@@ -55,7 +55,6 @@ If you can't use latexmk or make for some reason, you can run LaTeX manually ins
 #. run ``pdflatex io2d`` until there are no more changed labels or changed tables
 #. run ``makeindex generalindex``
 #. run ``makeindex libraryindex``
-#. run ``makeindex grammarindex``
 #. run ``makeindex impldefindex``
 #. run ``pdflatex io2d`` twice more.
 
@@ -92,5 +91,5 @@ you Pete.
 Thanks to Walter Brown for suggesting the use of ``latexmk``.
 
 Thanks to the above-mentioned folks for their hard work creating the
-`C++ Standard Draft Sources<https://github.com/cplusplus/draft>_`,
+`C++ Standard Draft Sources <https://github.com/cplusplus/draft>`_,
 from which this borrows heavily.
