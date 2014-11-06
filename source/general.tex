@@ -1,0 +1,202 @@
+%!TEX root = io2d.tex
+\rSec0[\iotwod.general]{General}
+\rSec1[\iotwod.general.scope]{Scope}
+\pnum
+\indextext{scope|(}%
+This Technical Specification specifies requirements for implementations
+of an interface that computer programs written in the \Cpp programming
+language may use to render and display raster graphics.%
+\indextext{scope|)}
+
+\rSec1[\iotwod.general.refs]{Normative references}
+
+\pnum
+\indextext{references!normative|(}%
+The following referenced documents are indispensable for the application
+of this document. For dated references, only the edition cited applies.
+For undated references, the latest edition of the referenced document
+(including any amendments) applies.
+
+\begin{itemize}
+\item ISO/IEC 14882, \doccite{Programming languages --- \Cpp}
+\item ISO/IEC 10646-1:1993, \doccite{Information technology --- Universal 
+Multiple-Octet Coded Character Set (UCS) --- Part 1: Architecture and Basic 
+Multilingual Plane}
+\item ISO/IEC TR 19769:2004, \doccite{Information technology --- Programming 
+languages, their environments and system software interfaces --- Extensions for 
+the programming language C to support new character data types}
+\item ISO 32000-1:2008, \doccite{Document management --- Portable document 
+format --- Part 1: PDF 1.7}
+\item Tantek \c{C}elik et al., \doccite{CSS Color Module Level 3 --- W3C 
+Recommendation 07 June 2011}, 
+Copyright~\textcopyright~2011~W3C\textsuperscript{\textregistered} (MIT, ERCIM, 
+Keio)
+\item Carl D. Worth, Chris Wilson, et al., \doccite{cairo graphics library --- 
+Version 1.12.16}, 
+Copyright~\textcopyright~2002~University~of~Southern~California, 
+Copyright~\textcopyright~2005~Red~Hat,~Inc., 
+Copyright~\textcopyright~2011~Intel~Corporation
+\end{itemize}
+
+\pnum
+The library described in ISO/IEC TR 19769:2004 is hereinafter called the
+\indexdefn{C!Unicode TR}\term{C Unicode TR}.
+
+\pnum
+The document CSS Color Module Level 3 --- W3C Recommendation 07 June 2011 is 
+hereinafter called the \indexdefn{CSS Colors Specification}\term{CSS Colors 
+Specification}.
+
+\pnum
+Any section number reference to \CppXIV or to \Cpp generally refers to the 
+Working Draft in Document Number N4140.
+
+\rSec1[\iotwod.general.defns]{Terms and definitions}
+
+\pnum
+\indextext{definitions|(}%
+For the purposes of this document, the following definitions apply.
+
+\indexdefn{aliasing}%
+\definition{aliasing}{\iotwod.general.defns.alias}
+<aliasing> the presence of visual artifacts in the results of rendering due to 
+sampling imperfections
+
+\indexdefn{anti-aliasing}%
+\definition{anti-aliasing}{\iotwod.general.defns.anti.alias}
+<anti-aliasing> the application of a function or algorithm while rendering to 
+reduce aliasing
+
+\indexdefn{artifact}
+\definition{artifact}{\iotwod.general.defns.artifact}
+<artifact> in signal processing, an error in the results due to the input 
+signal and output signal not having a one-to-one mapping between their 
+frequencies
+
+\indexdefn{B\'ezier curve}
+\definition{B\'ezier curve}{\iotwod.general.defns.bezier}
+<B\'ezier curve> a curve defined by a parametric equation where the starting 
+point, ending point, and zero or more control points are given -- a cubic 
+B\'ezier curve, which is the type meant whenever the general term B\'ezier 
+curve is used herein, has two control points and is defined by the following 
+equation: $f(t) = (1 - t)^{3} \times P_{0} + 3 \times t \times (1 - t)^{2} 
+\times P_{1} + 3 \times t^{2} \times (1 - t) \times P_{2} + t^{3} \times P_{3}$ 
+where $0.0 \le t \le 1.0$, $P_{0}$ is the starting point, $P_{1}$ is the first 
+control point, and $P_{2}$ is the second control point, and $P_{3}$ is the 
+ending 
+point
+\enternote
+$f(t) = P_{0}$ when $t = 0.0$ and $f(t) = P_{3}$ when $t = 1.0$
+\exitnote
+
+\indexdefn{coordinate space}
+\definition{coordinate space}{\iotwod.general.defns.coordinate.space}
+<coordinate space> used to define specific positions on a surface; when a 
+surface is displayed or otherwise rendered, the point (0.0, 0.0) is the top 
+left, the positive X axis extends rightward, the positive Y axis extends 
+downward, the point (1.0, 0.0) rotated around the point (0.0, 0.0) to $0$ 
+radians will be at (1.0, 0.0), the point (1.0, 0.0) rotated around the point 
+(0.0, 0.0) to $\frac{(\pi)}{(2.0)}$ radians will be at (0.0, 1.0), the point 
+(1.0, 0.0) rotated around the point (0.0, 0.0) to $\pi$ radians will be at 
+(-1.0, 0.0), the point (1.0, 0.0) rotated around the point (0.0, 0.0) to 
+$\frac{(3.0 \times \pi)}{(2.0)}$ radians will be at (0.0, -1.0), and the point 
+(1.0, 0.0) rotated around the point (0.0, 0.0) to $2.0 \times \pi$ 
+radians will be at (0.0, 1.0)
+
+\indexdefn{filter}
+\definition{filter}{\iotwod.general.defns.filter}
+<filter> a mathematical function that transforms a signal into discrete data
+
+\indexdefn{graphics}
+\indexdefn{graphics!raster}
+\definition{graphics}{\iotwod.general.defns.graphics.raster}
+<raster graphics> visual information stored as a rectangular grid of pixels
+
+\indexdefn{graphics}
+\indexdefn{graphics!vector}
+\definition{graphics}{\iotwod.general.defns.graphics.vector}
+<vector graphics> visual information stored as geometrical data
+
+\indexdefn{pixel}
+\definition{pixel}{\iotwod.general.defns.pixel}
+<pixel> a discrete data element with a format-dependent composition
+\enternote
+In raster graphics a pixel is obtained by sampling visual data, whether 
+electro-mechanically, e.g. by a digital camera when a picture is taken, or 
+manually, e.g. by an artist using a raster graphics editing program to create a 
+pixel representation of visual data; the given examples typically result in a 
+texture composed of many pixels
+\exitnote
+
+\indexdefn{point}
+\definition{point}{\iotwod.general.defns.point}
+<point> a coordinate designated by an X component and a Y component within the 
+coordinate space of a surface
+
+\indexdefn{render}
+\definition{render}{\iotwod.general.defns.render}
+<render> the process of compositing source data and destination data to create 
+result data that replaces the destination data
+\enternote
+depending on the compositing operator and the clip, there may not be any change 
+to the original destination data.
+\exitnote
+
+\indexdefn{sampling}%
+\definition{sampling}{\iotwod.general.defns.sampling}
+<sampling> the transformation of continuous or discrete signals to discrete 
+data by application of a filter
+
+\indexdefn{signal}
+\indexdefn{signal!continuous}
+\definition{signal}{\iotwod.general.defns.signal.cont}
+<continuous signal> a real function which is defined at every point within a 
+2D space and conveys information about one or more properties of the space
+
+\indexdefn{signal}
+\indexdefn{signal!discrete}
+\definition{signal}{\iotwod.general.defns.signal}
+<discrete signal> a real function which is defined at points separated by 
+integer intervals within a 2D space and conveys information about one or more 
+properties of the space
+
+% end definitions
+\indextext{definitions|)}
+
+\rSec1[\iotwod.general.compliance]{Implementation compliance}
+
+\pnum
+\indextext{conformance requirements|(}%
+\indextext{conformance requirements!general|(}%
+The set of
+\defn{diagnosable rules}
+consists of all syntactic and semantic rules in this International
+Standard except for those rules containing an explicit notation that
+``no diagnostic is required'' or which are described as resulting in
+``undefined behavior.''
+
+
+\rSec1[\iotwod.general.ack]{Acknowledgments}
+
+\pnum
+The \Cpp  programming language as described in this International
+Standard is based on the language as described in Chapter R (Reference
+Manual) of Stroustrup: \doccite{The \Cpp  Programming Language} (second
+edition, Addison-Wesley Publishing Company, ISBN 0-201-53992-6,
+copyright \copyright 1991 AT\&T). That, in turn, is based on the C
+programming language as described in Appendix A of Kernighan and
+Ritchie: \doccite{The C Programming Language} (Prentice-Hall, 1978, ISBN
+0-13-110163-3, copyright \copyright 1978 AT\&T).
+
+\pnum
+Portions of the library Clauses of this International Standard are based
+on work by P.J. Plauger, which was published as \doccite{The Draft
+Standard \Cpp  Library} (Prentice-Hall, ISBN 0-13-117003-1, copyright
+\copyright 1995 P.J. Plauger).
+
+\pnum
+POSIX\textregistered\ is a registered trademark of the Institute of Electrical and
+Electronic Engineers, Inc.
+
+\pnum
+All rights in these originals are reserved.

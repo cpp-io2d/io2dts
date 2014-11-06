@@ -1,0 +1,503 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.compositing.operator] {Enum class \tcode{compositing_operator}}
+
+\rSec1 [\iotwod.compositing.operator.summary] {\tcode{compositing_operator} 
+Summary}
+
+\pnum
+The \tcode{compositing_operator} enum class determines how drawing operations 
+process the source (input) content and the existing destination content to 
+compose the final result content that will replace the original destination 
+content. See Table~\ref{tab:\iotwod.compositing.operator.meanings.basic}, 
+Table~\ref{tab:\iotwod.compositing.operator.meanings.blend} and 
+Table~\ref{tab:\iotwod.compositing.operator.meanings.hsl} for the meaning of 
+each \tcode{compositing_operator} enumerator.
+
+\rSec1 [\iotwod.compositing.operator.synopsis] {\tcode{compositing_operator} 
+Synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace drawing { inline namespace 
+v1 {
+  enum class compositing_operator {
+    over,
+    clear,
+    source,
+    in,
+    out,
+    atop,
+    dest,
+    dest_over,
+    dest_in,
+    dest_out,
+    dest_atop,
+    xor_op,
+    add,
+    saturate,
+    multiply,
+    screen,
+    overlay,
+    darken,
+    lighten,
+    color_dodge,
+    color_burn,
+    hard_light,
+    soft_light,
+    difference,
+    exclusion,
+    hsl_hue,
+    hsl_saturation,
+    hsl_color,
+    hsl_luminosity
+  };
+} } } } // namespaces std::experimental::graphics::v1
+\end{codeblock}
+
+\rSec1 [\iotwod.compositing.operator.enumerators] {\tcode{compositing_operator} 
+Enumerators}
+\pnum
+The tables below specify the compositing operations by mathematical formula. 
+The formulas differentiate between three color channels (red, green, and blue) 
+and a transparency channel (alpha). Channel values are in the range $[0.0, 
+1.0]$.
+
+\pnum
+The following symbols and specifiers are used:\\
+\hspace*{1em}The $R$ symbol means the result color value\\
+\hspace*{1em}The $S$ symbol means the source color value\\
+\hspace*{1em}The $D$ symbol means the destination color value\\
+\hspace*{1em}The $c$ specifier means the color channels of the value it 
+follows\\
+\hspace*{1em}The $a$ specifier means the alpha channel of the value it follows\\
+
+\pnum
+The color symbols $R$, $S$, and $D$ may appear with or without any specifiers.
+
+\pnum 
+If a color symbol appears alone, it designates the entire color as a tuple in 
+the unsigned normalized form (red, green, blue, alpha).
+
+\pnum
+The specifiers $c$ and $a$ may appear alone or together after any of the three 
+color symbols.
+
+\pnum
+The presence of the $c$ specifier alone means the three color channels of the 
+color as a tuple in the unsigned normalized form (red, green, blue).
+
+\pnum
+The presence of the $a$ specifier alone means the alpha channel of the color in 
+unsigned normalized form.
+
+\pnum
+The presence of the specifiers together in the form $ca$ means the 
+value of the color as a tuple in the unsigned normalized form (red, green, 
+blue, alpha), where the value of each color channel is the product of each 
+color channel and the alpha channel and the value of the alpha channel is the 
+original value of the alpha channel.
+\enterexample
+When it appears in a formula, $Sca$ means (($Sc \times Sa$), $Sa$), such that, 
+given a source color $Sc = (1.0, 0.5, 0.0)$ and an source alpha $Sa = (0.5)$, 
+the value of $Sca$ when specified in one of the formulas would be $Sca = (1.0 
+\times 0.5, 0.5 \times 0.5, 0.0 \times 0.5, 0.5) = (0.5, 0.25, 0.0, 0.5)$. The 
+same is true for $Dca$ and $Rca$.
+\exitexample
+
+\pnum
+No space is left between a value and its channel specifiers. Channel 
+specifiers will be preceded by exactly one value symbol.
+%\enterexample
+%$Rca$ means the color and alpha channels of the result value. $Sc$ means the 
+%color channels of the source value. $Da$ means the alpha channel of the 
+%destination value. $R$ is invalid because it has no channel specifier. $c$ is 
+%invalid because it is not attached to a value symbol. $RSa$ is invalid because 
+%there are two value symbols preceding the channel specifier.
+%\exitexample
+
+\pnum
+When performing an operation that involves evaluating the color 
+channels, each color channel should be evaluated individually to produce its 
+own value.
+
+\pnum
+The basic enumerators specify a value for Bounding. This value may be Bound, 
+Unbound, or N/A.
+
+\pnum
+If the Bounding value is 'Bound", then the source is treated as though it is 
+also a mask. As such, only areas of the surface where the source would affect 
+the surface are altered. The remaining areas of the surface have the same color 
+value as before the compositing operation.
+\enternote
+If a clip is set then it will constrain the area of the surface that the 
+compositing operation will affect to be the intersection of the source and the 
+clip. If they do not intersect then no change will occur.
+\exitnote
+
+\pnum
+If the Bounding value is 'Unbound', then every area of the surface that is not 
+affected by the source will become transparent black. In effect, it is as 
+though the source was treated as being the same size as the destination surface 
+with every part of the source that does not already have a color value assigned 
+to it being treated as though it were transparent black. Application of the 
+formula with this precondition results in those areas evaluating to transparent 
+black such that evaluation can be bypassed due to the predetermined outcome.
+\enternote
+If a clip is set then only those areas of the surface that the are within the 
+clip will be affected by the compositing operation. Even if no part of the 
+source is within the clip, the operation will still set every area within the 
+clip to transparent black. Areas outside the clip are not modified.
+\exitnote
+
+\pnum
+If the Bounding value is 'N/A', the operation would have the same effect 
+regardless of whether it was treated as Bound or Unbound such that those 
+Bounding values are not applicable to the operation. An N/A formula when 
+applied to an area where the source does not provide a value will evaluate to 
+the original value of the destination even if the source is treated as having a 
+value there of transparent black. As such the result is the same as if the 
+source were treated as being a mask, i.e. Bound and Unbound treatment each 
+produce the same result in areas where the source does not have a value.
+\enternote
+If a clip is set then only those areas of the surface that the are within the 
+clip will be affected by the compositing operation.
+\exitnote
+
+\begin{libiotwodreqtab4b}
+ {\tcode{compositing_operator} basic enumerator meanings}
+ {tab:\iotwod.compositing.operator.meanings.basic}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \chdr{Bounding}
+ & \chdr{Color}
+ & \rhdr{Alpha}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \chdr{Bounding}
+ & \chdr{Color}
+ & \rhdr{Alpha}
+ \\ \capsep
+ \endhead
+ \tcode{clear}
+ & Bound
+ & $Rc = 0$
+ & $Ra = 0$
+ \\
+ \tcode{source}
+ & Bound
+ & $Rc = Sc$
+ & $Ra = Sa$
+ \\
+ \tcode{over}
+ & N/A
+ & $Rc = \dfrac{(Sca + Dca \times (1 - Sa))}{Ra}$
+ & $Ra = Sa + Da \times (1 - Sa)$
+ \\
+ \tcode{in}
+ & Unbound
+ & $Rc = Sc$
+ & $Ra = Sa \times Da$
+ \\
+ \tcode{out}
+ & Unbound
+ & $Rc = Sc$
+ & $Ra = Sa \times (1 - Da)$
+ \\
+ \tcode{atop}
+ & N/A
+ & $Rc = Sca + Dc \times (1 - Sa)$
+ & $Ra = Da$
+ \\
+ \tcode{dest}
+ & N/A
+ & $Rc = Dc$
+ & $Ra = Da$
+ \\
+ \tcode{dest_over}
+ & N/A
+ & $\dfrac{(Sca \times (1 - Da) + Dca)}{Ra}$
+ & $(1 - Da) \times Sa + Da$
+ \\
+ \tcode{dest_in}
+ & Unbound
+ & $Rc = Dc$
+ & $Ra = Sa \times Da$
+ \\
+ \tcode{dest_out}
+ & N/A
+ & $Rc = Dc$
+ & $Ra = (1 - Sa) \times Da$
+ \\
+ \tcode{dest_atop}
+ & Unbound
+ & $Rc = Sc \times (1 - Da) + Dca$
+ & $Ra = Sa$
+ \\
+ \tcode{xor_op}
+ & N/A
+ & $Rc = \dfrac{(Sca \times (1 - Da) + Dca \times (1 - Sa))}{Ra}$
+ & $Ra = Sa + Da - 2 \times Sa \times Da$
+ \\
+ \tcode{add}
+ & N/A
+ & $Rc = \dfrac{(Sca + Dca)}{Ra}$
+ & $Ra = min(1, Sa + Da)$
+ \\
+ \tcode{saturate}
+ & N/A
+ & $Rc = \dfrac{(min(Sa, 1 - Da) \times Sc + Dca)}{Ra}$
+ & $Ra = min(1, Sa + Da)$
+ \\
+\end{libiotwodreqtab4b}
+
+\pnum
+The blend enumerators and hsl enumerators share a common formula for the result 
+color's color channel, with only one part of it changing depending on the 
+enumerator. The result color's color channel value formula is as follows: $Rc = 
+\dfrac{1}{Ra} \times ((1 - Da) \times Sca + (1 - Sa) \times Dca + Sa \times Da 
+\times f(Sc, Dc))$. The function $f(Sc, Dc)$ is the component of the formula 
+that is enumerator dependent.
+
+\pnum
+For the blend enumerators, the color channels shall be treated as separable, 
+meaning that the color formula shall be evaluated separately for each color 
+channel: red, green, and blue.
+
+\pnum
+The color formula divides 1 by the result color's alpha channel value. As a 
+result, if the result color's alpha channel is zero then a division by zero 
+would normally occur. Implementations shall not throw an exception nor  
+otherwise produce any observable error condition if the result color's alpha 
+channel is zero. Instead, implementations shall bypass the division by zero and 
+produce the result color (0.0, 0.0, 0.0, 0.0), i.e. \defnx{transparent 
+black}{color!transparent black}, if the result color alpha channel formula 
+evaluates to zero.
+\enternote
+The simplest way to comply with this requirement is to bypass evaluation of the 
+color channel formula in the event that the result alpha is zero. However, in 
+order to allow implementations the greatest latitude possible, only the result 
+is specified.
+\exitnote
+
+\pnum
+For the enumerators in 
+Table~\ref{tab:\iotwod.compositing.operator.meanings.blend} and 
+Table~\ref{tab:\iotwod.compositing.operator.meanings.hsl} the result color's 
+alpha channel value formula is as follows: $Ra = Sa + Da \times (1 - Sa)$.
+\enternote
+Since it is the same formula for all enumerators in those tables, the formula 
+is not included in those tables.
+\exitnote
+
+\pnum
+All of the blend enumerators and hsl enumerators have a Bounding value of N/A.
+
+\begin{libreqtab2}
+ {\tcode{compositing_operator} blend enumerator meanings}
+ {tab:\iotwod.compositing.operator.meanings.blend}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \rhdr{Color}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \rhdr{Color}
+ \\ \capsep
+ \endhead
+ \tcode{multiply}
+ & $f(Sc, Dc) = Sc \times Dc$
+ \\
+ \tcode{screen}
+ & $f(Sc, Dc) = Sc + Dc - Sc \times Dc$
+ \\
+ \tcode{overlay}
+ & $if (Dc \le 0.5)~\{\br
+ \hspace*{1em}f(Sc, Dc) = 2 \times Sc \times Dc\br
+ \}\br
+ else~\{\br
+ \hspace*{1em}f(Sc,Dc) =\br
+ \hspace*{2em}1 - 2 \times (1 - Sc) \times\br
+ \hspace*{2em}(1 - Dc)\br
+ \}$\br
+ \enternote
+ The difference between this enumerator and \tcode{hard_light} is that this 
+ tests the destination color ($Dc$) whereas \tcode{hard_light} tests the source 
+ color ($Sc$).
+ \exitnote
+ \\
+ \tcode{darken}
+ & $f(Sc, Dc) = min(Sc, Dc)$
+ \\
+ \tcode{lighten}
+ & $f(Sc, Dc) = max(Sc, Dc)$
+ \\
+ \tcode{color_dodge}
+ & $if (Dc < 1)~\{\br
+ \hspace*{1em}f(Sc, Dc) = min(1, \dfrac{Dc}{(1 - Sc)})\br
+ \}\br
+ else~\{\br
+ \hspace*{1em}f(Sc,Dc) = 1
+ \}$
+ \\
+ \tcode{color_burn}
+ & $if~(Dc > 0)~\{\br
+ \hspace*{1em}f(Sc, Dc) = 1 - min(1, \dfrac{1 - Dc}{Sc})\br
+ \}\br
+ else~\{\br
+ \hspace*{1em}f(Sc,Dc) = 0\br
+ \}$
+ \\
+ \tcode{hard_light}
+ & $if~(Sc \le 0.5)~\{\br
+ \hspace*{1em}f(Sc, Dc) = 2 \times Sc \times Dc\br
+ \}\br
+ else~\{\br
+ \hspace*{1em}f(Sc,Dc) =\br
+ \hspace*{2em}1 - 2 \times (1 - Sc) \times\br
+ \hspace*{2em}(1 - Dc)\br
+ \}$\br
+ \enternote
+ The difference between this enumerator and \tcode{overlay} is that this 
+ tests the source color ($Sc$) whereas \tcode{overlay} tests the destination 
+ color ($Dc$).
+ \exitnote
+ \\
+ \tcode{soft_light}
+ & $if~(Sc \le 0.5)~\{\br
+ \hspace*{1em}f(Sc, Dc) =\br
+ \hspace*{2em}Dc - (1 - 2 \times Sc) \times Dc \times\br
+ \hspace*{2em}(1 - Dc)\br
+ \}\br
+ else~\{\br
+ \hspace*{1em}f(Sc,Dc) =\br
+ \hspace*{2em}Dc + (2 \times Sc - 1) \times\br
+ \hspace*{2em}(g(Dc) - Sc)\br
+ \}$\br
+ \br
+ $g(Dc)$ is defined as follows:\br
+ 
+ $if~(Dc \le 0.25)~\{\br
+ \hspace*{1em}g(Dc) =\br
+ \hspace*{2em}((16 \times Dc - 12) \times Dc +\br
+ \hspace*{2em}4) \times Dc\br
+ \}\br
+ else~\{\br
+ \hspace*{1em}g(Dc) = \sqrt{Dc}\br
+ \}$
+ \\
+ \tcode{difference}
+ & $f(Sc, Dc) = abs(Dc - Sc)$
+ \\
+ \tcode{exclusion}
+ & $f(Sc, Dc) = Sc + Dc - 2 \times Sc \times Dc$
+ \\
+\end{libreqtab2}
+
+\pnum
+For the hsl enumerators, the color channels shall be treated as nonseparable, 
+meaning that the color formula shall be evaluated once, with the colors being 
+passed in as tuples in the form (red, green, blue).
+
+\pnum
+The following additional functions are used to define the hsl enumerator 
+formulas:
+
+\pnum
+$min(x,~y,~z)~=~min(x,~min(y,~z))$
+
+\pnum
+$max(x,~y,~z)~=~max(x,~max(y,~z))$
+
+\pnum
+$sat(C) = max(Cr,~Cg,~Cb) - min(Cr,~Cg,~Cb)$
+
+\pnum
+$lum(C) = Cr \times 0.3 + Cg \times 0.59 + Cb \times 0.11$
+
+\pnum
+$clip\_color(C) =~\{\\
+\hspace*{1em}L = lum(C)\\
+\hspace*{1em}N = min(Cr, Cg, Cb)\\
+\hspace*{1em}X = max(Cr, Cg, Cb)\\
+\hspace*{1em}if~(N < 0.0)~\{\\
+\hspace*{2em}Cr = L + \dfrac{((Cr - L) \times L)}{(L - N)}\\
+\hspace*{2em}Cg = L + \dfrac{((Cg - L) \times L)}{(L - N)}\\
+\hspace*{2em}Cb = L + \dfrac{((Cb - L) \times L)}{(L - N)}\\
+\hspace*{1em}\}\\
+\hspace*{1em}if~(X > 1.0)~\{\\
+\hspace*{2em}Cr = L + \dfrac{((Cr - L) \times (1 - L))}{(X - L)}\\
+\hspace*{2em}Cg = L + \dfrac{((Cg - L) \times (1 - L))}{(X - L)}\\
+\hspace*{2em}Cb = L + \dfrac{((Cb - L) \times (1 - L))}{(X - L)}\\
+\hspace*{1em}\}\\
+\hspace*{1em}return~C\\
+\} $
+
+\pnum
+$set\_lum(C, L) =~\{\\
+\hspace*{1em}D = L - lum(C)\\
+\hspace*{1em}Cr = Cr + D\\
+\hspace*{1em}Cg = Cg + D\\
+\hspace*{1em}Cb = Cb + D\\
+\hspace*{1em}return~clip\_color(C)\\
+\}$
+
+\pnum
+$set\_sat(C, S) =~\{\\
+\hspace*{1em}R = C\\
+\hspace*{1em}auto\&~max = (Rr > Rg)~?~((Rr > Rb)~?~Rr : Rb) : ((Rg > Rb)~?~Rg 
+: Rb)\\
+\hspace*{1em}auto\&~mid = (Rr > Rg)~?~((Rr > Rb)~?~((Rg > Rb)~?~Rg : Rb) : 
+Rr) : ((Rg > Rb)~?~((Rr > Rb)~?~Rr : Rb) : Rg)\\
+\hspace*{1em}auto\&~min = (Rr > Rg)~?~((Rg > Rb)~?~Rb : Rg) : ((Rr > Rb)~?~Rb : 
+Rr)\\
+\hspace*{1em}if~(max > min)~\{\\
+\hspace*{2em}mid = \dfrac{((mid - min) \times S)}{max - min}\\
+\hspace*{2em}max = S\\
+\hspace*{1em}\}\\
+\hspace*{1em}else~\{\\
+\hspace*{2em}mid = 0.0\\
+\hspace*{2em}max = 0.0\\
+\hspace*{1em}\}\\
+\hspace*{1em}min = 0.0\\
+\hspace*{1em}return~R\\
+\}$
+\enternote
+In the formula, $max$, $mid$, and $min$ are reference variables which are bound 
+to the highest value, second highest value, and lowest value color channels of 
+the (red, blue, green) tuple $R$ such that the subsequent operations 
+modify the values of $R$ directly.
+\exitnote
+
+\begin{libreqtab2}
+ {\tcode{compositing_operator} hsl enumerator meanings}
+ {tab:\iotwod.compositing.operator.meanings.hsl}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \rhdr{Color \& Alpha}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \chdr{Color \& Alpha}
+ \\ \capsep
+ \endhead
+ 
+ \tcode{hsl_hue}
+ & $f(Sc, Dc) = set\_lum(set\_sat(Sc,~sat(Dc)),~lum(Dc))$
+ \\
+ \tcode{hsl_saturation}
+ & $(Sc, Dc) = set\_lum(set\_sat(Dc, sat(Sc)),~lum(Dc))$
+ \\
+ \tcode{hsl_color}
+ & $f(Sc, Dc) = set\_lum(Sc,~lum(Dc))$
+ \\
+ \tcode{hsl_luminosity}
+ & $f(Sc, Dc) = set\_lum(Dc,~lum(Sc))$
+ \\
+\end{libreqtab2}

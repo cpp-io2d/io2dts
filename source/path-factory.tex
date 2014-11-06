@@ -1,0 +1,712 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.pathfactory] {Class \tcode{path_factory}}
+
+\rSec1 [\iotwod.pathfactory.intro] {\tcode{path_factory} Description}
+
+\pnum
+\indexlibrary{\idxcode{path_factory}}%
+The \tcode{path_factory} class is a factory class that produces \tcode{path} 
+objects. The \tcode{path} objects produced by a \tcode{path_factory} instance 
+are immutable such that subsequent changes to the \tcode{path_factory} do not 
+modify a previous \tcode{path} object obtained from it.
+
+\rSec1 [\iotwod.pathfactory.synopsis] {\tcode{path_factory} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class path_factory {
+    // \ref{\iotwod.pathfactory.cons}, construct/copy/destroy:
+    path_factory();
+    path_factory(const path_factory& x);
+    path_factory& operator=(const path_factory& x);
+    path_factory(path_factory&& x);
+    path_factory& operator=(path_factory&& x);
+    
+    // \ref{\iotwod.pathfactory.modifiers}, modifiers:
+    void append(const path& p);
+    void append(const path_factory& p);
+    void append(const ::std::vector<path_data>& p);
+    void reset();
+    void new_sub_path();
+    void close_path();
+    void arc(const point& center, double radius, double angle1,
+    double angle2);
+    void arc_negative(const point& center, double radius,
+    double angle1, double angle2);
+    void curve_to(const point& pt0, const point& pt1,
+    const point& pt2);
+    void line_to(const point& pt);
+    void move_to(const point& pt);
+    void rect(const rectangle& r);
+    void rel_curve_to(const point& dpt0, const point& dpt1,
+    const point& dpt2);
+    void rel_line_to(const point& dpt);
+    void rel_move_to(const point& dpt);
+    void set_transform_matrix(const matrix_2d& m);
+    void set_origin(const point& pt);
+    
+    // \ref{\iotwod.pathfactory.observers}, observers:
+    matrix_2d get_transform_matrix() const;
+    point get_origin() const;
+    bool has_current_point() const;
+    point get_current_point() const;
+    path get_path() const;
+    rectangle get_path_extents() const;
+    ::std::vector<path_data> get_data() const;
+    const ::std::vector<path_data>& get_data_ref() const;
+  };
+} } } } // namespaces std::experimental::io2d::v1
+\end{codeblock}
+
+\rSec1 [\iotwod.pathfactory.cons] {\tcode{path_factory} constructors and 
+assignment operators}
+
+\indexlibrary{\idxcode{path_factory}!constructor}%
+\begin{itemdecl}
+path_factory();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{path_factory}.
+	
+	\pnum
+	\postconditions
+	\tcode{get_data_ref()} returns a const reference to an empty vector.
+	\tcode{get_data()} returns an empty vector.
+	\tcode{has_current_point()} returns false.
+	\tcode{get_origin()} returns a value equivalent to \tcode{point\{0.0, 
+	0.0\}}.
+	\tcode{get_transform_matrix()} returns a value equivalent to the return 
+	value of \tcode{matrix_2d::init_identity()}.
+	\tcode{get_path_extents()} returns a value equivalent to 
+	\tcode{rectangle\{0.0, 0.0, 0.0, 0.0\}}.
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\rSec1 [\iotwod.pathfactory.modifiers] {\tcode{path_factory} modifiers}
+
+\rSec2 [\iotwod.pathfactory::append] {\tcode{path_factory::append}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{append}}%
+\indexlibrary{\idxcode{append}!\idxcode{path_factory}}%
+\begin{itemdecl}
+void append(const path& p);
+void append(const path_factory& p);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Appends the results of \tcode{p.get_data()} to the \tcode{path_data} stored 
+	by \tcode{*this}.
+	
+	\pnum
+	\postconditions
+	If \tcode{p.get_data().empty() == false}, the
+	\tcode{vector<path_data>} returned by \tcode{get_data_ref} will change in 
+	the ways documented for \tcode{vector<T>::push_back(const T\&)}.
+	The values returned by \tcode{get_transform_matrix()}, 
+	\tcode{get_origin()}, \tcode{has_current_point()}, and 
+	\tcode{get_current_point()} are the same as they would be if the 
+	\tcode{path_factory} member function calls necessary to generate the 
+	\tcode{path_data} in \tcode{p.get_data()} had been called.
+	
+	\pnum
+	\complexity
+	Linear in the number of elements in \tcode{p.get_data()}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{append}}%
+\indexlibrary{\idxcode{append}!\idxcode{path_factory}}%
+\begin{itemdecl}
+void append(const ::std::vector<path_data>& p);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	The same as \tcode{path_factory::append_path(const path\& p)}.
+	
+	\pnum
+	\throws
+	\tcode{system_error} with an error code equivalent to 
+	\tcode{io2d_error::invalid_path_data} and an error category of type 
+	\tcode{io2d_error_category} if a \tcode{path_data} with a type that is not 
+	a member of \tcode{path_data_type} is encountered or if a \tcode{path_data} 
+	with a type of \tcode{path_data_type::rel_move_to}, 
+	\tcode{path_data_type::rel_line_to}, or 
+	\tcode{path_data_type::rel_curve_to} is encountered when no current point 
+	is established.
+
+	\pnum
+	\postconditions
+	If \tcode{p.empty() == false}, the \tcode{vector<path_data>} returned by 
+	\tcode{get_data_ref} will change in the ways documented for 
+	\tcode{vector<T>::push_back(const T\&)}.
+	The values returned by \tcode{get_transform_matrix()}, 
+	\tcode{get_origin()}, \tcode{has_current_point()}, and 
+	\tcode{get_current_point()} are the same as they would be if the 
+	\tcode{path_factory} member function calls necessary to generate the 
+	\tcode{path_data} in \tcode{p} had been called.
+
+	\pnum
+	\complexity
+	Linear in the number of elements in \tcode{p}.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::reset] {\tcode{path_factory::reset}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{reset}}%
+\indexlibrary{\idxcode{reset}!\idxcode{path_factory}}%
+\begin{itemdecl}
+void reset();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Modify \tcode{*this} so that its observable state matches that of a 
+	\tcode{path_factory} object that was just default constructed.
+
+	\pnum
+	\postcondition
+	The \tcode{vector<path_data>} returned by \tcode{get_data_ref} will change 
+	in the ways documented for \tcode{vector<T>::push_back(const T\&)}.
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::new_sub_path] {\tcode{path_factory::new_sub_path}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{new_sub_path}}%
+\indexlibrary{\idxcode{new_sub_path}!\idxcode{path_factory}}%
+\begin{itemdecl}
+void new_sub_path();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Append a new \tcode{path_data} object to the \tcode{path_data} stored by 
+	\tcode{*this}. The appended object's \tcode{path_data::type} is 
+	\tcode{path_data_type::new_sub_path} and its \tcode{path_data::data} has 
+	\tcode{path_data::data::unused} set to \tcode{0}.
+	
+	\pnum
+	\postconditions
+	The \tcode{vector<path_data>} returned by \tcode{get_data_ref} will change 
+	in the ways documented for \tcode{vector<T>::push_back(const T\&)}.
+	\tcode{has_current_point()} will return \tcode{false}.
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::close_path] {\tcode{path_factory::close_path}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{close_path}}%
+\indexlibrary{\idxcode{close_path}!\idxcode{path_factory}}%
+\begin{itemdecl}
+void close_path();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	If \tcode{has_current_point() == true}, append a new \tcode{path_data} 
+	object to the \tcode{path_data} stored by \tcode{*this}. The appended 
+	object's \tcode{path_data::type} is \tcode{path_data_type::close_path} and 
+	its \tcode{path_data::data} has \tcode{path_data::data::unused} set to 
+	\tcode{0}. If \tcode{has_current_point() == false}, do nothing.
+	
+	\pnum
+	\postconditions
+	If \tcode{has_current_point() == true}, the \tcode{vector<path_data>} 
+	returned by \tcode{get_data_ref} will change in the ways documented for 
+	\tcode{vector<T>::push_back(const T\&)} and the value returned by 
+	\tcode{get_current_point()} will be the value of 
+	\tcode{path_data::data::move} from the most recent \tcode{path_data} 
+	appended to the \tcode{path_data} stored by \tcode{*this} with a 
+	{path_data::type} of \tcode{path_data_type::move_to}.
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::arc] {\tcode{path_factory::arc}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{arc}}%
+\indexlibrary{\idxcode{arc}!\idxcode{path_factory}}%
+\begin{itemdecl}
+void arc(const point& center, double radius, double angle1, double angle2);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Append a new \tcode{path_data} object to the \tcode{path_data} stored by 
+	\tcode{*this}. The appended object's \tcode{path_data::type} is 
+	\tcode{path_data_type::arc} and its \tcode{path_data::data} has 
+	\tcode{path_data::data::arc::center} set to \tcode{center}, 
+	\tcode{path_data::data::arc::radius} set to \tcode{radius}, 
+	\tcode{path_data::data::arc::angle1} set to \tcode{angle1}, and
+	\tcode{path_data::data::arc::angle2} set to \tcode{angle2}.
+	
+	\pnum
+	\postconditions
+	The \tcode{vector<path_data>} returned by \tcode{get_data_ref} will change 
+	in the ways documented for \tcode{vector<T>::push_back(const T\&)}.
+	\tcode{has_current_point()} will return \tcode{true}.
+	\tcode{get_current_point()} will return a \tcode{point} placed at 
+	\tcode{point(center.x + radius, center.y} and rotated around \tcode{center} 
+	such that it is at \tcode{angle2} radians.
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::arc_negative] {\tcode{path_factory::arc_negative}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{arc_negative}}%
+\indexlibrary{\idxcode{arc_negative}!\idxcode{path_factory}}%
+\begin{itemdecl}
+void arc_negative(const point& center, double radius, double angle1, double 
+angle2);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Append a new \tcode{path_data} object to the \tcode{path_data} stored by 
+	\tcode{*this}. The appended object's \tcode{path_data::type} is 
+	\tcode{path_data_type::arc_negative} and its \tcode{path_data::data} has 
+	\tcode{path_data::data::arc::center} set to \tcode{center}, 
+	\tcode{path_data::data::arc::radius} set to \tcode{radius}, 
+	\tcode{path_data::data::arc::angle1} set to \tcode{angle1}, and
+	\tcode{path_data::data::arc::angle2} set to \tcode{angle2}.
+	
+	\pnum
+	\postconditions
+	The \tcode{vector<path_data>} returned by \tcode{get_data_ref} will change 
+	in the ways documented for \tcode{vector<T>::push_back(const T\&)}.
+	\tcode{has_current_point()} will return \tcode{true}. 
+	\tcode{get_current_point()} will return a \tcode{point} placed at 
+	\tcode{point(center.x + radius, center.y} and rotated around \tcode{center} 
+	such that it is at \tcode{angle2} radians.
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::curve_to] {\tcode{path_factory::curve_to}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{curve_to}}%
+\indexlibrary{\idxcode{curve_to}!\idxcode{path_factory}}%
+\begin{itemdecl}
+void curve_to(const point& pt0, const point& pt1, const point& pt2);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Append a new \tcode{path_data} object to the \tcode{path_data} stored by 
+	\tcode{*this}. The appended object's \tcode{path_data::type} is 
+	\tcode{path_data_type::curve_to} and its \tcode{path_data::data} has 
+	\tcode{path_data::data::curve::pt1} set to \tcode{pt0}, 
+	\tcode{path_data::data::curve::pt2} set to \tcode{pt1}, and 
+	\tcode{path_data::data::curve::pt3} set to \tcode{pt2}.
+	
+	\pnum
+	\postcondition
+	The \tcode{vector<path_data>} returned by \tcode{get_data_ref} will change 
+	in the ways documented for \tcode{vector<T>::push_back(const T\&)}.
+	\tcode{has_current_point()} will return \tcode{true}. 
+	\tcode{get_current_point()} will return \tcode{point(pt3)}.
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::line_to] {\tcode{path_factory::line_to}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{line_to}}%
+\indexlibrary{\idxcode{line_to}!\idxcode{path_factory}}%
+\begin{itemdecl}
+void line_to(const point& pt);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	If \tcode{has_current_point() == true}, append a new \tcode{path_data} 
+	object to the \tcode{path_data} stored by \tcode{*this}. The appended 
+	object's \tcode{path_data::type} is \tcode{path_data_type::line_to} and its 
+	\tcode{path_data::data} has \tcode{path_data::data::line} set to 
+	\tcode{pt}. Otherwise has the same effect as calling \tcode{move_to(pt)}.
+	
+	\pnum
+	\postconditions
+	The \tcode{vector<path_data>} returned by \tcode{get_data_ref} will change 
+	in the ways documented for \tcode{vector<T>::push_back(const T\&)}.
+	\tcode{has_current_point()} will return \tcode{true}. 
+	\tcode{get_current_point()} will return \tcode{point(pt)}.
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::move_to] {\tcode{path_factory::move_to}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{move_to}}%
+\indexlibrary{\idxcode{move_to}!\idxcode{path_factory}}%
+\begin{itemdecl}
+void move_to(const point& pt);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Append a new \tcode{path_data} object to the \tcode{path_data} stored by 
+	\tcode{*this}. The appended object's \tcode{path_data::type} is 
+	\tcode{path_data_type::move_to} and its \tcode{path_data::data} has 
+	\tcode{path_data::data::move} set to \tcode{pt}.
+	
+	\pnum
+	\postconditions
+	The \tcode{vector<path_data>} returned by \tcode{get_data_ref} will change 
+	in the ways documented for \tcode{vector<T>::push_back(const T\&)}.
+	\tcode{has_current_point()} will return \tcode{true}. 
+	\tcode{get_current_point()} will return \tcode{point(pt)}.
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::rect] {\tcode{path_factory::rect}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{rect}}%
+\indexlibrary{\idxcode{rect}!\idxcode{path_factory}}%
+\begin{itemdecl}
+void rect(const rectangle& r);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Append five new \tcode{path_data} objects to the \tcode{path_data} stored 
+	by \tcode{*this}.
+	The first appended object's \tcode{path_data::type} is 
+	\tcode{path_data_type::move_to} and its \tcode{path_data::data} has 
+	\tcode{path_data::data::move.x} set to \tcode{r.x} and 
+	\tcode{path_data::data::move.y} set to \tcode{r.y}.
+	The second appended object's \tcode{path_data::type} is 
+	\tcode{path_data_type::rel_line_to} and its \tcode{path_data::data} has 
+	\tcode{path_data::data::line.x} set to \tcode{r.width} and 
+	\tcode{path_data::data::line.y} set to \tcode{0.0}.
+	The third appended object's \tcode{path_data::type} is 
+	\tcode{path_data_type::rel_line_to} and its \tcode{path_data::data} has 
+	\tcode{path_data::data::line.x} set to \tcode{0.0} and 
+	\tcode{path_data::data::line.y} set to \tcode{r.height}.
+	The fourth appended object's \tcode{path_data::type} is 
+	\tcode{path_data_type::rel_line_to} and its \tcode{path_data::data} has 
+	\tcode{path_data::data::line.x} set to \tcode{-r.width} and 
+	\tcode{path_data::data::line.y} set to \tcode{0.0}.
+	The fifth appended object's \tcode{path_data::type} is 
+	\tcode{path_data_type::close_path} and its \tcode{path_data::data} has 
+	\tcode{path_data::data::unused} set to \tcode{0}.
+	
+	\pnum
+	\postconditions
+	The \tcode{vector<path_data>} returned by \tcode{get_data_ref} will change 
+	in the ways documented for \tcode{vector<T>::push_back(const T\&)}. 
+	\tcode{has_current_point} will return \tcode{false}.
+	\tcode{has_current_point()} will return \tcode{true}. 
+	\tcode{get_current_point()} will return \tcode{point\{r.x, r.y\}}.	
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::rel_curve_to] {\tcode{path_factory::rel_curve_to}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{rel_curve_to}}%
+\indexlibrary{\idxcode{rel_curve_to}!\idxcode{path_factory}}%
+\begin{itemdecl}
+void rel_curve_to(const point& dpt0, const point& dpt1, const point& dpt2);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Append a new \tcode{path_data} object to the \tcode{path_data} stored by 
+	\tcode{*this}. The appended object's \tcode{path_data::type} is 
+	\tcode{path_data_type::rel_curve_to} and its \tcode{path_data::data} has 
+	\tcode{path_data::data::curve::pt1} set to \tcode{pt0}, 
+	\tcode{path_data::data::curve::pt2} set to \tcode{pt1}, and 
+	\tcode{path_data::data::curve::pt3} set to \tcode{pt2}.
+	
+	\pnum
+	\postcondition
+	The \tcode{vector<path_data>} returned by \tcode{get_data_ref} will change 
+	in the ways documented for \tcode{vector<T>::push_back(const T\&)}.
+	\tcode{has_current_point()} will return \tcode{true}.
+	\tcode{get_current_point()} will return the result of 
+	\tcode{get_current_point()} before the function was called with 
+	\tcode{point(pt3)} added to it.
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::rel_line_to] {\tcode{path_factory::rel_line_to}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{rel_line_to}}%
+\indexlibrary{\idxcode{rel_line_to}!\idxcode{path_factory}}%
+\begin{itemdecl}
+void rel_line_to(const point& dpt);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	If \tcode{has_current_point() == true}, append a new \tcode{path_data} 
+	object to the \tcode{path_data} stored by \tcode{*this}. The appended 
+	object's \tcode{path_data::type} is \tcode{path_data_type::rel_line_to} and 
+	its \tcode{path_data::data} has \tcode{path_data::data::line} set to 
+	\tcode{pt}. Otherwise has the same effect as calling \tcode{move_to(pt)}.
+	
+	\pnum
+	\postconditions
+	The \tcode{vector<path_data>} returned by \tcode{get_data_ref} will change 
+	in the ways documented for \tcode{vector<T>::push_back(const T\&)}.
+	\tcode{has_current_point()} will return \tcode{true}. 
+	\tcode{get_current_point()} will return the result of 
+	\tcode{get_current_point()} before the function was called with 
+	\tcode{point(pt)} added to it.
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::rel_move_to] {\tcode{path_factory::rel_move_to}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{rel_move_to}}%
+\indexlibrary{\idxcode{rel_move_to}!\idxcode{path_factory}}%
+\begin{itemdecl}
+void rel_move_to(const point& dpt);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Append a new \tcode{path_data} object to the \tcode{path_data} stored by 
+	\tcode{*this}. The appended object's \tcode{path_data::type} is 
+	\tcode{path_data_type::rel_move_to} and its \tcode{path_data::data} has 
+	\tcode{path_data::data::move} set to \tcode{pt}.
+	
+	\pnum
+	\postconditions
+	The \tcode{vector<path_data>} returned by \tcode{get_data_ref} will change 
+	in the ways documented for \tcode{vector<T>::push_back(const T\&)}.
+	\tcode{has_current_point()} will return \tcode{true}. 
+	\tcode{get_current_point()} will return the result of 
+	\tcode{get_current_point()} before the function was called with 
+	\tcode{point(pt)} added to it.
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::set_transform_matrix] 
+{\tcode{path_factory::set_transform_matrix}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{set_transform_matrix}}%
+\indexlibrary{\idxcode{set_transform_matrix}!\idxcode{path_factory}}%
+\begin{itemdecl}
+void set_transform_matrix(const matrix_2d& m);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Append a new \tcode{path_data} object to the \tcode{path_data} stored by 
+	\tcode{*this}. The appended object's \tcode{path_data::type} is 
+	\tcode{path_data_type::change_matrix} and its \tcode{path_data::data} has 
+	\tcode{path_data::data::matrix} set to \tcode{m}.
+	
+	\pnum
+	\postconditions
+	The \tcode{vector<path_data>} returned by \tcode{get_data_ref} will change 
+	in the ways documented for \tcode{vector<T>::push_back(const T\&)}.
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::set_origin] {\tcode{path_factory::set_origin}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{set_origin}}%
+\indexlibrary{\idxcode{set_origin}!\idxcode{path_factory}}%
+\begin{itemdecl}
+void set_origin(const point& pt);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Append a new \tcode{path_data} object to the \tcode{path_data} stored by 
+	\tcode{*this}. The appended object's \tcode{path_data::type} is 
+	\tcode{path_data_type::change_origin} and its \tcode{path_data::data} has 
+	\tcode{path_data::data::origin} set to \tcode{pt}.
+	
+	\pnum
+	\postconditions
+	The \tcode{vector<path_data>} returned by \tcode{get_data_ref} will change 
+	in the ways documented for \tcode{vector<T>::push_back(const T\&)}.
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\rSec1 [\iotwod.pathfactory.observers] {\tcode{path_factory} observers}
+
+
+\rSec2 [\iotwod.pathfactory::get_transform_matrix] 
+{\tcode{path_factory::get_transform_matrix}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{get_transform_matrix}}%
+\indexlibrary{\idxcode{get_transform_matrix}!\idxcode{path_factory}}%
+\begin{itemdecl}
+matrix_2d get_transform_matrix() const;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	The value of \tcode{path_data::data::matrix} in the element nearest to the 
+	end of \tcode{get_data_ref()} with a \tcode{path_data::type} of 
+	\tcode{path_data_type::change_matrix} or, if no such element exists, a 
+	value equal to the return value of \tcode{matrix_2d::init_identity()}.
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::get_origin] {\tcode{path_factory::get_origin}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{get_origin}}%
+\indexlibrary{\idxcode{get_origin}!\idxcode{path_factory}}%
+\begin{itemdecl}
+point get_origin() const;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	The value of \tcode{path_data::data::origin} in the element nearest to the 
+	end of \tcode{get_data_ref()} with a \tcode{path_data::type} of 
+	\tcode{path_data_type::change_origin} or, if no such element exists, a 
+	value equal to the return value of \tcode{point\{0.0, 0.0\}}.
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::has_current_point] 
+{\tcode{path_factory::has_current_point}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{has_current_point}}%
+\indexlibrary{\idxcode{has_current_point}!\idxcode{path_factory}}%
+\begin{itemdecl}
+bool has_current_point() const;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	True if there is a current point, false if not.
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::get_current_point] 
+{\tcode{path_factory::get_current_point}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{get_current_point}}%
+\indexlibrary{\idxcode{get_current_point}!\idxcode{path_factory}}%
+\begin{itemdecl}
+point get_current_point() const;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	The value of the current point if \tcode{has_current_point() == true}, 
+	otherwise an undefined but valid value.
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::get_path] {\tcode{path_factory::get_path}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{get_path}}%
+\indexlibrary{\idxcode{get_path}!\idxcode{path_factory}}%
+\begin{itemdecl}
+path get_path() const;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{path(*this)}.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::get_path_extents] 
+{\tcode{path_factory::get_path_extents}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{get_path_extents}}%
+\indexlibrary{\idxcode{get_path_extents}!\idxcode{path_factory}}%
+\begin{itemdecl}
+rectangle get_path_extents() const;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	The smallest \tcode{rectangle} that can contain the points contained in the 
+	\tcode{path_data} of \tcode{*this}.
+	
+	\pnum
+	\remarks
+	When determining the return value of this function, each point should be 
+	transformed in the way described in \ref{\iotwod.surface.pathtransform}.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::get_data] {\tcode{path_factory::get_data}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{get_data}}%
+\indexlibrary{\idxcode{get_data}!\idxcode{path_factory}}%
+\begin{itemdecl}
+::std::vector<path_data> get_data() const;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	A copy of the \tcode{vector<path_data>} stored by \tcode{*this}.
+\end{itemdescr}
+
+\rSec2 [\iotwod.pathfactory::get_data_ref] {\tcode{path_factory::get_data_ref}}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{get_data_ref}}%
+\indexlibrary{\idxcode{get_data_ref}!\idxcode{path_factory}}%
+\begin{itemdecl}
+const ::std::vector<path_data>& get_data_ref() const;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	A const reference to the \tcode{vector<path_data>} stored by \tcode{*this}.
+\end{itemdescr}

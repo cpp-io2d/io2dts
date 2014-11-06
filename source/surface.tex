@@ -1,0 +1,929 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.surface] {Class \tcode{surface}}
+
+\rSec1 [\iotwod.surface.intro] {\tcode{surface} Description}
+
+\pnum
+\indexlibrary{\idxcode{surface}}%
+The \tcode{surface} class represents a surface on which graphics are rendered.
+
+\pnum
+A \tcode{surface} object is a stateful, move-only object.
+
+\pnum
+Rendering to a \tcode{surface} is accomplished by setting the appropriate state, often in the form of state objects such as \tcode{path} and \tcode{pattern}, and then calling one or more of the render functions to make the changes specified by the state to the surface resource managed by the \tcode{surface} object.
+
+\pnum
+A \tcode{surface} object is usually created by calling the \tcode{make_surface} \ref{\iotwod.surface.make_surface} function.
+
+\rSec1 [\iotwod.surface.synopsis] {\tcode{surface} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class surface {
+  public:
+    // See~\ref{\iotwod.req.native}
+    typedef @\impdef@ native_handle_type;
+    native_handle_type native_handle() const;
+
+    // tuple<dashes, offset>
+    typedef ::std::tuple<::std::vector<double>, double> dashes;
+
+    // \ref{\iotwod.surface.cons}, constructors, assignment operators, destructors:
+    surface() = delete;
+    surface(const surface&) = delete;
+    surface& operator=(const surface&) = delete;
+    surface(surface&& other);
+    surface& operator=(surface&& other);
+    surface(const surface& other, content content, int width, int height);
+    virtual ~surface();
+
+    // \ref{\iotwod.surface.modifiers.state}, state modifiers:
+    void finish();
+    void flush();
+    ::std::shared_ptr<device> get_device();
+    void mark_dirty();
+    void mark_dirty(const rectangle& rect);
+    void set_device_offset(const point& offset);
+    void write_to_png(const ::std::string& filename);
+    image_surface map_to_image();
+    image_surface map_to_image(const rectangle& extents);
+    void unmap_image(image_surface& image);
+    void save();
+    void restore();
+    void set_pattern();
+    void set_pattern(const pattern& source);
+    void set_antialias(antialias a);
+    void set_dashes();
+    void set_dashes(const dashes& d);
+    void set_fill_rule(fill_rule fr);
+    void set_line_cap(line_cap lc);
+    void set_line_join(line_join lj);
+    void set_line_width(double width);
+    void set_miter_limit(double limit);
+    void set_compositing_operator(compositing_operator co);
+    void clip();
+    void reset_clip();
+    void set_path();
+    void set_path(const path& p);
+
+    // \ref{\iotwod.surface.modifiers.render}, render modifiers:
+    void fill();
+    void fill(const surface& s);
+    void mask(const pattern& pttn);
+    void mask(const surface& surface);
+    void mask(const surface& surface, const point& origin);
+    void paint();
+    void paint(const surface& s);
+    void paint(double alpha);
+    void paint(const surface& s, double alpha);
+    void stroke();
+    void stroke(const surface& s);
+    void show_text(const ::std::string& utf8);
+    void show_glyphs(const ::std::vector<glyph>& glyphs);
+    void show_text_glyphs(const ::std::string& utf8,
+      const ::std::vector<glyph>& glyphs,
+      const ::std::vector<text_cluster>& clusters, 
+      bool clusterToGlyphsMapReverse = false);
+
+    // \ref{\iotwod.surface.modifiers.transform}, transformation modifiers:
+    void set_matrix(const matrix_2d& matrix);
+
+    // \ref{\iotwod.surface.modifiers.font}, font modifiers:
+    void select_font_face(const ::std::string& family, font_slant slant, 
+      font_weight weight);
+    void set_font_size(double size);
+    void set_font_matrix(const matrix_2d& matrix);
+    void set_font_options(const font_options& options);
+    void set_font_face(const font_face& font_face);
+    void set_scaled_font(const scaled_font& scaled_font);
+
+    // \ref{\iotwod.surface.observers.state}, state observers:
+    content get_content() const;
+    point get_device_offset() const;
+    bool has_surface_resource() const;
+    pattern get_pattern() const;
+    antialias get_antialias() const;
+    int get_dashes_count() const;
+    dashes get_dashes() const;
+    fill_rule get_fill_rule() const;
+    line_cap get_line_cap() const;
+    line_join get_line_join() const;
+    double get_line_width() const;
+    double get_miter_limit() const;
+    compositing_operator get_compositing_operator() const;
+    double get_tolerance() const;
+    rectangle get_clip_extents() const;
+    bool in_clip(const point& pt) const;
+    ::std::vector<rectangle> get_clip_rectangles() const;
+
+    // \ref{\iotwod.surface.observers.render}, render observers:
+    rectangle get_fill_extents() const;
+    bool in_fill(const point& pt) const;
+    rectangle get_stroke_extents() const;
+    bool in_stroke(const point& pt) const;
+    font_extents get_font_extents() const;
+    text_extents get_text_extents(const ::std::string& utf8) const;
+    text_extents get_glyph_extents(const ::std::vector<glyph>& glyphs) const;
+
+    // \ref{\iotwod.surface.observers.transform}, transformation observers:
+    matrix_2d get_matrix() const;
+    point user_to_device() const;
+    point user_to_device_distance() const;
+    point device_to_user() const;
+    point device_to_user_distance() const;
+
+    // \ref{\iotwod.surface.observers.font}, font observers:
+    matrix_2d get_font_matrix() const;
+    font_options get_font_options() const;
+    font_face get_font_face() const;
+    scaled_font get_scaled_font() const;
+  };
+  
+  // \ref{\iotwod.surface.nonmembers}, non-member functions:
+  surface make_surface(@\impdef@) @\impdef@;
+} } } } // namespaces std::experimental::io2d::v1
+\end{codeblock}
+
+\rSec1 [\iotwod.surface.cons] {\tcode{surface} constructors, assignment operators, and destructors}
+
+\indexlibrary{\idxcode{surface}!constructor}%
+\begin{itemdecl}
+surface(const surface& other, content content, int width, int height);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs a \tcode{surface} object. It shall, to the extent possible, have the same observable state as \tcode{other}. Its content shall be transparent black if it has an alpha channel or black if it does not.
+	
+	\pnum
+	\remarks
+	The \tcode{surface} object that is constructed takes its initial state from \tcode{other} to the extent possible, but is not observably connected to \tcode{other} such that changes to either surface, including destruction, do not affect the observable state of the other surface.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{surface}!destructor}%
+\begin{itemdecl}
+virtual ~surface();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Destroys an object of class \tcode{surface}.
+	
+	\pnum
+	\remarks
+	Does not throw any exceptions.
+\end{itemdescr}
+
+\rSec1 [\iotwod.surface.modifiers.state] {\tcode{surface} state modifiers}
+
+\rSec2 [\iotwod.surface::finish] {\tcode{surface::finish}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{finish}}%
+\indexlibrary{\idxcode{finish}!\idxcode{surface}}%
+\begin{itemdecl}
+void finish();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Releases all resources associated with the \tcode{surface}.
+	
+	\pnum
+	\remarks
+	Once this function has been called, the surface is considered finished. The only valid operations on a finished surface are destruction and calling \tcode{finish} again (which will return without doing anything since the surface is already finished). Any other operation on a finished surface or any attempt to use a finished surface as an argument to a function produces undefined behavior.
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::flush] {\tcode{surface::flush}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{flush}}%
+\indexlibrary{\idxcode{flush}!\idxcode{surface}}%
+\begin{itemdecl}
+void flush();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	The user will be able to use the implementation's underlying surface without introducing a race condition. This means that any pending surface operations will be executed, batched, or otherwise committed to the underlying technologies. Saved surface state, if any, shall also be restored before this function returns.
+	
+	\pnum
+	\remarks
+	This function exists primarily to allow the user to take control of the 
+	underlying surface using an implementation-provided native handle. The implementation's responsibility is to ensure that the user can safely use the underlying surface.
+	\enternote
+	This function flushes the native surface so that it can safely be rendered to or, if the underlying technology supports it, be used as a texture to be sampled from. It is not required to flush the device or context that is rendering to it.
+	\exitnote
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::get_device] {\tcode{surface::get_device}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{get_device}}%
+\indexlibrary{\idxcode{get_device}!\idxcode{surface}}%
+\begin{itemdecl}
+::std::shared_ptr<device> get_device();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	A shared pointer to the \tcode{device} object for this \tcode{surface}.	
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::mark_dirty] {\tcode{surface::mark_dirty}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{mark_dirty}}%
+\indexlibrary{\idxcode{mark_dirty}!\idxcode{surface}}%
+\begin{itemdecl}
+void mark_dirty();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Informs the implementation that external changes were made to the underlying surface.
+	
+	\pnum
+	\remarks
+	A program shall call this function first when using the \tcode{surface} object after external changes are made to its underlying surface; no diagnostic is required.
+\end{itemdescr}
+
+\begin{itemdecl}
+void mark_dirty(const rectangle& rect);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Informs the implementation that external changes were made to the underlying surface within the area denoted by \tcode{rect}.
+	
+	\pnum
+	\remarks
+	This function shall be at least as efficient as \tcode{mark_dirty()}. A program shall call this function first when using the \tcode{surface} object after external changes are made to its underlying surface; no diagnostic is required.
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::set_device_offset] {\tcode{surface::set_device_offset}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{set_device_offset}}%
+\indexlibrary{\idxcode{set_device_offset}!\idxcode{surface}}%
+\begin{itemdecl}
+void set_device_offset(const point& offset);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Stores the value of \tcode{offset}. The value will be added to all coordinates after they have been transformed by the \tcode{surface} object's transformation matrix.
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::write_to_file] {\tcode{surface::write_to_file}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{write_to_file}}%
+\indexlibrary{\idxcode{write_to_file}!\idxcode{surface}}%
+\begin{itemdecl}
+void write_to_file(const ::std::string& filename);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	\impldef{\tcode{surface}!\tcode{write_to_file}}.
+	
+	\pnum
+	\realnotes
+	This functionality is expected to change and evolve to make use of the Filesystem TS in the future. For now implementations should write the surface's data to an image file.
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::map_to_image] {\tcode{surface::map_to_image}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{map_to_image}}%
+\indexlibrary{\idxcode{map_to_image}!\idxcode{surface}}%
+\begin{itemdecl}
+image_surface map_to_image();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Maps \tcode{*this} to a newly created \tcode{image_surface} which allows direct manipulation of the underlying surface. Whether changes are committed to the underlying surface immediately or only when the surface is unmapped is \impldef{\tcode{surface}!\tcode{map_to_image}}. Implementations may specify different commit behaviors for \tcode{surface::map_to_image()} and \tcode{surface::map_to_image(const rectangle\&)}.
+	
+	\pnum
+	\returns
+	An \tcode{image_surface} which, when changed, will change the underlying surface of \tcode{*this}.
+	\enternote
+	Use of the returned \tcode{image_surface} is very limited. The only valid operations that may be performed with it are move construction, move assignment, destruction, \tcode{image_surface::set_data}, \tcode{image_surface::get_data}, \tcode{image_surface::get_format}, \tcode{image_surface::get_width}, \tcode{image_surface::get_height}, \tcode{image_surface::get_stride}, and passing it as an argument when calling \tcode{surface::unmap_image} on the \tcode{surface} object that created it. All other operations produce undefined behavior.
+	\exitnote
+	
+	\pnum
+	\remarks
+	A \tcode{surface} object shall only be mapped once at any time; no diagnostic is required. A \tcode{surface} object that is mapped shall not be used until it is unmapped; no diagnostic is required. A mapped \tcode{surface} object can be unmapped by either destroying the \tcode{image_surface} object returned by this function or by passing the \tcode{image_surface} object returned by this function to the \tcode{unmap_image} member function of the \tcode{surface} object that created it.
+\end{itemdescr}
+
+\begin{itemdecl}
+image_surface map_to_image(const rectangle& extents);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Creates an \tcode{image_surface} that allows direct manipulation of the underlying surface. The \tcode{image_surface} will be scoped to the area of the underlying surface defined by \tcode{extents}. Whether changes are committed to the underlying surface immediately or only when the surface is unmapped is \impldef{\tcode{surface}!\tcode{map_to_image}}. Implementations may specify different commit behaviors for \tcode{surface::map_to_image()} and \tcode{surface::map_to_image(const rectangle\&)}.
+	
+	\pnum
+	\returns
+	An \tcode{image_surface} which, when changed, will change the underlying surface of \tcode{*this}. 
+	\enternote
+	Use of the returned \tcode{image_surface} is very limited. The only valid operations that may be performed with it are move construction, move assignment, destruction, \tcode{image_surface::set_data}, \tcode{image_surface::get_data}, \tcode{image_surface::get_format}, \tcode{image_surface::get_width}, \tcode{image_surface::get_height}, \tcode{image_surface::get_stride}, and passing it as an argument when calling \tcode{surface::unmap_image} on the \tcode{surface} object that created it. All other operations produce undefined behavior.
+	\exitnote
+	
+	\pnum
+	\remarks
+	A \tcode{surface} object shall only be mapped once at any time; no diagnostic is required. A \tcode{surface} object that is mapped shall not be used until it is unmapped; no diagnostic is required. A mapped \tcode{surface} object can be unmapped by either destroying the \tcode{image_surface} object returned by this function or by passing the \tcode{image_surface} object returned by this function to the \tcode{unmap_image} member function of the \tcode{surface} object that created it. 
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::unmap_image] {\tcode{surface::unmap_image}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{unmap_image}}%
+\indexlibrary{\idxcode{unmap_image}!\idxcode{surface}}%
+\begin{itemdecl}
+void unmap_image(image_surface& image);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\requires
+	\tcode{image} must have been created by calling \tcode{surface::map_to_image} on \tcode{*this}.
+	
+	\pnum
+	\effects
+	Unmaps \tcode{*this} and commits any uncommitted changes that were made to the underlying surface using \tcode{image}.
+	
+	\pnum
+	\throws
+	\tcode{::std::invalid_argument} if \tcode{image} was not created by calling \tcode{surface::map_to_image} on \tcode{*this}.
+	
+	\pnum
+	\remarks
+	Except in move construction, move assignment, and destruction, any use of \tcode{image} after it has been passed as an argument to this function produces undefined behavior.
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::save] {\tcode{surface::save}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{save}}%
+\indexlibrary{\idxcode{save}!\idxcode{surface}}%
+\begin{itemdecl}
+void save();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Saves the current observable state of \tcode{*this} to a newly created entry on the internal stack of saved states.
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::restore] {\tcode{surface::restore}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{restore}}%
+\indexlibrary{\idxcode{restore}!\idxcode{surface}}%
+\begin{itemdecl}
+void restore();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\requires
+	A matching call to \tcode{surface::save} on \tcode{*this}.
+	
+	\pnum
+	\effects
+	Restores the observable state of \tcode{*this} from the most recent entry on the internal stack of saved states and removes that entry from the stack.
+	
+	\pnum
+	\throws
+	\tcode{::std::system_error} with an error category of \tcode{io2d_error_category} and an error condition of \tcode{io2d_error::invalid_restore} if there are no entries on the stack of saved states when this function is called.
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::set_pattern] {\tcode{surface::set_pattern}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{set_pattern}}%
+\indexlibrary{\idxcode{set_pattern}!\idxcode{surface}}%
+\begin{itemdecl}
+void set_pattern();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Unsets the current \tcode{pattern} object and sets a default \tcode{pattern} object.
+	\enternote
+	The default \tcode{pattern} object is always an opaque black solid color 
+	pattern, equivalent to the pattern created by 
+	\tcode{solid_color_pattern_factory(rgba_color::black).get_pattern()}. It is 
+	not required to be the same object throughout the lifetime of the program.
+	\exitnote
+	
+	\pnum
+	\postconditions
+	\tcode{get_pattern()} returns a default \tcode{pattern} object.
+\end{itemdescr}
+
+\begin{itemdecl}
+void set_pattern(const pattern& source);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Unsets the current \tcode{pattern} object and sets \tcode{source} as the current \tcode{pattern} object.
+	
+	\pnum
+	\postconditions
+	\tcode{get_pattern()} returns a \tcode{pattern} object with the same observable state as \tcode{source} object.
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::set_antialias] {\tcode{surface::set_antialias}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{set_antialias}}%
+\indexlibrary{\idxcode{set_antialias}!\idxcode{surface}}%
+\begin{itemdecl}
+void set_antialias(antialias a);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Sets the current \tcode{antialias} state to \tcode{a}.
+	
+	\pnum
+	\postconditions
+	\tcode{get_antialias()} returns the value of \tcode{a}.
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::] {\tcode{surface::}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{}}%
+\indexlibrary{\idxcode{}!\idxcode{surface}}%
+\begin{itemdecl}
+void set_dashes();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Sets the current dash pattern to be a solid line.
+	
+	\pnum
+	\postconditions
+	\tcode{get_dashes()} will return the equivalent of \tcode{::std::make_tuple::std::<vector<double>, double>(\{ \}, 0.0)}. \tcode{get_dashes_count()} will return \tcode{0}.
+\end{itemdescr}
+
+\begin{itemdecl}
+void set_dashes(const dashes& d);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Sets the current dash pattern to the value of \tcode{d}.
+	
+	\pnum
+	\postconditions
+	\tcode{get_dashes()} will return the equivalent of \tcode{d}. \tcode{get_dashes_count()} will return the value of \tcode{static_cast<int>(::std::get<0>(d).size())}.
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::set_fill_rule] {\tcode{surface::set_fill_rule}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{set_fill_rule}}%
+\indexlibrary{\idxcode{set_fill_rule}!\idxcode{surface}}%
+\begin{itemdecl}
+void set_fill_rule(fill_rule fr);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Sets the current fill rule to the value of \tcode{fr}.
+	
+	\pnum
+	\postconditions
+	\tcode{get_fill_rule()} will return the value of \tcode{fr}.
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::set_line_cap] {\tcode{surface::set_line_cap}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{set_line_cap}}%
+\indexlibrary{\idxcode{set_line_cap}!\idxcode{surface}}%
+\begin{itemdecl}
+void set_line_cap(line_cap lc);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Sets the current line cap to the value of \tcode{lc}.
+		
+	\pnum
+	\postconditions
+	\tcode{get_line_cap()} will return the value of \tcode{lc}.
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::set_line_join] {\tcode{surface::set_line_join}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{set_line_join}}%
+\indexlibrary{\idxcode{set_line_join}!\idxcode{surface}}%
+\begin{itemdecl}
+void set_line_join(line_join lj);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Sets the current line join to the value of \tcode{lj}.
+	
+	\pnum
+	\postconditions
+	\tcode{get_line_join()} will return the value of \tcode{lj}.
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::set_line_width] {\tcode{surface::set_line_width}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{set_line_width}}%
+\indexlibrary{\idxcode{set_line_width}!\idxcode{surface}}%
+\begin{itemdecl}
+void set_line_width(double width);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Sets the current line width to \tcode{::std::max(width, 0.0)}.
+	
+	\pnum
+	\postconditions
+	\tcode{get_line_width()} will return \tcode{::std::max(width, 0.0)}.
+	
+	\pnum
+	\remarks
+	Line width is in pre-transformation units and is used with the \tcode{surface::stroke} functions. It postulates a round brush with a diameter of the current line width. The shape and size of the stroke when rendered depends on other state data. See \tcode{surface::stroke}\ref{\iotwod.surface::stroke} for more information.
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::set_miter_limit] {\tcode{surface::set_miter_limit}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{set_miter_limit}}%
+\indexlibrary{\idxcode{set_miter_limit}!\idxcode{surface}}%
+\begin{itemdecl}
+void set_miter_limit(double limit);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Sets the current miter limit to the value of \tcode{::std::max(limit, 1.0)}. This limit only applies when the current line join is set to \tcode{line_join::miter_or_bevel}.
+	
+	\pnum
+	\postconditions
+	\tcode{get_miter_limit} will return \tcode{::std::max(limit, 1.0)}.
+	
+	\pnum
+	\remarks
+	The miter limit works as follow. The length of the miter is divided by the width of the line. If the resulting value is greater than \tcode{limit}, the line join will be beveled, otherwise it will be mitered.
+	\enternote
+	When the join angle is less than 0.0005 radians, it is 
+	\impldef{\tcode{surface}!\tcode{set_miter_limit}} whether a mitered join or 
+	a beveled joins will be produced. Specifically, when the join angle is less than 0.0005 radians, implementations may switch to beveled rendering instead of mitered rendering at any arbitrary \impdef angle value, provided that the value is less than 0.0005 radians and that all joins with angles below the \impdef angle value are rendered as beveled.
+	\exitnote
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::set_compositing_operator] {\tcode{surface::set_compositing_operator}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{set_compositing_operator}}%
+\indexlibrary{\idxcode{set_compositing_operator}!\idxcode{surface}}%
+\begin{itemdecl}
+void set_compositing_operator(compositing_operator co);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Sets the current compositing operator to the value of \tcode{co}.
+	
+	\pnum
+	\postconditions
+	\tcode{get_compositing_operator} will return the value of \tcode{co}.
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::clip] {\tcode{surface::clip}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{clip}}%
+\indexlibrary{\idxcode{clip}!\idxcode{surface}}%
+\begin{itemdecl}
+void clip();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Sets the current clip area to be the intersection of the current clip area and the current path where the current path's area is determined in the same way as if the current path were filled according to the current fill rule.
+	
+	\pnum
+	\realnotes
+	The clip area never increases as a result of this function.
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::reset_clip] {\tcode{surface::reset_clip}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{reset_clip}}%
+\indexlibrary{\idxcode{reset_clip}!\idxcode{surface}}%
+\begin{itemdecl}
+void reset_clip();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Resets the current clip area to be an unbounded, infinitely large area. All points are within the resulting clip area.
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface::set_path] {\tcode{surface::set_path}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{set_path}}%
+\indexlibrary{\idxcode{set_path}!\idxcode{surface}}%
+\begin{itemdecl}
+void set_path();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Set's the current \tcode{path} to be an empty path.
+	
+	\pnum
+	\realnotes
+	The empty \tcode{path} object is not supplied by the user. The implementation is expected to provide an empty \tcode{path} object. Since a \tcode{path} object is immutable, an implementation should create an empty path object in advance for maximum efficiency.
+\end{itemdescr}
+\begin{itemdecl}
+void set_path(const path& p);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Set's the current \tcode{path} to \tcode{p}.
+	
+	\pnum
+	\remarks
+	Processing the path data so that it is properly transformed can be done at the time it is first set as a path on a \tcode{surface} object or any time before that. The untransformed \tcode{vector<path_data>} must be retained to ensure that a path can be properly recreated at any time. The steps for converting an untransformed \tcode{vector<path_data>} to transformed path data are found at \ref{\iotwod.surface.pathtransform}.
+\end{itemdescr}
+
+\rSec2 [\iotwod.surface.pathtransform] {\tcode{vector<path_data>} transformation steps}
+
+\pnum
+	\enternote
+	The ``as if'' rule applies here. For purposes of exposition, it is assumed that there is a native geometry object which supports creating a line from its current point to a supplied point and creating a cubic B\'{e}zier curve using its current point as the start point (with the control points and end point supplied by the user), a close path instruction, and which tracks its current point and its last move to point. In reality the native geometry object may provide more (or less) capabilities. It is possible to render with as little native support as the ability to stroke a line and fill a rectangular area.
+	\exitnote
+
+\pnum
+	\begin{enumerate}
+	\item
+	Create a \tcode{matrix_2d m} and initialize it to \tcode{matrix_2d::init_identity();}.
+	
+	\item
+	Create a \tcode{point origin} and initialize it to \tcode{\{ 0.0, 0.0 \}}.
+	
+	\item
+	Create a \tcode{point currentPoint}.
+	
+	\item
+	Create a \tcode{bool hasCurrentPoint} and initialize it to \tcode{false}.
+	
+	\item
+	Create a \tcode{point lastMovePoint}.
+	
+	\item
+	Create a \tcode{bool hasLastMovePoint} and initialize it to \tcode{false}.
+	
+	\item
+	Create the following variable: \tcode{const auto\& pathData = p.get_data_ref();}.
+	
+	\item
+	Create the following loop: \tcode{for (const auto\& item : pathData) \{ \}}
+	
+	\item
+	Within the body of the loop, evaluate \tcode{item.type}:
+	
+	\begin{enumerate}
+	\item
+	If \tcode{item.type} is \tcode{path_data_type::move_to} perform the following actions. Set \tcode{currentPoint} equal to the value of \tcode{item.data.move}. Set \tcode{hasCurrentPoint} equal to \tcode{true}. Set the native geometry's current point equal to the value of \tcode{m.transform_point(item.data.move - origin) + origin}. Set \tcode{lastMovePoint} equal to the value of \tcode{item.data.move}. Set \tcode{hasLastMovePoint} equal to \tcode{true}. Set the native geometry's last move to point equal to the value of \tcode{m.transform_point(item.data.move - origin) + origin}.
+	
+	\item
+	If \tcode{item.type} is \tcode{path_data_type::line_to} perform the following actions. Set \tcode{currentPoint} equal to the value of \tcode{item.data.line}. If \tcode{hasCurrentPoint} is true, instruct the native geometry to create a line to \tcode{m.transform_point(item.data.line - origin) + origin}. Regardless, set \tcode{hasCurrentPoint} to true and set the native geometry's current point equal to \tcode{m.transform_point(item.data.line - origin) + origin}.
+	
+	\item
+	If \tcode{item.type} is \tcode{path_data_type::curve_to} perform the following actions. If \tcode{hasCurrentPoint} is equal to \tcode{false}, set the native geometry's current point equal to \tcode{m.transform_point(item.data.curve.pt1 - origin) + origin}. Regardless, instruct the native geometry to create a cubic B\'{e}zier curve using \tcode{m.transform_point(item.data.curve.pt1 - origin) + origin} as the first control point, \tcode{m.transform_point(item.data.curve.pt2 - origin) + origin} as the second control point, and \tcode{m.transform_point(item.data.curve.pt3 - origin) + origin} as the end point. Set the native geometry's current point to \tcode{m.transform_point(item.data.curve.pt3 - origin) + origin}. Set \tcode{currentPoint} equal to the value of \tcode{item.data.curve.pt3 + currentPoint}. Set \tcode{hasCurrentPoint} to \tcode{true}.
+	
+	\item
+	If \tcode{item.type} is \tcode{path_data_type::new_sub_path} perform the following actions. Set \tcode{hasCurrentPoint} to \tcode{false}. Set \tcode{hasMoveToPoint} to false.
+	
+	\item
+	If \tcode{item.type} is \tcode{path_data_type::close_path} perform the following actions.
+	\begin{itemize}
+		\item
+		If \tcode{hasCurrentPoint} is \tcode{true} when this \tcode{item.type} is encountered, instruct the native geometry to create a line connecting its current point to its last move to point, with the connection at the last move to point being a join instead of being two separate segment end points. Set \tcode{currentPoint} to \tcode{lastMoveToPoint}. Instruct the native geometry to set its current point to be equal to its last move to point. 
+	
+		\item
+		If \tcode{hasCurrentPoint} is \tcode{false} when this \tcode{item.type} is encountered, do nothing.
+	\end{itemize}
+	
+	\item
+	If \tcode{item.type} is \tcode{path_data_type::rel_move_to} perform the following actions. Set \tcode{currentPoint} equal to \tcode{currentPoint} plus the value of \tcode{item.data.move}. Set \tcode{hasCurrentPoint} equal to \tcode{true}. Set the native geometry's current point equal to the value of \tcode{m.transform_point(currentPoint - origin) + origin}. Set \tcode{lastMovePoint} equal to the value of \tcode{currentPoint}. Set \tcode{hasLastMovePoint} equal to \tcode{true}. Set the native geometry's last move to point equal to the value of \tcode{m.transform_point(currentPoint - origin) + origin}.
+
+	\item
+	If \tcode{item.type} is \tcode{path_data_type::rel_line_to} perform the following actions. Set \tcode{currentPoint} equal to the value of \tcode{item.data.line + currentPoint}. If \tcode{hasCurrentPoint} is true, instruct the native geometry to create a line to \tcode{m.transform_point(currentPoint - origin) + origin}. Regardless, set \tcode{hasCurrentPoint} to true and set the native geometry's current point equal to \tcode{m.transform_point(currentPoint - origin) + origin}.
+	
+	\item
+	If \tcode{item.type} is \tcode{path_data_type::rel_curve_to} perform the following actions. If \tcode{hasCurrentPoint} is equal to \tcode{false}, set the native geometry's current point equal to \tcode{m.transform_point((item.data.curve.pt1 + currentPoint) - origin) + origin}. Regardless, instruct the native geometry to create a cubic B\'{e}zier curve using \tcode{m.transform_point((item.data.curve.pt1 + currentPoint) - origin) + origin} as the first control point, \tcode{m.transform_point((item.data.curve.pt2 + currentPoint) - origin) + origin} as the second control point, and \tcode{m.transform_point((item.data.curve.pt3 + currentPoint) - origin) + origin} as the end point. Set the native geometry's current point to \tcode{m.transform_point((item.data.curve.pt3 + currentPoint) - origin) + origin}. Set \tcode{hasCurrentPoint} to true. Set \tcode{currentPoint} equal to the value of \tcode{item.data.curve.pt3 + currentPoint}. Set \tcode{hasCurrentPoint} to \tcode{true}.
+	
+	
+	\item
+	If \tcode{item.type} is \tcode{path_data_type::arc} perform the following actions. Convert the arc into one or more cubic B\'ezier curves that, when rendered in sequence, approximate the arc as closely as reasonably possible.
+	\begin{itemize}
+		\item
+		If \tcode{hasCurrentPoint} is \tcode{true}, create a line from the current point to the starting point of the first curve in the manner prescribed when \tcode{item.type} is \tcode{path_data_type::line_to}.
+		\item
+		Otherwise move to the starting point of the first curve in the manner prescribed when \tcode{item.type} is \tcode{path_data_type::move_to}.
+	\end{itemize}
+	Process each curve in the manner prescribed when \tcode{item.type} is \tcode{path_data_type::curve_to}. \enternote Done properly, this results in an arc that is properly transformed with due consideration of the current origin such that everything from circles to rotated elliptical arcs are possible. It also leaves the current point and the last move to point set to their appropriate values. \exitnote
+	
+	\item
+	If \tcode{item.type} is \tcode{path_data_type::arc_negative} perform the following actions. Convert the arc into one or more cubic B\'ezier curves that, when rendered in sequence, approximate the arc as closely as reasonably possible.
+	\begin{itemize}
+		\item
+		If \tcode{hasCurrentPoint} is \tcode{true}, create a line from the current point to the starting point of the first curve in the manner prescribed when \tcode{item.type} is \tcode{path_data_type::line_to}.
+		
+		\item
+		Otherwise move to the starting point of the first curve in the manner prescribed when \tcode{item.type} is \tcode{path_data_type::move_to}.
+	\end{itemize}
+	Process each curve in the manner prescribed when \tcode{item.type} is \tcode{path_data_type::curve_to}. \enternote Done properly, this results in an arc that is properly transformed with due consideration of the current origin such that everything from circles to rotated elliptical arcs are possible. It also leaves the current point and the last move to point set to their appropriate values. \exitnote
+	
+	\item
+	If \tcode{item.type} is \tcode{path_data_type::change_matrix} perform the following actions. Set \tcode{m} equal to the value of \tcode{item.data.matrix}.
+	
+	\item
+	If \tcode{item.type} is \tcode{path_data_type::change_origin} perform the following actions. Set \tcode{origin} equal to the value of \tcode{item.data.origin}.
+	
+	\item
+	If \tcode{item.type} is any other value, throw a \tcode{system_error} with error condition \tcode{io2d_error::invalid_path_data}.
+	\end{enumerate}
+	\end{enumerate}
+
+\rSec1 [\iotwod.surface.modifiers.render] {\tcode{surface} render modifiers}
+
+\rSec2 [\iotwod.surface::stroke] {\tcode{surface::stroke}}
+
+\indexlibrary{\idxcode{surface}!\idxcode{stroke}}%
+\indexlibrary{\idxcode{stroke}!\idxcode{surface}}%
+\begin{itemdecl}
+void stroke();
+void stroke(const surface& s);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	...
+	
+	\pnum
+	\postconditions
+	...
+	
+	\pnum
+	\complexity
+	...
+	
+\end{itemdescr}
+
+\rSec1 [\iotwod.surface.modifiers.transform] {\tcode{surface} transformation modifiers}
+
+%\rSec2 [\iotwod.::] {\tcode{::}}
+%
+%\indexlibrary{\idxcode{}!\idxcode{}}%
+%\indexlibrary{\idxcode{}!\idxcode{}}%
+%\begin{itemdecl}
+%\end{itemdecl}
+%\begin{itemdescr}
+%	\pnum
+%	\effects
+%	
+%	\pnum
+%	\postconditions
+%	
+%	\pnum
+%	\complexity
+%\end{itemdescr}
+
+\rSec1 [\iotwod.surface.modifiers.font] {\tcode{surface} font modifiers}
+
+%\rSec2 [\iotwod.::] {\tcode{::}}
+%
+%\indexlibrary{\idxcode{}!\idxcode{}}%
+%\indexlibrary{\idxcode{}!\idxcode{}}%
+%\begin{itemdecl}
+%\end{itemdecl}
+%\begin{itemdescr}
+%	\pnum
+%	\effects
+%	
+%	\pnum
+%	\postconditions
+%	
+%	\pnum
+%	\complexity
+%\end{itemdescr}
+
+\rSec1 [\iotwod.surface.observers.state] {\tcode{surface} state observers}
+
+%\rSec2 [\iotwod.::] {\tcode{::}}
+%
+%\indexlibrary{\idxcode{}!\idxcode{}}%
+%\indexlibrary{\idxcode{}!\idxcode{}}%
+%\begin{itemdecl}
+%\end{itemdecl}
+%\begin{itemdescr}
+%	\pnum
+%	\effects
+%	
+%	\pnum
+%	\postconditions
+%	
+%	\pnum
+%	\complexity
+%\end{itemdescr}
+
+\rSec1 [\iotwod.surface.observers.render] {\tcode{surface} render observers}
+
+%\rSec2 [\iotwod.::] {\tcode{::}}
+%
+%\indexlibrary{\idxcode{}!\idxcode{}}%
+%\indexlibrary{\idxcode{}!\idxcode{}}%
+%\begin{itemdecl}
+%\end{itemdecl}
+%\begin{itemdescr}
+%	\pnum
+%	\effects
+%	
+%	\pnum
+%	\postconditions
+%	
+%	\pnum
+%	\complexity
+%\end{itemdescr}
+
+\rSec1 [\iotwod.surface.observers.transform] {\tcode{surface} transformation observers}
+
+%\rSec2 [\iotwod.::] {\tcode{::}}
+%
+%\indexlibrary{\idxcode{}!\idxcode{}}%
+%\indexlibrary{\idxcode{}!\idxcode{}}%
+%\begin{itemdecl}
+%\end{itemdecl}
+%\begin{itemdescr}
+%	\pnum
+%	\effects
+%	
+%	\pnum
+%	\postconditions
+%	
+%	\pnum
+%	\complexity
+%\end{itemdescr}
+
+\rSec1 [\iotwod.surface.observers.font] {\tcode{surface} font observers}
+
+%\rSec2 [\iotwod.::] {\tcode{::}}
+%
+%\indexlibrary{\idxcode{}!\idxcode{}}%
+%\indexlibrary{\idxcode{}!\idxcode{}}%
+%\begin{itemdecl}
+%\end{itemdecl}
+%\begin{itemdescr}
+%	\pnum
+%	\effects
+%	
+%	\pnum
+%	\postconditions
+%	
+%	\pnum
+%	\complexity
+%\end{itemdescr}
+
+\rSec1 [\iotwod.surface.nonmembers] {\tcode{surface} non-member functions}
+
+\rSec2 [\iotwod.surface.make_surface] {\tcode{make_surface}}
+
+\indexlibrary{\idxcode{make_surface}}%
+\begin{itemdecl}
+surface make_surface(@\impdef@) @\impdef@;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	A \tcode{surface} object. The default initial state of the returned \tcode{surface} object is listed in Table~\ref{tab:\iotwod.surface.make_surface.definitstate}.
+	\enternote
+	Implementations may return a \tcode{surface} object with a different initial state. See the Remarks section below.
+	\exitnote
+	
+\begin{libreqtab2}
+ {\tcode{make_surface} Default Initial State Values}
+ {tab:\iotwod.surface.make_surface.definitstate}
+ \\ \topline
+ \lhdr{Observer}
+ & \rhdr{Return Value}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Observer}
+ & \rhdr{Return Value}
+ \\ \capsep
+ \endhead
+ \tcode{a}
+ & \tcode{b}
+ \\
+\end{libreqtab2}
+
+	\pnum
+	\remarks
+	The name, return type, and default initial values for the observable states of the returned \tcode{surface} object are the only semantic elements specified for \tcode{make_surface}. The default initial values for the observable state of the returned \tcode{surface} object are given in Table~\ref{tab:\iotwod.surface.make_surface.definitstate}. Implementations are free to provide different initial values provided that the differences are documented. 
+\end{itemdescr}

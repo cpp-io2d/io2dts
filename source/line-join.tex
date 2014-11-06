@@ -1,0 +1,64 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.line.join] {Enum class \tcode{line_join}}
+
+\rSec1 [\iotwod.line.join.summary] {\tcode{line_join} Summary}
+
+\pnum
+The \tcode{line_join} enum class specifies how the junction of two line 
+segments should be rendered when a \tcode{path} is stroked.
+See Table~\ref{tab:\iotwod.line.join.meanings} for the meaning of each
+\tcode{} enumerator.
+
+\rSec1 [\iotwod.line.join.synopsis] {\tcode{line_join} Synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace drawing { inline namespace 
+v1 {
+  enum class line_join {
+    miter,
+    round,
+    bevel,
+    miter_or_bevel
+  };
+} } } } // namespaces std::experimental::graphics::v1
+\end{codeblock}
+
+\rSec1 [\iotwod.line.join.enumerators] {\tcode{line_join} Enumerators}
+\begin{libreqtab2}
+ {\tcode{line_join} enumerator meanings}
+ {tab:\iotwod.line.join.meanings}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endhead
+ \tcode{miter}
+ & Joins will be angular.
+ \enternote
+ When the join angle is less than 0.0005 radians, it is 
+ \impldef{line_join!miter} whether this value will produce mitered or 
+ beveled joins. Specifically, when this value is set implementations may switch 
+ to beveled rendering instead of mitered rendering at any arbitrary \impdef angle value, provided that the value is less than 0.0005 radians and that all joins with angles below the \impdef angle value are rendered as beveled.
+ \exitnote
+ \\
+ \tcode{round}
+ & Joins will be rounded, with the center of the circle being the join point.
+ \\
+ \tcode{bevel}
+ & Joins will be beveled, with the join cut off at half the line width from the 
+ join point.
+ \enternote
+ Implementations may vary the cut off distance by an amount that is less than 
+ one pixel at each join for aesthetic or technical reasons.
+ \exitnote
+ \\
+ \tcode{miter_or_bevel}
+ & Joins will be angular or beveled, depending on the current miter limit.
+ \\
+\end{libreqtab2}

@@ -1,0 +1,295 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.point] {Struct \tcode{point}}
+
+\rSec1 [\iotwod.point.intro] {\tcode{point} Description}
+
+\pnum
+\indexlibrary{\idxcode{point}}%
+The \tcode{point} struct represents a point in coordinate space.
+
+\rSec1 [\iotwod.point.synopsis] {\tcode{point} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  struct point {
+    double x;
+    double y;
+  };
+  
+  // \ref{\iotwod.point.nonmembers}, point non-member functions:
+  point operator+(const point& lhs);
+  point operator+(const point& lhs, const point& rhs);
+  point operator+(const point& lhs, double rhs);
+  point& operator+=(point& lhs, const point& rhs);
+  point& operator+=(point& lhs, double rhs);
+  point operator-(const point& lhs);
+  point operator-(const point& lhs, const point& rhs);
+  point operator-(const point& lhs, double rhs);
+  point& operator-=(point& lhs, const point& rhs);
+  point& operator-=(point& lhs, double rhs);
+  point operator*(const point& lhs, const point& rhs);
+  point operator*(const point& lhs, double rhs);
+  point& operator*=(point& lhs, const point& rhs);
+  point& operator*=(point& lhs, double rhs);
+  point operator/(const point& lhs, const point& rhs);
+  point operator/(const point& lhs, double rhs);
+  point& operator/=(point& lhs, const point& rhs);
+  point& operator/=(point& lhs, double rhs);
+  bool operator==(const point& lhs, const point& rhs);
+  bool operator!=(const point& lhs, const point& rhs);
+} } } } // namespaces std::experimental::io2d::v1
+\end{codeblock}
+
+\rSec1 [\iotwod.point.nonmembers] {\tcode{point} non-member functions}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator+}}%
+\indexlibrary{\idxcode{operator+}!\idxcode{point}}%
+\begin{itemdecl}
+point operator+(const point& lhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{point(lhs)}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator+}}%
+\indexlibrary{\idxcode{operator+}!\idxcode{point}}%
+\begin{itemdecl}
+point operator+(const point& lhs, const point& rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{point\{ lhs.x + rhs.x, lhs.y + rhs.y \}}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator+}}%
+\indexlibrary{\idxcode{operator+}!\idxcode{point}}%
+\begin{itemdecl}
+point operator+(const point& lhs, double rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{point\{ lhs.x + rhs, lhs.y + rhs \}}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator+=}}%
+\indexlibrary{\idxcode{operator+=}!\idxcode{point}}%
+\begin{itemdecl}
+point& operator+=(point& lhs, const point& rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	\tcode{lhs = lhs + rhs}
+
+	\pnum
+	\returns
+	\tcode{lhs}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator+=}}%
+\indexlibrary{\idxcode{operator+=}!\idxcode{point}}%
+\begin{itemdecl}
+point& operator+=(point& lhs, double rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	\tcode{lhs = lhs + rhs}
+
+	\pnum
+	\returns
+	\tcode{lhs}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator-}}%
+\indexlibrary{\idxcode{operator-}!\idxcode{point}}%
+\begin{itemdecl}
+point operator-(const point& lhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{point\{ -lhs.x, -lhs.y \}}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator-}}%
+\indexlibrary{\idxcode{operator-}!\idxcode{point}}%
+\begin{itemdecl}
+point operator-(const point& lhs, const point& rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{point\{ lhs.x - rhs.x, lhs.y - rhs.y \}}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator-}}%
+\indexlibrary{\idxcode{operator-}!\idxcode{point}}%
+\begin{itemdecl}
+point operator-(const point& lhs, double rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{point\{ lhs.x - rhs, lhs.y - rhs \}}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator-=}}%
+\indexlibrary{\idxcode{operator-=}!\idxcode{point}}%
+\begin{itemdecl}
+point& operator-=(point& lhs, const point& rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	\tcode{lhs = lhs - rhs}
+
+	\pnum
+	\returns
+	\tcode{lhs}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator-=}}%
+\indexlibrary{\idxcode{operator-=}!\idxcode{point}}%
+\begin{itemdecl}
+point& operator-=(point& lhs, double rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	\tcode{lhs = lhs - rhs}
+
+	\pnum
+	\returns
+	\tcode{lhs}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator*}}%
+\indexlibrary{\idxcode{operator*}!\idxcode{point}}%
+\begin{itemdecl}
+point operator*(const point& lhs, const point& rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{point\{ lhs.x * rhs.x, lhs.y * rhs.y \}}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator*}}%
+\indexlibrary{\idxcode{operator*}!\idxcode{point}}%
+\begin{itemdecl}
+point operator*(const point& lhs, double rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{point\{ lhs.x * rhs, lhs.y * rhs \}}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator*=}}%
+\indexlibrary{\idxcode{operator*=}!\idxcode{point}}%
+\begin{itemdecl}
+point& operator*=(point& lhs, const point& rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	\tcode{lhs = lhs * rhs}
+
+	\pnum
+	\returns
+	\tcode{lhs}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator*=}}%
+\indexlibrary{\idxcode{operator*=}!\idxcode{point}}%
+\begin{itemdecl}
+point& operator*=(point& lhs, double rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	\tcode{lhs = lhs * rhs}
+
+	\pnum
+	\returns
+	\tcode{lhs}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator/}}%
+\indexlibrary{\idxcode{operator/}!\idxcode{point}}%
+\begin{itemdecl}
+point operator/(const point& lhs, const point& rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{point\{ lhs.x / rhs.x, lhs.y / rhs.y \}}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator/}}%
+\indexlibrary{\idxcode{operator/}!\idxcode{point}}%
+\begin{itemdecl}
+point operator/(const point& lhs, double rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{point\{ lhs.x / rhs, lhs.y / rhs \}}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator/=}}%
+\indexlibrary{\idxcode{operator/=}!\idxcode{point}}%
+\begin{itemdecl}
+point& operator/=(point& lhs, const point& rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	\tcode{lhs = lhs / rhs}
+
+	\pnum
+	\returns
+	\tcode{lhs}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator/=}}%
+\indexlibrary{\idxcode{operator/=}!\idxcode{point}}%
+\begin{itemdecl}
+point& operator/=(point& lhs, double rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	\tcode{lhs = lhs / rhs}
+
+	\pnum
+	\returns
+	\tcode{lhs}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator==}}%
+\indexlibrary{\idxcode{operator==}!\idxcode{point}}%
+\begin{itemdecl}
+bool operator==(const point& lhs, const point& rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{lhs.x == rhs.x \&\& lhs.y == rhs.y}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{point}!\idxcode{operator==}}%
+\indexlibrary{\idxcode{operator==}!\idxcode{point}}%
+\begin{itemdecl}
+bool operator!=(const point& lhs, const point& rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{!(lhs == rhs)}
+\end{itemdescr}

@@ -1,0 +1,90 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.format] {Enum class \tcode{format}}
+
+\rSec1 [\iotwod.format.summary] {\tcode{format} Summary}
+
+\pnum
+The \tcode{format} enum class describes the data format of the pixels of an 
+\tcode{image_surface}. See Table~\ref{tab:\iotwod.format.meanings} for 
+the meaning of each \tcode{format} enumerator.
+
+\pnum
+Unless otherwise specified, each channel of a pixel shall be treated as an 
+unsigned integral value.
+
+\pnum
+A channel value of 0x0 means that there is no contribution from that channel. 
+As the channel value increases towards the maximum unsigned integral value 
+representable by the number of bits of the channel, the contribution from that 
+channel also increases.
+\enterexample
+Given a 5-bit red channel, a value of 0x0 means that the red channel does not 
+contribute any value towards the final color of the pixel. A value of 0x1F 
+means that the red channel makes its maximum contribution to the final color of 
+the pixel.
+\exitexample
+
+\rSec1 [\iotwod.format.synopsis] {\tcode{format} Synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  enum class format {
+    invalid,
+    argb32,
+    rgb24,
+    a8,
+    rgb16_565,
+    rgb30
+  };
+} } } } // namespaces std::experimental::graphics::v1
+\end{codeblock}
+
+\rSec1 [\iotwod.format.enumerators] {\tcode{format} Enumerators}
+\begin{libreqtab2}
+ {\tcode{format} enumerator meanings}
+ {tab:\iotwod.format.meanings}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endhead
+ \tcode{invalid}
+ & A previously specified \tcode{format} is unsupported by the implementation.
+ \\
+ \tcode{argb32}
+ & A 32-bit pixel format. The upper 8 bits are an alpha channel, 
+ followed by an 8-bit red color channel, then an 8-bit green color channel, and 
+ finally an 8-bit blue color channel. The value in each channel is an unsigned 
+ normalized integer. The endianness of the 32-bit value is 
+ \impldef{\tcode{format}!endianness}. This is a premultiplied format.
+ \enternote
+ It is valid for an implementation to define the endianness of the 32-bit value 
+ as being native-endian.
+ \exitnote
+ \\
+ \tcode{rgb24}
+ & A 32-bit pixel format. The upper 8 bits are unused, followed by an 8-bit red 
+ color channel, then an 8-bit green channel, and finally an 8-bit blue channel. 
+ The value in each channel is an unsigned normalized integer.
+ \\
+ \tcode{a8}
+ & An 8-bit pixel format composed of an alpha channel. The value in the channel 
+ is an unsigned normalized integer.
+ \\
+ \tcode{rgb16_565}
+ & A 16-bit pixel format composed on a red channel in the upper 5 bits, 
+ followed by a 6-bit green channel, and finally a 5-bit blue channel. The value 
+ in each channel is an unsigned normalized integer.
+ \\
+ \tcode{rgb30}
+ & A 32-bit pixel format. The upper 2 bits are unused, followed by a 10-bit red 
+ channel, a 10-bit green channel, and finally a 10-bit blue channel. The value 
+ in each channel is an unsigned normalized integer.
+ \\
+\end{libreqtab2}

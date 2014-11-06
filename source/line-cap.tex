@@ -1,0 +1,50 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.line.cap] {Enum class \tcode{line_cap}}
+
+\rSec1 [\iotwod.line.cap.summary] {\tcode{line_cap} Summary}
+
+\pnum
+The \tcode{line_cap} enum class specifies how the ends of lines should be 
+rendered when a \tcode{path} is stroked. See 
+Table~\ref{tab:\iotwod.line.cap.meanings} for the meaning of each 
+\tcode{line_cap} enumerator.
+
+\rSec1 [\iotwod.line.cap.synopsis] {\tcode{line_cap} Synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  enum class line_cap {
+    butt,
+    round,
+    square
+  };
+} } } } // namespaces std::experimental::io2d::v1
+\end{codeblock}
+
+\rSec1 [\iotwod.line.cap.enumerators] {\tcode{line_cap} Enumerators}
+\begin{libreqtab2}
+ {\tcode{line_cap} enumerator meanings}
+ {tab:\iotwod.line.cap.meanings}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endhead
+ \tcode{butt}
+ & The line has no cap. It terminates exactly at the end \tcode{point}.
+ \\
+ \tcode{round}
+ & The line has a circular cap, with the end \tcode{point} serving as the 
+ center of the circle and the line width serving as its diameter.
+ \\
+ \tcode{square}
+ & The line has a square cap, with the end \tcode{point} serving as the center 
+ of the square and the line width serving as the length of each side.
+ \\
+\end{libreqtab2}

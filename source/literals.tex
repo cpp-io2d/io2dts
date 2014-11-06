@@ -1,0 +1,38 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.literals] {\tcode{literals} namespace}
+
+\rSec1 [\iotwod.literals.synopsis] {\tcode{literals} Synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  inline namespace literals {
+    double operator""ubyte(unsigned long long value);
+    double operator""unorm(long double value);
+  } // namespace literals
+} } } } // namespaces std::experimental::io2d::v1
+\end{codeblock}
+
+\rSec1 [\iotwod.literals.operators] {\tcode{literals} operators}
+
+\indexlibrary{\idxcode{literals}!\idxcode{operator''''ubyte}}%
+\indexlibrary{\idxcode{operator''''ubyte}!\idxcode{literals}}%
+\begin{itemdecl}
+double operator""ubyte(unsigned long long value);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{::std::max(0.0, ::std::min(1.0, static_cast<double>(value) / 255.0))}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{literals}!\idxcode{operator''''unorm}}%
+\indexlibrary{\idxcode{operator''''unorm}!\idxcode{literals}}%
+\begin{itemdecl}
+double operator""unorm(long double value);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{::std::nearbyint(::std::max(0.0, ::std::min(1.0, 
+	static_cast<double>(value))) * 255.0) / 255.0}
+\end{itemdescr}

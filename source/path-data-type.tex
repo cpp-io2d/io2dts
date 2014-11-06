@@ -1,0 +1,133 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.pathdatatype] {Enum class \tcode{path_data_type}}
+
+\rSec1 [\iotwod.pathdatatype.summary] {\tcode{path_data_type} Summary}
+
+\pnum
+The \tcode{path_data_type} enum class specifies the type of path data contained 
+by a \tcode{path_data} object. This determines which member of 
+\tcode{path_data::data} should be used.
+See Table~\ref{tab:\iotwod.pathdatatype.meanings} for the meaning of each
+\tcode{path_data_type} enumerator.
+
+\rSec1 [\iotwod.pathdatatype.synopsis] {\tcode{path_data_type} Synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  enum class path_data_type {
+    move_to,
+    line_to,
+    curve_to,
+    new_sub_path,
+    close_path,
+    rel_move_to,
+    rel_line_to,
+    rel_curve_to,
+    arc,
+    arc_negative,
+    change_matrix,
+    change_origin
+  };
+} } } } // namespaces std::experimental::io2d::v1
+\end{codeblock}
+
+\rSec1 [\iotwod.pathdatatype.enumerators] {\tcode{path_data_type} Enumerators}
+
+\pnum
+For the following table, assume that there is a \tcode{path_data p} object. The 
+\term{Meaning} column describes the operation type while the \term{Data Member} 
+column specifies the correct \tcode{p.data} member to access when 
+\tcode{p.type} is equal to the enumerator.
+
+\begin{libreqtab3a}
+ {\tcode{path_data_type} enumerator meanings}
+ {tab:\iotwod.pathdatatype.meanings}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \chdr{Meaning}
+ & \rhdr{Data Member}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \chdr{Meaning}
+ & \rhdr{Data Member}
+ \\ \capsep
+ \endhead
+ \tcode{move_to}
+ & Set the \term{current point} and the \term{last move to point}. This starts 
+ a new sub-path.
+ & \tcode{p.data.move}
+ \\
+ \tcode{line_to}
+ & Create a line from the \tcode{current point} to \tcode{p.data.line}. Make 
+ the new point the \term{current point}.
+ & \tcode{p.data.line}
+ \\
+ \tcode{curve_to}
+ & Create a cubic B\'ezier curve. The start point is the \term{current 
+ point}. The first control point is \tcode{p.data.curve.pt1}. The second 
+ control point is \tcode{p.data.curve.pt2}. The end point is 
+ \tcode{p.data.curve.pt3}. Set the \term{current point} to be equal to 
+ \tcode{p.data.curve.pt3}.
+ & \tcode{p.data.curve}
+ \\
+ \tcode{new_sub_path}
+ & Create a new sub-path. There is no \tcode{current point} or \tcode{last move 
+ to point} after this operation.
+ & \tcode{p.data.unused}
+ \\
+ \tcode{close_path}
+ & If there is a \term{current point}, close the \term{current path} by 
+ creating a line from the \tcode{current point} to the \tcode{last move to 
+ point} \enternote this differs from \tcode{line_to} in that the line is joined 
+ to the initial path segment (instead of each end having line caps)\exitnote, 
+ then set the \term{current point} to the value of the \term{last move to 
+ point}. If there is no \term{current point} then do nothing.
+ & \tcode{p.data.unused}
+ \\
+ \tcode{rel_move_to}
+ & Adds the point in \tcode{p.data.move} to the \term{current point} and then 
+ sets the \term{current point} and the \term{last move to point} to be equal to 
+ the resulting point.
+ & \tcode{p.data.move}
+ \\
+ \tcode{rel_line_to}
+ & Adds the point in \tcode{p.data.line} to the \term{current point} and 
+ creates a line from the \term{current point} to the resulting point. Make the 
+ resulting point the new \term{current point}.
+ & \tcode{p.data.line}
+ \\
+ \tcode{rel_curve_to}
+ & Create a B\'ezier curve. The start point is the \term{current point}. 
+ The first control point is the point created by adding \term{current point} 
+ and \tcode{p.data.curve.pt1}. The second control point is the point created by 
+ adding \term{current point} and \tcode{p.data.curve.pt2}. The end point is the 
+ point created by adding \term{current point} and \tcode{p.data.curve.pt3}. 
+ Make the point created by adding \term{current point} and 
+ \tcode{p.data.curve.pt3} the new \tcode{current point}.
+ & \tcode{p.data.curve}
+ \\
+ \tcode{arc}
+ & Create a circular arc. \enternote The transformation matrix is used to modify a circular arc to create an elliptical arc. \exitnote The center of the arc is \tcode{p.data.arc.center}. Its radius is \tcode{p.data.arc.radius}. It starts at the point at \tcode{p.data.arc.angle1} radians which is \tcode{p.data.arc.radius} units from \tcode{p.data.arc.center} and proceeds clockwise to the point at \tcode{p.data.arc.angle2} radians which is \tcode{p.data.arc.radius} units from \tcode{p.data.arc.center}. If \tcode{p.data.arc.angle2} is less that \tcode{p.data.arc.angle1}, continually increase \tcode{p.data.arc.angle2} by $2 \times \pi$ until it is equal to or greater than \tcode{p.data.arc.angle1}.
+ & \tcode{p.data.arc}
+ \\
+ \tcode{arc_negative}
+ & Create a circular arc. \enternote The transformation matrix is used to modify a circular arc to create an elliptical arc. \exitnote The center of the arc is \tcode{p.data.arc.center}. Its radius is \tcode{p.data.arc.radius}. It starts at the point at \tcode{p.data.arc.angle1} radians which is \tcode{p.data.arc.radius} units from \tcode{p.data.arc.center} and proceeds counterclockwise to the point at \tcode{p.data.arc.angle2} radians which is \tcode{p.data.arc.radius} units from \tcode{p.data.arc.center}. If \tcode{p.data.arc.angle2} is greater that \tcode{p.data.arc.angle1}, continually decrease \tcode{p.data.arc.angle2} by $2 \times \pi$ until it is equal to or less than \tcode{p.data.arc.angle1}.
+ & \tcode{p.data.arc}
+ \\
+ \tcode{change_matrix}
+ & Establish a new transformation matrix.
+ & \tcode{p.data.matrix}
+ \\
+ \tcode{change_origin}
+ & Establish a new origin point.
+ \enternote
+ When a point is transformed by the transformation matrix, the origin is 
+ subtracted from it before it is transformed and then added back to the result 
+ of the transformation.
+ \exitnote
+ & \tcode{p.data.origin}
+ \\
+\end{libreqtab3a}

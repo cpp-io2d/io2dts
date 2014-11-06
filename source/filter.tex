@@ -1,0 +1,94 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.filter] {Enum class \tcode{filter}}
+
+\rSec1 [\iotwod.filter.summary] {\tcode{filter} Summary}
+
+\pnum
+The \tcode{filter} enum class specifies the type of signal filter to use when 
+sampling from a \tcode{pattern} or \tcode{surface}. Some values specify 
+attributes, leaving the choice of specific filter to the implementation, while 
+others denote that a specific type of filter should be used. See 
+Table~\ref{tab:\iotwod.filter.meanings} for the meaning of each
+\tcode{filter} enumerator.
+
+\rSec1 [\iotwod.filter.synopsis] {\tcode{filter} Synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  enum class filter {
+    fast,
+    good,
+    best,
+    nearest,
+    bilinear,
+    default_filter = good
+  };
+} } } } // namespaces std::experimental::io2d::v1
+\end{codeblock}
+
+\rSec1 [\iotwod.filter.enumerators] {\tcode{filter} Enumerators}
+\begin{libreqtab2}
+ {\tcode{filter} enumerator meanings}
+ {tab:\iotwod.filter.meanings}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endhead
+ \tcode{fast}
+ & \impldef{filter!fast}
+ \enternote
+ By choosing this value, the user is hinting that performance is more important 
+ that quality. Typically this would mean nearest-neighbor filtering, but if 
+ implementations can perform, e.g., bilinear filtering at nearly identical 
+ speeds, they are free to set that as the fast filter.
+ \exitnote
+ \\
+ \tcode{good}
+ & \impldef{filter!good}
+ \enternote
+ By choosing this value, the user is hinting that quality is important but that 
+ performance is also still a consideration. Typically this would mean bilinear 
+ filtering, but if implementations can perform, e.g., mipmapped bilinear 
+ filtering at nearly identical speeds, they are free to set that as the fast 
+ filter.
+ \exitnote
+ \\
+ \tcode{best}
+ & \impldef{filter!best}
+ \enternote
+ By choosing this value, the user is hinting that quality is more important 
+ than performance. Typically this would mean mipmapped bilinear filtering or 
+ mipmapped bicubic filtering.
+ \exitnote
+ \\
+ \tcode{nearest}
+ & Nearest-neighbor filtering shall be used.
+ \enternote
+ This is sometimes also called point sampling. The color of the nearest source 
+ pixel is used with no interpolation performed. Whether mipmapping is used and 
+ whether mipmaps are generated for sources that do not have them is 
+ \impldef{filter!nearest mipmapping}.
+ \exitnote
+ \\
+ \tcode{bilinear}
+ & Bilinear filtering shall be used.
+ \enternote
+ The distance-weighted average of the nearest 2x2 grid of source pixels is used 
+ to create an interpolated color for the destination pixel. If some source 
+ pixel values do not exist (e.g. because an edge or corner of the source has 
+ been reached) then the current \tcode{extend} should be considered in order to 
+ determine the values for the missing source pixels. If a hardware sampler is 
+ available and offers bilinear filtering, implementations may use it even if it 
+ does not conform to the description of bilinear filtering provided by this 
+ standard. Whether mipmapping is used and whether mipmaps are generated for 
+ sources that do not have them is \impldef{filter!bilinear mipmapping}.
+ \exitnote
+ \\
+\end{libreqtab2}

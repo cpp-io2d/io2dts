@@ -1,0 +1,127 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.device] {Class \tcode{device}}
+
+\rSec1 [\iotwod.device.intro] {\tcode{device} Description}
+
+\pnum
+\indexlibrary{\idxcode{device}}%
+The \tcode{device} class provides access to the underlying rendering and 
+presentation technologies, such a graphics devices, contexts, and swap chains.
+
+\rSec1 [\iotwod.device.synopsis] {\tcode{device} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class device {
+  public:
+    // See~\ref{\iotwod.req.native}
+    typedef @\impdef@ native_handle_type; // Exposition only.
+    native_handle_type native_handle() const; // Exposition only.
+
+    device() = delete;
+    device(const device&) = delete;
+    device& operator=(const device&) = delete;
+    device(device&& other);
+    device& operator=(device&& other);
+
+    // \ref{\iotwod.device.modifiers}, modifiers:
+    void flush();
+    void lock();
+    void unlock();
+  };
+} } } } // namespaces std::experimental::io2d::v1
+\end{codeblock}
+
+\rSec1 [\iotwod.device.modifiers] {\tcode{device} modifiers}
+
+\rSec2 [\iotwod.device::flush] {\tcode{device::flush}}
+
+\indexlibrary{\idxcode{device}!\idxcode{flush}}%
+\indexlibrary{\idxcode{flush}!\idxcode{device}}%
+\begin{itemdecl}
+void flush();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	The user will be able to manipulate the underlying rendering and 
+	presentation technologies used by the implementation without introducing a 
+	race condition. This means that any pending device operations will be 
+	executed, batched, or otherwise committed to the underlying technologies. 
+	Saved device state, if any, shall also be restored before this function 
+	returns.
+
+	\pnum
+	\remarks
+	This function exists primarily to allow the user to take control of the 
+	underlying rendering and presentation technologies using an 
+	implementation-provided native handle. The implementation's responsibility 
+	is to ensure that the user can safely make changes to the state of those 
+	underlying technologies. The implementation is not required to ensure that 
+	every last operation has fully completed.
+	\enternote
+	This function flushes the native device or context that the implementation 
+	is using to render to a surface. It is not required to flush the surface.
+	\exitnote
+	
+	\pnum
+	\realnotes
+	One reason a user might call this function would be because they wished to 
+	render UI controls that this library does not provide. As such, the 
+	user needs to know that using the underlying rendering technology will not 
+	introduce any race conditions. This function, in combination with locking 
+	the device, exists to provide that surety. If the underlying technologies 
+	internally batch operations in a way that allows them to receive and batch 
+	further commands without introducing race conditions, the implementation 
+	should return as soon as all pending operations have been submitted to the 
+	batch queue.
+\end{itemdescr}
+
+\rSec2 [\iotwod.device::lock] {\tcode{device::lock}}
+
+\indexlibrary{\idxcode{device}!\idxcode{lock}}%
+\indexlibrary{\idxcode{lock}!\idxcode{device}}%
+\begin{itemdecl}
+void lock();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Produces all effects of \tcode{m.lock()} from \term{BasicLockable}, 
+	30.2.5.2 in \CppXIV. Implementations shall make this function capable of 
+	being recursively reentered.
+	
+	\pnum
+	\throws
+	\impldef{\tcode{device::lock}!exception types}.
+	\enternote
+	Implementations should avoid throwing exceptions from this function absent 
+	a compelling technical reason such as reaching a maximum level of 
+	ownership, in which case an exception of type \tcode{::std::system_error} 
+	shall be thrown.
+	\exitnote
+\end{itemdescr}
+
+\rSec2 [\iotwod.device::unlock] {\tcode{device::unlock}}
+
+\indexlibrary{\idxcode{device}!\idxcode{unlock}}%
+\indexlibrary{\idxcode{unlock}!\idxcode{device}}%
+\begin{itemdecl}
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\requires
+	Meets all requirements of \tcode{m.unlock()} from \term{BasicLockable}, 
+	30.2.5.2 in \CppXIV.
+	
+	\pnum
+	\effects
+	Produces all effects of \tcode{m.unlock()} from \term{BasicLockable}, 
+	30.2.5.2 in \CppXIV. The lock on \tcode{m} shall not be fully released 
+	until \tcode{m.unlock} has been called a number of times equal to the 
+	number of times \tcode{m.lock} was successfully called.
+	
+	\pnum
+	\throws
+	Nothing.
+\end{itemdescr}

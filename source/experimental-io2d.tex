@@ -1,0 +1,978 @@
+%!TEX root = io2d.tex
+\rSec0[\iotwod.syn]{Header \tcode{<experimental/io2d>} synopsis}
+
+\indexlibrary{\idxhdr{experimental/io2d}|(}%
+\indextext{2D graphics!synopsis|(}
+\begin{codeblock}
+#ifndef _IO2D_
+#define _IO2D_
+
+#include <memory>
+#include <functional>
+#include <exception>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <system_error>
+
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  enum class io2d_error {
+    success,
+    no_memory,
+    invalid_restore,
+    invalid_pop_group,
+    no_current_point,
+    invalid_matrix,
+    invalid_status,
+    null_pointer,
+    invalid_string,
+    invalid_path_data,
+    read_error,
+    write_error,
+    surface_finished,
+    surface_type_mismatch,
+    pattern_type_mismatch,
+    invalid_content,
+    invalid_format,
+    invalid_visual,
+    file_not_found,
+    invalid_dash,
+    invalid_dsc_comment,
+    invalid_index,
+    clip_not_representable,
+    temp_file_error,
+    invalid_stride,
+    font_type_mismatch,
+    user_font_immutable,
+    user_font_error,
+    negative_count,
+    invalid_clusters,
+    invalid_slant,
+    invalid_weight,
+    invalid_size,
+    user_font_not_implemented,
+    device_type_mismatch,
+    device_error,
+    invalid_mesh_construction,
+    device_finished,
+    last_value
+  };
+
+  enum class antialias {
+    default_antialias,
+    none,
+    gray,
+    subpixel,
+    fast,
+    good,
+    best
+  };
+
+  enum class content {
+    color,
+    alpha,
+    color_alpha
+  };
+
+  enum class fill_rule {
+    winding,
+    even_odd
+  };
+
+  enum class line_cap {
+    butt,
+    round,
+    square
+  };
+
+  enum class line_join {
+    miter,
+    round,
+    bevel,
+    miter_or_bevel
+  };
+
+  enum class compositing_operator {
+    clear,
+    source,
+    over,
+    in,
+    out,
+    atop,
+    dest,
+    dest_over,
+    dest_in,
+    dest_out,
+    dest_atop,
+    xor_op,
+    add,
+    saturate,
+    multiply,
+    screen,
+    overlay,
+    darken,
+    lighten,
+    color_dodge,
+    color_burn,
+    hard_light,
+    soft_light,
+    difference,
+    exclusion,
+    hsl_hue,
+    hsl_saturation,
+    hsl_color,
+    hsl_luminosity,
+    default_op = over
+  };
+
+  enum class format {
+    invalid,
+    argb32,
+    rgb24,
+    a8,
+    a1,
+    rgb16_565,
+    rgb30
+  };
+
+  enum class extend {
+    none,
+    repeat,
+    reflect,
+    pad,
+    default_extend = none
+  };
+
+  enum class filter {
+    fast,
+    good,
+    best,
+    nearest,
+    bilinear,
+    gaussian,
+    default_filter = good
+  };
+
+  enum class pattern_type {
+    unknown,
+    solid_color,
+    linear,
+    radial,
+    mesh
+  };
+
+  enum class font_slant {
+    normal,
+    italic,
+    oblique
+  };
+
+  enum class font_weight {
+    normal,
+    bold
+  };
+
+  enum class subpixel_order {
+    default_subpixel_order,
+    horizontal_rgb,
+    horizontal_bgr,
+    vertical_rgb,
+    vertical_bgr
+  };
+
+  enum class path_data_type {
+    move_to,
+    line_to,
+    curve_to,
+    new_sub_path,
+    close_path,
+    rel_move_to,
+    rel_line_to,
+    rel_curve_to,
+    arc,
+    arc_negative,
+    change_matrix,
+    change_origin
+  };
+
+  struct rectangle {
+    double x;
+    double y;
+    double width;
+    double height;
+  };
+
+  struct rgba_color {
+    double r;
+    double g;
+    double b;
+    double a;
+
+    const static rgba_color alice_blue;
+    const static rgba_color antique_white;
+    const static rgba_color aqua;
+    const static rgba_color aquamarine;
+    const static rgba_color azure;
+    const static rgba_color beige;
+    const static rgba_color bisque;
+    const static rgba_color black;
+    const static rgba_color blanched_almond;
+    const static rgba_color blue;
+    const static rgba_color blue_violet;
+    const static rgba_color brown;
+    const static rgba_color burly_wood;
+    const static rgba_color cadet_blue;
+    const static rgba_color chartreuse;
+    const static rgba_color chocolate;
+    const static rgba_color coral;
+    const static rgba_color cornflower_blue;
+    const static rgba_color cornsilk;
+    const static rgba_color crimson;
+    const static rgba_color cyan;
+    const static rgba_color dark_blue;
+    const static rgba_color dark_cyan;
+    const static rgba_color dark_goldenrod;
+    const static rgba_color dark_gray;
+    const static rgba_color dark_green;
+    const static rgba_color dark_grey;
+    const static rgba_color dark_khaki;
+    const static rgba_color dark_magenta;
+    const static rgba_color dark_olive_green;
+    const static rgba_color dark_orange;
+    const static rgba_color dark_orchid;
+    const static rgba_color dark_red;
+    const static rgba_color dark_salmon;
+    const static rgba_color dark_sea_green;
+    const static rgba_color dark_slate_blue;
+    const static rgba_color dark_slate_gray;
+    const static rgba_color dark_slate_grey;
+    const static rgba_color dark_turquoise;
+    const static rgba_color dark_violet;
+    const static rgba_color deep_pink;
+    const static rgba_color deep_sky_blue;
+    const static rgba_color dim_gray;
+    const static rgba_color dim_grey;
+    const static rgba_color dodger_blue;
+    const static rgba_color firebrick;
+    const static rgba_color floral_white;
+    const static rgba_color forest_green;
+    const static rgba_color fuchsia;
+    const static rgba_color gainsboro;
+    const static rgba_color ghost_white;
+    const static rgba_color gold;
+    const static rgba_color goldenrod;
+    const static rgba_color gray;
+    const static rgba_color green;
+    const static rgba_color green_yellow;
+    const static rgba_color grey;
+    const static rgba_color honeydew;
+    const static rgba_color hot_pink;
+    const static rgba_color indian_red;
+    const static rgba_color indigo;
+    const static rgba_color ivory;
+    const static rgba_color khaki;
+    const static rgba_color lavender;
+    const static rgba_color lavender_blush;
+    const static rgba_color lawn_green;
+    const static rgba_color lemon_chiffon;
+    const static rgba_color light_blue;
+    const static rgba_color light_coral;
+    const static rgba_color light_cyan;
+    const static rgba_color light_goldenrod_yellow;
+    const static rgba_color light_gray;
+    const static rgba_color light_green;
+    const static rgba_color light_grey;
+    const static rgba_color light_pink;
+    const static rgba_color light_salmon;
+    const static rgba_color light_sea_green;
+    const static rgba_color light_sky_blue;
+    const static rgba_color light_slate_gray;
+    const static rgba_color light_slate_grey;
+    const static rgba_color light_steel_blue;
+    const static rgba_color light_yellow;
+    const static rgba_color lime;
+    const static rgba_color lime_green;
+    const static rgba_color linen;
+    const static rgba_color magenta;
+    const static rgba_color maroon;
+    const static rgba_color medium_aquamarine;
+    const static rgba_color medium_blue;
+    const static rgba_color medium_orchid;
+    const static rgba_color medium_purple;
+    const static rgba_color medium_sea_green;
+    const static rgba_color medium_slate_blue;
+    const static rgba_color medium_spring_green;
+    const static rgba_color medium_turquoise;
+    const static rgba_color medium_violet_red;
+    const static rgba_color midnight_blue;
+    const static rgba_color mint_cream;
+    const static rgba_color misty_rose;
+    const static rgba_color moccasin;
+    const static rgba_color navajo_white;
+    const static rgba_color navy;
+    const static rgba_color old_lace;
+    const static rgba_color olive;
+    const static rgba_color olive_drab;
+    const static rgba_color orange;
+    const static rgba_color orange_red;
+    const static rgba_color orchid;
+    const static rgba_color pale_goldenrod;
+    const static rgba_color pale_green;
+    const static rgba_color pale_turquoise;
+    const static rgba_color pale_violet_red;
+    const static rgba_color papaya_whip;
+    const static rgba_color peach_puff;
+    const static rgba_color peru;
+    const static rgba_color pink;
+    const static rgba_color plum;
+    const static rgba_color powder_blue;
+    const static rgba_color purple;
+    const static rgba_color red;
+    const static rgba_color rosy_brown;
+    const static rgba_color royal_blue;
+    const static rgba_color saddle_brown;
+    const static rgba_color salmon;
+    const static rgba_color sandy_brown;
+    const static rgba_color sea_green;
+    const static rgba_color sea_shell;
+    const static rgba_color sienna;
+    const static rgba_color silver;
+    const static rgba_color sky_blue;
+    const static rgba_color slate_blue;
+    const static rgba_color slate_gray;
+    const static rgba_color slate_grey;
+    const static rgba_color snow;
+    const static rgba_color spring_green;
+    const static rgba_color steel_blue;
+    const static rgba_color tan;
+    const static rgba_color teal;
+    const static rgba_color thistle;
+    const static rgba_color tomato;
+    const static rgba_color transparent_black; // Note: Not in CSS3.
+    const static rgba_color turquoise;
+    const static rgba_color violet;
+    const static rgba_color wheat;
+    const static rgba_color white;
+    const static rgba_color white_smoke;
+    const static rgba_color yellow;
+    const static rgba_color yellow_green;
+  };
+
+  rgba_color operator*(const rgba_color& lhs, double rhs);
+  rgba_color& operator*=(rgba_color& lhs, double rhs);
+  bool operator==(const rgba_color& lhs, const rgba_color& rhs);
+  bool operator!=(const rgba_color& lhs, const rgba_color& rhs);
+
+  inline namespace literals {
+    double operator""ubyte(unsigned long long value);
+    double operator""unorm(long double value);
+  } // inline namespace literals
+  
+  struct point {
+    double x;
+    double y;
+  };
+
+  point operator+(const point& lhs);
+  point operator+(const point& lhs, const point& rhs);
+  point operator+(const point& lhs, double rhs);
+  point& operator+=(point& lhs, const point& rhs);
+  point& operator+=(point& lhs, double rhs);
+  point operator-(const point& lhs);
+  point operator-(const point& lhs, const point& rhs);
+  point operator-(const point& lhs, double rhs);
+  point& operator-=(point& lhs, const point& rhs);
+  point& operator-=(point& lhs, double rhs);
+  point operator*(const point& lhs, const point& rhs);
+  point operator*(const point& lhs, double rhs);
+  point& operator*=(point& lhs, const point& rhs);
+  point& operator*=(point& lhs, double rhs);
+  point operator/(const point& lhs, const point& rhs);
+  point operator/(const point& lhs, double rhs);
+  point& operator/=(point& lhs, const point& rhs);
+  point& operator/=(point& lhs, double rhs);
+  bool operator==(const point& lhs, const point& rhs);
+  bool operator!=(const point& lhs, const point& rhs);
+
+  struct glyph {
+    unsigned long index;
+    double x;
+    double y;
+  };
+
+  struct text_cluster {
+    int num_bytes;
+    int num_glyphs;
+  };
+
+  struct font_extents {
+    double ascent;
+    double descent;
+    double height;
+    double max_x_advance;
+    double max_y_advance;
+  };
+
+  struct text_extents {
+    double x_bearing;
+    double y_bearing;
+    double width;
+    double height;
+    double x_advance;
+    double y_advance;
+  };
+
+  struct matrix_2d {
+    double m00;
+    double m01;
+    double m10;
+    double m11;
+    double m20;
+    double m21;
+
+    static matrix_2d init_identity();
+    static matrix_2d init_translate(const point& value);
+    static matrix_2d init_scale(const point& value);
+    static matrix_2d init_rotate(double radians);
+    static matrix_2d init_shear_x(double factor);
+    static matrix_2d init_shear_y(double factor);
+
+    matrix_2d& translate(const point& value);
+    matrix_2d& scale(const point& value);
+    matrix_2d& rotate(double radians);
+    matrix_2d& shear_x(double factor);
+    matrix_2d& shear_y(double factor);
+    matrix_2d& invert();
+
+    double determinant() const;
+    point transform_distance(const point& dist) const;
+    point transform_point(const point& pt) const;
+  };
+
+  matrix_2d operator*(const matrix_2d& lhs, const matrix_2d& rhs);
+  matrix_2d& operator*=(matrix_2d& lhs, const matrix_2d& rhs);
+  bool operator==(const matrix_2d& lhs, const matrix_2d& rhs);
+  bool operator!=(const matrix_2d& lhs, const matrix_2d& rhs);
+
+  struct path_data {
+    path_data_type type;
+    union {
+    	point move;
+    	point line;
+    	struct {
+    		point pt1;
+    		point pt2;
+    		point pt3;
+    	} curve;
+    	point origin;
+    	struct {
+    		point center;
+    		double radius;
+    		double angle1;
+    		double angle2;
+    	} arc;
+    	matrix_2d matrix;
+    	int unused;
+    } data;
+  };
+
+  bool operator==(const path_data& lhs, const path_data& rhs);
+  bool operator!=(const path_data& lhs, const path_data& rhs);
+
+  class io2d_error_category : public ::std::error_category {
+  public:
+    virtual const char* name() const noexcept override;
+    virtual ::std::string message(int errVal) const override;
+    virtual bool equivalent(const ::std::error_code& ec, int condition) const 
+    noexcept override;
+  };
+
+  const ::std::error_category& io2d_category() noexcept;
+
+  // Forward declaration.
+  class path_factory;
+
+  class path {
+  public:
+    typedef @\impdef@ native_handle_type;
+
+    path() = delete;
+    path(const path_factory& pb);
+    path(const path& other) = default;
+    path& operator=(const path& other) = default;
+    path(path&& other);
+    path& operator=(path&& other);
+
+    ::std::vector<path_data> get_data() const;
+    const ::std::vector<path_data>& get_data_ref() const;
+    rectangle get_path_extents() const;
+  };
+
+  class path_factory {
+  public:
+    path_factory();
+    path_factory(const path_factory& other);
+    path_factory& operator=(const path_factory& other);
+    path_factory(path_factory&& other);
+    path_factory& operator=(path_factory&& other);
+
+    path get_path() const;
+    rectangle get_path_extents() const;
+
+    void append(const path& p);
+    void append(const path_factory& p);
+    void append(const ::std::vector<path_data>& p);
+    bool has_current_point() const;
+    point get_current_point() const;
+    void new_sub_path();
+    void close_path();
+    void arc(const point& center, double radius, double angle1, double angle2);
+    void arc_negative(const point& center, double radius, double angle1, double 
+    angle2);
+    void curve_to(const point& pt0, const point& pt1, const point& pt2);
+    void line_to(const point& pt);
+    void move_to(const point& pt);
+    void rect(const rectangle& r);
+    void rel_curve_to(const point& dpt0, const point& dpt1, const point& dpt2);
+    void rel_line_to(const point& dpt);
+    void rel_move_to(const point& dpt);
+
+    void set_transform_matrix(const matrix_2d& m);
+    matrix_2d get_transform_matrix() const;
+    void set_origin(const point& pt);
+    point get_origin() const;
+
+    ::std::vector<path_data> get_data() const;
+    path_data get_data(unsigned int index) const;
+    const ::std::vector<path_data>& get_data_ref() const;
+
+    void reset();
+  };
+
+  class device {
+  public:
+    typedef @\impdef@ native_handle_type;
+    native_handle_type native_handle() const;
+
+    device() = delete;
+    device(const device&) = delete;
+    device& operator=(const device&) = delete;
+    device(device&& other);
+    device& operator=(device&& other);
+    explicit device(native_handle_type nh);
+    void flush();
+    void lock();
+    void unlock();
+  };
+
+  // Forward declaration.
+  class font_options;
+
+  class font_options_factory {
+  public:
+    font_options_factory();
+    font_options_factory(const font_options_factory&);
+    font_options_factory& operator=(const font_options_factory&);
+    font_options_factory(font_options_factory&& other);
+    font_options_factory& operator=(font_options_factory&& other);
+
+    font_options get_font_options() const;
+    void set_antialias(antialias a);
+    antialias get_antialias() const;
+    void set_subpixel_order(subpixel_order so);
+    subpixel_order get_subpixel_order() const;
+  };
+
+  class font_options {
+  public:
+    typedef @\impdef@ native_handle_type;
+    native_handle_type native_handle() const;
+
+    font_options() = delete;
+    font_options(const font_options&) = default;
+    font_options& operator=(const font_options&) = default;
+    font_options(font_options&& other);
+    font_options& operator=(font_options&& other);
+    font_options(antialias a, subpixel_order so);
+    explicit font_options(native_handle_type nh);
+
+    antialias get_antialias() const;
+    subpixel_order get_subpixel_order() const;
+  };
+
+  class font_face {
+  public:
+    typedef @\impdef@ native_handle_type;
+    native_handle_type native_handle() const;
+
+    font_face() = delete;
+    font_face(const font_face&) = default;
+    font_face& operator=(const font_face&) = default;
+    font_face(font_face&& other);
+    font_face& operator=(font_face&& other);
+
+    explicit font_face(native_handle_type nh);
+
+    virtual ~font_face();
+  };
+
+  class scaled_font {
+  public:
+    typedef @\impdef@ native_handle_type;
+    native_handle_type native_handle() const;
+
+    scaled_font() = delete;
+    scaled_font(const scaled_font&) = default;
+    scaled_font& operator=(const scaled_font&) = default;
+    scaled_font(scaled_font&& other);
+    scaled_font& operator=(scaled_font&& other);
+
+    explicit scaled_font(native_handle_type nh);
+    scaled_font(const font_face& ff, const matrix_2d& fm, const matrix_2d& ctm, 
+    const font_options& fo);
+
+    font_extents get_extents() const;
+    text_extents get_text_extents(const ::std::string& utf8) const;
+    text_extents get_glyph_extents(const ::std::vector<glyph>& glyphs) const;
+    ::std::vector<glyph> text_to_glyphs(double x, double y, const 
+    ::std::string& utf8) const;
+    ::std::vector<glyph> text_to_glyphs(double x, double y, const 
+    ::std::string& utf8, ::std::vector<text_cluster>& clusters, bool& 
+    clustersToGlyphsReverseMap) const;
+  };
+
+  class simple_font_face : public font_face {
+  public:
+    simple_font_face() = delete;
+    simple_font_face(const simple_font_face&) = default;
+    simple_font_face& operator=(const simple_font_face&) = default;
+    simple_font_face(const ::std::string& family, font_slant slant, font_weight 
+    weight);
+    simple_font_face(simple_font_face&& other);
+    simple_font_face& operator=(simple_font_face&& other);
+
+    ::std::string get_family() const;
+    font_slant get_slant() const;
+    font_weight get_weight() const;
+  };
+
+  // Forward declaration.
+  class image_surface;
+
+  // Forward declaration.
+  class linear_pattern_factory;
+  class mesh_pattern_factory;
+  class radial_pattern_factory;
+  class raster_source_pattern_factory;
+  class solid_color_pattern_factory;
+  class surface;
+
+  class pattern {
+  public:
+    typedef @\impdef@ native_handle_type;
+    native_handle_type native_handle() const;
+
+    pattern() = delete;
+    pattern(const pattern&) = default;
+    pattern& operator=(const pattern&) = default;
+    pattern(pattern&& other);
+    pattern& operator=(pattern&& other);
+
+    ~pattern();
+
+    pattern_type get_type() const;
+  };
+
+  class solid_color_pattern_factory {
+  public:
+    solid_color_pattern_factory();
+    solid_color_pattern_factory(const solid_color_pattern_factory&);
+    solid_color_pattern_factory& operator=(const solid_color_pattern_factory&);
+    solid_color_pattern_factory(solid_color_pattern_factory&& other);
+    solid_color_pattern_factory& operator=(solid_color_pattern_factory&& other);
+    solid_color_pattern_factory(const rgba_color& color);
+
+    pattern get_pattern() const;
+    void set_extend(extend e);
+    extend get_extend() const;
+    void set_filter(filter f);
+    filter get_filter() const;
+    void set_matrix(const matrix_2d& m);
+    matrix_2d get_matrix() const;
+
+    rgba_color get_rgba() const;
+    void set_rgba(const rgba_color& color);
+    double get_red() const;
+    void set_red(double red);
+    double get_green() const;
+    void set_green(double green);
+    double get_blue() const;
+    void set_blue(double blue);
+    double get_alpha() const;
+    void set_alpha(double alpha);
+  };
+
+  class linear_pattern_factory {
+  public:
+    linear_pattern_factory();
+    linear_pattern_factory(const linear_pattern_factory&);
+    linear_pattern_factory& operator=(const linear_pattern_factory&);
+    linear_pattern_factory(linear_pattern_factory&& other);
+    linear_pattern_factory& operator=(linear_pattern_factory&& other);
+    linear_pattern_factory(const point& pt0, const point& pt1);
+
+    pattern get_pattern() const;
+    void set_extend(extend extend);
+    extend get_extend() const;
+    void set_filter(filter filter);
+    filter get_filter() const;
+    void set_matrix(const matrix_2d& matrix);
+    matrix_2d get_matrix() const;
+
+    void add_color_stop_rgba(double offset, const rgba_color& color);
+    int get_color_stop_count() const;
+
+    void get_color_stop_rgba(unsigned int index, double& offset, rgba_color& 
+    color) const;
+    void set_color_stop_rgba(unsigned int index, double offset, const 
+    rgba_color& color);
+    void get_linear_points(point& pt0, point& pt1) const;
+    void set_linear_points(const point& pt0, const point& pt1);
+  };
+
+  class radial_pattern_factory {
+  public:
+    radial_pattern_factory();
+    radial_pattern_factory(const radial_pattern_factory&);
+    radial_pattern_factory& operator=(const radial_pattern_factory&);
+    radial_pattern_factory(radial_pattern_factory&& other);
+    radial_pattern_factory& operator=(radial_pattern_factory&& other);
+    radial_pattern_factory(const point& center0, double radius0, const point& 
+    center1, double radius1);
+
+    pattern get_pattern() const;
+    void set_extend(extend extend);
+    extend get_extend() const;
+    void set_filter(filter filter);
+    filter get_filter() const;
+    void set_matrix(const matrix_2d& matrix);
+    matrix_2d get_matrix() const;
+
+    void add_color_stop_rgba(double offset, const rgba_color& color);
+    int get_color_stop_count() const;
+
+    void get_color_stop_rgba(unsigned int index, double& offset, rgba_color& 
+    color) const;
+    void set_color_stop_rgba(unsigned int index, double offset, const 
+    rgba_color& color);
+
+    void get_radial_circles(point& center0, double& radius0, point& center1, 
+    double& radius1) const;
+    void set_radial_circles(const point& center0, double radius0, const point& 
+    center1, double radius1);
+  };
+
+  class mesh_pattern_factory {
+  public:
+    mesh_pattern_factory();
+    mesh_pattern_factory(const mesh_pattern_factory&);
+    mesh_pattern_factory& operator=(const mesh_pattern_factory&);
+    mesh_pattern_factory(mesh_pattern_factory&& other);
+    mesh_pattern_factory& operator=(mesh_pattern_factory&& other);
+
+    pattern get_pattern() const;
+    void set_extend(extend extend);
+    extend get_extend() const;
+    void set_filter(filter filter);
+    filter get_filter() const;
+    void set_matrix(const matrix_2d& matrix);
+    matrix_2d get_matrix() const;
+
+    void begin_patch();
+    void begin_edit_patch(unsigned int patch_num);
+    void end_patch();
+    void move_to(const point& pt);
+    void line_to(const point& pt);
+    void curve_to(const point& pt0, const point& pt1, const point& pt2);
+    void set_control_point(unsigned int point_num, const point& pt);
+    void set_corner_color_rgba(unsigned int corner_num, const rgba_color& 
+    color);
+    unsigned int get_patch_count() const;
+    path get_path(unsigned int patch_num) const;
+    path_factory get_path_factory(unsigned int patch_num) const;
+    point get_control_point(unsigned int patch_num, unsigned int point_num) 
+    const;
+    rgba_color get_corner_color_rgba(unsigned int patch_num, unsigned int 
+    corner_num) const;
+  };
+
+  // \ref{\iotwod.surface}
+  class surface {
+  public:
+    // See~\ref{\iotwod.req.native}
+    typedef @\impdef@ native_handle_type;
+    native_handle_type native_handle() const;
+
+    // tuple<dashes, offset>
+    typedef ::std::tuple<::std::vector<double>, double> dashes;
+
+    // \ref{\iotwod.surface.cons}, constructors, assignment operators, destructors:
+    surface() = delete;
+    surface(const surface&) = delete;
+    surface& operator=(const surface&) = delete;
+    surface(surface&& other);
+    surface& operator=(surface&& other);
+    surface(const surface& other, content content, int width, int height);
+    virtual ~surface();
+
+    // \ref{\iotwod.surface.modifiers.state}, state modifiers:
+    void finish();
+    void flush();
+    ::std::shared_ptr<device> get_device();
+    void mark_dirty();
+    void mark_dirty(const rectangle& rect);
+    void set_device_offset(const point& offset);
+    void write_to_png(const ::std::string& filename);
+    image_surface map_to_image();
+    image_surface map_to_image(const rectangle& extents);
+    void unmap_image(image_surface& image);
+    void save();
+    void restore();
+    void set_pattern();
+    void set_pattern(const pattern& source);
+    void set_antialias(antialias a);
+    void set_dashes();
+    void set_dashes(const dashes& d);
+    void set_fill_rule(fill_rule fr);
+    void set_line_cap(line_cap lc);
+    void set_line_join(line_join lj);
+    void set_line_width(double width);
+    void set_miter_limit(double limit);
+    void set_compositing_operator(compositing_operator co);
+    void clip();
+    void reset_clip();
+    void set_path();
+    void set_path(const path& p);
+
+    // \ref{\iotwod.surface.modifiers.render}, render modifiers:
+    void fill();
+    void fill(const surface& s);
+    void mask(const pattern& pttn);
+    void mask(const surface& surface);
+    void mask(const surface& surface, const point& origin);
+    void paint();
+    void paint(const surface& s);
+    void paint(double alpha);
+    void paint(const surface& s, double alpha);
+    void stroke();
+    void stroke(const surface& s);
+    void show_text(const ::std::string& utf8);
+    void show_glyphs(const ::std::vector<glyph>& glyphs);
+    void show_text_glyphs(const ::std::string& utf8,
+      const ::std::vector<glyph>& glyphs,
+      const ::std::vector<text_cluster>& clusters, 
+      bool clusterToGlyphsMapReverse = false);
+
+    // \ref{\iotwod.surface.modifiers.transform}, transformation modifiers:
+    void set_matrix(const matrix_2d& matrix);
+
+    // \ref{\iotwod.surface.modifiers.font}, font modifiers:
+    void select_font_face(const ::std::string& family, font_slant slant, 
+      font_weight weight);
+    void set_font_size(double size);
+    void set_font_matrix(const matrix_2d& matrix);
+    void set_font_options(const font_options& options);
+    void set_font_face(const font_face& font_face);
+    void set_scaled_font(const scaled_font& scaled_font);
+
+    // \ref{\iotwod.surface.observers.state}, state observers:
+    content get_content() const;
+    point get_device_offset() const;
+    bool has_surface_resource() const;
+    pattern get_pattern() const;
+    antialias get_antialias() const;
+    int get_dashes_count() const;
+    dashes get_dashes() const;
+    fill_rule get_fill_rule() const;
+    line_cap get_line_cap() const;
+    line_join get_line_join() const;
+    double get_line_width() const;
+    double get_miter_limit() const;
+    compositing_operator get_compositing_operator() const;
+    double get_tolerance() const;
+    rectangle get_clip_extents() const;
+    bool in_clip(const point& pt) const;
+    ::std::vector<rectangle> get_clip_rectangles() const;
+
+    // \ref{\iotwod.surface.observers.render}, render observers:
+    rectangle get_fill_extents() const;
+    bool in_fill(const point& pt) const;
+    rectangle get_stroke_extents() const;
+    bool in_stroke(const point& pt) const;
+    font_extents get_font_extents() const;
+    text_extents get_text_extents(const ::std::string& utf8) const;
+    text_extents get_glyph_extents(const ::std::vector<glyph>& glyphs) const;
+
+    // \ref{\iotwod.surface.observers.transform}, transformation observers:
+    matrix_2d get_matrix() const;
+    point user_to_device() const;
+    point user_to_device_distance() const;
+    point device_to_user() const;
+    point device_to_user_distance() const;
+
+    // \ref{\iotwod.surface.observers.font}, font observers:
+    matrix_2d get_font_matrix() const;
+    font_options get_font_options() const;
+    font_face get_font_face() const;
+    scaled_font get_scaled_font() const;
+  };
+
+  class image_surface : public surface {
+  public:
+    image_surface() = delete;
+    image_surface(const image_surface&) = delete;
+    image_surface& operator=(const image_surface&) = delete;
+    image_surface(image_surface&& other);
+    image_surface& operator=(image_surface&& other);
+    image_surface(surface::native_handle_type nh, surface::native_handle_type 
+    map_of);
+    image_surface(format format, int width, int height);
+    image_surface(vector<unsigned char>& data, format format, int width, int 
+    height, int stride);
+    // create_similar_image
+    image_surface(const surface& other, format format, int width, int height);
+    // create_from_png
+    image_surface(const ::std::string& filename);
+
+    void set_data(::std::vector<unsigned char>& data);
+    ::std::vector<unsigned char> get_data() const;
+    format get_format() const;
+    int get_width() const;
+    int get_height() const;
+    int get_stride() const;
+  };
+
+  int format_stride_for_width(format format, int width);
+  surface make_surface(@\impdef@) @\impdef@;
+  image_surface make_image_surface(format format, int width, int height);
+} } } } // namespaces std::experimental::io2d::v1
+
+namespace std {
+	template<>
+	struct is_error_condition_enum<::std::experimental::io2d::io2d_error>
+		: public ::std::true_type{ };
+
+	template<>
+	struct is_error_code_enum<::cairo_status_t>
+		: public ::std::true_type{ };
+
+	::std::error_condition make_error_condition(experimental::io2d::io2d_error 
+	e) noexcept;
+
+	::std::error_code make_error_code(cairo_status_t e) noexcept;
+} // namespace std
+
+#endif
+\end{codeblock}
+\indextext{2D graphics!synopsis|)}%
+\indexlibrary{\idxhdr{experimental/io2d}|)}

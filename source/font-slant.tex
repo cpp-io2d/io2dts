@@ -1,0 +1,62 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.fontslant] {Enum class \tcode{font_slant}}
+
+\rSec1 [\iotwod.fontslant.summary] {\tcode{font_slant} Summary}
+
+\pnum
+The \tcode{font_slant} enum class specifies the slant requested for rendering 
+text.
+\enternote
+These values have different meanings for different scripts. For some scripts 
+they may have no meaning at all. Further, not all typefaces will support every 
+value. As such, the values are requests which should be honored if possible and 
+meaningful, not requirements.
+\exitnote
+See Table~\ref{tab:\iotwod.fontslant.meanings} for the meaning of each
+\tcode{font_slant} enumerator.
+
+\rSec1 [\iotwod.fontslant.synopsis] {\tcode{font_slant} Synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  enum class font_slant {
+    normal,
+    italic,
+    oblique
+  };
+} } } } // namespaces std::experimental::io2d::v1
+\end{codeblock}
+
+\rSec1 [\iotwod.fontslant.enumerators] {\tcode{font_slant} Enumerators}
+\begin{libreqtab2}
+ {\tcode{font_slant} enumerator meanings}
+ {tab:\iotwod.fontslant.meanings}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endhead
+ \tcode{normal}
+ & The text should be rendered in whatever is a normal type for the script.
+ \\
+ \tcode{italic}
+ & The text should be rendered in whatever is an italic type for the script.
+ \enternote
+ If a font does not have an italic type but does have an oblique type, the 
+ oblique type shall be used if \tcode{italic} is requested.
+ \exitnote
+ \\
+ \tcode{oblique}
+ & The text should be rendered in whatever is an oblique type for the script.
+ \enternote
+ If a font does not have an oblique type but does have an italic type, the 
+ italic type shall be used if \tcode{oblique} is requested.
+ \exitnote
+ \\
+\end{libreqtab2}

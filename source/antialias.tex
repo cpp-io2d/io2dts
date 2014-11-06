@@ -1,0 +1,94 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.antialias] {Enum class \tcode{antialias}}
+
+\rSec1 [\iotwod.antialias.summary] {\tcode{antialias} Summary}
+
+\pnum
+The antialias enum class specifies the type of antialiasing that the rendering
+system is requested to use for rendering \tcode{surface} and 
+\tcode{pattern} objects, and for rendering text. See 
+Table~\ref{tab:\iotwod.antialias.meanings} for the meaning of each
+\tcode{antialias} enumerator.
+
+\pnum
+\enternote
+The value \tcode{antialias::subpixel} is only expected to be meaningful in the 
+context of rendering text.
+\exitnote
+
+\rSec1 [\iotwod.antialias.synopsis] {\tcode{antialias} Synopsis}
+
+\indexlibrary{\idxcode{antialias}}
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  enum class antialias {
+    default_antialias,
+    none,
+    gray,
+    subpixel,
+    fast,
+    good,
+    best
+  };
+} } } } // namespaces std::experimental::io2d::v1
+\end{codeblock}
+
+\rSec1 [\iotwod.antialias.enumerators] {\tcode{antialias} Enumerators}
+
+\begin{libreqtab2}
+ {\tcode{antialias} enumerator meanings}
+ {tab:\iotwod.antialias.meanings}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endhead
+ \tcode{default_antialias}
+ & \impldef{antialiasing!default}.
+ \\
+ \tcode{none}
+ & No antialiasing.
+ \\
+ \tcode{gray}
+ & Monochromatic antialiasing.
+ \\
+ \tcode{subpixel}
+ & Antialiasing that breaks pixels into their constituent color channels and 
+ manipulates those color channels individually. The meaning of this value for 
+ any rendering operation other than \tcode{surface::show_text}, 
+ \tcode{surface::show_glyphs}, and \tcode{surface::show_text_glyphs} is 
+ \impldef{antialias!subpixel}.
+ \\
+ \tcode{fast}
+ & \impldef{antialiasing!fast}.
+ \enternote
+ By choosing this value, the user is hinting that some antialiasing is
+ desired but that performance is more important that appearance.
+ \exitnote
+ \\
+ \tcode{good}
+ & \impldef{antialiasing!good}.
+ \enternote
+ By choosing this value, the user is hinting that antialiasing is
+ desired and that sacrificing some performance to obtain antialiasing
+ is acceptable. Implementations that provide antialiasing shall
+ enable some form of antialiasing when this option is selected unless
+ there is a compelling performance reason not to do so.
+ \\
+ \tcode{best}
+ & \impldef{antialiasing!best}.
+ \enternote
+ By choosing this value, the user is hinting that antialiasing is
+ more important than performance. Implementations that provide
+ antialiasing shall enable some form of antialiasing when this
+ option is selected, preferably the form that the implementor
+ believes to be the form that generally provides the best visual
+ results.
+ \\
+\end{libreqtab2}

@@ -1,0 +1,65 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.subpixel.order] {Enum class \tcode{subpixel_order}}
+
+\rSec1 [\iotwod.subpixel.order.summary] {\tcode{subpixel_order} Summary}
+
+\pnum
+The \tcode{subpixel_order} enum class is used to request a specific order of 
+color channels for each pixel of an output device. When a \tcode{surface} 
+object's \tcode{font_options} object has its \tcode{antialias} 
+value set to \tcode{antialias::subpixel} and its \tcode{subpixel_order} value 
+set to one of these values, an implementation should use the specified 
+\tcode{subpixel_order} to render text.
+See Table~\ref{tab:\iotwod.subpixel.order.meanings} for the meaning of each
+\tcode{subpixel_order} enumerator.
+
+\rSec1 [\iotwod.subpixel.order.synopsis] {\tcode{subpixel_order} Synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  enum class subpixel_order {
+    default_subpixel_order,
+    horizontal_rgb,
+    horizontal_bgr,
+    vertical_rgb,
+    vertical_bgr
+  };
+} } } } // namespaces std::experimental::io2d::v1
+\end{codeblock}
+
+\rSec1 [\iotwod.subpixel.order.enumerators] {\tcode{subpixel_order} Enumerators}
+\begin{libreqtab2}
+ {\tcode{subpixel_order} enumerator meanings}
+ {tab:\iotwod.subpixel.order.meanings}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endhead
+ \tcode{default_subpixel_order}
+ & The implementation should use the target \tcode{surface} object's default 
+ subpixel order.
+ \\
+ \tcode{horizontal_rgb}
+ & The color channels should be arranged horizontally starting with red on the 
+ left, followed by green, then blue.
+ \\
+ \tcode{horizontal_bgr}
+ & The color channels should be arranged horizontally starting with blue on the 
+ left, followed by green, then red.
+ \\
+ \tcode{vertical_rgb}
+ & The color channels should be arranged vertically starting with red on the 
+ top, followed by green, then blue.
+ \\
+ \tcode{vertical_bgr}
+ & The color channels should be arranged vertically starting with blue on the 
+ top, followed by green, then red.
+ \\
+\end{libreqtab2}

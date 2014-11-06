@@ -1,0 +1,365 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.\matrixtwod] {Struct \tcode{matrix_2d}}
+
+\rSec1 [\iotwod.\matrixtwod.intro] {\tcode{matrix_2d} Description}
+
+\pnum
+\indexlibrary{\idxcode{matrix_2d}}%
+The \tcode{matrix_2d} struct represents a two-dimensional, 3x3, row-major 
+matrix for affine transformations.
+
+\pnum
+The third column always has the column vector value of $[0.0, 0.0, 1.0]$ and so 
+is not included in the data members of the matrix. The performance of any 
+mathematical operation upon a \tcode{matrix_2d} shall be carried out as if the 
+omitted data members were present with their prescribed values.
+\enternote
+If the third column's data members were included, they would be: \tcode{double 
+m02}, which would immediately follow \tcode{m01} and would be assigned a value 
+of \tcode{0.0} by all static factory 
+functions\ref{\iotwod.\matrixtwod.staticfactories}; \tcode{double m12}, which 
+would immediately follow \tcode{m11} and would be assigned a value of 
+\tcode{0.0} by all static factory 
+functions\ref{\iotwod.\matrixtwod.staticfactories}; and, \tcode{double m22}, 
+which 
+would immediately follow \tcode{m21} and would be assigned a value of 
+\tcode{1.0} by all static factory 
+functions\ref{\iotwod.\matrixtwod.staticfactories}. The layout of the resulting 
+matrix 
+would be as such: \\
+$~[~[~m00~m01~m02~]~] \\
+~[~[~m10~m11~m12~]~] \\
+~[~[~m20~m21~m22~]~]$
+\exitnote
+
+\rSec1 [\iotwod.\matrixtwod.synopsis] {\tcode{matrix_2d} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  struct matrix_2d {
+    double m00;
+    double m01;
+    double m10;
+    double m11;
+    double m20;
+    double m21;
+    
+    // \ref{\iotwod.\matrixtwod.staticfactories}, static factory functions:
+    static matrix_2d init_identity();
+    static matrix_2d init_translate(const point& value);
+    static matrix_2d init_scale(const point& value);
+    static matrix_2d init_rotate(double radians);
+    static matrix_2d init_shear_x(double factor);
+    static matrix_2d init_shear_y(double factor);
+
+    // \ref{\iotwod.\matrixtwod.modifiers}, modifiers:
+    matrix_2d& translate(const point& value);
+    matrix_2d& scale(const point& value);
+    matrix_2d& rotate(double radians);
+    matrix_2d& shear_x(double factor);
+    matrix_2d& shear_y(double factor);
+    matrix_2d& invert();
+
+    // \ref{\iotwod.\matrixtwod.observers}, observers:
+    double determinant() const;
+    point transform_distance(const point& dist) const;
+    point transform_point(const point& pt) const;
+  };
+  
+  // \ref{\iotwod.\matrixtwod.nonmembers}, matrix_2d non-member functions:
+  matrix_2d operator*(const matrix_2d& lhs, const matrix_2d& rhs);
+  matrix_2d& operator*=(matrix_2d& lhs, const matrix_2d& rhs);
+  bool operator==(const matrix_2d& lhs, const matrix_2d& rhs);
+} } } } // namespaces std::experimental::io2d::v1
+\end{codeblock}
+
+\rSec1 [\iotwod.\matrixtwod.staticfactories] {\tcode{matrix_2d} static factory 
+functions}
+
+\rSec2 [\iotwod.\matrixtwod::init_identity] {\tcode{matrix_2d::init_identity}}
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{init_identity}}%
+\indexlibrary{\idxcode{init_identity}!\idxcode{matrix_2d}}%
+\begin{itemdecl}
+static matrix_2d init_identity();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{matrix\{ 1.0, 0.0, 0.0, 1.0, 0.0, 0.0 \}}
+\end{itemdescr}
+
+\rSec2 [\iotwod.\matrixtwod::init_translate] {\tcode{matrix_2d::init_translate}}
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{init_translate}}%
+\indexlibrary{\idxcode{init_translate}!\idxcode{matrix_2d}}%
+\begin{itemdecl}
+static matrix_2d init_translate(const point& value);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{matrix\{ 1.0, 0.0, 0.0, 1.0, value.x, value.y \}}
+\end{itemdescr}
+
+\rSec2 [\iotwod.\matrixtwod::init_scale] {\tcode{matrix_2d::init_scale}}
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{init_scale}}%
+\indexlibrary{\idxcode{init_scale}!\idxcode{matrix_2d}}%
+\begin{itemdecl}
+static matrix_2d init_scale(const point& value);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{matrix\{ value.x, 0.0, 0.0, value.y, 0.0, 0.0 \}}
+\end{itemdescr}
+
+\rSec2 [\iotwod.\matrixtwod::init_rotate] {\tcode{matrix_2d::init_rotate}}
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{init_rotate}}%
+\indexlibrary{\idxcode{init_rotate}!\idxcode{matrix_2d}}%
+\begin{itemdecl}
+static matrix_2d init_rotate(double radians);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{matrix\{ cos(radians), sin(radians), -sin(radians), cos(radians), 
+	0.0, 0.0 \}}
+\end{itemdescr}
+
+\rSec2 [\iotwod.\matrixtwod::init_shear_x] {\tcode{matrix_2d::init_shear_x}}
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{init_shear_x}}%
+\indexlibrary{\idxcode{init_shear_y}!\idxcode{matrix_2d}}%
+\begin{itemdecl}
+static matrix_2d init_shear_x(double factor);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{matrix\{ 1.0, 0.0, factor, 1.0, 0.0, 0.0 \}}
+\end{itemdescr}
+
+\rSec2 [\iotwod.\matrixtwod::init_shear_y] {\tcode{matrix_2d::init_shear_y}}
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{init_shear_y}}%
+\indexlibrary{\idxcode{init_shear_y}!\idxcode{matrix_2d}}%
+\begin{itemdecl}
+static matrix_2d init_shear_y(double factor);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{matrix\{ 1.0, factor, 0.0, 1.0, 0.0, 0.0 \}}
+\end{itemdescr}
+
+\rSec1 [\iotwod.\matrixtwod.modifiers] {\tcode{matrix_2d} modifiers}
+
+\rSec2 [\iotwod.\matrixtwod::translate] {\tcode{matrix_2d::translate}}
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{translate}}%
+\indexlibrary{\idxcode{translate}!\idxcode{matrix_2d}}%
+\begin{itemdecl}
+matrix_2d& translate(const point& value);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	\tcode{*this = init_translate(value) * (*this)}
+	
+	\pnum
+	\returns
+	\tcode{*this}
+\end{itemdescr}
+
+\rSec2 [\iotwod.\matrixtwod::scale] {\tcode{matrix_2d::scale}}
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{scale}}%
+\indexlibrary{\idxcode{scale}!\idxcode{matrix_2d}}%
+\begin{itemdecl}
+matrix_2d& scale(const point& value);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	\tcode{*this = init_scale(value) * (*this)}
+	
+	\pnum
+	\returns
+	\tcode{*this}
+\end{itemdescr}
+
+\rSec2 [\iotwod.\matrixtwod::rotate] {\tcode{matrix_2d::rotate}}
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{rotate}}%
+\indexlibrary{\idxcode{rotate}!\idxcode{matrix_2d}}%
+\begin{itemdecl}
+matrix_2d& rotate(double radians);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	\tcode{*this = init_rotate(radians) * (*this)}
+	
+	\pnum
+	\returns
+	\tcode{*this}
+\end{itemdescr}
+
+\rSec2 [\iotwod.\matrixtwod::shear_x] {\tcode{matrix_2d::shear_x}}
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{shear_x}}%
+\indexlibrary{\idxcode{shear_x}!\idxcode{matrix_2d}}%
+\begin{itemdecl}
+matrix_2d& shear_x(double factor);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	\tcode{*this = init_shear_x(factor) * (*this)}
+	
+	\pnum
+	\returns
+	\tcode{*this}
+\end{itemdescr}
+
+\rSec2 [\iotwod.\matrixtwod::shear_y] {\tcode{matrix_2d::shear_y}}
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{shear_y}}%
+\indexlibrary{\idxcode{shear_y}!\idxcode{matrix_2d}}%
+\begin{itemdecl}
+matrix_2d& shear_y(double factor);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	\tcode{*this = init_shear_y(factor) * (*this)}
+	
+	\pnum
+	\returns
+	\tcode{*this}
+\end{itemdescr}
+
+\rSec2 [\iotwod.\matrixtwod::invert] {\tcode{matrix_2d::invert}}
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{invert}}%
+\indexlibrary{\idxcode{invert}!\idxcode{matrix_2d}}%
+\begin{itemdecl}
+matrix_2d& invert();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	\tcode{*this} is inverted.
+	
+	\pnum
+	\returns
+	\tcode{*this}
+	
+	\pnum
+	\throws
+	\tcode{system_error} with an error code equivalent to 
+	\tcode{io2d_error::invalid_matrix} and an error category of type 
+	\tcode{io2d_error_category} if a \tcode{*this} is not an invertible matrix. 
+\end{itemdescr}
+
+\rSec1 [\iotwod.\matrixtwod.observers] {\tcode{matrix_2d} observers}
+
+\rSec2 [\iotwod.\matrixtwod::determinant] {\tcode{matrix_2d::determinant}}
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{determinant}}%
+\indexlibrary{\idxcode{determinant}!\idxcode{matrix_2d}}%
+\begin{itemdecl}
+double determinant() const;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	The determinant of \tcode{*this}.
+\end{itemdescr}
+
+\rSec2 [\iotwod.\matrixtwod::transform_distance] 
+{\tcode{matrix_2d::transform_distance}}
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{transform_distance}}%
+\indexlibrary{\idxcode{transform_distance}!\idxcode{matrix_2d}}%
+\begin{itemdecl}
+point transform_distance(const point& dist) const;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{point\{ m00 * dist.x + m10 * dist.y, m01 * dist.x + m11 * dist.y \}}
+	
+	\pnum
+	\notes
+	This function ignores the translation component of \tcode{*this}. If the 
+	translation component, \tcode{m20} and \tcode{m21}, of \tcode{*this} is set 
+	to \tcode{(0.0, 0.0)}, the return value of this function and the return 
+	value of \tcode{transform_point(dist)} will be identical when given the 
+	same input.
+\end{itemdescr}
+
+\rSec2 [\iotwod.\matrixtwod::transform_point] 
+{\tcode{matrix_2d::transform_point}}
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{transform_point}}%
+\indexlibrary{\idxcode{transform_point}!\idxcode{matrix_2d}}%
+\begin{itemdecl}
+point transform_point(const point& pt) const;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{point\{ (m00 * dist.x + m10 * dist.y) + m20, (m01 * dist.x + m11 * 
+	dist.y) + m21 \}}
+\end{itemdescr}
+
+\rSec1 [\iotwod.\matrixtwod.nonmembers] {\tcode{matrix_2d} non-member functions}
+
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{operator*}}%
+\indexlibrary{\idxcode{operator*}!\idxcode{matrix_2d}}%
+\begin{itemdecl}
+matrix_2d operator*(const matrix_2d& lhs, const matrix_2d& rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{matrix_2d\{\\
+	(lhs.m00 * rhs.m00) + (lhs.m01 * rhs.m10),\\
+	(lhs.m00 * rhs.m01) + (lhs.m01 * rhs.m11),\\
+	(lhs.m10 * rhs.m00) + (lhs.m11 * rhs.m10),\\
+	(lhs.m10 * rhs.m01) + (lhs.m11 * rhs.m11),\\
+	(lhs.m20 * rhs.m00) + (lhs.m21 * rhs.m10) + lhs.m20,\\
+	(lhs.m20 * rhs.m01) + (lhs.m21 * rhs.m11) + lhs.m21\\
+	\}}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{operator*=}}%
+\indexlibrary{\idxcode{operator*=}!\idxcode{matrix_2d}}%
+\begin{itemdecl}
+matrix_2d& operator*=(matrix_2d& lhs, const matrix_2d& rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	\tcode{lhs = lhs * rhs}
+	
+	\pnum
+	\returns
+	\tcode{lhs}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{operator==}}%
+\indexlibrary{\idxcode{operator==}!\idxcode{matrix_2d}}%
+\begin{itemdecl}
+bool operator==(const matrix_2d& lhs, const matrix_2d& rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{lhs.m00 == rhs.m00 \&\&
+	lhs.m01 == rhs.m01 \&\&
+	lhs.m10 == rhs.m10 \&\&
+	lhs.m11 == rhs.m11 \&\&
+	lhs.m20 == rhs.m20 \&\&
+	lhs.m21 == rhs.m21}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{operator!=}}%
+\indexlibrary{\idxcode{operator!=}!\idxcode{matrix_2d}}%
+\begin{itemdecl}
+bool operator!=(const matrix_2d& lhs, const matrix_2d& rhs);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{!(lhs == rhs)}
+\end{itemdescr}

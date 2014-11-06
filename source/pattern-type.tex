@@ -1,0 +1,56 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.pattern.type] {Enum class \tcode{pattern_type}}
+
+\rSec1 [\iotwod.pattern.type.summary] {\tcode{pattern_type} Summary}
+
+\pnum
+The \tcode{pattern_type} enum class denotes a \tcode{pattern} object's type.
+\enternote
+Since a \tcode{pattern} can only be formed using one of the pattern builder 
+types, this enum class is described in terms of which pattern builder was used 
+to form the \tcode{pattern} which has a particular \tcode{pattern_type}.
+\exitnote
+See Table~\ref{tab:\iotwod.pattern.type.meanings} for the meaning of each
+\tcode{pattern_type} enumerator.
+
+\rSec1 [\iotwod.pattern.type.synopsis] {\tcode{pattern_type} Synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  enum class pattern_type {
+    solid_color = 1,
+    linear,
+    radial,
+    mesh
+  };
+} } } } // namespaces std::experimental::io2d::v1
+\end{codeblock}
+
+\rSec1 [\iotwod.pattern.type.enumerators] {\tcode{pattern_type} Enumerators}
+\begin{libreqtab2}
+ {\tcode{pattern_type} enumerator meanings}
+ {tab:\iotwod.pattern.type.meanings}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endhead
+ \tcode{solid_color}
+ & The pattern was formed using a \tcode{solid_color_pattern_builder} object.
+ \\
+ \tcode{linear}
+ & The pattern was formed using a \tcode{linear_pattern_builder} object.
+ \\
+ \tcode{radial}
+ & The pattern was formed using a \tcode{radial_pattern_builder} object.
+ \\
+ \tcode{mesh}
+ & The pattern was formed using a \tcode{mesh_pattern_builder} object.
+ \\
+\end{libreqtab2}

@@ -1,0 +1,68 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.fill.rule] {Enum class \tcode{fill_rule}}
+
+\rSec1 [\iotwod.fill.rule.summary] {\tcode{fill_rule} Summary}
+
+\pnum
+The \tcode{fill_rule} enum class determines how the individuals paths in
+\tcode{path} objects are filled. For information about multiple paths in
+a single \tcode{path} object, see the description of the \tcode{path}
+class~(\ref{\iotwod.path}).
+
+\pnum
+In order to determine whether a point will be included in a fill
+operation, create a ray from the point to infinity. The direction of the
+ray does not matter provided that it does not pass through the end point
+of a path segment and does not intersect the path at a point that is
+tangent to the path. The intersections of the ray with the path are used
+in conjunction with the current \tcode{fill_rule} value to determine
+whether a point is filled. See Table~\ref{tab:\iotwod.fill.rule.meanings}
+for the meaning of each \tcode{fill_rule} enumerator.
+\enternote
+When used below, if the term path is formatted normally, i.e. path, it
+refers to an individual path within a \tcode{path} object. If the term is
+formatted in code style, i.e. \tcode{path}, it refers to the \tcode{path}
+type, which may contain one or more paths.
+\exitnote
+
+\pnum
+The default \tcode{fill_rule} is \tcode{fill_rule::winding}.
+
+\rSec1 [\iotwod.fill.rule.synopsis] {\tcode{fill_rule} Synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  enum class fill_rule {
+    winding,
+    even_odd
+  };
+} } } } // namespaces std::experimental::io2d::v1
+\end{codeblock}
+
+\rSec1 [\iotwod.fill.rule.enumerators] {\tcode{fill_rule} Enumerators}
+
+\begin{libreqtab2}
+ {\tcode{fill_rule} enumerator meanings}
+ {tab:\iotwod.fill.rule.meanings}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endhead
+ \tcode{winding}
+ & Starting with a count of zero, whenever the path crosses the ray from
+ left to right, add one to the count, and whenever the path crosses the
+ ray from right to left, subtract one from the count. If the count is
+ zero the point is not filled, otherwise it is filled.
+ \\
+ \tcode{even_odd}
+ & Count the number of times the ray intersects the path. If the count
+ is even, the point is not filled, otherwise it is filled.
+ \\ 
+\end{libreqtab2}

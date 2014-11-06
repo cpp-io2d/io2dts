@@ -1,0 +1,102 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.path] {Class \tcode{path}}
+
+\rSec1 [\iotwod.path.intro] {\tcode{path} Description}
+
+\pnum
+\indexlibrary{\idxcode{path}}%
+The \tcode{path} class is an opaque resource container. It represents one or 
+more geometric paths, which are created using the functionality of the 
+\tcode{path_factory} class~(\ref{\iotwod.pathfactory}).
+
+\pnum
+When a \tcode{path} object is set on a \tcode{surface} object using 
+\tcode{surface::set_path}, the geometric paths represented by it can be 
+stroked or filled.
+
+\rSec1 [\iotwod.path.synopsis] {\tcode{path} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class path {
+    public:
+    // See~\ref{\iotwod.req.native}
+    typedef @\impdef@ native_handle_type; // Exposition only.
+    native_handle_type native_handle(); // Exposition only.
+  	
+    // \ref{\iotwod.path.cons}, construct/copy/destroy:
+    path() = delete;
+    path(const path_factory& pb);
+    path(const path& other);
+    path& operator=(const path& other);
+    path(path&& other);
+    path& operator=(path&& other);
+  	
+    // \ref{\iotwod.path.observers}, observers:
+    ::std::vector<path_data> get_data() const;
+    const ::std::vector<path_data>& get_data_ref() const;
+    rectangle get_path_extents() const;
+  };
+} } } } // namespaces std::experimental::io2d::v1
+\end{codeblock}
+
+\rSec1 [\iotwod.path.cons] {\tcode{path} constructors and assignment operators}
+
+\indexlibrary{\idxcode{path}!constructor}%
+\begin{itemdecl}
+	path(const path_factory& pb);
+\end{itemdecl}
+
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of class \tcode{path} from a \tcode{path_factory} 
+	object's observable state.
+\end{itemdescr}
+
+\rSec1 [\iotwod.path.observers] {\tcode{path} observers}
+
+\rSec2 [\iotwod.path::get_path_extents] {\tcode{path::get_path_extents}}
+
+\indexlibrary{\idxcode{path}!\idxcode{get_path_extents}}%
+\indexlibrary{\idxcode{get_path_extents}!\idxcode{path}}%
+\begin{itemdecl}
+rectangle get_path_extents() const;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	The smallest \tcode{rectangle} that can contain the points contained in the 
+	\tcode{path_data} of \tcode{*this}.
+	
+	\pnum
+	\remarks
+	When determining the return value of this function, each point should be 
+	transformed in the way described in \ref{\iotwod.surface.pathtransform}.
+\end{itemdescr}
+
+\rSec2 [\iotwod.path::get_data] {\tcode{path::get_data}}
+
+\indexlibrary{\idxcode{path}!\idxcode{get_data}}%
+\indexlibrary{\idxcode{get_data}!\idxcode{path}}%
+\begin{itemdecl}
+::std::vector<path_data> get_data() const;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	A copy of the \tcode{vector<path_data>} stored by \tcode{*this}.
+\end{itemdescr}
+
+\rSec2 [\iotwod.path::get_data_ref] {\tcode{path::get_data_ref}}
+
+\indexlibrary{\idxcode{path}!\idxcode{get_data_ref}}%
+\indexlibrary{\idxcode{get_data_ref}!\idxcode{path}}%
+\begin{itemdecl}
+const ::std::vector<path_data>& get_data_ref() const;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	A const reference to the \tcode{vector<path_data>} stored by \tcode{*this}.
+\end{itemdescr}

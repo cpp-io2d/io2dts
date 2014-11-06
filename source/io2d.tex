@@ -1,0 +1,160 @@
+%% main file for the proposed 2d graphics ts.
+%%
+
+%%--------------------------------------------------
+%% basics
+% \documentclass[letterpaper,oneside,openany]{memoir}
+\documentclass[ebook,10pt,oneside,openany,final]{memoir}
+% \includeonly{declarations}
+
+\usepackage[american]
+           {babel}        % needed for iso dates
+\usepackage[iso,american]
+           {isodate}      % use iso format for dates
+\usepackage[final]
+           {listings}     % code listings
+\usepackage{longtable}    % auto-breaking tables
+\usepackage{ltcaption}    % fix captions for long tables
+\usepackage{booktabs}     % fancy tables
+\usepackage{relsize}      % provide relative font size changes
+\usepackage{underscore}   % remove special status of '_' in ordinary text
+\usepackage{verbatim}     % improved verbatim environment
+\usepackage{parskip}      % handle non-indented paragraphs "properly"
+\usepackage{array}        % new column definitions for tables
+\usepackage[normalem]{ulem}
+\usepackage{color}        % define colors for strikeouts and underlines
+\usepackage{amsmath}      % additional math symbols
+\usepackage{mathrsfs}     % mathscr font
+\usepackage{multicol}
+\usepackage{xspace}
+\usepackage{fixme}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[pdftex, final]{graphicx}
+\usepackage[pdftex,
+            pdftitle={Working Draft, Technical Specification --- 2D Graphics},
+            pdfsubject={Draft 2D Graphics Technical Specification},
+            pdfcreator={Michael B. McLaughlin, Herb Sutter, Jason Zink},
+            bookmarks=true,
+            bookmarksnumbered=true,
+            pdfpagelabels=true,
+            pdfpagemode=UseOutlines,
+            pdfstartview=FitH,
+            linktocpage=true,
+            colorlinks=true,
+            linkcolor=blue,
+            plainpages=false
+           ]{hyperref}
+\usepackage{memhfixc}     % fix interactions between hyperref and memoir
+
+\input{layout}
+\input{styles}
+\input{macros}
+\input{tables}
+
+\input{local-macros}
+
+\makeindex[generalindex]
+\makeindex[libraryindex]
+%\makeindex[grammarindex]
+\makeindex[impldefindex]
+
+%%--------------------------------------------------
+%% fix interaction between hyperref and other
+%% commands
+\pdfstringdefDisableCommands{\def\smaller#1{#1}}
+\pdfstringdefDisableCommands{\def\textbf#1{#1}}
+\pdfstringdefDisableCommands{\def\raisebox#1{}}
+\pdfstringdefDisableCommands{\def\hspace#1{}}
+
+%%--------------------------------------------------
+%% add special hyphenation rules
+\hyphenation{tem-plate ex-am-ple in-put-it-er-a-tor name-space name-spaces}
+
+\begin{document}
+\chapterstyle{cppstd}
+\pagestyle{cpppage}
+
+%%--------------------------------------------------
+%% configuration
+\input{config}
+
+%%--------------------------------------------------
+%% front matter
+\frontmatter
+\include{front}
+
+%%--------------------------------------------------
+%% main body of the document
+\mainmatter
+\setglobalstyles
+
+\include{general}
+\include{reqs}
+
+%% header synopsis
+\include{experimental-io2d}
+
+%% enum classes
+\include{io2d-error}
+\include{antialias}
+\include{content}
+\include{fill-rule}
+\include{line-cap}
+\include{line-join}
+\include{compositing-operator}
+\include{format}
+\include{path-data-type}
+\include{extend}
+\include{filter}
+\include{pattern-type}
+\include{font-slant}
+\include{font-weight}
+\include{subpixel-order}
+
+%% POD struct non-member functions
+\include{rgba-color}
+\include{literals}
+\include{point}
+\include{matrix-2d}
+
+%% classes
+\include{io2d-error-category}
+\include{path}
+\include{path-factory}
+\include{device}
+\include{font-options-factory}
+\include{font-options}
+\include{font-face}
+\include{scaled-font}
+\include{simple-font-face}
+\include{pattern}
+\include{solid-pattern-factory}
+\include{linear-pattern-factory}
+\include{radial-pattern-factory}
+\include{mesh-pattern-factory}
+\include{surface}
+\include{image-surface}
+
+%% free functions
+\include{free-functions}
+
+%%--------------------------------------------------
+%% appendices
+\appendix
+% %\include{grammar}
+% %\include{limits}
+% %\include{compatibility}
+% %\include{future}
+% %\include{charname}
+% %\include{xref}
+
+%%--------------------------------------------------
+%% back matter
+\backmatter
+\include{back}
+
+
+%%--------------------------------------------------
+%% End of document
+\end{document}
