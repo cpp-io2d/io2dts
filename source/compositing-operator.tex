@@ -20,6 +20,7 @@ Synopsis}
 namespace std { namespace experimental { namespace drawing { inline namespace 
 v1 {
   enum class compositing_operator {
+    // basic
     over,
     clear,
     source,
@@ -34,6 +35,7 @@ v1 {
     xor_op,
     add,
     saturate,
+    // blend
     multiply,
     screen,
     overlay,
@@ -45,12 +47,13 @@ v1 {
     soft_light,
     difference,
     exclusion,
+    // hsl
     hsl_hue,
     hsl_saturation,
     hsl_color,
     hsl_luminosity
   };
-} } } } // namespaces std::experimental::graphics::v1
+} } } }
 \end{codeblock}
 
 \rSec1 [\iotwod.compositing.operator.enumerators] {\tcode{compositing_operator} 

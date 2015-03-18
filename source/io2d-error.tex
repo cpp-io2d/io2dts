@@ -1,23 +1,21 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.io2d.error] {Enum class \tcode{io2d_error}}
+\rSec0 [\iotwod.io2derror] {Enum class \tcode{io2d_error}}
 
-\rSec1 [\iotwod.io2d.error.summary] {\tcode{io2d_error} Summary}
+\rSec1 [\iotwod.io2derror.summary] {\tcode{io2d_error} Summary}
 \pnum
 The \tcode{io2d_error} enum class is used as an \tcode{error_condition} 
 associated with \tcode{io2d_error_category}. See 
-Table~\ref{tab:\iotwod.io2d.error.meanings} for the meaning of each
+Table~\ref{tab:\iotwod.io2derror.meanings} for the meaning of each
 status code.
 
-\rSec1 [\iotwod.io2d.error.synopsis] {\tcode{io2d_error} Synopsis}
+\rSec1 [\iotwod.io2derror.synopsis] {\tcode{io2d_error} Synopsis}
 
 \indexlibrary{\idxcode{io2d_error}}%
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   enum class io2d_error {
     success,
-    no_memory,
     invalid_restore,
-    invalid_pop_group,
     no_current_point,
     invalid_matrix,
     invalid_status,
@@ -27,41 +25,23 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     read_error,
     write_error,
     surface_finished,
-    surface_type_mismatch,
-    pattern_type_mismatch,
-    invalid_content,
-    invalid_format,
-    invalid_visual,
-    file_not_found,
     invalid_dash,
-    invalid_dsc_comment,
-    invalid_index,
     clip_not_representable,
-    temp_file_error,
     invalid_stride,
-    font_type_mismatch,
     user_font_immutable,
     user_font_error,
-    negative_count,
     invalid_clusters,
-    invalid_slant,
-    invalid_weight,
-    invalid_size,
-    user_font_not_implemented,
-    device_type_mismatch,
     device_error,
     invalid_mesh_construction,
-    device_finished,
-    last_status
   };
-} } } } // namespaces std::experimental::io2d::v1
+} } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.io2d.error.enumerators] {\tcode{io2d_error} Enumerators}
+\rSec1 [\iotwod.io2derror.enumerators] {\tcode{io2d_error} Enumerators}
 
 \begin{libreqtab2}
   {\tcode{io2d_error} enumerator meanings}
-  {tab:\iotwod.io2d.error.meanings}
+  {tab:\iotwod.io2derror.meanings}
   \\ \topline
   \lhdr{Enumerator}
   & \rhdr{Meaning}
@@ -76,21 +56,9 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \tcode{success}
  & The operation completed successfully.
  \\
- \tcode{no_memory}
- & The operation failed due to insufficient memory.
- \enternote
- Deprecated. Implementations should throw an exception of type
- \tcode{std::bad_alloc} instead.
- \exitnote
- \\
  \tcode{invalid_restore}
  & A call was made to \tcode{surface::restore} for which no prior call to
  \tcode{surface::save} was made.
- \\
- \tcode{invalid_pop_group}
- & A call was made to \tcode{surface::pop_group} or
- \tcode{surface::pop_group_to_source} for which no prior call to
- \tcode{surface::push_group} was made.
  \\
  \tcode{no_current_point}
  & The operation requires a current point but no current point was set.
@@ -104,22 +72,19 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  a \tcode{matrix_2d} must be invertible.
  \\
  \tcode{invalid_status}
- & An internal error has occurred.
+ & An internal error has occurred. The conditions and circumstances under which 
+ this \tcode{io2d_error} value occurs are 
+ \impldef{\idxcode{status}!\idxcode{null_pointer}}.
  \enternote
- This value must only be used when no other \tcode{io2d_error} value is
+ This value should only be used when no other \tcode{io2d_error} value is
  appropriate. It signifies that an implementation-specific error
- occurred such as passing a bad native handle as an argument. The
- conditions and circumstances under which this \tcode{io2d_error} value occurs
- are \impldef{\idxcode{status}!\idxcode{null_pointer}}.
+ occurred such as passing a bad native handle as an argument.
  \exitnote
  \\
  \tcode{null_pointer}
- & A null pointer value was unexpectedly encountered.
- \enternote
- The conditions and circumstances under which this \tcode{io2d_error} value 
- occurs 
- are \impldef{\idxcode{status}!\idxcode{null_pointer}}.
- \exitnote
+ & A null pointer value was unexpectedly encountered. The conditions and 
+ circumstances under which this \tcode{io2d_error} value occurs are 
+ \impldef{\idxcode{status}!\idxcode{null_pointer}}.
  \\
  \tcode{invalid_string}
  & A UTF-8 string value was expected but the string is not a valid UTF-8
@@ -129,12 +94,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  & Invalid data was encountered in a \tcode{path} or a \tcode{path_builder}
  object.
  \enternote
- This status value should only occur when a user directly manipulates the
- internal data of a \tcode{path} or a \tcode{path_builder} object. Creating
- a \tcode{path} object using the \tcode{path_builder} type should never
- result in an invalid path unless the user calls the non-\tcode{const}
- overload of \tcode{path_builder::get_data_ref} and directly manipulates
- the data in an erroneous manner.
+ This status value should only occur when a user creates invalid path data and 
+ appends it to a path.
  \exitnote
  \\
  \tcode{read_error}
@@ -151,80 +112,19 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  result of erroneous usage of a native handle.
  \exitnote
  \\
- \tcode{surface_type_mismatch}
- & An operation was attempted on a surface that does not support it.
- \enternote
- Deprecated.
- \exitnote
- \\
- \tcode{pattern_type_mismatch}
- & An operation was attempted on a pattern that does not support it.
- \enternote
- Deprecated.
- \exitnote
-  \\
- \tcode{invalid_content}
- & An invalid \tcode{content} value was passed as an argument.
- \enternote
- Deprecated. Implementations should throw an exception of type
- \tcode{std::invalid_argument} instead.
- \exitnote
- \\
- \tcode{invalid_format}
- & An invalid \tcode{format} value was passed as an argument.
- \enternote
- Deprecated. Implementations should throw an exception of type
- \tcode{std::invalid_argument} instead.
- \exitnote
- \\
- \tcode{invalid_visual}
- & Invalid visual.
- \enternote
- Deprecated. Implementations should use \tcode{invalid_status} instead.
- \exitnote
- \\
- \tcode{file_not_found}
- & File not found.
- \\
  \tcode{invalid_dash}
  & An invalid dash value was specified in a call to \tcode{surface::set_dashes}.
- \\
- \tcode{invalid_dsc_comment}
- & Invalid dsc comment.
- \enternote
- Deprecated. Implementations should use \tcode{invalid_status} instead.
- \exitnote
- \\
- \tcode{invalid_index}
- & Invalid index.
- \enternote
- Deprecated. Implementations should throw an exception of type 
- \tcode{std::out_of_range} instead.
- \exitnote
  \\
  \tcode{clip_not_representable}
  & A call was made to \tcode{surface::get_clip_rectangles} when the
  \tcode{surface} object's current clipping region could not be represented
  with rectangles.
  \\
- \tcode{temp_file_error}
- & Temp file error.
- \enternote
- Deprecated. Implementations that require temporary files should use
- \tcode{invalid_status} instead.
- \exitnote
- \\
  \tcode{invalid_stride}
  & An invalid stride value was used. Surface formats may require padding at
  the end of each row of pixel data depending on the implementation and the
  current graphics chipset, if any. Use \tcode{format_stride_for_width} to
  obtain the correct stride value.
- \\
- \tcode{font_type_mismatch}
- & Font type mismatch.
- \enternote
- Deprecated.
- \exitnote
  \\
  \tcode{user_font_immutable}
  & User font immutable.
@@ -238,49 +138,11 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  Reserved.
  \exitnote
  \\
- \tcode{negative_count}
- & Negative count.
- \enternote
- Deprecated.
- \exitnote
- \\
  \tcode{invalid_clusters}
  & A call was made to \tcode{surface::show_text_glyphs} with a
  \tcode{std::vector<text_clusters>} argument that does not properly map
  the UTF-8 \tcode{std::string} code points to the \tcode{std::vector<glyph>}
  glyphs.
- \\
- \tcode{invalid_slant}
- & Invalid slant.
- \enternote
- Deprecated.
- \exitnote
- \\
- \tcode{invalid_weight}
- & Invalid weight.
- \enternote
- Deprecated.
- \exitnote
- \\
- \tcode{invalid_size}
- & The input value for a size parameter is incorrect.
- \enternote
- Typically this is an improper width or height argument. It could be zero or
- it could be a value that exceeds the implementation-defined size limits for
- a surface or a pattern.
- \exitnote
- \\
- \tcode{user_font_not_implemented}
- & User fonts are not implemented.
- \enternote
- Reserved.
- \exitnote
- \\
- \tcode{device_type_mismatch}
- & Device type mismatch.
- \enternote
- Deprecated.
- \exitnote
  \\
  \tcode{device_error}
  & The operation failed. The \tcode{device} encountered an error.
@@ -297,16 +159,4 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \tcode{mesh_pattern_builder::begin_edit_patch} and
  \tcode{mesh_pattern_builder::end_patch}.
  \\
- \tcode{device_finished}
- & Device finished.
- \enternote
- Deprecated.
- \exitnote
- \\
- \tcode{last_status}
- & This value is unused.
- \enternote
- Deprecated.
- \exitnote
- \\	
 \end{libreqtab2}

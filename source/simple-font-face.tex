@@ -1,1 +1,106 @@
 %!TEX root = io2d.tex
+\rSec0 [\iotwod.simplefontface] {Class \tcode{simple_font_face}}
+
+\rSec1 [\iotwod.simplefontface.intro] {\tcode{simple_font_face} Description}
+
+\pnum
+\indexlibrary{\idxcode{simple_font_face}}%
+The \tcode{simple_font_face} class ...
+
+\rSec1 [\iotwod.simplefontface.synopsis] {\tcode{simple_font_face} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class simple_font_face : public font_face {
+  public:
+    // See~\ref{\iotwod.req.native}
+    typedef @\impdef@ native_handle_type; // Exposition only.
+    native_handle_type native_handle() const; // Exposition only.
+    
+    // \ref{\iotwod.simplefontface.cons}, construct/copy/destroy:
+    simple_font_face() = delete;
+    simple_font_face(const simple_font_face&) = default;
+    simple_font_face& operator=(const simple_font_face&) = default;
+    simple_font_face(simple_font_face&& other);
+    simple_font_face& operator=(simple_font_face&& other);
+    simple_font_face(const ::std::string& family, font_slant slant,
+      font_weight weight);
+
+    // \ref{\iotwod.simplefontface.observers}, observers:
+    ::std::string get_family() const;
+    font_slant get_slant() const;
+    font_weight get_weight() const;
+  };
+} } } } // namespaces std::experimental::io2d::v1
+\end{codeblock}
+
+\rSec1 [\iotwod.simplefontface.cons] {\tcode{simple_font_face} constructors and 
+assignment operators}
+
+\indexlibrary{\idxcode{simple_font_face}!constructor}%
+\begin{itemdecl}
+simple_font_face(const ::std::string& family, font_slant slant,
+      font_weight weight);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of class \tcode{simple_font_face}.
+	
+	\pnum
+	\postconditions
+	\tcode{get_family()} shall return the value of \tcode{family} if the 
+	implementation located and loaded a font family by that name, otherwise it 
+	will return the name of the \impldef{\tcode{simple_font_family}!font 
+	family} nearest match.
+	\tcode{get_slant()} will return the value of \tcode{slant}.
+	\enternote
+	This value is a request only; see \ref{\iotwod.fontslant} for more 
+	information.
+	\exitnote
+	\tcode{get_weight()} will return the value of \tcode{weight}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.simplefontface.observers] {\tcode{simple_font_face} observers}
+
+\rSec2 [\iotwod.simplefontface::get_family] 
+{\tcode{simple_font_face::get_family}}
+
+\indexlibrary{\idxcode{simple_font_face}!\idxcode{get_family}}%
+\indexlibrary{\idxcode{get_family}!\idxcode{simple_font_face}}%
+\begin{itemdecl}
+::std::string get_family() const;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	The name of the font family used by \tcode{*this} (i.e. the font family 
+	with which it was actually created).
+\end{itemdescr}
+
+\rSec2 [\iotwod.simplefontface::get_slant] {\tcode{simple_font_face::get_slant}}
+
+\indexlibrary{\idxcode{simple_font_face}!\idxcode{get_slant}}%
+\indexlibrary{\idxcode{get_slant}!\idxcode{simple_font_face}}%
+\begin{itemdecl}
+font_slant get_slant() const;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	The \tcode{font_slant} value with which \tcode{*this} was created.
+\end{itemdescr}
+
+\rSec2 [\iotwod.simplefontface::get_weight] 
+{\tcode{simple_font_face::get_weight}}
+
+\indexlibrary{\idxcode{simple_font_face}!\idxcode{get_weight}}%
+\indexlibrary{\idxcode{get_weight}!\idxcode{simple_font_face}}%
+\begin{itemdecl}
+font_weight get_weight() const;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	The \tcode{font_weight} value with which \tcode{*this} was created.
+\end{itemdescr}

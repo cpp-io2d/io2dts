@@ -568,7 +568,11 @@ void set_miter_limit(double limit);
 	\enternote
 	When the join angle is less than 0.0005 radians, it is 
 	\impldef{\tcode{surface}!\tcode{set_miter_limit}} whether a mitered join or 
-	a beveled joins will be produced. Specifically, when the join angle is less than 0.0005 radians, implementations may switch to beveled rendering instead of mitered rendering at any arbitrary \impdef angle value, provided that the value is less than 0.0005 radians and that all joins with angles below the \impdef angle value are rendered as beveled.
+	a beveled joins will be produced. Specifically, when the join angle is less 
+	than 0.0005 radians, implementations may switch to beveled rendering 
+	instead of mitered rendering at an \impdef angle value, provided that the 
+	value is less than 0.0005 radians and that all joins with angles below the 
+	\impdef angle value are rendered as beveled.
 	\exitnote
 \end{itemdescr}
 

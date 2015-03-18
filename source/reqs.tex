@@ -1,5 +1,42 @@
 \rSec1 [\iotwod.req] {Requirements}
 
+\rSec2 [\iotwod.req.namespace] {Namespaces and headers}
+
+\pnum
+The components described in this technical specification are experimental and not part of the C++ standard library. All components described in this technical specification are declared in namespace
+\tcode{std::experimental::io2d::v1} or a sub-namespace thereof unless otherwise specified. The header described in this technical specification shall import the contents of \tcode{std::experimental::io2d::v1} into \tcode{std::experimental::io2d} as if by
+
+\pnum
+\begin{codeblock}
+namespace std {
+  namespace experimental {
+    namespace io2d {
+      inline namespace v1 { }
+    }
+  }
+}
+\end{codeblock}
+
+\pnum
+Unless otherwise specified, references to other entities described in this technical specification are assumed to be qualified with \tcode{std::experimental::filesystem::v1::}, and references to entities
+described in the C++ standard are assumed to be qualified with \tcode{std::}.
+
+\rSec2 [\iotwod.req.macros] {Feature test macros}
+
+\pnum
+This macro allows users to determine which version of this Technical Specification is supported by header \tcode{<experimental/io2d>}.
+
+\pnum
+Header \tcode{<experimental/io2d>} shall supply the following macro definition:
+
+\pnum
+\tcode{#define __cpp_lib_experimental_io2d 201505
+
+\pnum
+\enternote
+The value of macro __cpp_lib_experimental_io2d is yyyymm where yyyy is the year
+and mm the month when the version of the Technical Specification was completed. \exitnote
+
 \rSec2 [\iotwod.req.native] {Native handles}
 
 \pnum

@@ -1,12 +1,201 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.rgbacolor] {Struct \tcode{rgba_color}}
+\rSec0 [\iotwod.rgbacolor] {Class \tcode{rgba_color}}
+
+\rSec1 [\iotwod.rgbacolor.synopsis] {\tcode{rgba_color} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class rgba_color {
+    // \ref{\iotwod.rgbacolor.cons}, construct/copy/move/destroy:
+  	rgba_color() noexcept;
+  	rgba_color(double r, double g, double b, double a = 1.0);
+  	rgba_color(double r, double g, double b, ::std::error_code& ec) noexcept;
+  	rgba_color(double r, double g, double b, double a, ::std::error_code& ec) noexcept;
+  	rgba_color(const rgba_color& c);
+  	rgba_color& operator=(const rgba_color& c);
+  	rgba_color(rgba_color&& c);
+  	rgba_color& operator=(rgba_color&& c);
+  	
+    // \ref{\iotwod.rgbacolor.modifiers}, modifiers:
+    void r(double val) noexcept;
+    void g(double val) noexcept;
+    void b(double val) noexcept;
+    void a(double val) noexcept;
+    
+    // \ref{\iotwod.rgbacolor.observers}, observers:
+    double r() const noexcept;
+    double g() const noexcept;
+    double b() const noexcept;
+    double a() const noexcept;
+    
+    // \ref{\iotwod.rgbacolor.statics}, static member functions:
+    static const rgba_color& alice_blue() noexcept;
+    static const rgba_color& antique_white() noexcept;
+    static const rgba_color& aqua() noexcept;
+    static const rgba_color& aquamarine() noexcept;
+    static const rgba_color& azure() noexcept;
+    static const rgba_color& beige() noexcept;
+    static const rgba_color& bisque() noexcept;
+    static const rgba_color& black() noexcept;
+    static const rgba_color& blanched_almond() noexcept;
+    static const rgba_color& blue() noexcept;
+    static const rgba_color& blue_violet() noexcept;
+    static const rgba_color& brown() noexcept;
+    static const rgba_color& burly_wood() noexcept;
+    static const rgba_color& cadet_blue() noexcept;
+    static const rgba_color& chartreuse() noexcept;
+    static const rgba_color& chocolate() noexcept;
+    static const rgba_color& coral() noexcept;
+    static const rgba_color& cornflower_blue() noexcept;
+    static const rgba_color& cornsilk() noexcept;
+    static const rgba_color& crimson() noexcept;
+    static const rgba_color& cyan() noexcept;
+    static const rgba_color& dark_blue() noexcept;
+    static const rgba_color& dark_cyan() noexcept;
+    static const rgba_color& dark_goldenrod() noexcept;
+    static const rgba_color& dark_gray() noexcept;
+    static const rgba_color& dark_green() noexcept;
+    static const rgba_color& dark_grey() noexcept;
+    static const rgba_color& dark_khaki() noexcept;
+    static const rgba_color& dark_magenta() noexcept;
+    static const rgba_color& dark_olive_green() noexcept;
+    static const rgba_color& dark_orange() noexcept;
+    static const rgba_color& dark_orchid() noexcept;
+    static const rgba_color& dark_red() noexcept;
+    static const rgba_color& dark_salmon() noexcept;
+    static const rgba_color& dark_sea_green() noexcept;
+    static const rgba_color& dark_slate_blue() noexcept;
+    static const rgba_color& dark_slate_gray() noexcept;
+    static const rgba_color& dark_slate_grey() noexcept;
+    static const rgba_color& dark_turquoise() noexcept;
+    static const rgba_color& dark_violet() noexcept;
+    static const rgba_color& deep_pink() noexcept;
+    static const rgba_color& deep_sky_blue() noexcept;
+    static const rgba_color& dim_gray() noexcept;
+    static const rgba_color& dim_grey() noexcept;
+    static const rgba_color& dodger_blue() noexcept;
+    static const rgba_color& firebrick() noexcept;
+    static const rgba_color& floral_white() noexcept;
+    static const rgba_color& forest_green() noexcept;
+    static const rgba_color& fuchsia() noexcept;
+    static const rgba_color& gainsboro() noexcept;
+    static const rgba_color& ghost_white() noexcept;
+    static const rgba_color& gold() noexcept;
+    static const rgba_color& goldenrod() noexcept;
+    static const rgba_color& gray() noexcept;
+    static const rgba_color& green() noexcept;
+    static const rgba_color& green_yellow() noexcept;
+    static const rgba_color& grey() noexcept;
+    static const rgba_color& honeydew() noexcept;
+    static const rgba_color& hot_pink() noexcept;
+    static const rgba_color& indian_red() noexcept;
+    static const rgba_color& indigo() noexcept;
+    static const rgba_color& ivory() noexcept;
+    static const rgba_color& khaki() noexcept;
+    static const rgba_color& lavender() noexcept;
+    static const rgba_color& lavender_blush() noexcept;
+    static const rgba_color& lawn_green() noexcept;
+    static const rgba_color& lemon_chiffon() noexcept;
+    static const rgba_color& light_blue() noexcept;
+    static const rgba_color& light_coral() noexcept;
+    static const rgba_color& light_cyan() noexcept;
+    static const rgba_color& light_goldenrod_yellow() noexcept;
+    static const rgba_color& light_gray() noexcept;
+    static const rgba_color& light_green() noexcept;
+    static const rgba_color& light_grey() noexcept;
+    static const rgba_color& light_pink() noexcept;
+    static const rgba_color& light_salmon() noexcept;
+    static const rgba_color& light_sea_green() noexcept;
+    static const rgba_color& light_sky_blue() noexcept;
+    static const rgba_color& light_slate_gray() noexcept;
+    static const rgba_color& light_slate_grey() noexcept;
+    static const rgba_color& light_steel_blue() noexcept;
+    static const rgba_color& light_yellow() noexcept;
+    static const rgba_color& lime() noexcept;
+    static const rgba_color& lime_green() noexcept;
+    static const rgba_color& linen() noexcept;
+    static const rgba_color& magenta() noexcept;
+    static const rgba_color& maroon() noexcept;
+    static const rgba_color& medium_aquamarine() noexcept;
+    static const rgba_color& medium_blue() noexcept;
+    static const rgba_color& medium_orchid() noexcept;
+    static const rgba_color& medium_purple() noexcept;
+    static const rgba_color& medium_sea_green() noexcept;
+    static const rgba_color& medium_slate_blue() noexcept;
+    static const rgba_color& medium_spring_green() noexcept;
+    static const rgba_color& medium_turquoise() noexcept;
+    static const rgba_color& medium_violet_red() noexcept;
+    static const rgba_color& midnight_blue() noexcept;
+    static const rgba_color& mint_cream() noexcept;
+    static const rgba_color& misty_rose() noexcept;
+    static const rgba_color& moccasin() noexcept;
+    static const rgba_color& navajo_white() noexcept;
+    static const rgba_color& navy() noexcept;
+    static const rgba_color& old_lace() noexcept;
+    static const rgba_color& olive() noexcept;
+    static const rgba_color& olive_drab() noexcept;
+    static const rgba_color& orange() noexcept;
+    static const rgba_color& orange_red() noexcept;
+    static const rgba_color& orchid() noexcept;
+    static const rgba_color& pale_goldenrod() noexcept;
+    static const rgba_color& pale_green() noexcept;
+    static const rgba_color& pale_turquoise() noexcept;
+    static const rgba_color& pale_violet_red() noexcept;
+    static const rgba_color& papaya_whip() noexcept;
+    static const rgba_color& peach_puff() noexcept;
+    static const rgba_color& peru() noexcept;
+    static const rgba_color& pink() noexcept;
+    static const rgba_color& plum() noexcept;
+    static const rgba_color& powder_blue() noexcept;
+    static const rgba_color& purple() noexcept;
+    static const rgba_color& red() noexcept;
+    static const rgba_color& rosy_brown() noexcept;
+    static const rgba_color& royal_blue() noexcept;
+    static const rgba_color& saddle_brown() noexcept;
+    static const rgba_color& salmon() noexcept;
+    static const rgba_color& sandy_brown() noexcept;
+    static const rgba_color& sea_green() noexcept;
+    static const rgba_color& sea_shell() noexcept;
+    static const rgba_color& sienna() noexcept;
+    static const rgba_color& silver() noexcept;
+    static const rgba_color& sky_blue() noexcept;
+    static const rgba_color& slate_blue() noexcept;
+    static const rgba_color& slate_gray() noexcept;
+    static const rgba_color& slate_grey() noexcept;
+    static const rgba_color& snow() noexcept;
+    static const rgba_color& spring_green() noexcept;
+    static const rgba_color& steel_blue() noexcept;
+    static const rgba_color& tan() noexcept;
+    static const rgba_color& teal() noexcept;
+    static const rgba_color& thistle() noexcept;
+    static const rgba_color& tomato() noexcept;
+    static const rgba_color& transparent_black() noexcept;
+    static const rgba_color& turquoise() noexcept;
+    static const rgba_color& violet() noexcept;
+    static const rgba_color& wheat() noexcept;
+    static const rgba_color& white() noexcept;
+    static const rgba_color& white_smoke() noexcept;
+    static const rgba_color& yellow() noexcept;
+    static const rgba_color& yellow_green() noexcept;
+  };
+
+  // \ref{\iotwod.rgbacolor.ops}, non-member operators:
+  bool operator==(const rgba_color& lhs, const rgba_color& rhs);
+  bool operator!=(const rgba_color& lhs, const rgba_color& rhs);
+private:
+    double _Red;   // \expos
+    double _Green; // \expos
+    double _Blue;  // \expos
+    double _Alpha; // \expos
+
+} } } }
+\end{codeblock}
 
 \rSec1 [\iotwod.rgbacolor.intro] {\tcode{rgba_color} Description}
 
 \pnum
 \indexlibrary{\idxcode{rgba_color}}%
-The \tcode{rgba_color} struct represents a premultiplied color with four 
-channels.
+The class \tcode{rgba_color} describes a four channel color ***FIXME*** premultiplied format.
 
 \pnum
 There are three color channels, each of which is an unsigned normalized double: 
@@ -24,673 +213,1833 @@ ensures sufficient precision for lossless storage and retrieval, without
 conversion, of 32-bit color formats and even 64-bit (16-bits per channel) color 
 formats.
 
-\rSec1 [\iotwod.rgbacolor.synopsis] {\tcode{rgba_color} synopsis}
+\rSec1 [\iotwod.rgbacolor.cons] {\tcode{rgba_color} constructors and assignment operators}
 
-\begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  struct rgba_color {
-    double r;
-    double g;
-    double b;
-    double a;
-    
-    // \ref{\iotwod.rgbacolor.constants}, static constants:
-    const static rgba_color alice_blue;
-    const static rgba_color antique_white;
-    const static rgba_color aqua;
-    const static rgba_color aquamarine;
-    const static rgba_color azure;
-    const static rgba_color beige;
-    const static rgba_color bisque;
-    const static rgba_color black;
-    const static rgba_color blanched_almond;
-    const static rgba_color blue;
-    const static rgba_color blue_violet;
-    const static rgba_color brown;
-    const static rgba_color burly_wood;
-    const static rgba_color cadet_blue;
-    const static rgba_color chartreuse;
-    const static rgba_color chocolate;
-    const static rgba_color coral;
-    const static rgba_color cornflower_blue;
-    const static rgba_color cornsilk;
-    const static rgba_color crimson;
-    const static rgba_color cyan;
-    const static rgba_color dark_blue;
-    const static rgba_color dark_cyan;
-    const static rgba_color dark_goldenrod;
-    const static rgba_color dark_gray;
-    const static rgba_color dark_green;
-    const static rgba_color dark_grey;
-    const static rgba_color dark_khaki;
-    const static rgba_color dark_magenta;
-    const static rgba_color dark_olive_green;
-    const static rgba_color dark_orange;
-    const static rgba_color dark_orchid;
-    const static rgba_color dark_red;
-    const static rgba_color dark_salmon;
-    const static rgba_color dark_sea_green;
-    const static rgba_color dark_slate_blue;
-    const static rgba_color dark_slate_gray;
-    const static rgba_color dark_slate_grey;
-    const static rgba_color dark_turquoise;
-    const static rgba_color dark_violet;
-    const static rgba_color deep_pink;
-    const static rgba_color deep_sky_blue;
-    const static rgba_color dim_gray;
-    const static rgba_color dim_grey;
-    const static rgba_color dodger_blue;
-    const static rgba_color firebrick;
-    const static rgba_color floral_white;
-    const static rgba_color forest_green;
-    const static rgba_color fuchsia;
-    const static rgba_color gainsboro;
-    const static rgba_color ghost_white;
-    const static rgba_color gold;
-    const static rgba_color goldenrod;
-    const static rgba_color gray;
-    const static rgba_color green;
-    const static rgba_color green_yellow;
-    const static rgba_color grey;
-    const static rgba_color honeydew;
-    const static rgba_color hot_pink;
-    const static rgba_color indian_red;
-    const static rgba_color indigo;
-    const static rgba_color ivory;
-    const static rgba_color khaki;
-    const static rgba_color lavender;
-    const static rgba_color lavender_blush;
-    const static rgba_color lawn_green;
-    const static rgba_color lemon_chiffon;
-    const static rgba_color light_blue;
-    const static rgba_color light_coral;
-    const static rgba_color light_cyan;
-    const static rgba_color light_goldenrod_yellow;
-    const static rgba_color light_gray;
-    const static rgba_color light_green;
-    const static rgba_color light_grey;
-    const static rgba_color light_pink;
-    const static rgba_color light_salmon;
-    const static rgba_color light_sea_green;
-    const static rgba_color light_sky_blue;
-    const static rgba_color light_slate_gray;
-    const static rgba_color light_slate_grey;
-    const static rgba_color light_steel_blue;
-    const static rgba_color light_yellow;
-    const static rgba_color lime;
-    const static rgba_color lime_green;
-    const static rgba_color linen;
-    const static rgba_color magenta;
-    const static rgba_color maroon;
-    const static rgba_color medium_aquamarine;
-    const static rgba_color medium_blue;
-    const static rgba_color medium_orchid;
-    const static rgba_color medium_purple;
-    const static rgba_color medium_sea_green;
-    const static rgba_color medium_slate_blue;
-    const static rgba_color medium_spring_green;
-    const static rgba_color medium_turquoise;
-    const static rgba_color medium_violet_red;
-    const static rgba_color midnight_blue;
-    const static rgba_color mint_cream;
-    const static rgba_color misty_rose;
-    const static rgba_color moccasin;
-    const static rgba_color navajo_white;
-    const static rgba_color navy;
-    const static rgba_color old_lace;
-    const static rgba_color olive;
-    const static rgba_color olive_drab;
-    const static rgba_color orange;
-    const static rgba_color orange_red;
-    const static rgba_color orchid;
-    const static rgba_color pale_goldenrod;
-    const static rgba_color pale_green;
-    const static rgba_color pale_turquoise;
-    const static rgba_color pale_violet_red;
-    const static rgba_color papaya_whip;
-    const static rgba_color peach_puff;
-    const static rgba_color peru;
-    const static rgba_color pink;
-    const static rgba_color plum;
-    const static rgba_color powder_blue;
-    const static rgba_color purple;
-    const static rgba_color red;
-    const static rgba_color rosy_brown;
-    const static rgba_color royal_blue;
-    const static rgba_color saddle_brown;
-    const static rgba_color salmon;
-    const static rgba_color sandy_brown;
-    const static rgba_color sea_green;
-    const static rgba_color sea_shell;
-    const static rgba_color sienna;
-    const static rgba_color silver;
-    const static rgba_color sky_blue;
-    const static rgba_color slate_blue;
-    const static rgba_color slate_gray;
-    const static rgba_color slate_grey;
-    const static rgba_color snow;
-    const static rgba_color spring_green;
-    const static rgba_color steel_blue;
-    const static rgba_color tan;
-    const static rgba_color teal;
-    const static rgba_color thistle;
-    const static rgba_color tomato;
-    const static rgba_color transparent_black;
-    const static rgba_color turquoise;
-    const static rgba_color violet;
-    const static rgba_color wheat;
-    const static rgba_color white;
-    const static rgba_color white_smoke;
-    const static rgba_color yellow;
-    const static rgba_color yellow_green;
-  };
-
-  // \ref{\iotwod.rgbacolor.nonmembers}, rgba_color non-member functions:
-  rgba_color operator*(const rgba_color& lhs, double rhs);
-  rgba_color& operator*=(rgba_color& lhs, double rhs);
-  bool operator==(const rgba_color& lhs, const rgba_color& rhs);
-  bool operator!=(const rgba_color& lhs, const rgba_color& rhs);
-} } } } // namespaces std::experimental::io2d::v1
-\end{codeblock}
-
-\rSec1 [\iotwod.rgbacolor.constants] {\tcode{rgba_color} static constants}
-
-%\pnum
-%With the exception of \tcode{transparent_black}, these predefined colors are 
-%derived from \S4.3 of the \term{CSS Colors Specification}.
-
-\begin{libreqtab2}
- {\tcode{rgba_color} const static member values}
- {tab:\iotwod.rgbacolor.constvalues}
- \\ \topline
- \lhdr{Constant}
- & \rhdr{Value}
- \\ \capsep
- \endfirsthead
- \continuedcaption\\
- \hline
- \lhdr{Constant}
- & \rhdr{Value}
- \\ \capsep
- \endhead
- \tcode{alice_blue}
- & \tcode{rgba_color\{ 240ubyte, 248ubyte, 255ubyte, 255ubyte \}}
- \\
- \tcode{antique_white}
- & \tcode{rgba_color\{ 250ubyte, 235ubyte, 215ubyte, 255ubyte \}}
- \\
- \tcode{aqua}
- & \tcode{rgba_color\{ 0ubyte, 255ubyte, 255ubyte, 255ubyte \}}
- \\
- \tcode{aquamarine}
- & \tcode{rgba_color\{ 127ubyte, 255ubyte, 212ubyte, 255ubyte \}}
- \\
- \tcode{azure}
- & \tcode{rgba_color\{ 240ubyte, 255ubyte, 255ubyte, 255ubyte \}}
- \\
- \tcode{beige}
- & \tcode{rgba_color\{ 245ubyte, 245ubyte, 220ubyte, 255ubyte \}}
- \\
- \tcode{bisque}
- & \tcode{rgba_color\{ 255ubyte, 228ubyte, 196ubyte, 255ubyte \}}
- \\
- \tcode{black}
- & \tcode{rgba_color\{ 0ubyte, 0ubyte, 0ubyte, 255ubyte \}}
- \\
- \tcode{blanched_almond}
- & \tcode{rgba_color\{ 255ubyte, 235ubyte, 205ubyte, 255ubyte \}}
- \\
- \tcode{blue}
- & \tcode{rgba_color\{ 0ubyte, 0ubyte, 255ubyte, 255ubyte \}}
- \\
- \tcode{blue_violet}
- & \tcode{rgba_color\{ 138ubyte, 43ubyte, 226ubyte, 255ubyte \}}
- \\
- \tcode{brown}
- & \tcode{rgba_color\{ 165ubyte, 42ubyte, 42ubyte, 255ubyte \}}
- \\
- \tcode{burly_wood}
- & \tcode{rgba_color\{ 222ubyte, 184ubyte, 135ubyte, 255ubyte \}}
- \\
- \tcode{cadet_blue}
- & \tcode{rgba_color\{ 95ubyte, 158ubyte, 160ubyte, 255ubyte \}}
- \\
- \tcode{chartreuse}
- & \tcode{rgba_color\{ 127ubyte, 255ubyte, 0ubyte, 255ubyte \}}
- \\
- \tcode{chocolate}
- & \tcode{rgba_color\{ 210ubyte, 105ubyte, 30ubyte, 255ubyte \}}
- \\
- \tcode{coral}
- & \tcode{rgba_color\{ 255ubyte, 127ubyte, 80ubyte, 255ubyte \}}
- \\
- \tcode{cornflower_blue}
- & \tcode{rgba_color\{ 100ubyte, 149ubyte, 237ubyte, 255ubyte \}}
- \\
- \tcode{cornsilk}
- & \tcode{rgba_color\{ 255ubyte, 248ubyte, 220ubyte, 255ubyte \}}
- \\
- \tcode{crimson}
- & \tcode{rgba_color\{ 220ubyte, 20ubyte, 60ubyte, 255ubyte \}}
- \\
- \tcode{cyan}
- & \tcode{rgba_color\{ 0ubyte, 255ubyte, 255ubyte, 255ubyte \}}
- \\
- \tcode{dark_blue}
- & \tcode{rgba_color\{ 0ubyte, 0ubyte, 139ubyte, 255ubyte \}}
- \\
- \tcode{dark_cyan}
- & \tcode{rgba_color\{ 0ubyte, 139ubyte, 139ubyte, 255ubyte \}}
- \\
- \tcode{dark_goldenrod}
- & \tcode{rgba_color\{ 184ubyte, 134ubyte, 11ubyte, 255ubyte \}}
- \\
- \tcode{dark_gray}
- & \tcode{rgba_color\{ 169ubyte, 169ubyte, 169ubyte, 255ubyte \}}
- \\
- \tcode{dark_green}
- & \tcode{rgba_color\{ 0ubyte, 100ubyte, 0ubyte, 255ubyte \}}
- \\
- \tcode{dark_grey}
- & \tcode{rgba_color\{ 169ubyte, 169ubyte, 169ubyte, 255ubyte \}}
- \\
- \tcode{dark_khaki}
- & \tcode{rgba_color\{ 189ubyte, 183ubyte, 107ubyte, 255ubyte \}}
- \\
- \tcode{dark_magenta}
- & \tcode{rgba_color\{ 139ubyte, 0ubyte, 139ubyte, 255ubyte \}}
- \\
- \tcode{dark_olive_green}
- & \tcode{rgba_color\{ 85ubyte, 107ubyte, 47ubyte, 255ubyte \}}
- \\
- \tcode{dark_orange}
- & \tcode{rgba_color\{ 255ubyte, 140ubyte, 0ubyte, 255ubyte \}}
- \\
- \tcode{dark_orchid}
- & \tcode{rgba_color\{ 153ubyte, 50ubyte, 204ubyte, 255ubyte \}}
- \\
- \tcode{dark_red}
- & \tcode{rgba_color\{ 139ubyte, 0ubyte, 0ubyte, 255ubyte \}}
- \\
- \tcode{dark_salmon}
- & \tcode{rgba_color\{ 233ubyte, 150ubyte, 122ubyte, 255ubyte \}}
- \\
- \tcode{dark_sea_green}
- & \tcode{rgba_color\{ 143ubyte, 188ubyte, 143ubyte, 255ubyte \}}
- \\
- \tcode{dark_slate_blue}
- & \tcode{rgba_color\{ 72ubyte, 61ubyte, 139ubyte, 255ubyte \}}
- \\
- \tcode{dark_slate_gray}
- & \tcode{rgba_color\{ 47ubyte, 79ubyte, 79ubyte, 255ubyte \}}
- \\
- \tcode{dark_slate_grey}
- & \tcode{rgba_color\{ 47ubyte, 79ubyte, 79ubyte, 255ubyte \}}
- \\
- \tcode{dark_turquoise}
- & \tcode{rgba_color\{ 0ubyte, 206ubyte, 209ubyte, 255ubyte \}}
- \\
- \tcode{dark_violet}
- & \tcode{rgba_color\{ 148ubyte, 0ubyte, 211ubyte, 255ubyte \}}
- \\
- \tcode{deep_pink}
- & \tcode{rgba_color\{ 255ubyte, 20ubyte, 147ubyte, 255ubyte \}}
- \\
- \tcode{deep_sky_blue}
- & \tcode{rgba_color\{ 0ubyte, 191ubyte, 255ubyte, 255ubyte \}}
- \\
- \tcode{dim_gray}
- & \tcode{rgba_color\{ 105ubyte, 105ubyte, 105ubyte, 255ubyte \}}
- \\
- \tcode{dim_grey}
- & \tcode{rgba_color\{ 105ubyte, 105ubyte, 105ubyte, 255ubyte \}}
- \\
- \tcode{dodger_blue}
- & \tcode{rgba_color\{ 30ubyte, 144ubyte, 255ubyte, 255ubyte \}}
- \\
- \tcode{firebrick}
- & \tcode{rgba_color\{ 178ubyte, 34ubyte, 34ubyte, 255ubyte \}}
- \\
- \tcode{floral_white}
- & \tcode{rgba_color\{ 255ubyte, 250ubyte, 240ubyte, 255ubyte \}}
- \\
- \tcode{forest_green}
- & \tcode{rgba_color\{ 34ubyte, 139ubyte, 34ubyte, 255ubyte \}}
- \\
- \tcode{fuchsia}
- & \tcode{rgba_color\{ 255ubyte, 0ubyte, 255ubyte, 255ubyte \}}
- \\
- \tcode{gainsboro}
- & \tcode{rgba_color\{ 220ubyte, 220ubyte, 220ubyte, 255ubyte \}}
- \\
- \tcode{ghost_white}
- & \tcode{rgba_color\{ 248ubyte, 248ubyte, 255ubyte, 255ubyte \}}
- \\
- \tcode{gold}
- & \tcode{rgba_color\{ 255ubyte, 215ubyte, 0ubyte, 255ubyte \}}
- \\
- \tcode{goldenrod}
- & \tcode{rgba_color\{ 218ubyte, 165ubyte, 32ubyte, 255ubyte \}}
- \\
- \tcode{gray}
- & \tcode{rgba_color\{ 128ubyte, 128ubyte, 128ubyte, 255ubyte \}}
- \\
- \tcode{green}
- & \tcode{rgba_color\{ 0ubyte, 128ubyte, 0ubyte, 255ubyte \}}
- \\
- \tcode{green_yellow}
- & \tcode{rgba_color\{ 173ubyte, 255ubyte, 47ubyte, 255ubyte \}}
- \\
- \tcode{grey}
- & \tcode{rgba_color\{ 128ubyte, 128ubyte, 128ubyte, 255ubyte \}}
- \\
- \tcode{honeydew}
- & \tcode{rgba_color\{ 240ubyte, 255ubyte, 240ubyte, 255ubyte \}}
- \\
- \tcode{hot_pink}
- & \tcode{rgba_color\{ 255ubyte, 105ubyte, 180ubyte, 255ubyte \}}
- \\
- \tcode{indian_red}
- & \tcode{rgba_color\{ 205ubyte, 92ubyte, 92ubyte, 255ubyte \}}
- \\
- \tcode{indigo}
- & \tcode{rgba_color\{ 75ubyte, 0ubyte, 130ubyte, 255ubyte \}}
- \\
- \tcode{ivory}
- & \tcode{rgba_color\{ 255ubyte, 255ubyte, 240ubyte, 255ubyte \}}
- \\
- \tcode{khaki}
- & \tcode{rgba_color\{ 240ubyte, 230ubyte, 140ubyte, 255ubyte \}}
- \\
- \tcode{lavender}
- & \tcode{rgba_color\{ 230ubyte, 230ubyte, 250ubyte, 255ubyte \}}
- \\
- \tcode{lavender_blush}
- & \tcode{rgba_color\{ 255ubyte, 240ubyte, 245ubyte, 255ubyte \}}
- \\
- \tcode{lawn_green}
- & \tcode{rgba_color\{ 124ubyte, 252ubyte, 0ubyte, 255ubyte \}}
- \\
- \tcode{lemon_chiffon}
- & \tcode{rgba_color\{ 255ubyte, 250ubyte, 205ubyte, 255ubyte \}}
- \\
- \tcode{light_blue}
- & \tcode{rgba_color\{ 173ubyte, 216ubyte, 230ubyte, 255ubyte \}}
- \\
- \tcode{light_coral}
- & \tcode{rgba_color\{ 240ubyte, 128ubyte, 128ubyte, 255ubyte \}}
- \\
- \tcode{light_cyan}
- & \tcode{rgba_color\{ 224ubyte, 255ubyte, 255ubyte, 255ubyte \}}
- \\
- \tcode{light_goldenrod_yellow}
- & \tcode{rgba_color\{ 250ubyte, 250ubyte, 210ubyte, 255ubyte \}}
- \\
- \tcode{light_gray}
- & \tcode{rgba_color\{ 211ubyte, 211ubyte, 211ubyte, 255ubyte \}}
- \\
- \tcode{light_green}
- & \tcode{rgba_color\{ 144ubyte, 238ubyte, 144ubyte, 255ubyte \}}
- \\
- \tcode{light_grey}
- & \tcode{rgba_color\{ 211ubyte, 211ubyte, 211ubyte, 255ubyte \}}
- \\
- \tcode{light_pink}
- & \tcode{rgba_color\{ 255ubyte, 182ubyte, 193ubyte, 255ubyte \}}
- \\
- \tcode{light_salmon}
- & \tcode{rgba_color\{ 255ubyte, 160ubyte, 122ubyte, 255ubyte \}}
- \\
- \tcode{light_sea_green}
- & \tcode{rgba_color\{ 32ubyte, 178ubyte, 170ubyte, 255ubyte \}}
- \\
- \tcode{light_sky_blue}
- & \tcode{rgba_color\{ 135ubyte, 206ubyte, 250ubyte, 255ubyte \}}
- \\
- \tcode{light_slate_gray}
- & \tcode{rgba_color\{ 119ubyte, 136ubyte, 153ubyte, 255ubyte \}}
- \\
- \tcode{light_slate_grey}
- & \tcode{rgba_color\{ 119ubyte, 136ubyte, 153ubyte, 255ubyte \}}
- \\
- \tcode{light_steel_blue}
- & \tcode{rgba_color\{ 176ubyte, 196ubyte, 222ubyte, 255ubyte \}}
- \\
- \tcode{light_yellow}
- & \tcode{rgba_color\{ 255ubyte, 255ubyte, 224ubyte, 255ubyte \}}
- \\
- \tcode{lime}
- & \tcode{rgba_color\{ 0ubyte, 255ubyte, 0ubyte, 255ubyte \}}
- \\
- \tcode{lime_green}
- & \tcode{rgba_color\{ 50ubyte, 205ubyte, 50ubyte, 255ubyte \}}
- \\
- \tcode{linen}
- & \tcode{rgba_color\{ 250ubyte, 240ubyte, 230ubyte, 255ubyte \}}
- \\
- \tcode{magenta}
- & \tcode{rgba_color\{ 255ubyte, 0ubyte, 255ubyte, 255ubyte \}}
- \\
- \tcode{maroon}
- & \tcode{rgba_color\{ 128ubyte, 0ubyte, 0ubyte, 255ubyte \}}
- \\
- \tcode{medium_aquamarine}
- & \tcode{rgba_color\{ 102ubyte, 205ubyte, 170ubyte, 255ubyte \}}
- \\
- \tcode{medium_blue}
- & \tcode{rgba_color\{ 0ubyte, 0ubyte, 205ubyte, 255ubyte \}}
- \\
- \tcode{medium_orchid}
- & \tcode{rgba_color\{ 186ubyte, 85ubyte, 211ubyte, 255ubyte \}}
- \\
- \tcode{medium_purple}
- & \tcode{rgba_color\{ 147ubyte, 112ubyte, 219ubyte, 255ubyte \}}
- \\
- \tcode{medium_sea_green}
- & \tcode{rgba_color\{ 60ubyte, 179ubyte, 113ubyte, 255ubyte \}}
- \\
- \tcode{medium_slate_blue}
- & \tcode{rgba_color\{ 123ubyte, 104ubyte, 238ubyte, 255ubyte \}}
- \\
- \tcode{medium_spring_green}
- & \tcode{rgba_color\{ 0ubyte, 250ubyte, 154ubyte, 255ubyte \}}
- \\
- \tcode{medium_turquoise}
- & \tcode{rgba_color\{ 72ubyte, 209ubyte, 204ubyte, 255ubyte \}}
- \\
- \tcode{medium_violet_red}
- & \tcode{rgba_color\{ 199ubyte, 21ubyte, 133ubyte, 255ubyte \}}
- \\
- \tcode{midnight_blue}
- & \tcode{rgba_color\{ 25ubyte, 25ubyte, 112ubyte, 255ubyte \}}
- \\
- \tcode{mint_cream}
- & \tcode{rgba_color\{ 245ubyte, 255ubyte, 250ubyte, 255ubyte \}}
- \\
- \tcode{misty_rose}
- & \tcode{rgba_color\{ 255ubyte, 228ubyte, 225ubyte, 255ubyte \}}
- \\
- \tcode{moccasin}
- & \tcode{rgba_color\{ 255ubyte, 228ubyte, 181ubyte, 255ubyte \}}
- \\
- \tcode{navajo_white}
- & \tcode{rgba_color\{ 255ubyte, 222ubyte, 173ubyte, 255ubyte \}}
- \\
- \tcode{navy}
- & \tcode{rgba_color\{ 0ubyte, 0ubyte, 128ubyte, 255ubyte \}}
- \\
- \tcode{old_lace}
- & \tcode{rgba_color\{ 253ubyte, 245ubyte, 230ubyte, 255ubyte \}}
- \\
- \tcode{olive}
- & \tcode{rgba_color\{ 128ubyte, 128ubyte, 0ubyte, 255ubyte \}}
- \\
- \tcode{olive_drab}
- & \tcode{rgba_color\{ 107ubyte, 142ubyte, 35ubyte, 255ubyte \}}
- \\
- \tcode{orange}
- & \tcode{rgba_color\{ 255ubyte, 165ubyte, 0ubyte, 255ubyte \}}
- \\
- \tcode{orange_red}
- & \tcode{rgba_color\{ 255ubyte, 69ubyte, 0ubyte, 255ubyte \}}
- \\
- \tcode{orchid}
- & \tcode{rgba_color\{ 218ubyte, 112ubyte, 214ubyte, 255ubyte \}}
- \\
- \tcode{pale_goldenrod}
- & \tcode{rgba_color\{ 238ubyte, 232ubyte, 170ubyte, 255ubyte \}}
- \\
- \tcode{pale_green}
- & \tcode{rgba_color\{ 152ubyte, 251ubyte, 152ubyte, 255ubyte \}}
- \\
- \tcode{pale_turquoise}
- & \tcode{rgba_color\{ 175ubyte, 238ubyte, 238ubyte, 255ubyte \}}
- \\
- \tcode{pale_violet_red}
- & \tcode{rgba_color\{ 219ubyte, 112ubyte, 147ubyte, 255ubyte \}}
- \\
- \tcode{papaya_whip}
- & \tcode{rgba_color\{ 255ubyte, 239ubyte, 213ubyte, 255ubyte \}}
- \\
- \tcode{peach_puff}
- & \tcode{rgba_color\{ 255ubyte, 218ubyte, 185ubyte, 255ubyte \}}
- \\
- \tcode{peru}
- & \tcode{rgba_color\{ 205ubyte, 133ubyte, 63ubyte, 255ubyte \}}
- \\
- \tcode{pink}
- & \tcode{rgba_color\{ 255ubyte, 192ubyte, 203ubyte, 255ubyte \}}
- \\
- \tcode{plum}
- & \tcode{rgba_color\{ 221ubyte, 160ubyte, 221ubyte, 255ubyte \}}
- \\
- \tcode{powder_blue}
- & \tcode{rgba_color\{ 176ubyte, 224ubyte, 230ubyte, 255ubyte \}}
- \\
- \tcode{purple}
- & \tcode{rgba_color\{ 128ubyte, 0ubyte, 128ubyte, 255ubyte \}}
- \\
- \tcode{red}
- & \tcode{rgba_color\{ 255ubyte, 0ubyte, 0ubyte, 255ubyte \}}
- \\
- \tcode{rosy_brown}
- & \tcode{rgba_color\{ 188ubyte, 143ubyte, 143ubyte, 255ubyte \}}
- \\
- \tcode{royal_blue}
- & \tcode{rgba_color\{ 65ubyte, 105ubyte, 225ubyte, 255ubyte \}}
- \\
- \tcode{saddle_brown}
- & \tcode{rgba_color\{ 139ubyte, 69ubyte, 19ubyte, 255ubyte \}}
- \\
- \tcode{salmon}
- & \tcode{rgba_color\{ 250ubyte, 128ubyte, 114ubyte, 255ubyte \}}
- \\
- \tcode{sandy_brown}
- & \tcode{rgba_color\{ 244ubyte, 164ubyte, 96ubyte, 255ubyte \}}
- \\
- \tcode{sea_green}
- & \tcode{rgba_color\{ 46ubyte, 139ubyte, 87ubyte, 255ubyte \}}
- \\
- \tcode{sea_shell}
- & \tcode{rgba_color\{ 255ubyte, 245ubyte, 238ubyte, 255ubyte \}}
- \\
- \tcode{sienna}
- & \tcode{rgba_color\{ 160ubyte, 82ubyte, 45ubyte, 255ubyte \}}
- \\
- \tcode{silver}
- & \tcode{rgba_color\{ 192ubyte, 192ubyte, 192ubyte, 255ubyte \}}
- \\
- \tcode{sky_blue}
- & \tcode{rgba_color\{ 135ubyte, 206ubyte, 235ubyte, 255ubyte \}}
- \\
- \tcode{slate_blue}
- & \tcode{rgba_color\{ 106ubyte, 90ubyte, 205ubyte, 255ubyte \}}
- \\
- \tcode{slate_gray}
- & \tcode{rgba_color\{ 112ubyte, 128ubyte, 144ubyte, 255ubyte \}}
- \\
- \tcode{slate_grey}
- & \tcode{rgba_color\{ 112ubyte, 128ubyte, 144ubyte, 255ubyte \}}
- \\
- \tcode{snow}
- & \tcode{rgba_color\{ 255ubyte, 250ubyte, 250ubyte, 255ubyte \}}
- \\
- \tcode{spring_green}
- & \tcode{rgba_color\{ 0ubyte, 255ubyte, 127ubyte, 255ubyte \}}
- \\
- \tcode{steel_blue}
- & \tcode{rgba_color\{ 70ubyte, 130ubyte, 180ubyte, 255ubyte \}}
- \\
- \tcode{tan}
- & \tcode{rgba_color\{ 210ubyte, 180ubyte, 140ubyte, 255ubyte \}}
- \\
- \tcode{teal}
- & \tcode{rgba_color\{ 0ubyte, 128ubyte, 128ubyte, 255ubyte \}}
- \\
- \tcode{thistle}
- & \tcode{rgba_color\{ 216ubyte, 191ubyte, 216ubyte, 255ubyte \}}
- \\
- \tcode{tomato}
- & \tcode{rgba_color\{ 255ubyte, 99ubyte, 71ubyte, 255ubyte \}}
- \\
- \tcode{transparent_black}
- & \tcode{rgba_color\{ 0ubyte, 0ubyte, 0ubyte, 255ubyte \}}
- \\
- \tcode{turquoise}
- & \tcode{rgba_color\{ 64ubyte, 244ubyte, 208ubyte, 255ubyte \}}
- \\
- \tcode{violet}
- & \tcode{rgba_color\{ 238ubyte, 130ubyte, 238ubyte, 255ubyte \}}
- \\
- \tcode{wheat}
- & \tcode{rgba_color\{ 245ubyte, 222ubyte, 179ubyte, 255ubyte \}}
- \\
- \tcode{white}
- & \tcode{rgba_color\{ 255ubyte, 255ubyte, 255ubyte, 255ubyte \}}
- \\
- \tcode{white_smoke}
- & \tcode{rgba_color\{ 245ubyte, 245ubyte, 245ubyte, 255ubyte \}}
- \\
- \tcode{yellow}
- & \tcode{rgba_color\{ 255ubyte, 255ubyte, 0ubyte, 255ubyte \}}
- \\
- \tcode{yellow_green}
- & \tcode{rgba_color\{ 154ubyte, 205ubyte, 50ubyte, 255ubyte \}}
- \\
-\end{libreqtab2}
-
-\rSec1 [\iotwod.rgbacolor.nonmembers] {\tcode{rgba_color} non-member functions}
-
-\indexlibrary{\idxcode{rgba_color}!\idxcode{operator*}}%
-\indexlibrary{\idxcode{operator*}!\idxcode{rgba_color}}%
+\indexlibrary{\idxcode{rgba_color}!constructor}
 \begin{itemdecl}
-rgba_color operator*(const rgba_color& lhs, double rhs);
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{rgba_color\{\\
-	::std::max(0.0, ::std::min(1.0, lhs.r * rhs)),\\
-	::std::max(0.0, ::std::min(1.0, lhs.g * rhs)),\\
-	::std::max(0.0, ::std::min(1.0, lhs.b * rhs)),\\
-	::std::max(0.0, ::std::min(1.0, rhs))\\
-	\}}
-\end{itemdescr}
-
-\indexlibrary{\idxcode{rgba_color}!\idxcode{operator*=}}%
-\indexlibrary{\idxcode{operator*=}!\idxcode{rgba_color}}%
-\begin{itemdecl}
-rgba_color& operator*=(rgba_color& lhs, double rhs);
+	rgba_color() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	\tcode{lhs = lhs * rhs}
+	Constructs an object of type \tcode{rgba_color}.
 	
 	\pnum
-	\returns
-	\tcode{lhs}
+	\postconditions
+	\tcode{_Red == 0.0 \&\& _Green == 0.0 \&\& _Blue == 0.0 \&\& _Alpha == 1.0}.
+	
+	\pnum
+	\realnote
+	The resulting color is opaque black, which can also be obtained from \tcode{rgba_color::black()}.
 \end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!constructor}
+\begin{itemdecl}
+	rgba_color(double r, double g, double b, double a = 1.0);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\requires
+	\tcode{r >= 0.0} and \tcode{r <= 1.0} and \tcode{g >= 0.0} and \tcode{g <= 1.0} and \tcode{b >= 0.0} and \tcode{b <= 1.0} and \tcode{a >= 0.0} and \tcode{a <= 1.0}.
+	
+	\pnum
+	\effects
+	Constructs an object of type \tcode{rgba_color}.
+
+	\pnum
+	\throws
+	\tcode{std::system_error(std::make_error_code(std::errc::invalid_argument))}if the value of \tcode{r}, \tcode{g}, \tcode{b}, or \tcode{a} is invalid.
+	
+	\pnum
+	\postconditions
+	\tcode{_Alpha = a}.
+	
+	\tcode{_Red = r * a}.
+	
+	\tcode{_Green = g * a}.
+	
+	\tcode{_Blue = b * a}.
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!constructor}
+\begin{itemdecl}
+  	rgba_color(double r, double g, double b, error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\requires
+	\tcode{r >= 0.0} and \tcode{r <= 1.0} and \tcode{g >= 0.0} and \tcode{g <= 1.0} and \tcode{b >= 0.0} and \tcode{b <= 1.0}.
+	
+	\pnum
+	\effects
+	Constructs an object of type \tcode{rgba_color}.
+	
+	\pnum
+	\postconditions
+	\tcode{_Alpha = 1.0}.
+	
+	\tcode{_Red = r * a}.
+	
+	\tcode{_Green = g * a}.
+	
+	\tcode{_Blue = b * a}.
+
+	\pnum
+	\errors
+		
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!constructor}
+\begin{itemdecl}
+  	rgba_color(double r, double g, double b, double a, error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\requires
+	\tcode{r >= 0.0} and \tcode{r <= 1.0} and \tcode{g >= 0.0} and \tcode{g <= 1.0} and \tcode{b >= 0.0} and \tcode{b <= 1.0} and \tcode{a >= 0.0} and \tcode{a <= 1.0}.
+	
+	\pnum
+	\effects
+	Constructs an object of type \tcode{rgba_color}.
+	
+	\pnum
+	\postconditions
+	\tcode{_Alpha = a}.
+	
+	\tcode{_Red = r * a}.
+	
+	\tcode{_Green = g * a}.
+	
+	\tcode{_Blue = b * a}.
+	
+\end{itemdescr}
+
+\rSec1 [\iotwod.rgbacolor.modifiers]{\tcode{rgba_color} modifiers}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{r}}%
+\indexlibrary{\idxcode{r}!\idxcode{rgba_color}}%
+\begin{itemdecl}
+	void r(double val) noexcept;
+\end{itemdecl}
+
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Red == val}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{g}}%
+\indexlibrary{\idxcode{g}!\idxcode{rgba_color}}%
+\begin{itemdecl}
+	void g(double val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Y == val}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rectangle}!\idxcode{width}}%
+\indexlibrary{\idxcode{width}!\idxcode{rectangle}}%
+\begin{itemdecl}
+	void width(double val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Width == val}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rectangle}!\idxcode{height}}%
+\indexlibrary{\idxcode{height}!\idxcode{rectangle}}%
+\begin{itemdecl}
+	void height(double val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Height == val}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.rgbacolor.observers]{\tcode{rgba_color} observers}
+
+\indexlibrary{\idxcode{rectangle}!\idxcode{x}}%
+\indexlibrary{\idxcode{x}!\idxcode{rectangle}}%
+\begin{itemdecl}
+	double x() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_X}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rectangle}!\idxcode{y}}%
+\indexlibrary{\idxcode{y}!\idxcode{rectangle}}%
+\begin{itemdecl}
+	double y() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Y}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rectangle}!\idxcode{width}}%
+\indexlibrary{\idxcode{width}!\idxcode{rectangle}}%
+\begin{itemdecl}
+	double width() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Width}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rectangle}!\idxcode{height}}%
+\indexlibrary{\idxcode{height}!\idxcode{rectangle}}%
+\begin{itemdecl}
+	double height() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Height}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.rgbacolor.statics] {\tcode{rgba_color} static member functions}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{alice_blue}}
+\indexlibrary{\idxcode{alice_blue}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& alice_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 240ubyte, 248ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{antique_white}}
+\indexlibrary{\idxcode{antique_white}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& antique_white() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 250ubyte, 235ubyte, 215ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{aqua}}
+\indexlibrary{\idxcode{aqua}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& aqua() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 0ubyte, 255ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{aquamarine}}
+\indexlibrary{\idxcode{aquamarine}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& aquamarine() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 127ubyte, 255ubyte, 212ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{azure}}
+\indexlibrary{\idxcode{azure}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& azure() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 240ubyte, 255ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{beige}}
+\indexlibrary{\idxcode{beige}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& beige() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 245ubyte, 245ubyte, 220ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{bisque}}
+\indexlibrary{\idxcode{bisque}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& bisque() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 228ubyte, 196ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{black}}
+\indexlibrary{\idxcode{black}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& black() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 0ubyte, 0ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{blanched_almond}}
+\indexlibrary{\idxcode{blanched_almond}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& blanched_almond() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 235ubyte, 205ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{blue}}
+\indexlibrary{\idxcode{blue}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 0ubyte, 0ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{blue_violet}}
+\indexlibrary{\idxcode{blue_violet}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& blue_violet() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 138ubyte, 43ubyte, 226ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{brown}}
+\indexlibrary{\idxcode{brown}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& brown() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 165ubyte, 42ubyte, 42ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{burly_wood}}
+\indexlibrary{\idxcode{burly_wood}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& burly_wood() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 222ubyte, 184ubyte, 135ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{cadet_blue}}
+\indexlibrary{\idxcode{cadet_blue}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& cadet_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 95ubyte, 158ubyte, 160ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{chartreuse}}
+\indexlibrary{\idxcode{chartreuse}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& chartreuse() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 127ubyte, 255ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{chocolate}}
+\indexlibrary{\idxcode{chocolate}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& chocolate() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 210ubyte, 105ubyte, 30ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{coral}}
+\indexlibrary{\idxcode{coral}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& coral() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 127ubyte, 80ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{cornflower_blue}}
+\indexlibrary{\idxcode{cornflower_blue}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& cornflower_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 100ubyte, 149ubyte, 237ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{cornsilk}}
+\indexlibrary{\idxcode{cornsilk}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& cornsilk() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 248ubyte, 220ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{crimson}}
+\indexlibrary{\idxcode{crimson}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& crimson() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 220ubyte, 20ubyte, 60ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{cyan}}
+\indexlibrary{\idxcode{cyan}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& cyan() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 0ubyte, 255ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dark_blue}}
+\indexlibrary{\idxcode{dark_blue}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dark_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 0ubyte, 0ubyte, 139ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dark_cyan}}
+\indexlibrary{\idxcode{dark_cyan}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dark_cyan() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 0ubyte, 139ubyte, 139ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dark_goldenrod}}
+\indexlibrary{\idxcode{dark_goldenrod}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dark_goldenrod() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 184ubyte, 134ubyte, 11ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dark_gray}}
+\indexlibrary{\idxcode{dark_gray}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dark_gray() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 169ubyte, 169ubyte, 169ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dark_green}}
+\indexlibrary{\idxcode{dark_green}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dark_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 0ubyte, 100ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dark_grey}}
+\indexlibrary{\idxcode{dark_grey}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dark_grey() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 169ubyte, 169ubyte, 169ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dark_khaki}}
+\indexlibrary{\idxcode{dark_khaki}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dark_khaki() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 189ubyte, 183ubyte, 107ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dark_magenta}}
+\indexlibrary{\idxcode{dark_magenta}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dark_magenta() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 139ubyte, 0ubyte, 139ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dark_olive_green}}
+\indexlibrary{\idxcode{dark_olive_green}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dark_olive_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 85ubyte, 107ubyte, 47ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dark_orange}}
+\indexlibrary{\idxcode{dark_orange}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dark_orange() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 140ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dark_orchid}}
+\indexlibrary{\idxcode{dark_orchid}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dark_orchid() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 153ubyte, 50ubyte, 204ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dark_red}}
+\indexlibrary{\idxcode{dark_red}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dark_red() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 139ubyte, 0ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dark_salmon}}
+\indexlibrary{\idxcode{dark_salmon}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dark_salmon() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 233ubyte, 150ubyte, 122ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dark_sea_green}}
+\indexlibrary{\idxcode{dark_sea_green}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dark_sea_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 143ubyte, 188ubyte, 143ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dark_slate_blue}}
+\indexlibrary{\idxcode{dark_slate_blue}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dark_slate_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 72ubyte, 61ubyte, 139ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dark_slate_gray}}
+\indexlibrary{\idxcode{dark_slate_gray}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dark_slate_gray() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 47ubyte, 79ubyte, 79ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dark_slate_grey}}
+\indexlibrary{\idxcode{dark_slate_grey}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dark_slate_grey() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 47ubyte, 79ubyte, 79ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dark_turquoise}}
+\indexlibrary{\idxcode{dark_turquoise}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dark_turquoise() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 0ubyte, 206ubyte, 209ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dark_violet}}
+\indexlibrary{\idxcode{dark_violet}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dark_violet() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 148ubyte, 0ubyte, 211ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{deep_pink}}
+\indexlibrary{\idxcode{deep_pink}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& deep_pink() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 20ubyte, 147ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{deep_sky_blue}}
+\indexlibrary{\idxcode{deep_sky_blue}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& deep_sky_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 0ubyte, 191ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dim_gray}}
+\indexlibrary{\idxcode{dim_gray}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dim_gray() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 105ubyte, 105ubyte, 105ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dim_grey}}
+\indexlibrary{\idxcode{dim_grey}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dim_grey() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 105ubyte, 105ubyte, 105ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{dodger_blue}}
+\indexlibrary{\idxcode{dodger_blue}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& dodger_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 30ubyte, 144ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{firebrick}}
+\indexlibrary{\idxcode{firebrick}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& firebrick() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 178ubyte, 34ubyte, 34ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{floral_white}}
+\indexlibrary{\idxcode{floral_white}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& floral_white() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 250ubyte, 240ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{forest_green}}
+\indexlibrary{\idxcode{forest_green}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& forest_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 34ubyte, 139ubyte, 34ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{fuchsia}}
+\indexlibrary{\idxcode{fuchsia}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& fuchsia() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 0ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{gainsboro}}
+\indexlibrary{\idxcode{gainsboro}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& gainsboro() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 220ubyte, 220ubyte, 220ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{ghost_white}}
+\indexlibrary{\idxcode{ghost_white}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& ghost_white() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 248ubyte, 248ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{gold}}
+\indexlibrary{\idxcode{gold}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& gold() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 215ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{goldenrod}}
+\indexlibrary{\idxcode{goldenrod}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& goldenrod() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 218ubyte, 165ubyte, 32ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{gray}}
+\indexlibrary{\idxcode{gray}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& gray() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 128ubyte, 128ubyte, 128ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{green}}
+\indexlibrary{\idxcode{green}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 0ubyte, 128ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{green_yellow}}
+\indexlibrary{\idxcode{green_yellow}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& green_yellow() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 173ubyte, 255ubyte, 47ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{grey}}
+\indexlibrary{\idxcode{grey}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& grey() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 128ubyte, 128ubyte, 128ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{honeydew}}
+\indexlibrary{\idxcode{honeydew}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& honeydew() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 240ubyte, 255ubyte, 240ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{hot_pink}}
+\indexlibrary{\idxcode{hot_pink}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& hot_pink() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 105ubyte, 180ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{indian_red}}
+\indexlibrary{\idxcode{indian_red}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& indian_red() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 205ubyte, 92ubyte, 92ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{indigo}}
+\indexlibrary{\idxcode{indigo}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& indigo() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 75ubyte, 0ubyte, 130ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{ivory}}
+\indexlibrary{\idxcode{ivory}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& ivory() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 255ubyte, 240ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{khaki}}
+\indexlibrary{\idxcode{khaki}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& khaki() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 240ubyte, 230ubyte, 140ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{lavender}}
+\indexlibrary{\idxcode{lavender}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& lavender() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 230ubyte, 230ubyte, 250ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{lavender_blush}}
+\indexlibrary{\idxcode{lavender_blush}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& lavender_blush() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 240ubyte, 245ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{lawn_green}}
+\indexlibrary{\idxcode{lawn_green}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& lawn_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 124ubyte, 252ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{lemon_chiffon}}
+\indexlibrary{\idxcode{lemon_chiffon}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& lemon_chiffon() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 250ubyte, 205ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{light_blue}}
+\indexlibrary{\idxcode{light_blue}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& light_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 173ubyte, 216ubyte, 230ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{light_coral}}
+\indexlibrary{\idxcode{light_coral}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& light_coral() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 240ubyte, 128ubyte, 128ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{light_cyan}}
+\indexlibrary{\idxcode{light_cyan}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& light_cyan() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 224ubyte, 255ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{light_goldenrod_yellow}}
+\indexlibrary{\idxcode{light_goldenrod_yellow}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& light_goldenrod_yellow() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 250ubyte, 250ubyte, 210ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{light_gray}}
+\indexlibrary{\idxcode{light_gray}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& light_gray() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 211ubyte, 211ubyte, 211ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{light_green}}
+\indexlibrary{\idxcode{light_green}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& light_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 144ubyte, 238ubyte, 144ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{light_grey}}
+\indexlibrary{\idxcode{light_grey}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& light_grey() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 211ubyte, 211ubyte, 211ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{light_pink}}
+\indexlibrary{\idxcode{light_pink}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& light_pink() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 182ubyte, 193ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{light_salmon}}
+\indexlibrary{\idxcode{light_salmon}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& light_salmon() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 160ubyte, 122ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{light_sea_green}}
+\indexlibrary{\idxcode{light_sea_green}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& light_sea_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 32ubyte, 178ubyte, 170ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{light_sky_blue}}
+\indexlibrary{\idxcode{light_sky_blue}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& light_sky_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 135ubyte, 206ubyte, 250ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{light_slate_gray}}
+\indexlibrary{\idxcode{light_slate_gray}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& light_slate_gray() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 119ubyte, 136ubyte, 153ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{light_slate_grey}}
+\indexlibrary{\idxcode{light_slate_grey}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& light_slate_grey() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 119ubyte, 136ubyte, 153ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{light_steel_blue}}
+\indexlibrary{\idxcode{light_steel_blue}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& light_steel_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 176ubyte, 196ubyte, 222ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{light_yellow}}
+\indexlibrary{\idxcode{light_yellow}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& light_yellow() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 255ubyte, 224ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{lime}}
+\indexlibrary{\idxcode{lime}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& lime() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 0ubyte, 255ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{lime_green}}
+\indexlibrary{\idxcode{lime_green}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& lime_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 50ubyte, 205ubyte, 50ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{linen}}
+\indexlibrary{\idxcode{linen}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& linen() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 250ubyte, 240ubyte, 230ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{magenta}}
+\indexlibrary{\idxcode{magenta}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& magenta() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 0ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{maroon}}
+\indexlibrary{\idxcode{maroon}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& maroon() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 128ubyte, 0ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{medium_aquamarine}}
+\indexlibrary{\idxcode{medium_aquamarine}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& medium_aquamarine() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 102ubyte, 205ubyte, 170ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{medium_blue}}
+\indexlibrary{\idxcode{medium_blue}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& medium_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 0ubyte, 0ubyte, 205ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{medium_orchid}}
+\indexlibrary{\idxcode{medium_orchid}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& medium_orchid() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 186ubyte, 85ubyte, 211ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{medium_purple}}
+\indexlibrary{\idxcode{medium_purple}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& medium_purple() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 147ubyte, 112ubyte, 219ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{medium_sea_green}}
+\indexlibrary{\idxcode{medium_sea_green}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& medium_sea_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 60ubyte, 179ubyte, 113ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{medium_slate_blue}}
+\indexlibrary{\idxcode{medium_slate_blue}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& medium_slate_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 123ubyte, 104ubyte, 238ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{medium_spring_green}}
+\indexlibrary{\idxcode{medium_spring_green}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& medium_spring_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 0ubyte, 250ubyte, 154ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{medium_turquoise}}
+\indexlibrary{\idxcode{medium_turquoise}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& medium_turquoise() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 72ubyte, 209ubyte, 204ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{medium_violet_red}}
+\indexlibrary{\idxcode{medium_violet_red}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& medium_violet_red() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 199ubyte, 21ubyte, 133ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{midnight_blue}}
+\indexlibrary{\idxcode{midnight_blue}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& midnight_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 25ubyte, 25ubyte, 112ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{mint_cream}}
+\indexlibrary{\idxcode{mint_cream}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& mint_cream() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 245ubyte, 255ubyte, 250ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{misty_rose}}
+\indexlibrary{\idxcode{misty_rose}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& misty_rose() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 228ubyte, 225ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{moccasin}}
+\indexlibrary{\idxcode{moccasin}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& moccasin() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 228ubyte, 181ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{navajo_white}}
+\indexlibrary{\idxcode{navajo_white}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& navajo_white() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 222ubyte, 173ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{navy}}
+\indexlibrary{\idxcode{navy}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& navy() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 0ubyte, 0ubyte, 128ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{old_lace}}
+\indexlibrary{\idxcode{old_lace}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& old_lace() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 253ubyte, 245ubyte, 230ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{olive}}
+\indexlibrary{\idxcode{olive}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& olive() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 128ubyte, 128ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{olive_drab}}
+\indexlibrary{\idxcode{olive_drab}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& olive_drab() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 107ubyte, 142ubyte, 35ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{orange}}
+\indexlibrary{\idxcode{orange}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& orange() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 165ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{orange_red}}
+\indexlibrary{\idxcode{orange_red}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& orange_red() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 69ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{orchid}}
+\indexlibrary{\idxcode{orchid}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& orchid() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 218ubyte, 112ubyte, 214ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{pale_goldenrod}}
+\indexlibrary{\idxcode{pale_goldenrod}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& pale_goldenrod() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 238ubyte, 232ubyte, 170ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{pale_green}}
+\indexlibrary{\idxcode{pale_green}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& pale_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 152ubyte, 251ubyte, 152ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{pale_turquoise}}
+\indexlibrary{\idxcode{pale_turquoise}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& pale_turquoise() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 175ubyte, 238ubyte, 238ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{pale_violet_red}}
+\indexlibrary{\idxcode{pale_violet_red}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& pale_violet_red() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 219ubyte, 112ubyte, 147ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{papaya_whip}}
+\indexlibrary{\idxcode{papaya_whip}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& papaya_whip() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 239ubyte, 213ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{peach_puff}}
+\indexlibrary{\idxcode{peach_puff}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& peach_puff() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 218ubyte, 185ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{peru}}
+\indexlibrary{\idxcode{peru}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& peru() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 205ubyte, 133ubyte, 63ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{pink}}
+\indexlibrary{\idxcode{pink}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& pink() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 192ubyte, 203ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{plum}}
+\indexlibrary{\idxcode{plum}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& plum() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 221ubyte, 160ubyte, 221ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{powder_blue}}
+\indexlibrary{\idxcode{powder_blue}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& powder_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 176ubyte, 224ubyte, 230ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{purple}}
+\indexlibrary{\idxcode{purple}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& purple() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 128ubyte, 0ubyte, 128ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{red}}
+\indexlibrary{\idxcode{red}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& red() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 0ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{rosy_brown}}
+\indexlibrary{\idxcode{rosy_brown}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& rosy_brown() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 188ubyte, 143ubyte, 143ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{royal_blue}}
+\indexlibrary{\idxcode{royal_blue}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& royal_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 65ubyte, 105ubyte, 225ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{saddle_brown}}
+\indexlibrary{\idxcode{saddle_brown}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& saddle_brown() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 139ubyte, 69ubyte, 19ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{salmon}}
+\indexlibrary{\idxcode{salmon}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& salmon() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 250ubyte, 128ubyte, 114ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{sandy_brown}}
+\indexlibrary{\idxcode{sandy_brown}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& sandy_brown() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 244ubyte, 164ubyte, 96ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{sea_green}}
+\indexlibrary{\idxcode{sea_green}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& sea_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 46ubyte, 139ubyte, 87ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{sea_shell}}
+\indexlibrary{\idxcode{sea_shell}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& sea_shell() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 245ubyte, 238ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{sienna}}
+\indexlibrary{\idxcode{sienna}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& sienna() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 160ubyte, 82ubyte, 45ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{silver}}
+\indexlibrary{\idxcode{silver}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& silver() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 192ubyte, 192ubyte, 192ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{sky_blue}}
+\indexlibrary{\idxcode{sky_blue}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& sky_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 135ubyte, 206ubyte, 235ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{slate_blue}}
+\indexlibrary{\idxcode{slate_blue}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& slate_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 106ubyte, 90ubyte, 205ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{slate_gray}}
+\indexlibrary{\idxcode{slate_gray}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& slate_gray() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 112ubyte, 128ubyte, 144ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{slate_grey}}
+\indexlibrary{\idxcode{slate_grey}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& slate_grey() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 112ubyte, 128ubyte, 144ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{snow}}
+\indexlibrary{\idxcode{snow}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& snow() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 250ubyte, 250ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{spring_green}}
+\indexlibrary{\idxcode{spring_green}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& spring_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 0ubyte, 255ubyte, 127ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{steel_blue}}
+\indexlibrary{\idxcode{steel_blue}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& steel_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 70ubyte, 130ubyte, 180ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{tan}}
+\indexlibrary{\idxcode{tan}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& tan() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 210ubyte, 180ubyte, 140ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{teal}}
+\indexlibrary{\idxcode{teal}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& teal() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 0ubyte, 128ubyte, 128ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{thistle}}
+\indexlibrary{\idxcode{thistle}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& thistle() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 216ubyte, 191ubyte, 216ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{tomato}}
+\indexlibrary{\idxcode{tomato}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& tomato() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 99ubyte, 71ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{transparent_black}}
+\indexlibrary{\idxcode{transparent_black}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& transparent_black() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 0ubyte, 0ubyte, 0ubyte, 0ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{turquoise}}
+\indexlibrary{\idxcode{turquoise}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& turquoise() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 64ubyte, 244ubyte, 208ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{violet}}
+\indexlibrary{\idxcode{violet}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& violet() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 238ubyte, 130ubyte, 238ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{wheat}}
+\indexlibrary{\idxcode{wheat}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& wheat() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 245ubyte, 222ubyte, 179ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{white}}
+\indexlibrary{\idxcode{white}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& white() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 255ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{white_smoke}}
+\indexlibrary{\idxcode{white_smoke}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& white_smoke() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 245ubyte, 245ubyte, 245ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{yellow}}
+\indexlibrary{\idxcode{yellow}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& yellow() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 255ubyte, 255ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rgba_color}!\idxcode{yellow_green}}
+\indexlibrary{\idxcode{yellow_green}!\idxcode{rgba_color}}
+\begin{itemdecl}
+    static const rgba_color& yellow_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+    \pnum
+    \returns
+    a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 154ubyte, 205ubyte, 50ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.rgbacolor.ops] {\tcode{rgba_color} non-member operators}
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{operator==}}%
 \indexlibrary{\idxcode{operator==}!\idxcode{rgba_color}}%

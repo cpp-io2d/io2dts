@@ -1,0 +1,166 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.rectangle] {Class \tcode{rectangle}}
+
+\rSec1 [\iotwod.rectangle.synopsis] {\tcode{rectangle} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class rectangle {
+  public:
+    // \ref{\iotwod.rectangle.cons}, construct/copy/move/destroy:
+    rectangle() noexcept;
+    rectangle(double x, double y, double width, double height) noexcept;
+    rectangle(const rectangle& r) noexcept;
+    rectangle& operator=(const rectangle& r) noexcept;
+    rectangle(rectangle&& r) noexcept;
+    rectangle& operator=(rectangle&& r) noexcept;
+
+    // \ref{\iotwod.rectangle.modifiers}, modifiers:
+    void x(double val) noexcept;
+    void y(double val) noexcept;
+    void width(double val) noexcept;
+    void height(double val) noexcept;
+    
+    // \ref{\iotwod.rectangle.observers}, observers:
+    double x() const noexcept;
+    double y() const noexcept;
+    double width() const noexcept;
+    double height() const noexcept;
+    
+  private:
+    double _X;      // \expos
+    double _Y;      // \expos
+    double _Width;  // \expos
+    double _Height; // \expos
+  };
+} } } }
+\end{codeblock}
+
+\rSec1 [\iotwod.rectangle.intro] {\tcode{rectangle} Description}
+
+\pnum
+\indexlibrary{\idxcode{rectangle}}%
+The class \tcode{rectangle} describes an object that represents a rectangle, storing a two-dimensional coordinate representing the upper left corner of a rectangle, and the rectangle's width and height.
+
+\rSec1 [\iotwod.rectangle.cons] {\tcode{rectangle} constructors and assignment operators}
+
+\indexlibrary{\idxcode{rectangle}!constructor}
+\begin{itemdecl}
+rectangle() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{rectangle}.
+	
+	\pnum
+	\postconditions
+	\tcode{_X == 0.0 \&\& _Y == 0.0 \&\& _Width == 0.0 \&\& _Height == 0.0}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rectangle}!constructor}
+\begin{itemdecl}
+rectangle(double x, double y, double w, double h) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{rectangle}.
+	
+	\pnum
+	\postconditions
+	\tcode{_X == x \&\& _Y == y \&\& _Width == w \&\& _Height == h}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.rectangle.modifiers]{\tcode{rectangle} modifiers}
+
+\indexlibrary{\idxcode{rectangle}!\idxcode{x}}%
+\indexlibrary{\idxcode{x}!\idxcode{rectangle}}%
+\begin{itemdecl}
+void x(double val) noexcept;
+\end{itemdecl}
+
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_X == val}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rectangle}!\idxcode{y}}%
+\indexlibrary{\idxcode{y}!\idxcode{rectangle}}%
+\begin{itemdecl}
+    void y(double val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Y == val}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rectangle}!\idxcode{width}}%
+\indexlibrary{\idxcode{width}!\idxcode{rectangle}}%
+\begin{itemdecl}
+	void width(double val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Width == val}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rectangle}!\idxcode{height}}%
+\indexlibrary{\idxcode{height}!\idxcode{rectangle}}%
+\begin{itemdecl}
+	void height(double val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Height == val}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.rectangle.observers]{\tcode{rectangle} observers}
+
+\indexlibrary{\idxcode{rectangle}!\idxcode{x}}%
+\indexlibrary{\idxcode{x}!\idxcode{rectangle}}%
+\begin{itemdecl}
+    double x() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_X}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rectangle}!\idxcode{y}}%
+\indexlibrary{\idxcode{y}!\idxcode{rectangle}}%
+\begin{itemdecl}
+    double y() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Y}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rectangle}!\idxcode{width}}%
+\indexlibrary{\idxcode{width}!\idxcode{rectangle}}%
+\begin{itemdecl}
+	double width() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Width}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rectangle}!\idxcode{height}}%
+\indexlibrary{\idxcode{height}!\idxcode{rectangle}}%
+\begin{itemdecl}
+	double height() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Height}.
+\end{itemdescr}

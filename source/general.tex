@@ -31,11 +31,15 @@ format --- Part 1: PDF 1.7}
 Recommendation 07 June 2011}, 
 Copyright~\textcopyright~2011~W3C\textsuperscript{\textregistered} (MIT, ERCIM, 
 Keio)
+\item ****FIXME**** The remaining references should probably be non-normative 
+and in an informative bibliography (ISO/IEC Directives, Part 2, 6.2.2 and 6.4.2)
 \item Carl D. Worth, Chris Wilson, et al., \doccite{cairo graphics library --- 
 Version 1.12.16}, 
 Copyright~\textcopyright~2002~University~of~Southern~California, 
 Copyright~\textcopyright~2005~Red~Hat,~Inc., 
 Copyright~\textcopyright~2011~Intel~Corporation
+\item Thomas Porter, Tom Duff, \doccite{Compositing Digital Images}, 
+Copyright~\textcopyright~1984~ACM
 \end{itemize}
 
 \pnum
@@ -47,104 +51,147 @@ The document CSS Color Module Level 3 --- W3C Recommendation 07 June 2011 is
 hereinafter called the \indexdefn{CSS Colors Specification}\term{CSS Colors 
 Specification}.
 
-\pnum
-Any section number reference to \CppXIV or to \Cpp generally refers to the 
-Working Draft in Document Number N4140.
-
 \rSec1[\iotwod.general.defns]{Terms and definitions}
 
 \pnum
 \indextext{definitions|(}%
 For the purposes of this document, the following definitions apply.
 
-\indexdefn{aliasing}%
+\indexdefn{aliasing}
 \definition{aliasing}{\iotwod.general.defns.alias}
-<aliasing> the presence of visual artifacts in the results of rendering due to 
+the presence of visual artifacts in the results of rendering due to 
 sampling imperfections
 
-\indexdefn{anti-aliasing}%
-\definition{anti-aliasing}{\iotwod.general.defns.anti.alias}
-<anti-aliasing> the application of a function or algorithm while rendering to 
+\indexdefn{alpha}
+\definition{alpha}{\iotwod.general.defns.alpha}
+visual data representing transparency
+
+\indexdefn{anti-aliasing}
+\definition{anti-aliasing}{\iotwod.general.defns.antialias}
+the application of a function or algorithm while rendering to 
 reduce aliasing
+\enternote
+Certain algorithms can produce ``better'' results, i.e. results with less 
+artifacts or with less pronounced artifacts, when rendering text with 
+anti-aliasing due to the nature of text rendering. As such, it often makes 
+sense to provide the ability to choose one type of anti-aliasing for text 
+rendering and another for all other rendering and to provide different sets of 
+anti-aliasing types to choose from for each of the two operations.
+\exitnote
 
 \indexdefn{artifact}
 \definition{artifact}{\iotwod.general.defns.artifact}
-<artifact> in signal processing, an error in the results due to the input 
-signal and output signal not having a one-to-one mapping between their 
-frequencies
+an error in the results of signal processing due to the input signal and output 
+signal not having a one-to-one mapping between their frequencies
+
+\indexdefn{aspect ratio}
+\definition{aspect ratio}{\iotwod.general.defns.aspectratio}
+the width divided by the height
 
 \indexdefn{B\'ezier curve}
 \definition{B\'ezier curve}{\iotwod.general.defns.bezier}
-<B\'ezier curve> a curve defined by a parametric equation where the starting 
-point, ending point, and zero or more control points are given -- a cubic 
-B\'ezier curve, which is the type meant whenever the general term B\'ezier 
-curve is used herein, has two control points and is defined by the following 
-equation: $f(t) = (1 - t)^{3} \times P_{0} + 3 \times t \times (1 - t)^{2} 
+a curve defined by the 
+equation $f(t) = (1 - t)^{3} \times P_{0} + 3 \times t \times (1 - t)^{2} 
 \times P_{1} + 3 \times t^{2} \times (1 - t) \times P_{2} + t^{3} \times P_{3}$ 
 where $0.0 \le t \le 1.0$, $P_{0}$ is the starting point, $P_{1}$ is the first 
-control point, and $P_{2}$ is the second control point, and $P_{3}$ is the 
-ending 
-point
+control point, $P_{2}$ is the second control point, and $P_{3}$ is the 
+ending point
 \enternote
-$f(t) = P_{0}$ when $t = 0.0$ and $f(t) = P_{3}$ when $t = 1.0$
+This is a the definition of a cubic B\'ezier curve; other B\'eziers curve types 
+with different numbers of control points exist but are not relevant in this 
+\documenttypename.
 \exitnote
 
 \indexdefn{coordinate space}
-\definition{coordinate space}{\iotwod.general.defns.coordinate.space}
-<coordinate space> used to define specific positions on a surface; when a 
-surface is displayed or otherwise rendered, the point (0.0, 0.0) is the top 
-left, the positive X axis extends rightward, the positive Y axis extends 
-downward, the point (1.0, 0.0) rotated around the point (0.0, 0.0) to $0$ 
-radians will be at (1.0, 0.0), the point (1.0, 0.0) rotated around the point 
-(0.0, 0.0) to $\frac{(\pi)}{(2.0)}$ radians will be at (0.0, 1.0), the point 
-(1.0, 0.0) rotated around the point (0.0, 0.0) to $\pi$ radians will be at 
-(-1.0, 0.0), the point (1.0, 0.0) rotated around the point (0.0, 0.0) to 
-$\frac{(3.0 \times \pi)}{(2.0)}$ radians will be at (0.0, -1.0), and the point 
-(1.0, 0.0) rotated around the point (0.0, 0.0) to $2.0 \times \pi$ 
-radians will be at (0.0, 1.0)
+\definition{coordinate space}{\iotwod.general.defns.coordinatespace}
+the two-dimensional area defined by two perpendicular axes that have a common 
+unit of length where the x-axis increases towards positive infinity to the 
+right, the y-axis increases towards positive infinity downward, and rotation 
+around the origin by a positive amount of radians is clockwise
 
 \indexdefn{filter}
 \definition{filter}{\iotwod.general.defns.filter}
-<filter> a mathematical function that transforms a signal into discrete data
+a mathematical function that transforms a signal into discrete data
+
+\indexdefn{format}
+\definition{format}{\iotwod.general.defns.format}
+a well-defined visual data format composed of one or more channels representing 
+color data or transparency data
 
 \indexdefn{graphics}
 \indexdefn{graphics!raster}
 \definition{graphics}{\iotwod.general.defns.graphics.raster}
-<raster graphics> visual information stored as a rectangular grid of pixels
+<raster graphics> visual data stored as a rectangular grid of pixels
 
 \indexdefn{graphics}
 \indexdefn{graphics!vector}
 \definition{graphics}{\iotwod.general.defns.graphics.vector}
-<vector graphics> visual information stored as geometrical data
+<vector graphics> visual data stored as geometrical data
+
+\indexdefn{letterbox}
+\definition{letterbox}{\iotwod.general.defns.letterbox}
+render one surface to another by scaling it, centering it, and filling the 
+areas outside of the  ***FIXME***
+
+\indexdefn{normalized integer}
+\indexdefn{integer!normalized}
+\indexdefn{unsigned normalized integer}
+\indexdefn{integer!unsigned normalized}
+\definition{normalized integer}{\iotwod.general.defns.normalizedint}
+an n-bit unsigned integer value which maps to an evenly spaced sequence of 
+floating 
+point values in the range [0, 1] where all bits set to 0b0 maps to 0.0 and all 
+bits set to 0b1 maps to 1.0
+\enternote
+In this document, normalized integer always means an unsigned normalized 
+integer, of which this is the definition. Signed normalized 
+integers exist but are not relevant in this \documenttypename. 
+\enterexample
+An 8-bit normalized integer is capable of representing 256 discrete states 
+ranging from 0b00000000 == 0 == 0.0 to 0b11111111 == 255 == 1.0. In this 
+example 0.5 would be 0b01111111 (127).
+\exitexample
 
 \indexdefn{pixel}
 \definition{pixel}{\iotwod.general.defns.pixel}
-<pixel> a discrete data element with a format-dependent composition
+a discrete visual data element with a format-dependent composition
 \enternote
 In raster graphics a pixel is obtained by sampling visual data, whether 
 electro-mechanically, e.g. by a digital camera when a picture is taken, or 
 manually, e.g. by an artist using a raster graphics editing program to create a 
 pixel representation of visual data; the given examples typically result in a 
-texture composed of many pixels
+texture composed of many pixels.
 \exitnote
 
 \indexdefn{point}
 \definition{point}{\iotwod.general.defns.point}
-<point> a coordinate designated by an X component and a Y component within the 
+a coordinate designated by an X component and a Y component within the 
 coordinate space of a surface
+
+\indexdefn{premultiplied format}
+\definition{premultiplied format}{\iotwod.general.defns.premultipliedformat}
+a format with color and alpha where each color channel is normalized and then 
+multiplied by the normalized alpha channel value
+\enterexample
+Given the 32-bit non-premultiplied RGBA pixel with 8 bits per channel \{255, 0, 
+0, 127\} (half-transparent red), when normalized it would become \{1.0, 0.0, 
+0.0, 0.5\}. As such, in premultiplied, normalized format it would become \{0.5, 
+0.0, 0.0, 0.5\} as a result of multiplying each of the three color channels by 
+the alpha channel value.
+\exitexample
 
 \indexdefn{render}
 \definition{render}{\iotwod.general.defns.render}
-<render> the process of compositing source data and destination data to create 
-result data that replaces the destination data
+combine source data and destination data in accordance with state data to 
+create result data that replaces the original destination data
 \enternote
-depending on the compositing operator and the clip, there may not be any change 
-to the original destination data.
+Depending on the compositing operator and the clip, two of the pieces of state 
+data, there may not be any change to the original destination data. 
 \exitnote
 
 \indexdefn{sampling}%
 \definition{sampling}{\iotwod.general.defns.sampling}
-<sampling> the transformation of continuous or discrete signals to discrete 
+the transformation of continuous or discrete signals to discrete 
 data by application of a filter
 
 \indexdefn{signal}
@@ -160,6 +207,10 @@ data by application of a filter
 integer intervals within a 2D space and conveys information about one or more 
 properties of the space
 
+\indexdefn{texture}
+\definition{texture}{\iotwod.general.defns.texture}
+
+
 % end definitions
 \indextext{definitions|)}
 
@@ -174,29 +225,3 @@ consists of all syntactic and semantic rules in this International
 Standard except for those rules containing an explicit notation that
 ``no diagnostic is required'' or which are described as resulting in
 ``undefined behavior.''
-
-
-\rSec1[\iotwod.general.ack]{Acknowledgments}
-
-\pnum
-The \Cpp  programming language as described in this International
-Standard is based on the language as described in Chapter R (Reference
-Manual) of Stroustrup: \doccite{The \Cpp  Programming Language} (second
-edition, Addison-Wesley Publishing Company, ISBN 0-201-53992-6,
-copyright \copyright 1991 AT\&T). That, in turn, is based on the C
-programming language as described in Appendix A of Kernighan and
-Ritchie: \doccite{The C Programming Language} (Prentice-Hall, 1978, ISBN
-0-13-110163-3, copyright \copyright 1978 AT\&T).
-
-\pnum
-Portions of the library Clauses of this International Standard are based
-on work by P.J. Plauger, which was published as \doccite{The Draft
-Standard \Cpp  Library} (Prentice-Hall, ISBN 0-13-117003-1, copyright
-\copyright 1995 P.J. Plauger).
-
-\pnum
-POSIX\textregistered\ is a registered trademark of the Institute of Electrical and
-Electronic Engineers, Inc.
-
-\pnum
-All rights in these originals are reserved.

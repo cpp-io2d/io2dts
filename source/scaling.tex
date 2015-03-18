@@ -1,0 +1,92 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.scaling] {Enum class \tcode{scaling}}
+
+\rSec1 [\iotwod.scaling.summary] {\tcode{scaling} Summary}
+
+\pnum
+The scaling enum class specifies the type of scaling a \tcode{display_surface} 
+will use when the size of its display area, e.g. a window, differs from the 
+size of its render area. For information about the display area versus the render area, see the description of the \tcode{display_surface}~type\ref{\iotwod.displaysurface}. See 
+Table~\ref{tab:\iotwod.scaling.meanings} for the meaning of each
+\tcode{scaling} enumerator.
+
+\rSec1 [\iotwod.scaling.synopsis] {\tcode{scaling} Synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  enum class scaling {
+    letterbox,
+    uniform,
+    fill_uniform,
+    fill_exact,
+    none
+  };
+} } } }
+\end{codeblock}
+
+\rSec1 [\iotwod.scaling.enumerators] {\tcode{scaling} Enumerators}
+
+\pnum
+\enternote
+In the following table, examples will be given to help explain the meaning of each enumerator. The examples will all use a \tcode{display_surface} called \tcode{ds}.
+
+The render area of \tcode{ds} is 640x480 (i.e. it has a width of 640 pixels and a height of 480 pixels), giving it an aspect ratio of $1.\bar{3}$.
+
+The display area of \tcode{ds} is 1280x720, giving it an aspect ratio of $1.\bar{7}$.
+
+When a rectangle is defined in an example, the coordinate $(x1,y1)$ denotes the top left corner of the rectangle, inclusive, and the coordinate $(x2,y2)$ denotes the bottom right corner of the rectangle, exclusive. As such, a rectangle with $(x1,y1) = (10,10)$, $(x2,y2) = (20, 20)$ is 10 pixels wide and 10 pixels tall and includes the pixel $(x,y) = (19,19)$ but does not include the pixels $(x,y) = (20,19)$ or $(x,y) = (19,20)$.
+\exitnote
+
+\begin{libreqtab2}
+ {\tcode{scaling} enumerator meanings}
+ {tab:\iotwod.scaling.meanings}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endhead
+ \tcode{letterbox}
+ & Fill the display area with the letterbox pattern of the \tcode{display_surface}. Uniformly scale the render area so that at least one dimension of it is the same length as the same dimension of the display area while ensuring that all render area content will be displayed and render the scaled render area centered in the display area.
+
+ \enterexample
+ The display area of \tcode{ds} will be filled with the \tcode{pattern} object returned by \tcode{ds.letterbox_pattern();}.  The render area of \tcode{ds} will be scaled so that it is 960x720, thereby retaining its original aspect ratio. The scaled render area will be rendered in the display area in the rectangle $(x1,y1) = (\dfrac{1280}{2} - \dfrac{960}{2},0) = (160,0)$, $(x2,y2) = (960 + (\dfrac{1280}{2} - \dfrac{960}{2}),720) = (1120,720)$. This fulfills all of the conditions. At least one dimension of the scaled render area is the same length as the same dimension of the display area (both have a height of 720 pixels). All render area content is displayed (the render area's scaled width is 960 pixels, which is not greater than the display area's width of 1280 pixels, and its scaled height is 720 pixels, which is not greater than the display area's height of 720 pixels). Lastly, the scaled render area is centered in the display area (on the $x$ axis there are 160 pixels between each vertical side of the rectangle and the nearest vertical edge of the display area and on the $y$ axis there are 0 pixels between each horizontal side of the rectangle and the nearest horizontal edge of the display area).
+ \exitexample
+ \\
+ \tcode{uniform}
+ & Uniformly scale the render area so that at least one dimension of it is the same length as the same dimension of the display area while ensuring that all render area content will be displayed and render the scaled render area centered in the display area.
+ 
+ \enterexample
+ The render area of \tcode{ds} will be scaled so that it is 960x720, thereby retaining its original aspect ratio. The scaled render area will be rendered in the display area in the rectangle $(x1,y1) = (\dfrac{1280}{2} - \dfrac{960}{2},0) = (160,0)$, $(x2,y2) = (960 + (\dfrac{1280}{2} - \dfrac{960}{2}),720) = (1120,720)$. This fulfills all of the conditions. At least one dimension of the scaled render area is the same length as the same dimension of the display area (both have a height of 720 pixels). All render area content is displayed (the render area's scaled width is 960 pixels, which is not greater than the display area's width of 1280 pixels, and its scaled height is 720 pixels, which is not greater than the display area's height of 720 pixels). Lastly, the scaled render area is centered in the display area (on the $x$ axis there are 160 pixels between each vertical side of the rectangle and the nearest vertical edge of the display area and on the $y$ axis there are 0 pixels between each horizontal side of the rectangle and the nearest horizontal edge of the display area).
+ \exitexample
+ \enternote
+ The difference between \tcode{uniform} and \tcode{letterbox} is that \tcode{uniform} does not modify the contents of the display area that fall outside of the rectangle that the scaled render area is drawn in while \tcode{letterbox} fills those areas with the \tcode{display_surface} object's letterbox pattern.
+ \exitnote
+ \\
+ \tcode{fill_uniform}
+ & Uniformly scale the render area so that at least one dimension of it is the same length as the same dimension of the display area while ensuring that the display area will be filled entirely with scaled render area content. Render the scaled render area centered in the display area such that the display area is filled entirely with scaled render area content.
+ 
+ \enterexample
+ The render area of \tcode{ds} will be drawn in the rectangle $(x1,y1) = (0,-120)$, $(x2,y2) = (1280,840)$. This fulfills all of the conditions. At least one dimension of the scaled render area is the same length as the same dimension of the display area (both have a width of 1280 pixels).The display area will be filled entirely with scaled render area content (the render area's scaled width is 1280 pixels, which is not less than the display area's width of 1280 pixels, and its scaled height is 840 pixels, which is not less than the display area's height of 720 pixels). Lastly, the scaled render area is centered in the display area (on the $x$ axis there are 0 pixels between each vertical side of the rectangle and the nearest vertical edge of the display area and on the $y$ axis there are 120 pixels between each horizontal side of the rectangle and the nearest horizontal edge of the display area).
+ \exitexample 
+ \\
+ \tcode{fill_exact}
+ & Scale the render area so that each dimension of it is the same length as the same dimension of the display area. Render the scaled render area so that its origin is at the origin of the display area.
+ 
+ \enterexample
+ The render area of \tcode{ds} will be scaled so that it is 1280x720. The scaled render area will be rendered in the display area in the rectangle $(x1,y1) = (0,0)$, $(x2,y2) = (1280,720)$. This fulfills all of the conditions. Each dimension of the scaled render area is the same length as the same dimension of the display area (both have a width of 1280 pixels and a height of 720 pixels) and the scaled render area is rendered so that its origin is at the origin of the display area.
+ \exitexample
+ \\
+ \tcode{none}
+ & Do not perform any scaling. Render the render area so that its origin is at the origin of the display area.
+ 
+ \enterexample
+ The render area of \tcode{ds} will be rendered in the display area in the rectangle $(x1,y1) = (0,0)$, $(x2,y2) = (640,480)$ such that no scaling occurs and the origin of the render area is at the origin of the display area. The contents of the display area with $x >= 640$ or $y >= 480$ will not be modified.
+ \exitexample
+ \\
+\end{libreqtab2}
