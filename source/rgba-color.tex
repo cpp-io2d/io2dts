@@ -236,11 +236,13 @@ formats.
 \indexlibrary{\idxcode{rgba_color}!constructor}
 \begin{itemdecl}
 	rgba_color(double r, double g, double b, double a = 1.0);
+  	rgba_color(double r, double g, double b, error_code& ec) noexcept;
+  	rgba_color(double r, double g, double b, double a, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\requires
-	\tcode{r >= 0.0} and \tcode{r <= 1.0} and \tcode{g >= 0.0} and \tcode{g <= 1.0} and \tcode{b >= 0.0} and \tcode{b <= 1.0} and \tcode{a >= 0.0} and \tcode{a <= 1.0}.
+	\tcode{r >= 0.0} and \tcode{r <= 1.0} and \tcode{g >= 0.0} and \tcode{g <= 1.0} and \tcode{b >= 0.0} and \tcode{b <= 1.0}. Where there is an \tcode{a} parameter, \tcode{a >= 0.0} and \tcode{a <= 1.0}.
 	
 	\pnum
 	\effects
@@ -248,11 +250,11 @@ formats.
 
 	\pnum
 	\throws
-	\tcode{std::system_error(std::make_error_code(std::errc::invalid_argument))}if the value of \tcode{r}, \tcode{g}, \tcode{b}, or \tcode{a} is invalid.
+	As specified in Error reporting (\ref{\iotwod.err.report}).
 	
 	\pnum
 	\postconditions
-	\tcode{_Alpha = a}.
+	Where there is an \tcode{a} parameter, \tcode{_Alpha = a}; otherwise \tcode{_Alpha = 1.0}.
 	
 	\tcode{_Red = r * a}.
 	
@@ -260,59 +262,9 @@ formats.
 	
 	\tcode{_Blue = b * a}.
 	
-\end{itemdescr}
-
-\indexlibrary{\idxcode{rgba_color}!constructor}
-\begin{itemdecl}
-  	rgba_color(double r, double g, double b, error_code& ec) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\requires
-	\tcode{r >= 0.0} and \tcode{r <= 1.0} and \tcode{g >= 0.0} and \tcode{g <= 1.0} and \tcode{b >= 0.0} and \tcode{b <= 1.0}.
-	
-	\pnum
-	\effects
-	Constructs an object of type \tcode{rgba_color}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Alpha = 1.0}.
-	
-	\tcode{_Red = r * a}.
-	
-	\tcode{_Green = g * a}.
-	
-	\tcode{_Blue = b * a}.
-
 	\pnum
 	\errors
-		
-	
-\end{itemdescr}
-
-\indexlibrary{\idxcode{rgba_color}!constructor}
-\begin{itemdecl}
-  	rgba_color(double r, double g, double b, double a, error_code& ec) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\requires
-	\tcode{r >= 0.0} and \tcode{r <= 1.0} and \tcode{g >= 0.0} and \tcode{g <= 1.0} and \tcode{b >= 0.0} and \tcode{b <= 1.0} and \tcode{a >= 0.0} and \tcode{a <= 1.0}.
-	
-	\pnum
-	\effects
-	Constructs an object of type \tcode{rgba_color}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Alpha = a}.
-	
-	\tcode{_Red = r * a}.
-	
-	\tcode{_Green = g * a}.
-	
-	\tcode{_Blue = b * a}.
+	\tcode{errc::argument_out_of_domain} if the value of \tcode{r}, \tcode{g}, \tcode{b}, or \tcode{a} fails to meet the preconditions.
 	
 \end{itemdescr}
 
@@ -326,6 +278,10 @@ formats.
 
 \begin{itemdescr}
 	\pnum
+	\requires
+	\tcode{val >= 0.0} and \tcode{val <= 1.0}; no diagnostic is required.
+	
+	\pnum
 	\postconditions
 	\tcode{_Red == val}.
 \end{itemdescr}
@@ -337,76 +293,94 @@ formats.
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
+	\requires
+	\tcode{val >= 0.0} and \tcode{val <= 1.0}; no diagnostic is required.
+	
+	\pnum
 	\postconditions
-	\tcode{_Y == val}.
+	\tcode{_Green == val}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rectangle}!\idxcode{width}}%
-\indexlibrary{\idxcode{width}!\idxcode{rectangle}}%
+\indexlibrary{\idxcode{rgba_color}!\idxcode{b}}%
+\indexlibrary{\idxcode{b}!\idxcode{rgba_color}}%
 \begin{itemdecl}
-	void width(double val) noexcept;
+	void b(double val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
+	\requires
+	\tcode{val >= 0.0} and \tcode{val <= 1.0}; no diagnostic is required.
+	
+	\pnum
 	\postconditions
-	\tcode{_Width == val}.
+	\tcode{_Blue == val}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rectangle}!\idxcode{height}}%
-\indexlibrary{\idxcode{height}!\idxcode{rectangle}}%
+\indexlibrary{\idxcode{rgba_color}!\idxcode{a}}%
+\indexlibrary{\idxcode{a}!\idxcode{rgba_color}}%
 \begin{itemdecl}
-	void height(double val) noexcept;
+	void a(double val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
+	\requires
+	\tcode{val >= 0.0} and \tcode{val <= 1.0}; no diagnostic is required.
+	
+	\pnum
 	\postconditions
-	\tcode{_Height == val}.
+	\tcode{_Alpha == val}.
+	
+	\tcode{_Red = _Red * val}.
+	
+	\tcode{_Green = _Green * val}.
+	
+	\tcode{_Blue = _Blue * val}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.rgbacolor.observers]{\tcode{rgba_color} observers}
 
-\indexlibrary{\idxcode{rectangle}!\idxcode{x}}%
-\indexlibrary{\idxcode{x}!\idxcode{rectangle}}%
+\indexlibrary{\idxcode{rgba_color}!\idxcode{r}}%
+\indexlibrary{\idxcode{r}!\idxcode{rgba_color}}%
 \begin{itemdecl}
-	double x() const noexcept;
+	double r() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_X}.
+	\tcode{_Red}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rectangle}!\idxcode{y}}%
-\indexlibrary{\idxcode{y}!\idxcode{rectangle}}%
+\indexlibrary{\idxcode{rgba_color}!\idxcode{g}}%
+\indexlibrary{\idxcode{g}!\idxcode{rgba_color}}%
 \begin{itemdecl}
-	double y() const noexcept;
+	double g() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Y}.
+	\tcode{_Green}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rectangle}!\idxcode{width}}%
-\indexlibrary{\idxcode{width}!\idxcode{rectangle}}%
+\indexlibrary{\idxcode{rgba_color}!\idxcode{b}}%
+\indexlibrary{\idxcode{b}!\idxcode{rgba_color}}%
 \begin{itemdecl}
-	double width() const noexcept;
+	double b() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Width}.
+	\tcode{_Blue}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rectangle}!\idxcode{height}}%
-\indexlibrary{\idxcode{height}!\idxcode{rectangle}}%
+\indexlibrary{\idxcode{rgba_color}!\idxcode{a}}%
+\indexlibrary{\idxcode{a}!\idxcode{rgba_color}}%
 \begin{itemdecl}
-	double height() const noexcept;
+	double a() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Height}.
+	\tcode{_Alpha}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.rgbacolor.statics] {\tcode{rgba_color} static member functions}
@@ -2044,21 +2018,21 @@ formats.
 \indexlibrary{\idxcode{rgba_color}!\idxcode{operator==}}%
 \indexlibrary{\idxcode{operator==}!\idxcode{rgba_color}}%
 \begin{itemdecl}
-bool operator==(const rgba_color& lhs, const rgba_color& rhs);
+bool operator==(const rgba_color& lhs, const rgba_color& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{lhs.r == rhs.r \&\&
-	lhs.g == rhs.g \&\&
-	lhs.b == rhs.b \&\&
-	lhs.a == rhs.a}
+	\tcode{lhs.r() == rhs.r() \&\&
+	lhs.g() == rhs.g() \&\&
+	lhs.b() == rhs.b() \&\&
+	lhs.a() == rhs.a()}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{operator!=}}%
 \indexlibrary{\idxcode{operator!=}!\idxcode{rgba_color}}%
 \begin{itemdecl}
-bool operator!=(const rgba_color& lhs, const rgba_color& rhs);
+bool operator!=(const rgba_color& lhs, const rgba_color& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum

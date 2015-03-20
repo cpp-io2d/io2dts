@@ -20,5 +20,30 @@ This supports two common use cases:
 Functions \textbf{not} having an argument of type \tcode{error_code\&} report errors as follows, unless otherwise specified:
 
 \begin{itemize}
-\item When a call by the implementation **FIXME**
+\item When a call by the implementation to an operating system or other underlying API results in an error that prevents the function from meeting its specifications and the cause of the error is described in the function's \textit{Error conditions} description:
+	\begin{itemize}
+		\item If the description calls for \tcode{errc::argument_out_of_domain}, the exception type shall be \tcode{out_of_range} constructed with an \impdef \tcode{what_arg} argument value.
+		\item If the description calls for \tcode{errc::invalid_argument}, the exception type shall be \tcode{invalid_argument} constructed with an \impdef \tcode{what_arg} argument value.
+		\item If the description calls for \tcode{errc::not_enough_memory}, the error shall be reported by throwing an exception as described in \CppXIV \S17.6.5.12 [res.on.exception.handling].
+		\item In all other cases the exception type shall be \tcode{system_error} constructed with an \tcode{ec} argument value formed by passing the specified enumerator value to \tcode{make_error_code} and an \impdef \tcode{what_arg} argument value, unless otherwise specified.
+	\end{itemize}
+
+\item When a call by the implementation to an operating system or other underlying API results in an error that prevents the function from meeting its specifications and the cause of the error is \textbf{not} described in the function's \textit{Error conditions} description and is not a failure to allocate storage, an exception of type \tcode{system_error} shall be thrown constructed with its \tcode{error_code} argument set to an \impdef value as appropriate for the specific operating system dependent error. 
+
+\item Failure to allocate storage is reported by throwing an exception as described in \CppXIV \S17.6.5.12 [res.on.exception.handling].
+
+\item Destructors throw nothing.
+\end{itemize}
+
+\pnum
+Functions having an argument of type \tcode{error_code\&} report errors as follows, unless otherwise specified:
+
+\begin{itemize}
+\item When a call by the implementation to an operating system or other underlying API results in an error that prevents the function from meeting its specifications and the cause of the error is described in the function's \textit{Error conditions} description, the \tcode{error_code\&} argument is set as appropriate for the specified enumerator.
+
+\item When a call by the implementation to an operating system or other underlying API results in an error that prevents the function from meeting its specifications and the cause of the error is \textbf{not} described in the function's \textit{Error conditions} description and is not a failure to allocate storage, the \tcode{error_code\&} argument is set to an \impdef value as appropriate for the specific operating system dependent error.
+
+\item If a failure to allocate storage occurs, the \tcode{error_code\&} argument shall be set to \tcode{make_error_code(errc::not_enough_memory)}.
+
+\item Otherwise, \tcode{clear()} is called on the \tcode{error_code\&} argument.
 \end{itemize}
