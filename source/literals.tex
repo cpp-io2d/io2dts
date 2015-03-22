@@ -6,10 +6,10 @@
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   inline namespace literals {
-    double operator""ubyte(unsigned long long value);
-    double operator""unorm(long double value);
-  } // namespace literals
-} } } } // namespaces std::experimental::io2d::v1
+    double operator "" ubyte(unsigned long long int value);
+    double operator "" unorm(long double value);
+  }
+} } } }
 \end{codeblock}
 
 \rSec1 [\iotwod.literals.operators] {\tcode{literals} operators}
@@ -17,7 +17,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \indexlibrary{\idxcode{literals}!\idxcode{operator''''ubyte}}%
 \indexlibrary{\idxcode{operator''''ubyte}!\idxcode{literals}}%
 \begin{itemdecl}
-double operator""ubyte(unsigned long long value);
+double operator "" ubyte(unsigned long long int value);
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -28,7 +28,7 @@ double operator""ubyte(unsigned long long value);
 \indexlibrary{\idxcode{literals}!\idxcode{operator''''unorm}}%
 \indexlibrary{\idxcode{operator''''unorm}!\idxcode{literals}}%
 \begin{itemdecl}
-double operator""unorm(long double value);
+double operator "" unorm(long double value);
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum

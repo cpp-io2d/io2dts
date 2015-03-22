@@ -133,24 +133,12 @@ color data or transparency data
 render one surface to another by scaling it, centering it, and filling the 
 areas outside of the  ***FIXME***
 
-\indexdefn{normalized integer}
-\indexdefn{integer!normalized}
-\indexdefn{unsigned normalized integer}
-\indexdefn{integer!unsigned normalized}
-\definition{normalized integer}{\iotwod.general.defns.normalizedint}
-an n-bit unsigned integer value which maps to an evenly spaced sequence of 
-floating 
-point values in the range [0, 1] where all bits set to 0b0 maps to 0.0 and all 
-bits set to 0b1 maps to 1.0
+\indexdefn{normalize}
+\definition{normalize}{\iotwod.general.defns.normalize}
+to map a closed set of evenly spaced values in the range $[0, x]$ to an evenly spaced sequence of floating point values in the range $[0, 1]$
 \enternote
-In this document, normalized integer always means an unsigned normalized 
-integer, of which this is the definition. Signed normalized 
-integers exist but are not relevant in this \documenttypename. 
-\enterexample
-An 8-bit normalized integer is capable of representing 256 discrete states 
-ranging from 0b00000000 == 0 == 0.0 to 0b11111111 == 255 == 1.0. In this 
-example 0.5 would be 0b01111111 (127).
-\exitexample
+The definition of normalize given is the definition for normalizing unsigned input. Signed normalization, i.e. the mapping of a closed set of evenly spaced values in the range $[-x, x)$ to an evenly spaced sequence of floating point values in the range $[-1, 1]$, also exists but is not used in this \documenttypename.
+\exitnote
 
 \indexdefn{pixel}
 \definition{pixel}{\iotwod.general.defns.pixel}

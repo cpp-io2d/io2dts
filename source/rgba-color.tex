@@ -195,23 +195,19 @@ private:
 
 \pnum
 \indexlibrary{\idxcode{rgba_color}}%
-The class \tcode{rgba_color} describes a four channel color ***FIXME*** premultiplied format.
+The class \tcode{rgba_color} describes a four channel color in premultiplied format.
 
 \pnum
-There are three color channels, each of which is an unsigned normalized double: 
-red, green, and blue.
+There are three color channels, red, green, and blue, each of which is \tcode{double}.
 
 \pnum
-There is also an alpha channel, which is an unsigned normalized double.
+There is also an alpha channel, which is a \tcode{double}.
 
 \pnum
-The use of an unsigned normalized double allows for storing unsigned normalized 
-integer values with easy, albeit potentially lossy, conversion between 
-different bits per channel (e.g. storing a 32-bit X8R8G8B8 value and retrieving 
-its nearest 16-bit equivalent R5G6B5 value). More importantly, use of a double 
-ensures sufficient precision for lossless storage and retrieval, without 
-conversion, of 32-bit color formats and even 64-bit (16-bits per channel) color 
-formats.
+Legal values for each channel are in the range $[0, 1]$.
+
+\pnum
+The type predefines a set of named colors, for which each channel is an unsigned normalized 8-bit integer.
 
 \rSec1 [\iotwod.rgbacolor.cons] {\tcode{rgba_color} constructors and assignment operators}
 
@@ -256,16 +252,32 @@ formats.
 	\postconditions
 	Where there is an \tcode{a} parameter, \tcode{_Alpha = a}; otherwise \tcode{_Alpha = 1.0}.
 	
+	\pnum
 	\tcode{_Red = r * a}.
 	
+	\pnum
 	\tcode{_Green = g * a}.
 	
+	\pnum
 	\tcode{_Blue = b * a}.
+	
+	\pnum
+	\remarks
+	In the event of a non-throwing error, the object shall be constructed to meet the following conditions:
+	
+	\pnum
+	\tcode{_Red == 1.0 \&\& _Green == 0.0 \&\& _Blue == 1.0 \&\& _Alpha == 1.0}.
 	
 	\pnum
 	\errors
 	\tcode{errc::argument_out_of_domain} if the value of \tcode{r}, \tcode{g}, \tcode{b}, or \tcode{a} fails to meet the preconditions.
 	
+	\pnum
+	\realnotes
+	When an object is constructed despite the presence of one or more erroneous arguments, the resulting color is opaque magenta, which can also be obtained from \tcode{rgba_color::magenta()}.
+	
+	\pnum
+	This color was picked because it is a legal color value, it does not have all channels set to the same value (which would hide, e.g., erroneous saturation calculations), and in the hope that it will help highlight error visibility (both visually and in an examination of the data) in the event that the developer neglects to check the \tcode{error_code\&} argument following construction of the object.
 \end{itemdescr}
 
 \rSec1 [\iotwod.rgbacolor.modifiers]{\tcode{rgba_color} modifiers}
