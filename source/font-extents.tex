@@ -43,6 +43,9 @@ The class \tcode{font_extents} describes metric information for a font.
 It is used by a \tcode{surface} object to report certain metrics of its currently selected font in the \tcode{surface} object's untransformed coordinate space units.
 
 \pnum
+These metrics cover all glyphs in a font and thus may be noticeably larger than the values obtained by getting the \tcode{text_extents} for a particular string.
+
+\pnum
 \enternote
 This object's observable values can be manipulated by library users for their convenience. But since the \tcode{font_extents} object returned by \tcode{surface::font_extents()} is not a reference or a pointer, the changes do not reflect back to the surface or its current font.
 \exitnote
@@ -60,7 +63,11 @@ This object's observable values can be manipulated by library users for their co
 	
 	\pnum
 	\postconditions
-	\tcode{_Asc = 0.0} and \tcode{_Desc = 0.0} and \tcode{_Height = 0.0}.
+	\tcode{_Asc == 0.0}.
+	
+	\tcode{_Desc == 0.0}.
+	
+	\tcode{_Height == 0.0}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{font_extents}!constructor}
@@ -74,7 +81,11 @@ This object's observable values can be manipulated by library users for their co
 	
 	\pnum
 	\postconditions
-	\tcode{_Asc = ascent} and \tcode{_Desc = descent} and \tcode{_Height = height}.
+	\tcode{_Asc == ascent}.
+	
+	\tcode{_Desc == descent}.
+	
+	\tcode{_Height == height}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.fontextents.modifiers]{\tcode{font_extents} modifiers}
@@ -88,7 +99,7 @@ This object's observable values can be manipulated by library users for their co
 \begin{itemdescr}
 	\pnum
 	\postconditions
-	\tcode{_Asc = value}.
+	\tcode{_Asc == value}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{font_extents}!\idxcode{descent}}
@@ -100,7 +111,7 @@ This object's observable values can be manipulated by library users for their co
 \begin{itemdescr}
 	\pnum
 	\postconditions
-	\tcode{_Desc = value}.
+	\tcode{_Desc == value}.
 	
 \end{itemdescr}
 
@@ -113,7 +124,7 @@ This object's observable values can be manipulated by library users for their co
 \begin{itemdescr}
 	\pnum
 	\postconditions
-	\tcode{_Height = value}.
+	\tcode{_Height == value}.
 	
 \end{itemdescr}
 
@@ -157,7 +168,7 @@ This object's observable values can be manipulated by library users for their co
 	
 	\pnum
 	\enternote
-	Some font rendering technologies express this value as a negative value. Because it is defined here as a distance from the baseline, the value should typically be positive or zero. It would only be negative if the font's baseline was set below the bottom of its bounding box, which is unlikely but not impossible.
+	Some font rendering technologies express this value as a negative value. Because it is defined here as a distance from the baseline, the value should typically be positive or zero. It would only be negative if the font's baseline was set below the bottom of its bounding box, which, while highly unlikely, is not impossible.
 	\exitnote
 
 \end{itemdescr}
@@ -177,6 +188,9 @@ This object's observable values can be manipulated by library users for their co
 	This value is the font designer's suggested distance, in untransformed coordinate space units, from the baseline of one line of text to the baseline of a consecutive line of text.
 	
 	\pnum
-	This value is likely to be greater than the sum of \tcode{ascent()} and \tcode{descent()} since it will typically include a value known as a line gap or as external leading, which is additional whitespace added for aesthetic reasons.
+	This value is may be greater than the sum of \tcode{ascent()} and \tcode{descent()}. This occurs when a font includes a value known as a line gap or as external leading, which is additional whitespace added for aesthetic reasons.
+	
+	\pnum	
+	Fonts whose \tcode{height()} is equal to their \tcode{ascent() + descent()} likely include line gap in their ascent or descent rather than specifying it separately.
 
 \end{itemdescr}
