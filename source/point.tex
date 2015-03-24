@@ -16,8 +16,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     point& operator=(point&&) noexcept;
 
     // \ref{\iotwod.point.modifiers}, modifiers:
-    void x(double val) noexcept;
-    void y(double val) noexcept;
+    void x(double value) noexcept;
+    void y(double value) noexcept;
     
     // \ref{\iotwod.point.observers}, observers:
     double x() const noexcept;
@@ -80,28 +80,27 @@ point(double x, double y) noexcept;
 	
 \rSec1 [\iotwod.point.modifiers]{\tcode{point} modifiers}
 
-\indexlibrary{\idxcode{point}!\idxcode{x}}%
-\indexlibrary{\idxcode{x}!\idxcode{point}}%
+\indexlibrary{\idxcode{point}!\idxcode{x}}
+\indexlibrary{\idxcode{x}!\idxcode{point}}
 \begin{itemdecl}
-void x(double val) noexcept;
+void x(double value) noexcept;
 \end{itemdecl}
-
 \begin{itemdescr}
 	\pnum
 	\postconditions
-	\tcode{_X == val}.
+	\tcode{_X == value}.
 	
 \end{itemdescr}
 
-\indexlibrary{\idxcode{point}!\idxcode{y}}%
-\indexlibrary{\idxcode{y}!\idxcode{point}}%
+\indexlibrary{\idxcode{point}!\idxcode{y}}
+\indexlibrary{\idxcode{y}!\idxcode{point}}
 \begin{itemdecl}
-    void y(double val) noexcept;
+    void y(double value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\postconditions
-	\tcode{_Y == val}.
+	\tcode{_Y == value}.
 	
 \end{itemdescr}
 
