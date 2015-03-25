@@ -1,0 +1,105 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.changeorigin] {Class \tcode{change_origin}}
+
+\rSec1 [\iotwod.changeorigin.synopsis] {\tcode{change_origin} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class change_origin : public path_data {
+  public:
+    // \ref{\iotwod.changeorigin.cons}, construct/copy/move/destroy:
+    change_origin() noexcept;
+    change_origin(const change_origin& other) noexcept;
+    change_origin& operator=(const change_origin& other) noexcept;
+    change_origin(change_origin&& other) noexcept;
+    change_origin& operator=(change_origin&& other) noexcept;
+    change_origin(const point& pt) noexcept;
+
+    // \ref{\iotwod.changeorigin.modifiers}, modifiers:
+    void origin(const point& value) noexcept;
+
+    // \ref{\iotwod.changeorigin.observers}, observers:
+    point origin() const noexcept;
+    virtual path_data_type type() const noexcept override;
+    
+  private:
+    point _Data; // \expos
+  };
+} } } }
+\end{codeblock}
+
+\rSec1 [\iotwod.changeorigin.intro] {\tcode{change_origin} Description}
+
+\pnum
+\indexlibrary{\idxcode{change_origin}}
+The class \tcode{change_origin} describes a \tcode{path} operation. For a description of its meaning within a \tcode{path}, see the meaning of \tcode{path_data_type::change_origin} in Table~\ref{tab:\iotwod.pathdatatype.meanings}.
+
+\rSec1 [\iotwod.changeorigin.cons] {\tcode{change_origin} constructors and assignment operators}
+
+\indexlibrary{\idxcode{change_origin}!constructor}
+\begin{itemdecl}
+    change_origin() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{change_origin}.
+	
+	\pnum
+	\postconditions
+	\tcode{_Data == point(0.0, 0.0)}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{change_origin}!constructor}
+\begin{itemdecl}
+    change_origin(const point& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{change_origin}.
+	
+	\pnum
+	\postconditions
+	\tcode{_Data == pt}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.changeorigin.modifiers]{\tcode{change_origin} modifiers}
+
+\indexlibrary{\idxcode{change_origin}!\idxcode{origin}}
+\indexlibrary{\idxcode{origin}!\idxcode{change_origin}}
+\begin{itemdecl}
+    void origin(const point& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Data == value}.
+	
+\end{itemdescr}
+
+\rSec1 [\iotwod.changeorigin.observers]{\tcode{change_origin} observers}
+
+\indexlibrary{\idxcode{change_origin}!\idxcode{origin}}
+\indexlibrary{\idxcode{origin}!\idxcode{change_origin}}
+\begin{itemdecl}
+    point origin() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Data}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{move_to}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{move_to}}
+\begin{itemdecl}
+    virtual path_data_type type() const noexcept override;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{path_data_type::change_origin}.
+
+\end{itemdescr}

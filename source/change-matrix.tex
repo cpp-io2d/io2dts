@@ -1,0 +1,105 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.changematrix] {Class \tcode{change_matrix}}
+
+\rSec1 [\iotwod.changematrix.synopsis] {\tcode{change_matrix} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class change_matrix : public path_data {
+  public:
+    // \ref{\iotwod.changematrix.cons}, construct/copy/move/destroy:
+    change_matrix() noexcept;
+    change_matrix(const change_matrix& other) noexcept;
+    change_matrix& operator=(const change_matrix& other) noexcept;
+    change_matrix(change_matrix&& other) noexcept;
+    change_matrix& operator=(change_matrix&& other) noexcept;
+    change_matrix(const matrix_2d& m) noexcept;
+
+    // \ref{\iotwod.changematrix.modifiers}, modifiers:
+    void matrix(const matrix_2d& value) noexcept;
+
+    // \ref{\iotwod.changematrix.observers}, observers:
+    matrix_2d matrix() const noexcept;
+    virtual path_data_type type() const noexcept override;
+    
+  private:
+    matrix_2d _Matrix; // \expos
+  };
+} } } }
+\end{codeblock}
+
+\rSec1 [\iotwod.changematrix.intro] {\tcode{change_matrix} Description}
+
+\pnum
+\indexlibrary{\idxcode{change_matrix}}
+The class \tcode{change_matrix} describes a \tcode{path} operation. For a description of its meaning within a \tcode{path}, see the meaning of \tcode{path_data_type::change_matrix} in Table~\ref{tab:\iotwod.pathdatatype.meanings}.
+
+\rSec1 [\iotwod.changematrix.cons] {\tcode{change_matrix} constructors and assignment operators}
+
+\indexlibrary{\idxcode{change_matrix}!constructor}
+\begin{itemdecl}
+    change_matrix() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{change_matrix}.
+	
+	\pnum
+	\postconditions
+	\tcode{_Matrix == matrix_2d\{\}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{change_matrix}!constructor}
+\begin{itemdecl}
+    change_matrix(const matrix_2d& m) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{change_matrix}.
+	
+	\pnum
+	\postconditions
+	\tcode{_Matrix == m}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.changematrix.modifiers]{\tcode{change_matrix} modifiers}
+
+\indexlibrary{\idxcode{change_matrix}!\idxcode{matrix}}
+\indexlibrary{\idxcode{matrix}!\idxcode{change_matrix}}
+\begin{itemdecl}
+    void matrix(const matrix_2d& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Matrix == value}.
+	
+\end{itemdescr}
+
+\rSec1 [\iotwod.changematrix.observers]{\tcode{change_matrix} observers}
+
+\indexlibrary{\idxcode{change_matrix}!\idxcode{matrix}}
+\indexlibrary{\idxcode{matrix}!\idxcode{change_matrix}}
+\begin{itemdecl}
+    matrix_2d matrix() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Matrix}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{change_matrix}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{change_matrix}}
+\begin{itemdecl}
+    virtual path_data_type type() const noexcept override;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{path_data_type::change_matrix}.
+
+\end{itemdescr}

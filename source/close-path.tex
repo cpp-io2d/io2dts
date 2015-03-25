@@ -1,0 +1,41 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.closepath] {Class \tcode{close_path}}
+
+\rSec1 [\iotwod.closepath.synopsis] {\tcode{close_path} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class close_path {
+  public:
+    // construct/copy/move/destroy:
+    close_path() noexcept;
+    close_path(const close_path& other) noexcept;
+    close_path& operator=(const close_path& other) noexcept;
+    close_path(close_path&& other) noexcept;
+    close_path& operator=(close_path&& other) noexcept;
+
+    // \ref{\iotwod.closepath.observers}, observers:
+    virtual path_data_type type() const noexcept override;
+  };
+} } } }
+\end{codeblock}
+
+\rSec1 [\iotwod.closepath.intro] {\tcode{close_path} Description}
+
+\pnum
+\indexlibrary{\idxcode{close_path}}
+The class \tcode{close_path} describes a \tcode{path} operation. For a description of its meaning within a \tcode{path}, see the meaning of \tcode{path_data_type::close_path} in Table~\ref{tab:\iotwod.pathdatatype.meanings}.
+
+\rSec1 [\iotwod.closepath.observers]{\tcode{close_path} observers}
+
+\indexlibrary{\idxcode{close_path}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{close_path}}
+\begin{itemdecl}
+    virtual path_data_type type() const noexcept override;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{path_data_type::close_path}.
+
+\end{itemdescr}

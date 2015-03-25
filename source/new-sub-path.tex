@@ -1,0 +1,41 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.newsubpath] {Class \tcode{new_sub_path}}
+
+\rSec1 [\iotwod.newsubpath.synopsis] {\tcode{new_sub_path} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class new_sub_path {
+  public:
+    // construct/copy/move/destroy:
+    new_sub_path() noexcept;
+    new_sub_path(const new_sub_path& other) noexcept;
+    new_sub_path& operator=(const new_sub_path& other) noexcept;
+    new_sub_path(new_sub_path&& other) noexcept;
+    new_sub_path& operator=(new_sub_path&& other) noexcept;
+
+    // \ref{\iotwod.newsubpath.observers}, observers:
+    virtual path_data_type type() const noexcept override;
+  };
+} } } }
+\end{codeblock}
+
+\rSec1 [\iotwod.newsubpath.intro] {\tcode{new_sub_path} Description}
+
+\pnum
+\indexlibrary{\idxcode{new_sub_path}}
+The class \tcode{new_sub_path} describes a \tcode{path} operation. For a description of its meaning within a \tcode{path}, see the meaning of \tcode{path_data_type::new_sub_path} in Table~\ref{tab:\iotwod.pathdatatype.meanings}.
+
+\rSec1 [\iotwod.newsubpath.observers]{\tcode{new_sub_path} observers}
+
+\indexlibrary{\idxcode{new_sub_path}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{new_sub_path}}
+\begin{itemdecl}
+    virtual path_data_type type() const noexcept override;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{path_data_type::new_sub_path}.
+
+\end{itemdescr}

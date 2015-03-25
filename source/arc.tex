@@ -1,0 +1,200 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.arc] {Class \tcode{arc}}
+
+\rSec1 [\iotwod.arc.synopsis] {\tcode{arc} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class arc : public path_data {
+  public:
+    // \ref{\iotwod.arc.cons}, construct/copy/move/destroy:
+    arc() noexcept;
+    arc(const arc& other) noexcept;
+    arc& operator=(const arc& other) noexcept;
+    arc(arc&& other) noexcept;
+    arc& operator=(arc&& other) noexcept;
+    arc(point ctr, double rad, double angle1, double angle2) noexcept;
+
+    // \ref{\iotwod.arc.modifiers}, modifiers:
+    void center(const point& value) noexcept;
+    void radius(double value) noexcept;
+    void angle_1(double radians) noexcept;
+    void angle_2(double radians) noexcept;
+
+    // \ref{\iotwod.arc.observers}, observers:
+    point center() const noexcept;
+    double radius() const noexcept;
+    double angle_1() const noexcept;
+    double angle_2() const noexcept;
+    virtual path_data_type type() const noexcept override;
+
+  private:
+    point _Center;   // \expos
+    double _Radius;  // \expos
+    double _Angle_1; // \expos
+    double _Angle_2; // \expos
+  };
+} } } }
+\end{codeblock}
+
+\rSec1 [\iotwod.arc.intro] {\tcode{arc} Description}
+
+\pnum
+\indexlibrary{\idxcode{arc}}
+The class \tcode{arc} describes a \tcode{path} operation. For a description of its meaning within a \tcode{path}, see the meaning of \tcode{path_data_type::arc} in Table~\ref{tab:\iotwod.pathdatatype.meanings}.
+
+\rSec1 [\iotwod.arc.cons] {\tcode{arc} constructors and assignment operators}
+
+\indexlibrary{\idxcode{arc}!constructor}
+\begin{itemdecl}
+    arc() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{arc}.
+	
+	\pnum
+	\postconditions
+	\tcode{_Center == point(0.0, 0.0)}.
+
+	\tcode{_Radius == 0.0}.
+
+	\tcode{_Angle_1 == 0.0}.
+
+	\tcode{_Angle_2 == 0.0}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{arc}!constructor}
+\begin{itemdecl}
+    arc(point ctr, double rad, double angle1, double angle2) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{arc}.
+	
+	\pnum
+	\postconditions
+	\tcode{_Center == ctr}.
+
+	\tcode{_Radius == rad}.
+
+	\tcode{_Angle_1 == angle1}.
+
+	\tcode{_Angle_2 == angle2}.
+
+\end{itemdescr}
+
+\rSec1 [\iotwod.arc.modifiers]{\tcode{arc} modifiers}
+
+\indexlibrary{\idxcode{arc}!\idxcode{center}}
+\indexlibrary{\idxcode{center}!\idxcode{arc}}
+\begin{itemdecl}
+    void center(const point& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Center == value}.
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{arc}!\idxcode{radius}}
+\indexlibrary{\idxcode{radius}!\idxcode{arc}}
+\begin{itemdecl}
+    void radius(double value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Radius == value}.
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{arc}!\idxcode{angle_1}}
+\indexlibrary{\idxcode{angle_1}!\idxcode{arc}}
+\begin{itemdecl}
+    void angle_1(double value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Angle_1 == value}.
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{arc}!\idxcode{angle_2}}
+\indexlibrary{\idxcode{angle_2}!\idxcode{arc}}
+\begin{itemdecl}
+    void angle_2(double value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Angle_2 == value}.
+	
+\end{itemdescr}
+
+\rSec1 [\iotwod.arc.observers]{\tcode{arc} observers}
+
+\indexlibrary{\idxcode{arc}!\idxcode{center}}
+\indexlibrary{\idxcode{center}!\idxcode{arc}}
+\begin{itemdecl}
+    point center() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Center}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{arc}!\idxcode{radius}}
+\indexlibrary{\idxcode{radius}!\idxcode{arc}}
+\begin{itemdecl}
+    double radius() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Radius}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{arc}!\idxcode{angle_1}}
+\indexlibrary{\idxcode{angle_1}!\idxcode{arc}}
+\begin{itemdecl}
+    double angle_1() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Angle_1}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{arc}!\idxcode{angle_2}}
+\indexlibrary{\idxcode{angle_2}!\idxcode{arc}}
+\begin{itemdecl}
+    double angle_2() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Angle_2}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{arc}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{arc}}
+\begin{itemdecl}
+    virtual path_data_type type() const noexcept override;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{path_data_type::arc}.
+
+\end{itemdescr}
