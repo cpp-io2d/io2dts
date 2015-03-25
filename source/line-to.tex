@@ -1,0 +1,105 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.lineto] {Class \tcode{line_to}}
+
+\rSec1 [\iotwod.lineto.synopsis] {\tcode{line_to} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class line_to : public path_data {
+  public:
+    // \ref{\iotwod.lineto.cons}, construct/copy/move/destroy:
+    line_to() noexcept;
+    line_to(const line_to& other) noexcept;
+    line_to& operator=(const line_to& other) noexcept;
+    line_to(line_to&& other) noexcept;
+    line_to& operator=(line_to&& other) noexcept;
+    line_to(const point& pt) noexcept;
+
+    // \ref{\iotwod.lineto.modifiers}, modifiers:
+    void to(const point& pt) noexcept;
+
+    // \ref{\iotwod.lineto.observers}, observers:
+    point to() const noexcept;
+    virtual path_data_type type() const noexcept override;
+    
+  private:
+    point _Data; // \expos
+  };
+} } } }
+\end{codeblock}
+
+\rSec1 [\iotwod.lineto.intro] {\tcode{line_to} Description}
+
+\pnum
+\indexlibrary{\idxcode{line_to}}
+The class \tcode{line_to} describes a \tcode{path} operation. For a description of its meaning within a \tcode{path}, see the meaning of \tcode{path_data_type::line_to} in Table~\ref{tab:\iotwod.pathdatatype.meanings}.
+
+\rSec1 [\iotwod.lineto.cons] {\tcode{line_to} constructors and assignment operators}
+
+\indexlibrary{\idxcode{line_to}!constructor}
+\begin{itemdecl}
+    line_to() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{line_to}.
+	
+	\pnum
+	\postconditions
+	\tcode{_Data == point(0.0, 0.0)}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{line_to}!constructor}
+\begin{itemdecl}
+    line_to(const point& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{line_to}.
+	
+	\pnum
+	\postconditions
+	\tcode{_Data == pt}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.lineto.modifiers]{\tcode{line_to} modifiers}
+
+\indexlibrary{\idxcode{line_to}!\idxcode{to}}
+\indexlibrary{\idxcode{to}!\idxcode{line_to}}
+\begin{itemdecl}
+    void to(const point& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Data == pt}.
+	
+\end{itemdescr}
+
+\rSec1 [\iotwod.lineto.observers]{\tcode{line_to} observers}
+
+\indexlibrary{\idxcode{line_to}!\idxcode{to}}
+\indexlibrary{\idxcode{to}!\idxcode{line_to}}
+\begin{itemdecl}
+    point to() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Data}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{line_to}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{line_to}}
+\begin{itemdecl}
+    virtual path_data_type type() const noexcept override;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{path_data_type::line_to}.
+
+\end{itemdescr}

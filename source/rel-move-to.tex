@@ -1,0 +1,105 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.relmoveto] {Class \tcode{rel_move_to}}
+
+\rSec1 [\iotwod.relmoveto.synopsis] {\tcode{rel_move_to} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class rel_move_to : public path_data {
+  public:
+    // \ref{\iotwod.relmoveto.cons}, construct/copy/move/destroy:
+    rel_move_to() noexcept;
+    rel_move_to(const rel_move_to& other) noexcept;
+    rel_move_to& operator=(const rel_move_to& other) noexcept;
+    rel_move_to(rel_move_to&& other) noexcept;
+    rel_move_to& operator=(rel_move_to&& other) noexcept;
+    rel_move_to(const point& pt) noexcept;
+
+    // \ref{\iotwod.relmoveto.modifiers}, modifiers:
+    void to(const point& pt) noexcept;
+
+    // \ref{\iotwod.relmoveto.observers}, observers:
+    point to() const noexcept;
+    virtual path_data_type type() const noexcept override;
+    
+  private:
+    point _Data; // \expos
+  };
+} } } }
+\end{codeblock}
+
+\rSec1 [\iotwod.relmoveto.intro] {\tcode{rel_move_to} Description}
+
+\pnum
+\indexlibrary{\idxcode{rel_move_to}}
+The class \tcode{rel_move_to} describes a \tcode{path} operation. For a description of its meaning within a \tcode{path}, see the meaning of \tcode{path_data_type::rel_move_to} in Table~\ref{tab:\iotwod.pathdatatype.meanings}.
+
+\rSec1 [\iotwod.relmoveto.cons] {\tcode{rel_move_to} constructors and assignment operators}
+
+\indexlibrary{\idxcode{rel_move_to}!constructor}
+\begin{itemdecl}
+    rel_move_to() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{rel_move_to}.
+	
+	\pnum
+	\postconditions
+	\tcode{_Data == point(0.0, 0.0)}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rel_move_to}!constructor}
+\begin{itemdecl}
+    rel_move_to(const point& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{rel_move_to}.
+	
+	\pnum
+	\postconditions
+	\tcode{_Data == pt}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.relmoveto.modifiers]{\tcode{rel_move_to} modifiers}
+
+\indexlibrary{\idxcode{rel_move_to}!\idxcode{to}}
+\indexlibrary{\idxcode{to}!\idxcode{rel_move_to}}
+\begin{itemdecl}
+    void to(const point& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Data == pt}.
+	
+\end{itemdescr}
+
+\rSec1 [\iotwod.relmoveto.observers]{\tcode{rel_move_to} observers}
+
+\indexlibrary{\idxcode{rel_move_to}!\idxcode{to}}
+\indexlibrary{\idxcode{to}!\idxcode{rel_move_to}}
+\begin{itemdecl}
+    point to() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Data}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rel_move_to}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{rel_move_to}}
+\begin{itemdecl}
+    virtual path_data_type type() const noexcept override;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{path_data_type::rel_move_to}.
+
+\end{itemdescr}

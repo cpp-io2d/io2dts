@@ -1,0 +1,105 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.moveto] {Class \tcode{move_to}}
+
+\rSec1 [\iotwod.moveto.synopsis] {\tcode{move_to} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class move_to : public path_data {
+  public:
+    // \ref{\iotwod.moveto.cons}, construct/copy/move/destroy:
+    move_to() noexcept;
+    move_to(const move_to& other) noexcept;
+    move_to& operator=(const move_to& other) noexcept;
+    move_to(move_to&& other) noexcept;
+    move_to& operator=(move_to&& other) noexcept;
+    move_to(const point& pt) noexcept;
+
+    // \ref{\iotwod.moveto.modifiers}, modifiers:
+    void to(const point& pt) noexcept;
+
+    // \ref{\iotwod.moveto.observers}, observers:
+    point to() const noexcept;
+    virtual path_data_type type() const noexcept override;
+    
+  private:
+    point _Data; // \expos
+  };
+} } } }
+\end{codeblock}
+
+\rSec1 [\iotwod.moveto.intro] {\tcode{move_to} Description}
+
+\pnum
+\indexlibrary{\idxcode{move_to}}
+The class \tcode{move_to} describes a \tcode{path} operation. For a description of its meaning within a \tcode{path}, see the meaning of \tcode{path_data_type::move_to} in Table~\ref{tab:\iotwod.pathdatatype.meanings}.
+
+\rSec1 [\iotwod.moveto.cons] {\tcode{move_to} constructors and assignment operators}
+
+\indexlibrary{\idxcode{move_to}!constructor}
+\begin{itemdecl}
+    move_to() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{move_to}.
+	
+	\pnum
+	\postconditions
+	\tcode{_Data == point(0.0, 0.0)}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{move_to}!constructor}
+\begin{itemdecl}
+    move_to(const point& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{move_to}.
+	
+	\pnum
+	\postconditions
+	\tcode{_Data == pt}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.moveto.modifiers]{\tcode{move_to} modifiers}
+
+\indexlibrary{\idxcode{move_to}!\idxcode{to}}
+\indexlibrary{\idxcode{to}!\idxcode{move_to}}
+\begin{itemdecl}
+    void to(const point& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Data == pt}.
+	
+\end{itemdescr}
+
+\rSec1 [\iotwod.moveto.observers]{\tcode{move_to} observers}
+
+\indexlibrary{\idxcode{move_to}!\idxcode{to}}
+\indexlibrary{\idxcode{to}!\idxcode{move_to}}
+\begin{itemdecl}
+    point to() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Data}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{move_to}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{move_to}}
+\begin{itemdecl}
+    virtual path_data_type type() const noexcept override;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{path_data_type::move_to}.
+
+\end{itemdescr}

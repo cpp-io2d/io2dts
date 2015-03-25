@@ -1,0 +1,172 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.relcurveto] {Class \tcode{rel_curve_to}}
+
+\rSec1 [\iotwod.relcurveto.synopsis] {\tcode{rel_curve_to} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class rel_curve_to : public path_data {
+  public:
+    // \ref{\iotwod.relcurveto.cons}, construct/copy/move/destroy:
+    curve_to() noexcept;
+    curve_to(const curve_to& other) noexcept;
+    curve_to& operator=(const curve_to& other) noexcept;
+    curve_to(curve_to&& other) noexcept;
+    curve_to& operator=(curve_to&& other) noexcept;
+    curve_to(const point& controlPoint1, const point& controlPoint2,
+      const point& endPoint) noexcept;
+
+    // \ref{\iotwod.relcurveto.modifiers}, modifiers:
+    void control_point_1(const point& value) noexcept;
+    void control_point_2(const point& value) noexcept;
+    void end_point(const point& value) noexcept;
+
+
+    // \ref{\iotwod.relcurveto.observers}, observers:
+    point control_point_1() const noexcept;
+    point control_point_2() const noexcept;
+    point end_point() const noexcept;
+    virtual path_data_type type() const noexcept override;
+    
+  private:
+    point _Control_pt1; // \expos
+    point _Control_pt2; // \expos
+    point _End_pt;      // \expos
+  };
+} } } }
+\end{codeblock}
+
+\rSec1 [\iotwod.relcurveto.intro] {\tcode{rel_curve_to} Description}
+
+\pnum
+\indexlibrary{\idxcode{rel_curve_to}}
+The class \tcode{rel_curve_to} describes a \tcode{path} operation. For a description of its meaning within a \tcode{path}, see the meaning of \tcode{path_data_type::rel_curve_to} in Table~\ref{tab:\iotwod.pathdatatype.meanings}.
+
+\rSec1 [\iotwod.relcurveto.cons] {\tcode{rel_curve_to} constructors and assignment operators}
+
+\indexlibrary{\idxcode{rel_curve_to}!constructor}
+\begin{itemdecl}
+    rel_curve_to() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{rel_curve_to}.
+	
+	\pnum
+	\postconditions
+	\tcode{_Control_pt1 == point(0.0, 0.0)}.
+
+	\tcode{_Control_pt2 == point(0.0, 0.0)}.
+
+	\tcode{_End_pt == point(0.0, 0.0)}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rel_curve_to}!constructor}
+\begin{itemdecl}
+    rel_curve_to(const point& controlPoint1, const point& controlPoint2,
+      const point& endPoint) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{rel_curve_to}.
+	
+	\pnum
+	\postconditions
+	\tcode{_Control_pt1 == controlPoint1}.
+
+	\tcode{_Control_pt2 == controlPoint2}.
+
+	\tcode{_End_pt == endPoint}.
+
+\end{itemdescr}
+
+\rSec1 [\iotwod.relcurveto.modifiers]{\tcode{rel_curve_to} modifiers}
+
+\indexlibrary{\idxcode{rel_curve_to}!\idxcode{control_point_1}}
+\indexlibrary{\idxcode{control_point_1}!\idxcode{rel_curve_to}}
+\begin{itemdecl}
+    void control_point_1(const point& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Control_pt_1 == value}.
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rel_curve_to}!\idxcode{control_point_2}}
+\indexlibrary{\idxcode{control_point_2}!\idxcode{rel_curve_to}}
+\begin{itemdecl}
+    void control_point_2(const point& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Control_pt_2 == value}.
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rel_curve_to}!\idxcode{end_point}}
+\indexlibrary{\idxcode{end_point}!\idxcode{rel_curve_to}}
+\begin{itemdecl}
+    void end_point(const point& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_End_pt == value}.
+	
+\end{itemdescr}
+
+\rSec1 [\iotwod.relcurveto.observers]{\tcode{rel_curve_to} observers}
+
+\indexlibrary{\idxcode{rel_curve_to}!\idxcode{control_point_1}}
+\indexlibrary{\idxcode{control_point_1}!\idxcode{rel_curve_to}}
+\begin{itemdecl}
+    point control_point_1() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Control_pt_1}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rel_curve_to}!\idxcode{control_point_2}}
+\indexlibrary{\idxcode{control_point_2}!\idxcode{rel_curve_to}}
+\begin{itemdecl}
+    point control_point_2() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Control_pt_2}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rel_curve_to}!\idxcode{end_point}}
+\indexlibrary{\idxcode{end_point}!\idxcode{rel_curve_to}}
+\begin{itemdecl}
+    point end_point() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_End_pt}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rel_curve_to}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{rel_curve_to}}
+\begin{itemdecl}
+    virtual path_data_type type() const noexcept override;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{path_data_type::rel_curve_to}.
+
+\end{itemdescr}
