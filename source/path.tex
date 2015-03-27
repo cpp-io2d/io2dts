@@ -5,13 +5,13 @@
 
 \pnum
 \indexlibrary{\idxcode{path}}%
-The \tcode{path} class is an opaque resource container. It represents one or 
+The \tcode{path} class is an immutable representation of one or 
 more geometric paths, which are created using the functionality of the 
 \tcode{path_factory} class~(\ref{\iotwod.pathfactory}).
 
 \pnum
 When a \tcode{path} object is set on a \tcode{surface} object using 
-\tcode{surface::set_path}, the geometric paths represented by it can be 
+\tcode{surface::path}, the geometric paths represented by it can be 
 stroked or filled.
 
 \rSec1 [\iotwod.path.synopsis] {\tcode{path} synopsis}
@@ -20,33 +20,35 @@ stroked or filled.
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path {
     public:
-    // See~\ref{\iotwod.req.native}
-    typedef @\impdef@ native_handle_type; // Exposition only.
-    native_handle_type native_handle(); // Exposition only.
-  	
     // \ref{\iotwod.path.cons}, construct/copy/destroy:
     path() = delete;
-    path(const path_factory& pb);
+    path(const path_factory& pb, const surface& sf);
     path(const path& other);
     path& operator=(const path& other);
     path(path&& other);
     path& operator=(path&& other);
-  	
+
     // \ref{\iotwod.path.observers}, observers:
-    ::std::vector<path_data> get_data() const;
-    const ::std::vector<path_data>& get_data_ref() const;
-    rectangle get_path_extents() const;
+    vector<unique_ptr<path_data>> data() const;
+    const vector<unique_ptr<path_data>>& data_ref() const;
+    rectangle path_extents() const;
+    
+  private:
+    shared_ptr<vector<unique_ptr<path_data>>> _Data; // \expos
+    bool _Has_current_point;                         // \expos
+    point _Current_point;                            // \expos
+    point _Last_move_to_point;                       // \expos
+    rectangle _Extents;                              // \expos
   };
-} } } } // namespaces std::experimental::io2d::v1
+} } } }
 \end{codeblock}
 
 \rSec1 [\iotwod.path.cons] {\tcode{path} constructors and assignment operators}
 
-\indexlibrary{\idxcode{path}!constructor}%
+\indexlibrary{\idxcode{path}!constructor}
 \begin{itemdecl}
-	path(const path_factory& pb);
+	path(const path_factory& pb, const surface& sf);
 \end{itemdecl}
-
 \begin{itemdescr}
 	\pnum
 	\effects
@@ -56,12 +58,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \rSec1 [\iotwod.path.observers] {\tcode{path} observers}
 
-\rSec2 [\iotwod.path::get_path_extents] {\tcode{path::get_path_extents}}
-
-\indexlibrary{\idxcode{path}!\idxcode{get_path_extents}}%
-\indexlibrary{\idxcode{get_path_extents}!\idxcode{path}}%
+\indexlibrary{\idxcode{path}!\idxcode{path_extents}}%
+\indexlibrary{\idxcode{path_extents}!\idxcode{path}}%
 \begin{itemdecl}
-rectangle get_path_extents() const;
+rectangle path_extents() const;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum

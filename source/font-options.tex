@@ -1,82 +1,79 @@
 %!TEX root = io2d.tex
 \rSec0 [\iotwod.fontoptions] {Class \tcode{font_options}}
 
-\rSec1 [\iotwod.fontoptions.intro] {\tcode{font_options} Description}
-
-\pnum
-\indexlibrary{\idxcode{font_options}}%
-The \tcode{font_options} class is an opaque resource container. It allows for 
-tweaking how fonts are rendered. It is created using the functionality of the 
-\tcode{font_options_factory} class~(\ref{\iotwod.fontoptionsfactory}).
-
 \rSec1 [\iotwod.fontoptions.synopsis] {\tcode{font_options} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class font_options {
     public:
-    // See~\ref{\iotwod.req.native}
-    typedef @\impdef@ native_handle_type; // Exposition only.
-    native_handle_type native_handle(); // Exposition only.
-  	
     // \ref{\iotwod.fontoptions.cons}, construct/copy/destroy:
     font_options() = delete;
-    font_options(const font_options&) = default;
-    font_options& operator=(const font_options&) = default;
+    font_options(const font_options&);
+    font_options& operator=(const font_options&);
     font_options(font_options&& other);
     font_options& operator=(font_options&& other);
-    font_options(const font_options_factory& factory);
+    font_options(std::experimental::io2d::antialias a,
+      std::experimental::io2d::subpixel_order so);
 
     // \ref{\iotwod.fontoptions.observers}, observers:
-    antialias get_antialias() const;
-    subpixel_order get_subpixel_order() const;
+    std::experimental::io2d::antialias antialias() const;
+    std::experimental::io2d::subpixel_order subpixel_order() const;
+  private:
+    std::experimental::io2d::antialias _Antialias;           // \expos
+    std::experimental::io2d::subpixel_order _Subpixel_order; // \expos
   };
-} } } } // namespaces std::experimental::io2d::v1
+} } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.fontoptions.cons] {\tcode{font_options} constructors and 
-assignment 
-operators}
+\rSec1 [\iotwod.fontoptions.intro] {\tcode{font_options} Description}
 
-\indexlibrary{\idxcode{font_options}!constructor}%
+\pnum
+\indexlibrary{\idxcode{font_options}}
+The \tcode{font_options} class describes and object that holds values which specify certain aspects of how text should be rendered.
+
+\rSec1 [\iotwod.fontoptions.cons] {\tcode{font_options} constructors and assignment operators}
+
+\indexlibrary{\idxcode{font_options}!constructor}
 \begin{itemdecl}
-	font_options(const font_options_factory& factory);
+    font_options(std::experimental::io2d::antialias a,
+      std::experimental::io2d::subpixel_order so);
 \end{itemdecl}
-
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{font_options} from the observable state 
-	of \tcode{factory}. 
-	value and a \tcode{subpixel_order} value.
+	Constructs an object of type \tcode{font_options}.
+	
+	\pnum
+	\postconditions
+	\tcode{_Antialias == a}.
+	
+	\tcode{_Subpixel_order == so}.
+	
 \end{itemdescr}
 
 \rSec1 [\iotwod.fontoptions.observers] {\tcode{font_options} observers}
 
-\rSec2 [\iotwod.fontoptions::get_antialias] 
-{\tcode{font_options::get_antialias}}
-
-\indexlibrary{\idxcode{font_options}!\idxcode{get_antialias}}%
-\indexlibrary{\idxcode{get_antialias}!\idxcode{font_options}}%
+\indexlibrary{\idxcode{font_options}!\idxcode{antialias}}
+\indexlibrary{\idxcode{antialias}!\idxcode{font_options}}
 \begin{itemdecl}
-antialias get_antialias() const;
+std::experimental::io2d::antialias antialias() const;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
-	The \tcode{antialias} value stored by \tcode{*this}.
+	\tcode{_Antialias}.
+
 \end{itemdescr}
 
-\rSec2 [\iotwod.fontoptions::get_subpixel_order] 
-{\tcode{font_options::get_subpixel_order}}
-
-\indexlibrary{\idxcode{font_options}!\idxcode{get_subpixel_order}}%
-\indexlibrary{\idxcode{get_subpixel_order}!\idxcode{font_options}}%
+\indexlibrary{\idxcode{font_options}!\idxcode{subpixel_order}}
+\indexlibrary{\idxcode{subpixel_order}!\idxcode{font_options}}
 \begin{itemdecl}
-subpixel_order get_subpixel_order() const;
+std::experimental::io2d::subpixel_order subpixel_order() const;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
-	The \tcode{subpixel_order} value stored by \tcode{*this}.
+	\tcode{_Subpixel_order}.
+	
 \end{itemdescr}

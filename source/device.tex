@@ -29,12 +29,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void lock();
     void unlock();
   };
-} } } } // namespaces std::experimental::io2d::v1
+} } } }
 \end{codeblock}
 
 \rSec1 [\iotwod.device.modifiers] {\tcode{device} modifiers}
-
-\rSec2 [\iotwod.device::flush] {\tcode{device::flush}}
 
 \indexlibrary{\idxcode{device}!\idxcode{flush}}%
 \indexlibrary{\idxcode{flush}!\idxcode{device}}%
@@ -67,20 +65,11 @@ void flush();
 	\pnum
 	\realnotes
 	One reason a user might call this function would be because they wished to 
-	render UI controls that this library does not provide. As such, the 
-	user needs to know that using the underlying rendering technology will not 
-	introduce any race conditions. This function, in combination with locking 
-	the device, exists to provide that surety. If the underlying technologies 
-	internally batch operations in a way that allows them to receive and batch 
-	further commands without introducing race conditions, the implementation 
-	should return as soon as all pending operations have been submitted to the 
-	batch queue.
+	render UI controls (something that this library does not provide). As such, the user needs to know that using the underlying rendering system outside of this library will not introduce any race conditions. This function, in combination with locking the device, exists to provide that surety. If the underlying technologies internally batch operations in a way that allows them to receive and batch further commands without introducing race conditions, the implementation should return as soon as all pending operations have been submitted to the batch queue.
 \end{itemdescr}
 
-\rSec2 [\iotwod.device::lock] {\tcode{device::lock}}
-
-\indexlibrary{\idxcode{device}!\idxcode{lock}}%
-\indexlibrary{\idxcode{lock}!\idxcode{device}}%
+\indexlibrary{\idxcode{device}!\idxcode{lock}}
+\indexlibrary{\idxcode{lock}!\idxcode{device}}
 \begin{itemdecl}
 void lock();
 \end{itemdecl}
@@ -102,10 +91,8 @@ void lock();
 	\exitnote
 \end{itemdescr}
 
-\rSec2 [\iotwod.device::unlock] {\tcode{device::unlock}}
-
-\indexlibrary{\idxcode{device}!\idxcode{unlock}}%
-\indexlibrary{\idxcode{unlock}!\idxcode{device}}%
+\indexlibrary{\idxcode{device}!\idxcode{unlock}}
+\indexlibrary{\idxcode{unlock}!\idxcode{device}}
 \begin{itemdecl}
 \end{itemdecl}
 \begin{itemdescr}
