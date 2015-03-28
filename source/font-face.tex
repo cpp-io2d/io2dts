@@ -1,14 +1,6 @@
 %!TEX root = io2d.tex
 \rSec0 [\iotwod.fontface] {Class \tcode{font_face}}
 
-\rSec1 [\iotwod.fontface.intro] {\tcode{font_face} Description}
-
-\pnum
-\indexlibrary{\idxcode{font_face}}%
-The \tcode{font_face} class is an opaque resource container. It represents a 
-font face that is used to render text. It is a base class only and is not 
-directly instantiable.
-
 \rSec1 [\iotwod.fontface.synopsis] {\tcode{font_face} synopsis}
 
 \begin{codeblock}
@@ -17,23 +9,31 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   public:
     // See~\ref{\iotwod.req.native}
     typedef @\impdef@ native_handle_type;
-    native_handle_type native_handle() const;
+    native_handle_type native_handle() const noexcept;
 
     // \ref{\iotwod.fontface.cons}, construct/copy/destroy:
     font_face() = delete;
-    font_face(const font_face&);
-    font_face& operator=(const font_face&);
-    font_face(font_face&& other);
-    font_face& operator=(font_face&& other);
+    font_face(const font_face&) noexcept;
+    font_face& operator=(const font_face&) noexcept;
+    font_face(font_face&& other) noexcept;
+    font_face& operator=(font_face&& other) noexcept;
     virtual ~font_face();
   };
-} } } } // namespaces std::experimental::io2d::v1
+} } } }
 \end{codeblock}
+
+\rSec1 [\iotwod.fontface.intro] {\tcode{font_face} Description}
+
+\pnum
+\indexlibrary{\idxcode{font_face}}
+The \tcode{font_face} class is an opaque resource container. It represents a 
+font face that is used to render text. It is a base class only and shall not be
+directly instantiable.
 
 \rSec1 [\iotwod.fontface.cons] {\tcode{font_face} constructors and 
 assignment operators}
 
-\indexlibrary{\idxcode{font_face}!destructor}%
+\indexlibrary{\idxcode{font_face}!destructor}
 \begin{itemdecl}
 virtual ~font_face();
 \end{itemdecl}
@@ -42,7 +42,4 @@ virtual ~font_face();
 	\effects
 	Destroys an object of class \tcode{font_face}.
 	
-	\pnum
-	\remarks
-	Does not throw any exceptions.
 \end{itemdescr}

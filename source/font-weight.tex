@@ -1,14 +1,6 @@
 %!TEX root = io2d.tex
 \rSec0 [\iotwod.font.weight] {Enum class \tcode{font_weight}}
 
-\rSec1 [\iotwod.font.weight.summary] {\tcode{font_weight} Summary}
-
-\pnum
-The \tcode{font_weight} enum class specifies the weight requested for rendering 
-text.
-See Table~\ref{tab:\iotwod.font.weight.meanings} for the meaning of each
-\tcode{} enumerator.
-
 \rSec1 [\iotwod.font.weight.synopsis] {\tcode{font_weight} Synopsis}
 
 \begin{codeblock}
@@ -17,8 +9,17 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     normal,
     bold
   };
-} } } } // namespaces std::experimental::io2d::v1
+} } } }
 \end{codeblock}
+
+\rSec1 [\iotwod.font.weight.summary] {\tcode{font_weight} Summary}
+
+\pnum
+The \tcode{font_weight} enum class specifies the font weight for rendering text.
+
+\pnum
+See Table~\ref{tab:\iotwod.font.weight.meanings} for the meaning of each
+\tcode{} enumerator.
 
 \rSec1 [\iotwod.font.weight.enumerators] {\tcode{font_weight} Enumerators}
 \begin{libreqtab2}
@@ -36,9 +37,9 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \\ \capsep
  \endhead
  \tcode{normal}
- & The text should be rendered in whatever is a normal weight for the script.
+ & The text shall be rendered in whatever is a normal weight for the script.
  \\
  \tcode{bold}
- & The text should be rendered in whatever is a bold weight for the script.
+ & The text shall be rendered in whatever is a bold weight for the script.
  \\
 \end{libreqtab2}

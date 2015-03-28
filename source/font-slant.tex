@@ -6,12 +6,16 @@
 \pnum
 The \tcode{font_slant} enum class specifies the slant requested for rendering 
 text.
-\enternote
+
+\pnum
 These values have different meanings for different scripts. For some scripts 
 they may have no meaning at all. Further, not all typefaces will support every 
-value. As such, the values are requests which should be honored if possible and 
-meaningful, not requirements.
-\exitnote
+value.
+
+\pnum
+As such, these values are requests which implementations should honor if possible.
+
+\pnum
 See Table~\ref{tab:\iotwod.fontslant.meanings} for the meaning of each
 \tcode{font_slant} enumerator.
 
@@ -43,20 +47,19 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \\ \capsep
  \endhead
  \tcode{normal}
- & The text should be rendered in whatever is a normal type for the script.
+ & The text shall be rendered in whatever is a normal type for the font. If a font has both an italic type and an oblique type but does not have another type, then the italic type shall be the normal type for the font unless the font includes data that specifies otherwise.
+ \enternote
+ If a font only has an italic type or only an oblique type then that is the normal type for the font.
+ \exitnote  
  \\
  \tcode{italic}
- & The text should be rendered in whatever is an italic type for the script.
- \enternote
+ & The text should be rendered in whatever is an italic type for the font.
  If a font does not have an italic type but does have an oblique type, the 
- oblique type shall be used if \tcode{italic} is requested.
- \exitnote
+ oblique type shall be used if \tcode{italic} is requested. If a font has neither an italic type nor and oblique type, the normal type shall be used.
  \\
  \tcode{oblique}
- & The text should be rendered in whatever is an oblique type for the script.
- \enternote
+ & The text should be rendered in whatever is an oblique type for the font.
  If a font does not have an oblique type but does have an italic type, the 
- italic type shall be used if \tcode{oblique} is requested.
- \exitnote
+ italic type shall be used if \tcode{oblique} is requested. If a font has neither an italic type nor and oblique type, the normal type shall be used.
  \\
 \end{libreqtab2}
