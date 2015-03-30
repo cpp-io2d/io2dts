@@ -24,12 +24,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     ::std::experimental::io2d::filter filter() const noexcept;
     matrix_2d matrix() const noexcept;
     brush_type type() const noexcept;
-  };
 
-    
-    
-// \expos
-  
+  private:
+    ::std::experimental::io2d::extend _Extend; // \expos
+    ::std::experimental::io2d::filter _Filter; // \expos
+    matrix_2d _Matrix;                         // \expos
+    brush_type _Brush_type;                    // \expos
+  };
 } } } }
 \end{codeblock}
 
@@ -37,17 +38,58 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \pnum
 \indexlibrary{\idxcode{brush}}
-The class \tcode{brush} describes .
+The class \tcode{brush} describes an opaque resource wrapper for color and alpha data.
+
+\pnum
+A \tcode{brush} object's color and alpha data is immutable.
+
+\pnum
+A \tcode{brush} object also has mutable \tcode{extend}, \tcode{filter}, and \tcode{matrix_2d} data which affects how the color and alpha data is used and interpreted.
+
+\pnum
+Lastly, a \tcode{brush} object has immutable \tcode{brush_type} data which indicates the type of brush factory which was used in creating the \tcode{brush} object.
+
+\pnum
+A \tcode{brush} object is usable as the color and alpha source for a surface's stroke, fill, mask, paint, and text rendering operations. See \ref{\iotwod.surface.modifiers.render} for more information.
+
+\pnum
+It is also usable as the mask for a surface's mask operation. Its alpha channel is used as the mask such that only brush types which have a non-uniform alpha channel are suitable for use as a mask. See the description of \tcode{surface::mask} (\ref{\iotwod.surface.modifiers.render}) for more information.
 
 \rSec1 [\iotwod.brush.modifiers]{\tcode{brush} modifiers}
 
-\indexlibrary{\idxcode{brush}!\idxcode{}}
-\indexlibrary{\idxcode{}!\idxcode{brush}}
+\indexlibrary{\idxcode{brush}!\idxcode{extend}}
+\indexlibrary{\idxcode{extend}!\idxcode{brush}}
 \begin{itemdecl}
+    void extend(::std::experimental::io2d::extend e) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\postconditions
+	\tcode{_Extend == e}.
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{brush}!\idxcode{filter}}
+\indexlibrary{\idxcode{filter}!\idxcode{brush}}
+\begin{itemdecl}
+    void filter(::std::experimental::io2d::filter f) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Filter == f}.
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{brush}!\idxcode{matrix}}
+\indexlibrary{\idxcode{matrix}!\idxcode{brush}}
+\begin{itemdecl}
+    void matrix(const matrix_2d& m) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Matrix == m}.
 	
 \end{itemdescr}
 
@@ -56,9 +98,47 @@ The class \tcode{brush} describes .
 \indexlibrary{\idxcode{brush}!\idxcode{}}
 \indexlibrary{\idxcode{}!\idxcode{brush}}
 \begin{itemdecl}
+    ::std::experimental::io2d::extend extend() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
+	\tcode{_Extend}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{brush}!\idxcode{}}
+\indexlibrary{\idxcode{}!\idxcode{brush}}
+\begin{itemdecl}
+    ::std::experimental::io2d::filter filter() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Filter}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{brush}!\idxcode{}}
+\indexlibrary{\idxcode{}!\idxcode{brush}}
+\begin{itemdecl}
+    matrix_2d matrix() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Matrix}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{brush}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{brush}}
+\begin{itemdecl}
+    brush_type type() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Brush_type}.
 
 \end{itemdescr}
