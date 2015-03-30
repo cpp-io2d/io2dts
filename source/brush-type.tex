@@ -1,0 +1,62 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.brushtype] {Enum class \tcode{brush_type}}
+
+\rSec1 [\iotwod.brushtype.summary] {\tcode{brush_type} Summary}
+
+\pnum
+The \tcode{brush_type} enum class denotes a \tcode{brush} object's type.
+\enternote
+Since a \tcode{brush} can only be formed using one of the brush factory 
+types, this enum class is described in terms of which brush factory was used 
+to form the \tcode{brush} which has a particular \tcode{brush_type}.
+\exitnote
+
+\pnum`
+See Table~\ref{tab:\iotwod.brushtype.meanings} for the meaning of each
+\tcode{brush_type} enumerator.
+
+\rSec1 [\iotwod.brushtype.synopsis] {\tcode{brush_type} Synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  enum class brush_type {
+    solid_color,
+    surface,
+    linear,
+    radial,
+    mesh
+  };
+} } } }
+\end{codeblock}
+
+\rSec1 [\iotwod.brushtype.enumerators] {\tcode{brush_type} Enumerators}
+\begin{libreqtab2}
+ {\tcode{brush_type} enumerator meanings}
+ {tab:\iotwod.brushtype.meanings}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endhead
+ \tcode{solid_color}
+ & The \tcode{brush} object was created from a \tcode{solid_color_brush_factory} object.
+ \\
+ \tcode{surface}
+ & The \tcode{brush} object was created from a \tcode{surface_brush_factory} object.
+ \\
+ \tcode{linear}
+ & The \tcode{brush} object was created from a \tcode{linear_brush_factory} object.
+ \\
+ \tcode{radial}
+ & The \tcode{brush} object was created from a \tcode{radial_brush_factory} object.
+ \\
+ \tcode{mesh}
+ & The \tcode{brush} object was created from a \tcode{mesh_brush_factory} object.
+ \\
+\end{libreqtab2}

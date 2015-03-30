@@ -11,16 +11,20 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   	rgba_color(double r, double g, double b, double a = 1.0);
   	rgba_color(double r, double g, double b, ::std::error_code& ec) noexcept;
   	rgba_color(double r, double g, double b, double a, ::std::error_code& ec) noexcept;
-  	rgba_color(const rgba_color& c);
-  	rgba_color& operator=(const rgba_color& c);
-  	rgba_color(rgba_color&& c);
-  	rgba_color& operator=(rgba_color&& c);
+  	rgba_color(const rgba_color& c) noexcept;
+  	rgba_color& operator=(const rgba_color& c) noexcept;
+  	rgba_color(rgba_color&& c) noexcept;
+  	rgba_color& operator=(rgba_color&& c) noexcept;
   	
     // \ref{\iotwod.rgbacolor.modifiers}, modifiers:
-    void r(double val) noexcept;
-    void g(double val) noexcept;
-    void b(double val) noexcept;
-    void a(double val) noexcept;
+    void r(double val);
+    void r(double val, ::std::error_code& ec) noexcept;
+    void g(double val);
+    void g(double val, ::std::error_code& ec) noexcept;
+    void b(double val);
+    void b(double val, ::std::error_code& ec) noexcept;
+    void a(double val);
+    void a(double val, ::std::error_code& ec) noexcept;
     
     // \ref{\iotwod.rgbacolor.observers}, observers:
     double r() const noexcept;
@@ -177,17 +181,17 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     static const rgba_color& white_smoke() noexcept;
     static const rgba_color& yellow() noexcept;
     static const rgba_color& yellow_green() noexcept;
-  };
 
-  // \ref{\iotwod.rgbacolor.ops}, non-member operators:
-  bool operator==(const rgba_color& lhs, const rgba_color& rhs);
-  bool operator!=(const rgba_color& lhs, const rgba_color& rhs);
 private:
     double _Red;   // \expos
     double _Green; // \expos
     double _Blue;  // \expos
     double _Alpha; // \expos
+  };
 
+  // \ref{\iotwod.rgbacolor.ops}, non-member operators:
+  bool operator==(const rgba_color& lhs, const rgba_color& rhs) noexcept;
+  bool operator!=(const rgba_color& lhs, const rgba_color& rhs) noexcept;
 } } } }
 \end{codeblock}
 
@@ -241,8 +245,8 @@ The type predefines a set of named colors, for which each channel is an unsigned
 \indexlibrary{\idxcode{rgba_color}!constructor}
 \begin{itemdecl}
 	rgba_color(double r, double g, double b, double a = 1.0);
-  	rgba_color(double r, double g, double b, error_code& ec) noexcept;
-  	rgba_color(double r, double g, double b, double a, error_code& ec) noexcept;
+  	rgba_color(double r, double g, double b, ::std::error_code& ec) noexcept;
+  	rgba_color(double r, double g, double b, double a, ::std::error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -291,61 +295,108 @@ The type predefines a set of named colors, for which each channel is an unsigned
 
 \rSec1 [\iotwod.rgbacolor.modifiers]{\tcode{rgba_color} modifiers}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{r}}%
-\indexlibrary{\idxcode{r}!\idxcode{rgba_color}}%
+\indexlibrary{\idxcode{rgba_color}!\idxcode{r}}
+\indexlibrary{\idxcode{r}!\idxcode{rgba_color}}
 \begin{itemdecl}
-	void r(double val) noexcept;
+	void r(double val);
+	void r(double val, error_code& ec) noexcept;
 \end{itemdecl}
 
 \begin{itemdescr}
 	\pnum
 	\requires
-	\tcode{val >= 0.0} and \tcode{val <= 1.0}; no diagnostic is required.
+	\tcode{val >= 0.0} and \tcode{val <= 1.0}.
+	
+	\pnum
+	\throws
+	As specified in Error reporting (\ref{\iotwod.err.report}).
 	
 	\pnum
 	\postconditions
 	\tcode{_Red == val}.
+
+	\pnum
+	\remarks
+	In the event of an error, the object shall not be modified.
+	
+	\pnum
+	\errors
+	\tcode{errc::argument_out_of_domain} if the value of \tcode{val} fails to meet the preconditions.
+	
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{g}}%
-\indexlibrary{\idxcode{g}!\idxcode{rgba_color}}%
+\indexlibrary{\idxcode{rgba_color}!\idxcode{g}}
+\indexlibrary{\idxcode{g}!\idxcode{rgba_color}}
 \begin{itemdecl}
-	void g(double val) noexcept;
+	void g(double val);
+	void g(double val, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\requires
-	\tcode{val >= 0.0} and \tcode{val <= 1.0}; no diagnostic is required.
+	\tcode{val >= 0.0} and \tcode{val <= 1.0}.
+		
+	\pnum
+	\throws
+	As specified in Error reporting (\ref{\iotwod.err.report}).
 	
 	\pnum
 	\postconditions
 	\tcode{_Green == val}.
+
+	\pnum
+	\remarks
+	In the event of an error, the object shall not be modified.
+	
+	\pnum
+	\errors
+	\tcode{errc::argument_out_of_domain} if the value of \tcode{val} fails to meet the preconditions.
+	
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{b}}%
-\indexlibrary{\idxcode{b}!\idxcode{rgba_color}}%
+\indexlibrary{\idxcode{rgba_color}!\idxcode{b}}
+\indexlibrary{\idxcode{b}!\idxcode{rgba_color}}
 \begin{itemdecl}
-	void b(double val) noexcept;
+	void b(double val);
+	void b(double val, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\requires
-	\tcode{val >= 0.0} and \tcode{val <= 1.0}; no diagnostic is required.
+	\tcode{val >= 0.0} and \tcode{val <= 1.0}.
+	
+	\pnum
+	\throws
+	As specified in Error reporting (\ref{\iotwod.err.report}).
 	
 	\pnum
 	\postconditions
 	\tcode{_Blue == val}.
+
+	\pnum
+	\remarks
+	In the event of an error, the object shall not be modified.
+	
+	\pnum
+	\errors
+	\tcode{errc::argument_out_of_domain} if the value of \tcode{val} fails to meet the preconditions.
+	
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{a}}%
-\indexlibrary{\idxcode{a}!\idxcode{rgba_color}}%
+\indexlibrary{\idxcode{rgba_color}!\idxcode{a}}
+\indexlibrary{\idxcode{a}!\idxcode{rgba_color}}
 \begin{itemdecl}
-	void a(double val) noexcept;
+	void a(double val);
+	void a(double val, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\requires
-	\tcode{val >= 0.0} and \tcode{val <= 1.0}; no diagnostic is required.
+	\tcode{val >= 0.0} and \tcode{val <= 1.0}.
+	
+	\pnum
+	\throws
+	As specified in Error reporting (\ref{\iotwod.err.report}).
 	
 	\pnum
 	\postconditions
@@ -356,12 +407,21 @@ The type predefines a set of named colors, for which each channel is an unsigned
 	\tcode{_Green = _Green * val}.
 	
 	\tcode{_Blue = _Blue * val}.
+
+	\pnum
+	\remarks
+	In the event of an error, the object shall not be modified.
+	
+	\pnum
+	\errors
+	\tcode{errc::argument_out_of_domain} if the value of \tcode{val} fails to meet the preconditions.
+	
 \end{itemdescr}
 
 \rSec1 [\iotwod.rgbacolor.observers]{\tcode{rgba_color} observers}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{r}}%
-\indexlibrary{\idxcode{r}!\idxcode{rgba_color}}%
+\indexlibrary{\idxcode{rgba_color}!\idxcode{r}}
+\indexlibrary{\idxcode{r}!\idxcode{rgba_color}}
 \begin{itemdecl}
 	double r() const noexcept;
 \end{itemdecl}
@@ -371,8 +431,8 @@ The type predefines a set of named colors, for which each channel is an unsigned
 	\tcode{_Red}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{g}}%
-\indexlibrary{\idxcode{g}!\idxcode{rgba_color}}%
+\indexlibrary{\idxcode{rgba_color}!\idxcode{g}}
+\indexlibrary{\idxcode{g}!\idxcode{rgba_color}}
 \begin{itemdecl}
 	double g() const noexcept;
 \end{itemdecl}
@@ -382,8 +442,8 @@ The type predefines a set of named colors, for which each channel is an unsigned
 	\tcode{_Green}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{b}}%
-\indexlibrary{\idxcode{b}!\idxcode{rgba_color}}%
+\indexlibrary{\idxcode{rgba_color}!\idxcode{b}}
+\indexlibrary{\idxcode{b}!\idxcode{rgba_color}}
 \begin{itemdecl}
 	double b() const noexcept;
 \end{itemdecl}
@@ -393,8 +453,8 @@ The type predefines a set of named colors, for which each channel is an unsigned
 	\tcode{_Blue}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{a}}%
-\indexlibrary{\idxcode{a}!\idxcode{rgba_color}}%
+\indexlibrary{\idxcode{rgba_color}!\idxcode{a}}
+\indexlibrary{\idxcode{a}!\idxcode{rgba_color}}
 \begin{itemdecl}
 	double a() const noexcept;
 \end{itemdecl}
@@ -2036,8 +2096,8 @@ The type predefines a set of named colors, for which each channel is an unsigned
 
 \rSec1 [\iotwod.rgbacolor.ops] {\tcode{rgba_color} non-member operators}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{operator==}}%
-\indexlibrary{\idxcode{operator==}!\idxcode{rgba_color}}%
+\indexlibrary{\idxcode{rgba_color}!\idxcode{operator==}}
+\indexlibrary{\idxcode{operator==}!\idxcode{rgba_color}}
 \begin{itemdecl}
 bool operator==(const rgba_color& lhs, const rgba_color& rhs) noexcept;
 \end{itemdecl}
@@ -2050,8 +2110,8 @@ bool operator==(const rgba_color& lhs, const rgba_color& rhs) noexcept;
 	lhs.a() == rhs.a()}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{operator!=}}%
-\indexlibrary{\idxcode{operator!=}!\idxcode{rgba_color}}%
+\indexlibrary{\idxcode{rgba_color}!\idxcode{operator!=}}
+\indexlibrary{\idxcode{operator!=}!\idxcode{rgba_color}}
 \begin{itemdecl}
 bool operator!=(const rgba_color& lhs, const rgba_color& rhs) noexcept;
 \end{itemdecl}

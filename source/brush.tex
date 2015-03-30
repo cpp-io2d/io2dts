@@ -1,0 +1,64 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.brush] {Class \tcode{brush}}
+
+\rSec1 [\iotwod.brush.synopsis] {\tcode{brush} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class brush {
+  public:
+    // construct/copy/move/destroy:
+    brush() = delete;
+    brush(const brush&) noexcept;
+    brush& operator=(const brush&) noexcept;
+    brush(brush&& other) noexcept;
+    brush& operator=(brush&& other) noexcept;
+
+    // \ref{\iotwod.brush.modifiers}, modifiers:
+    void extend(::std::experimental::io2d::extend e) noexcept;
+    void filter(::std::experimental::io2d::filter f) noexcept;
+    void matrix(const matrix_2d& m) noexcept;
+
+    // \ref{\iotwod.brush.observers}, observers:
+    ::std::experimental::io2d::extend extend() const noexcept;
+    ::std::experimental::io2d::filter filter() const noexcept;
+    matrix_2d matrix() const noexcept;
+    brush_type type() const noexcept;
+  };
+
+    
+    
+// \expos
+  
+} } } }
+\end{codeblock}
+
+\rSec1 [\iotwod.brush.intro] {\tcode{brush} Description}
+
+\pnum
+\indexlibrary{\idxcode{brush}}
+The class \tcode{brush} describes .
+
+\rSec1 [\iotwod.brush.modifiers]{\tcode{brush} modifiers}
+
+\indexlibrary{\idxcode{brush}!\idxcode{}}
+\indexlibrary{\idxcode{}!\idxcode{brush}}
+\begin{itemdecl}
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	
+\end{itemdescr}
+
+\rSec1 [\iotwod.brush.observers]{\tcode{brush} observers}
+
+\indexlibrary{\idxcode{brush}!\idxcode{}}
+\indexlibrary{\idxcode{}!\idxcode{brush}}
+\begin{itemdecl}
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+
+\end{itemdescr}

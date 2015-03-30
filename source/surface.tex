@@ -1,21 +1,6 @@
 %!TEX root = io2d.tex
 \rSec0 [\iotwod.surface] {Class \tcode{surface}}
 
-\rSec1 [\iotwod.surface.intro] {\tcode{surface} Description}
-
-\pnum
-\indexlibrary{\idxcode{surface}}%
-The \tcode{surface} class represents a surface on which graphics are rendered.
-
-\pnum
-A \tcode{surface} object is a stateful, move-only object.
-
-\pnum
-Rendering to a \tcode{surface} is accomplished by setting the appropriate state, often in the form of state objects such as \tcode{path} and \tcode{pattern}, and then calling one or more of the render functions to make the changes specified by the state to the surface resource managed by the \tcode{surface} object.
-
-\pnum
-A \tcode{surface} object is usually created by calling the \tcode{make_surface} \ref{\iotwod.surface.make_surface} function.
-
 \rSec1 [\iotwod.surface.synopsis] {\tcode{surface} synopsis}
 
 \begin{codeblock}
@@ -142,8 +127,23 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   
   // \ref{\iotwod.surface.nonmembers}, non-member functions:
   surface make_surface(@\impdef@) @\impdef@;
-} } } } // namespaces std::experimental::io2d::v1
+} } } }
 \end{codeblock}
+
+\rSec1 [\iotwod.surface.intro] {\tcode{surface} Description}
+
+\pnum
+\indexlibrary{\idxcode{surface}}
+The \tcode{surface} class represents a surface on which graphics are rendered.
+
+\pnum
+A \tcode{surface} object is a stateful, move-only object.
+
+\pnum
+Rendering to a \tcode{surface} is accomplished by setting the appropriate state, often in the form of state objects such as \tcode{path} and \tcode{pattern}, and then calling one or more of the render functions to make the changes specified by the state to the surface resource managed by the \tcode{surface} object.
+
+\pnum
+A \tcode{surface} object is usually created by calling the \tcode{make_surface} \ref{\iotwod.surface.make_surface} function.
 
 \rSec1 [\iotwod.surface.cons] {\tcode{surface} constructors, assignment operators, and destructors}
 

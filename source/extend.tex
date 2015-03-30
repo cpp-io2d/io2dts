@@ -5,11 +5,12 @@
 
 \pnum
 The \tcode{extend} enum class describes how a pixel's color should be 
-determined if it is outside the boundary of the source \tcode{pattern} or 
+determined if it is outside the boundary of the source \tcode{brush} or 
 \tcode{surface} during a call to \tcode{surface::fill}, \tcode{surface::mask}, 
-\tcode{surface::paint}, or \tcode{stroke}. See 
-Table~\ref{tab:\iotwod.extend.meanings} for the meaning of each \tcode{extend} 
-enumerator.
+\tcode{surface::paint}, or \tcode{surface::stroke}.
+
+\pnum
+See Table~\ref{tab:\iotwod.extend.meanings} for the meaning of each \tcode{extend} enumerator.
 
 \rSec1 [\iotwod.extend.synopsis] {\tcode{extend} Synopsis}
 
@@ -22,7 +23,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     pad,
     default_extend = none
   };
-} } } } // namespaces std::experimental::io2d::v1
+} } } }
 \end{codeblock}
 
 \rSec1 [\iotwod.extend.enumerators] {\tcode{extend} Enumerators}
@@ -41,24 +42,23 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \\ \capsep
  \endhead
  \tcode{none}
- & Any pixel outside of the bounds of the \tcode{pattern} or \tcode{surface} 
- which must be set shall be set to transparent black.
+ & Any pixel outside of the bounds of the \tcode{brush} or \tcode{surface} 
+ which is required to be set shall be set to transparent black.
  \\
  \tcode{repeat}
- & A pixel outside of the bounds of the \tcode{pattern} or \tcode{surface} 
- which must be set shall be set to the color it would have been set to if the 
- \tcode{pattern} or \tcode{surface} was infinitely large and repeated itself in 
+ & A pixel outside of the bounds of the \tcode{brush} or \tcode{surface} 
+ which is required to be set shall be set to the color it would have been set to if the 
+ \tcode{brush} or \tcode{surface} was infinitely large and repeated itself in 
  a left-to-right-left-to-right and top-to-bottom-top-to-bottom fashion.
  \\
  \tcode{reflect}
- & A pixel outside of the bounds of the \tcode{pattern} or \tcode{surface} 
- which must be set shall be set to the color it would have been set to if the 
- \tcode{pattern} or \tcode{surface} was infinitely large and repeated itself in 
+ & A pixel outside of the bounds of the \tcode{brush} or \tcode{surface} 
+ which is required to be set shall be set to the color it would have been set to if the 
+ \tcode{brush} or \tcode{surface} was infinitely large and repeated itself in 
  a left-to-right-to-left-to-right and top-to-bottom-to-top-to-bottom fashion.
  \\
  \tcode{pad}
- & A pixel outside of the bounds of the \tcode{pattern} or \tcode{surface} 
- which must be set shall be set to the color of the nearest pixel that was in 
- bounds.
+ & A pixel outside of the bounds of the \tcode{brush} or \tcode{surface} 
+ which is required to be set shall be set to the color of the nearest pixel that is in bounds.
  \\
 \end{libreqtab2}

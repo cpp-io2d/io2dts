@@ -153,10 +153,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \exitnote
  \\
  \tcode{invalid_mesh_construction}
- & A mesh construction operation on a \tcode{mesh_pattern_builder} object
+ & A mesh construction operation on a \tcode{mesh_brush_factory} object
  failed. Mesh construction operations are only permitted in between a call to
- either \tcode{mesh_pattern_builder::begin_patch} or
- \tcode{mesh_pattern_builder::begin_edit_patch} and
- \tcode{mesh_pattern_builder::end_patch}.
+ either \tcode{mesh_brush_factory::begin_patch} or
+ \tcode{mesh_brush_factory::begin_replace_patch} and
+ \tcode{mesh_brush_factory::end_patch}.
  \\
 \end{libreqtab2}
