@@ -59,7 +59,7 @@ The class \tcode{solid_color_brush_factory} describes a mutable factory for crea
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{solid_color_brush_factory}.
+	Constructs an object of type \tcode{solid_color_brush_factory}. A \tcode{brush} created using this object will will have \tcode{color} as its color.
 	
 	\pnum
 	\postcondition
@@ -76,7 +76,11 @@ The class \tcode{solid_color_brush_factory} describes a mutable factory for crea
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
+	\effects
+	A \tcode{brush} created using this object will will have \tcode{value} as its color.
+	
+	\pnum
+	\postcondition
 	\tcode{_Color == value}.
 	
 \end{itemdescr}

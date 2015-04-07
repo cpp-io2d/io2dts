@@ -18,8 +18,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     
     // \ref{\iotwod.\matrixtwod.staticfactories}, static factory functions:
     static matrix_2d init_identity() noexcept;
-    static matrix_2d init_translate(const point& value) noexcept;
-    static matrix_2d init_scale(const point& value) noexcept;
+    static matrix_2d init_translate(const vector_2d& value) noexcept;
+    static matrix_2d init_scale(const vector_2d& value) noexcept;
     static matrix_2d init_rotate(double radians) noexcept;
     static matrix_2d init_shear_x(double factor) noexcept;
     static matrix_2d init_shear_y(double factor) noexcept;
@@ -31,8 +31,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void m11(double value) noexcept;
     void m20(double value) noexcept;
     void m21(double value) noexcept;
-    matrix_2d& translate(const point& value) noexcept;
-    matrix_2d& scale(const point& value) noexcept;
+    matrix_2d& translate(const vector_2d& value) noexcept;
+    matrix_2d& scale(const vector_2d& value) noexcept;
     matrix_2d& rotate(double radians) noexcept;
     matrix_2d& shear_x(double factor) noexcept;
     matrix_2d& shear_y(double factor) noexcept;
@@ -48,8 +48,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     double m21() const noexcept;
     double determinant() const;
     double determinant(::std::error_code& ec) const noexcept;
-    point transform_distance(const point& dist) const noexcept;
-    point transform_point(const point& pt) const noexcept;
+    vector_2d transform_distance(const vector_2d& dist) const noexcept;
+    vector_2d transform_point(const vector_2d& pt) const noexcept;
     
     // \ref{\iotwod.\matrixtwod.member.ops}, matrix_2d member operators:
     matrix_2d& operator*=(const matrix_2d& rhs) noexcept;
@@ -185,7 +185,7 @@ static matrix_2d init_identity() noexcept;
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{init_translate}}
 \indexlibrary{\idxcode{init_translate}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-static matrix_2d init_translate(const point& value) noexcept;
+static matrix_2d init_translate(const vector_2d& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -196,7 +196,7 @@ static matrix_2d init_translate(const point& value) noexcept;
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{init_scale}}
 \indexlibrary{\idxcode{init_scale}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-static matrix_2d init_scale(const point& value) noexcept;
+static matrix_2d init_scale(const vector_2d& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -315,7 +315,7 @@ static matrix_2d init_shear_y(double factor) noexcept;
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{translate}}
 \indexlibrary{\idxcode{translate}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-matrix_2d& translate(const point& value) noexcept;
+matrix_2d& translate(const vector_2d& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -330,7 +330,7 @@ matrix_2d& translate(const point& value) noexcept;
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{scale}}
 \indexlibrary{\idxcode{scale}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-matrix_2d& scale(const point& value) noexcept;
+matrix_2d& scale(const vector_2d& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -535,12 +535,12 @@ double determinant(error_code& ec) const noexcept;
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{transform_distance}}
 \indexlibrary{\idxcode{transform_distance}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-point transform_distance(const point& dist) const noexcept;
+vector_2d transform_distance(const vector_2d& dist) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{point(m00() * dist.x() + m10() * dist.y(), m01() * dist.x() + m11() * dist.y())}.
+	\tcode{vector_2d(m00() * dist.x() + m10() * dist.y(), m01() * dist.x() + m11() * dist.y())}.
 	
 	\pnum
 	\realnote
@@ -553,12 +553,12 @@ point transform_distance(const point& dist) const noexcept;
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{transform_point}}
 \indexlibrary{\idxcode{transform_point}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-point transform_point(const point& pt) const noexcept;
+vector_2d transform_point(const vector_2d& pt) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{point((m00() * dist.x() + m10() * dist.y()) + m20(), (m01() * dist.x() + m11() * dist.y()) + m21())}.
+	\tcode{vector_2d((m00() * dist.x() + m10() * dist.y()) + m20(), (m01() * dist.x() + m11() * dist.y()) + m21())}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.\matrixtwod.member.ops] {\tcode{matrix_2d} member operators}

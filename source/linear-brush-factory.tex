@@ -1,55 +1,320 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.] {Class \tcode{}}
+\rSec0 [\iotwod.linearbrushfact] {Class \tcode{linear_brush_factory}}
 
-\rSec1 [\iotwod..intro] {\tcode{} Description}
-
-\pnum
-\indexlibrary{\idxcode{}}%
-The \tcode{} class ...
-
-\rSec1 [\iotwod..synopsis] {\tcode{} synopsis}
+\rSec1 [\iotwod.linearbrushfact.synopsis] {\tcode{linear_brush_factory} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-    // \ref{\iotwod..cons}, construct/copy/destroy:
-    // \ref{\iotwod..modifiers}, modifiers:
-    // \ref{\iotwod..observers}, observers:
-  // \ref{\iotwod..nonmembers}, non-member functions:
-} } } } // namespaces std::experimental::io2d::v1
+  class linear_brush_factory {
+  public:
+    // \ref{\iotwod.linearbrushfact.cons}, construct/copy/move/destroy:
+    linear_brush_factory() noexcept;
+    linear_brush_factory(const linear_brush_factory&);
+    linear_brush_factory& operator=(const linear_brush_factory&);
+    linear_brush_factory(linear_brush_factory&& other) noexcept;
+    linear_brush_factory& operator=(linear_brush_factory&& other) noexcept;
+    linear_brush_factory(const vector_2d& begin, const vector_2d& end) noexcept;
+
+    // \ref{\iotwod.linearbrushfact.modifiers}, modifiers:
+    void add_color_stop(double offset, const rgba_color& color);
+    void add_color_stop(double offset, const rgba_color& color, 
+      error_code& ec) noexcept;
+    void color_stop(unsigned int index, double offset,
+      const rgba_color& color);
+    void color_stop(unsigned int index, double offset,
+      const rgba_color& color, error_code& ec) noexcept;
+    void begin_point(const vector_2d& value) noexcept;
+    void end_point(const vector_2d& value) noexcept;
+
+    // \ref{\iotwod.linearbrushfact.observers}, observers:
+    int color_stop_count() const noexcept;
+    tuple<double, rgba_color> color_stop(unsigned int index) const;
+    tuple<double, rgba_color> color_stop(unsigned int index,
+      error_code& ec) const noexcept;
+    vector_2d begin_point() const noexcept;
+    vector_2d end_point() const noexcept;
+
+  private:
+    vector_2d _Begin_point;                             // \expos
+    vector_2d _End_point;                               // \expos
+    vector<tuple<double, rgba_color>> _Color_stops; // \expos
+  };
+} } } }
 \end{codeblock}
 
-\rSec1 [\iotwod..cons] {\tcode{} constructors and 
-assignment operators}
+\rSec1 [\iotwod.linearbrushfact.intro] {\tcode{linear_brush_factory} Description}
 
-\indexlibrary{\idxcode{}!constructor}%
+\pnum
+\indexlibrary{\idxcode{linear_brush_factory}}
+The class \tcode{linear_brush_factory} describes a mutable factory for creating \tcode{brush} objects with linear gradient color and alpha data.
+
+\pnum
+A linear gradient is defined by a begin point, an end point, and a variable number of color stops.
+
+\pnum
+The begin and end points define a line segment, with a color stop offset value of 0.0 corresponding to the begin point and a color stop offset value of 1.0 corresponding to the end point.
+
+\pnum
+Color stop offset values in between 0.0 and 1.0 linearly correspond to points on the line segment.
+
+\pnum
+\enterexample
+Given a \tcode{linear_brush_factory} with a begin point of \tcode{vector_2d(0.0, 0.0)} and an end point of \tcode{vector_2d(10.0, 5.0)}, a color stop offset value of 0.6 would correspond to \tcode{vector_2d(6.0, 3.0)}.
+\exitexample
+
+\pnum
+Color stops are assigned a sequentially incremented \tcode{unsigned int} index value in the order that they are added. The first color stop which is added is assigned the index value 0.
+
+\pnum
+Color stops which have been added can be replaced. A color stop which replaces another color stop assumes the index value of the color stop it replaced. Replacement does not constitute addition for purposes of assigning index values.
+\enterexample
+If three color stops are added and then the color stop at index 1 is replaced, the next color stop which is added will be assigned the index value 3.
+\exitexample
+
+\pnum
+For any point on the line segment, its color value shall be determined according to the following rules:
+
+\begin{itemize}
+\item If there are less than two color stops or if all color stops have the same offset value, then there are no adjacent color stops and the color value of every point on the line segment shall be \tcode{rgba_color::transparent_black()}. The remaining rules are inapplicable if either of these conditions is met.
+
+\item When no color stop has the offset value of 0.0, then, defining $n$ to be the offset value of the color stop whose offset value is nearest to 0.0, the color value of every point along the line segment in the offset range $[0, n)$ shall be \tcode{rgba_color::transparent_black()}.
+
+\item When no color stop has the offset value of 1.0, then, defining $n$ to be the offset value of the color stop whose offset value is nearest to 1.0, the color value of every point along the line segment in the offset range $(n, 1]$ shall be \tcode{rgba_color::transparent_black()}.
+
+\item Each color stop has, at most, two adjacent color stops: one to its left and one to its right.
+
+\item Adjacency of color stops is initially determined by offset values. If two or more color stops have the same offset value then index values are used to conclusively determine adjacency as set forth in the remaining rules.
+
+\item For each color stop \textit{a}, the \term{set of color stops to its left} are those color stops which have an offset value which is closer to 0.0 than \textit{a}'s offset value.
+\enternote
+This includes any color stops with an offset value of 0.0 provided that \textit{a}'s offset value is not 0.0.
+\exitnote
+
+\item For each color stop \textit{b}, the \term{set of color stops to its right} are those color stops which have an offset value which is closer to 1.0 than \textit{b}'s offset value.
+\enternote
+This includes any color stops with an offset value of 1.0 provided that \textit{b}'s offset value is not 1.0.
+\exitnote
+
+\item A color stop which has an offset value of 0.0 cannot have an adjacent color stop to its left.
+
+\item A color stop which has an offset value of 1.0 cannot have an adjacent color stop to its right.
+
+\item If a color stop \textit{a}'s set of color stops to its left consists of exactly one color stop, that color stop is the color stop that is adjacent to \textit{a} on its left.
+
+\item If a color stop \textit{b}'s set of color stops to its right consists of exactly one color stop, that color stop is the color stop that is adjacent to \textit{b} on its right.
+
+\item If two or more color stops have the same offset value then the color stop with the lowest index value is the only color stop from that set of color stops which can have a color stop that is adjacent to it on its left and the color stop with the highest index value is the only color stop from that set of color stops which can have a color stop that is adjacent to it on its right. This rule takes precedence over all of the remaining rules.
+
+\item If a color stop can have an adjacent color stop to its left, then the color stop which is adjacent to it to its left is the color stop from the set of color stops to its left which has an offset value which is closest to its offset value. If two or more color stops meet that criteria, then the color stop which is adjacent to it to its left is the color stop which has the highest index value from the set of color stops to its left which are tied for being closest to its offset value.
+
+\item If a color stop can have an adjacent color stop to its right, then the color stop which is adjacent to it to its right is the color stop from the set of color stops to its right which has an offset value which is closest to its offset value. If two or more color stops meet that criteria, then the color stop which is adjacent to it to its right is the color stop which has the lowest index value from the set of color stops to its right which are tied for being closest to its offset value.
+\end{itemize}
+
+\pnum
+For each color stop which has at least one adjacent color stop, all points perpendicular to that color stop relative to the \tcode{linear_brush_factory}'s line segment shall have the same color.
+
+\pnum
+For each point on the line segment between adjacent color stops, the color for that point and for all points perpendicular to that point shall be a linear interpolation between the color values of the adjacent color stops.
+
+\pnum
+It is unspecified whether the linear interpolation between the colors of two adjacent color stops is performed linearly on each color channel, is performed within an RGB color space (with or without gamma correction), or is performed by a linear color interpolation algorithm implemented in hardware (typically in a graphics processing unit).
+
+\pnum
+Implementations shall interpolate between alpha channel values of adjacent color stops linearly except as provided in the following paragraph.
+
+\pnum
+A conforming implementation may use the alpha channel interpolation results from a linear color interpolation algorithm implemented in hardware even if those results differ from the results required by the previous paragraph.
+
+\rSec1 [\iotwod.linearbrushfact.cons] {\tcode{linear_brush_factory} constructors and assignment operators}
+
+\indexlibrary{\idxcode{linear_brush_factory}!constructor}
 \begin{itemdecl}
+    linear_brush_factory() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
+	Constructs an object of type \tcode{linear_brush_factory}.
 	
 	\pnum
 	\postconditions
+	\tcode{_Begin_point == vector_2d\{\}}.
 	
-	\pnum
-	\complexity
+	\tcode{_End_point == vector_2d\{\}}.
+	
+	\tcode{_Color_stops.empty() == true}.
+	
 \end{itemdescr}
 
-\rSec1 [\iotwod..modifiers] {\tcode{} modifiers}
-
-\rSec2 [\iotwod.::] {\tcode{::}}
-
-\indexlibrary{\idxcode{}!\idxcode{}}%
-\indexlibrary{\idxcode{}!\idxcode{}}%
+\indexlibrary{\idxcode{linear_brush_factory}!constructor}
 \begin{itemdecl}
+    linear_brush_factory(const vector_2d& begin, const vector_2d& end) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
+	Constructs an object of type \tcode{linear_brush_factory}.
 	
 	\pnum
 	\postconditions
+	\tcode{_Begin_point == begin}.
+	
+	\tcode{_End_point == end}.
+	
+	\tcode{_Color_stops.empty() == true}.
+	
+\end{itemdescr}
+
+\rSec1 [\iotwod.linearbrushfact.modifiers] {\tcode{linear_brush_factory} modifiers}
+
+\indexlibrary{\idxcode{linear_brush_factory}!\idxcode{add_color_stop}}
+\indexlibrary{\idxcode{add_color_stop}!\idxcode{linear_brush_factory}}
+\begin{itemdecl}
+    void add_color_stop(double offset, const rgba_color& color);
+    void add_color_stop(double offset, const rgba_color& color, 
+      error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Adds a color stop with an offset value of \tcode{offset} and a color value of \tcode{color}.
 	
 	\pnum
-	\complexity
+	\postconditions
+	\tcode{_Color_stops.push_back(make_tuple(offset, color))}.
+	
+	\pnum
+	\throws
+	As specified in Error reporting (\ref{\iotwod.err.report}).
+	
+	\pnum
+	\errors
+	\tcode{errc::not_enough_memory} if the attempt to add the color stop fails.
+	 
+\end{itemdescr}
+
+\indexlibrary{\idxcode{linear_brush_factory}!\idxcode{color_stop}}
+\indexlibrary{\idxcode{color_stop}!\idxcode{linear_brush_factory}}
+\begin{itemdecl}
+    void color_stop(unsigned int index, double offset,
+      const rgba_color& color);
+    void color_stop(unsigned int index, double offset,
+      const rgba_color& color, error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\requires
+	\tcode{_Color_stops.size() > index}.
+	
+	\pnum
+	\effects
+	Replaces the color stop at index \tcode{index} with a color stop with an offset of \tcode{offset} and a color of \tcode{color}.
+
+	\pnum
+	\postconditions
+	\tcode{_Color_stops.at(index) == make_tuple(offset, color)}.
+	
+	\pnum
+	\throws
+	As specified in Error reporting (\ref{\iotwod.err.report}).
+	
+	\pnum
+	\errors
+	\tcode{io2d_error::invalid_index} if \tcode{index} violated the preconditions.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{linear_brush_factory}!\idxcode{begin_point}}
+\indexlibrary{\idxcode{begin_point}!\idxcode{linear_brush_factory}}
+\begin{itemdecl}
+    void begin_point(const vector_2d& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Sets the begin point to \tcode{value}.
+
+	\pnum
+	\postconditions
+	\tcode{_Begin_point == value}.
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{linear_brush_factory}!\idxcode{end_point}}
+\indexlibrary{\idxcode{end_point}!\idxcode{linear_brush_factory}}
+\begin{itemdecl}
+    void end_point(const vector_2d& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Sets the end point to \tcode{value}.
+	
+	\pnum
+	\postconditions
+	\tcode{_End_point == value}.
+	
+\end{itemdescr}
+
+\rSec1 [\iotwod.linearbrushfact.observers] {\tcode{color_stop_count} observers}
+
+\indexlibrary{\idxcode{linear_brush_factory}!\idxcode{color_stop_count}}
+\indexlibrary{\idxcode{color_stop_count}!\idxcode{linear_brush_factory}}
+\begin{itemdecl}
+    unsigned int color_stop_count() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{static_cast<unsigned int>(_Color_stops.size())}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{linear_brush_factory}!\idxcode{color_stop}}
+\indexlibrary{\idxcode{color_stop}!\idxcode{linear_brush_factory}}
+\begin{itemdecl}
+    tuple<double, rgba_color> color_stop(unsigned int index) const;
+    tuple<double, rgba_color> color_stop(unsigned int index,
+      error_code& ec) const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\requires
+	\tcode{_Color_stops.size() > index}.
+	
+	\pnum
+	\returns
+	\tcode{_Color_stops.at(index)}.
+
+	\pnum
+	\throws
+	As specified in Error reporting (\ref{\iotwod.err.report}).
+	
+	\pnum
+	\errors
+	\tcode{io2d_error::invalid_index} if \tcode{index} violated the preconditions.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{linear_brush_factory}!\idxcode{begin_point}}
+\indexlibrary{\idxcode{begin_point}!\idxcode{linear_brush_factory}}
+\begin{itemdecl}
+    vector_2d begin_point() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_Begin_point}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{linear_brush_factory}!\idxcode{end_point}}
+\indexlibrary{\idxcode{end_point}!\idxcode{linear_brush_factory}}
+\begin{itemdecl}
+    vector_2d end_point() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{_End_point}.
+
 \end{itemdescr}

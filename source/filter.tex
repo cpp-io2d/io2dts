@@ -7,7 +7,7 @@
 The \tcode{filter} enum class specifies the type of signal filter to use when 
 sampling from a \tcode{brush} or \tcode{surface}. Some values specify 
 attributes, leaving the choice of specific filter to the implementation, while 
-others denote that a specific type of filter should be used.
+others denote a specific type of filter that shall be used.
 
 \pnum
 See Table~\ref{tab:\iotwod.filter.meanings} for the meaning of each
@@ -22,8 +22,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     good,
     best,
     nearest,
-    bilinear,
-    default_filter = good
+    bilinear
   };
 } } } }
 \end{codeblock}

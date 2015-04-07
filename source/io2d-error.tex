@@ -1,16 +1,16 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.io2derror] {Enum class \tcode{io2d_error}}
+\rSec0 [\iotwod.\iotwoderror] {Enum class \tcode{io2d_error}}
 
-\rSec1 [\iotwod.io2derror.summary] {\tcode{io2d_error} Summary}
+\rSec1 [\iotwod.\iotwoderror.summary] {\tcode{io2d_error} Summary}
 \pnum
 The \tcode{io2d_error} enum class is used as an \tcode{error_condition} 
 associated with \tcode{io2d_error_category}. See 
-Table~\ref{tab:\iotwod.io2derror.meanings} for the meaning of each
+Table~\ref{tab:\iotwod.\iotwoderror.meanings} for the meaning of each
 status code.
 
-\rSec1 [\iotwod.io2derror.synopsis] {\tcode{io2d_error} Synopsis}
+\rSec1 [\iotwod.\iotwoderror.synopsis] {\tcode{io2d_error} Synopsis}
 
-\indexlibrary{\idxcode{io2d_error}}%
+\indexlibrary{\idxcode{io2d_error}}
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   enum class io2d_error {
@@ -26,6 +26,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     write_error,
     surface_finished,
     invalid_dash,
+    invalid_index,
     clip_not_representable,
     invalid_stride,
     user_font_immutable,
@@ -37,11 +38,11 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.io2derror.enumerators] {\tcode{io2d_error} Enumerators}
+\rSec1 [\iotwod.\iotwoderror.enumerators] {\tcode{io2d_error} Enumerators}
 
 \begin{libreqtab2}
   {\tcode{io2d_error} enumerator meanings}
-  {tab:\iotwod.io2derror.meanings}
+  {tab:\iotwod.\iotwoderror.meanings}
   \\ \topline
   \lhdr{Enumerator}
   & \rhdr{Meaning}
@@ -62,14 +63,11 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \\
  \tcode{no_current_point}
  & The operation requires a current point but no current point was set.
- This is usually the result of a call to \tcode{path_builder::rel_curve_to},
- \tcode{path_builder::rel_line_to}, or \tcode{path_builder::rel_move_to} and
- can be corrected by first establishing a current point with a non-"rel"
- member function call such as \tcode{path_builder::move_to}.
+ This is the result of an improper call to \tcode{path_builder::rel_curve_to},
+ \tcode{path_builder::rel_line_to}, or \tcode{path_builder::rel_move_to} or is the result of a call to \tcode{path_builder::append} with malformed data. See 
  \\
  \tcode{invalid_matrix}
- & A \tcode{matrix_2d} that the operation depends on is invalid. To be valid
- a \tcode{matrix_2d} must be invertible.
+ & A \tcode{matrix_2d} value that the operation depends on is invalid. Except as otherwise specified, this means that the \tcode{matrix_2d} value is not invertible.
  \\
  \tcode{invalid_status}
  & An internal error has occurred. The conditions and circumstances under which 
@@ -114,6 +112,9 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \\
  \tcode{invalid_dash}
  & An invalid dash value was specified in a call to \tcode{surface::set_dashes}.
+ \\
+ \tcode{invalid_index}
+ & An index value was specified in a call to a function which is outside the range of index values that are currently valid.
  \\
  \tcode{clip_not_representable}
  & A call was made to \tcode{surface::get_clip_rectangles} when the

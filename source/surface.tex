@@ -29,7 +29,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     ::std::shared_ptr<device> get_device();
     void mark_dirty();
     void mark_dirty(const rectangle& rect);
-    void set_device_offset(const point& offset);
+    void set_device_offset(const vector_2d& offset);
     void write_to_png(const ::std::string& filename);
     image_surface map_to_image();
     image_surface map_to_image(const rectangle& extents);
@@ -57,7 +57,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void fill(const surface& s);
     void mask(const pattern& pttn);
     void mask(const surface& surface);
-    void mask(const surface& surface, const point& origin);
+    void mask(const surface& surface, const vector_2d& origin);
     void paint();
     void paint(const surface& s);
     void paint(double alpha);
@@ -85,7 +85,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
     // \ref{\iotwod.surface.observers.state}, state observers:
     content get_content() const;
-    point get_device_offset() const;
+    vector_2d get_device_offset() const;
     bool has_surface_resource() const;
     pattern get_pattern() const;
     antialias get_antialias() const;
@@ -99,24 +99,24 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     compositing_operator get_compositing_operator() const;
     double get_tolerance() const;
     rectangle get_clip_extents() const;
-    bool in_clip(const point& pt) const;
+    bool in_clip(const vector_2d& pt) const;
     ::std::vector<rectangle> get_clip_rectangles() const;
 
     // \ref{\iotwod.surface.observers.render}, render observers:
     rectangle get_fill_extents() const;
-    bool in_fill(const point& pt) const;
+    bool in_fill(const vector_2d& pt) const;
     rectangle get_stroke_extents() const;
-    bool in_stroke(const point& pt) const;
+    bool in_stroke(const vector_2d& pt) const;
     font_extents get_font_extents() const;
     text_extents get_text_extents(const ::std::string& utf8) const;
     text_extents get_glyph_extents(const ::std::vector<glyph>& glyphs) const;
 
     // \ref{\iotwod.surface.observers.transform}, transformation observers:
     matrix_2d get_matrix() const;
-    point user_to_device() const;
-    point user_to_device_distance() const;
-    point device_to_user() const;
-    point device_to_user_distance() const;
+    vector_2d user_to_device() const;
+    vector_2d user_to_device_distance() const;
+    vector_2d device_to_user() const;
+    vector_2d device_to_user_distance() const;
 
     // \ref{\iotwod.surface.observers.font}, font observers:
     matrix_2d get_font_matrix() const;
@@ -263,7 +263,7 @@ void mark_dirty(const rectangle& rect);
 \indexlibrary{\idxcode{surface}!\idxcode{set_device_offset}}%
 \indexlibrary{\idxcode{set_device_offset}!\idxcode{surface}}%
 \begin{itemdecl}
-void set_device_offset(const point& offset);
+void set_device_offset(const vector_2d& offset);
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -665,16 +665,16 @@ void set_path(const path& p);
 	Create a \tcode{matrix_2d m} and initialize it to \tcode{matrix_2d::init_identity();}.
 	
 	\item
-	Create a \tcode{point origin} and initialize it to \tcode{\{ 0.0, 0.0 \}}.
+	Create a \tcode{vector_2d origin} and initialize it to \tcode{\{ 0.0, 0.0 \}}.
 	
 	\item
-	Create a \tcode{point currentPoint}.
+	Create a \tcode{vector_2d currentPoint}.
 	
 	\item
 	Create a \tcode{bool hasCurrentPoint} and initialize it to \tcode{false}.
 	
 	\item
-	Create a \tcode{point lastMovePoint}.
+	Create a \tcode{vector_2d lastMovePoint}.
 	
 	\item
 	Create a \tcode{bool hasLastMovePoint} and initialize it to \tcode{false}.
