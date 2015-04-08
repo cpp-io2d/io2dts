@@ -13,17 +13,17 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     line_to& operator=(const line_to& other) noexcept;
     line_to(line_to&& other) noexcept;
     line_to& operator=(line_to&& other) noexcept;
-    line_to(const point& pt) noexcept;
+    line_to(const vector_2d& pt) noexcept;
 
     // \ref{\iotwod.lineto.modifiers}, modifiers:
-    void to(const point& pt) noexcept;
+    void to(const vector_2d& pt) noexcept;
 
     // \ref{\iotwod.lineto.observers}, observers:
-    point to() const noexcept;
+    vector_2d to() const noexcept;
     virtual path_data_type type() const noexcept override;
     
   private:
-    point _Data; // \expos
+    vector_2d _Data; // \expos
   };
 } } } }
 \end{codeblock}
@@ -47,12 +47,12 @@ The class \tcode{line_to} describes a \tcode{path} operation. For a description 
 	
 	\pnum
 	\postconditions
-	\tcode{_Data == point(0.0, 0.0)}.
+	\tcode{_Data == vector_2d(0.0, 0.0)}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{line_to}!constructor}
 \begin{itemdecl}
-    line_to(const point& pt) noexcept;
+    line_to(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -69,7 +69,7 @@ The class \tcode{line_to} describes a \tcode{path} operation. For a description 
 \indexlibrary{\idxcode{line_to}!\idxcode{to}}
 \indexlibrary{\idxcode{to}!\idxcode{line_to}}
 \begin{itemdecl}
-    void to(const point& pt) noexcept;
+    void to(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -83,7 +83,7 @@ The class \tcode{line_to} describes a \tcode{path} operation. For a description 
 \indexlibrary{\idxcode{line_to}!\idxcode{to}}
 \indexlibrary{\idxcode{to}!\idxcode{line_to}}
 \begin{itemdecl}
-    point to() const noexcept;
+    vector_2d to() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum

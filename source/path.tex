@@ -1,19 +1,6 @@
 %!TEX root = io2d.tex
 \rSec0 [\iotwod.path] {Class \tcode{path}}
 
-\rSec1 [\iotwod.path.intro] {\tcode{path} Description}
-
-\pnum
-\indexlibrary{\idxcode{path}}%
-The \tcode{path} class is an immutable representation of one or 
-more geometric paths, which are created using the functionality of the 
-\tcode{path_factory} class~(\ref{\iotwod.pathfactory}).
-
-\pnum
-When a \tcode{path} object is set on a \tcode{surface} object using 
-\tcode{surface::path}, the geometric paths represented by it can be 
-stroked or filled.
-
 \rSec1 [\iotwod.path.synopsis] {\tcode{path} synopsis}
 
 \begin{codeblock}
@@ -22,38 +9,67 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     public:
     // \ref{\iotwod.path.cons}, construct/copy/destroy:
     path() = delete;
-    path(const path_factory& pb, const surface& sf);
-    path(const path& other);
-    path& operator=(const path& other);
-    path(path&& other);
-    path& operator=(path&& other);
+    explicit path(const path_factory& pb);
+    path(const path_factory& pb, error_code& ec) noexcept;
+    path(const vector<path_data_item>& p);
+    path(const vector<path_data_item>& p, error_code& ec) noexcept;
+    path(const path& other) noexcept;
+    path& operator=(const path& other) noexcept;
+    path(path&& other) noexcept;
+    path& operator=(path&& other) noexcept;
 
     // \ref{\iotwod.path.observers}, observers:
-    vector<unique_ptr<path_data>> data() const;
-    const vector<unique_ptr<path_data>>& data_ref() const;
-    rectangle path_extents() const;
+    vector<path_data_item> data() const;
+    vector<path_data_item> data(error_code& ec) const noexcept;
+    const ::std::vector<path_data_item>& data_ref() const noexcept;
+    rectangle path_extents() const noexcept;
     
   private:
-    shared_ptr<vector<unique_ptr<path_data>>> _Data; // \expos
-    bool _Has_current_point;                         // \expos
-    point _Current_point;                            // \expos
-    point _Last_move_to_point;                       // \expos
-    rectangle _Extents;                              // \expos
+    shared_ptr<vector<path_data_item>> _Data; // \expos
+    bool _Has_current_point;                  // \expos
+    vector_2d _Current_point;                 // \expos
+    vector_2d _Last_move_to_point;            // \expos
+    rectangle _Extents;                       // \expos
   };
 } } } }
 \end{codeblock}
+
+\rSec1 [\iotwod.path.intro] {\tcode{path} Description}
+
+\pnum
+\indexlibrary{\idxcode{path}}
+The \tcode{path} class represents an immutable collection of geometric paths.
+
+\pnum
+When a \tcode{path} object is set on a \tcode{surface} object using 
+\tcode{surface::path}, the geometric paths represented by it can be 
+stroked or filled.
 
 \rSec1 [\iotwod.path.cons] {\tcode{path} constructors and assignment operators}
 
 \indexlibrary{\idxcode{path}!constructor}
 \begin{itemdecl}
-	path(const path_factory& pb, const surface& sf);
+    explicit path(const path_factory& pb);
+    path(const path_factory& pb, error_code& ec) noexcept;
+    path(const vector<path_data_item>& p);
+    path(const vector<path_data_item>& p, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
 	Constructs an object of class \tcode{path} from a \tcode{path_factory} 
 	object's observable state.
+
+	\pnum
+	\throws
+	As specified in Error reporting (\ref{\iotwod.err.report}).
+
+	\pnum
+	\errors
+	\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
+	
+	\pnum
+	\tcode{io2d_error::no_current_point} 
 \end{itemdescr}
 
 \rSec1 [\iotwod.path.observers] {\tcode{path} observers}

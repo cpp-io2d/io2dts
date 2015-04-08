@@ -13,17 +13,17 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     change_origin& operator=(const change_origin& other) noexcept;
     change_origin(change_origin&& other) noexcept;
     change_origin& operator=(change_origin&& other) noexcept;
-    change_origin(const point& pt) noexcept;
+    change_origin(const vector_2d& pt) noexcept;
 
     // \ref{\iotwod.changeorigin.modifiers}, modifiers:
-    void origin(const point& value) noexcept;
+    void origin(const vector_2d& value) noexcept;
 
     // \ref{\iotwod.changeorigin.observers}, observers:
-    point origin() const noexcept;
+    vector_2d origin() const noexcept;
     virtual path_data_type type() const noexcept override;
     
   private:
-    point _Data; // \expos
+    vector_2d _Data; // \expos
   };
 } } } }
 \end{codeblock}
@@ -47,12 +47,12 @@ The class \tcode{change_origin} describes a \tcode{path} operation. For a descri
 	
 	\pnum
 	\postconditions
-	\tcode{_Data == point(0.0, 0.0)}.
+	\tcode{_Data == vector_2d(0.0, 0.0)}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{change_origin}!constructor}
 \begin{itemdecl}
-    change_origin(const point& pt) noexcept;
+    change_origin(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -69,7 +69,7 @@ The class \tcode{change_origin} describes a \tcode{path} operation. For a descri
 \indexlibrary{\idxcode{change_origin}!\idxcode{origin}}
 \indexlibrary{\idxcode{origin}!\idxcode{change_origin}}
 \begin{itemdecl}
-    void origin(const point& value) noexcept;
+    void origin(const vector_2d& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -83,7 +83,7 @@ The class \tcode{change_origin} describes a \tcode{path} operation. For a descri
 \indexlibrary{\idxcode{change_origin}!\idxcode{origin}}
 \indexlibrary{\idxcode{origin}!\idxcode{change_origin}}
 \begin{itemdecl}
-    point origin() const noexcept;
+    vector_2d origin() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum

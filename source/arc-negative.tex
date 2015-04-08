@@ -13,23 +13,24 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     arc_negative& operator=(const arc_negative& other) noexcept;
     arc_negative(arc_negative&& other) noexcept;
     arc_negative& operator=(arc_negative&& other) noexcept;
-    arc_negative(point ctr, double rad, double angle1, double angle2) noexcept;
+    arc_negative(const vector_2d& ctr, double rad, double angle1,
+      double angle2) noexcept;
 
     // \ref{\iotwod.arcnegative.modifiers}, modifiers:
-    void center(const point& value) noexcept;
+    void center(const vector_2d& value) noexcept;
     void radius(double value) noexcept;
     void angle_1(double radians) noexcept;
     void angle_2(double radians) noexcept;
 
     // \ref{\iotwod.arcnegative.observers}, observers:
-    point center() const noexcept;
+    vector_2d center() const noexcept;
     double radius() const noexcept;
     double angle_1() const noexcept;
     double angle_2() const noexcept;
     virtual path_data_type type() const noexcept override;
 
   private:
-    point _Center;   // \expos
+    vector_2d _Center;   // \expos
     double _Radius;  // \expos
     double _Angle_1; // \expos
     double _Angle_2; // \expos
@@ -56,7 +57,7 @@ The class \tcode{arc_negative} describes a \tcode{path} operation. For a descrip
 	
 	\pnum
 	\postconditions
-	\tcode{_Center == point(0.0, 0.0)}.
+	\tcode{_Center == vector_2d(0.0, 0.0)}.
 
 	\tcode{_Radius == 0.0}.
 
@@ -68,7 +69,8 @@ The class \tcode{arc_negative} describes a \tcode{path} operation. For a descrip
 
 \indexlibrary{\idxcode{arc_negative}!constructor}
 \begin{itemdecl}
-    arc_negative(point ctr, double rad, double angle1, double angle2) noexcept;
+    arc_negative(const vector_2d& ctr, double rad, double angle1,
+      double angle2) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -92,7 +94,7 @@ The class \tcode{arc_negative} describes a \tcode{path} operation. For a descrip
 \indexlibrary{\idxcode{arc_negative}!\idxcode{center}}
 \indexlibrary{\idxcode{center}!\idxcode{arc_negative}}
 \begin{itemdecl}
-    void center(const point& value) noexcept;
+    void center(const vector_2d& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -142,7 +144,7 @@ The class \tcode{arc_negative} describes a \tcode{path} operation. For a descrip
 \indexlibrary{\idxcode{arc_negative}!\idxcode{center}}
 \indexlibrary{\idxcode{center}!\idxcode{arc_negative}}
 \begin{itemdecl}
-    point center() const noexcept;
+    vector_2d center() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum

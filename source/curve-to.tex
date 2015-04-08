@@ -13,25 +13,25 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     curve_to& operator=(const curve_to& other) noexcept;
     curve_to(curve_to&& other) noexcept;
     curve_to& operator=(curve_to&& other) noexcept;
-    curve_to(const point& controlPoint1, const point& controlPoint2,
-      const point& endPoint) noexcept;
+    curve_to(const vector_2d& controlPoint1, const vector_2d& controlPoint2,
+      const vector_2d& endPoint) noexcept;
 
     // \ref{\iotwod.curveto.modifiers}, modifiers:
-    void control_point_1(const point& value) noexcept;
-    void control_point_2(const point& value) noexcept;
-    void end_point(const point& value) noexcept;
+    void control_point_1(const vector_2d& value) noexcept;
+    void control_point_2(const vector_2d& value) noexcept;
+    void end_point(const vector_2d& value) noexcept;
 
 
     // \ref{\iotwod.curveto.observers}, observers:
-    point control_point_1() const noexcept;
-    point control_point_2() const noexcept;
-    point end_point() const noexcept;
+    vector_2d control_point_1() const noexcept;
+    vector_2d control_point_2() const noexcept;
+    vector_2d end_point() const noexcept;
     virtual path_data_type type() const noexcept override;
     
   private:
-    point _Control_pt1; // \expos
-    point _Control_pt2; // \expos
-    point _End_pt;      // \expos
+    vector_2d _Control_pt1; // \expos
+    vector_2d _Control_pt2; // \expos
+    vector_2d _End_pt;      // \expos
   };
 } } } }
 \end{codeblock}
@@ -55,18 +55,18 @@ The class \tcode{curve_to} describes a \tcode{path} operation. For a description
 	
 	\pnum
 	\postconditions
-	\tcode{_Control_pt1 == point(0.0, 0.0)}.
+	\tcode{_Control_pt1 == vector_2d(0.0, 0.0)}.
 
-	\tcode{_Control_pt2 == point(0.0, 0.0)}.
+	\tcode{_Control_pt2 == vector_2d(0.0, 0.0)}.
 
-	\tcode{_End_pt == point(0.0, 0.0)}.
+	\tcode{_End_pt == vector_2d(0.0, 0.0)}.
 
 \end{itemdescr}
 
 \indexlibrary{\idxcode{curve_to}!constructor}
 \begin{itemdecl}
-    curve_to(const point& controlPoint1, const point& controlPoint2,
-      const point& endPoint) noexcept;
+    curve_to(const vector_2d& controlPoint1, const vector_2d& controlPoint2,
+      const vector_2d& endPoint) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -88,7 +88,7 @@ The class \tcode{curve_to} describes a \tcode{path} operation. For a description
 \indexlibrary{\idxcode{curve_to}!\idxcode{control_point_1}}
 \indexlibrary{\idxcode{control_point_1}!\idxcode{curve_to}}
 \begin{itemdecl}
-    void control_point_1(const point& value) noexcept;
+    void control_point_1(const vector_2d& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -100,7 +100,7 @@ The class \tcode{curve_to} describes a \tcode{path} operation. For a description
 \indexlibrary{\idxcode{curve_to}!\idxcode{control_point_2}}
 \indexlibrary{\idxcode{control_point_2}!\idxcode{curve_to}}
 \begin{itemdecl}
-    void control_point_2(const point& value) noexcept;
+    void control_point_2(const vector_2d& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -112,7 +112,7 @@ The class \tcode{curve_to} describes a \tcode{path} operation. For a description
 \indexlibrary{\idxcode{curve_to}!\idxcode{end_point}}
 \indexlibrary{\idxcode{end_point}!\idxcode{curve_to}}
 \begin{itemdecl}
-    void end_point(const point& value) noexcept;
+    void end_point(const vector_2d& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -126,7 +126,7 @@ The class \tcode{curve_to} describes a \tcode{path} operation. For a description
 \indexlibrary{\idxcode{curve_to}!\idxcode{control_point_1}}
 \indexlibrary{\idxcode{control_point_1}!\idxcode{curve_to}}
 \begin{itemdecl}
-    point control_point_1() const noexcept;
+    vector_2d control_point_1() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -138,7 +138,7 @@ The class \tcode{curve_to} describes a \tcode{path} operation. For a description
 \indexlibrary{\idxcode{curve_to}!\idxcode{control_point_2}}
 \indexlibrary{\idxcode{control_point_2}!\idxcode{curve_to}}
 \begin{itemdecl}
-    point control_point_2() const noexcept;
+    vector_2d control_point_2() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -150,7 +150,7 @@ The class \tcode{curve_to} describes a \tcode{path} operation. For a description
 \indexlibrary{\idxcode{curve_to}!\idxcode{end_point}}
 \indexlibrary{\idxcode{end_point}!\idxcode{curve_to}}
 \begin{itemdecl}
-    point end_point() const noexcept;
+    vector_2d end_point() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum

@@ -21,7 +21,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void flush() noexcept;
     void lock();
     void lock(error_code& ec) noexcept;
-    void unlock() noexcept;
+    void unlock();
+    void unlock(error_code& ec) noexcept;
   };
 } } } }
 \end{codeblock}
@@ -112,7 +113,8 @@ void lock(error_code& ec) noexcept;
 \indexlibrary{\idxcode{device}!\idxcode{unlock}}
 \indexlibrary{\idxcode{unlock}!\idxcode{device}}
 \begin{itemdecl}
-void unlock() noexcept;
+void unlock();
+void unlock(error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -128,7 +130,11 @@ void unlock() noexcept;
 	number of times \tcode{m.lock} was successfully called.
 	
 	\pnum
-	\remark
+	\throws
+	As described in Error reporting (\ref{\iotwod.err.report}).
+	
+	\pnum
+	\remarks
 	This function shall not be called more times than \tcode{lock} has been called; no diagnostic is required.
 
 \end{itemdescr}
