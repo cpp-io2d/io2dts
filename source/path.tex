@@ -17,19 +17,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     path& operator=(const path& other) noexcept;
     path(path&& other) noexcept;
     path& operator=(path&& other) noexcept;
-
-    // \ref{\iotwod.path.observers}, observers:
-    vector<path_data_item> data() const;
-    vector<path_data_item> data(error_code& ec) const noexcept;
-    const ::std::vector<path_data_item>& data_ref() const noexcept;
-    rectangle path_extents() const noexcept;
-    
-  private:
-    shared_ptr<vector<path_data_item>> _Data; // \expos
-    bool _Has_current_point;                  // \expos
-    vector_2d _Current_point;                 // \expos
-    vector_2d _Last_move_to_point;            // \expos
-    rectangle _Extents;                       // \expos
   };
 } } } }
 \end{codeblock}
@@ -38,12 +25,15 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \pnum
 \indexlibrary{\idxcode{path}}
-The \tcode{path} class represents an immutable collection of geometric paths.
+The \tcode{path} class represents an immutable resource wrapper containing zero or more native path geometries.
 
 \pnum
 When a \tcode{path} object is set on a \tcode{surface} object using 
 \tcode{surface::path}, the geometric paths represented by it can be 
 stroked or filled.
+
+\pnum
+A \tcode{path} object shall be usable with any \tcode{surface} or \tcode{surface}-derived object.
 
 \rSec1 [\iotwod.path.cons] {\tcode{path} constructors and assignment operators}
 
@@ -57,62 +47,27 @@ stroked or filled.
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of class \tcode{path} from a \tcode{path_factory} 
-	object's observable state.
+	Constructs an object of class \tcode{path}. Implementations shall create native path geometries from the path geometries contained in \tcode{p} or \tcode{pb.data_ref()} as if they followed the procedure set forth in \ref{\iotwod.pathgeometries.processing}.
 
 	\pnum
 	\throws
 	As specified in Error reporting (\ref{\iotwod.err.report}).
 
 	\pnum
+	\remarks
+	It is unspecified whether a \tcode{path} object shall require further processing when it is passed as an argument to a \tcode{surface} or \tcode{surface}-derived object.
+	
+	\pnum
+	Implementations should avoid or minimize the need for further processing of a \tcode{path} object after it has been constructed.
+
+	\pnum
 	\errors
 	\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
 	
 	\pnum
-	\tcode{io2d_error::no_current_point} 
-\end{itemdescr}
-
-\rSec1 [\iotwod.path.observers] {\tcode{path} observers}
-
-\indexlibrary{\idxcode{path}!\idxcode{path_extents}}%
-\indexlibrary{\idxcode{path_extents}!\idxcode{path}}%
-\begin{itemdecl}
-rectangle path_extents() const;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	The smallest \tcode{rectangle} that can contain the points contained in the 
-	\tcode{path_data} of \tcode{*this}.
+	\tcode{io2d_error::no_current_point} if, when processing the path geometries, an operation was encountered which required a current point and the current path geometry had no current point.
 	
 	\pnum
-	\remarks
-	When determining the return value of this function, each point should be 
-	transformed in the way described in \ref{\iotwod.surface.pathtransform}.
-\end{itemdescr}
-
-\rSec2 [\iotwod.path::get_data] {\tcode{path::get_data}}
-
-\indexlibrary{\idxcode{path}!\idxcode{get_data}}%
-\indexlibrary{\idxcode{get_data}!\idxcode{path}}%
-\begin{itemdecl}
-::std::vector<path_data> get_data() const;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	A copy of the \tcode{vector<path_data>} stored by \tcode{*this}.
-\end{itemdescr}
-
-\rSec2 [\iotwod.path::get_data_ref] {\tcode{path::get_data_ref}}
-
-\indexlibrary{\idxcode{path}!\idxcode{get_data_ref}}%
-\indexlibrary{\idxcode{get_data_ref}!\idxcode{path}}%
-\begin{itemdecl}
-const ::std::vector<path_data>& get_data_ref() const;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	A const reference to the \tcode{vector<path_data>} stored by \tcode{*this}.
+	\tcode{io2d_error::invalid_matrix} if, when processing the path geometries, an operation was encountered which required the current transformation matrix to be invertible and the matrix was not invertible.
+	
 \end{itemdescr}

@@ -258,10 +258,6 @@ The type predefines a set of named colors, for which each channel is an unsigned
 	Constructs an object of type \tcode{rgba_color}.
 
 	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
 	\postconditions
 	Where there is an \tcode{a} parameter, \tcode{_Alpha = a}; otherwise \tcode{_Alpha = 1.0}.
 	
@@ -273,6 +269,10 @@ The type predefines a set of named colors, for which each channel is an unsigned
 	
 	\pnum
 	\tcode{_Blue = b * a}.
+	
+	\pnum
+	\throws
+	As specified in Error reporting (\ref{\iotwod.err.report}).
 	
 	\pnum
 	\remarks

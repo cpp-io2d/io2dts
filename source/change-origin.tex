@@ -32,7 +32,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \pnum
 \indexlibrary{\idxcode{change_origin}}
-The class \tcode{change_origin} describes a \tcode{path} operation. For a description of its meaning within a \tcode{path}, see the meaning of \tcode{path_data_type::change_origin} in Table~\ref{tab:\iotwod.pathdatatype.meanings}.
+The class \tcode{change_origin} describes an operation on a path geometry collection.
+
+\pnum
+This operation changes the origin point for a path geometry collection to be the value returned by \tcode{*this.origin()}. As shown in \ref{\iotwod.pathgeometries.processing}, the new origin point does not affect any operations that came before this operation. It is only used in processing operations that come after it. It continues to be used until another \tcode{change_origin} object is encountered or the end of the path geometry collection is reached.
 
 \rSec1 [\iotwod.changeorigin.cons] {\tcode{change_origin} constructors and assignment operators}
 

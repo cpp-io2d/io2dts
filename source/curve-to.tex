@@ -40,7 +40,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \pnum
 \indexlibrary{\idxcode{curve_to}}
-The class \tcode{curve_to} describes a \tcode{path} operation. For a description of its meaning within a \tcode{path}, see the meaning of \tcode{path_data_type::curve_to} in Table~\ref{tab:\iotwod.pathdatatype.meanings}.
+The class \tcode{curve_to} describes an operation on a path geometry collection.
+
+\pnum
+If the current path geometry has no current point, then this operation behaves exactly as if this object was preceded by a \tcode{move_to} object with the value returned by \tcode{*this.control_point_1()} taking the place of the value returned by \tcode{move_to::to()}. As per the semantics of the \tcode{move_to} type, the path geometry will now have a current point.
+
+\pnum
+When the current path geometry has a current point, this operation creates a B\'ezier curve from the current point to point returned by \tcode{*this.end_point()}, with the first control point being the point returned by \tcode{*this.control_point_1()} and the second control point being the point returned by \tcode{*this.control_point_2()}. It then sets the current point to be the point returned by \tcode{*this.end_point()}.
 
 \rSec1 [\iotwod.curveto.cons] {\tcode{curve_to} constructors and assignment operators}
 

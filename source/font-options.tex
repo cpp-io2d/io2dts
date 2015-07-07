@@ -8,17 +8,21 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class font_options {
     public:
     // \ref{\iotwod.fontoptions.cons}, construct/copy/destroy:
-    font_options() = delete;
-    font_options(const font_options&);
-    font_options& operator=(const font_options&);
-    font_options(font_options&& other);
-    font_options& operator=(font_options&& other);
+    font_options() noexcept;
+    font_options(const font_options& other) noexcept;
+    font_options& operator=(const font_options& other) noexcept;
+    font_options(font_options&& other) noexcept;
+    font_options& operator=(font_options&& other) noexcept;
     font_options(std::experimental::io2d::antialias a,
-      std::experimental::io2d::subpixel_order so);
+      std::experimental::io2d::subpixel_order so) noexcept;
+
+    // \ref{\iotwod.fontoptions.modifiers}, modifiers:
+    void antialias(std::experimental::io2d::antialias value) noexcept;
+    void subpixel_order(std::experimental::io2d::subpixel_order value) noexcept;
 
     // \ref{\iotwod.fontoptions.observers}, observers:
-    std::experimental::io2d::antialias antialias() const;
-    std::experimental::io2d::subpixel_order subpixel_order() const;
+    std::experimental::io2d::antialias antialias() const noexcept;
+    std::experimental::io2d::subpixel_order subpixel_order() const noexcept;
 
   private:
     std::experimental::io2d::antialias _Antialias;           // \expos
@@ -31,14 +35,31 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \pnum
 \indexlibrary{\idxcode{font_options}}
-The \tcode{font_options} class describes and object that holds values which specify certain aspects of how text should be rendered.
+The \tcode{font_options} class describes an object that holds values which specify certain aspects of how text should be rendered.
 
 \rSec1 [\iotwod.fontoptions.cons] {\tcode{font_options} constructors and assignment operators}
 
 \indexlibrary{\idxcode{font_options}!constructor}
 \begin{itemdecl}
+    font_options() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{font_options}.
+	
+	\pnum
+	\postconditions
+	\tcode{_Antialias == std::experimental::io2d::antialias::default_antialias}.
+	
+	\tcode{_Subpixel_order == std::experimental::io2d::subpixel_order::default_subpixel_order}.
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{font_options}!constructor}
+\begin{itemdecl}
     font_options(std::experimental::io2d::antialias a,
-      std::experimental::io2d::subpixel_order so);
+      std::experimental::io2d::subpixel_order so) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -53,12 +74,38 @@ The \tcode{font_options} class describes and object that holds values which spec
 	
 \end{itemdescr}
 
+\rSec1 [\iotwod.fontoptions.modifiers] {\tcode{font_options} modifiers}
+
+\indexlibrary{\idxcode{font_options}!\idxcode{antialias}}
+\indexlibrary{\idxcode{antialias}!\idxcode{font_options}}
+\begin{itemdecl}
+    void antialias(std::experimental::io2d::antialias value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Antialias == value}.
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{font_options}!\idxcode{subpixel_order}}
+\indexlibrary{\idxcode{subpixel_order}!\idxcode{font_options}}
+\begin{itemdecl}
+    void subpixel_order(std::experimental::io2d::subpixel_order value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Subpixel_order == value}.
+	
+\end{itemdescr}
+
 \rSec1 [\iotwod.fontoptions.observers] {\tcode{font_options} observers}
 
 \indexlibrary{\idxcode{font_options}!\idxcode{antialias}}
 \indexlibrary{\idxcode{antialias}!\idxcode{font_options}}
 \begin{itemdecl}
-std::experimental::io2d::antialias antialias() const;
+std::experimental::io2d::antialias antialias() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -70,7 +117,7 @@ std::experimental::io2d::antialias antialias() const;
 \indexlibrary{\idxcode{font_options}!\idxcode{subpixel_order}}
 \indexlibrary{\idxcode{subpixel_order}!\idxcode{font_options}}
 \begin{itemdecl}
-std::experimental::io2d::subpixel_order subpixel_order() const;
+std::experimental::io2d::subpixel_order subpixel_order() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum

@@ -17,19 +17,23 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     simple_font_face& operator=(const simple_font_face&) noexcept;
     simple_font_face(simple_font_face&& other) noexcept;
     simple_font_face& operator=(simple_font_face&& other) noexcept;
-    simple_font_face(const ::std::string& fontFamily,
-      ::std::experimental::io2d::font_slant fs,
-      ::std::experimental::io2d::font_weight fw) noexcept;
+    simple_font_face(const string& fontFamily,
+      std::experimental::io2d::font_slant fs,
+      std::experimental::io2d::font_weight fw);
+    simple_font_face(const string& fontFamily,
+      std::experimental::io2d::font_slant fs,
+      std::experimental::io2d::font_weight fw, error_code& ec) noexcept;
 
     // \ref{\iotwod.simplefontface.observers}, observers:
-    ::std::string family() const noexcept;
+    string font_family() const;
+    void font_family(string& str, error_code& ec) const noexcept;
     ::std::experimental::io2d::font_slant font_slant() const noexcept;
     ::std::experimental::io2d::font_weight font_weight() const noexcept;
 
   private:
-    ::std::string _Family;                               // \expos
-    ::std::experimental::io2d::font_slant _Font_slant;   // \expos
-    ::std::experimental::io2d::font_weight _Font_weight; // \expos
+    string _Family;                                    // \expos
+    std::experimental::io2d::font_slant _Font_slant;   // \expos
+    std::experimental::io2d::font_weight _Font_weight; // \expos
   };
 } } } }
 \end{codeblock}
@@ -67,9 +71,12 @@ assignment operators}
 
 \indexlibrary{\idxcode{simple_font_face}!constructor}
 \begin{itemdecl}
-simple_font_face(const ::std::string& fontFamily,
-  ::std::experimental::io2d::font_slant fs,
-  ::std::experimental::io2d::font_weight fw);
+    simple_font_face(const string& fontFamily,
+      std::experimental::io2d::font_slant fs,
+      std::experimental::io2d::font_weight fw);
+    simple_font_face(const string& fontFamily,
+      std::experimental::io2d::font_slant fs,
+      std::experimental::io2d::font_weight fw, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -96,25 +103,63 @@ simple_font_face(const ::std::string& fontFamily,
 	
 	\pnum
 	\tcode{_Font_weight == fw}.
+
+	\pnum
+	\throws
+	As specified in Error reporting (\ref{\iotwod.err.report}).
+
+	\pnum
+	\errors
+	\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
+	
 \end{itemdescr}
 
 \rSec1 [\iotwod.simplefontface.observers] {\tcode{simple_font_face} observers}
 
-\indexlibrary{\idxcode{simple_font_face}!\idxcode{family}}
-\indexlibrary{\idxcode{family}!\idxcode{simple_font_face}}
+\indexlibrary{\idxcode{simple_font_face}!\idxcode{font_family}}
+\indexlibrary{\idxcode{font_family}!\idxcode{simple_font_face}}
 \begin{itemdecl}
-::std::string family() const noexcept;
+    string font_family() const;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
 	\tcode{_Family}.
+
+	\pnum
+	\throws
+	As specified in Error reporting (\ref{\iotwod.err.report}).
+
+	\pnum
+	\errors
+	\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{simple_font_face}!\idxcode{font_family}}
+\indexlibrary{\idxcode{font_family}!\idxcode{simple_font_face}}
+\begin{itemdecl}
+    void font_family(string& str, error_code& ec) const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	\tcode{str = _Family}.
+
+	\pnum
+	\throws
+	As specified in Error reporting (\ref{\iotwod.err.report}).
+
+	\pnum
+	\errors
+	\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
+	
 \end{itemdescr}
 
 \indexlibrary{\idxcode{simple_font_face}!\idxcode{font_slant}}
 \indexlibrary{\idxcode{font_slant}!\idxcode{simple_font_face}}
 \begin{itemdecl}
-::std::experimental::io2d::font_slant font_slant() const noexcept;
+    std::experimental::io2d::font_slant font_slant() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -125,7 +170,7 @@ simple_font_face(const ::std::string& fontFamily,
 \indexlibrary{\idxcode{simple_font_face}!\idxcode{font_weight}}
 \indexlibrary{\idxcode{font_weight}!\idxcode{simple_font_face}}
 \begin{itemdecl}
-::std::experimental::io2d::font_weight font_weight() const noexcept;
+    std::experimental::io2d::font_weight font_weight() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum

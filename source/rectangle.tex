@@ -10,22 +10,27 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     // \ref{\iotwod.rectangle.cons}, construct/copy/move/destroy:
     rectangle() noexcept;
     rectangle(double x, double y, double width, double height) noexcept;
+    rectangle(const vector_2d& tl, const vector_2d& br) noexcept;
     rectangle(const rectangle& r) noexcept;
     rectangle& operator=(const rectangle& r) noexcept;
     rectangle(rectangle&& r) noexcept;
     rectangle& operator=(rectangle&& r) noexcept;
 
     // \ref{\iotwod.rectangle.modifiers}, modifiers:
-    void x(double val) noexcept;
-    void y(double val) noexcept;
-    void width(double val) noexcept;
-    void height(double val) noexcept;
+    void x(double value) noexcept;
+    void y(double value) noexcept;
+    void width(double value) noexcept;
+    void height(double value) noexcept;
+    void top_left(const vector_2d& value) noexcept;
+    void bottom_right(const vector_2d& value) noexcept;
     
     // \ref{\iotwod.rectangle.observers}, observers:
     double x() const noexcept;
     double y() const noexcept;
     double width() const noexcept;
     double height() const noexcept;
+    vector_2d top_left() const noexcept;
+    vector_2d bottom_right() const noexcept;
     
   private:
     double _X;      // \expos
@@ -39,8 +44,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \rSec1 [\iotwod.rectangle.intro] {\tcode{rectangle} Description}
 
 \pnum
-\indexlibrary{\idxcode{rectangle}}%
-The class \tcode{rectangle} describes an object that represents a rectangle, storing a two-dimensional coordinate representing the upper left corner of a rectangle, and the rectangle's width and height.
+\indexlibrary{\idxcode{rectangle}}
+The class \tcode{rectangle} describes an object that represents a rectangle.
 
 \rSec1 [\iotwod.rectangle.cons] {\tcode{rectangle} constructors and assignment operators}
 
@@ -55,7 +60,17 @@ rectangle() noexcept;
 	
 	\pnum
 	\postconditions
-	\tcode{_X == 0.0 \&\& _Y == 0.0 \&\& _Width == 0.0 \&\& _Height == 0.0}.
+	\tcode{_X == 0.0}.
+	
+	\pnum
+	\tcode{_Y == 0.0}.
+	
+	\pnum
+	\tcode{_Width == 0.0}.
+	
+	\pnum
+	\tcode{_Height == 0.0}.
+
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rectangle}!constructor}
@@ -69,98 +84,194 @@ rectangle(double x, double y, double w, double h) noexcept;
 	
 	\pnum
 	\postconditions
-	\tcode{_X == x \&\& _Y == y \&\& _Width == w \&\& _Height == h}.
+	\tcode{_X == x}.
+	
+	\pnum
+	\tcode{_Y == y}.
+	
+	\pnum
+	\tcode{_Width == w}.
+	
+	\pnum
+	\tcode{_Height == h}.
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rectangle}!constructor}
+\begin{itemdecl}
+rectangle(const vector_2d& tl, const vector_2d& br) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{rectangle} from a top-left coordinate and a bottom-right coordinate.
+	
+	\pnum
+	\postconditions
+	\tcode{_X == tl.x()}.
+	
+	\pnum
+	\tcode{_Y == tl.y()}.
+	
+	\pnum
+	\tcode{_Width == max(0.0, br.x() - tl.x())}.
+	
+	\pnum
+	\tcode{_Height == max(0.0, br.y() - tl.y())}.
+	
 \end{itemdescr}
 
 \rSec1 [\iotwod.rectangle.modifiers]{\tcode{rectangle} modifiers}
 
-\indexlibrary{\idxcode{rectangle}!\idxcode{x}}%
-\indexlibrary{\idxcode{x}!\idxcode{rectangle}}%
+\indexlibrary{\idxcode{rectangle}!\idxcode{x}}
+\indexlibrary{\idxcode{x}!\idxcode{rectangle}}
 \begin{itemdecl}
-void x(double val) noexcept;
+void x(double value) noexcept;
 \end{itemdecl}
 
 \begin{itemdescr}
 	\pnum
 	\postconditions
-	\tcode{_X == val}.
+	\tcode{_X == value}.
+
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rectangle}!\idxcode{y}}%
-\indexlibrary{\idxcode{y}!\idxcode{rectangle}}%
+\indexlibrary{\idxcode{rectangle}!\idxcode{y}}
+\indexlibrary{\idxcode{y}!\idxcode{rectangle}}
 \begin{itemdecl}
-    void y(double val) noexcept;
+void y(double value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\postconditions
-	\tcode{_Y == val}.
+	\tcode{_Y == value}.
+
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rectangle}!\idxcode{width}}%
-\indexlibrary{\idxcode{width}!\idxcode{rectangle}}%
+\indexlibrary{\idxcode{rectangle}!\idxcode{width}}
+\indexlibrary{\idxcode{width}!\idxcode{rectangle}}
 \begin{itemdecl}
-	void width(double val) noexcept;
+void width(double value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\postconditions
-	\tcode{_Width == val}.
+	\tcode{_Width == value}.
+
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rectangle}!\idxcode{height}}%
-\indexlibrary{\idxcode{height}!\idxcode{rectangle}}%
+\indexlibrary{\idxcode{rectangle}!\idxcode{height}}
+\indexlibrary{\idxcode{height}!\idxcode{rectangle}}
 \begin{itemdecl}
-	void height(double val) noexcept;
+void height(double value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\postconditions
-	\tcode{_Height == val}.
+	\tcode{_Height == value}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rectangle}!\idxcode{top_left}}
+\indexlibrary{\idxcode{top_left}!\idxcode{rectangle}}
+\begin{itemdecl}
+void top_left(const vector_2d& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_X == value.x()}.
+	
+	\pnum
+	\tcode{_Y == value.y()}.
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rectangle}!\idxcode{bottom_right}}
+\indexlibrary{\idxcode{bottom_right}!\idxcode{rectangle}}
+\begin{itemdecl}
+void bottom_right(const vector_2d& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	\tcode{_Width == max(0.0, value.x() - _X)}.
+	
+	\pnum
+	\tcode{_Height == max(0.0, value.y() - _Y)}.
+	
 \end{itemdescr}
 
 \rSec1 [\iotwod.rectangle.observers]{\tcode{rectangle} observers}
 
-\indexlibrary{\idxcode{rectangle}!\idxcode{x}}%
-\indexlibrary{\idxcode{x}!\idxcode{rectangle}}%
+\indexlibrary{\idxcode{rectangle}!\idxcode{x}}
+\indexlibrary{\idxcode{x}!\idxcode{rectangle}}
 \begin{itemdecl}
-    double x() const noexcept;
+double x() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
 	\tcode{_X}.
+
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rectangle}!\idxcode{y}}%
-\indexlibrary{\idxcode{y}!\idxcode{rectangle}}%
+\indexlibrary{\idxcode{rectangle}!\idxcode{y}}
+\indexlibrary{\idxcode{y}!\idxcode{rectangle}}
 \begin{itemdecl}
-    double y() const noexcept;
+double y() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
 	\tcode{_Y}.
+
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rectangle}!\idxcode{width}}%
-\indexlibrary{\idxcode{width}!\idxcode{rectangle}}%
+\indexlibrary{\idxcode{rectangle}!\idxcode{width}}
+\indexlibrary{\idxcode{width}!\idxcode{rectangle}}
 \begin{itemdecl}
-	double width() const noexcept;
+double width() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
 	\tcode{_Width}.
+
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rectangle}!\idxcode{height}}%
-\indexlibrary{\idxcode{height}!\idxcode{rectangle}}%
+\indexlibrary{\idxcode{rectangle}!\idxcode{height}}
+\indexlibrary{\idxcode{height}!\idxcode{rectangle}}
 \begin{itemdecl}
-	double height() const noexcept;
+double height() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
 	\tcode{_Height}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rectangle}!\idxcode{top_left}}
+\indexlibrary{\idxcode{top_left}!\idxcode{rectangle}}
+\begin{itemdecl}
+vector_2d top_left() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{vector_2d\{ _X, _Y \}}.
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rectangle}!\idxcode{bottom_right}}
+\indexlibrary{\idxcode{bottom_right}!\idxcode{rectangle}}
+\begin{itemdecl}
+vector_2d bottom_right() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{vector_2d\{ _X + _Width, _Y + _Height \}}.
+
 \end{itemdescr}

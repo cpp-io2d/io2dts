@@ -42,7 +42,34 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \pnum
 \indexlibrary{\idxcode{arc_negative}}
-The class \tcode{arc_negative} describes a \tcode{path} operation. For a description of its meaning within a \tcode{path}, see the meaning of \tcode{path_data_type::arc_negative} in Table~\ref{tab:\iotwod.pathdatatype.meanings}.
+The class \tcode{arc_negative} describes an operation on a path geometry collection.
+
+\pnum
+This operation creates a circular arc.
+
+\pnum
+The unit for the values passed to and returned by \tcode{arc::angle_1} and \tcode{arc::angle_2} is the radian.
+
+\pnum
+Its \term{start point} is \tcode{vector_2d\{ *this.radius() * cos(*this.angle_1(), *this.radius() * -sin(*this.angle_1()) \} + *this.center()}.
+
+\pnum
+Its \term{end point} is \tcode{vector_2d\{ *this.radius() * cos(*this.angle_2(), *this.radius() * -sin(*this.angle_2()) \} + *this.center()}.
+
+\pnum
+If the current path geometry has a current point, a line is created from the current point to the start point before this arc operation is processed. Otherwise the start point is set as the current point and last-move-to point of the current path geometry.
+
+\pnum
+The arc rotates around the point returned by \tcode{*this.center()}.
+
+\pnum
+The arc begins at its start point and proceeds counterclockwise until it reaches its end point.
+
+\pnum
+The current point is set be to the arc's end point at the end of this operation.
+
+\pnum
+For purposes of determining whether a point is on the arc, if the value returned by \tcode{*this.angle_2()} is greater than the value returned by \tcode{*this.angle_1()} then the value returned by \tcode{*this.angle_2()} shall be continuously decremented by $2\pi$ until it is less than the value returned by \tcode{*this.angle_1()}.
 
 \rSec1 [\iotwod.arcnegative.cons] {\tcode{arc_negative} constructors and assignment operators}
 

@@ -54,7 +54,7 @@ Specification}.
 \rSec1[\iotwod.general.defns]{Terms and definitions}
 
 \pnum
-\indextext{definitions|(}%
+\indextext{definitions|(}
 For the purposes of this document, the following definitions apply.
 
 \indexdefn{aliasing}
@@ -106,17 +106,46 @@ with different numbers of control points exist but are not relevant in this
 \definition{channel}{\iotwod.general.defs.channel}
 a bounded set of homogeneously-spaced rational numbers
 
+\indexdefn{closed path geometry}
+\definition{closed path geometry}{\iotwod.general.defns.closedpathgeometry}
+a path geometry with one or more path segments where the initial path segment's start point is used to define the end point of the final path segment
+
 \indexdefn{color stop}
 \definition{color stop}{\iotwod.general.defns.colorstop}
-a value composed of a floating point offset value in the range $[0, 1]$ and a color
+a tuple value composed of a floating point offset value in the range $[0, 1]$ and a color value
 
 \indexdefn{coordinate space}
 \definition{coordinate space}{\iotwod.general.defns.coordinatespace}
-a Euclidean plane described by a Cartesian coordinate system where the first coordinate is measured along a horizontal axis, called the \xaxis, oriented from left to right, the second coordinate is measured along a vertical axis, called the \yaxis, oriented from top to bottom, and rotation around the origin by a positive value expressed in radians is clockwise
+a Euclidean plane described by a Cartesian coordinate system where the first coordinate is measured along a horizontal axis, called the \xaxis, oriented from left to right, the second coordinate is measured along a vertical axis, called the \yaxis, oriented from top to bottom, and rotation of a point around the origin by a positive value expressed in radians is clockwise
+
+\indexdefn{current point}
+\definition{current point}{\iotwod.general.defns.currentpoint}
+a point established by various operations used in creating a path geometry
+\enternote
+A new path geometry has no current point except as otherwise specified.
+\exitnote
+
+\indexdefn{degenerate path geometry}
+\definition{degenerate path geometry}{\iotwod.general.defns.degeneratepathgeometry}
+a path geometry with only one path segment
+\enternote
+The path segment is not required to be a degenerate path segment.
+\exitnote
+
+\indexdefn{degenerate path segment}
+\definition{degenerate path segment}{\iotwod.general.defns.degeneratepathsegment}
+a path segment which has the same value for its start point and its end point is a \term{degenerate path segment}
 
 \indexdefn{filter}
 \definition{filter}{\iotwod.general.defns.filter}
 a mathematical function that transforms a signal into discrete data
+
+\indexdefn{final path segment}
+\definition{final path segment}{\iotwod.general.defns.finalpathsegment}
+a path segment whose end point shall not be used to define the start point of any other path segment
+\enternote
+It is possible for the initial path segment and final path segment to be the same path segment.
+\exitnote
 
 \indexdefn{format}
 \definition{format}{\iotwod.general.defns.format}
@@ -137,10 +166,25 @@ a ***FIXME***
 \definition{graphics}{\iotwod.general.defns.graphics.vector}
 <vector graphics> visual data stored as geometrical data
 
+\indexdefn{initial path segment}
+\definition{initial path segment}{\iotwod.general.defns.initialpathsegment}
+a path segment whose start point is not defined as being the end point of another path segment
+\enternote
+It is possible for the initial path segment and final path segment to be the same path segment.
+\exitnote
+
+\indexdefn{last-move-to point}
+\definition{last-move-to point}{\iotwod.general.defns.lastmovetopoint}
+the point in a path geometry that is the start point of the initial path segment
+
 \indexdefn{letterbox}
 \definition{letterbox}{\iotwod.general.defns.letterbox}
 render one surface to another by scaling it, centering it, and filling the 
 areas outside of the  ***FIXME***
+
+\indexdefn{native path geometry}
+\definition{native path geometry}{\iotwod.general.defns.nativepathgeometry}
+the representation of a path geometry in the form used by the underlying rendering technology
 
 \indexdefn{normalize}
 \definition{normalize}{\iotwod.general.defns.normalize}
@@ -148,6 +192,21 @@ to map a closed set of evenly spaced values in the range $[0, x]$ to an evenly s
 \enternote
 The definition of normalize given is the definition for normalizing unsigned input. Signed normalization, i.e. the mapping of a closed set of evenly spaced values in the range $[-x, x)$ to an evenly spaced sequence of floating point values in the range $[-1, 1]$, also exists but is not used in this \documenttypename.
 \exitnote
+
+\indexdefn{open path geometry}
+\definition{open path geometry}{\iotwod.general.defns.openpathgeometry}
+a path geometry with one or more path segments where the initial path segment's start point is not used to define the end point of the final path segment
+\enternote
+Even if the start point of the initial path segment and the end point of the final path segment are assigned the same coordinates, the path geometry is still an open path geometry since the final path segment's end point is not defined as being the start point of the initial segment but instead merely happens to have the same value as that point.
+\exitnote
+
+\indexdefn{path geometry}
+\definition{path geometry}{\iotwod.general.defns.pathgeometry}
+a collection of path segments where the end point of each path segment, except the final path segment, shall be used to define the start point of exactly one other path segment in the collection
+
+\indexdefn{path segment}
+\definition{path segment}{\iotwod.general.defns.pathsegment}
+is a line or a curve, each of which has a start point and an end point
 
 \indexdefn{pixel}
 \definition{pixel}{\iotwod.general.defns.pixel}

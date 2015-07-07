@@ -32,7 +32,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \pnum
 \indexlibrary{\idxcode{rel_move_to}}
-The class \tcode{rel_move_to} describes a \tcode{path} operation. For a description of its meaning within a \tcode{path}, see the meaning of \tcode{path_data_type::rel_move_to} in Table~\ref{tab:\iotwod.pathdatatype.meanings}.
+The class \tcode{rel_move_to} describes an operation on a path geometry collection.
+
+\pnum
+This operation starts a new path geometry and sets its current point and last-move-to point to the point that is the sum of the previous path geometry's current point and the point returned by \tcode{*this.to()}.
+
+\pnum
+If the existing path geometry does not have a current point when this operation is requested the path geometry collection is malformed.
 
 \rSec1 [\iotwod.relmoveto.cons] {\tcode{rel_move_to} constructors and assignment operators}
 

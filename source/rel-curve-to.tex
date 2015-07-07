@@ -8,12 +8,12 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class rel_curve_to : public path_data {
   public:
     // \ref{\iotwod.relcurveto.cons}, construct/copy/move/destroy:
-    curve_to() noexcept;
-    curve_to(const curve_to& other) noexcept;
-    curve_to& operator=(const curve_to& other) noexcept;
+    rel_curve_to() noexcept;
+    rel_curve_to(const rel_curve_to& other) noexcept;
+    rel_curve_to& operator=(const rel_curve_to& other) noexcept;
     curve_to(curve_to&& other) noexcept;
-    curve_to& operator=(curve_to&& other) noexcept;
-    curve_to(const vector_2d& controlPoint1, const vector_2d& controlPoint2,
+    rel_curve_to& operator=(rel_curve_to&& other) noexcept;
+    rel_curve_to(const vector_2d& controlPoint1, const vector_2d& controlPoint2,
       const vector_2d& endPoint) noexcept;
 
     // \ref{\iotwod.relcurveto.modifiers}, modifiers:
@@ -40,7 +40,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \pnum
 \indexlibrary{\idxcode{rel_curve_to}}
-The class \tcode{rel_curve_to} describes a \tcode{path} operation. For a description of its meaning within a \tcode{path}, see the meaning of \tcode{path_data_type::rel_curve_to} in Table~\ref{tab:\iotwod.pathdatatype.meanings}.
+The class \tcode{rel_curve_to} describes an operation on a path geometry collection.
+
+\pnum
+This operation creates a B\'ezier curve from the current point to the point that is the sum of the current point and the point returned by \tcode{*this.end_point()}, with the first control point being the point that is the sum of the current point and the point returned by \tcode{*this.control_point_1()} and the second control point being the point that is the sum of the current point and the point returned by \tcode{*this.control_point_2()}. It then sets the current point to be the point that is the sum of the current point and the point returned by \tcode{*this.end_point()}.
+
+\pnum
+If the current path geometry does not have a current point when this operation is requested the path geometry collection is malformed.
 
 \rSec1 [\iotwod.relcurveto.cons] {\tcode{rel_curve_to} constructors and assignment operators}
 

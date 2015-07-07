@@ -32,7 +32,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \pnum
 \indexlibrary{\idxcode{line_to}}
-The class \tcode{line_to} describes a \tcode{path} operation. For a description of its meaning within a \tcode{path}, see the meaning of \tcode{path_data_type::line_to} in Table~\ref{tab:\iotwod.pathdatatype.meanings}.
+The class \tcode{line_to} describes an operation on a path geometry collection.
+
+\pnum
+If the current path geometry has a current point then this operation creates a line from the current point to the point returned by \tcode{*this.to()} and then sets current point to be the point returned by \tcode{*this.to()}.
+
+\pnum
+If there is no current point, then this operation behaves exactly as if this object was a \tcode{move_to} object with the value returned by \tcode{*this.to()} taking the place of the value returned by \tcode{move_to::to()}.
 
 \rSec1 [\iotwod.lineto.cons] {\tcode{line_to} constructors and assignment operators}
 

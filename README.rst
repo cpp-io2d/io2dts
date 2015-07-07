@@ -13,9 +13,10 @@ Getting Started on Windows
 --------------------------
 
 1. Install a Perl distribution. Strawberry Perl is free and simple to install. (This ensures that latexmk will work correctly).
-2. Install TeXstudio.
-3. Run TeXstudio.
-4. In TeXstudio, under "Options" -> "Configure TeXstudio...", first make sure the "Show Advanced Option" box is checked, then select "Build" from the menu on the left of the "Configure TeXstudio" window and then under the "Meta Commands" section, change the "Default Compiler" to "txs:///latexmk" using the drop down menu.
+2. Install MiKTeX.
+3. Install TeXstudio.
+4. Run TeXstudio.
+5. In TeXstudio, under "Options" -> "Configure TeXstudio...", first make sure the "Show Advanced Option" box is checked, then select "Build" from the menu on the left of the "Configure TeXstudio" window and then under the "Meta Commands" section, change the "Default Compiler" to "txs:///latexmk" using the drop down menu.
 
 You are now ready to edit and build TeX documents.
 

@@ -32,7 +32,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \pnum
 \indexlibrary{\idxcode{rel_line_to}}
-The class \tcode{rel_line_to} describes a \tcode{path} operation. For a description of its meaning within a \tcode{path}, see the meaning of \tcode{path_data_type::rel_line_to} in Table~\ref{tab:\iotwod.pathdatatype.meanings}.
+The class \tcode{rel_line_to} describes an operation on a path geometry collection.
+
+\pnum
+This operation creates a line from the current point to the point that is the sum of the current point and the point returned by \tcode{*this.to()}. It then sets current point to be the sum of the current point and the point returned by \tcode{*this.to()}.
+
+\pnum
+If the current path geometry does not have a current point when this operation is requested the path geometry collection is malformed.
 
 \rSec1 [\iotwod.rellineto.cons] {\tcode{rel_line_to} constructors and assignment operators}
 

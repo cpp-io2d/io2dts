@@ -12,45 +12,64 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     native_handle_type native_handle() const;
 
     // tuple<dashes, offset>
-    typedef ::std::tuple<::std::vector<double>, double> dashes;
+    typedef std::tuple<std::vector<double>, double> dashes;
 
     // \ref{\iotwod.surface.cons}, constructors, assignment operators, destructors:
     surface() = delete;
     surface(const surface&) = delete;
     surface& operator=(const surface&) = delete;
-    surface(surface&& other);
-    surface& operator=(surface&& other);
-    surface(const surface& other, content content, int width, int height);
+    surface(surface&& other) noexcept;
+    surface& operator=(surface&& other) noexcept;
     virtual ~surface();
 
     // \ref{\iotwod.surface.modifiers.state}, state modifiers:
-    void finish();
+    virtual void finish() noexcept;
     void flush();
-    ::std::shared_ptr<device> get_device();
+    void flush(error_code& ec) noexcept;
+    std::shared_ptr<std::experimental::io2d::device> device();
+    std::shared_ptr<std::experimental::io2d::device> device(error_code& ec)
+      noexcept;
     void mark_dirty();
+    void mark_dirty(error_code& ec) noexcept;
     void mark_dirty(const rectangle& rect);
-    void set_device_offset(const vector_2d& offset);
-    void write_to_png(const ::std::string& filename);
-    image_surface map_to_image();
-    image_surface map_to_image(const rectangle& extents);
-    void unmap_image(image_surface& image);
-    void save();
-    void restore();
-    void set_pattern();
-    void set_pattern(const pattern& source);
-    void set_antialias(antialias a);
-    void set_dashes();
-    void set_dashes(const dashes& d);
-    void set_fill_rule(fill_rule fr);
-    void set_line_cap(line_cap lc);
-    void set_line_join(line_join lj);
-    void set_line_width(double width);
-    void set_miter_limit(double limit);
-    void set_compositing_operator(compositing_operator co);
-    void clip();
-    void reset_clip();
-    void set_path();
-    void set_path(const path& p);
+    void mark_dirty(const rectangle& rect, error_code& ec) noexcept;
+    void device_offset(const vector_2d& offset);
+    void device_offset(const vector_2d& offset, error_code& ec) noexcept;
+    void map(const std::function<void(mapped_surface&)>& action);
+    void map(const std::function<void(mapped_surface&, error_code&)>& action,
+      error_code& ec);
+    void map(const rectangle& extents,
+      const std::function<void(mapped_surface&)>& action);
+    void map(const rectangle& extents,
+      const std::function<void(mapped_surface&, error_code&)>& action,
+      error_code& ec);
+    virtual void save();
+    virtual void save(error_code& ec) noexcept;
+    virtual void restore();
+    virtual void restore(error_code& ec) noexcept;
+    void reset_brush() noexcept;
+    void brush(const std::experimental::io2d::brush& source);
+    void brush(const std::experimental::io2d::brush& source, error_code& ec)
+      noexcept;
+    void antialias(std::experimental::io2d::antialias a) noexcept;
+    void reset_dashes() noexcept;
+    void dashes(const std::experimental::io2d::dashes& d);
+    void dashes(const std::experimental::io2d::dashes& d, error_code& ec)
+      noexcept;
+    void fill_rule(std::experimental::io2d::fill_rule fr) noexcept;
+    void line_cap(std::experimental::io2d::line_cap lc) noexcept;
+    void line_join(std::experimental::io2d::line_join lj) noexcept;
+    void line_width(double width) noexcept;
+    void miter_limit(double limit) noexcept;
+    void compositing_operator(std::experimental::io2d::compositing_operator co)
+      noexcept;
+    void clip(const std::experimental::io2d::path& p);
+    void clip(const std::experimental::io2d::path& p, error_code& ec) noexcept;
+    void clip_immediate();
+    void clip_immediate(error_code& ec) noexcept;
+    void reset_path() noexcept;
+    void path(const std::experimental::io2d::path& p);
+    void path(const std::experimental::io2d::path& p, error_code& ec) noexcept;
 
     // \ref{\iotwod.surface.modifiers.render}, render modifiers:
     void fill();
@@ -64,18 +83,18 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void paint(const surface& s, double alpha);
     void stroke();
     void stroke(const surface& s);
-    void show_text(const ::std::string& utf8);
-    void show_glyphs(const ::std::vector<glyph>& glyphs);
-    void show_text_glyphs(const ::std::string& utf8,
-      const ::std::vector<glyph>& glyphs,
-      const ::std::vector<text_cluster>& clusters, 
+    void show_text(const std::string& utf8);
+    void show_glyphs(const std::vector<glyph>& glyphs);
+    void show_text_glyphs(const std::string& utf8,
+      const std::vector<glyph>& glyphs,
+      const std::vector<text_cluster>& clusters, 
       bool clusterToGlyphsMapReverse = false);
 
     // \ref{\iotwod.surface.modifiers.transform}, transformation modifiers:
     void set_matrix(const matrix_2d& matrix);
 
     // \ref{\iotwod.surface.modifiers.font}, font modifiers:
-    void select_font_face(const ::std::string& family, font_slant slant, 
+    void select_font_face(const std::string& family, font_slant slant, 
       font_weight weight);
     void set_font_size(double size);
     void set_font_matrix(const matrix_2d& matrix);
@@ -100,7 +119,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     double get_tolerance() const;
     rectangle get_clip_extents() const;
     bool in_clip(const vector_2d& pt) const;
-    ::std::vector<rectangle> get_clip_rectangles() const;
+    std::vector<rectangle> get_clip_rectangles() const;
 
     // \ref{\iotwod.surface.observers.render}, render observers:
     rectangle get_fill_extents() const;
@@ -108,8 +127,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     rectangle get_stroke_extents() const;
     bool in_stroke(const vector_2d& pt) const;
     font_extents get_font_extents() const;
-    text_extents get_text_extents(const ::std::string& utf8) const;
-    text_extents get_glyph_extents(const ::std::vector<glyph>& glyphs) const;
+    text_extents get_text_extents(const std::string& utf8) const;
+    text_extents get_glyph_extents(const std::vector<glyph>& glyphs) const;
 
     // \ref{\iotwod.surface.observers.transform}, transformation observers:
     matrix_2d get_matrix() const;
@@ -147,21 +166,7 @@ A \tcode{surface} object is usually created by calling the \tcode{make_surface} 
 
 \rSec1 [\iotwod.surface.cons] {\tcode{surface} constructors, assignment operators, and destructors}
 
-\indexlibrary{\idxcode{surface}!constructor}%
-\begin{itemdecl}
-surface(const surface& other, content content, int width, int height);
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	Constructs a \tcode{surface} object. It shall, to the extent possible, have the same observable state as \tcode{other}. Its content shall be transparent black if it has an alpha channel or black if it does not.
-	
-	\pnum
-	\remarks
-	The \tcode{surface} object that is constructed takes its initial state from \tcode{other} to the extent possible, but is not observably connected to \tcode{other} such that changes to either surface, including destruction, do not affect the observable state of the other surface.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{surface}!destructor}%
+\indexlibrary{\idxcode{surface}!destructor}
 \begin{itemdecl}
 virtual ~surface();
 \end{itemdecl}
@@ -170,19 +175,14 @@ virtual ~surface();
 	\effects
 	Destroys an object of class \tcode{surface}.
 	
-	\pnum
-	\remarks
-	Does not throw any exceptions.
 \end{itemdescr}
 
 \rSec1 [\iotwod.surface.modifiers.state] {\tcode{surface} state modifiers}
 
-\rSec2 [\iotwod.surface::finish] {\tcode{surface::finish}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{finish}}%
-\indexlibrary{\idxcode{finish}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{finish}}
+\indexlibrary{\idxcode{finish}!\idxcode{surface}}
 \begin{itemdecl}
-void finish();
+virtual void finish() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -191,15 +191,14 @@ void finish();
 	
 	\pnum
 	\remarks
-	Once this function has been called, the surface is considered finished. The only valid operations on a finished surface are destruction and calling \tcode{finish} again (which will return without doing anything since the surface is already finished). Any other operation on a finished surface or any attempt to use a finished surface as an argument to a function produces undefined behavior.
+	Once this function has been called, the surface is \term{finished}. The only valid operations on a finished surface are destruction and calling \tcode{finish} again (which will do nothing). Any other operation on a finished surface or any attempt to use a finished surface as an argument to a function produces undefined behavior.
 \end{itemdescr}
 
-\rSec2 [\iotwod.surface::flush] {\tcode{surface::flush}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{flush}}%
-\indexlibrary{\idxcode{flush}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{flush}}
+\indexlibrary{\idxcode{flush}!\idxcode{surface}}
 \begin{itemdecl}
 void flush();
+void flush(error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -215,12 +214,11 @@ void flush();
 	\exitnote
 \end{itemdescr}
 
-\rSec2 [\iotwod.surface::get_device] {\tcode{surface::get_device}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{get_device}}%
-\indexlibrary{\idxcode{get_device}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{device}}
+\indexlibrary{\idxcode{device}!\idxcode{surface}}%
 \begin{itemdecl}
-::std::shared_ptr<device> get_device();
+shared_ptr<std::experimental::io2d::device> device();
+shared_ptr<std::experimental::io2d::device> device(error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -230,10 +228,11 @@ void flush();
 
 \rSec2 [\iotwod.surface::mark_dirty] {\tcode{surface::mark_dirty}}
 
-\indexlibrary{\idxcode{surface}!\idxcode{mark_dirty}}%
-\indexlibrary{\idxcode{mark_dirty}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{mark_dirty}}
+\indexlibrary{\idxcode{mark_dirty}!\idxcode{surface}}
 \begin{itemdecl}
 void mark_dirty();
+void mark_dirty(error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -247,6 +246,7 @@ void mark_dirty();
 
 \begin{itemdecl}
 void mark_dirty(const rectangle& rect);
+void mark_dirty(const rectangle& rect, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -258,12 +258,11 @@ void mark_dirty(const rectangle& rect);
 	This function shall be at least as efficient as \tcode{mark_dirty()}. A program shall call this function first when using the \tcode{surface} object after external changes are made to its underlying surface; no diagnostic is required.
 \end{itemdescr}
 
-\rSec2 [\iotwod.surface::set_device_offset] {\tcode{surface::set_device_offset}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{set_device_offset}}%
-\indexlibrary{\idxcode{set_device_offset}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{set_device_offset}}
+\indexlibrary{\idxcode{set_device_offset}!\idxcode{surface}}
 \begin{itemdecl}
-void set_device_offset(const vector_2d& offset);
+void device_offset(const vector_2d& offset);
+void device_offset(const vector_2d& offset, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -271,29 +270,11 @@ void set_device_offset(const vector_2d& offset);
 	Stores the value of \tcode{offset}. The value will be added to all coordinates after they have been transformed by the \tcode{surface} object's transformation matrix.
 \end{itemdescr}
 
-\rSec2 [\iotwod.surface::write_to_file] {\tcode{surface::write_to_file}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{write_to_file}}%
-\indexlibrary{\idxcode{write_to_file}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{map}}
+\indexlibrary{\idxcode{map}!\idxcode{surface}}
 \begin{itemdecl}
-void write_to_file(const ::std::string& filename);
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	\impldef{\tcode{surface}!\tcode{write_to_file}}.
-	
-	\pnum
-	\realnotes
-	This functionality is expected to change and evolve to make use of the Filesystem TS in the future. For now implementations should write the surface's data to an image file.
-\end{itemdescr}
-
-\rSec2 [\iotwod.surface::map_to_image] {\tcode{surface::map_to_image}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{map_to_image}}%
-\indexlibrary{\idxcode{map_to_image}!\idxcode{surface}}%
-\begin{itemdecl}
-image_surface map_to_image();
+void map(const std::function<void(mapped_surface&)>& action);
+void map(const std::function<void(mapped_surface&, error_code&)>& action, error_code& ec);
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -313,7 +294,11 @@ image_surface map_to_image();
 \end{itemdescr}
 
 \begin{itemdecl}
-image_surface map_to_image(const rectangle& extents);
+void map(const rectangle& extents,
+  const std::function<void(mapped_surface&)>& action);
+void map(const rectangle& extents,
+  const std::function<void(mapped_surface&, error_code&)>& action,
+  error_code& ec);
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -332,37 +317,11 @@ image_surface map_to_image(const rectangle& extents);
 	A \tcode{surface} object shall only be mapped once at any time; no diagnostic is required. A \tcode{surface} object that is mapped shall not be used until it is unmapped; no diagnostic is required. A mapped \tcode{surface} object can be unmapped by either destroying the \tcode{image_surface} object returned by this function or by passing the \tcode{image_surface} object returned by this function to the \tcode{unmap_image} member function of the \tcode{surface} object that created it. 
 \end{itemdescr}
 
-\rSec2 [\iotwod.surface::unmap_image] {\tcode{surface::unmap_image}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{unmap_image}}%
-\indexlibrary{\idxcode{unmap_image}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{save}}
+\indexlibrary{\idxcode{save}!\idxcode{surface}}
 \begin{itemdecl}
-void unmap_image(image_surface& image);
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\requires
-	\tcode{image} must have been created by calling \tcode{surface::map_to_image} on \tcode{*this}.
-	
-	\pnum
-	\effects
-	Unmaps \tcode{*this} and commits any uncommitted changes that were made to the underlying surface using \tcode{image}.
-	
-	\pnum
-	\throws
-	\tcode{::std::invalid_argument} if \tcode{image} was not created by calling \tcode{surface::map_to_image} on \tcode{*this}.
-	
-	\pnum
-	\remarks
-	Except in move construction, move assignment, and destruction, any use of \tcode{image} after it has been passed as an argument to this function produces undefined behavior.
-\end{itemdescr}
-
-\rSec2 [\iotwod.surface::save] {\tcode{surface::save}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{save}}%
-\indexlibrary{\idxcode{save}!\idxcode{surface}}%
-\begin{itemdecl}
-void save();
+virtual void save();
+virtual void save(error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -370,12 +329,11 @@ void save();
 	Saves the current observable state of \tcode{*this} to a newly created entry on the internal stack of saved states.
 \end{itemdescr}
 
-\rSec2 [\iotwod.surface::restore] {\tcode{surface::restore}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{restore}}%
-\indexlibrary{\idxcode{restore}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{restore}}
+\indexlibrary{\idxcode{restore}!\idxcode{surface}}
 \begin{itemdecl}
-void restore();
+virtual void restore();
+virtual void restore(error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -388,15 +346,13 @@ void restore();
 	
 	\pnum
 	\throws
-	\tcode{::std::system_error} with an error category of \tcode{io2d_error_category} and an error condition of \tcode{io2d_error::invalid_restore} if there are no entries on the stack of saved states when this function is called.
+	\tcode{std::system_error} with an error category of \tcode{io2d_error_category} and an error condition of \tcode{io2d_error::invalid_restore} if there are no entries on the stack of saved states when this function is called.
 \end{itemdescr}
 
-\rSec2 [\iotwod.surface::set_pattern] {\tcode{surface::set_pattern}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{set_pattern}}%
-\indexlibrary{\idxcode{set_pattern}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{reset_brush}}
+\indexlibrary{\idxcode{reset_brush}!\idxcode{surface}}
 \begin{itemdecl}
-void set_pattern();
+void reset_brush() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -415,7 +371,9 @@ void set_pattern();
 \end{itemdescr}
 
 \begin{itemdecl}
-void set_pattern(const pattern& source);
+void brush(const std::experimental::io2d::brush& source);
+void brush(const std::experimental::io2d::brush& source,
+  error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -427,12 +385,10 @@ void set_pattern(const pattern& source);
 	\tcode{get_pattern()} returns a \tcode{pattern} object with the same observable state as \tcode{source} object.
 \end{itemdescr}
 
-\rSec2 [\iotwod.surface::set_antialias] {\tcode{surface::set_antialias}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{set_antialias}}%
-\indexlibrary{\idxcode{set_antialias}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{antialias}}
+\indexlibrary{\idxcode{antialias}!\idxcode{surface}}
 \begin{itemdecl}
-void set_antialias(antialias a);
+void antialias(std::experimental::io2d::antialias a) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -444,12 +400,10 @@ void set_antialias(antialias a);
 	\tcode{get_antialias()} returns the value of \tcode{a}.
 \end{itemdescr}
 
-\rSec2 [\iotwod.surface::] {\tcode{surface::}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{}}%
-\indexlibrary{\idxcode{}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{reset_dashes}}
+\indexlibrary{\idxcode{reset_dashes}!\idxcode{surface}}
 \begin{itemdecl}
-void set_dashes();
+void reset_dashes() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -458,11 +412,14 @@ void set_dashes();
 	
 	\pnum
 	\postconditions
-	\tcode{get_dashes()} will return the equivalent of \tcode{::std::make_tuple::std::<vector<double>, double>(\{ \}, 0.0)}. \tcode{get_dashes_count()} will return \tcode{0}.
+	\tcode{get_dashes()} will return the equivalent of \tcode{std::make_tuplestd::<vector<double>, double>(\{ \}, 0.0)}. \tcode{get_dashes_count()} will return \tcode{0}.
 \end{itemdescr}
 
+\indexlibrary{\idxcode{surface}!\idxcode{dashes}}
+\indexlibrary{\idxcode{dashes}!\idxcode{surface}}
 \begin{itemdecl}
-void set_dashes(const dashes& d);
+void dashes(const std::experimental::io2d::dashes& d);
+void dashes(const std::experimental::io2d::dashes& d, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -471,15 +428,13 @@ void set_dashes(const dashes& d);
 	
 	\pnum
 	\postconditions
-	\tcode{get_dashes()} will return the equivalent of \tcode{d}. \tcode{get_dashes_count()} will return the value of \tcode{static_cast<int>(::std::get<0>(d).size())}.
+	\tcode{get_dashes()} will return the equivalent of \tcode{d}. \tcode{get_dashes_count()} will return the value of \tcode{static_cast<int>(std::get<0>(d).size())}.
 \end{itemdescr}
 
-\rSec2 [\iotwod.surface::set_fill_rule] {\tcode{surface::set_fill_rule}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{set_fill_rule}}%
-\indexlibrary{\idxcode{set_fill_rule}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{fill_rule}}
+\indexlibrary{\idxcode{fill_rule}!\idxcode{surface}}
 \begin{itemdecl}
-void set_fill_rule(fill_rule fr);
+void fill_rule(std::experimental::io2d::fill_rule fr) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -491,12 +446,10 @@ void set_fill_rule(fill_rule fr);
 	\tcode{get_fill_rule()} will return the value of \tcode{fr}.
 \end{itemdescr}
 
-\rSec2 [\iotwod.surface::set_line_cap] {\tcode{surface::set_line_cap}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{set_line_cap}}%
-\indexlibrary{\idxcode{set_line_cap}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{line_cap}}
+\indexlibrary{\idxcode{line_cap}!\idxcode{surface}}
 \begin{itemdecl}
-void set_line_cap(line_cap lc);
+void line_cap(std::experimental::io2d::line_cap lc) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -508,12 +461,10 @@ void set_line_cap(line_cap lc);
 	\tcode{get_line_cap()} will return the value of \tcode{lc}.
 \end{itemdescr}
 
-\rSec2 [\iotwod.surface::set_line_join] {\tcode{surface::set_line_join}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{set_line_join}}%
-\indexlibrary{\idxcode{set_line_join}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{line_join}}
+\indexlibrary{\idxcode{line_join}!\idxcode{surface}}
 \begin{itemdecl}
-void set_line_join(line_join lj);
+void line_join(std::experimental::io2d::line_join lj) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -525,42 +476,38 @@ void set_line_join(line_join lj);
 	\tcode{get_line_join()} will return the value of \tcode{lj}.
 \end{itemdescr}
 
-\rSec2 [\iotwod.surface::set_line_width] {\tcode{surface::set_line_width}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{set_line_width}}%
-\indexlibrary{\idxcode{set_line_width}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{set_line_width}}
+\indexlibrary{\idxcode{set_line_width}!\idxcode{surface}}
 \begin{itemdecl}
-void set_line_width(double width);
+void line_width(double width) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Sets the current line width to \tcode{::std::max(width, 0.0)}.
+	Sets the current line width to \tcode{std::max(width, 0.0)}.
 	
 	\pnum
 	\postconditions
-	\tcode{get_line_width()} will return \tcode{::std::max(width, 0.0)}.
+	\tcode{get_line_width()} will return \tcode{std::max(width, 0.0)}.
 	
 	\pnum
 	\remarks
 	Line width is in pre-transformation units and is used with the \tcode{surface::stroke} functions. It postulates a round brush with a diameter of the current line width. The shape and size of the stroke when rendered depends on other state data. See \tcode{surface::stroke}\ref{\iotwod.surface::stroke} for more information.
 \end{itemdescr}
 
-\rSec2 [\iotwod.surface::set_miter_limit] {\tcode{surface::set_miter_limit}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{set_miter_limit}}%
-\indexlibrary{\idxcode{set_miter_limit}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{miter_limit}}
+\indexlibrary{\idxcode{miter_limit}!\idxcode{surface}}
 \begin{itemdecl}
-void set_miter_limit(double limit);
+void miter_limit(double limit) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Sets the current miter limit to the value of \tcode{::std::max(limit, 1.0)}. This limit only applies when the current line join is set to \tcode{line_join::miter_or_bevel}.
+	Sets the current miter limit to the value of \tcode{std::max(limit, 1.0)}. This limit only applies when the current line join is set to \tcode{line_join::miter_or_bevel}.
 	
 	\pnum
 	\postconditions
-	\tcode{get_miter_limit} will return \tcode{::std::max(limit, 1.0)}.
+	\tcode{get_miter_limit} will return \tcode{std::max(limit, 1.0)}.
 	
 	\pnum
 	\remarks
@@ -576,12 +523,11 @@ void set_miter_limit(double limit);
 	\exitnote
 \end{itemdescr}
 
-\rSec2 [\iotwod.surface::set_compositing_operator] {\tcode{surface::set_compositing_operator}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{set_compositing_operator}}%
-\indexlibrary{\idxcode{set_compositing_operator}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{compositing_operator}}
+\indexlibrary{\idxcode{compositing_operator}!\idxcode{surface}}
 \begin{itemdecl}
-void set_compositing_operator(compositing_operator co);
+void compositing_operator(std::experimental::io2d::compositing_operator co)
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -593,12 +539,11 @@ void set_compositing_operator(compositing_operator co);
 	\tcode{get_compositing_operator} will return the value of \tcode{co}.
 \end{itemdescr}
 
-\rSec2 [\iotwod.surface::clip] {\tcode{surface::clip}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{clip}}%
-\indexlibrary{\idxcode{clip}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{clip}}
+\indexlibrary{\idxcode{clip}!\idxcode{surface}}
 \begin{itemdecl}
-void clip();
+void clip(const std::experimental::io2d::path& p);
+void clip(const std::experimental::io2d::path& p, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -610,25 +555,11 @@ void clip();
 	The clip area never increases as a result of this function.
 \end{itemdescr}
 
-\rSec2 [\iotwod.surface::reset_clip] {\tcode{surface::reset_clip}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{reset_clip}}%
-\indexlibrary{\idxcode{reset_clip}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{clip_immediate}}
+\indexlibrary{\idxcode{clip_immediate}!\idxcode{surface}}
 \begin{itemdecl}
-void reset_clip();
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	Resets the current clip area to be an unbounded, infinitely large area. All points are within the resulting clip area.
-\end{itemdescr}
-
-\rSec2 [\iotwod.surface::set_path] {\tcode{surface::set_path}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{set_path}}%
-\indexlibrary{\idxcode{set_path}!\idxcode{surface}}%
-\begin{itemdecl}
-void set_path();
+void clip_immediate();
+void clip_immediate(error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -639,8 +570,25 @@ void set_path();
 	\realnotes
 	The empty \tcode{path} object is not supplied by the user. The implementation is expected to provide an empty \tcode{path} object. Since a \tcode{path} object is immutable, an implementation should create an empty path object in advance for maximum efficiency.
 \end{itemdescr}
+
+\indexlibrary{\idxcode{surface}!\idxcode{reset_path}}
+\indexlibrary{\idxcode{reset_path}!\idxcode{surface}}
 \begin{itemdecl}
-void set_path(const path& p);
+void reset_path() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Set's the current \tcode{path} to be an empty path.
+	
+	\pnum
+	\realnotes
+	The empty \tcode{path} object is not supplied by the user. The implementation is expected to provide an empty \tcode{path} object. Since a \tcode{path} object is immutable, an implementation should create an empty path object in advance for maximum efficiency.
+\end{itemdescr}
+
+\begin{itemdecl}
+void path(const std::experimental::io2d::path& p);
+void path(const std::experimental::io2d::path& p, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum

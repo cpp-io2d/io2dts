@@ -47,62 +47,39 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \\ \capsep
  \endhead
  \tcode{move_to}
- & Set the \term{current point} and the \term{last move to point}. This starts 
- a new sub-path.
+ & The object is of type \tcode{move_to}.
  \\
  \tcode{line_to}
- & Create a line from the \tcode{current point} to \tcode{p.data.line}. Make 
- the new point the \term{current point}.
+ & The object is of type \tcode{line_to}.
  \\
  \tcode{curve_to}
- & Create a cubic B\'ezier curve. The start point is the \term{current 
- point}. The first control point is \tcode{p.data.curve.pt1}. The second 
- control point is \tcode{p.data.curve.pt2}. The end point is 
- \tcode{p.data.curve.pt3}. Set the \term{current point} to be equal to 
- \tcode{p.data.curve.pt3}.
+ & The object is of type \tcode{curve_to}.
  \\
  \tcode{new_sub_path}
- & Create a new sub-path. There is no \tcode{current point} or \tcode{last move 
- to point} after this operation.
+ & The object is of type \tcode{new_sub_path}.
  \\
  \tcode{close_path}
- & If there is a \term{current point}, close the \term{current path} by 
- creating a line from the \tcode{current point} to the \tcode{last move to 
- point}, then set the \term{current point} to the value of the \term{last move 
- to point}. If there is no \term{current point} then do nothing.
- The line created here, if any, differs from \tcode{line_to} in that the line 
- here is joined to the initial path segment instead of each end having line 
- caps.
+ & The object is of type \tcode{close_path}.
  \\
  \tcode{rel_move_to}
- & Adds the point in \tcode{p.data.move} to the \term{current point} and then 
- sets the \term{current point} and the \term{last move to point} to be equal to 
- the resulting point.
+ & The object is of type \tcode{rel_move_to}.
  \\
  \tcode{rel_line_to}
- & Adds the point in \tcode{p.data.line} to the \term{current point} and 
- creates a line from the \term{current point} to the resulting point. Make the 
- resulting point the new \term{current point}.
+ & The object is of type \tcode{rel_line_to}.
  \\
  \tcode{rel_curve_to}
- & Create a B\'ezier curve. The start point is the \term{current point}. 
- The first control point is the point created by adding \term{current point} 
- and \tcode{p.data.curve.pt1}. The second control point is the point created by 
- adding \term{current point} and \tcode{p.data.curve.pt2}. The end point is the 
- point created by adding \term{current point} and \tcode{p.data.curve.pt3}. 
- Make the point created by adding \term{current point} and 
- \tcode{p.data.curve.pt3} the new \tcode{current point}.
+ & The object is of type \tcode{rel_curve_to}.
  \\
  \tcode{arc}
- & Create a circular arc. \enternote The transformation matrix is used to modify a circular arc to create an elliptical arc. \exitnote The center of the arc is \tcode{p.data.arc.center}. Its radius is \tcode{p.data.arc.radius}. It starts at the point at \tcode{p.data.arc.angle1} radians which is \tcode{p.data.arc.radius} units from \tcode{p.data.arc.center} and proceeds clockwise to the point at \tcode{p.data.arc.angle2} radians which is \tcode{p.data.arc.radius} units from \tcode{p.data.arc.center}. If \tcode{p.data.arc.angle2} is less that \tcode{p.data.arc.angle1}, continually increase \tcode{p.data.arc.angle2} by $2 \times \pi$ until it is equal to or greater than \tcode{p.data.arc.angle1}.
+ & The object is of type \tcode{arc}.
  \\
  \tcode{arc_negative}
- & Create a circular arc. \enternote The transformation matrix is used to modify a circular arc to create an elliptical arc. \exitnote The center of the arc is \tcode{p.data.arc.center}. Its radius is \tcode{p.data.arc.radius}. It starts at the point at \tcode{p.data.arc.angle1} radians which is \tcode{p.data.arc.radius} units from \tcode{p.data.arc.center} and proceeds counterclockwise to the point at \tcode{p.data.arc.angle2} radians which is \tcode{p.data.arc.radius} units from \tcode{p.data.arc.center}. If \tcode{p.data.arc.angle2} is greater that \tcode{p.data.arc.angle1}, continually decrease \tcode{p.data.arc.angle2} by $2 \times \pi$ until it is equal to or less than \tcode{p.data.arc.angle1}.
+ & The object is of type \tcode{arc_negative}.
  \\
  \tcode{change_matrix}
- & Establish a new transformation matrix.
+ & The object is of type \tcode{change_matrix}.
  \\
  \tcode{change_origin}
- & Establish a new origin point.
+ & The object is of type \tcode{change_origin}.
  \\
 \end{libreqtab2}
