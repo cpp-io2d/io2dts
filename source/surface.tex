@@ -143,9 +143,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     font_face get_font_face() const;
     scaled_font get_scaled_font() const;
   };
-  
-  // \ref{\iotwod.surface.nonmembers}, non-member functions:
-  surface make_surface(@\impdef@) @\impdef@;
 } } } }
 \end{codeblock}
 
@@ -159,10 +156,148 @@ The \tcode{surface} class represents a surface on which graphics are rendered.
 A \tcode{surface} object is a stateful, move-only object.
 
 \pnum
-Rendering to a \tcode{surface} is accomplished by setting the appropriate state, often in the form of state objects such as \tcode{path} and \tcode{pattern}, and then calling one or more of the render functions to make the changes specified by the state to the surface resource managed by the \tcode{surface} object.
+Rendering to a \tcode{surface} object is accomplished by setting the appropriate state, often in the form of state objects such as \tcode{path} and \tcode{pattern}, and then calling one or more of the render functions to make the changes specified by the state to the \tcode{surface} object's underlying graphics resource.
 
 \pnum
-A \tcode{surface} object is usually created by calling the \tcode{make_surface} \ref{\iotwod.surface.make_surface} function.
+The \tcode{surface} type is not directly instantiable.
+
+\rSec1 [\iotwod.surface.state] {\tcode{surface} State}
+
+\rSec2 [\iotwod.surface.state.default] {\tcode{surface} State Default Values}
+
+\pnum
+Table~\ref{tab:\iotwod.surface.state.listing} specifies the name, type, function, and default value for each item of a surface's observable state.
+
+\begin{libreqtab4b}
+	{Surface observable state}
+	{tab:\iotwod.surface.state.listing}
+	\\ \topline
+	\lhdr{Name}   &   \chdr{Type}  &   \chdr{Function}  &   \rhdr{Default value}       \\ \capsep
+	\endfirsthead
+	\continuedcaption\\
+	\hline
+	\lhdr{Name}   &   \chdr{Type}  &   \chdr{Function}  &   \rhdr{Default value}       \\ \capsep
+	\endhead
+	
+	Current Brush &
+	\tcode{brush} &
+	This is the brush that shall be used when performing rendering operations &
+	\tcode{brush\{ \{ rgba_color::black() \} \}} \\ \rowsep
+
+	General Antialiasing &
+	\tcode{antialias} &
+	This is the type of antialiasing that should be used when performing non-text rendering operations &
+	\tcode{antialias::default_antialias}\\ \rowsep
+	
+	Dash Pattern &
+	\tcode{dashes} &
+	This specifies the pattern that shall be used when performing stroke rendering operations &
+	\tcode{dashes\{ vector<double>(), 0.0 \}} \\ \rowsep
+	
+	Fill Rule &
+	\tcode{fill_rule} &
+	This controls which areas of paths shall be eligible to be filled when performing fill rendering operations &
+	\tcode{fill_rule::winding} \\ \rowsep
+	
+	Line Cap &
+	\tcode{line_cap} &
+	This specifies how the end of a path segment that is not joined to another path segment shall be rendered when performing stroke rendering operations &
+	\tcode{line_cap::butt} \\ \rowsep
+	
+	Line Join &
+	\tcode{line_join} &
+	This specifies how the join point of two path segments that are joined to each other shall be rendered when performing stroke rendering operations &
+	\tcode{line_join::miter} \\ \rowsep
+	
+	Line Width &
+	\tcode{double} &
+	This is the width, in surface coordinate space units, that shall be used to determine the rendered width of path segments when performing a stroke rendering operation &
+	\tcode{2.0} \\ \rowsep
+	
+	Miter Limit &
+	\tcode{double} &
+	This is the value used to calculate whether a line join should be mitered or beveled when the Line Join is \tcode{line_join::miter_or_bevel} &
+	\tcode{10.0} \\ \rowsep
+	
+	Compositing Operator &
+	\tcode{compositing_operator} &
+	This specifies how source visual data shall be combined with existing destination visual data to produce the resulting destination visual data when performing rendering operations &
+	\tcode{compositing_operator::over} \\ \rowsep
+	
+	Tolerance &
+	\tcode{double} &
+	This is the value, in surface coordinate space units, that should be used when transforming non-linear path segments into linear path segments when performing rendering operations &
+	\tcode{\impldef{\tcode{surface}!Tolerance}} \\ \rowsep
+	
+	Current Path &
+	\tcode{path} &
+	This is the \tcode{path} object that shall be used when performing non-immediate rendering operations &
+	\tcode{path\{ path_factory\{ \} \}} \\ \rowsep
+	
+	Immediate Path &
+	\tcode{path_factory} &
+	This is the \tcode{path_factory} object that shall be used when performing immediate rendering operations &
+	\tcode{path_factory\{ \}} \\ \rowsep
+	
+	Transformation Matrix &
+	\tcode{matrix_2d} &
+	This is the \tcode{matrix_2d} object that shall be used to transform coordinates from an object's local coordinate space to the surface's coordinate space when performing rendering operations &
+	\tcode{matrix_2d::init_identity\{ \}} \\ \rowsep
+	
+	Font Face &
+	\tcode{font_face} &
+	This is the font that shall be used when performing text rendering operations &
+	\tcode{\impldef{\tcode{surface}!Font Face}} \\ \rowsep
+	
+	Font Matrix &
+	\tcode{matrix_2d} &
+	This is the \tcode{matrix_2d} object that shall be used to transform coordinates from a font's local coordinate space to the surface's coordinate space when performing text rendering operations &
+	\tcode{matrix_2d::init_scale\{ \{ 10.0, 10.0 \} \}} \\ \rowsep
+	
+	Font Options &
+	\tcode{font_options} &
+	This is the \tcode{font_options} object that shall be used to determine certain aspects of how a font should be rendered when performing text rendering operations &
+	\tcode{font_option\{ antialias::default_antialias, subpixel_order::default_subpixel_order \}} \\ \rowsep
+	
+\end{libreqtab4b}
+
+
+\rSec2 [\iotwod.surface.state.save] {\tcode{surface} Saved State}
+
+\pnum
+A surface object provides an interface to save its current state and subsequently restore it.
+
+\pnum
+Save and restore operations are performed using \tcode{surface::save} and \tcode{surface::restore}, respectively.
+
+\pnum
+Save and restore operations may be nested.
+
+\pnum
+Each call to \tcode{surface::restore} restores a surface object's state to its values at the time of the most recent call to \tcode{surface::save}.
+
+\pnum
+The following list denotes each item of observable state that shall be saved by \tcode{surface::save} and restored by \tcode{surface::restore}, using the state item names listed in Table~\ref{tab:\iotwod.surface.state.listing}:
+
+\begin{itemize}
+	\item Current Brush
+	\item General Antialiasing
+	\item Dash Pattern
+	\item Fill Rule
+	\item Line Cap
+	\item Line Join
+	\item Line Width
+	\item Miter Limit
+	\item Compositing Operator
+	\item Tolerance
+	\item Current Path
+	\item Immediate Path
+	\item Transformation Matrix
+	\item Font Face
+	\item Font Matrix
+	\item Font Options
+\end{itemize}
+
 
 \rSec1 [\iotwod.surface.cons] {\tcode{surface} constructors, assignment operators, and destructors}
 
@@ -191,7 +326,7 @@ virtual void finish() noexcept;
 	
 	\pnum
 	\remarks
-	Once this function has been called, the surface is \term{finished}. The only valid operations on a finished surface are destruction and calling \tcode{finish} again (which will do nothing). Any other operation on a finished surface or any attempt to use a finished surface as an argument to a function produces undefined behavior.
+	Once this function has been called, the surface is \term{finished}. The only valid operations on a finished surface are destruction, calling \tcode{finish()} again (which will do nothing), calling \tcode{has_surface_resource()}, and calling \tcode{is_finished()}. Any other operation on a finished surface or any attempt to use a finished \tcode{surface} or \tcode{surface}-derived object as an argument to a function produces undefined behavior except as otherwise noted.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{surface}!\idxcode{flush}}
@@ -604,8 +739,8 @@ void path(const std::experimental::io2d::path& p, error_code& ec) noexcept;
 
 \rSec2 [\iotwod.surface::stroke] {\tcode{surface::stroke}}
 
-\indexlibrary{\idxcode{surface}!\idxcode{stroke}}%
-\indexlibrary{\idxcode{stroke}!\idxcode{surface}}%
+\indexlibrary{\idxcode{surface}!\idxcode{stroke}}
+\indexlibrary{\idxcode{stroke}!\idxcode{surface}}
 \begin{itemdecl}
 void stroke();
 void stroke(const surface& s);
@@ -619,18 +754,25 @@ void stroke(const surface& s);
 	\postconditions
 	...
 	
-	\pnum
-	\complexity
-	...
-	
+%\indexlibrary{\idxcode{surface}!\idxcode{}}
+%\indexlibrary{\idxcode{}!\idxcode{surface}}
+%\begin{itemdecl}
+%\end{itemdecl}
+%\begin{itemdescr}
+%	\pnum
+%	\effects
+%	
+%	\pnum
+%	\postconditions
+%	
+%\end{itemdescr}
+
 \end{itemdescr}
 
 \rSec1 [\iotwod.surface.modifiers.transform] {\tcode{surface} transformation modifiers}
 
-%\rSec2 [\iotwod.::] {\tcode{::}}
-%
-%\indexlibrary{\idxcode{}!\idxcode{}}%
-%\indexlibrary{\idxcode{}!\idxcode{}}%
+%\indexlibrary{\idxcode{surface}!\idxcode{}}
+%\indexlibrary{\idxcode{}!\idxcode{surface}}
 %\begin{itemdecl}
 %\end{itemdecl}
 %\begin{itemdescr}
@@ -640,16 +782,12 @@ void stroke(const surface& s);
 %	\pnum
 %	\postconditions
 %	
-%	\pnum
-%	\complexity
 %\end{itemdescr}
 
 \rSec1 [\iotwod.surface.modifiers.font] {\tcode{surface} font modifiers}
 
-%\rSec2 [\iotwod.::] {\tcode{::}}
-%
-%\indexlibrary{\idxcode{}!\idxcode{}}%
-%\indexlibrary{\idxcode{}!\idxcode{}}%
+%\indexlibrary{\idxcode{surface}!\idxcode{}}
+%\indexlibrary{\idxcode{}!\idxcode{surface}}
 %\begin{itemdecl}
 %\end{itemdecl}
 %\begin{itemdescr}
@@ -659,122 +797,52 @@ void stroke(const surface& s);
 %	\pnum
 %	\postconditions
 %	
-%	\pnum
-%	\complexity
 %\end{itemdescr}
 
 \rSec1 [\iotwod.surface.observers.state] {\tcode{surface} state observers}
 
-%\rSec2 [\iotwod.::] {\tcode{::}}
-%
-%\indexlibrary{\idxcode{}!\idxcode{}}%
-%\indexlibrary{\idxcode{}!\idxcode{}}%
+%\indexlibrary{\idxcode{surface}!\idxcode{}}
+%\indexlibrary{\idxcode{}!\idxcode{surface}}
 %\begin{itemdecl}
 %\end{itemdecl}
 %\begin{itemdescr}
 %	\pnum
-%	\effects
+%	\returns
 %	
-%	\pnum
-%	\postconditions
-%	
-%	\pnum
-%	\complexity
 %\end{itemdescr}
 
 \rSec1 [\iotwod.surface.observers.render] {\tcode{surface} render observers}
 
-%\rSec2 [\iotwod.::] {\tcode{::}}
-%
-%\indexlibrary{\idxcode{}!\idxcode{}}%
-%\indexlibrary{\idxcode{}!\idxcode{}}%
+%\indexlibrary{\idxcode{surface}!\idxcode{}}
+%\indexlibrary{\idxcode{}!\idxcode{surface}}
 %\begin{itemdecl}
 %\end{itemdecl}
 %\begin{itemdescr}
 %	\pnum
-%	\effects
+%	\returns
 %	
-%	\pnum
-%	\postconditions
-%	
-%	\pnum
-%	\complexity
 %\end{itemdescr}
 
 \rSec1 [\iotwod.surface.observers.transform] {\tcode{surface} transformation observers}
 
-%\rSec2 [\iotwod.::] {\tcode{::}}
-%
-%\indexlibrary{\idxcode{}!\idxcode{}}%
-%\indexlibrary{\idxcode{}!\idxcode{}}%
+%\indexlibrary{\idxcode{surface}!\idxcode{}}
+%\indexlibrary{\idxcode{}!\idxcode{surface}}
 %\begin{itemdecl}
 %\end{itemdecl}
 %\begin{itemdescr}
 %	\pnum
-%	\effects
+%	\returns
 %	
-%	\pnum
-%	\postconditions
-%	
-%	\pnum
-%	\complexity
 %\end{itemdescr}
 
 \rSec1 [\iotwod.surface.observers.font] {\tcode{surface} font observers}
 
-%\rSec2 [\iotwod.::] {\tcode{::}}
-%
-%\indexlibrary{\idxcode{}!\idxcode{}}%
-%\indexlibrary{\idxcode{}!\idxcode{}}%
+%\indexlibrary{\idxcode{surface}!\idxcode{}}
+%\indexlibrary{\idxcode{}!\idxcode{surface}}
 %\begin{itemdecl}
 %\end{itemdecl}
 %\begin{itemdescr}
 %	\pnum
-%	\effects
+%	\returns
 %	
-%	\pnum
-%	\postconditions
-%	
-%	\pnum
-%	\complexity
 %\end{itemdescr}
-
-\rSec1 [\iotwod.surface.nonmembers] {\tcode{surface} non-member functions}
-
-\rSec2 [\iotwod.surface.make_surface] {\tcode{make_surface}}
-
-\indexlibrary{\idxcode{make_surface}}%
-\begin{itemdecl}
-surface make_surface(@\impdef@) @\impdef@;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	A \tcode{surface} object. The default initial state of the returned \tcode{surface} object is listed in Table~\ref{tab:\iotwod.surface.make_surface.definitstate}.
-	\enternote
-	Implementations may return a \tcode{surface} object with a different initial state. See the Remarks section below.
-	\exitnote
-	
-\begin{libreqtab2}
- {\tcode{make_surface} Default Initial State Values}
- {tab:\iotwod.surface.make_surface.definitstate}
- \\ \topline
- \lhdr{Observer}
- & \rhdr{Return Value}
- \\ \capsep
- \endfirsthead
- \continuedcaption\\
- \hline
- \lhdr{Observer}
- & \rhdr{Return Value}
- \\ \capsep
- \endhead
- \tcode{a}
- & \tcode{b}
- \\
-\end{libreqtab2}
-
-	\pnum
-	\remarks
-	The name, return type, and default initial values for the observable states of the returned \tcode{surface} object are the only semantic elements specified for \tcode{make_surface}. The default initial values for the observable state of the returned \tcode{surface} object are given in Table~\ref{tab:\iotwod.surface.make_surface.definitstate}. Implementations are free to provide different initial values provided that the differences are documented. 
-\end{itemdescr}

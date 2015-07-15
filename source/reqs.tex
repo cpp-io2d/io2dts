@@ -18,7 +18,7 @@ namespace std {
 \end{codeblock}
 
 \pnum
-Unless otherwise specified, references to other entities described in this technical specification are assumed to be qualified with \tcode{std::experimental::filesystem::v1::}, and references to entities
+Unless otherwise specified, references to other entities described in this \documenttypename are assumed to be qualified with \tcode{std::experimental::filesystem::v1::}, and references to entities
 described in the C++ standard are assumed to be qualified with \tcode{std::}.
 
 \rSec1 [\iotwod.req.macros] {Feature test macros}
@@ -30,7 +30,7 @@ This macro allows users to determine which version of this Technical Specificati
 Header \tcode{<experimental/io2d>} shall supply the following macro definition:
 
 \pnum
-\tcode{\#define __cpp_lib_experimental_io2d 201505}
+\tcode{\#define __cpp_lib_experimental_io2d 201507}
 
 \pnum
 \enternote
@@ -40,7 +40,7 @@ and mm the month when the version of the Technical Specification was completed. 
 \rSec1 [\iotwod.req.native] {Native handles}
 
 \pnum
-Several classes described in this Technical Specification have members 
+Several classes described in this \documenttypename have members 
 \tcode{native_handle_type} and \tcode{native_handle}. The presence of these 
 members and their semantics is \impldef{presence and meaning of 
 \tcode{native_handle_type} and \tcode{native_handle}}.
@@ -49,3 +49,8 @@ These members allow implementations to provide access to implementation
 details. Their names are specified to facilitate portable compile-time 
 detection. Actual use of these members is inherently non-portable.
 \exitnote
+
+\rSec1 [\iotwod.req.\iecfivefivenine] {IEC 559 floating point support}
+
+\pnum
+This \documenttypename requires that \tcode{numeric_limits<double>::is_iec559 == true}. 

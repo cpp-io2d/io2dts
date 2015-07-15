@@ -1,90 +1,495 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.] {Class \tcode{}}
+\rSec0 [\iotwod.displaysurface] {Class \tcode{display_surface}}
 
-\rSec1 [\iotwod..synopsis] {\tcode{} synopsis}
+\rSec1 [\iotwod.displaysurface.synopsis] {\tcode{display_surface} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-    // \ref{\iotwod..cons}, construct/copy/move/destroy:
+  class display_surface : public surface {
+  public:
+    // \ref{\iotwod.displaysurface.cons}, construct/copy/move/destroy:
+    display_surface() = delete;
+    display_surface(const display_surface&) = delete;
+    display_surface& operator=(const display_surface&) = delete;
+    display_surface(display_surface&& other) noexcept;
+    display_surface& operator=(display_surface&& other) noexcept;
+    
+    display_surface(int preferredWidth, int preferredHeight, 
+      experimental::io2d::format preferredFormat,
+      experimental::io2d::scaling scl = experimental::io2d::scaling::letterbox);
+    display_surface(int preferredWidth, int preferredHeight, 
+      experimental::io2d::format preferredFormat, error_code& ec,
+      experimental::io2d::scaling scl = experimental::io2d::scaling::letterbox)
+      noexcept;
+    
+    display_surface(int preferredWidth, int preferredHeight, 
+      experimental::io2d::format preferredFormat,
+      int preferredDisplayWidth, int preferredDisplayHeight,
+      experimental::io2d::scaling scl = experimental::io2d::scaling::letterbox);
+    display_surface(int preferredWidth, int preferredHeight, 
+      experimental::io2d::format preferredFormat,
+      int preferredDisplayWidth, int preferredDisplayHeight, error_code& ec,
+      experimental::io2d::scaling scl = experimental::io2d::scaling::letterbox) 
+      noexcept;
+    
+    virtual ~display_surface();
+    
+    // \ref{\iotwod.displaysurface.modifiers}, modifiers:
+    virtual void save() override;
+    virtual void save(error_code& ec) noexcept override;
+    virtual void restore() override;
+    virtual void restore(error_code& ec) noexcept override;
+    
+    void draw_fn(const function<void(display_surface& sfc)>& fn);
+    void draw_fn(const function<void(display_surface& sfc)>& fn,
+      error_code& ec) noexcept;
+    void size_change_fn(const function<void(display_surface& sfc)>& fn);
+    void size_change_fn(const function<void(display_surface& sfc)>& fn,
+      error_code& ec) noexcept;
+    void width(int w);
+    void width(int w, error_code& ec) noexcept;
+    void height(int h);
+    void height(int h, error_code& ec) noexcept;
+    void display_width(int w);
+    void display_width(int w, error_code& ec) noexcept;
+    void display_height(int h);
+    void display_height(int h, error_code& ec) noexcept;
+    void dimensions(int w, int h);
+    void dimensions(int w, int h, error_code& ec) noexcept;
+    void display_dimensions(int dw, int dh);
+    void display_dimensions(int dw, int dh, error_code& ec) noexcept;
+    void scaling(experimental::io2d::scaling scl) noexcept;
+    void user_scaling_fn(const function<experimental::io2d::rectangle(
+      const display_surface&, bool&)>& fn);
+    void user_scaling_fn(const function<experimental::io2d::rectangle(
+      const display_surface&, bool&)>& fn, error_code& ec) noexcept;
+    void reset_letterbox_brush() noexcept;
+    void letterbox_brush(const rgba_color& c);
+    void letterbox_brush(const rgba_color& c, error_code& ec) noexcept;
+    void letterbox_brush(const experimental::io2d::brush& b);
+    void letterbox_brush(const experimental::io2d::brush& b, error_code& ec) noexcept;
+    int join();
+    int join(error_code& ec);
+    
+    // \ref{\iotwod.displaysurface.observers}, observers:
+    experimental::io2d::format format() const noexcept;
+    int width() const noexcept;
+    int height() const noexcept;
+    int display_width() const noexcept;
+    int display_height() const noexcept;
+    tuple<int, int> dimensions() const noexcept;
+    tuple<int, int> display_dimensions() const noexcept;
+    experimental::io2d::scaling scaling() const noexcept;
+    const function<experimental::io2d::rectangle(const display_surface&,
+      bool&)>& user_scaling_fn() const noexcept;
+    experimental::io2d::brush letterbox_brush() const noexcept;
 
-    // \ref{\iotwod..modifiers}, modifiers:
-    
-    // \ref{\iotwod..observers}, observers:
-    
-    // \ref{\iotwod..member.ops}, member operators:
-    
-// \expos
-  
-  // \ref{\iotwod..ops}, non-member operators:
+  private:
+    experimental::io2d::brush _Default_brush;             // \expos
+    experimental::io2d::scaling _Scaling;                 // \expos
+    int _Width;                                           // \expos
+    int _Height;                                          // \expos
+    int _Display_width;                                   // \expos
+    int _Display_height;                                  // \expos
+    function<void(display_surface& sfc)> _Draw_fn;        // \expos
+    function<void(display_surface& sfc)> _Size_change_fn; // \expos
+    function<experimental::io2d::rectangle(const display_surface&, bool&)> 
+      _User_scaling_fn;                                   // \expos
+    experimental::io2d::brush _Letterbox_brush;           // \expos    
+    unique_ptr<@\impdef@> _Native_surface;   // \expos
+    unique_ptr<@\impdef@> _Native_context;   // \expos
+  };
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod..intro] {\tcode{} Description}
+\rSec1 [\iotwod.displaysurface.intro] {\tcode{display_surface} Description}
 
 \pnum
-\indexlibrary{\idxcode{}}
-The class \tcode{} describes .
+\indexlibrary{\idxcode{display_surface}}
+The class \tcode{display_surface} describes .
 
-\rSec1 [\iotwod..cons] {\tcode{} constructors and assignment operators}
+\rSec1 [\iotwod.displaysurface.cons] {\tcode{display_surface} constructors and assignment operators}
 
-\indexlibrary{\idxcode{}!constructor}
+\indexlibrary{\idxcode{display_surface}!constructor}
 \begin{itemdecl}
+display_surface(int preferredWidth, int preferredHeight, 
+  experimental::io2d::format preferredFormat,
+  experimental::io2d::scaling scl = experimental::io2d::scaling::letterbox);
+display_surface(int preferredWidth, int preferredHeight, 
+  experimental::io2d::format preferredFormat, error_code& ec,
+  experimental::io2d::scaling scl = experimental::io2d::scaling::letterbox)
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{}.
+	Constructs an object of type \tcode{display_surface}.
 	
 	\pnum
 	\postconditions
 \end{itemdescr}
 
-\rSec1 [\iotwod..modifiers]{\tcode{} modifiers}
-
-\indexlibrary{\idxcode{}!\idxcode{}}
-\indexlibrary{\idxcode{}!\idxcode{}}
+\indexlibrary{\idxcode{display_surface}!constructor}
 \begin{itemdecl}
+display_surface(int preferredWidth, int preferredHeight, 
+  experimental::io2d::format preferredFormat,
+  int preferredDisplayWidth, int preferredDisplayHeight,
+  experimental::io2d::scaling scl = experimental::io2d::scaling::letterbox);
+display_surface(int preferredWidth, int preferredHeight, 
+  experimental::io2d::format preferredFormat,
+  int preferredDisplayWidth, int preferredDisplayHeight, error_code& ec,
+  experimental::io2d::scaling scl = experimental::io2d::scaling::letterbox) 
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{display_surface}.
+	
 	\pnum
 	\postconditions
-	
 \end{itemdescr}
 
-\rSec1 [\iotwod..observers]{\tcode{} observers}
+\rSec1 [\iotwod.displaysurface.modifiers]{\tcode{display_surface} modifiers}
 
-\indexlibrary{\idxcode{}!\idxcode{}}
-\indexlibrary{\idxcode{}!\idxcode{}}
+\indexlibrary{\idxcode{display_surface}!\idxcode{save}}
+\indexlibrary{\idxcode{save}!\idxcode{display_surface}}
 \begin{itemdecl}
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-
-\end{itemdescr}
-
-\rSec1 [\iotwod..member.ops] {\tcode{} member operators}
-
-\indexlibrary{\idxcode{}!\idxcode{}}
-\indexlibrary{\idxcode{}!\idxcode{}}
-\begin{itemdecl}
+    virtual void save() override;
+    virtual void save(error_code& ec) noexcept override;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
 	
 	\pnum
-	\returns
-	\tcode{*this}.
+	\postconditions
+	
 \end{itemdescr}
 
-\rSec1 [\iotwod..ops] {\tcode{} non-member operators}
-
-\indexlibrary{\idxcode{}!\idxcode{}}
-\indexlibrary{\idxcode{}!\idxcode{}}
+\indexlibrary{\idxcode{display_surface}!\idxcode{restore}}
+\indexlibrary{\idxcode{restore}!\idxcode{display_surface}}
 \begin{itemdecl}
+    virtual void restore() override;
+    virtual void restore(error_code& ec) noexcept override;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	
+	\pnum
+	\postconditions
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{draw_fn}}
+\indexlibrary{\idxcode{draw_fn}!\idxcode{display_surface}}
+\begin{itemdecl}
+    void draw_fn(const function<void(display_surface& sfc)>& fn);
+    void draw_fn(const function<void(display_surface& sfc)>& fn,
+      error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	
+	\pnum
+	\postconditions
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{size_change_fn}}
+\indexlibrary{\idxcode{size_change_fn}!\idxcode{display_surface}}
+\begin{itemdecl}
+    void size_change_fn(const function<void(display_surface& sfc)>& fn);
+    void size_change_fn(const function<void(display_surface& sfc)>& fn,
+      error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	
+	\pnum
+	\postconditions
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{width}}
+\indexlibrary{\idxcode{width}!\idxcode{display_surface}}
+\begin{itemdecl}
+    void width(int w);
+    void width(int w, error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	
+	\pnum
+	\postconditions
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{height}}
+\indexlibrary{\idxcode{height}!\idxcode{display_surface}}
+\begin{itemdecl}
+    void height(int h);
+    void height(int h, error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	
+	\pnum
+	\postconditions
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{display_width}}
+\indexlibrary{\idxcode{display_width}!\idxcode{display_surface}}
+\begin{itemdecl}
+    void display_width(int w);
+    void display_width(int w, error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	
+	\pnum
+	\postconditions
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{display_height}}
+\indexlibrary{\idxcode{display_height}!\idxcode{display_surface}}
+\begin{itemdecl}
+    void display_height(int h);
+    void display_height(int h, error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	
+	\pnum
+	\postconditions
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{dimensions}}
+\indexlibrary{\idxcode{dimensions}!\idxcode{display_surface}}
+\begin{itemdecl}
+    void dimensions(int w, int h);
+    void dimensions(int w, int h, error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	
+	\pnum
+	\postconditions
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{display_dimensions}}
+\indexlibrary{\idxcode{display_dimensions}!\idxcode{display_surface}}
+\begin{itemdecl}
+    void display_dimensions(int dw, int dh);
+    void display_dimensions(int dw, int dh, error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	
+	\pnum
+	\postconditions
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{scaling}}
+\indexlibrary{\idxcode{scaling}!\idxcode{display_surface}}
+\begin{itemdecl}
+    void scaling(experimental::io2d::scaling scl) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	
+	\pnum
+	\postconditions
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{user_scaling_fn}}
+\indexlibrary{\idxcode{user_scaling_fn}!\idxcode{display_surface}}
+\begin{itemdecl}
+    void user_scaling_fn(const function<experimental::io2d::rectangle(
+      const display_surface&, bool&)>& fn);
+    void user_scaling_fn(const function<experimental::io2d::rectangle(
+      const display_surface&, bool&)>& fn, error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	
+	\pnum
+	\postconditions
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{reset_letterbox_brush}}
+\indexlibrary{\idxcode{reset_letterbox_brush}!\idxcode{display_surface}}
+\begin{itemdecl}
+    void reset_letterbox_brush() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	
+	\pnum
+	\postconditions
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{letterbox_brush}}
+\indexlibrary{\idxcode{letterbox_brush}!\idxcode{display_surface}}
+\begin{itemdecl}
+    void letterbox_brush(const rgba_color& c);
+    void letterbox_brush(const rgba_color& c, error_code& ec) noexcept;
+    void letterbox_brush(const experimental::io2d::brush& b);
+    void letterbox_brush(const experimental::io2d::brush& b, error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	
+	\pnum
+	\postconditions
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{join}}
+\indexlibrary{\idxcode{join}!\idxcode{display_surface}}
+\begin{itemdecl}
+    int join();
+    int join(error_code& ec);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	
+	\pnum
+	\postconditions
+	
+\end{itemdescr}
+
+\rSec1 [\iotwod.displaysurface.observers]{\tcode{display_surface} observers}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{format}}
+\indexlibrary{\idxcode{format}!\idxcode{display_surface}}
+\begin{itemdecl}
+    experimental::io2d::format format() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{width}}
+\indexlibrary{\idxcode{width}!\idxcode{display_surface}}
+\begin{itemdecl}
+    int width() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{height}}
+\indexlibrary{\idxcode{height}!\idxcode{display_surface}}
+\begin{itemdecl}
+    int height() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{display_width}}
+\indexlibrary{\idxcode{display_width}!\idxcode{display_surface}}
+\begin{itemdecl}
+    int display_width() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{display_height}}
+\indexlibrary{\idxcode{display_height}!\idxcode{display_surface}}
+\begin{itemdecl}
+    int display_height() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{dimensions}}
+\indexlibrary{\idxcode{dimensions}!\idxcode{display_surface}}
+\begin{itemdecl}
+    tuple<int, int> dimensions() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{display_dimensions}}
+\indexlibrary{\idxcode{display_dimensions}!\idxcode{display_surface}}
+\begin{itemdecl}
+    tuple<int, int> display_dimensions() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{scaling}}
+\indexlibrary{\idxcode{scaling}!\idxcode{display_surface}}
+\begin{itemdecl}
+    experimental::io2d::scaling scaling() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{user_scaling_fn}}
+\indexlibrary{\idxcode{user_scaling_fn}!\idxcode{display_surface}}
+\begin{itemdecl}
+    const function<experimental::io2d::rectangle(const display_surface&,
+      bool&)>& user_scaling_fn() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{letterbox_brush}}
+\indexlibrary{\idxcode{letterbox_brush}!\idxcode{display_surface}}
+\begin{itemdecl}
+    experimental::io2d::brush letterbox_brush() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	
 \end{itemdescr}

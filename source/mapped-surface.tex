@@ -1,0 +1,160 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.mappedsurface] {Class \tcode{mapped_surface}}
+
+\rSec1 [\iotwod.mappedsurface.synopsis] {\tcode{mapped_surface} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class mapped_surface {
+  public:
+    // \ref{\iotwod.mappedsurface.cons}, construct/copy/move/destroy:
+    mapped_surface() = delete;
+    mapped_surface(const mapped_surface&) = delete;
+    mapped_surface& operator=(const mapped_surface&) = delete;
+    mapped_surface(mapped_surface&& other) = delete;
+    mapped_surface& operator=(mapped_surface&& other) = delete;
+    ~mapped_surface();
+    
+    // \ref{\iotwod.mappedsurface.modifiers}, modifiers:
+    void commit_changes();
+    void commit_changes(::std::error_code& ec) noexcept;
+    unsigned char* data();
+    unsigned char* data(::std::error_code& ec) noexcept;
+    
+    // \ref{\iotwod.mappedsurface.observers}, observers:
+    const unsigned char* data() const;
+    const unsigned char* data(::std::error_code& ec) const noexcept;
+    experimental::io2d::format format() const noexcept;
+    int width() const noexcept;
+    int height() const noexcept;
+    int stride() const noexcept;
+  };
+} } } }
+\end{codeblock}
+
+\rSec1 [\iotwod.mappedsurface.intro] {\tcode{mapped_surface} Description}
+
+\pnum
+\indexlibrary{\idxcode{mapped_surface}}
+The class \tcode{mapped_surface} describes .
+
+\rSec1 [\iotwod.mappedsurface.cons] {\tcode{mapped_surface} constructors and assignment operators}
+
+\indexlibrary{\idxcode{mapped_surface}!destructor}
+\begin{itemdecl}
+    ~mapped_surface();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Destroys an object of type \tcode{mapped_surface}. 
+	
+	\pnum
+	\remarks
+	Implementations shall not commit any uncommitted changes.
+		
+\end{itemdescr}
+
+\rSec1 [\iotwod.mappedsurface.modifiers]{\tcode{mapped_surface} modifiers}
+
+\indexlibrary{\idxcode{mapped_surface}!\idxcode{commit_changes}}
+\indexlibrary{\idxcode{commit_changes}!\idxcode{mapped_surface}}
+\begin{itemdecl}
+    void commit_changes();
+    void commit_changes(::std::error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{mapped_surface}!\idxcode{data}}
+\indexlibrary{\idxcode{data}!\idxcode{mapped_surface}}
+\begin{itemdecl}
+    unsigned char* data();
+    unsigned char* data(::std::error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\postconditions
+	
+\end{itemdescr}
+
+\rSec1 [\iotwod.mappedsurface.observers]{\tcode{mapped_surface} observers}
+
+\indexlibrary{\idxcode{mapped_surface}!\idxcode{data}}
+\indexlibrary{\idxcode{data}!\idxcode{mapped_surface}}
+\begin{itemdecl}
+    const unsigned char* data() const;
+    const unsigned char* data(::std::error_code& ec) const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{mapped_surface}!\idxcode{format}}
+\indexlibrary{\idxcode{format}!\idxcode{mapped_surface}}
+\begin{itemdecl}
+    experimental::io2d::format format() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	The pixel format of the mapped surface.
+	
+	\pnum
+	\remarks
+	If the mapped surface is invalid, this function shall return the value of \tcode{experimental::io2d::format::invalid}.
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{mapped_surface}!\idxcode{width}}
+\indexlibrary{\idxcode{width}!\idxcode{mapped_surface}}
+\begin{itemdecl}
+    int width() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	The number of pixels per horizontal line of the mapped surface.
+	
+	\pnum
+	\remarks
+	This function shall return the value \tcode{0} if \tcode{format() == experimental::io2d::format::unknown}.
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{mapped_surface}!\idxcode{height}}
+\indexlibrary{\idxcode{height}!\idxcode{mapped_surface}}
+\begin{itemdecl}
+    int height() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	The number of horizontal lines of pixels in the mapped surface.
+	
+	\pnum
+	\remarks
+	This function shall return the value \tcode{0} if \tcode{format() == experimental::io2d::format::unknown}.
+	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{mapped_surface}!\idxcode{stride}}
+\indexlibrary{\idxcode{stride}!\idxcode{mapped_surface}}
+\begin{itemdecl}
+    int stride() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	The length, in bytes, of a horizontal line of the mapped surface. This value is at least as large as the width in pixels of a horizontal line multiplied by the number of bytes per pixel but may be larger as a result of padding.
+	
+	\pnum
+	\remarks
+	This function shall return the value \tcode{0} if \tcode{format() == experimental::io2d::format::unknown}.
+	
+\end{itemdescr}

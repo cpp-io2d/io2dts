@@ -1,49 +1,71 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.] {Class \tcode{}}
+\rSec0 [\iotwod.imagesurface] {Class \tcode{image_surface}}
 
-\rSec1 [\iotwod..synopsis] {\tcode{} synopsis}
+\rSec1 [\iotwod.imagesurface.synopsis] {\tcode{image_surface} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-    // \ref{\iotwod..cons}, construct/copy/move/destroy:
-
-    // \ref{\iotwod..modifiers}, modifiers:
+  class image_surface : public surface {
+  public:
+    // \ref{\iotwod.imagesurface.cons}, construct/copy/move/destroy:
+    image_surface() = delete;
+    image_surface(const image_surface&) = delete;
+    image_surface& operator=(const image_surface&) = delete;
+    image_surface(image_surface&& other) noexcept;
+    image_surface& operator=(image_surface&& other) noexcept;
+    image_surface(experimental::io2d::format fmt, int width, int height);
+    image_surface(experimental::io2d::format fmt, int width, int height, 
+      error_code& ec) noexcept;
+    image_surface(vector<unsigned char>& data, experimental::io2d::format fmt,
+      int width, int height);
+    image_surface(vector<unsigned char>& data, experimental::io2d::format fmt,
+      int width, int height, error_code& ec) noexcept;
+    image_surface(const surface& other, experimental::io2d::format fmt, int width,
+      int height);
+    image_surface(const surface& other, experimental::io2d::format fmt, int width,
+      int height, error_code& ec) noexcept;
+    virtual ~image_surface();
     
-    // \ref{\iotwod..observers}, observers:
+    // \ref{\iotwod.imagesurface.modifiers}, modifiers:
+    void data(const vector<unsigned char>& data);
+    void data(const vector<unsigned char>& data, error_code& ec) noexcept;
+    vector<unsigned char> data();
+    vector<unsigned char> data(error_code& ec) noexcept;
     
-    // \ref{\iotwod..member.ops}, member operators:
-    
-// \expos
-  
-  // \ref{\iotwod..ops}, non-member operators:
+    // \ref{\iotwod.imagesurface.observers}, observers:
+    experimental::io2d::format format() const noexcept;
+    int width() const noexcept;
+    int height() const noexcept;
+    int stride() const noexcept;
+  };
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod..intro] {\tcode{} Description}
+\rSec1 [\iotwod.imagesurface.intro] {\tcode{image_surface} Description}
 
 \pnum
-\indexlibrary{\idxcode{}}
-The class \tcode{} describes .
+\indexlibrary{\idxcode{image_surface}}
+The class \tcode{image_surface} describes .
 
-\rSec1 [\iotwod..cons] {\tcode{} constructors and assignment operators}
+\rSec1 [\iotwod.imagesurface.cons] {\tcode{image_surface} constructors and assignment operators}
 
-\indexlibrary{\idxcode{}!constructor}
+\indexlibrary{\idxcode{image_surface}!constructor}
 \begin{itemdecl}
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{}.
+	Constructs an object of type \tcode{image_surface}.
 	
 	\pnum
 	\postconditions
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod..modifiers] {\tcode{} modifiers}
+\rSec1 [\iotwod.imagesurface.modifiers] {\tcode{image_surface} modifiers}
 
-\indexlibrary{\idxcode{}!\idxcode{}}
-\indexlibrary{\idxcode{}!\idxcode{}}
+\indexlibrary{\idxcode{image_surface}!\idxcode{}}
+\indexlibrary{\idxcode{}!\idxcode{image_surface}}
 \begin{itemdecl}
 \end{itemdecl}
 \begin{itemdescr}
@@ -52,40 +74,14 @@ The class \tcode{} describes .
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod..observers] {\tcode{} observers}
+\rSec1 [\iotwod.imagesurface.observers] {\tcode{image_surface} observers}
 
-\indexlibrary{\idxcode{}!\idxcode{}}
-\indexlibrary{\idxcode{}!\idxcode{}}
+\indexlibrary{\idxcode{image_surface}!\idxcode{}}
+\indexlibrary{\idxcode{}!\idxcode{image_surface}}
 \begin{itemdecl}
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
 
-\end{itemdescr}
-
-\rSec1 [\iotwod..member.ops] {\tcode{} member operators}
-
-\indexlibrary{\idxcode{}!\idxcode{}}
-\indexlibrary{\idxcode{}!\idxcode{}}
-\begin{itemdecl}
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	
-	\pnum
-	\returns
-	\tcode{*this}.
-\end{itemdescr}
-
-\rSec1 [\iotwod..ops] {\tcode{} non-member operators}
-
-\indexlibrary{\idxcode{}!\idxcode{}}
-\indexlibrary{\idxcode{}!\idxcode{}}
-\begin{itemdecl}
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
 \end{itemdescr}

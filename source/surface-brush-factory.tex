@@ -1,90 +1,147 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.] {Class \tcode{}}
+\rSec0 [\iotwod.surfacebrushfact] {Class \tcode{surface_brush_factory}}
 
-\rSec1 [\iotwod..synopsis] {\tcode{} synopsis}
+\rSec1 [\iotwod.surfacebrushfact.synopsis] {\tcode{surface_brush_factory} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-    // \ref{\iotwod..cons}, construct/copy/move/destroy:
-
-    // \ref{\iotwod..modifiers}, modifiers:
+  class surface_brush_factory {
+  public:
+    // \ref{\iotwod.surfacebrushfact.cons}, construct/copy/move/destroy:
+    surface_brush_factory() noexcept;
+    surface_brush_factory(const surface_brush_factory&) = delete;
+    surface_brush_factory& operator=(const surface_brush_factory&) = delete;
+    surface_brush_factory(surface_brush_factory&& other) noexcept;
+    surface_brush_factory& operator=(surface_brush_factory&& other) noexcept;
+    surface_brush_factory(experimental::io2d::surface& s);
+    surface_brush_factory(experimental::io2d::surface& s, error_code& ec) noexcept;
     
-    // \ref{\iotwod..observers}, observers:
+    // \ref{\iotwod.surfacebrushfact.modifiers}, modifiers:
+    image_surface surface(experimental::io2d::surface& s);
+    void surface(experimental::io2d::surface& s, image_surface& oldSurface, error_code& ec) noexcept;
+    void surface(experimental::io2d::surface& s, error_code& ec) noexcept;
     
-    // \ref{\iotwod..member.ops}, member operators:
+    // \ref{\iotwod.surfacebrushfact.observers}, observers:
+    bool has_surface() const noexcept;
+    const image_surface& surface() const;
     
-// \expos
-  
-  // \ref{\iotwod..ops}, non-member operators:
+  private:
+    unique_ptr<image_surface> _Surface; // \expos
+  };
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod..intro] {\tcode{} Description}
+\rSec1 [\iotwod.surfacebrushfact.intro] {\tcode{surface_brush_factory} Description}
 
 \pnum
-\indexlibrary{\idxcode{}}
-The class \tcode{} describes .
+\indexlibrary{\idxcode{surface_brush_factory}}
+The class \tcode{surface_brush_factory} describes a mutable factory for creating \tcode{brush} objects with a \tcode{surface} object describing its color and alpha data.
 
-\rSec1 [\iotwod..cons] {\tcode{} constructors and assignment operators}
+\rSec1 [\iotwod.surfacebrushfact.cons] {\tcode{surface_brush_factory} constructors and assignment operators}
 
-\indexlibrary{\idxcode{}!constructor}
+\indexlibrary{\idxcode{surface_brush_factory}!constructor}
 \begin{itemdecl}
+    surface_brush_factory(experimental::io2d::surface& s);
+    surface_brush_factory(experimental::io2d::surface& s, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{}.
+	Constructs an object of type \tcode{surface_brush_factory}. Calls \tcode{s.flush()} then creates a copy of \tcode{s} and stores it as the surface which will be painted by a brush formed using \tcode{*this}.
 	
 	\pnum
 	\postconditions
-\end{itemdescr}
-
-\rSec1 [\iotwod..modifiers]{\tcode{} modifiers}
-
-\indexlibrary{\idxcode{}!\idxcode{}}
-\indexlibrary{\idxcode{}!\idxcode{}}
-\begin{itemdecl}
-\end{itemdecl}
-\begin{itemdescr}
+	\tcode{_Surface} contains a valid pointer to an \tcode{image_surface} object with the same width, height, \tcode{format} as \tcode{s} and a copy of the visual data of \tcode{s} as raster graphics data.
+	
 	\pnum
-	\postconditions
+	\throws
+	As specified in Error reporting (\ref{\iotwod.err.report}).
+	
+	\pnum
+	\remarks
+	Excluding any effects of calling \tcode{s.flush()}, \tcode{s} shall not be modified.
+	
+	\pnum
+	\errors
+	Any error condition documented for \tcode{surface::flush}.
+	
+	\pnum
+	\tcode{errc::invalid_argument} if \tcode{!s.has_surface_resource()}.
+	
+	\pnum
+	\tcode{io2d_error::surface_finished} if \tcode{s.is_finished()}.
+	
+	\pnum
+	\tcode{errc::not_enough_memory} if an attempted memory allocation failed.
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod..observers]{\tcode{} observers}
+\rSec1 [\iotwod.surfacebrushfact.modifiers]{\tcode{surface_brush_factory} modifiers}
 
-\indexlibrary{\idxcode{}!\idxcode{}}
-\indexlibrary{\idxcode{}!\idxcode{}}
+\indexlibrary{\idxcode{surface_brush_factory}!\idxcode{surface}}
+\indexlibrary{\idxcode{surface}!\idxcode{surface_brush_factory}}
 \begin{itemdecl}
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-
-\end{itemdescr}
-
-\rSec1 [\iotwod..member.ops] {\tcode{} member operators}
-
-\indexlibrary{\idxcode{}!\idxcode{}}
-\indexlibrary{\idxcode{}!\idxcode{}}
-\begin{itemdecl}
+    void surface(experimental::io2d::surface& s);
+    void surface(experimental::io2d::surface& s, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
+	Calls \tcode{s.flush()} then creates a copy of \tcode{s} and stores it as the surface which will be painted by a brush formed using \tcode{*this}. The stored surface shall be accessible as an object of type \tcode{image_surface}.
 	
 	\pnum
-	\returns
-	\tcode{*this}.
+	\postconditions
+	\tcode{_Surface} contains a valid pointer to an \tcode{image_surface} object with the same width, height, \tcode{format} as \tcode{s} and a copy of the visual data of \tcode{s} as raster graphics data.
+
+	\pnum
+	\throws
+	As specified in Error reporting (\ref{\iotwod.err.report}).
+
+	\pnum
+	\remarks
+	Excluding the effects of calling \tcode{s.flush()}, \tcode{s} shall not be modified.
+	
+	\pnum
+	\errors
+	Any error condition documented for \tcode{surface::flush} (\ref{\iotwod.surface}).
+	
+	\pnum
+	\tcode{errc::invalid_argument} if \tcode{!s.has_surface_resource()}.
+	
+	\pnum
+	\tcode{io2d_error::surface_finished} if \tcode{s.is_finished()}.
+
+	\pnum
+	\tcode{errc::not_enough_memory} if an attempted memory allocation failed.
+
 \end{itemdescr}
 
-\rSec1 [\iotwod..ops] {\tcode{} non-member operators}
+\rSec1 [\iotwod.surfacebrushfact.observers]{\tcode{surface_brush_factory} observers}
 
-\indexlibrary{\idxcode{}!\idxcode{}}
-\indexlibrary{\idxcode{}!\idxcode{}}
+\indexlibrary{\idxcode{surface_brush_factory}!\idxcode{has_surface}}
+\indexlibrary{\idxcode{has_surface}!\idxcode{surface_brush_factory}}
 \begin{itemdecl}
+    bool has_surface() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
+	\tcode{_Surface.get != nullptr}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{surface_brush_factory}!\idxcode{surface}}
+\indexlibrary{\idxcode{surface}!\idxcode{surface_brush_factory}}
+\begin{itemdecl}
+    const image_surface& surface() const;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\preconditions
+	\tcode{has_surface() == true}.
+	
+	\pnum
+	\returns
+	\tcode{_Surface.get()}.
+	
 \end{itemdescr}
