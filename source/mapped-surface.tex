@@ -17,13 +17,15 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     
     // \ref{\iotwod.mappedsurface.modifiers}, modifiers:
     void commit_changes();
-    void commit_changes(::std::error_code& ec) noexcept;
+    void commit_changes(error_code& ec) noexcept;
+    void commit_changes(const rectangle& area);
+    void commit_changes(const rectangle& area, error_code& ec) noexcept;
     unsigned char* data();
-    unsigned char* data(::std::error_code& ec) noexcept;
+    unsigned char* data(error_code& ec) noexcept;
     
     // \ref{\iotwod.mappedsurface.observers}, observers:
     const unsigned char* data() const;
-    const unsigned char* data(::std::error_code& ec) const noexcept;
+    const unsigned char* data(error_code& ec) const noexcept;
     experimental::io2d::format format() const noexcept;
     int width() const noexcept;
     int height() const noexcept;
@@ -36,7 +38,22 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \pnum
 \indexlibrary{\idxcode{mapped_surface}}
-The class \tcode{mapped_surface} describes .
+The \tcode{mapped_surface} class provides access to inspect and modify the pixel data of a \tcode{surface} object's underlying graphics resource or a subsection thereof, depending on the arguments to \tcode{surface::map}.
+
+\pnum
+The pixel data is presented as an array in the form of a pointer to (possibly \tcode{const}) \tcode{unsigned char}.
+
+\pnum
+The actual format of the pixel data depends on the \tcode{format} enumerator returned by calling \tcode{mapped_surface::format} and is native-endian. For more information, see the description of the \tcode{format} enum class (\ref{\iotwod.format}).
+
+\pnum
+The pixel data array is presented as a series of horizontal rows of pixels with row \tcode{0} being the top row of pixels of the underlying graphics resource and the bottom row being the row at \tcode{mapped_surface::height() - 1}.
+
+\pnum
+Each horizontal row of pixels begins with the leftmost pixel and proceeds right to \tcode{mapped_surface::width() - 1}.
+
+\pnum
+The width in bytes of each horizontal row is provided by \tcode{mapped_surface::stride}. This value may be larger than the result of multiplying the width in pixels of each horizontal row by the size in bytes of the pixel's format, most commonly as a result of alignment issues.
 
 \rSec1 [\iotwod.mappedsurface.cons] {\tcode{mapped_surface} constructors and assignment operators}
 
@@ -61,7 +78,7 @@ The class \tcode{mapped_surface} describes .
 \indexlibrary{\idxcode{commit_changes}!\idxcode{mapped_surface}}
 \begin{itemdecl}
     void commit_changes();
-    void commit_changes(::std::error_code& ec) noexcept;
+    void commit_changes(error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -73,7 +90,7 @@ The class \tcode{mapped_surface} describes .
 \indexlibrary{\idxcode{data}!\idxcode{mapped_surface}}
 \begin{itemdecl}
     unsigned char* data();
-    unsigned char* data(::std::error_code& ec) noexcept;
+    unsigned char* data(error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -87,7 +104,7 @@ The class \tcode{mapped_surface} describes .
 \indexlibrary{\idxcode{data}!\idxcode{mapped_surface}}
 \begin{itemdecl}
     const unsigned char* data() const;
-    const unsigned char* data(::std::error_code& ec) const noexcept;
+    const unsigned char* data(error_code& ec) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum

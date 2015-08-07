@@ -9,8 +9,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     // \ref{\iotwod.rgbacolor.cons}, construct/copy/move/destroy:
   	rgba_color() noexcept;
   	rgba_color(double r, double g, double b, double a = 1.0);
-  	rgba_color(double r, double g, double b, ::std::error_code& ec) noexcept;
-  	rgba_color(double r, double g, double b, double a, ::std::error_code& ec) noexcept;
+  	rgba_color(double r, double g, double b, error_code& ec) noexcept;
+  	rgba_color(double r, double g, double b, double a, error_code& ec) noexcept;
   	rgba_color(const rgba_color& c) noexcept;
   	rgba_color& operator=(const rgba_color& c) noexcept;
   	rgba_color(rgba_color&& c) noexcept;
@@ -18,13 +18,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   	
     // \ref{\iotwod.rgbacolor.modifiers}, modifiers:
     void r(double val);
-    void r(double val, ::std::error_code& ec) noexcept;
+    void r(double val, error_code& ec) noexcept;
     void g(double val);
-    void g(double val, ::std::error_code& ec) noexcept;
+    void g(double val, error_code& ec) noexcept;
     void b(double val);
-    void b(double val, ::std::error_code& ec) noexcept;
+    void b(double val, error_code& ec) noexcept;
     void a(double val);
-    void a(double val, ::std::error_code& ec) noexcept;
+    void a(double val, error_code& ec) noexcept;
     
     // \ref{\iotwod.rgbacolor.observers}, observers:
     double r() const noexcept;
@@ -245,8 +245,8 @@ The type predefines a set of named colors, for which each channel is an unsigned
 \indexlibrary{\idxcode{rgba_color}!constructor}
 \begin{itemdecl}
 	rgba_color(double r, double g, double b, double a = 1.0);
-  	rgba_color(double r, double g, double b, ::std::error_code& ec) noexcept;
-  	rgba_color(double r, double g, double b, double a, ::std::error_code& ec) noexcept;
+  	rgba_color(double r, double g, double b, error_code& ec) noexcept;
+  	rgba_color(double r, double g, double b, double a, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum

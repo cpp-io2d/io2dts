@@ -37,7 +37,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     matrix_2d& shear_x(double factor) noexcept;
     matrix_2d& shear_y(double factor) noexcept;
     matrix_2d& invert();
-    matrix_2d& invert(::std::error_code& ec) noexcept;
+    matrix_2d& invert(error_code& ec) noexcept;
     
     // \ref{\iotwod.\matrixtwod.observers}, observers:
     double m00() const noexcept;
@@ -47,7 +47,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     double m20() const noexcept;
     double m21() const noexcept;
     double determinant() const;
-    double determinant(::std::error_code& ec) const noexcept;
+    double determinant(error_code& ec) const noexcept;
     vector_2d transform_distance(const vector_2d& dist) const noexcept;
     vector_2d transform_point(const vector_2d& pt) const noexcept;
     

@@ -6,6 +6,8 @@
 \begin{codeblock}
 
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  typedef tuple<vector<double>, double> dashes;
+
   enum class io2d_error;
   enum class antialias;
   enum class content;
@@ -24,7 +26,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   enum class scaling;
 
   class io2d_error_category;
-  const ::std::error_category& io2d_category() noexcept;
+  const error_category& io2d_category() noexcept;
 
   class rectangle;
 
@@ -90,8 +92,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   
   int format_stride_for_width(format fmt, int width);
   display_surface make_display_surface(int pw, int ph, format pf,
-    scaling scl = scaling::default_scaling);
-  surface make_surface(@\impdef@) @\impdef@;
+    scaling scl = scaling::letterbox);
   image_surface make_image_surface(format fmt, int width, int height);
 } } } }
 

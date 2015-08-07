@@ -99,7 +99,7 @@ ending point
 \enternote
 This is a the definition of a cubic B\'ezier curve; other B\'eziers curve types 
 with different numbers of control points exist but are not relevant in this 
-\documenttypename.
+\documenttypename{}.
 \exitnote
 
 \indexdefn{channel}
@@ -113,6 +113,19 @@ a path geometry with one or more path segments where the initial path segment's 
 \indexdefn{color stop}
 \definition{color stop}{\iotwod.general.defns.colorstop}
 a tuple value composed of a floating point offset value in the range $[0, 1]$ and a color value
+
+\indexdefn{compose}
+\definition{compose}{\iotwod.general.defns.compose}
+to combine a source of raster graphics data with a raster graphics data graphics resource in the manner specified by a composition algorithm and store the result to the graphics resource
+\enternote
+The 'source of raster graphics' data may be the results of rendering or may be another raster graphics data graphics resource.
+
+Where a statement in the form 'compose X and Y' is encountered, X is the 'source of raster graphics data' and Y is the 'raster graphics data graphics resource'.
+\exitnote
+
+\indexdefn{composition algorithm}
+\definition{composition algorithm}{\iotwod.general.defns.compositionalgorithm}
+an algorithm that combines a source pixel and a destination pixel producing a result that has the same pixel format as the destination pixel
 
 \indexdefn{coordinate space}
 \definition{coordinate space}{\iotwod.general.defns.coordinatespace}
@@ -152,20 +165,29 @@ It is possible for the initial path segment and final path segment to be the sam
 a well-defined visual data format composed of one or more channels representing 
 color data or transparency data
 
-\indexdefn{glyph}
-\definition{glyph}{\iotwod.general.defns.glyph}
-a ***FIXME***
+\indexdefn{graphics data}
+\definition{graphics data}{\iotwod.general.defns.graphicsdata}
+<graphics data> visual data stored in an unspecified form
 
 \indexdefn{graphics data}
 \indexdefn{graphics data!raster}
 \definition{graphics data}{\iotwod.general.defns.graphics.raster}
 <raster graphics data> visual data stored as a rectangular grid of pixels
 
-\indexdefn{graphics data}
-\indexdefn{graphics data!vector}
-\definition{graphics data}{\iotwod.general.defns.graphics.vector}
-<vector graphics data> visual data stored as geometrical data
+\indexdefn{graphics resource}
+\definition{graphics resource}{\iotwod.general.defns.graphicsresource}
+an object used by an implementation to implement the requirements of this \documenttypename{}
+\enternote
+By its definition a graphics resource is an implementation detail. Typically it will be something like a graphics device, a render target, or some other graphics subsystem object. However it is also perfectly acceptable for it to be, e.g., an aggregate composed of multiple graphics subsystem objects which, together, allow the implementation to provide the required functionality.
 
+This \documenttypename{} only imposes requirements involving graphics resources in a few instances. Where it does so, it only specifies that certain behavior is required and makes no imposition on how the required behavior should be implemented.
+
+A graphics resource is only directly accessible if an implementation chooses to expose it by providing a native handle (\ref{\iotwod.req.native}).
+\exitnote
+
+\indexdefn{graphics state data}
+\definition{graphics state data}{\iotwod.general.defns.graphicsstatedata}
+data which specify how some part of the process of rendering or rasterizing shall be performed in part or in whole
 \indexdefn{initial path segment}
 \definition{initial path segment}{\iotwod.general.defns.initialpathsegment}
 a path segment whose start point is not defined as being the end point of another path segment
@@ -184,13 +206,13 @@ areas outside of the  ***FIXME***
 
 \indexdefn{native path geometry}
 \definition{native path geometry}{\iotwod.general.defns.nativepathgeometry}
-the representation of a path geometry in the form used by the underlying rendering technology
+a graphics resource representing a path geometry
 
 \indexdefn{normalize}
 \definition{normalize}{\iotwod.general.defns.normalize}
 to map a closed set of evenly spaced values in the range $[0, x]$ to an evenly spaced sequence of floating point values in the range $[0, 1]$
 \enternote
-The definition of normalize given is the definition for normalizing unsigned input. Signed normalization, i.e. the mapping of a closed set of evenly spaced values in the range $[-x, x)$ to an evenly spaced sequence of floating point values in the range $[-1, 1]$, also exists but is not used in this \documenttypename.
+The definition of normalize given is the definition for normalizing unsigned input. Signed normalization, i.e. the mapping of a closed set of evenly spaced values in the range $[-x, x)$ to an evenly spaced sequence of floating point values in the range $[-1, 1]$, also exists but is not used in this \documenttypename{}.
 \exitnote
 
 \indexdefn{open path geometry}
@@ -238,17 +260,12 @@ the alpha channel value.
 
 \indexdefn{render}
 \definition{render}{\iotwod.general.defns.render}
-combine source data and destination data in accordance with state data to 
-create result data that replaces the original destination data
-\enternote
-Depending on the compositing operator and the clip, two of the pieces of state 
-data, there may not be any change to the original destination data. 
-\exitnote
+to transform path geometries or text into raster graphics data in the manner specified by a set of graphics state data 
 
-\indexdefn{sampling}
-\definition{sampling}{\iotwod.general.defns.sampling}
-the transformation of continuous or discrete signals to discrete 
-data by application of a filter
+\indexdefn{sample}
+\definition{sample}{\iotwod.general.defns.sample}
+to transform continuous or discrete signals to discrete data by applying
+a filter
 
 \indexdefn{signal}
 \indexdefn{signal!continuous}

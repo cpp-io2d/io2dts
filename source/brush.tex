@@ -25,19 +25,19 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     brush(surface_brush_factory& f, error_code& ec) noexcept;
 
     // \ref{\iotwod.brush.modifiers}, modifiers:
-    void extend(::std::experimental::io2d::extend e) noexcept;
-    void filter(::std::experimental::io2d::filter f) noexcept;
+    void extend(experimental::io2d::extend e) noexcept;
+    void filter(experimental::io2d::filter f) noexcept;
     void matrix(const matrix_2d& m) noexcept;
 
     // \ref{\iotwod.brush.observers}, observers:
-    ::std::experimental::io2d::extend extend() const noexcept;
-    ::std::experimental::io2d::filter filter() const noexcept;
+    experimental::io2d::extend extend() const noexcept;
+    experimental::io2d::filter filter() const noexcept;
     matrix_2d matrix() const noexcept;
     brush_type type() const noexcept;
 
   private:
-    ::std::experimental::io2d::extend _Extend; // \expos
-    ::std::experimental::io2d::filter _Filter; // \expos
+    experimental::io2d::extend _Extend; // \expos
+    experimental::io2d::filter _Filter; // \expos
     matrix_2d _Matrix;                         // \expos
     brush_type _Brush_type;                    // \expos
   };
@@ -306,7 +306,7 @@ For the same reason as explained in the example above, if you wish to translate 
 \indexlibrary{\idxcode{brush}!\idxcode{extend}}
 \indexlibrary{\idxcode{extend}!\idxcode{brush}}
 \begin{itemdecl}
-    void extend(::std::experimental::io2d::extend e) noexcept;
+    void extend(experimental::io2d::extend e) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -322,7 +322,7 @@ For the same reason as explained in the example above, if you wish to translate 
 \indexlibrary{\idxcode{brush}!\idxcode{filter}}
 \indexlibrary{\idxcode{filter}!\idxcode{brush}}
 \begin{itemdecl}
-    void filter(::std::experimental::io2d::filter f) noexcept;
+    void filter(experimental::io2d::filter f) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -356,7 +356,7 @@ For the same reason as explained in the example above, if you wish to translate 
 \indexlibrary{\idxcode{brush}!\idxcode{}}
 \indexlibrary{\idxcode{}!\idxcode{brush}}
 \begin{itemdecl}
-    ::std::experimental::io2d::extend extend() const noexcept;
+    experimental::io2d::extend extend() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -368,7 +368,7 @@ For the same reason as explained in the example above, if you wish to translate 
 \indexlibrary{\idxcode{brush}!\idxcode{}}
 \indexlibrary{\idxcode{}!\idxcode{brush}}
 \begin{itemdecl}
-    ::std::experimental::io2d::filter filter() const noexcept;
+    experimental::io2d::filter filter() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum

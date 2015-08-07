@@ -5,10 +5,7 @@
 Summary}
 
 \pnum
-The \tcode{compositing_operator} enum class determines how drawing operations 
-process the source (input) content and the existing destination content to 
-compose the final result content that will replace the original destination 
-content. See Table~\ref{tab:\iotwod.compositing.operator.meanings.basic}, 
+The \tcode{compositing_operator} enum class specifies composition algorithms. See Table~\ref{tab:\iotwod.compositing.operator.meanings.basic}, 
 Table~\ref{tab:\iotwod.compositing.operator.meanings.blend} and 
 Table~\ref{tab:\iotwod.compositing.operator.meanings.hsl} for the meaning of 
 each \tcode{compositing_operator} enumerator.
@@ -59,10 +56,13 @@ v1 {
 \rSec1 [\iotwod.compositing.operator.enumerators] {\tcode{compositing_operator} 
 Enumerators}
 \pnum
-The tables below specify the compositing operations by mathematical formula. 
-The formulas differentiate between three color channels (red, green, and blue) 
-and a transparency channel (alpha). Channel values are in the range $[0.0, 
-1.0]$.
+The tables below specifies the mathematical formula for each enumerator's composition algorithm. The formulas differentiate between three color channels (red, green, and blue) and an alpha channel (transparency). For all channels, valid channel values are in the range $[0.0, 1.0]$.
+
+\pnum
+Where a pixel format for a pixel has no alpha channel, the pixel format shall be treated as though it had an alpha channel with a value of $1.0$ for purposes of evaluating the formulas.
+
+\pnum
+Where a pixel format for a pixel has no color channels, the pixel format shall be treated as though it had a value of $0.0$ for all color channels for purposes of evaluating the formulas.
 
 \pnum
 The following symbols and specifiers are used:\\
@@ -109,13 +109,6 @@ same is true for $Dca$ and $Rca$.
 \pnum
 No space is left between a value and its channel specifiers. Channel 
 specifiers will be preceded by exactly one value symbol.
-%\enterexample
-%$Rca$ means the color and alpha channels of the result value. $Sc$ means the 
-%color channels of the source value. $Da$ means the alpha channel of the 
-%destination value. $R$ is invalid because it has no channel specifier. $c$ is 
-%invalid because it is not attached to a value symbol. $RSa$ is invalid because 
-%there are two value symbols preceding the channel specifier.
-%\exitexample
 
 \pnum
 When performing an operation that involves evaluating the color 
@@ -123,55 +116,52 @@ channels, each color channel should be evaluated individually to produce its
 own value.
 
 \pnum
-The basic enumerators specify a value for Bounding. This value may be Bound, 
-Unbound, or N/A.
+The basic enumerators specify a value for Bound. This value may be 'Yes', 
+'No', or 'N/A'.
 
 \pnum
-If the Bounding value is 'Bound", then the source is treated as though it is 
+If the Bound value is 'Yes', then the source is treated as though it is 
 also a mask. As such, only areas of the surface where the source would affect 
 the surface are altered. The remaining areas of the surface have the same color 
 value as before the compositing operation.
-\enternote
-If a clip is set then it will constrain the area of the surface that the 
-compositing operation will affect to be the intersection of the source and the 
-clip. If they do not intersect then no change will occur.
-\exitnote
 
 \pnum
-If the Bounding value is 'Unbound', then every area of the surface that is not 
+If the Bound value is 'No', then every area of the surface that is not 
 affected by the source will become transparent black. In effect, it is as 
 though the source was treated as being the same size as the destination surface 
 with every part of the source that does not already have a color value assigned 
 to it being treated as though it were transparent black. Application of the 
 formula with this precondition results in those areas evaluating to transparent 
 black such that evaluation can be bypassed due to the predetermined outcome.
-\enternote
-If a clip is set then only those areas of the surface that the are within the 
-clip will be affected by the compositing operation. Even if no part of the 
-source is within the clip, the operation will still set every area within the 
-clip to transparent black. Areas outside the clip are not modified.
-\exitnote
 
 \pnum
-If the Bounding value is 'N/A', the operation would have the same effect 
-regardless of whether it was treated as Bound or Unbound such that those 
-Bounding values are not applicable to the operation. An N/A formula when 
+If the Bound value is 'N/A', the operation would have the same effect 
+regardless of whether it was treated as 'Yes' or 'No' such that those 
+Bound values are not applicable to the operation. A 'N/A' formula when 
 applied to an area where the source does not provide a value will evaluate to 
 the original value of the destination even if the source is treated as having a 
 value there of transparent black. As such the result is the same as if the 
-source were treated as being a mask, i.e. Bound and Unbound treatment each 
+source were treated as being a mask, i.e. 'Yes' and 'No' treatment each 
 produce the same result in areas where the source does not have a value.
-\enternote
-If a clip is set then only those areas of the surface that the are within the 
-clip will be affected by the compositing operation.
-\exitnote
+
+\pnum
+If a clip is set and the Bound value is 'Yes' or 'N/A', then only those
+areas of the surface that the are within the clip will be affected by the
+compositing operation.
+
+\pnum
+If a clip is set and the Bound value is 'No', then only those areas of
+the surface that the are within the clip will be affected by the compositing
+operation. Even if no part of the source is within the clip, the operation will
+still set every area within the clip to transparent black. Areas outside the
+clip are not modified.
 
 \begin{libiotwodreqtab4b}
  {\tcode{compositing_operator} basic enumerator meanings}
  {tab:\iotwod.compositing.operator.meanings.basic}
  \\ \topline
  \lhdr{Enumerator}
- & \chdr{Bounding}
+ & \chdr{Bound}
  & \chdr{Color}
  & \rhdr{Alpha}
  \\ \capsep
@@ -179,33 +169,43 @@ clip will be affected by the compositing operation.
  \continuedcaption\\
  \hline
  \lhdr{Enumerator}
- & \chdr{Bounding}
+ & \chdr{Bound}
  & \chdr{Color}
  & \rhdr{Alpha}
  \\ \capsep
  \endhead
  \tcode{clear}
- & Bound
+ & Yes
  & $Rc = 0$
  & $Ra = 0$
  \\
  \tcode{source}
- & Bound
+ & Yes
  & $Rc = Sc$
  & $Ra = Sa$
+ \\
+ %
+ &%
+ &%
+ &%
  \\
  \tcode{over}
  & N/A
  & $Rc = \dfrac{(Sca + Dca \times (1 - Sa))}{Ra}$
  & $Ra = Sa + Da \times (1 - Sa)$
  \\
+ %
+ &%
+ &%
+ &%
+ \\
  \tcode{in}
- & Unbound
+ & No
  & $Rc = Sc$
  & $Ra = Sa \times Da$
  \\
  \tcode{out}
- & Unbound
+ & No
  & $Rc = Sc$
  & $Ra = Sa \times (1 - Da)$
  \\
@@ -219,13 +219,23 @@ clip will be affected by the compositing operation.
  & $Rc = Dc$
  & $Ra = Da$
  \\
+ %
+ &%
+ &%
+ &%
+ \\
  \tcode{dest_over}
  & N/A
- & $\dfrac{(Sca \times (1 - Da) + Dca)}{Ra}$
- & $(1 - Da) \times Sa + Da$
+ & $Rc = \dfrac{(Sca \times (1 - Da) + Dca)}{Ra}$
+ & $Ra = (1 - Da) \times Sa + Da$
+ \\
+ %
+ &%
+ &%
+ &%
  \\
  \tcode{dest_in}
- & Unbound
+ & No
  & $Rc = Dc$
  & $Ra = Sa \times Da$
  \\
@@ -235,24 +245,44 @@ clip will be affected by the compositing operation.
  & $Ra = (1 - Sa) \times Da$
  \\
  \tcode{dest_atop}
- & Unbound
+ & No
  & $Rc = Sc \times (1 - Da) + Dca$
  & $Ra = Sa$
+ \\
+ %
+ &%
+ &%
+ &%
  \\
  \tcode{xor_op}
  & N/A
  & $Rc = \dfrac{(Sca \times (1 - Da) + Dca \times (1 - Sa))}{Ra}$
  & $Ra = Sa + Da - 2 \times Sa \times Da$
  \\
+ %
+ &%
+ &%
+ &%
+ \\
  \tcode{add}
  & N/A
  & $Rc = \dfrac{(Sca + Dca)}{Ra}$
  & $Ra = min(1, Sa + Da)$
  \\
+ %
+ &%
+ &%
+ &%
+ \\
  \tcode{saturate}
  & N/A
  & $Rc = \dfrac{(min(Sa, 1 - Da) \times Sc + Dca)}{Ra}$
  & $Ra = min(1, Sa + Da)$
+ \\
+ %
+ &%
+ &%
+ &%
  \\
 \end{libiotwodreqtab4b}
 
@@ -296,7 +326,7 @@ is not included in those tables.
 \exitnote
 
 \pnum
-All of the blend enumerators and hsl enumerators have a Bounding value of N/A.
+All of the blend enumerators and hsl enumerators have a Bound value of 'N/A'.
 
 \begin{libreqtab2}
  {\tcode{compositing_operator} blend enumerator meanings}

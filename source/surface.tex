@@ -7,13 +7,6 @@
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class surface {
   public:
-    // See~\ref{\iotwod.req.native}
-    typedef @\impdef@ native_handle_type;
-    native_handle_type native_handle() const;
-
-    // tuple<dashes, offset>
-    typedef std::tuple<std::vector<double>, double> dashes;
-
     // \ref{\iotwod.surface.cons}, constructors, assignment operators, destructors:
     surface() = delete;
     surface(const surface&) = delete;
@@ -26,147 +19,399 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     virtual void finish() noexcept;
     void flush();
     void flush(error_code& ec) noexcept;
-    std::shared_ptr<std::experimental::io2d::device> device();
-    std::shared_ptr<std::experimental::io2d::device> device(error_code& ec)
-      noexcept;
+    shared_ptr<experimental::io2d::device> device();
+    shared_ptr<experimental::io2d::device> device(error_code& ec) noexcept;
     void mark_dirty();
     void mark_dirty(error_code& ec) noexcept;
     void mark_dirty(const rectangle& rect);
     void mark_dirty(const rectangle& rect, error_code& ec) noexcept;
     void device_offset(const vector_2d& offset);
     void device_offset(const vector_2d& offset, error_code& ec) noexcept;
-    void map(const std::function<void(mapped_surface&)>& action);
-    void map(const std::function<void(mapped_surface&, error_code&)>& action,
+    void map(const function<void(mapped_surface&)>& action);
+    void map(const function<void(mapped_surface&, error_code&)>& action,
       error_code& ec);
     void map(const rectangle& extents,
-      const std::function<void(mapped_surface&)>& action);
+      const function<void(mapped_surface&)>& action);
     void map(const rectangle& extents,
-      const std::function<void(mapped_surface&, error_code&)>& action,
+      const function<void(mapped_surface&, error_code&)>& action,
       error_code& ec);
     virtual void save();
     virtual void save(error_code& ec) noexcept;
     virtual void restore();
     virtual void restore(error_code& ec) noexcept;
     void reset_brush() noexcept;
-    void brush(const std::experimental::io2d::brush& source);
-    void brush(const std::experimental::io2d::brush& source, error_code& ec)
+    void brush(const experimental::io2d::brush& source);
+    void brush(const experimental::io2d::brush& source, error_code& ec)
       noexcept;
-    void antialias(std::experimental::io2d::antialias a) noexcept;
+    void antialias(experimental::io2d::antialias a) noexcept;
     void reset_dashes() noexcept;
-    void dashes(const std::experimental::io2d::dashes& d);
-    void dashes(const std::experimental::io2d::dashes& d, error_code& ec)
-      noexcept;
-    void fill_rule(std::experimental::io2d::fill_rule fr) noexcept;
-    void line_cap(std::experimental::io2d::line_cap lc) noexcept;
-    void line_join(std::experimental::io2d::line_join lj) noexcept;
+    void dashes(const experimental::io2d::dashes& d);
+    void dashes(const experimental::io2d::dashes& d, error_code& ec) noexcept;
+    void fill_rule(experimental::io2d::fill_rule fr) noexcept;
+    void line_cap(experimental::io2d::line_cap lc) noexcept;
+    void line_join(experimental::io2d::line_join lj) noexcept;
     void line_width(double width) noexcept;
     void miter_limit(double limit) noexcept;
-    void compositing_operator(std::experimental::io2d::compositing_operator co)
+    void compositing_operator(experimental::io2d::compositing_operator co)
       noexcept;
-    void clip(const std::experimental::io2d::path& p);
-    void clip(const std::experimental::io2d::path& p, error_code& ec) noexcept;
+    void clip(const experimental::io2d::path& p);
+    void clip(const experimental::io2d::path& p, error_code& ec) noexcept;
     void clip_immediate();
     void clip_immediate(error_code& ec) noexcept;
     void reset_path() noexcept;
-    void path(const std::experimental::io2d::path& p);
-    void path(const std::experimental::io2d::path& p, error_code& ec) noexcept;
+    void path(const experimental::io2d::path& p);
+    void path(const experimental::io2d::path& p, error_code& ec) noexcept;
+
+    // \ref{\iotwod.surface.modifiers.immediatepath}, immediate path modifiers:
+    experimental::io2d::path_factory& immediate() noexcept;
 
     // \ref{\iotwod.surface.modifiers.render}, render modifiers:
     void fill();
-    void fill(const surface& s);
-    void mask(const pattern& pttn);
-    void mask(const surface& surface);
-    void mask(const surface& surface, const vector_2d& origin);
+    void fill(error_code& ec) noexcept;
+    void fill(const rgba_color& c);
+    void fill(const rgba_color& c, error_code& ec) noexcept;
+    void fill(const experimental::io2d::brush& b);
+    void fill(const experimental::io2d::brush& b, error_code& ec) noexcept;
+    void fill(const surface& s, const vector_2d& o = vector_2d{ },
+      extend e = extend::none, filter f = filter::good);
+    void fill(const surface& s, error_code& ec,
+      const vector_2d& o = vector_2d{ }, extend e = extend::none,
+      filter f = filter::good) noexcept;
+    void fill(const surface& s, const matrix_2d& m, extend e = extend::none,
+      filter f = filter::good);
+    void fill(const surface& s, const matrix_2d& m, error_code& ec,
+      extend e = extend::none, filter f = filter::good) noexcept;
+    void fill_immediate();
+    void fill_immediate(error_code& ec) noexcept;
+    void fill_immediate(const rgba_color& c);
+    void fill_immediate(const rgba_color& c, error_code& ec) noexcept;
+    void fill_immediate(const experimental::io2d::brush& b);
+    void fill_immediate(const experimental::io2d::brush& b, error_code& ec)
+      noexcept;
+    void fill_immediate(const surface& s, const vector_2d& o = vector_2d{ }, 
+      extend e = extend::none, filter f = filter::good);
+    void fill_immediate(const surface& s, error_code& ec,
+      const vector_2d& o = vector_2d{ }, extend e = extend::none,
+      filter f = filter::good) noexcept;
+    void fill_immediate(const surface& s, const matrix_2d& m,
+      extend e = extend::none, filter f = filter::good);
+    void fill_immediate(const surface& s, const matrix_2d& m, error_code& ec,
+      extend e = extend::none, filter f = filter::good) noexcept;
     void paint();
-    void paint(const surface& s);
+    void paint(error_code& ec) noexcept;
+    void paint(const rgba_color& c);
+    void paint(const rgba_color& c, error_code& ec) noexcept;
+    void paint(const experimental::io2d::brush& b);
+    void paint(const experimental::io2d::brush& b, error_code& ec) noexcept;
+    void paint(const surface& s, const vector_2d& o = vector_2d{ },
+      extend e = extend::none, filter f = filter::good);
+    void paint(const surface& s, error_code& ec,
+      const vector_2d& o = vector_2d{ }, extend e = extend::none,
+      filter f = filter::good) noexcept;
+    void paint(const surface& s, const matrix_2d& m, extend e = extend::none,
+      filter f = filter::good);
+    void paint(const surface& s, const matrix_2d& m, error_code& ec,
+      extend e = extend::none, filter f = filter::good) noexcept;
     void paint(double alpha);
-    void paint(const surface& s, double alpha);
+    void paint(double alpha, error_code& ec) noexcept;
+    void paint(const rgba_color& c, double alpha);
+    void paint(const rgba_color& c, double alpha, error_code& ec) noexcept;
+    void paint(const experimental::io2d::brush& b, double alpha);
+    void paint(const experimental::io2d::brush& b, double alpha,
+      error_code& ec) noexcept;
+    void paint(const surface& s, double alpha,
+      const vector_2d& o = vector_2d{ }, extend e = extend::none,
+      filter f = filter::good);
+    void paint(const surface& s, double alpha, error_code& ec,
+      const vector_2d& o = vector_2d{ }, extend e = extend::none,
+      filter f = filter::good) noexcept;
+    void paint(const surface& s, double alpha, const matrix_2d& m,
+      extend e = extend::none, filter f = filter::good);
+    void paint(const surface& s, double alpha, const matrix_2d& m,
+      error_code& ec, extend e = extend::none, filter f = filter::good)
+      noexcept;
     void stroke();
-    void stroke(const surface& s);
-    void show_text(const std::string& utf8);
-    void show_glyphs(const std::vector<glyph>& glyphs);
-    void show_text_glyphs(const std::string& utf8,
-      const std::vector<glyph>& glyphs,
-      const std::vector<text_cluster>& clusters, 
-      bool clusterToGlyphsMapReverse = false);
-
+    void stroke(error_code& ec) noexcept;
+    void stroke(const rgba_color& c);
+    void stroke(const rgba_color& c, error_code& ec) noexcept;
+    void stroke(const experimental::io2d::brush& b);
+    void stroke(const experimental::io2d::brush& b, error_code& ec) noexcept;
+    void stroke(const surface& s, const vector_2d& o = vector_2d{ },
+      extend e = extend::none, filter f = filter::good);
+    void stroke(const surface& s, error_code& ec,
+      const vector_2d& o = vector_2d{ },
+      extend e = extend::none, filter f = filter::good) noexcept;
+    void stroke(const surface& s, const matrix_2d& m, extend e = extend::none,
+      filter f = filter::good);
+    void stroke(const surface& s, const matrix_2d& m, error_code& ec,
+      extend e = extend::none, filter f = filter::good) noexcept;
+    void stroke_immediate();
+    void stroke_immediate(error_code& ec) noexcept;
+    void stroke_immediate(const rgba_color& c);
+    void stroke_immediate(const rgba_color& c, error_code& ec) noexcept;
+    void stroke_immediate(const experimental::io2d::brush& b);
+    void stroke_immediate(const experimental::io2d::brush& b, error_code& ec)
+      noexcept;
+    void stroke_immediate(const surface& s, const vector_2d& o = vector_2d{ },
+      extend e = extend::none, filter f = filter::good);
+    void stroke_immediate(const surface& s, error_code& ec,
+      const vector_2d& o = vector_2d{ }, extend e = extend::none,
+      filter f = filter::good) noexcept;
+    void stroke_immediate(const surface& s, const matrix_2d& m,
+      extend e = extend::none, filter f = filter::good);
+    void stroke_immediate(const surface& s, const matrix_2d& m, error_code& ec,
+      extend e = extend::none, filter f = filter::good) noexcept;
+    
+    // \ref{\iotwod.surface.modifiers.maskrender}, mask render modifiers:
+    void mask(const experimental::io2d::brush& mb);
+    void mask(const experimental::io2d::brush& mb, error_code& ec)
+      noexcept;
+    void mask(const experimental::io2d::brush& mb, const rgba_color& c);
+    void mask(const experimental::io2d::brush& mb, const rgba_color& c, 
+      error_code& ec) noexcept;
+    void mask(const experimental::io2d::brush& mb,
+      const experimental::io2d::brush& b);
+    void mask(const experimental::io2d::brush& mb,
+      const experimental::io2d::brush& b, error_code& ec) noexcept;
+    void mask(const experimental::io2d::brush& mb, const surface& s,
+      const vector_2d& o = vector_2d{ }, extend e = extend::none, 
+      filter f = filter::good);
+    void mask(const experimental::io2d::brush& mb, const surface& s,
+      error_code& ec, const vector_2d& o = vector_2d{ },
+      extend e = extend::none, filter f = filter::good) noexcept;
+    void mask(const experimental::io2d::brush& mb, const surface& s,
+      const matrix_2d& m, extend e = extend::none, filter f = filter::good);
+    void mask(const experimental::io2d::brush& mb, const surface& s,
+      const matrix_2d& m, error_code& ec, extend e = extend::none,
+      filter f = filter::good) noexcept;
+    void mask(const surface& ms);
+    void mask(const surface& ms, error_code& ec) noexcept;
+    void mask(const surface& ms, const rgba_color& c);
+    void mask(const surface& ms, const rgba_color& c, error_code& ec) noexcept;
+    void mask(const surface& ms, const experimental::io2d::brush& b);
+    void mask(const surface& ms, const experimental::io2d::brush& b, 
+      error_code& ec) noexcept;
+    void mask(const surface& ms, const surface& s,
+      const vector_2d& o = vector_2d{ }, extend e = extend::none,
+      filter f = filter::good);
+    void mask(const surface& ms, const surface& s, error_code& ec,
+      const vector_2d& o = vector_2d{ }, extend e = extend::none,
+      filter f = filter::good) noexcept;
+    void mask(const surface& ms, const surface& s, const matrix_2d& m,
+      extend e = extend::none, filter f = filter::good);
+    void mask(const surface& ms, const surface& s, const matrix_2d& m,
+      error_code& ec, extend e = extend::none, filter f = filter::good)
+      noexcept;
+    void mask(const surface& ms, const vector_2d& mo);
+    void mask(const surface& ms, const vector_2d& mo, error_code& ec) noexcept;
+    void mask(const surface& ms, const vector_2d& mo, const rgba_color& c);
+    void mask(const surface& ms, const vector_2d& mo, const rgba_color& c,
+      error_code& ec) noexcept;
+    void mask(const surface& ms, const vector_2d& mo,
+      const experimental::io2d::brush& b);
+    void mask(const surface& ms, const vector_2d& mo,
+      const experimental::io2d::brush& b, error_code& ec) noexcept;
+    void mask(const surface& ms, const vector_2d& mo, const surface& s,
+      const vector_2d& o = vector_2d{ }, extend e = extend::none,
+      filter f = filter::good);
+    void mask(const surface& ms, const vector_2d& mo, const surface& s,
+      error_code& ec, const vector_2d& o = vector_2d{ },
+      extend e = extend::none, filter f = filter::good) noexcept;
+    void mask(const surface& ms, const vector_2d& mo, const surface& s,
+      const matrix_2d& m, extend e = extend::none, filter f = filter::good);
+    void mask(const surface& ms, const vector_2d& mo, const surface& s,
+      const matrix_2d& m, error_code& ec, extend e = extend::none,
+      filter f = filter::good) noexcept;
+    void mask_immediate(const experimental::io2d::brush& mb);
+    void mask_immediate(const experimental::io2d::brush& mb, error_code& ec)
+      noexcept;
+    void mask_immediate(const experimental::io2d::brush& mb,
+      const rgba_color& c);
+    void mask_immediate(const experimental::io2d::brush& mb,
+      const rgba_color& c, error_code& ec) noexcept;
+    void mask_immediate(const experimental::io2d::brush& mb,
+      const experimental::io2d::brush& b);
+    void mask_immediate(const experimental::io2d::brush& mb,
+      const experimental::io2d::brush& b, error_code& ec) noexcept;
+    void mask_immediate(const experimental::io2d::brush& mb, const surface& s,
+      const vector_2d& o = vector_2d{ }, extend e = extend::none,
+      filter f = filter::good);
+    void mask_immediate(const experimental::io2d::brush& mb, const surface& s,
+      error_code& ec, const vector_2d& o = vector_2d{ },
+      extend e = extend::none, filter f = filter::good) noexcept;
+    void mask_immediate(const experimental::io2d::brush& mb, const surface& s, 
+      const matrix_2d& m, extend e = extend::none, filter f = filter::good);
+    void mask_immediate(const experimental::io2d::brush& mb, const surface& s,
+      const matrix_2d& m, error_code& ec, extend e = extend::none,
+      filter f = filter::good) noexcept;
+    void mask_immediate(const surface& ms);
+    void mask_immediate(const surface& ms, error_code& ec) noexcept;
+    void mask_immediate(const surface& ms, const rgba_color& c);
+    void mask_immediate(const surface& ms, const rgba_color& c, error_code& ec) 
+      noexcept;
+    void mask_immediate(const surface& ms, const experimental::io2d::brush& b);
+    void mask_immediate(const surface& ms, const experimental::io2d::brush& b,
+      error_code& ec) noexcept;
+    void mask_immediate(const surface& ms, const surface& s,
+      const vector_2d& o = vector_2d{ }, extend e = extend::none,
+      filter f = filter::good);
+    void mask_immediate(const surface& ms, const surface& s, error_code& ec,
+      const vector_2d& o = vector_2d{ }, extend e = extend::none,
+      filter f = filter::good) noexcept;
+    void mask_immediate(const surface& ms, const surface& s, const matrix_2d& m,
+      extend e = extend::none, filter f = filter::good);
+    void mask_immediate(const surface& ms, const surface& s,
+      const matrix_2d& m, error_code& ec, extend e = extend::none,
+      filter f = filter::good) noexcept;
+    void mask_immediate(const surface& ms, const vector_2d& mo);
+    void mask_immediate(const surface& ms, const vector_2d& mo, error_code& ec)
+      noexcept;
+    void mask_immediate(const surface& ms, const vector_2d& mo,
+      const rgba_color& c);
+    void mask_immediate(const surface& ms, const vector_2d& mo,
+      const rgba_color& c, error_code& ec) noexcept;
+    void mask_immediate(const surface& ms, const vector_2d& mo,
+      const experimental::io2d::brush& b);
+    void mask_immediate(const surface& ms, const vector_2d& mo,
+      const experimental::io2d::brush& b, error_code& ec) noexcept;
+    void mask_immediate(const surface& ms, const vector_2d& mo,
+      const surface& s, const vector_2d& o = vector_2d{ },
+      extend e = extend::none, filter f = filter::good);
+    void mask_immediate(const surface& ms, const vector_2d& mo,
+      const surface& s, error_code& ec, const vector_2d& o = vector_2d{ },
+      extend e = extend::none, filter f = filter::good) noexcept;
+    void mask_immediate(const surface& ms, const vector_2d& mo,
+      const surface& s, const matrix_2d& m, extend e = extend::none,
+      filter f = filter::good);
+    void mask_immediate(const surface& ms, const vector_2d& mo,
+      const surface& s, const matrix_2d& m, error_code& ec,
+      extend e = extend::none, filter f = filter::good) noexcept;
+    
+    // \ref{\iotwod.surface.modifiers.textrender}, text render modifiers:
+    vector_2d show_text(const string& utf8, const vector_2d& pos);
+    vector_2d show_text(const string& utf8, const vector_2d& pos,
+      error_code& ec) noexcept;
+    vector_2d show_text(const string& utf8, const vector_2d& pos,
+      const rgba_color& c);
+    vector_2d show_text(const string& utf8, const vector_2d& pos,
+      const rgba_color& c, error_code& ec) noexcept;
+    vector_2d show_text(const string& utf8, const vector_2d& pos,
+      const experimental::io2d::brush& b);
+    vector_2d show_text(const string& utf8, const vector_2d& pos,
+      const experimental::io2d::brush& b, error_code& ec) noexcept;
+    vector_2d show_text(const string& utf8, const vector_2d& pos,
+      const surface& s, const vector_2d& o = vector_2d{ },
+      extend e = extend::none, filter f = filter::good);
+    vector_2d show_text(const string& utf8, const vector_2d& pos,
+      const surface& s, error_code& ec, const vector_2d& o = vector_2d{ },
+      extend e = extend::none, filter f = filter::good) noexcept;
+    vector_2d show_text(const string& utf8, const vector_2d& pos,
+      const surface& s, const matrix_2d& m, extend e = extend::none,
+      filter f = filter::good);
+    vector_2d show_text(const string& utf8, const vector_2d& pos,
+      const surface& s, const matrix_2d& m, error_code& ec,
+      extend e = extend::none, filter f = filter::good) noexcept;
+    
     // \ref{\iotwod.surface.modifiers.transform}, transformation modifiers:
-    void set_matrix(const matrix_2d& matrix);
-
+    void matrix(const matrix_2d& matrix) noexcept;
+    
     // \ref{\iotwod.surface.modifiers.font}, font modifiers:
-    void select_font_face(const std::string& family, font_slant slant, 
-      font_weight weight);
-    void set_font_size(double size);
-    void set_font_matrix(const matrix_2d& matrix);
-    void set_font_options(const font_options& options);
-    void set_font_face(const font_face& font_face);
-    void set_scaled_font(const scaled_font& scaled_font);
-
+    void font_face(const string& family, font_slant sl, font_weight w);
+    void font_face(const string& family, font_slant sl, font_weight w,
+      error_code& ec) noexcept;
+    void font_face(const experimental::io2d::font_face& f);
+    void font_face(const experimental::io2d::font_face& f, error_code& ec)
+      noexcept;
+    void font_size(double s) noexcept;
+    void font_matrix(const matrix_2d& m) noexcept;
+    void font_options(const font_options& fo) noexcept;
+    
     // \ref{\iotwod.surface.observers.state}, state observers:
-    content get_content() const;
-    vector_2d get_device_offset() const;
-    bool has_surface_resource() const;
-    pattern get_pattern() const;
-    antialias get_antialias() const;
-    int get_dashes_count() const;
-    dashes get_dashes() const;
-    fill_rule get_fill_rule() const;
-    line_cap get_line_cap() const;
-    line_join get_line_join() const;
-    double get_line_width() const;
-    double get_miter_limit() const;
-    compositing_operator get_compositing_operator() const;
-    double get_tolerance() const;
-    rectangle get_clip_extents() const;
-    bool in_clip(const vector_2d& pt) const;
-    std::vector<rectangle> get_clip_rectangles() const;
-
+    bool is_finished() const noexcept;
+    experimental::io2d::content content() const noexcept;
+    bool has_surface_resource() const noexcept;
+    experimental::io2d::brush brush() const noexcept;
+    experimental::io2d::antialias antialias() const noexcept;
+    unsigned int dashes_count() const noexcept;
+    experimental::io2d::dashes dashes() const;
+    experimental::io2d::dashes dashes(error_code& ec) const noexcept;
+    experimental::io2d::fill_rule fill_rule() const noexcept;
+    experimental::io2d::line_cap line_cap() const noexcept;
+    experimental::io2d::line_join line_join() const noexcept;
+    double line_width() const noexcept;
+    double miter_limit() const noexcept;
+    experimental::io2d::compositing_operator compositing_operator() const
+      noexcept;
+    double tolerance() const noexcept;
+    rectangle clip_extents() const noexcept;
+    bool in_clip(const vector_2d& pt) const noexcept;
+    vector<rectangle> clip_rectangles() const;
+    vector<rectangle> clip_rectangles(error_code& ec) const noexcept;
+    
     // \ref{\iotwod.surface.observers.render}, render observers:
-    rectangle get_fill_extents() const;
-    bool in_fill(const vector_2d& pt) const;
-    rectangle get_stroke_extents() const;
-    bool in_stroke(const vector_2d& pt) const;
-    font_extents get_font_extents() const;
-    text_extents get_text_extents(const std::string& utf8) const;
-    text_extents get_glyph_extents(const std::vector<glyph>& glyphs) const;
-
+    rectangle fill_extents() const noexcept;
+    rectangle fill_extents_immediate() const noexcept;
+    bool in_fill(const vector_2d& pt) const noexcept;
+    bool in_fill_immediate(const vector_2d& pt) const noexcept;
+    rectangle stroke_extents() const noexcept;
+    rectangle stroke_extents_immediate() const noexcept;
+    bool in_stroke(const vector_2d& pt) const noexcept;
+    bool in_stroke_immediate(const vector_2d& pt) const noexcept;
+    experimental::io2d::font_extents font_extents() const noexcept;
+    experimental::io2d::text_extents text_extents(const string& utf8) const;
+    experimental::io2d::text_extents text_extents(const string& utf8,
+      error_code& ec) const noexcept;
+    
     // \ref{\iotwod.surface.observers.transform}, transformation observers:
-    matrix_2d get_matrix() const;
-    vector_2d user_to_device() const;
-    vector_2d user_to_device_distance() const;
-    vector_2d device_to_user() const;
-    vector_2d device_to_user_distance() const;
-
+    matrix_2d matrix() const noexcept;
+    vector_2d user_to_surface(const vector_2d& pt) const noexcept;
+    vector_2d user_to_surface_distance(const vector_2d& dpt) const noexcept;
+    vector_2d surface_to_user(const vector_2d& pt) const;
+    vector_2d surface_to_user(const vector_2d& pt, error_code& ec) const
+      noexcept;
+    vector_2d surface_to_user_distance(const vector_2d& dpt) const;
+    vector_2d surface_to_user_distance(const vector_2d& dpt, error_code& ec)
+      const noexcept;
+    
     // \ref{\iotwod.surface.observers.font}, font observers:
-    matrix_2d get_font_matrix() const;
-    font_options get_font_options() const;
-    font_face get_font_face() const;
-    scaled_font get_scaled_font() const;
+    matrix_2d font_matrix() const noexcept;
+    experimental::io2d::font_options font_options() const noexcept;
+    experimental::io2d::font_face font_face() const;
+    experimental::io2d::font_face font_face(error_code& ec) const noexcept;
   };
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.surface.intro] {\tcode{surface} Description}
+\rSec1 [\iotwod.surface.intro] {\tcode{surface} description}
 
 \pnum
 \indexlibrary{\idxcode{surface}}
-The \tcode{surface} class represents a surface on which graphics are rendered.
+The \tcode{surface} class manages a graphics
+data graphics resource and its observable state data
+(\ref{\iotwod.surface.state}).
 
 \pnum
-A \tcode{surface} object is a stateful, move-only object.
+The \tcode{surface} class provides two ways to modify its graphics resource:
+\begin{itemize}
+\item by rendering to it; and
+\item by mapping it.
+\end{itemize}
 
 \pnum
-Rendering to a \tcode{surface} object is accomplished by setting the appropriate state, often in the form of state objects such as \tcode{path} and \tcode{pattern}, and then calling one or more of the render functions to make the changes specified by the state to the \tcode{surface} object's underlying graphics resource.
+A \tcode{surface} object is a move-only object.
 
 \pnum
-The \tcode{surface} type is not directly instantiable.
+Rendering to a \tcode{surface} object is accomplished by setting the appropriate state, often in the form of state objects such as \tcode{path} and \tcode{pattern}, and then calling one or more of the render functions to make the changes specified by the state to the \tcode{surface} object's graphics resource.
 
-\rSec1 [\iotwod.surface.state] {\tcode{surface} State}
+\pnum
+The \tcode{surface} class is intended to serve only as a base class and as such is not directly instantiable. While a \tcode{surface} object manages a graphics data graphics resource, no well-defined semantics are provided for the graphics resource. Directly instantiable types which derive, directly or indirectly, from the \tcode{surface} class shall either provide well-defined semantics for the graphics resource or inherit well-defined semantics for the graphics resource from a base class.
 
-\rSec2 [\iotwod.surface.state.default] {\tcode{surface} State Default Values}
+\rSec1 [\iotwod.surface.state] {\tcode{surface} state}
 
 \pnum
 Table~\ref{tab:\iotwod.surface.state.listing} specifies the name, type, function, and default value for each item of a surface's observable state.
+
+\rSec2 [\iotwod.surface.state.default] {\tcode{surface} state default values}
 
 \begin{libreqtab4b}
 	{Surface observable state}
@@ -216,18 +461,23 @@ Table~\ref{tab:\iotwod.surface.state.listing} specifies the name, type, function
 	
 	Miter Limit &
 	\tcode{double} &
-	This is the value used to calculate whether a line join should be mitered or beveled when the Line Join is \tcode{line_join::miter_or_bevel} &
+	This is the value that shall be used to calculate whether a line join shall be mitered or beveled when the value of Line Join is \tcode{line_join::miter}. &
 	\tcode{10.0} \\ \rowsep
 	
-	Compositing Operator &
+	Composition Operator &
 	\tcode{compositing_operator} &
-	This specifies how source visual data shall be combined with existing destination visual data to produce the resulting destination visual data when performing rendering operations &
+	This specifies the composition algorithm that shall be used when performing rendering operations &
 	\tcode{compositing_operator::over} \\ \rowsep
 	
 	Tolerance &
 	\tcode{double} &
 	This is the value, in surface coordinate space units, that should be used when transforming non-linear path segments into linear path segments when performing rendering operations &
 	\tcode{\impldef{\tcode{surface}!Tolerance}} \\ \rowsep
+	
+	Clip Area &
+	\tcode{\unspec}
+	The areas of the surface which shall be the only areas in which rendering and composing operations shall be able to have any effect &
+	An area which contains the entire area of the surface \\ \rowsep
 	
 	Current Path &
 	\tcode{path} &
@@ -262,7 +512,7 @@ Table~\ref{tab:\iotwod.surface.state.listing} specifies the name, type, function
 \end{libreqtab4b}
 
 
-\rSec2 [\iotwod.surface.state.save] {\tcode{surface} Saved State}
+\rSec2 [\iotwod.surface.state.save] {\tcode{surface} saved state}
 
 \pnum
 A surface object provides an interface to save its current state and subsequently restore it.
@@ -290,6 +540,7 @@ The following list denotes each item of observable state that shall be saved by 
 	\item Miter Limit
 	\item Compositing Operator
 	\item Tolerance
+	\item Clip Area
 	\item Current Path
 	\item Immediate Path
 	\item Transformation Matrix
@@ -297,6 +548,71 @@ The following list denotes each item of observable state that shall be saved by 
 	\item Font Matrix
 	\item Font Options
 \end{itemize}
+
+\rSec1 [\iotwod.surface.rendering] {\tcode{surface} rendering and composing}
+
+\pnum
+The \tcode{surface} class provides five fundamental rendering and composing operations:
+\begin{itemize}
+\item painting
+\item filling
+\item stroking
+\item masking
+\item typesetting
+\end{itemize}
+
+\pnum
+Some of these operations consist solely of composing. The remainder consist of rendering followed by composing.
+
+%\pnum
+%Where an operation includes rendering, the rendering shall be done as if the following steps are taken:
+%\begin{enumeraten}
+%\item An \tcode{image_surface} object large enough to contain the results of the rendering is created 
+%\end{enumeraten}
+
+\pnum
+All rendering and composing operations shall be constrained to the Clip Area.
+\enternote
+The preceding requirement is intended to make it clear that the Clip Area always applies even if no mention is made of the Clip Area or if a description of an operation could otherwise be read as disregarding the Clip Area. The painting operation is a good example of this since it is described as affecting the entire surface but it, in fact, only affects all areas of the surface that are within the Clip Area. The preceding requirement removes the need to continually restate the applicability of the Clip Area through the descriptions of the rendering and composing operations that follow.
+\exitnote
+
+\rSec2 [\iotwod.surface.rendering.painting] {\tcode{surface} painting}
+
+\pnum
+Painting is a composing operation.
+
+\pnum
+Painting shall affect the entire surface.
+
+\pnum
+Where a painting operation is initiated on a surface and either no arguments are supplied or the only argument supplied is an \tcode{error_code} object, the implementation shall compose the surface's Current Brush and the surface in the manner required by the Composition Operator.
+\enternote
+***FIXME*** Should the term 'compose' be defined (as it is now) or should I eliminate the definition (or make it a local term) since it is complex due to the fact that the definition has "parameters". Need to examine the Standard to see if there is any precedent for a term definition in this form. Also need to fixup the 'brush' type to use the new terminology (i.e. it is a raster graphics data graphics resource).
+\exitnote
+
+\pnum
+Where one or more arguments, not including an \tcode{error_code} object, are supplied, the entire surface shall be filled as if those arguments were used to construct a \tcode{brush} object from a brush factory object of the type which those 
+
+\rSec2 [\iotwod.surface.rendering.filling] {\tcode{surface} filling}
+
+\pnum
+***FIXME***
+
+\rSec2 [\iotwod.surface.rendering.stroking] {\tcode{surface} stroking}
+
+\pnum
+***FIXME***
+
+\rSec2 [\iotwod.surface.rendering.masking] {\tcode{surface} masking}
+
+\pnum
+***FIXME***
+
+\rSec2 [\iotwod.surface.rendering.typesetting] {\tcode{surface} typesetting}
+
+\pnum
+***FIXME***
+
 
 
 \rSec1 [\iotwod.surface.cons] {\tcode{surface} constructors, assignment operators, and destructors}
@@ -306,10 +622,9 @@ The following list denotes each item of observable state that shall be saved by 
 virtual ~surface();
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Destroys an object of class \tcode{surface}.
-	
+\pnum
+\effects
+Destroys an object of class \tcode{surface}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.surface.modifiers.state] {\tcode{surface} state modifiers}
@@ -320,13 +635,17 @@ virtual ~surface();
 virtual void finish() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Releases all resources associated with the \tcode{surface}.
-	
-	\pnum
-	\remarks
-	Once this function has been called, the surface is \term{finished}. The only valid operations on a finished surface are destruction, calling \tcode{finish()} again (which will do nothing), calling \tcode{has_surface_resource()}, and calling \tcode{is_finished()}. Any other operation on a finished surface or any attempt to use a finished \tcode{surface} or \tcode{surface}-derived object as an argument to a function produces undefined behavior except as otherwise noted.
+\pnum
+\effects
+Releases all resources managed by the \tcode{surface} if \tcode{!is_finished()}, otherwise does nothing.
+
+\pnum
+\postconditions
+\tcode{is_finished()} shall return \tcode{true}. \tcode{has_surface_resource()} shall return \tcode{false}.
+
+\pnum
+\remarks
+Once this function has been called, the surface is \term{finished}. The only valid operations on a finished surface are destruction, calling \tcode{finish()}, calling \tcode{has_surface_resource()}, and calling \tcode{is_finished()}. Any other operation on a finished surface or any attempt to use a finished \tcode{surface} or \tcode{surface}-derived object as an argument to a function produces undefined behavior except as otherwise noted.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{surface}!\idxcode{flush}}
@@ -336,80 +655,82 @@ void flush();
 void flush(error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	The user will be able to use the implementation's underlying surface without introducing a race condition. This means that any pending surface operations will be executed, batched, or otherwise committed to the underlying technologies. Saved surface state, if any, shall also be restored before this function returns.
-	
-	\pnum
-	\remarks
-	This function exists primarily to allow the user to take control of the 
-	underlying surface using an implementation-provided native handle. The implementation's responsibility is to ensure that the user can safely use the underlying surface.
-	\enternote
-	This function flushes the native surface so that it can safely be rendered to or, if the underlying technology supports it, be used as a texture to be sampled from. It is not required to flush the device or context that is rendering to it.
-	\exitnote
+\pnum
+\effects
+The user shall be able to use the implementation's underlying surface without introducing a race condition. This means that any pending surface operations shall be executed, batched, or otherwise committed to the underlying technologies. Saved surface state, if any, shall also be restored before this function returns.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\remarks
+This function exists primarily to allow the user to take control of the underlying surface using an implementation-provided native handle. The implementation's responsibility is to ensure that the user can safely use the underlying surface.
+\enternote
+This function flushes the native surface so that it can safely be rendered to or, if the underlying technology supports it, be used as a texture to be sampled from. It is not required to flush the device or context that is rendering to it.
+\exitnote
+
+\pnum
+\errors
+
 \end{itemdescr}
 
 \indexlibrary{\idxcode{surface}!\idxcode{device}}
-\indexlibrary{\idxcode{device}!\idxcode{surface}}%
+\indexlibrary{\idxcode{device}!\idxcode{surface}}
 \begin{itemdecl}
-shared_ptr<std::experimental::io2d::device> device();
-shared_ptr<std::experimental::io2d::device> device(error_code& ec) noexcept;
+shared_ptr<experimental::io2d::device> device();
+shared_ptr<experimental::io2d::device> device(error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	A shared pointer to the \tcode{device} object for this \tcode{surface}.	
+\pnum
+\returns
+A shared pointer to the \tcode{device} object for this \tcode{surface}.	
 \end{itemdescr}
-
-\rSec2 [\iotwod.surface::mark_dirty] {\tcode{surface::mark_dirty}}
 
 \indexlibrary{\idxcode{surface}!\idxcode{mark_dirty}}
 \indexlibrary{\idxcode{mark_dirty}!\idxcode{surface}}
 \begin{itemdecl}
 void mark_dirty();
 void mark_dirty(error_code& ec) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	Informs the implementation that external changes were made to the underlying surface.
-	
-	\pnum
-	\remarks
-	A program shall call this function first when using the \tcode{surface} object after external changes are made to its underlying surface; no diagnostic is required.
-\end{itemdescr}
-
-\begin{itemdecl}
 void mark_dirty(const rectangle& rect);
 void mark_dirty(const rectangle& rect, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Informs the implementation that external changes were made to the underlying surface within the area denoted by \tcode{rect}.
-	
-	\pnum
-	\remarks
-	This function shall be at least as efficient as \tcode{mark_dirty()}. A program shall call this function first when using the \tcode{surface} object after external changes are made to its underlying surface; no diagnostic is required.
+\pnum
+\effects
+Informs the implementation that external changes were potentially made to the entire underlying graphics resource, or to the area defined by \tcode{rect} if that parameter is present.
+
+\pnum
+\remarks
+After external changes are made to this \tcode{surface} object's underlying graphics resource, this function shall be called before using this \tcode{surface} object; no diagnostic is required.
+
+\pnum
+No call to this function shall be required solely as a result of changes made to a surface using the functionality provided by \tcode{surface::map}.
+\enternote
+The \tcode{mapped_surface} type, which is used by \tcode{surface::map}, provides its own functionality for managing any such changes.
+\exitnote
 \end{itemdescr}
 
-\indexlibrary{\idxcode{surface}!\idxcode{set_device_offset}}
-\indexlibrary{\idxcode{set_device_offset}!\idxcode{surface}}
+\indexlibrary{\idxcode{surface}!\idxcode{device_offset}}
+\indexlibrary{\idxcode{device_offset}!\idxcode{surface}}
 \begin{itemdecl}
 void device_offset(const vector_2d& offset);
 void device_offset(const vector_2d& offset, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Stores the value of \tcode{offset}. The value will be added to all coordinates after they have been transformed by the \tcode{surface} object's transformation matrix.
+\pnum
+\effects
+Stores the value of \tcode{offset}. The value will be added to all coordinates after they have been transformed by the \tcode{surface} object's transformation matrix.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{surface}!\idxcode{map}}
 \indexlibrary{\idxcode{map}!\idxcode{surface}}
 \begin{itemdecl}
-void map(const std::function<void(mapped_surface&)>& action);
-void map(const std::function<void(mapped_surface&, error_code&)>& action, error_code& ec);
+void map(const function<void(mapped_surface&)>& action);
+void map(const function<void(mapped_surface&, error_code&)>& action, error_code& ec);
+void map(const function<void(mapped_surface&)>& action, const rectangle& extents);
+void map(const function<void(mapped_surface&, error_code&)>& action,
+  const rectangle& extents, error_code& ec);
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -429,11 +750,6 @@ void map(const std::function<void(mapped_surface&, error_code&)>& action, error_
 \end{itemdescr}
 
 \begin{itemdecl}
-void map(const rectangle& extents,
-  const std::function<void(mapped_surface&)>& action);
-void map(const rectangle& extents,
-  const std::function<void(mapped_surface&, error_code&)>& action,
-  error_code& ec);
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -481,7 +797,7 @@ virtual void restore(error_code& ec) noexcept;
 	
 	\pnum
 	\throws
-	\tcode{std::system_error} with an error category of \tcode{io2d_error_category} and an error condition of \tcode{io2d_error::invalid_restore} if there are no entries on the stack of saved states when this function is called.
+	\tcode{system_error} with an error category of \tcode{io2d_error_category} and an error condition of \tcode{io2d_error::invalid_restore} if there are no entries on the stack of saved states when this function is called.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{surface}!\idxcode{reset_brush}}
@@ -506,8 +822,8 @@ void reset_brush() noexcept;
 \end{itemdescr}
 
 \begin{itemdecl}
-void brush(const std::experimental::io2d::brush& source);
-void brush(const std::experimental::io2d::brush& source,
+void brush(const experimental::io2d::brush& source);
+void brush(const experimental::io2d::brush& source,
   error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -523,7 +839,7 @@ void brush(const std::experimental::io2d::brush& source,
 \indexlibrary{\idxcode{surface}!\idxcode{antialias}}
 \indexlibrary{\idxcode{antialias}!\idxcode{surface}}
 \begin{itemdecl}
-void antialias(std::experimental::io2d::antialias a) noexcept;
+void antialias(experimental::io2d::antialias a) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -547,14 +863,14 @@ void reset_dashes() noexcept;
 	
 	\pnum
 	\postconditions
-	\tcode{get_dashes()} will return the equivalent of \tcode{std::make_tuplestd::<vector<double>, double>(\{ \}, 0.0)}. \tcode{get_dashes_count()} will return \tcode{0}.
+	\tcode{get_dashes()} will return the equivalent of \tcode{make_tuple<vector<double>, double>(\{ \}, 0.0)}. \tcode{get_dashes_count()} will return \tcode{0}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{surface}!\idxcode{dashes}}
 \indexlibrary{\idxcode{dashes}!\idxcode{surface}}
 \begin{itemdecl}
-void dashes(const std::experimental::io2d::dashes& d);
-void dashes(const std::experimental::io2d::dashes& d, error_code& ec) noexcept;
+void dashes(const experimental::io2d::dashes& d);
+void dashes(const experimental::io2d::dashes& d, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -563,13 +879,13 @@ void dashes(const std::experimental::io2d::dashes& d, error_code& ec) noexcept;
 	
 	\pnum
 	\postconditions
-	\tcode{get_dashes()} will return the equivalent of \tcode{d}. \tcode{get_dashes_count()} will return the value of \tcode{static_cast<int>(std::get<0>(d).size())}.
+	\tcode{get_dashes()} will return the equivalent of \tcode{d}. \tcode{get_dashes_count()} will return the value of \tcode{static_cast<int>(get<0>(d).size())}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{surface}!\idxcode{fill_rule}}
 \indexlibrary{\idxcode{fill_rule}!\idxcode{surface}}
 \begin{itemdecl}
-void fill_rule(std::experimental::io2d::fill_rule fr) noexcept;
+void fill_rule(experimental::io2d::fill_rule fr) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -584,7 +900,7 @@ void fill_rule(std::experimental::io2d::fill_rule fr) noexcept;
 \indexlibrary{\idxcode{surface}!\idxcode{line_cap}}
 \indexlibrary{\idxcode{line_cap}!\idxcode{surface}}
 \begin{itemdecl}
-void line_cap(std::experimental::io2d::line_cap lc) noexcept;
+void line_cap(experimental::io2d::line_cap lc) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -599,7 +915,7 @@ void line_cap(std::experimental::io2d::line_cap lc) noexcept;
 \indexlibrary{\idxcode{surface}!\idxcode{line_join}}
 \indexlibrary{\idxcode{line_join}!\idxcode{surface}}
 \begin{itemdecl}
-void line_join(std::experimental::io2d::line_join lj) noexcept;
+void line_join(experimental::io2d::line_join lj) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -619,15 +935,15 @@ void line_width(double width) noexcept;
 \begin{itemdescr}
 	\pnum
 	\effects
-	Sets the current line width to \tcode{std::max(width, 0.0)}.
+	Sets the current line width to \tcode{max(width, 0.0)}.
 	
 	\pnum
 	\postconditions
-	\tcode{get_line_width()} will return \tcode{std::max(width, 0.0)}.
+	\tcode{get_line_width()} will return \tcode{max(width, 0.0)}.
 	
 	\pnum
 	\remarks
-	Line width is in pre-transformation units and is used with the \tcode{surface::stroke} functions. It postulates a round brush with a diameter of the current line width. The shape and size of the stroke when rendered depends on other state data. See \tcode{surface::stroke}\ref{\iotwod.surface::stroke} for more information.
+	Line width is in pre-transformation units and is used with the \tcode{surface::stroke} functions. It postulates a round brush with a diameter of the current line width. The shape and size of the stroke when rendered depends on other state data.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{surface}!\idxcode{miter_limit}}
@@ -638,30 +954,25 @@ void miter_limit(double limit) noexcept;
 \begin{itemdescr}
 	\pnum
 	\effects
-	Sets the current miter limit to the value of \tcode{std::max(limit, 1.0)}. This limit only applies when the current line join is set to \tcode{line_join::miter_or_bevel}.
+	Sets the Miter Limit to \tcode{limit}.
 	
 	\pnum
-	\postconditions
-	\tcode{get_miter_limit} will return \tcode{std::max(limit, 1.0)}.
+	The Miter Limit shall be clamped to be within the range defined by the \impldef{Miter Limit!minimum} minimum value and the \impldef{Miter Limit!maximum} maximum value, inclusive. The \impdef minimum value shall not be greater than \tcode{2.0} and the \impdef maximum value shall not be less than \tcode{10.0}.
+	
+	\pnum
+	\enternote
+	The Miter Limit only applies when the Line Join is set to \tcode{line_join::miter}.
+	\exitnote
 	
 	\pnum
 	\remarks
-	The miter limit works as follow. The length of the miter is divided by the width of the line. If the resulting value is greater than \tcode{limit}, the line join will be beveled, otherwise it will be mitered.
-	\enternote
-	When the join angle is less than 0.0005 radians, it is 
-	\impldef{\tcode{surface}!\tcode{set_miter_limit}} whether a mitered join or 
-	a beveled joins will be produced. Specifically, when the join angle is less 
-	than 0.0005 radians, implementations may switch to beveled rendering 
-	instead of mitered rendering at an \impdef angle value, provided that the 
-	value is less than 0.0005 radians and that all joins with angles below the 
-	\impdef angle value are rendered as beveled.
-	\exitnote
+	The Miter Limit works as follow. The length of the miter is divided by the width of the line. If the resulting value is greater than the Miter Limit, the join will be beveled, otherwise it will be mitered.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{surface}!\idxcode{compositing_operator}}
 \indexlibrary{\idxcode{compositing_operator}!\idxcode{surface}}
 \begin{itemdecl}
-void compositing_operator(std::experimental::io2d::compositing_operator co)
+void compositing_operator(experimental::io2d::compositing_operator co)
   noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -677,8 +988,8 @@ void compositing_operator(std::experimental::io2d::compositing_operator co)
 \indexlibrary{\idxcode{surface}!\idxcode{clip}}
 \indexlibrary{\idxcode{clip}!\idxcode{surface}}
 \begin{itemdecl}
-void clip(const std::experimental::io2d::path& p);
-void clip(const std::experimental::io2d::path& p, error_code& ec) noexcept;
+void clip(const experimental::io2d::path& p);
+void clip(const experimental::io2d::path& p, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -722,8 +1033,8 @@ void reset_path() noexcept;
 \end{itemdescr}
 
 \begin{itemdecl}
-void path(const std::experimental::io2d::path& p);
-void path(const std::experimental::io2d::path& p, error_code& ec) noexcept;
+void path(const experimental::io2d::path& p);
+void path(const experimental::io2d::path& p, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -735,69 +1046,199 @@ void path(const std::experimental::io2d::path& p, error_code& ec) noexcept;
 	Processing the path data so that it is properly transformed can be done at the time it is first set as a path on a \tcode{surface} object or any time before that. The untransformed \tcode{vector<path_data>} must be retained to ensure that a path can be properly recreated at any time. The steps for converting an untransformed \tcode{vector<path_data>} to transformed path data are found at .
 \end{itemdescr}
 
-\rSec1 [\iotwod.surface.modifiers.render] {\tcode{surface} render modifiers}
+\rSec1 [\iotwod.surface.modifiers.immediatepath] {\tcode{surface} immediate path modifiers}
 
-\rSec2 [\iotwod.surface::stroke] {\tcode{surface::stroke}}
-
-\indexlibrary{\idxcode{surface}!\idxcode{stroke}}
-\indexlibrary{\idxcode{stroke}!\idxcode{surface}}
+\indexlibrary{\idxcode{surface}!\idxcode{}}
+\indexlibrary{\idxcode{}!\idxcode{surface}}
 \begin{itemdecl}
-void stroke();
-void stroke(const surface& s);
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	...
-	
-	\pnum
-	\postconditions
-	...
-	
-%\indexlibrary{\idxcode{surface}!\idxcode{}}
-%\indexlibrary{\idxcode{}!\idxcode{surface}}
-%\begin{itemdecl}
-%\end{itemdecl}
-%\begin{itemdescr}
-%	\pnum
-%	\effects
-%	
-%	\pnum
-%	\postconditions
-%	
-%\end{itemdescr}
+\pnum
+\effects
+
+
+\pnum
+\postconditions
+
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+
+\pnum
+\remarks
+
+
+\pnum
+\errors
+
+
+\pnum
+\realnotes
+
+
+\end{itemdescr}
+
+\rSec1 [\iotwod.surface.modifiers.render] {\tcode{surface} render modifiers}
+
+\indexlibrary{\idxcode{surface}!\idxcode{}}
+\indexlibrary{\idxcode{}!\idxcode{surface}}
+\begin{itemdecl}
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+
+\pnum
+\postconditions
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\remarks
+
+\pnum
+\errors
+
+\pnum
+\realnotes
+
+\end{itemdescr}
+
+\rSec1 [\iotwod.surface.modifiers.maskrender] {\tcode{surface} mask render modifiers}
+
+\indexlibrary{\idxcode{surface}!\idxcode{}}
+\indexlibrary{\idxcode{}!\idxcode{surface}}
+\begin{itemdecl}
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+
+\pnum
+\postconditions
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\remarks
+
+\pnum
+\errors
+
+\pnum
+\realnotes
+
+\end{itemdescr}
+
+\rSec1 [\iotwod.surface.modifiers.textrender] {\tcode{surface} text render modifiers}
+
+\indexlibrary{\idxcode{surface}!\idxcode{}}
+\indexlibrary{\idxcode{}!\idxcode{surface}}
+\begin{itemdecl}
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+
+
+\pnum
+\postconditions
+
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+
+\pnum
+\remarks
+
+
+\pnum
+\errors
+
+
+\pnum
+\realnotes
+
 
 \end{itemdescr}
 
 \rSec1 [\iotwod.surface.modifiers.transform] {\tcode{surface} transformation modifiers}
 
-%\indexlibrary{\idxcode{surface}!\idxcode{}}
-%\indexlibrary{\idxcode{}!\idxcode{surface}}
-%\begin{itemdecl}
-%\end{itemdecl}
-%\begin{itemdescr}
-%	\pnum
-%	\effects
-%	
-%	\pnum
-%	\postconditions
-%	
-%\end{itemdescr}
+\indexlibrary{\idxcode{surface}!\idxcode{}}
+\indexlibrary{\idxcode{}!\idxcode{surface}}
+\begin{itemdecl}
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+
+
+\pnum
+\postconditions
+
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+
+\pnum
+\remarks
+
+
+\pnum
+\errors
+
+
+\pnum
+\realnotes
+
+
+\end{itemdescr}
+
 
 \rSec1 [\iotwod.surface.modifiers.font] {\tcode{surface} font modifiers}
 
-%\indexlibrary{\idxcode{surface}!\idxcode{}}
-%\indexlibrary{\idxcode{}!\idxcode{surface}}
-%\begin{itemdecl}
-%\end{itemdecl}
-%\begin{itemdescr}
-%	\pnum
-%	\effects
-%	
-%	\pnum
-%	\postconditions
-%	
-%\end{itemdescr}
+\indexlibrary{\idxcode{surface}!\idxcode{}}
+\indexlibrary{\idxcode{}!\idxcode{surface}}
+\begin{itemdecl}
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+
+
+\pnum
+\postconditions
+
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+
+\pnum
+\remarks
+
+
+\pnum
+\errors
+
+
+\pnum
+\realnotes
+
+
+\end{itemdescr}
+
 
 \rSec1 [\iotwod.surface.observers.state] {\tcode{surface} state observers}
 

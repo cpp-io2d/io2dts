@@ -10,15 +10,15 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   public:
     // \ref{\iotwod.\iotwoderrorcategory.observers}, observers:
     virtual const char* name() const noexcept override;
-    virtual ::std::string message(int errVal) const override;
+    virtual string message(int errVal) const override;
     virtual bool equivalent(int code,
-      const ::std::error_condition& condition) const noexcept override;
-    virtual bool equivalent(const ::std::error_code& ec,
+      const error_condition& condition) const noexcept override;
+    virtual bool equivalent(const error_code& ec,
       int condition) const noexcept override;
   };
   
   // \ref{\iotwod.\iotwoderrorcategory.nonmembers}, non-member functions:
-  const ::std::error_category& io2d_category() noexcept;
+  const error_category& io2d_category() noexcept;
 } } } }
 \end{codeblock}
 
@@ -48,7 +48,7 @@ virtual const char* name() const noexcept override;
 \indexlibrary{\idxcode{io2d_error_category}!\idxcode{message}}
 \indexlibrary{\idxcode{message}!\idxcode{io2d_error_category}}
 \begin{itemdecl}
-virtual ::std::string message(int errVal) const override;
+virtual string message(int errVal) const override;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -76,7 +76,7 @@ virtual ::std::string message(int errVal) const override;
 \indexlibrary{\idxcode{equivalent}!\idxcode{io2d_error_category}}
 \begin{itemdecl}
 virtual bool equivalent(int code,
-  const ::std::error_condition& condition) const noexcept override;
+  const error_condition& condition) const noexcept override;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -90,13 +90,13 @@ virtual bool equivalent(int code,
 	\exitnote
 \end{itemdescr}
 \begin{itemdecl}
-virtual bool equivalent(const ::std::error_code& ec,
+virtual bool equivalent(const error_code& ec,
   int condition) const noexcept override;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
-	True if \tcode{ec.category() == *this} and the \impldef{\tcode{io2d_error_category}!\tcode{equivalent}} error code value in \tcode{ec.value} equates to \tcode{static_cast<io2d_error>(condition)}.
+	True if \tcode{ec.category() == *this} and the \impldef{\tcode{io2d_error_category}!\tcode{equivalent}} error code value in\\ \tcode{ec.value} equates to \tcode{static_cast<io2d_error>(condition)}.
 	\enternote
 	Because of the variations in rendering and presentation technologies 
 	available for use on different platforms, the issue of equivalence between 
@@ -110,7 +110,7 @@ non-member functions}
 
 \indexlibrary{\idxcode{io2d_category}}
 \begin{itemdecl}
-  const ::std::error_category& io2d_category() noexcept;
+  const error_category& io2d_category() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum

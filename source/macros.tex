@@ -120,6 +120,7 @@
 \newcommand{\Cpp}{\mbox{C\Rplus\Rplus}\xspace}
 \newcommand{\CppIII}{\Cpp 2003\xspace}
 \newcommand{\CppXI}{\Cpp 2011\xspace}
+\newcommand{\CppXIV}{\Cpp 2014\xspace}
 \newcommand{\opt}{{\ensuremath{_\mathit{opt}}}\xspace}
 \newcommand{\shl}{<{<}}
 \newcommand{\shr}{>{>}}
@@ -205,10 +206,16 @@
 
 \newcommand{\UNSP}[1]{\textit{\texttt{#1}}}
 \newcommand{\unspec}{\UNSP{unspecified}\xspace}
+\newlength{\unspecwidth}
+\newcommand{\unspecaligned}{%
+\settowidth{\unspecwidth}{xxunspecalignedx}%
+\makebox[\unspecwidth][l]{\UNSP{unspecified}}}
 \newcommand{\unspecbool}{\UNSP{unspecified-bool-type}}
 \newcommand{\seebelow}{\UNSP{see below}}
 \newcommand{\unspecuniqtype}{\UNSP{unspecified unique type}}
 \newcommand{\unspecalloctype}{\UNSP{unspecified allocator type}}
+
+\newcommand{\EXPLICIT}{\textit{\texttt{EXPLICIT}}}
 
 %% Double underscore
 \newcommand{\ungap}{\kern.5pt}
@@ -483,9 +490,6 @@
 % usage: \definition{name}{xref}
 %\newcommand{\definition}[2]{\rSec2[#2]{#1}}
 % for ISO format, use:
-\newcommand{\definition}[2]
- {\hfill\vspace{.25ex plus .5ex minus .2ex}\\
- \addtocounter{subsection}{1}%
- \textbf{\thesubsection\hfill\relax[#2]}\\
- \textbf{#1}\label{#2}\\
- }
+\newcommand{\definition}[2]{%
+\subsection[#1]{\hfill[#2]}\vspace{-.3\onelineskip}\label{#2}\textbf{#1}\\%
+}

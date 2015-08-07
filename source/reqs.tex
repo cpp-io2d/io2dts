@@ -3,8 +3,12 @@
 \rSec1 [\iotwod.req.namespace] {Namespaces and headers}
 
 \pnum
-The components described in this technical specification are experimental and not part of the C++ standard library. All components described in this technical specification are declared in namespace
-\tcode{std::experimental::io2d::v1} or a sub-namespace thereof unless otherwise specified. The header described in this technical specification shall import the contents of \tcode{std::experimental::io2d::v1} into \tcode{std::experimental::io2d} as if by
+The components described in this technical specification are experimental and 
+not part of the C++ standard library. All components described in this 
+technical specification are declared in namespace\\ \tcode{std::experimental::io2d::v1} or a sub-namespace thereof unless 
+otherwise specified. The header described in this technical specification shall 
+import the contents of \tcode{std::experimental::io2d::v1} into 
+\tcode{std::experimental::io2d} as if by
 
 \pnum
 \begin{codeblock}
@@ -18,13 +22,13 @@ namespace std {
 \end{codeblock}
 
 \pnum
-Unless otherwise specified, references to other entities described in this \documenttypename are assumed to be qualified with \tcode{std::experimental::filesystem::v1::}, and references to entities
+Unless otherwise specified, references to other entities described in this \documenttypename{} are assumed to be qualified with \tcode{std::experimental::io2d::v1::}, and references to entities
 described in the C++ standard are assumed to be qualified with \tcode{std::}.
 
 \rSec1 [\iotwod.req.macros] {Feature test macros}
 
 \pnum
-This macro allows users to determine which version of this Technical Specification is supported by header \tcode{<experimental/io2d>}.
+This macro allows users to determine which version of this \documenttypename{} is supported by header \tcode{<experimental/io2d>}.
 
 \pnum
 Header \tcode{<experimental/io2d>} shall supply the following macro definition:
@@ -40,7 +44,7 @@ and mm the month when the version of the Technical Specification was completed. 
 \rSec1 [\iotwod.req.native] {Native handles}
 
 \pnum
-Several classes described in this \documenttypename have members 
+Several classes described in this \documenttypename{} have members 
 \tcode{native_handle_type} and \tcode{native_handle}. The presence of these 
 members and their semantics is \impldef{presence and meaning of 
 \tcode{native_handle_type} and \tcode{native_handle}}.
@@ -53,4 +57,15 @@ detection. Actual use of these members is inherently non-portable.
 \rSec1 [\iotwod.req.\iecfivefivenine] {IEC 559 floating point support}
 
 \pnum
-This \documenttypename requires that \tcode{numeric_limits<double>::is_iec559 == true}. 
+In order to implement this \documenttypename{}, \tcode{numeric_limits<double>::is_iec559 == true} shall evaluate to \tcode{true}. 
+
+\rSec1 [\iotwod.req.cstdintopttypes] {Exact width integer types}
+
+\pnum
+In order to implement this \documenttypename{}, the implementation shall provide the following optional integer types from the \tcode{<cstdint>} header file:
+\begin{itemize}
+	\item \tcode{uint8_t}
+	\item \tcode{uint16_t}
+	\item \tcode{uint32_t}
+	\item \tcode{uint64_t}
+\end{itemize}
