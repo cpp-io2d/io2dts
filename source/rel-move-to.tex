@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.relmoveto] {Class \tcode{rel_move_to}}
+\rSec0 [relmoveto] {Class \tcode{rel_move_to}}
 
-\rSec1 [\iotwod.relmoveto.synopsis] {\tcode{rel_move_to} synopsis}
+\rSec1 [relmoveto.synopsis] {\tcode{rel_move_to} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class rel_move_to : public path_data {
   public:
-    // \ref{\iotwod.relmoveto.cons}, construct/copy/move/destroy:
+    // \ref{relmoveto.cons}, construct/copy/move/destroy:
     rel_move_to() noexcept;
     rel_move_to(const rel_move_to& other) noexcept;
     rel_move_to& operator=(const rel_move_to& other) noexcept;
@@ -15,10 +15,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     rel_move_to& operator=(rel_move_to&& other) noexcept;
     rel_move_to(const vector_2d& pt) noexcept;
 
-    // \ref{\iotwod.relmoveto.modifiers}, modifiers:
+    // \ref{relmoveto.modifiers}, modifiers:
     void to(const vector_2d& pt) noexcept;
 
-    // \ref{\iotwod.relmoveto.observers}, observers:
+    // \ref{relmoveto.observers}, observers:
     vector_2d to() const noexcept;
     virtual path_data_type type() const noexcept override;
     
@@ -28,7 +28,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.relmoveto.intro] {\tcode{rel_move_to} Description}
+\rSec1 [relmoveto.intro] {\tcode{rel_move_to} Description}
 
 \pnum
 \indexlibrary{\idxcode{rel_move_to}}
@@ -40,7 +40,7 @@ This operation starts a new path geometry and sets its current point and last-mo
 \pnum
 If the existing path geometry does not have a current point when this operation is requested the path geometry collection is malformed.
 
-\rSec1 [\iotwod.relmoveto.cons] {\tcode{rel_move_to} constructors and assignment operators}
+\rSec1 [relmoveto.cons] {\tcode{rel_move_to} constructors and assignment operators}
 
 \indexlibrary{\idxcode{rel_move_to}!constructor}
 \begin{itemdecl}
@@ -70,7 +70,7 @@ If the existing path geometry does not have a current point when this operation 
 	\tcode{_Data == pt}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.relmoveto.modifiers]{\tcode{rel_move_to} modifiers}
+\rSec1 [relmoveto.modifiers]{\tcode{rel_move_to} modifiers}
 
 \indexlibrary{\idxcode{rel_move_to}!\idxcode{to}}
 \indexlibrary{\idxcode{to}!\idxcode{rel_move_to}}
@@ -84,7 +84,7 @@ If the existing path geometry does not have a current point when this operation 
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.relmoveto.observers]{\tcode{rel_move_to} observers}
+\rSec1 [relmoveto.observers]{\tcode{rel_move_to} observers}
 
 \indexlibrary{\idxcode{rel_move_to}!\idxcode{to}}
 \indexlibrary{\idxcode{to}!\idxcode{rel_move_to}}

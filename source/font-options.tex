@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.fontoptions] {Class \tcode{font_options}}
+\rSec0 [fontoptions] {Class \tcode{font_options}}
 
-\rSec1 [\iotwod.fontoptions.synopsis] {\tcode{font_options} synopsis}
+\rSec1 [fontoptions.synopsis] {\tcode{font_options} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class font_options {
     public:
-    // \ref{\iotwod.fontoptions.cons}, construct/copy/destroy:
+    // \ref{fontoptions.cons}, construct/copy/destroy:
     font_options() noexcept;
     font_options(const font_options& other) noexcept;
     font_options& operator=(const font_options& other) noexcept;
@@ -16,11 +16,11 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     font_options(std::experimental::io2d::antialias a,
       std::experimental::io2d::subpixel_order so) noexcept;
 
-    // \ref{\iotwod.fontoptions.modifiers}, modifiers:
+    // \ref{fontoptions.modifiers}, modifiers:
     void antialias(std::experimental::io2d::antialias value) noexcept;
     void subpixel_order(std::experimental::io2d::subpixel_order value) noexcept;
 
-    // \ref{\iotwod.fontoptions.observers}, observers:
+    // \ref{fontoptions.observers}, observers:
     std::experimental::io2d::antialias antialias() const noexcept;
     std::experimental::io2d::subpixel_order subpixel_order() const noexcept;
 
@@ -31,13 +31,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.fontoptions.intro] {\tcode{font_options} Description}
+\rSec1 [fontoptions.intro] {\tcode{font_options} Description}
 
 \pnum
 \indexlibrary{\idxcode{font_options}}
 The \tcode{font_options} class describes an object that holds values which specify certain aspects of how text should be rendered.
 
-\rSec1 [\iotwod.fontoptions.cons] {\tcode{font_options} constructors and assignment operators}
+\rSec1 [fontoptions.cons] {\tcode{font_options} constructors and assignment operators}
 
 \indexlibrary{\idxcode{font_options}!constructor}
 \begin{itemdecl}
@@ -74,7 +74,7 @@ The \tcode{font_options} class describes an object that holds values which speci
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.fontoptions.modifiers] {\tcode{font_options} modifiers}
+\rSec1 [fontoptions.modifiers] {\tcode{font_options} modifiers}
 
 \indexlibrary{\idxcode{font_options}!\idxcode{antialias}}
 \indexlibrary{\idxcode{antialias}!\idxcode{font_options}}
@@ -100,7 +100,7 @@ The \tcode{font_options} class describes an object that holds values which speci
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.fontoptions.observers] {\tcode{font_options} observers}
+\rSec1 [fontoptions.observers] {\tcode{font_options} observers}
 
 \indexlibrary{\idxcode{font_options}!\idxcode{antialias}}
 \indexlibrary{\idxcode{antialias}!\idxcode{font_options}}

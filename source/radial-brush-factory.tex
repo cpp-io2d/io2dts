@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.radialbrushfact] {Class \tcode{radial_brush_factory}}
+\rSec0 [radialbrushfact] {Class \tcode{radial_brush_factory}}
 
-\rSec1 [\iotwod.radialbrushfact.synopsis] {\tcode{radial_brush_factory} synopsis}
+\rSec1 [radialbrushfact.synopsis] {\tcode{radial_brush_factory} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class radial_brush_factory {
   public:
-    // \ref{\iotwod.radialbrushfact.cons}, construct/copy/move/destroy:
+    // \ref{radialbrushfact.cons}, construct/copy/move/destroy:
     radial_brush_factory() noexcept;
     radial_brush_factory(const radial_brush_factory&);
     radial_brush_factory& operator=(const radial_brush_factory&);
@@ -16,7 +16,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     radial_brush_factory(const vector_2d& center0, double radius0,
       const vector_2d& center1, double radius1) noexcept;
 
-    // \ref{\iotwod.radialbrushfact.modifiers}, modifiers:
+    // \ref{radialbrushfact.modifiers}, modifiers:
     void add_color_stop(double offset, const rgba_color& color);
     void add_color_stop(double offset, const rgba_color& color,
       error_code& ec) noexcept;
@@ -26,7 +26,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void radial_circles(const vector_2d& center0, double radius0,
       const vector_2d& center1, double radius1) noexcept;
 
-    // \ref{\iotwod.radialbrushfact.observers}, observers:
+    // \ref{radialbrushfact.observers}, observers:
     unsigned int color_stop_count() const noexcept;
     tuple<double, rgba_color> color_stop(unsigned int index) const;
     tuple<double, rgba_color> color_stop(unsigned int index,
@@ -43,16 +43,16 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.radialbrushfact.intro] {\tcode{radial_brush_factory} Description}
+\rSec1 [radialbrushfact.intro] {\tcode{radial_brush_factory} Description}
 
 \pnum
 \indexlibrary{\idxcode{radial_brush_factory}}
 The class \tcode{radial_brush_factory} describes a mutable factory for creating \tcode{brush} objects with a radial gradient describing its color and alpha data.
 
 \pnum
-For more information about gradients, including radial gradients, see \ref{\iotwod.gradients}.
+For more information about gradients, including radial gradients, see \ref{gradients}.
 
-\rSec1 [\iotwod.radialbrushfact.cons] {\tcode{radial_brush_factory} constructors and assignment operators}
+\rSec1 [radialbrushfact.cons] {\tcode{radial_brush_factory} constructors and assignment operators}
 
 \indexlibrary{\idxcode{radial_brush_factory}!constructor}
 \begin{itemdecl}
@@ -109,7 +109,7 @@ For more information about gradients, including radial gradients, see \ref{\iotw
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.radialbrushfact.modifiers] {\tcode{radial_brush_factory} modifiers}
+\rSec1 [radialbrushfact.modifiers] {\tcode{radial_brush_factory} modifiers}
 
 \indexlibrary{\idxcode{radial_brush_factory}!\idxcode{add_color_stop}}
 \indexlibrary{\idxcode{add_color_stop}!\idxcode{radial_brush_factory}}
@@ -189,7 +189,7 @@ For more information about gradients, including radial gradients, see \ref{\iotw
 
 \end{itemdescr}
 
-\rSec1 [\iotwod.radialbrushfact.observers] {\tcode{radial_brush_factory} observers}
+\rSec1 [radialbrushfact.observers] {\tcode{radial_brush_factory} observers}
 
 \indexlibrary{\idxcode{radial_brush_factory}!\idxcode{color_stop_count}}
 \indexlibrary{\idxcode{color_stop_count}!\idxcode{radial_brush_factory}}

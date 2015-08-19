@@ -1,7 +1,7 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.device] {Class \tcode{device}}
+\rSec0 [device] {Class \tcode{device}}
 
-\rSec1 [\iotwod.device.synopsis] {\tcode{device} synopsis}
+\rSec1 [device.synopsis] {\tcode{device} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
@@ -17,7 +17,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     device(device&& other);
     device& operator=(device&& other);
 
-    // \ref{\iotwod.device.modifiers}, modifiers:
+    // \ref{device.modifiers}, modifiers:
     void flush() noexcept;
     void lock();
     void lock(error_code& ec) noexcept;
@@ -27,7 +27,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.device.intro] {\tcode{device} Description}
+\rSec1 [device.intro] {\tcode{device} Description}
 
 \pnum
 \indexlibrary{\idxcode{device}}
@@ -37,7 +37,7 @@ presentation technologies, such graphics devices, graphics device contexts, and 
 \pnum
 A \tcode{device} object is obtained from a \tcode{surface} or \tcode{surface}-derived object.
 
-\rSec1 [\iotwod.device.modifiers] {\tcode{device} modifiers}
+\rSec1 [device.modifiers] {\tcode{device} modifiers}
 
 \indexlibrary{\idxcode{device}!\idxcode{flush}}
 \indexlibrary{\idxcode{flush}!\idxcode{device}}

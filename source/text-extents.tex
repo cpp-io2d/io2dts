@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.textextents] {Class \tcode{text_extents}}
+\rSec0 [textextents] {Class \tcode{text_extents}}
 
-\rSec1 [\iotwod.textextents.synopsis] {\tcode{text_extents} synopsis}
+\rSec1 [textextents.synopsis] {\tcode{text_extents} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class text_extents {
   public:
-    // \ref{\iotwod.textextents.cons}, construct/copy/move/destroy:
+    // \ref{textextents.cons}, construct/copy/move/destroy:
     text_extents() noexcept;
     text_extents(const text_extents& other) noexcept;
     text_extents& operator=(const text_extents& other) noexcept;
@@ -16,7 +16,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     text_extents(double xBearing, double yBearing, double width,
       double height, double xAdvance, double yAdvance) noexcept;
 
-    // \ref{\iotwod.textextents.modifiers}, modifiers:
+    // \ref{textextents.modifiers}, modifiers:
     void x_bearing(double value) noexcept;
     void y_bearing(double value) noexcept;
     void width(double value) noexcept;
@@ -24,7 +24,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void x_advance(double value) noexcept;
     void y_advance(double value) noexcept;
 
-    // \ref{\iotwod.textextents.observers}, observers:
+    // \ref{textextents.observers}, observers:
     double x_bearing() const noexcept;
     double y_bearing() const noexcept;
     double width() const noexcept;
@@ -43,7 +43,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.textextents.intro] {\tcode{text_extents} Description}
+\rSec1 [textextents.intro] {\tcode{text_extents} Description}
 
 \pnum
 \indexlibrary{\idxcode{text_extents}}
@@ -57,7 +57,7 @@ It is used by a \tcode{surface} object to report the extents of a string in the 
 This object's observable values can be manipulated by library users for their convenience. But since the \tcode{text_extents} object returned by \tcode{surface::text_extents()} is not a reference or a pointer, the changes do not reflect back to the surface or its current font.
 \exitnote
 
-\rSec1 [\iotwod.textextents.cons] {\tcode{text_extents} constructors and assignment operators}
+\rSec1 [textextents.cons] {\tcode{text_extents} constructors and assignment operators}
 
 \indexlibrary{\idxcode{text_extents}!constructor}
 \begin{itemdecl}
@@ -110,7 +110,7 @@ This object's observable values can be manipulated by library users for their co
 
 \end{itemdescr}
 
-\rSec1 [\iotwod.textextents.modifiers]{\tcode{text_extents} modifiers}
+\rSec1 [textextents.modifiers]{\tcode{text_extents} modifiers}
 
 \indexlibrary{\idxcode{text_extents}!\idxcode{x_bearing}}
 \indexlibrary{\idxcode{x_bearing}!\idxcode{text_extents}}
@@ -183,7 +183,7 @@ This object's observable values can be manipulated by library users for their co
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.textextents.observers]{\tcode{text_extents} observers}
+\rSec1 [textextents.observers]{\tcode{text_extents} observers}
 
 \indexlibrary{\idxcode{text_extents}!\idxcode{x_bearing}}
 \indexlibrary{\idxcode{x_bearing}!\idxcode{text_extents}}

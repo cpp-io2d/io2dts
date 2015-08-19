@@ -1,16 +1,16 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.surface] {Class \tcode{surface}}
+\rSec0 [surface] {Class \tcode{surface}}
 
 \pnum
 A \term{rendering and composing operation} is an operation that is either a single-phase operation consisting of a composing operation or a multi-phase operation consisting of a rendering operation followed by a composing operation.
 
-\rSec1 [\iotwod.surface.synopsis] {\tcode{surface} synopsis}
+\rSec1 [surface.synopsis] {\tcode{surface} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class surface {
   public:
-    // \ref{\iotwod.surface.cons}, constructors, assignment operators, destructors:
+    // \ref{surface.cons}, constructors, assignment operators, destructors:
     surface() = delete;
     surface(const surface&) = delete;
     surface& operator=(const surface&) = delete;
@@ -18,7 +18,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     surface& operator=(surface&& other) noexcept;
     virtual ~surface();
 
-    // \ref{\iotwod.surface.modifiers.state}, state modifiers:
+    // \ref{surface.modifiers.state}, state modifiers:
     virtual void finish() noexcept;
     void flush();
     void flush(error_code& ec) noexcept;
@@ -65,10 +65,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void path(const experimental::io2d::path& p);
     void path(const experimental::io2d::path& p, error_code& ec) noexcept;
 
-    // \ref{\iotwod.surface.modifiers.immediatepath}, immediate path modifiers:
+    // \ref{surface.modifiers.immediatepath}, immediate path modifiers:
     experimental::io2d::path_factory& immediate() noexcept;
 
-    // \ref{\iotwod.surface.modifiers.render}, render modifiers:
+    // \ref{surface.modifiers.render}, render modifiers:
     void fill();
     void fill(error_code& ec) noexcept;
     void fill(const rgba_color& c);
@@ -165,7 +165,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void stroke_immediate(const surface& s, const matrix_2d& m, error_code& ec,
       extend e = extend::none, filter f = filter::good) noexcept;
     
-    // \ref{\iotwod.surface.modifiers.maskrender}, mask render modifiers:
+    // \ref{surface.modifiers.maskrender}, mask render modifiers:
     void mask(const experimental::io2d::brush& mb);
     void mask(const experimental::io2d::brush& mb, error_code& ec)
       noexcept;
@@ -290,7 +290,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       const surface& s, const matrix_2d& m, error_code& ec,
       extend e = extend::none, filter f = filter::good) noexcept;
     
-    // \ref{\iotwod.surface.modifiers.textrender}, text render modifiers:
+    // \ref{surface.modifiers.textrender}, text render modifiers:
     vector_2d show_text(const string& utf8, const vector_2d& pos);
     vector_2d show_text(const string& utf8, const vector_2d& pos,
       error_code& ec) noexcept;
@@ -315,10 +315,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       const surface& s, const matrix_2d& m, error_code& ec,
       extend e = extend::none, filter f = filter::good) noexcept;
     
-    // \ref{\iotwod.surface.modifiers.transform}, transformation modifiers:
+    // \ref{surface.modifiers.transform}, transformation modifiers:
     void matrix(const matrix_2d& matrix) noexcept;
     
-    // \ref{\iotwod.surface.modifiers.font}, font modifiers:
+    // \ref{surface.modifiers.font}, font modifiers:
     void font_face(const string& typeface, font_slant sl, font_weight w);
     void font_face(const string& typeface, font_slant sl, font_weight w,
       error_code& ec) noexcept;
@@ -329,7 +329,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void font_matrix(const matrix_2d& m) noexcept;
     void font_options(const font_options& fo) noexcept;
     
-    // \ref{\iotwod.surface.observers.state}, state observers:
+    // \ref{surface.observers.state}, state observers:
     bool is_finished() const noexcept;
     experimental::io2d::content content() const noexcept;
     bool has_surface_resource() const noexcept;
@@ -351,7 +351,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     vector<rectangle> clip_rectangles() const;
     vector<rectangle> clip_rectangles(error_code& ec) const noexcept;
     
-    // \ref{\iotwod.surface.observers.render}, render observers:
+    // \ref{surface.observers.render}, render observers:
     rectangle fill_extents() const noexcept;
     rectangle fill_extents_immediate() const noexcept;
     bool in_fill(const vector_2d& pt) const noexcept;
@@ -365,7 +365,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     experimental::io2d::text_extents text_extents(const string& utf8,
       error_code& ec) const noexcept;
     
-    // \ref{\iotwod.surface.observers.transform}, transformation observers:
+    // \ref{surface.observers.transform}, transformation observers:
     matrix_2d matrix() const noexcept;
     vector_2d user_to_surface(const vector_2d& pt) const noexcept;
     vector_2d user_to_surface_distance(const vector_2d& dpt) const noexcept;
@@ -376,7 +376,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     vector_2d surface_to_user_distance(const vector_2d& dpt, error_code& ec)
       const noexcept;
     
-    // \ref{\iotwod.surface.observers.font}, font observers:
+    // \ref{surface.observers.font}, font observers:
     matrix_2d font_matrix() const noexcept;
     experimental::io2d::font_options font_options() const noexcept;
     experimental::io2d::font_face font_face() const;
@@ -385,13 +385,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.surface.intro] {\tcode{surface} description}
+\rSec1 [surface.intro] {\tcode{surface} description}
 
 \pnum
 \indexlibrary{\idxcode{surface}}
 The \tcode{surface} class provides an interface for managing a graphics
 data graphics resource and its observable state data
-(\ref{\iotwod.surface.state}).
+(\ref{surface.state}).
 
 \pnum
 A \tcode{surface} object is a move-only object.
@@ -417,18 +417,18 @@ The \tcode{image_surface} class and the \tcode{display_surface} class each speci
 \exitexample
 
 \pnum
-The definitions of the rendering and composing operations in \ref{\iotwod.surface.rendering} shall only be applicable when the graphics data graphics resource on which the \tcode{surface} members operate is a raster graphics data graphics resource. In all other cases, any attempt to invoke the rendering and composition operations shall result in undefined behavior.
+The definitions of the rendering and composing operations in \ref{surface.rendering} shall only be applicable when the graphics data graphics resource on which the \tcode{surface} members operate is a raster graphics data graphics resource. In all other cases, any attempt to invoke the rendering and composition operations shall result in undefined behavior.
 
-\rSec1 [\iotwod.surface.state] {\tcode{surface} state}
+\rSec1 [surface.state] {\tcode{surface} state}
 
 \pnum
-Table~\ref{tab:\iotwod.surface.state.listing} specifies the name, type, function, and default value for each item of a surface's observable state.
+Table~\ref{tab:surface.state.listing} specifies the name, type, function, and default value for each item of a surface's observable state.
 
-\rSec2 [\iotwod.surface.state.default] {\tcode{surface} state default values}
+\rSec2 [surface.state.default] {\tcode{surface} state default values}
 
 \begin{libreqtab4b}
 	{Surface observable state}
-	{tab:\iotwod.surface.state.listing}
+	{tab:surface.state.listing}
 	\\ \topline
 	\lhdr{Name}   &   \chdr{Type}  &   \chdr{Function}  &   \rhdr{Default value}       \\ \capsep
 	\endfirsthead
@@ -488,7 +488,7 @@ Table~\ref{tab:\iotwod.surface.state.listing} specifies the name, type, function
 	\tcode{\impldef{\tcode{surface}!Tolerance}} \\ \rowsep
 	
 	Clip Area &
-	\unspec (see \ref{\iotwod.surface.state.default}, below) &
+	\unspec (see \ref{surface.state.default}, below) &
 	The areas of the surface which shall be the only areas in which composing operations may have any effect &
 	An area which contains the entire area of the surface \\ \rowsep
 	
@@ -529,7 +529,7 @@ Table~\ref{tab:\iotwod.surface.state.listing} specifies the name, type, function
 The Clip Area may be modified by intersecting the current Clip Area with the areas of a \tcode{path} object that would be filled according to the current Fill Rule. The resulting Clip Area will only contain areas that were already in the Clip Area and does not need to be a valid \tcode{path} object since the Clip Area is only guaranteed to be observable by the effects it has on composing operations. For this reason, the Clip Area's type is unspecified. The Clip Area may also be modified by resetting it to its default value, which is the only way of enlarging the current Clip Area.
 \exitnote
 
-\rSec2 [\iotwod.surface.state.save] {\tcode{surface} saved state}
+\rSec2 [surface.state.save] {\tcode{surface} saved state}
 
 \pnum
 A surface object provides an interface to save its current state and subsequently restore it.
@@ -544,7 +544,7 @@ Save and restore operations may be nested.
 Each call to \tcode{surface::restore} restores a surface object's state to its values at the time of the most recent call to \tcode{surface::save}.
 
 \pnum
-The following list denotes each item of observable state that shall be saved by \tcode{surface::save} and restored by \tcode{surface::restore}, using the state item names listed in Table~\ref{tab:\iotwod.surface.state.listing}:
+The following list denotes each item of observable state that shall be saved by \tcode{surface::save} and restored by \tcode{surface::restore}, using the state item names listed in Table~\ref{tab:surface.state.listing}:
 
 \begin{itemize}
 	\item Current Brush
@@ -566,13 +566,13 @@ The following list denotes each item of observable state that shall be saved by 
 	\item Font Options
 \end{itemize}
 
-\rSec1 [\iotwod.surface.rendering] {\tcode{surface} rendering and composing}
+\rSec1 [surface.rendering] {\tcode{surface} rendering and composing}
 
 \pnum
 The \tcode{surface} class provides five fundamental rendering and composing operations:
 \begin{libreqtab2}
  {\tcode{surface} rendering and composing operations}
- {tab:\iotwod.surface.rendering.operations}
+ {tab:surface.rendering.operations}
  \\ \topline
  \lhdr{Operation}
  & \rhdr{Function(s)}
@@ -623,7 +623,7 @@ The painting operation is a single-part operation consisting of a composing oper
 
 \pnum
 \enternote
-By definition (see Table \ref{tab:\iotwod.surface.state.listing}), the Clip Area always applies to all composing operations and therefore to all rendering and composing operations. This is true even if no mention is made of the Clip Area in the description of a rendering and composing operation or if the description of a rendering and composing operation uses phraseology that could otherwise be read as being unconstrained. Because of this, mention of the applicability of the Clip Area will be omitted in the descriptions of the rendering and composing operations that follow.
+By definition (see Table \ref{tab:surface.state.listing}), the Clip Area always applies to all composing operations and therefore to all rendering and composing operations. This is true even if no mention is made of the Clip Area in the description of a rendering and composing operation or if the description of a rendering and composing operation uses phraseology that could otherwise be read as being unconstrained. Because of this, mention of the applicability of the Clip Area will be omitted in the descriptions of the rendering and composing operations that follow.
 \exitnote
 
 \pnum
@@ -632,15 +632,15 @@ Each of the five fundamental rendering and composing operations has its own set 
 	\item The painting operation has no minimum arguments.
 	\item The filling operation has no minimum arguments.
 	\item The stroking operation has no minimum arguments.
-	\item The masking operation has one minimum argument: an object, used as the mask (see \ref{\iotwod.surface.rendering.masking}), that is of type \tcode{brush} or type \tcode{surface}.
-	\item The typesetting operation has two minimum arguments: an object, used as the text that is rendered and composed to the surface (see \ref{\iotwod.surface.rendering.typesetting}), that is of type \tcode{string}; and, an object, used to specify the coordinates at which the origin of the first character of the text is positioned (see \ref{\iotwod.surface.rendering.typesetting}), of type \tcode{vector_2d}.
+	\item The masking operation has one minimum argument: an object, used as the mask (see \ref{surface.rendering.masking}), that is of type \tcode{brush} or type \tcode{surface}.
+	\item The typesetting operation has two minimum arguments: an object, used as the text that is rendered and composed to the surface (see \ref{surface.rendering.typesetting}), that is of type \tcode{string}; and, an object, used to specify the coordinates at which the origin of the first character of the text is positioned (see \ref{surface.rendering.typesetting}), of type \tcode{vector_2d}.
 \end{enumerate}
 
 \pnum
 If an \tcode{error_code} argument (see \ref{\iotwod.err.report}) is passed to a rendering and composing operation, it shall be considered part of the set of minimum arguments for that operation.
 
 \pnum
-For the masking operation, where a \tcode{surface} object is used as the mask argument, it may be immediately followed by an argument of type \tcode{vector_2d} which shall be used as the mask surface origin (see \ref{\iotwod.surface.rendering.masking}). If a mask surface origin argument is passed to the masking operation, it shall be considered part of the set of minimum arguments for that operation.
+For the masking operation, where a \tcode{surface} object is used as the mask argument, it may be immediately followed by an argument of type \tcode{vector_2d} which shall be used as the mask surface origin (see \ref{surface.rendering.masking}). If a mask surface origin argument is passed to the masking operation, it shall be considered part of the set of minimum arguments for that operation.
 
 \pnum
 The rendering and composing operations shall have access to a \term{source brush}, a raster graphics data graphics resource which has the same observable behavior as a \tcode{brush} object even where it is not required to be a \tcode{brush} object, each time they are invoked.
@@ -669,15 +669,15 @@ The rendering and composing operations each have the same combinations of extra 
 \exitnote
 
 \pnum
-When a rendering and composing operation needs to obtain a value for a pixel from the source brush, it shall do so as specified in \ref{\iotwod.surface.sampling}. %% If the source brush is an object of type \tcode{brush}, and invoking \tcode{brush::type} on it returns \tcode{brush_type::linear} or \tcode{brush_type::radial}, \ref{\iotwod.gradients.sampling} shall also apply.
+When a rendering and composing operation needs to obtain a value for a pixel from the source brush, it shall do so as specified in \ref{surface.sampling}. %% If the source brush is an object of type \tcode{brush}, and invoking \tcode{brush::type} on it returns \tcode{brush_type::linear} or \tcode{brush_type::radial}, \ref{gradients.sampling} shall also apply.
 
 \pnum
 A \tcode{surface} object shall not be used as a mask or as a source brush for any rendering and composing operations invoked on that \tcode{surface} object. No diagnostic is required.
 \enternote
-When a \tcode{brush} object \tcode{b} is created from a \tcode{surface} object \tcode{s} using the \tcode{surface_brush_factory} class, \tcode{b} may be used as a mask or as a source brush for rendering and composing operations invoked on \tcode{s} because the \tcode{surface_brush_factory} class creates a copy of \tcode{s} (see \ref{\iotwod.surfacebrushfact}), thereby avoiding the aliasing problems and race conditions that this requirement exists to block.
+When a \tcode{brush} object \tcode{b} is created from a \tcode{surface} object \tcode{s} using the \tcode{surface_brush_factory} class, \tcode{b} may be used as a mask or as a source brush for rendering and composing operations invoked on \tcode{s} because the \tcode{surface_brush_factory} class creates a copy of \tcode{s} (see \ref{surfacebrushfact}), thereby avoiding the aliasing problems and race conditions that this requirement exists to block.
 \exitnote
 
-\rSec1 [\iotwod.surface.sampling] {Sampling from a raster graphics data graphics resource}
+\rSec1 [surface.sampling] {Sampling from a raster graphics data graphics resource}
 
 \pnum
 A ...
@@ -686,7 +686,7 @@ A ...
 For every raster graphics data graphics resource that may be used as a source brush or a mask it shall be possible to provide an input value in the form of a point and receive an output value in the form of a pixel. ***FIXME*** Need to deal with formats - are they an input or is the returned pixel always in the RGBA color space with the conversion to the required format happening as a subsequent step? Also, something needs to be done to ensure that the output is the same value both for every call with the same input and state and for all implementations - a graphics data graphics resource currently has no coordinate system which makes that problematic or even impossible. together with its graphics state data, if any,
 
 \pnum
-In general, the effects of the \tcode{extend} value on a \tcode{brush} object are documented in \ref{\iotwod.extend}.
+In general, the effects of the \tcode{extend} value on a \tcode{brush} object are documented in \ref{extend}.
 
 \pnum
 The initial \tcode{extend} value of a \tcode{brush} object depends on the brush factory used to create it and is documented in the \tcode{brush} constructors for each type of brush factory.
@@ -694,15 +694,15 @@ The initial \tcode{extend} value of a \tcode{brush} object depends on the brush 
 %\pnum
 %If the \tcode{brush}'s \tcode{brush_type} is \tcode{brush_type::mesh}, the \tcode{brush}'s \tcode{extend} value is ignored and all operations proceed as if the \tcode{extend} value is \tcode{extend::none}.
 %
-\rSec1 [\iotwod.brush.filter] {Effects of its \tcode{filter} value of a \tcode{brush} object}
+\rSec1 [brush.filter] {Effects of its \tcode{filter} value of a \tcode{brush} object}
 
 \pnum
-The effects of the \tcode{filter} value on a \tcode{brush} object are documented in \ref{\iotwod.filter}.
+The effects of the \tcode{filter} value on a \tcode{brush} object are documented in \ref{filter}.
 
 \pnum
 The initial \tcode{filter} value of a \tcode{brush} object depends on the brush factory used to create it and is documented in the \tcode{brush} constructors for each type of brush factory.
 
-\rSec1 [\iotwod.brush.matrix] {Effects of its \tcode{matrix_2d} value on a \tcode{brush} object}
+\rSec1 [brush.matrix] {Effects of its \tcode{matrix_2d} value on a \tcode{brush} object}
 
 \pnum
 The initial \tcode{matrix_2d} value of a \tcode{brush} object is \tcode{matrix_2d::init_identity()}.
@@ -740,12 +740,12 @@ Notice that although the \xaxis scale is set to \tcode{2.0} and the \yaxis scale
 For the same reason as explained in the example above, if you wish to translate the origin point of a \tcode{brush} to the point \tcode{vector_2d p} of a \tcode{surface}, you would do so by setting \tcode{matrix_2d::init_translate(-p)} as the brush's \tcode{matrix_2d} value.
 \exitnote
 
-\rSec2 [\iotwod.surface.rendering.painting] {\tcode{surface} painting}
+\rSec2 [surface.rendering.painting] {\tcode{surface} painting}
 
 \pnum
 When a painting operation is initiated on a surface, the implementation shall compose the source brush with the surface's graphics data graphics resource in the manner specified by the surface's current Composition Operator and modify the surface's graphics data graphics resource to reflect the results of that operation.
 
-\rSec2 [\iotwod.surface.rendering.filling] {\tcode{surface} filling}
+\rSec2 [surface.rendering.filling] {\tcode{surface} filling}
 
 \pnum
 When a filling operation is initiated on a surface, the implementation shall produce results as if the following steps were performed:
@@ -753,24 +753,24 @@ When a filling operation is initiated on a surface, the implementation shall pro
 	\item The surface's 
 \end{itemize}
 
-\rSec2 [\iotwod.surface.rendering.stroking] {\tcode{surface} stroking}
+\rSec2 [surface.rendering.stroking] {\tcode{surface} stroking}
 
 \pnum
 ***FIXME***
 
-\rSec2 [\iotwod.surface.rendering.masking] {\tcode{surface} masking}
+\rSec2 [surface.rendering.masking] {\tcode{surface} masking}
 
 \pnum
 ***FIXME*** used to specify the coordinates at which the origin of the \tcode{surface} object being used as the mask is positioned
 
-\rSec2 [\iotwod.surface.rendering.typesetting] {\tcode{surface} typesetting}
+\rSec2 [surface.rendering.typesetting] {\tcode{surface} typesetting}
 
 \pnum
 ***FIXME***
 
 
 
-\rSec1 [\iotwod.surface.cons] {\tcode{surface} constructors, assignment operators, and destructors}
+\rSec1 [surface.cons] {\tcode{surface} constructors, assignment operators, and destructors}
 
 \indexlibrary{\idxcode{surface}!destructor}
 \begin{itemdecl}
@@ -782,7 +782,7 @@ virtual ~surface();
 Destroys an object of class \tcode{surface}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.surface.modifiers.state] {\tcode{surface} state modifiers}
+\rSec1 [surface.modifiers.state] {\tcode{surface} state modifiers}
 
 \indexlibrary{\idxcode{surface}!\idxcode{finish}}
 \indexlibrary{\idxcode{finish}!\idxcode{surface}}
@@ -1201,7 +1201,7 @@ void path(const experimental::io2d::path& p, error_code& ec) noexcept;
 	Processing the path data so that it is properly transformed can be done at the time it is first set as a path on a \tcode{surface} object or any time before that. The untransformed \tcode{vector<path_data>} must be retained to ensure that a path can be properly recreated at any time. The steps for converting an untransformed \tcode{vector<path_data>} to transformed path data are found at .
 \end{itemdescr}
 
-\rSec1 [\iotwod.surface.modifiers.immediatepath] {\tcode{surface} immediate path modifiers}
+\rSec1 [surface.modifiers.immediatepath] {\tcode{surface} immediate path modifiers}
 
 \indexlibrary{\idxcode{surface}!\idxcode{}}
 \indexlibrary{\idxcode{}!\idxcode{surface}}
@@ -1235,7 +1235,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \end{itemdescr}
 
-\rSec1 [\iotwod.surface.modifiers.render] {\tcode{surface} render modifiers}
+\rSec1 [surface.modifiers.render] {\tcode{surface} render modifiers}
 
 \indexlibrary{\idxcode{surface}!\idxcode{}}
 \indexlibrary{\idxcode{}!\idxcode{surface}}
@@ -1263,7 +1263,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \end{itemdescr}
 
-\rSec1 [\iotwod.surface.modifiers.maskrender] {\tcode{surface} mask render modifiers}
+\rSec1 [surface.modifiers.maskrender] {\tcode{surface} mask render modifiers}
 
 \indexlibrary{\idxcode{surface}!\idxcode{}}
 \indexlibrary{\idxcode{}!\idxcode{surface}}
@@ -1291,41 +1291,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \end{itemdescr}
 
-\rSec1 [\iotwod.surface.modifiers.textrender] {\tcode{surface} text render modifiers}
-
-\indexlibrary{\idxcode{surface}!\idxcode{}}
-\indexlibrary{\idxcode{}!\idxcode{surface}}
-\begin{itemdecl}
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-
-
-\pnum
-\postconditions
-
-
-\pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-
-\pnum
-\remarks
-
-
-\pnum
-\errors
-
-
-\pnum
-\realnotes
-
-
-\end{itemdescr}
-
-\rSec1 [\iotwod.surface.modifiers.transform] {\tcode{surface} transformation modifiers}
+\rSec1 [surface.modifiers.textrender] {\tcode{surface} text render modifiers}
 
 \indexlibrary{\idxcode{surface}!\idxcode{}}
 \indexlibrary{\idxcode{}!\idxcode{surface}}
@@ -1359,8 +1325,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \end{itemdescr}
 
-
-\rSec1 [\iotwod.surface.modifiers.font] {\tcode{surface} font modifiers}
+\rSec1 [surface.modifiers.transform] {\tcode{surface} transformation modifiers}
 
 \indexlibrary{\idxcode{surface}!\idxcode{}}
 \indexlibrary{\idxcode{}!\idxcode{surface}}
@@ -1395,7 +1360,42 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 \end{itemdescr}
 
 
-\rSec1 [\iotwod.surface.observers.state] {\tcode{surface} state observers}
+\rSec1 [surface.modifiers.font] {\tcode{surface} font modifiers}
+
+\indexlibrary{\idxcode{surface}!\idxcode{}}
+\indexlibrary{\idxcode{}!\idxcode{surface}}
+\begin{itemdecl}
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+
+
+\pnum
+\postconditions
+
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+
+\pnum
+\remarks
+
+
+\pnum
+\errors
+
+
+\pnum
+\realnotes
+
+
+\end{itemdescr}
+
+
+\rSec1 [surface.observers.state] {\tcode{surface} state observers}
 
 %\indexlibrary{\idxcode{surface}!\idxcode{}}
 %\indexlibrary{\idxcode{}!\idxcode{surface}}
@@ -1407,7 +1407,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 %	
 %\end{itemdescr}
 
-\rSec1 [\iotwod.surface.observers.render] {\tcode{surface} render observers}
+\rSec1 [surface.observers.render] {\tcode{surface} render observers}
 
 %\indexlibrary{\idxcode{surface}!\idxcode{}}
 %\indexlibrary{\idxcode{}!\idxcode{surface}}
@@ -1419,7 +1419,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 %	
 %\end{itemdescr}
 
-\rSec1 [\iotwod.surface.observers.transform] {\tcode{surface} transformation observers}
+\rSec1 [surface.observers.transform] {\tcode{surface} transformation observers}
 
 %\indexlibrary{\idxcode{surface}!\idxcode{}}
 %\indexlibrary{\idxcode{}!\idxcode{surface}}
@@ -1431,7 +1431,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 %	
 %\end{itemdescr}
 
-\rSec1 [\iotwod.surface.observers.font] {\tcode{surface} font observers}
+\rSec1 [surface.observers.font] {\tcode{surface} font observers}
 
 %\indexlibrary{\idxcode{surface}!\idxcode{}}
 %\indexlibrary{\idxcode{}!\idxcode{surface}}

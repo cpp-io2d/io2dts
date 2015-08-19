@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.fontextents] {Class \tcode{font_extents}}
+\rSec0 [fontextents] {Class \tcode{font_extents}}
 
-\rSec1 [\iotwod.fontextents.synopsis] {\tcode{font_extents} synopsis}
+\rSec1 [fontextents.synopsis] {\tcode{font_extents} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class font_extents {
   public:
-    // \ref{\iotwod.fontextents.cons}, construct/copy/move/destroy:
+    // \ref{fontextents.cons}, construct/copy/move/destroy:
     font_extents() noexcept;
     font_extents(const font_extents& other) noexcept;
     font_extents& operator=(const font_extents& other) noexcept;
@@ -15,12 +15,12 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     font_extents& operator=(font_extents&& other) noexcept;
     font_extents(double ascent, double descent, double height) noexcept;
 
-    // \ref{\iotwod.fontextents.modifiers}, modifiers:
+    // \ref{fontextents.modifiers}, modifiers:
     void ascent(double value) noexcept;
     void descent(double value) noexcept;
     void height(double value) noexcept;
 
-    // \ref{\iotwod.fontextents.observers}, observers:
+    // \ref{fontextents.observers}, observers:
     double ascent() const noexcept;
     double descent() const noexcept;
     double height() const noexcept;
@@ -33,7 +33,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.fontextents.intro] {\tcode{font_extents} Description}
+\rSec1 [fontextents.intro] {\tcode{font_extents} Description}
 
 \pnum
 \indexlibrary{\idxcode{font_extents}}
@@ -50,7 +50,7 @@ These metrics cover all glyphs in a font and thus may be noticeably larger than 
 This object's observable values can be manipulated by library users for their convenience. But since the \tcode{font_extents} object returned by \tcode{surface::font_extents()} is not a reference or a pointer, the changes do not reflect back to the surface or its current font.
 \exitnote
 
-\rSec1 [\iotwod.fontextents.cons] {\tcode{font_extents} constructors and assignment operators}
+\rSec1 [fontextents.cons] {\tcode{font_extents} constructors and assignment operators}
 
 \indexlibrary{\idxcode{font_extents}!constructor}
 \begin{itemdecl}
@@ -88,7 +88,7 @@ This object's observable values can be manipulated by library users for their co
 	\tcode{_Height == height}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.fontextents.modifiers]{\tcode{font_extents} modifiers}
+\rSec1 [fontextents.modifiers]{\tcode{font_extents} modifiers}
 
 \indexlibrary{\idxcode{font_extents}!\idxcode{ascent}}
 \indexlibrary{\idxcode{ascent}!\idxcode{font_extents}}
@@ -128,7 +128,7 @@ This object's observable values can be manipulated by library users for their co
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.fontextents.observers]{\tcode{font_extents} observers}
+\rSec1 [fontextents.observers]{\tcode{font_extents} observers}
 
 \indexlibrary{\idxcode{font_extents}!\idxcode{ascent}}
 \indexlibrary{\idxcode{ascent}!\idxcode{font_extents}}

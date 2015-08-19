@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.displaysurface] {Class \tcode{display_surface}}
+\rSec0 [displaysurface] {Class \tcode{display_surface}}
 
-\rSec1 [\iotwod.displaysurface.synopsis] {\tcode{display_surface} synopsis}
+\rSec1 [displaysurface.synopsis] {\tcode{display_surface} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class display_surface : public surface {
   public:
-    // \ref{\iotwod.displaysurface.cons}, construct/copy/move/destroy:
+    // \ref{displaysurface.cons}, construct/copy/move/destroy:
     display_surface() = delete;
     display_surface(const display_surface&) = delete;
     display_surface& operator=(const display_surface&) = delete;
@@ -34,7 +34,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     
     virtual ~display_surface();
     
-    // \ref{\iotwod.displaysurface.modifiers}, modifiers:
+    // \ref{displaysurface.modifiers}, modifiers:
     virtual void save() override;
     virtual void save(error_code& ec) noexcept override;
     virtual void restore() override;
@@ -71,7 +71,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     int join();
     int join(error_code& ec);
     
-    // \ref{\iotwod.displaysurface.observers}, observers:
+    // \ref{displaysurface.observers}, observers:
     experimental::io2d::format format() const noexcept;
     int width() const noexcept;
     int height() const noexcept;
@@ -102,13 +102,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.displaysurface.intro] {\tcode{display_surface} Description}
+\rSec1 [displaysurface.intro] {\tcode{display_surface} Description}
 
 \pnum
 \indexlibrary{\idxcode{display_surface}}
 The class \tcode{display_surface} describes .
 
-\rSec1 [\iotwod.displaysurface.cons] {\tcode{display_surface} constructors and assignment operators}
+\rSec1 [displaysurface.cons] {\tcode{display_surface} constructors and assignment operators}
 
 \indexlibrary{\idxcode{display_surface}!constructor}
 \begin{itemdecl}
@@ -150,7 +150,7 @@ display_surface(int preferredWidth, int preferredHeight,
 	\postconditions
 \end{itemdescr}
 
-\rSec1 [\iotwod.displaysurface.modifiers]{\tcode{display_surface} modifiers}
+\rSec1 [displaysurface.modifiers]{\tcode{display_surface} modifiers}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{save}}
 \indexlibrary{\idxcode{save}!\idxcode{display_surface}}
@@ -381,7 +381,7 @@ display_surface(int preferredWidth, int preferredHeight,
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.displaysurface.observers]{\tcode{display_surface} observers}
+\rSec1 [displaysurface.observers]{\tcode{display_surface} observers}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{format}}
 \indexlibrary{\idxcode{format}!\idxcode{display_surface}}

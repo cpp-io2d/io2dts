@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.brush] {Class \tcode{brush}}
+\rSec0 [brush] {Class \tcode{brush}}
 
-\rSec1 [\iotwod.brush.synopsis] {\tcode{brush} synopsis}
+\rSec1 [brush.synopsis] {\tcode{brush} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class brush {
   public:
-    // \ref{\iotwod.brush.cons}, construct/copy/move/destroy:
+    // \ref{brush.cons}, construct/copy/move/destroy:
     brush() = delete;
     brush(const brush&) noexcept;
     brush& operator=(const brush&) noexcept;
@@ -24,12 +24,12 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     brush(surface_brush_factory& f);
     brush(surface_brush_factory& f, error_code& ec) noexcept;
 
-    // \ref{\iotwod.brush.modifiers}, modifiers:
+    // \ref{brush.modifiers}, modifiers:
     void extend(experimental::io2d::extend e) noexcept;
     void filter(experimental::io2d::filter f) noexcept;
     void matrix(const matrix_2d& m) noexcept;
 
-    // \ref{\iotwod.brush.observers}, observers:
+    // \ref{brush.observers}, observers:
     experimental::io2d::extend extend() const noexcept;
     experimental::io2d::filter filter() const noexcept;
     matrix_2d matrix() const noexcept;
@@ -44,7 +44,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.brush.intro] {\tcode{brush} Description}
+\rSec1 [brush.intro] {\tcode{brush} Description}
 
 \pnum
 \indexlibrary{\idxcode{brush}}
@@ -60,7 +60,7 @@ A \tcode{brush} object's graphics data is immutable.
 A \tcode{brush} object also has mutable \tcode{extend}, \tcode{filter}, and \tcode{matrix_2d} values which affect how the color and alpha data is used and interpreted.
 
 \pnum
-A \tcode{brush} object has immutable \tcode{brush_type} data which indicates the type of brush factory that was used in creating the \tcode{brush} object (See Table \ref{tab:\iotwod.brushtype.meanings}).
+A \tcode{brush} object has immutable \tcode{brush_type} data which indicates the type of brush factory that was used in creating the \tcode{brush} object (See Table \ref{tab:brushtype.meanings}).
 
 \pnum
 The \tcode{brush} object's graphics data may have less precision than the graphics data of the brush factory object from which it was created.
@@ -70,7 +70,7 @@ The \tcode{brush} object's graphics data may have less precision than the graphi
 Several graphics and rendering technologies that are currently widely used store individual color and alpha channel data as 8-bit unsigned normalized integer values while the \tcode{double} type that is used by the \tcode{rgba_color} class for individual color and alpha is often a 64-bit value. It is precisely these situations which the preceding paragraph is intended to address.
 \exitexample
 
-\rSec1 [\iotwod.brush.cons] {\tcode{brush} constructors and assignment operators}
+\rSec1 [brush.cons] {\tcode{brush} constructors and assignment operators}
 
 \indexlibrary{\idxcode{brush}!constructor}
 \begin{itemdecl}
@@ -235,7 +235,7 @@ Several graphics and rendering technologies that are currently widely used store
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.brush.modifiers]{\tcode{brush} modifiers}
+\rSec1 [brush.modifiers]{\tcode{brush} modifiers}
 
 \indexlibrary{\idxcode{brush}!\idxcode{extend}}
 \indexlibrary{\idxcode{extend}!\idxcode{brush}}
@@ -285,7 +285,7 @@ Several graphics and rendering technologies that are currently widely used store
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.brush.observers]{\tcode{brush} observers}
+\rSec1 [brush.observers]{\tcode{brush} observers}
 
 \indexlibrary{\idxcode{brush}!\idxcode{}}
 \indexlibrary{\idxcode{}!\idxcode{brush}}

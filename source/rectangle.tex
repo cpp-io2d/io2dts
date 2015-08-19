@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.rectangle] {Class \tcode{rectangle}}
+\rSec0 [rectangle] {Class \tcode{rectangle}}
 
-\rSec1 [\iotwod.rectangle.synopsis] {\tcode{rectangle} synopsis}
+\rSec1 [rectangle.synopsis] {\tcode{rectangle} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class rectangle {
   public:
-    // \ref{\iotwod.rectangle.cons}, construct/copy/move/destroy:
+    // \ref{rectangle.cons}, construct/copy/move/destroy:
     rectangle() noexcept;
     rectangle(double x, double y, double width, double height) noexcept;
     rectangle(const vector_2d& tl, const vector_2d& br) noexcept;
@@ -16,7 +16,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     rectangle(rectangle&& r) noexcept;
     rectangle& operator=(rectangle&& r) noexcept;
 
-    // \ref{\iotwod.rectangle.modifiers}, modifiers:
+    // \ref{rectangle.modifiers}, modifiers:
     void x(double value) noexcept;
     void y(double value) noexcept;
     void width(double value) noexcept;
@@ -24,7 +24,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void top_left(const vector_2d& value) noexcept;
     void bottom_right(const vector_2d& value) noexcept;
     
-    // \ref{\iotwod.rectangle.observers}, observers:
+    // \ref{rectangle.observers}, observers:
     double x() const noexcept;
     double y() const noexcept;
     double width() const noexcept;
@@ -41,13 +41,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.rectangle.intro] {\tcode{rectangle} Description}
+\rSec1 [rectangle.intro] {\tcode{rectangle} Description}
 
 \pnum
 \indexlibrary{\idxcode{rectangle}}
 The class \tcode{rectangle} describes an object that represents a rectangle.
 
-\rSec1 [\iotwod.rectangle.cons] {\tcode{rectangle} constructors and assignment operators}
+\rSec1 [rectangle.cons] {\tcode{rectangle} constructors and assignment operators}
 
 \indexlibrary{\idxcode{rectangle}!constructor}
 \begin{itemdecl}
@@ -121,7 +121,7 @@ rectangle(const vector_2d& tl, const vector_2d& br) noexcept;
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.rectangle.modifiers]{\tcode{rectangle} modifiers}
+\rSec1 [rectangle.modifiers]{\tcode{rectangle} modifiers}
 
 \indexlibrary{\idxcode{rectangle}!\idxcode{x}}
 \indexlibrary{\idxcode{x}!\idxcode{rectangle}}
@@ -202,7 +202,7 @@ void bottom_right(const vector_2d& value) noexcept;
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.rectangle.observers]{\tcode{rectangle} observers}
+\rSec1 [rectangle.observers]{\tcode{rectangle} observers}
 
 \indexlibrary{\idxcode{rectangle}!\idxcode{x}}
 \indexlibrary{\idxcode{x}!\idxcode{rectangle}}

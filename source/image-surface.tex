@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.imagesurface] {Class \tcode{image_surface}}
+\rSec0 [imagesurface] {Class \tcode{image_surface}}
 
-\rSec1 [\iotwod.imagesurface.synopsis] {\tcode{image_surface} synopsis}
+\rSec1 [imagesurface.synopsis] {\tcode{image_surface} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class image_surface : public surface {
   public:
-    // \ref{\iotwod.imagesurface.cons}, construct/copy/move/destroy:
+    // \ref{imagesurface.cons}, construct/copy/move/destroy:
     image_surface() = delete;
     image_surface(const image_surface&) = delete;
     image_surface& operator=(const image_surface&) = delete;
@@ -26,13 +26,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       int height, error_code& ec) noexcept;
     virtual ~image_surface();
     
-    // \ref{\iotwod.imagesurface.modifiers}, modifiers:
+    // \ref{imagesurface.modifiers}, modifiers:
     void data(const vector<unsigned char>& data);
     void data(const vector<unsigned char>& data, error_code& ec) noexcept;
     vector<unsigned char> data();
     vector<unsigned char> data(error_code& ec) noexcept;
     
-    // \ref{\iotwod.imagesurface.observers}, observers:
+    // \ref{imagesurface.observers}, observers:
     experimental::io2d::format format() const noexcept;
     int width() const noexcept;
     int height() const noexcept;
@@ -41,13 +41,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.imagesurface.intro] {\tcode{image_surface} Description}
+\rSec1 [imagesurface.intro] {\tcode{image_surface} Description}
 
 \pnum
 \indexlibrary{\idxcode{image_surface}}
 The class \tcode{image_surface} describes 
 
-\rSec1 [\iotwod.imagesurface.cons] {\tcode{image_surface} constructors and assignment operators}
+\rSec1 [imagesurface.cons] {\tcode{image_surface} constructors and assignment operators}
 
 \indexlibrary{\idxcode{image_surface}!constructor}
 \begin{itemdecl}
@@ -62,7 +62,7 @@ The class \tcode{image_surface} describes
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.imagesurface.modifiers] {\tcode{image_surface} modifiers}
+\rSec1 [imagesurface.modifiers] {\tcode{image_surface} modifiers}
 
 \indexlibrary{\idxcode{image_surface}!\idxcode{}}
 \indexlibrary{\idxcode{}!\idxcode{image_surface}}
@@ -74,7 +74,7 @@ The class \tcode{image_surface} describes
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.imagesurface.observers] {\tcode{image_surface} observers}
+\rSec1 [imagesurface.observers] {\tcode{image_surface} observers}
 
 \indexlibrary{\idxcode{image_surface}!\idxcode{}}
 \indexlibrary{\idxcode{}!\idxcode{image_surface}}

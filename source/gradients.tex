@@ -1,7 +1,7 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.gradients] {Gradient brushes}
+\rSec0 [gradients] {Gradient brushes}
 
-\rSec1 [\iotwod.gradients.colorstops] {Color stops}
+\rSec1 [gradients.colorstops] {Color stops}
 
 \pnum
 A gradient has as part of its observable state a collection of color stops.
@@ -30,7 +30,7 @@ Color stops in the collection of color stops can be removed.
 \pnum
 When a color stop associated with index $i$ is removed from a collection of color stops, every color stop in the collection which has an associated index that is greater than $i$ has its associated index decremented by 1. The collection's current index value is decremented by 1.
 
-\rSec1 [\iotwod.gradients.linear] {Linear gradients}
+\rSec1 [gradients.linear] {Linear gradients}
 
 \pnum
 A linear gradient is a type of gradient.
@@ -42,7 +42,7 @@ In addition to the observable state of a gradient, a linear gradient also has a 
 A linear gradient for which the distance between its begin point and its end point is not greater than \tcode{numeric_limits<double>::epsilon()} is a \term{degenerate linear gradient}.
 
 \pnum
-All attempts to sample from a \tcode{brush} object created using a degenerate linear gradient shall return the color \tcode{rgba_color::transparent_black()}. The remainder of \ref{\iotwod.gradients.linear} is inapplicable to degenerate linear gradients.
+All attempts to sample from a \tcode{brush} object created using a degenerate linear gradient shall return the color \tcode{rgba_color::transparent_black()}. The remainder of \ref{gradients.linear} is inapplicable to degenerate linear gradients.
 
 \pnum
 The begin point and end point of a linear gradient define a line segment, with a color stop offset value of 0.0 corresponding to the begin point and a color stop offset value of 1.0 corresponding to the end point.
@@ -72,7 +72,7 @@ To determine the offset value of a point $p$ for a linear gradient, perform the 
 \end{itemize}
 \end{enumeratea}
 
-\rSec1 [\iotwod.gradients.radial] {Radial gradients}
+\rSec1 [gradients.radial] {Radial gradients}
 
 \pnum
 A radial gradient is a type of gradient.
@@ -90,7 +90,7 @@ A radial gradient is a \term{degenerate radial gradient} if:
 \end{itemize}
 
 \pnum
-All attempts to sample from a \tcode{brush} object created using a degenerate radial gradient shall return the color \tcode{rgba_color::transparent_black()}. The remainder of \ref{\iotwod.gradients.radial} is inapplicable to degenerate radial gradients.
+All attempts to sample from a \tcode{brush} object created using a degenerate radial gradient shall return the color \tcode{rgba_color::transparent_black()}. The remainder of \ref{gradients.radial} is inapplicable to degenerate radial gradients.
 
 \pnum
 A color stop offset of 0.0 corresponds to all points along the diameter of the start circle or to its center point if it has a radius value of 0.0.
@@ -120,24 +120,24 @@ The interpolated circles shall be rendered starting from the smallest potential 
 \pnum
 An interpolated circle shall not be rendered if its value for $o$ results in $radius(o)$ evaluating to a negative value.
 
-\rSec1 [\iotwod.gradients.sampling] {Sampling from gradients}
+\rSec1 [gradients.sampling] {Sampling from gradients}
 
 \pnum
 For any offset value $o$, its color value shall be determined according to the following rules:
 
 \begin{itemize}
-\item If there are less than two color stops or if all color stops have the same offset value, then the color value of every offset value shall be \tcode{rgba_color::transparent_black()} and the remainder of \ref{\iotwod.gradients.sampling} is inapplicable.
+\item If there are less than two color stops or if all color stops have the same offset value, then the color value of every offset value shall be \tcode{rgba_color::transparent_black()} and the remainder of \ref{gradients.sampling} is inapplicable.
 
-\item If exactly one color stop has an offset value equal to $o$, $o$'s color value shall be the color value of that color stop and the remainder of \ref{\iotwod.gradients.sampling} is inapplicable.
+\item If exactly one color stop has an offset value equal to $o$, $o$'s color value shall be the color value of that color stop and the remainder of \ref{gradients.sampling} is inapplicable.
 
-\item If two or more color stops have an offset value equal to $o$, $o$'s color value shall be the color value of the color stop which has the lowest index value among the set of color stops that have an offset value equal to $o$ and the remainder of \ref{\iotwod.gradients.sampling} is inapplicable.
+\item If two or more color stops have an offset value equal to $o$, $o$'s color value shall be the color value of the color stop which has the lowest index value among the set of color stops that have an offset value equal to $o$ and the remainder of \ref{gradients.sampling} is inapplicable.
 
-\item When no color stop has the offset value of \tcode{0.0}, then, defining $n$ to be the offset value that is nearest to \tcode{0.0} among the offset values in the set of all color stops, if $o$ is in the offset range $[0, n)$, $o$'s color value shall be \tcode{rgba_color::transparent_black()} and the remainder of \ref{\iotwod.gradients.sampling} is inapplicable.
+\item When no color stop has the offset value of \tcode{0.0}, then, defining $n$ to be the offset value that is nearest to \tcode{0.0} among the offset values in the set of all color stops, if $o$ is in the offset range $[0, n)$, $o$'s color value shall be \tcode{rgba_color::transparent_black()} and the remainder of \ref{gradients.sampling} is inapplicable.
 \enternote
 Since the range described does not include $n$, it does not matter how many color stops have $n$ as their offset value for purposes of this rule.
 \exitnote
 
-\item When no color stop has the offset value of \tcode{1.0}, then, defining $n$ to be the offset value that is nearest to \tcode{1.0} among the offset values in the set of all color stops, if $o$ is in the offset range $(n, 1]$, $o$'s color value shall be \tcode{rgba_color::transparent_black()} and the remainder of \ref{\iotwod.gradients.sampling} is inapplicable.
+\item When no color stop has the offset value of \tcode{1.0}, then, defining $n$ to be the offset value that is nearest to \tcode{1.0} among the offset values in the set of all color stops, if $o$ is in the offset range $(n, 1]$, $o$'s color value shall be \tcode{rgba_color::transparent_black()} and the remainder of \ref{gradients.sampling} is inapplicable.
 \enternote
 Since the range described does not include $n$, it does not matter how many color stops have $n$ as their offset value for purposes of this rule.
 \exitnote

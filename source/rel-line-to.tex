@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.rellineto] {Class \tcode{rel_line_to}}
+\rSec0 [rellineto] {Class \tcode{rel_line_to}}
 
-\rSec1 [\iotwod.rellineto.synopsis] {\tcode{rel_line_to} synopsis}
+\rSec1 [rellineto.synopsis] {\tcode{rel_line_to} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class rel_line_to : public path_data {
   public:
-    // \ref{\iotwod.rellineto.cons}, construct/copy/move/destroy:
+    // \ref{rellineto.cons}, construct/copy/move/destroy:
     line_to() noexcept;
     line_to(const line_to& other) noexcept;
     line_to& operator=(const line_to& other) noexcept;
@@ -15,10 +15,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     line_to& operator=(line_to&& other) noexcept;
     line_to(const vector_2d& pt) noexcept;
 
-    // \ref{\iotwod.rellineto.modifiers}, modifiers:
+    // \ref{rellineto.modifiers}, modifiers:
     void to(const vector_2d& pt) noexcept;
 
-    // \ref{\iotwod.rellineto.observers}, observers:
+    // \ref{rellineto.observers}, observers:
     vector_2d to() const noexcept;
     virtual path_data_type type() const noexcept override;
     
@@ -28,7 +28,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.rellineto.intro] {\tcode{rel_line_to} Description}
+\rSec1 [rellineto.intro] {\tcode{rel_line_to} Description}
 
 \pnum
 \indexlibrary{\idxcode{rel_line_to}}
@@ -40,7 +40,7 @@ This operation creates a line from the current point to the point that is the su
 \pnum
 If the current path geometry does not have a current point when this operation is requested the path geometry collection is malformed.
 
-\rSec1 [\iotwod.rellineto.cons] {\tcode{rel_line_to} constructors and assignment operators}
+\rSec1 [rellineto.cons] {\tcode{rel_line_to} constructors and assignment operators}
 
 \indexlibrary{\idxcode{rel_line_to}!constructor}
 \begin{itemdecl}
@@ -70,7 +70,7 @@ If the current path geometry does not have a current point when this operation i
 	\tcode{_Data == pt}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.rellineto.modifiers]{\tcode{rel_line_to} modifiers}
+\rSec1 [rellineto.modifiers]{\tcode{rel_line_to} modifiers}
 
 \indexlibrary{\idxcode{rel_line_to}!\idxcode{to}}
 \indexlibrary{\idxcode{to}!\idxcode{rel_line_to}}
@@ -84,7 +84,7 @@ If the current path geometry does not have a current point when this operation i
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.rellineto.observers]{\tcode{rel_line_to} observers}
+\rSec1 [rellineto.observers]{\tcode{rel_line_to} observers}
 
 \indexlibrary{\idxcode{rel_line_to}!\idxcode{to}}
 \indexlibrary{\idxcode{to}!\idxcode{rel_line_to}}

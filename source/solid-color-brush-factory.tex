@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.solidcolorbrushfact] {Class \tcode{solid_color_brush_factory}}
+\rSec0 [solidcolorbrushfact] {Class \tcode{solid_color_brush_factory}}
 
-\rSec1 [\iotwod.solidcolorbrushfact.synopsis] {\tcode{solid_color_brush_factory} synopsis}
+\rSec1 [solidcolorbrushfact.synopsis] {\tcode{solid_color_brush_factory} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class solid_color_brush_factory {
   public:
-    // \ref{\iotwod.solidcolorbrushfact.cons}, construct/copy/move/destroy:
+    // \ref{solidcolorbrushfact.cons}, construct/copy/move/destroy:
     solid_color_brush_factory() noexcept;
     solid_color_brush_factory(const solid_color_brush_factory&) noexcept;
     solid_color_brush_factory& operator=(
@@ -17,10 +17,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       solid_color_brush_factory&& other) noexcept;
     solid_color_brush_factory(const rgba_color& color) noexcept;
 
-    // \ref{\iotwod.solidcolorbrushfact.modifiers}, modifiers:
+    // \ref{solidcolorbrushfact.modifiers}, modifiers:
     void color(const rgba_color& value) noexcept;
 
-    // \ref{\iotwod.solidcolorbrushfact.observers}, observers:
+    // \ref{solidcolorbrushfact.observers}, observers:
     rgba_color color() const noexcept;
     
   private:
@@ -29,13 +29,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.solidcolorbrushfact.intro] {\tcode{solid_color_brush_factory} Description}
+\rSec1 [solidcolorbrushfact.intro] {\tcode{solid_color_brush_factory} Description}
 
 \pnum
 \indexlibrary{\idxcode{solid_color_brush_factory}}
 The class \tcode{solid_color_brush_factory} describes a mutable factory for creating \tcode{brush} objects with uniform color and alpha data.
 
-\rSec1 [\iotwod.solidcolorbrushfact.cons] {\tcode{solid_color_brush_factory} constructors and assignment operators}
+\rSec1 [solidcolorbrushfact.cons] {\tcode{solid_color_brush_factory} constructors and assignment operators}
 
 \indexlibrary{\idxcode{solid_color_brush_factory}!constructor}
 \begin{itemdecl}
@@ -67,7 +67,7 @@ The class \tcode{solid_color_brush_factory} describes a mutable factory for crea
 		
 \end{itemdescr}
 
-\rSec1 [\iotwod.solidcolorbrushfact.modifiers] {\tcode{solid_color_brush_factory} modifiers}
+\rSec1 [solidcolorbrushfact.modifiers] {\tcode{solid_color_brush_factory} modifiers}
 
 \indexlibrary{\idxcode{solid_color_brush_factory}!\idxcode{color}}
 \indexlibrary{\idxcode{color}!\idxcode{solid_color_brush_factory}}
@@ -85,7 +85,7 @@ The class \tcode{solid_color_brush_factory} describes a mutable factory for crea
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.solidcolorbrushfact.observers] {\tcode{solid_color_brush_factory} observers}
+\rSec1 [solidcolorbrushfact.observers] {\tcode{solid_color_brush_factory} observers}
 
 \indexlibrary{\idxcode{solid_color_brush_factory}!\idxcode{color}}
 \indexlibrary{\idxcode{color}!\idxcode{solid_color_brush_factory}}

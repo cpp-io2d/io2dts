@@ -1,7 +1,7 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.pathgeometries] {Path geometries}
+\rSec0 [pathgeometries] {Path geometries}
 
-\rSec1 [\iotwod.pathgeometries.overview] {Overview of path geometries}
+\rSec1 [pathgeometries.overview] {Overview of path geometries}
 
 \pnum
 Path geometries are most easily formed using a \tcode{path_factory} object.
@@ -16,12 +16,12 @@ A path geometry may contain degenerate path segments.
 There are special rules concerning the rendering of degenerate path segments. As such they shall be added to a path geometry when requested and shall not be removed from a path geometry when processing it.
 
 \pnum
-A \tcode{path} object is an immutable resource wrapper containing a path geometry graphics resource (\ref{\iotwod.path}).
+A \tcode{path} object is an immutable resource wrapper containing a path geometry graphics resource (\ref{path}).
 
-\rSec1 [\iotwod.pathgeometries.processing] {Processing path geometries}
+\rSec1 [pathgeometries.processing] {Processing path geometries}
 
 \pnum
-\ref{\iotwod.pathgeometries.processing} describes how a properly formed \tcode{vector<path_data_item>} object shall be interpreted by an implementation in order to convert it into a path geometry graphics resource.
+\ref{pathgeometries.processing} describes how a properly formed \tcode{vector<path_data_item>} object shall be interpreted by an implementation in order to convert it into a path geometry graphics resource.
 
 \pnum
 For purposes of exposition, the following class for forming a path geometry graphics resource object is used:
@@ -348,21 +348,21 @@ for (const auto& item : p) {
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.pathgeometries.strokerules] {Stroking path geometries}
+\rSec1 [pathgeometries.strokerules] {Stroking path geometries}
 
 \pnum
 The following rules shall apply when a \tcode{path} object is stroked by a call to \tcode{surface::stroke} or\\
 \tcode{surface::stroke_immediate}.
 
 \begin{enumerate}
-	\item Except as otherwise specified in these rules, the start point and end point of a path segment shall be rendered as specified by the meaning of the surface's current \tcode{line_cap} value (\ref{\iotwod.linecap}).
+	\item Except as otherwise specified in these rules, the start point and end point of a path segment shall be rendered as specified by the meaning of the surface's current \tcode{line_cap} value (\ref{linecap}).
 	
-	\item If the end point of a path segment \textit{a} is set as the current point and is then used as the start point of another path segment, \textit{b}, the point where \tcode{a}'s end point meets \tcode{b}'s start point shall be rendered as specified by the meaning of the surface's current \tcode{line_join} value (\ref{\iotwod.linejoin}).
+	\item If the end point of a path segment \textit{a} is set as the current point and is then used as the start point of another path segment, \textit{b}, the point where \tcode{a}'s end point meets \tcode{b}'s start point shall be rendered as specified by the meaning of the surface's current \tcode{line_join} value (\ref{linejoin}).
 	
 	\item ***FIXME***
 \end{enumerate}
 
-\rSec1 [\iotwod.pathgeometries.fillrules] {Filling path geometries}
+\rSec1 [pathgeometries.fillrules] {Filling path geometries}
 
 \pnum
 ***FIXME***

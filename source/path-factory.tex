@@ -1,19 +1,19 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.pathfactory] {Class \tcode{path_factory}}
+\rSec0 [pathfactory] {Class \tcode{path_factory}}
 
-\rSec1 [\iotwod.pathfactory.synopsis] {\tcode{path_factory} synopsis}
+\rSec1 [pathfactory.synopsis] {\tcode{path_factory} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path_factory {
-    // \ref{\iotwod.pathfactory.cons}, construct/copy/destroy:
+    // \ref{pathfactory.cons}, construct/copy/destroy:
     path_factory() noexcept;
     path_factory(const path_factory& other);
     path_factory& operator=(const path_factory& other);
     path_factory(path_factory&& other) noexcept;
     path_factory& operator=(path_factory&& other) noexcept;
     
-    // \ref{\iotwod.pathfactory.modifiers}, modifiers:
+    // \ref{pathfactory.modifiers}, modifiers:
     void append(const path_factory& p);
     void append(const path_factory& p, error_code& ec) noexcept;
     void append(const vector<path_data_item>& p);
@@ -55,7 +55,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void origin(const vector_2d& pt, error_code& ec) noexcept;
     void clear() noexcept;
     
-    // \ref{\iotwod.pathfactory.observers}, observers:
+    // \ref{pathfactory.observers}, observers:
     std::experimental::io2d::rectangle path_extents() const;
     std::experimental::io2d::rectangle path_extents(error_code& ec) const noexcept;
     bool has_current_point() const noexcept;
@@ -80,13 +80,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.pathfactory.intro] {\tcode{path_factory} Description}
+\rSec1 [pathfactory.intro] {\tcode{path_factory} Description}
 
 \pnum
 \indexlibrary{\idxcode{path_factory}}
 The \tcode{path_factory} class is a factory class used in creating path geometry collection data from which \tcode{path} objects are created.
 
-\rSec1 [\iotwod.pathfactory.cons] {\tcode{path_factory} constructors and 
+\rSec1 [pathfactory.cons] {\tcode{path_factory} constructors and 
 assignment operators}
 
 \indexlibrary{\idxcode{path_factory}!constructor}
@@ -113,7 +113,7 @@ assignment operators}
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.pathfactory.modifiers] {\tcode{path_factory} modifiers}
+\rSec1 [pathfactory.modifiers] {\tcode{path_factory} modifiers}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{}}
 \indexlibrary{\idxcode{}!\idxcode{path_factory}}
@@ -601,7 +601,7 @@ assignment operators}
 
 \end{itemdescr}
 
-\rSec1 [\iotwod.pathfactory.observers] {\tcode{path_factory} observers}
+\rSec1 [pathfactory.observers] {\tcode{path_factory} observers}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{path_extents}}
 \indexlibrary{\idxcode{path_extents}!\idxcode{path_factory}}
@@ -612,7 +612,7 @@ assignment operators}
 \begin{itemdescr}
 	\pnum
 	\returns
-	A \tcode{rectangle} object which contains the extents of the \term{path segments}, including \term{degenerate path segments}, in \tcode{_Data} when it is processed as described in \ref{\iotwod.pathgeometries.processing}.
+	A \tcode{rectangle} object which contains the extents of the \term{path segments}, including \term{degenerate path segments}, in \tcode{_Data} when it is processed as described in \ref{pathgeometries.processing}.
 	\enternote
 	By using path segments, this description intentionally omits points established by \tcode{move_to} and \tcode{rel_move_to} operations from the extents value except where those points are subsequently used in defining a path segment.
 	\exitnote

@@ -1,7 +1,7 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.fontface] {Class \tcode{font_face}}
+\rSec0 [fontface] {Class \tcode{font_face}}
 
-\rSec1 [\iotwod.fontface.synopsis] {\tcode{font_face} synopsis}
+\rSec1 [fontface.synopsis] {\tcode{font_face} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
@@ -11,7 +11,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     typedef @\impdef@ native_handle_type;
     native_handle_type native_handle() const noexcept;
 
-    // \ref{\iotwod.fontface.cons}, construct/copy/destroy:
+    // \ref{fontface.cons}, construct/copy/destroy:
     font_face() = delete;
     font_face(const font_face&) noexcept;
     font_face& operator=(const font_face&) noexcept;
@@ -22,14 +22,14 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.fontface.intro] {\tcode{font_face} Description}
+\rSec1 [fontface.intro] {\tcode{font_face} Description}
 
 \pnum
 \indexlibrary{\idxcode{font_face}}
 The \tcode{font_face} class is an opaque resource wrapper. It represents a 
 font that is used to render text. It shall not be directly instantiable.
 
-\rSec1 [\iotwod.fontface.cons] {\tcode{font_face} constructors and 
+\rSec1 [fontface.cons] {\tcode{font_face} constructors and 
 assignment operators}
 
 \indexlibrary{\idxcode{font_face}!destructor}

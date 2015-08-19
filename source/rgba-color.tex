@@ -1,12 +1,12 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.rgbacolor] {Class \tcode{rgba_color}}
+\rSec0 [rgbacolor] {Class \tcode{rgba_color}}
 
-\rSec1 [\iotwod.rgbacolor.synopsis] {\tcode{rgba_color} synopsis}
+\rSec1 [rgbacolor.synopsis] {\tcode{rgba_color} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class rgba_color {
-    // \ref{\iotwod.rgbacolor.cons}, construct/copy/move/destroy:
+    // \ref{rgbacolor.cons}, construct/copy/move/destroy:
   	rgba_color() noexcept;
   	rgba_color(double r, double g, double b, double a = 1.0);
   	rgba_color(double r, double g, double b, error_code& ec) noexcept;
@@ -16,7 +16,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   	rgba_color(rgba_color&& c) noexcept;
   	rgba_color& operator=(rgba_color&& c) noexcept;
   	
-    // \ref{\iotwod.rgbacolor.modifiers}, modifiers:
+    // \ref{rgbacolor.modifiers}, modifiers:
     void r(double val);
     void r(double val, error_code& ec) noexcept;
     void g(double val);
@@ -26,13 +26,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void a(double val);
     void a(double val, error_code& ec) noexcept;
     
-    // \ref{\iotwod.rgbacolor.observers}, observers:
+    // \ref{rgbacolor.observers}, observers:
     double r() const noexcept;
     double g() const noexcept;
     double b() const noexcept;
     double a() const noexcept;
     
-    // \ref{\iotwod.rgbacolor.statics}, static member functions:
+    // \ref{rgbacolor.statics}, static member functions:
     static const rgba_color& alice_blue() noexcept;
     static const rgba_color& antique_white() noexcept;
     static const rgba_color& aqua() noexcept;
@@ -189,13 +189,13 @@ private:
     double _Alpha; // \expos
   };
 
-  // \ref{\iotwod.rgbacolor.ops}, non-member operators:
+  // \ref{rgbacolor.ops}, non-member operators:
   bool operator==(const rgba_color& lhs, const rgba_color& rhs) noexcept;
   bool operator!=(const rgba_color& lhs, const rgba_color& rhs) noexcept;
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.rgbacolor.intro] {\tcode{rgba_color} Description}
+\rSec1 [rgbacolor.intro] {\tcode{rgba_color} Description}
 
 \pnum
 \indexlibrary{\idxcode{rgba_color}}%
@@ -213,7 +213,7 @@ Legal values for each channel are in the range $[0, 1]$.
 \pnum
 The type predefines a set of named colors, for which each channel is an unsigned normalized 8-bit integer.
 
-\rSec1 [\iotwod.rgbacolor.cons] {\tcode{rgba_color} constructors and assignment operators}
+\rSec1 [rgbacolor.cons] {\tcode{rgba_color} constructors and assignment operators}
 
 \indexlibrary{\idxcode{rgba_color}!constructor}
 \begin{itemdecl}
@@ -293,7 +293,7 @@ The type predefines a set of named colors, for which each channel is an unsigned
 	This color was picked because it is a legal color value, it does not have all channels set to the same value (which would hide, e.g., erroneous saturation calculations), and in the hope that it will help highlight error visibility (both visually and in an examination of the data) in the event that the developer neglects to check the \tcode{error_code\&} argument following construction of the object.
 \end{itemdescr}
 
-\rSec1 [\iotwod.rgbacolor.modifiers]{\tcode{rgba_color} modifiers}
+\rSec1 [rgbacolor.modifiers]{\tcode{rgba_color} modifiers}
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{r}}
 \indexlibrary{\idxcode{r}!\idxcode{rgba_color}}
@@ -418,7 +418,7 @@ The type predefines a set of named colors, for which each channel is an unsigned
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.rgbacolor.observers]{\tcode{rgba_color} observers}
+\rSec1 [rgbacolor.observers]{\tcode{rgba_color} observers}
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{r}}
 \indexlibrary{\idxcode{r}!\idxcode{rgba_color}}
@@ -464,7 +464,7 @@ The type predefines a set of named colors, for which each channel is an unsigned
 	\tcode{_Alpha}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.rgbacolor.statics] {\tcode{rgba_color} static member functions}
+\rSec1 [rgbacolor.statics] {\tcode{rgba_color} static member functions}
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{alice_blue}}
 \indexlibrary{\idxcode{alice_blue}!\idxcode{rgba_color}}
@@ -2094,7 +2094,7 @@ The type predefines a set of named colors, for which each channel is an unsigned
     a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 154ubyte, 205ubyte, 50ubyte, 255ubyte \}}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.rgbacolor.ops] {\tcode{rgba_color} non-member operators}
+\rSec1 [rgbacolor.ops] {\tcode{rgba_color} non-member operators}
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{operator==}}
 \indexlibrary{\idxcode{operator==}!\idxcode{rgba_color}}

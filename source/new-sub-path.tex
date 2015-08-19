@@ -1,7 +1,7 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.newsubpath] {Class \tcode{new_sub_path}}
+\rSec0 [newsubpath] {Class \tcode{new_sub_path}}
 
-\rSec1 [\iotwod.newsubpath.synopsis] {\tcode{new_sub_path} synopsis}
+\rSec1 [newsubpath.synopsis] {\tcode{new_sub_path} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
@@ -14,13 +14,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     new_sub_path(new_sub_path&& other) noexcept;
     new_sub_path& operator=(new_sub_path&& other) noexcept;
 
-    // \ref{\iotwod.newsubpath.observers}, observers:
+    // \ref{newsubpath.observers}, observers:
     virtual path_data_type type() const noexcept override;
   };
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.newsubpath.intro] {\tcode{new_sub_path} Description}
+\rSec1 [newsubpath.intro] {\tcode{new_sub_path} Description}
 
 \pnum
 \indexlibrary{\idxcode{new_sub_path}}
@@ -29,7 +29,7 @@ The class \tcode{new_sub_path} describes an operation on a path geometry collect
 \pnum
 This operation starts a new path geometry. The new path geometry has no current point.
 
-\rSec1 [\iotwod.newsubpath.observers]{\tcode{new_sub_path} observers}
+\rSec1 [newsubpath.observers]{\tcode{new_sub_path} observers}
 
 \indexlibrary{\idxcode{new_sub_path}!\idxcode{type}}
 \indexlibrary{\idxcode{type}!\idxcode{new_sub_path}}

@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.arc] {Class \tcode{arc}}
+\rSec0 [arc] {Class \tcode{arc}}
 
-\rSec1 [\iotwod.arc.synopsis] {\tcode{arc} synopsis}
+\rSec1 [arc.synopsis] {\tcode{arc} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class arc : public path_data {
   public:
-    // \ref{\iotwod.arc.cons}, construct/copy/move/destroy:
+    // \ref{arc.cons}, construct/copy/move/destroy:
     arc() noexcept;
     arc(const arc& other) noexcept;
     arc& operator=(const arc& other) noexcept;
@@ -15,13 +15,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     arc& operator=(arc&& other) noexcept;
     arc(const vector_2d& ctr, double rad, double angle1, double angle2) noexcept;
 
-    // \ref{\iotwod.arc.modifiers}, modifiers:
+    // \ref{arc.modifiers}, modifiers:
     void center(const vector_2d& value) noexcept;
     void radius(double value) noexcept;
     void angle_1(double radians) noexcept;
     void angle_2(double radians) noexcept;
 
-    // \ref{\iotwod.arc.observers}, observers:
+    // \ref{arc.observers}, observers:
     vector_2d center() const noexcept;
     double radius() const noexcept;
     double angle_1() const noexcept;
@@ -37,7 +37,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.arc.intro] {\tcode{arc} Description}
+\rSec1 [arc.intro] {\tcode{arc} Description}
 
 \pnum
 \indexlibrary{\idxcode{arc}}
@@ -70,7 +70,7 @@ The current point is set be to the arc's end point at the end of this operation.
 \pnum
 For purposes of determining whether a point is on the arc, if the value returned by \tcode{*this.angle_2()} is less than the value returned by \tcode{*this.angle_1()} then the value returned by \tcode{*this.angle_2()} shall be continuously incremented by $2\pi$ until it is greater than the value returned by \tcode{*this.angle_1()}.
 
-\rSec1 [\iotwod.arc.cons] {\tcode{arc} constructors and assignment operators}
+\rSec1 [arc.cons] {\tcode{arc} constructors and assignment operators}
 
 \indexlibrary{\idxcode{arc}!constructor}
 \begin{itemdecl}
@@ -114,7 +114,7 @@ For purposes of determining whether a point is on the arc, if the value returned
 
 \end{itemdescr}
 
-\rSec1 [\iotwod.arc.modifiers]{\tcode{arc} modifiers}
+\rSec1 [arc.modifiers]{\tcode{arc} modifiers}
 
 \indexlibrary{\idxcode{arc}!\idxcode{center}}
 \indexlibrary{\idxcode{center}!\idxcode{arc}}
@@ -164,7 +164,7 @@ For purposes of determining whether a point is on the arc, if the value returned
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.arc.observers]{\tcode{arc} observers}
+\rSec1 [arc.observers]{\tcode{arc} observers}
 
 \indexlibrary{\idxcode{arc}!\idxcode{center}}
 \indexlibrary{\idxcode{center}!\idxcode{arc}}

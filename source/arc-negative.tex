@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.arcnegative] {Class \tcode{arc_negative}}
+\rSec0 [arcnegative] {Class \tcode{arc_negative}}
 
-\rSec1 [\iotwod.arcnegative.synopsis] {\tcode{arc_negative} synopsis}
+\rSec1 [arcnegative.synopsis] {\tcode{arc_negative} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class arc_negative : public path_data {
   public:
-    // \ref{\iotwod.arcnegative.cons}, construct/copy/move/destroy:
+    // \ref{arcnegative.cons}, construct/copy/move/destroy:
     arc_negative() noexcept;
     arc_negative(const arc_negative& other) noexcept;
     arc_negative& operator=(const arc_negative& other) noexcept;
@@ -16,13 +16,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     arc_negative(const vector_2d& ctr, double rad, double angle1,
       double angle2) noexcept;
 
-    // \ref{\iotwod.arcnegative.modifiers}, modifiers:
+    // \ref{arcnegative.modifiers}, modifiers:
     void center(const vector_2d& value) noexcept;
     void radius(double value) noexcept;
     void angle_1(double radians) noexcept;
     void angle_2(double radians) noexcept;
 
-    // \ref{\iotwod.arcnegative.observers}, observers:
+    // \ref{arcnegative.observers}, observers:
     vector_2d center() const noexcept;
     double radius() const noexcept;
     double angle_1() const noexcept;
@@ -38,7 +38,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.arcnegative.intro] {\tcode{arc_negative} Description}
+\rSec1 [arcnegative.intro] {\tcode{arc_negative} Description}
 
 \pnum
 \indexlibrary{\idxcode{arc_negative}}
@@ -71,7 +71,7 @@ The current point is set be to the arc's end point at the end of this operation.
 \pnum
 For purposes of determining whether a point is on the arc, if the value returned by \tcode{*this.angle_2()} is greater than the value returned by \tcode{*this.angle_1()} then the value returned by \tcode{*this.angle_2()} shall be continuously decremented by $2\pi$ until it is less than the value returned by \tcode{*this.angle_1()}.
 
-\rSec1 [\iotwod.arcnegative.cons] {\tcode{arc_negative} constructors and assignment operators}
+\rSec1 [arcnegative.cons] {\tcode{arc_negative} constructors and assignment operators}
 
 \indexlibrary{\idxcode{arc_negative}!constructor}
 \begin{itemdecl}
@@ -116,7 +116,7 @@ For purposes of determining whether a point is on the arc, if the value returned
 
 \end{itemdescr}
 
-\rSec1 [\iotwod.arcnegative.modifiers]{\tcode{arc_negative} modifiers}
+\rSec1 [arcnegative.modifiers]{\tcode{arc_negative} modifiers}
 
 \indexlibrary{\idxcode{arc_negative}!\idxcode{center}}
 \indexlibrary{\idxcode{center}!\idxcode{arc_negative}}
@@ -166,7 +166,7 @@ For purposes of determining whether a point is on the arc, if the value returned
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.arcnegative.observers]{\tcode{arc_negative} observers}
+\rSec1 [arcnegative.observers]{\tcode{arc_negative} observers}
 
 \indexlibrary{\idxcode{arc_negative}!\idxcode{center}}
 \indexlibrary{\idxcode{center}!\idxcode{arc_negative}}

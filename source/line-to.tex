@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.lineto] {Class \tcode{line_to}}
+\rSec0 [lineto] {Class \tcode{line_to}}
 
-\rSec1 [\iotwod.lineto.synopsis] {\tcode{line_to} synopsis}
+\rSec1 [lineto.synopsis] {\tcode{line_to} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class line_to : public path_data {
   public:
-    // \ref{\iotwod.lineto.cons}, construct/copy/move/destroy:
+    // \ref{lineto.cons}, construct/copy/move/destroy:
     line_to() noexcept;
     line_to(const line_to& other) noexcept;
     line_to& operator=(const line_to& other) noexcept;
@@ -15,10 +15,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     line_to& operator=(line_to&& other) noexcept;
     line_to(const vector_2d& pt) noexcept;
 
-    // \ref{\iotwod.lineto.modifiers}, modifiers:
+    // \ref{lineto.modifiers}, modifiers:
     void to(const vector_2d& pt) noexcept;
 
-    // \ref{\iotwod.lineto.observers}, observers:
+    // \ref{lineto.observers}, observers:
     vector_2d to() const noexcept;
     virtual path_data_type type() const noexcept override;
     
@@ -28,7 +28,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.lineto.intro] {\tcode{line_to} Description}
+\rSec1 [lineto.intro] {\tcode{line_to} Description}
 
 \pnum
 \indexlibrary{\idxcode{line_to}}
@@ -40,7 +40,7 @@ If the current path geometry has a current point then this operation creates a l
 \pnum
 If there is no current point, then this operation behaves exactly as if this object was a \tcode{move_to} object with the value returned by \tcode{*this.to()} taking the place of the value returned by \tcode{move_to::to()}.
 
-\rSec1 [\iotwod.lineto.cons] {\tcode{line_to} constructors and assignment operators}
+\rSec1 [lineto.cons] {\tcode{line_to} constructors and assignment operators}
 
 \indexlibrary{\idxcode{line_to}!constructor}
 \begin{itemdecl}
@@ -70,7 +70,7 @@ If there is no current point, then this operation behaves exactly as if this obj
 	\tcode{_Data == pt}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.lineto.modifiers]{\tcode{line_to} modifiers}
+\rSec1 [lineto.modifiers]{\tcode{line_to} modifiers}
 
 \indexlibrary{\idxcode{line_to}!\idxcode{to}}
 \indexlibrary{\idxcode{to}!\idxcode{line_to}}
@@ -84,7 +84,7 @@ If there is no current point, then this operation behaves exactly as if this obj
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.lineto.observers]{\tcode{line_to} observers}
+\rSec1 [lineto.observers]{\tcode{line_to} observers}
 
 \indexlibrary{\idxcode{line_to}!\idxcode{to}}
 \indexlibrary{\idxcode{to}!\idxcode{line_to}}

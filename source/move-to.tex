@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.moveto] {Class \tcode{move_to}}
+\rSec0 [moveto] {Class \tcode{move_to}}
 
-\rSec1 [\iotwod.moveto.synopsis] {\tcode{move_to} synopsis}
+\rSec1 [moveto.synopsis] {\tcode{move_to} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class move_to : public path_data {
   public:
-    // \ref{\iotwod.moveto.cons}, construct/copy/move/destroy:
+    // \ref{moveto.cons}, construct/copy/move/destroy:
     move_to() noexcept;
     move_to(const move_to& other) noexcept;
     move_to& operator=(const move_to& other) noexcept;
@@ -15,10 +15,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     move_to& operator=(move_to&& other) noexcept;
     move_to(const vector_2d& pt) noexcept;
 
-    // \ref{\iotwod.moveto.modifiers}, modifiers:
+    // \ref{moveto.modifiers}, modifiers:
     void to(const vector_2d& pt) noexcept;
 
-    // \ref{\iotwod.moveto.observers}, observers:
+    // \ref{moveto.observers}, observers:
     vector_2d to() const noexcept;
     virtual path_data_type type() const noexcept override;
     
@@ -28,7 +28,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.moveto.intro] {\tcode{move_to} Description}
+\rSec1 [moveto.intro] {\tcode{move_to} Description}
 
 \pnum
 \indexlibrary{\idxcode{move_to}}
@@ -37,7 +37,7 @@ The class \tcode{move_to} describes an operation on a path geometry collection.
 \pnum
 This operation starts a new path geometry and sets its current point and last-move-to point to the value of \tcode{*this.to()}.
 
-\rSec1 [\iotwod.moveto.cons] {\tcode{move_to} constructors and assignment operators}
+\rSec1 [moveto.cons] {\tcode{move_to} constructors and assignment operators}
 
 \indexlibrary{\idxcode{move_to}!constructor}
 \begin{itemdecl}
@@ -67,7 +67,7 @@ This operation starts a new path geometry and sets its current point and last-mo
 	\tcode{_Data == pt}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.moveto.modifiers]{\tcode{move_to} modifiers}
+\rSec1 [moveto.modifiers]{\tcode{move_to} modifiers}
 
 \indexlibrary{\idxcode{move_to}!\idxcode{to}}
 \indexlibrary{\idxcode{to}!\idxcode{move_to}}
@@ -81,7 +81,7 @@ This operation starts a new path geometry and sets its current point and last-mo
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.moveto.observers]{\tcode{move_to} observers}
+\rSec1 [moveto.observers]{\tcode{move_to} observers}
 
 \indexlibrary{\idxcode{move_to}!\idxcode{to}}
 \indexlibrary{\idxcode{to}!\idxcode{move_to}}

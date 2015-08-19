@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.surfacebrushfact] {Class \tcode{surface_brush_factory}}
+\rSec0 [surfacebrushfact] {Class \tcode{surface_brush_factory}}
 
-\rSec1 [\iotwod.surfacebrushfact.synopsis] {\tcode{surface_brush_factory} synopsis}
+\rSec1 [surfacebrushfact.synopsis] {\tcode{surface_brush_factory} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class surface_brush_factory {
   public:
-    // \ref{\iotwod.surfacebrushfact.cons}, construct/copy/move/destroy:
+    // \ref{surfacebrushfact.cons}, construct/copy/move/destroy:
     surface_brush_factory() noexcept;
     surface_brush_factory(const surface_brush_factory&) = delete;
     surface_brush_factory& operator=(const surface_brush_factory&) = delete;
@@ -16,12 +16,12 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     surface_brush_factory(experimental::io2d::surface& s);
     surface_brush_factory(experimental::io2d::surface& s, error_code& ec) noexcept;
     
-    // \ref{\iotwod.surfacebrushfact.modifiers}, modifiers:
+    // \ref{surfacebrushfact.modifiers}, modifiers:
     image_surface surface(experimental::io2d::surface& s);
     void surface(experimental::io2d::surface& s, image_surface& oldSurface, error_code& ec) noexcept;
     void surface(experimental::io2d::surface& s, error_code& ec) noexcept;
     
-    // \ref{\iotwod.surfacebrushfact.observers}, observers:
+    // \ref{surfacebrushfact.observers}, observers:
     bool has_surface() const noexcept;
     const image_surface& surface() const;
     
@@ -31,13 +31,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.surfacebrushfact.intro] {\tcode{surface_brush_factory} Description}
+\rSec1 [surfacebrushfact.intro] {\tcode{surface_brush_factory} Description}
 
 \pnum
 \indexlibrary{\idxcode{surface_brush_factory}}
 The class \tcode{surface_brush_factory} describes a mutable factory for creating \tcode{brush} objects with a \tcode{surface} object describing its color and alpha data.
 
-\rSec1 [\iotwod.surfacebrushfact.cons] {\tcode{surface_brush_factory} constructors and assignment operators}
+\rSec1 [surfacebrushfact.cons] {\tcode{surface_brush_factory} constructors and assignment operators}
 
 \indexlibrary{\idxcode{surface_brush_factory}!constructor}
 \begin{itemdecl}
@@ -76,7 +76,7 @@ The class \tcode{surface_brush_factory} describes a mutable factory for creating
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.surfacebrushfact.modifiers]{\tcode{surface_brush_factory} modifiers}
+\rSec1 [surfacebrushfact.modifiers]{\tcode{surface_brush_factory} modifiers}
 
 \indexlibrary{\idxcode{surface_brush_factory}!\idxcode{surface}}
 \indexlibrary{\idxcode{surface}!\idxcode{surface_brush_factory}}
@@ -103,7 +103,7 @@ The class \tcode{surface_brush_factory} describes a mutable factory for creating
 	
 	\pnum
 	\errors
-	Any error condition documented for \tcode{surface::flush} (\ref{\iotwod.surface}).
+	Any error condition documented for \tcode{surface::flush} (\ref{surface}).
 	
 	\pnum
 	\tcode{errc::invalid_argument} if \tcode{!s.has_surface_resource()}.
@@ -116,7 +116,7 @@ The class \tcode{surface_brush_factory} describes a mutable factory for creating
 
 \end{itemdescr}
 
-\rSec1 [\iotwod.surfacebrushfact.observers]{\tcode{surface_brush_factory} observers}
+\rSec1 [surfacebrushfact.observers]{\tcode{surface_brush_factory} observers}
 
 \indexlibrary{\idxcode{surface_brush_factory}!\idxcode{has_surface}}
 \indexlibrary{\idxcode{has_surface}!\idxcode{surface_brush_factory}}

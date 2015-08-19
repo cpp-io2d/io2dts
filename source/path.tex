@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.path] {Class \tcode{path}}
+\rSec0 [path] {Class \tcode{path}}
 
-\rSec1 [\iotwod.path.synopsis] {\tcode{path} synopsis}
+\rSec1 [path.synopsis] {\tcode{path} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path {
     public:
-    // \ref{\iotwod.path.cons}, construct/copy/destroy:
+    // \ref{path.cons}, construct/copy/destroy:
     path() = delete;
     explicit path(const path_factory& pb);
     path(const path_factory& pb, error_code& ec) noexcept;
@@ -21,7 +21,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.path.intro] {\tcode{path} Description}
+\rSec1 [path.intro] {\tcode{path} Description}
 
 \pnum
 \indexlibrary{\idxcode{path}}
@@ -35,7 +35,7 @@ stroked or filled.
 \pnum
 A \tcode{path} object shall be usable with any \tcode{surface} or \tcode{surface}-derived object.
 
-\rSec1 [\iotwod.path.cons] {\tcode{path} constructors and assignment operators}
+\rSec1 [path.cons] {\tcode{path} constructors and assignment operators}
 
 \indexlibrary{\idxcode{path}!constructor}
 \begin{itemdecl}
@@ -47,7 +47,7 @@ A \tcode{path} object shall be usable with any \tcode{surface} or \tcode{surface
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of class \tcode{path}. Implementations shall create native path geometries from the path geometries contained in \tcode{p} or \tcode{pb.data_ref()} as if they followed the procedure set forth in \ref{\iotwod.pathgeometries.processing}.
+	Constructs an object of class \tcode{path}. Implementations shall create native path geometries from the path geometries contained in \tcode{p} or \tcode{pb.data_ref()} as if they followed the procedure set forth in \ref{pathgeometries.processing}.
 
 	\pnum
 	\throws

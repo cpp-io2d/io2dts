@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.fillrule] {Enum class \tcode{fill_rule}}
+\rSec0 [fillrule] {Enum class \tcode{fill_rule}}
 
-\rSec1 [\iotwod.fillrule.summary] {\tcode{fill_rule} Summary}
+\rSec1 [fillrule.summary] {\tcode{fill_rule} Summary}
 
 \pnum
 The \tcode{fill_rule} enum class determines how the individuals paths in
 \tcode{path} objects are filled. For information about multiple paths in
 a single \tcode{path} object, see the description of the \tcode{path}
-class~(\ref{\iotwod.path}).
+class~(\ref{path}).
 
 \pnum
 In order to determine whether a point will be included in a fill
@@ -16,7 +16,7 @@ ray does not matter provided that it does not pass through the end point
 of a path segment and does not intersect the path at a point that is
 tangent to the path. The intersections of the ray with the path are used
 in conjunction with the current \tcode{fill_rule} value to determine
-whether a point is filled. See Table~\ref{tab:\iotwod.fillrule.meanings}
+whether a point is filled. See Table~\ref{tab:fillrule.meanings}
 for the meaning of each \tcode{fill_rule} enumerator.
 \enternote
 When used below, if the term path is formatted normally, i.e. path, it
@@ -25,7 +25,7 @@ formatted in code style, i.e. \tcode{path}, it refers to the \tcode{path}
 type, which may contain one or more paths.
 \exitnote
 
-\rSec1 [\iotwod.fillrule.synopsis] {\tcode{fill_rule} Synopsis}
+\rSec1 [fillrule.synopsis] {\tcode{fill_rule} Synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
@@ -36,11 +36,11 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.fillrule.enumerators] {\tcode{fill_rule} Enumerators}
+\rSec1 [fillrule.enumerators] {\tcode{fill_rule} Enumerators}
 
 \begin{libreqtab2}
  {\tcode{fill_rule} enumerator meanings}
- {tab:\iotwod.fillrule.meanings}
+ {tab:fillrule.meanings}
  \\ \topline
  \lhdr{Enumerator}
  & \rhdr{Meaning}

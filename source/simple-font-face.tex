@@ -1,7 +1,7 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.simplefontface] {Class \tcode{simple_font_face}}
+\rSec0 [simplefontface] {Class \tcode{simple_font_face}}
 
-\rSec1 [\iotwod.simplefontface.synopsis] {\tcode{simple_font_face} synopsis}
+\rSec1 [simplefontface.synopsis] {\tcode{simple_font_face} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
@@ -11,7 +11,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     typedef @\impdef@ native_handle_type; // \expos
     native_handle_type native_handle() const noexcept; // \expos
     
-    // \ref{\iotwod.simplefontface.cons}, construct/copy/destroy:
+    // \ref{simplefontface.cons}, construct/copy/destroy:
     simple_font_face() = delete;
     simple_font_face(const simple_font_face&) noexcept;
     simple_font_face& operator=(const simple_font_face&) noexcept;
@@ -24,7 +24,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       std::experimental::io2d::font_slant fs,
       std::experimental::io2d::font_weight fw, error_code& ec) noexcept;
 
-    // \ref{\iotwod.simplefontface.observers}, observers:
+    // \ref{simplefontface.observers}, observers:
     string typeface() const;
     void typeface(string& str, error_code& ec) const noexcept;
     ::std::experimental::io2d::font_slant font_slant() const noexcept;
@@ -38,7 +38,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.simplefontface.intro] {\tcode{simple_font_face} Description}
+\rSec1 [simplefontface.intro] {\tcode{simple_font_face} Description}
 
 \pnum
 \indexlibrary{\idxcode{simple_font_face}}
@@ -66,7 +66,7 @@ It may correctly handle some or all aspects of complex text rendering, e.g.:
 	\item text where the proper \term{display order} (the order text is rendered) differs from the \term{logical order} (the order text is typed on a keyboard).
 \end{itemize}
 
-\rSec1 [\iotwod.simplefontface.cons] {\tcode{simple_font_face} constructors and 
+\rSec1 [simplefontface.cons] {\tcode{simple_font_face} constructors and 
 assignment operators}
 
 \indexlibrary{\idxcode{simple_font_face}!constructor}
@@ -98,7 +98,7 @@ assignment operators}
 	\exitnote
 	
 	\pnum
-	\tcode{_Font_slant} shall equal the value determined according to the requirements set forth in \ref{\iotwod.fontslant} after the value of \tcode{_Typeface} has been determined. If that \tcode{font_slant} value is different than \tcode{fs}, \tcode{_Font_slant} shall be set to the actual value used.
+	\tcode{_Font_slant} shall equal the value determined according to the requirements set forth in \ref{fontslant} after the value of \tcode{_Typeface} has been determined. If that \tcode{font_slant} value is different than \tcode{fs}, \tcode{_Font_slant} shall be set to the actual value used.
 	\enterexample
 	If \tcode{font_slant::italic} is requested but an italic type does not exist for the chosen typeface, then if an oblique type exists, it is chosen and \tcode{_Font_slant == font_slant::oblique}, otherwise the normal type is chosen and \tcode{_Font_slant == font_slant::normal}.
 	\exitexample
@@ -116,7 +116,7 @@ assignment operators}
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.simplefontface.observers] {\tcode{simple_font_face} observers}
+\rSec1 [simplefontface.observers] {\tcode{simple_font_face} observers}
 
 \indexlibrary{\idxcode{simple_font_face}!\idxcode{typeface}}
 \indexlibrary{\idxcode{typeface}!\idxcode{simple_font_face}}

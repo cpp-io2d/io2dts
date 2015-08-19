@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.pathdataitem] {Class \tcode{path_data_item}}
+\rSec0 [pathdataitem] {Class \tcode{path_data_item}}
 
-\rSec1 [\iotwod.pathdataitem.synopsis] {\tcode{path_data_item} synopsis}
+\rSec1 [pathdataitem.synopsis] {\tcode{path_data_item} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path_data_item {
   public:
-    // \ref{\iotwod.pathdataitem.cons}, construct/copy/move/destroy:
+    // \ref{pathdataitem.cons}, construct/copy/move/destroy:
     path_data_item() noexcept;
     path_data_item(const path_data_item& other) noexcept;
     path_data_item& operator=(const path_data_item& other) noexcept;
@@ -26,7 +26,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     path_data_item(const rel_line_to& value) noexcept;
     path_data_item(const rel_move_to& value) noexcept;
 
-    // \ref{\iotwod.pathdataitem.modifiers}, modifiers:
+    // \ref{pathdataitem.modifiers}, modifiers:
     void assign(const arc& value) noexcept;
     void assign(const arc_negative& value) noexcept;
     void assign(const change_matrix& value) noexcept;
@@ -40,7 +40,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void assign(const rel_line_to& value) noexcept;
     void assign(const rel_move_to& value) noexcept;
 
-    // \ref{\iotwod.pathdataitem.observers}, observers:
+    // \ref{pathdataitem.observers}, observers:
     bool has_data() const noexcept;
     path_data_type type() const;
     path_data_type type(::std::error_code& ec) const noexcept;
@@ -136,13 +136,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.pathdataitem.intro] {\tcode{path_data_item} Description}
+\rSec1 [pathdataitem.intro] {\tcode{path_data_item} Description}
 
 \pnum
 \indexlibrary{\idxcode{path_data_item}}
 The class \tcode{path_data_item} describes an opaque container capable of storing and retrieving an object of a type derived from \tcode{path_data}.
 
-\rSec1 [\iotwod.pathdataitem.cons] {\tcode{path_data_item} constructors and assignment operators}
+\rSec1 [pathdataitem.cons] {\tcode{path_data_item} constructors and assignment operators}
 
 \indexlibrary{\idxcode{path_data_item}!constructor}
 \begin{itemdecl}
@@ -489,7 +489,7 @@ The class \tcode{path_data_item} describes an opaque container capable of storin
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.pathdataitem.modifiers] {\tcode{path_data_item} modifiers}
+\rSec1 [pathdataitem.modifiers] {\tcode{path_data_item} modifiers}
 
 \indexlibrary{\idxcode{path_data_item}!\idxcode{assign}}
 \indexlibrary{\idxcode{assign}!\idxcode{path_data_item}}
@@ -785,7 +785,7 @@ The class \tcode{path_data_item} describes an opaque container capable of storin
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.pathdataitem.observers] {\tcode{path_data_item} observers}
+\rSec1 [pathdataitem.observers] {\tcode{path_data_item} observers}
 
 \indexlibrary{\idxcode{path_data_item}!\idxcode{has_data}}
 \indexlibrary{\idxcode{has_data}!\idxcode{path_data_item}}

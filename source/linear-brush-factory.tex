@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.linearbrushfact] {Class \tcode{linear_brush_factory}}
+\rSec0 [linearbrushfact] {Class \tcode{linear_brush_factory}}
 
-\rSec1 [\iotwod.linearbrushfact.synopsis] {\tcode{linear_brush_factory} synopsis}
+\rSec1 [linearbrushfact.synopsis] {\tcode{linear_brush_factory} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class linear_brush_factory {
   public:
-    // \ref{\iotwod.linearbrushfact.cons}, construct/copy/move/destroy:
+    // \ref{linearbrushfact.cons}, construct/copy/move/destroy:
     linear_brush_factory() noexcept;
     linear_brush_factory(const linear_brush_factory&);
     linear_brush_factory& operator=(const linear_brush_factory&);
@@ -15,7 +15,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     linear_brush_factory& operator=(linear_brush_factory&& other) noexcept;
     linear_brush_factory(const vector_2d& begin, const vector_2d& end) noexcept;
 
-    // \ref{\iotwod.linearbrushfact.modifiers}, modifiers:
+    // \ref{linearbrushfact.modifiers}, modifiers:
     void add_color_stop(double offset, const rgba_color& color);
     void add_color_stop(double offset, const rgba_color& color, 
       error_code& ec) noexcept;
@@ -26,7 +26,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void begin_point(const vector_2d& value) noexcept;
     void end_point(const vector_2d& value) noexcept;
 
-    // \ref{\iotwod.linearbrushfact.observers}, observers:
+    // \ref{linearbrushfact.observers}, observers:
     int color_stop_count() const noexcept;
     tuple<double, rgba_color> color_stop(unsigned int index) const;
     tuple<double, rgba_color> color_stop(unsigned int index,
@@ -42,16 +42,16 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\iotwod.linearbrushfact.intro] {\tcode{linear_brush_factory} Description}
+\rSec1 [linearbrushfact.intro] {\tcode{linear_brush_factory} Description}
 
 \pnum
 \indexlibrary{\idxcode{linear_brush_factory}}
 The class \tcode{linear_brush_factory} describes a mutable factory for creating \tcode{brush} objects with a linear gradient describing its color and alpha data.
 
 \pnum
-For more information about gradients, including linear gradients, see \ref{\iotwod.gradients}.
+For more information about gradients, including linear gradients, see \ref{gradients}.
 
-\rSec1 [\iotwod.linearbrushfact.cons] {\tcode{linear_brush_factory} constructors and assignment operators}
+\rSec1 [linearbrushfact.cons] {\tcode{linear_brush_factory} constructors and assignment operators}
 
 \indexlibrary{\idxcode{linear_brush_factory}!constructor}
 \begin{itemdecl}
@@ -95,7 +95,7 @@ For more information about gradients, including linear gradients, see \ref{\iotw
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.linearbrushfact.modifiers] {\tcode{linear_brush_factory} modifiers}
+\rSec1 [linearbrushfact.modifiers] {\tcode{linear_brush_factory} modifiers}
 
 \indexlibrary{\idxcode{linear_brush_factory}!\idxcode{add_color_stop}}
 \indexlibrary{\idxcode{add_color_stop}!\idxcode{linear_brush_factory}}
@@ -185,7 +185,7 @@ For more information about gradients, including linear gradients, see \ref{\iotw
 	
 \end{itemdescr}
 
-\rSec1 [\iotwod.linearbrushfact.observers] {\tcode{color_stop_count} observers}
+\rSec1 [linearbrushfact.observers] {\tcode{color_stop_count} observers}
 
 \indexlibrary{\idxcode{linear_brush_factory}!\idxcode{color_stop_count}}
 \indexlibrary{\idxcode{color_stop_count}!\idxcode{linear_brush_factory}}
