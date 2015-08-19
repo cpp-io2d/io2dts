@@ -84,23 +84,19 @@ anti-aliasing types to choose from for each of the two operations.
 an error in the results of signal processing due to the input signal and output 
 signal not having a one-to-one mapping between their frequencies
 
+% The following may not be needed. Already defined in IEC 60050 723-05-05.
 \indexdefn{aspect ratio}
 \definition{aspect ratio}{\iotwod.general.defns.aspectratio}
-the width divided by the height
+the ratio of the width to the height of a rectangular area
 
-\indexdefn{B\'ezier curve}
-\definition{B\'ezier curve}{\iotwod.general.defns.bezier}
+\indexdefn{cubic B\'ezier curve}
+\definition{cubic B\'ezier curve}{\iotwod.general.defns.bezier}
 a curve defined by the 
 equation $f(t) = (1 - t)^{3} \times P_{0} + 3 \times t \times (1 - t)^{2} 
 \times P_{1} + 3 \times t^{2} \times (1 - t) \times P_{2} + t^{3} \times P_{3}$ 
 where $0.0 \le t \le 1.0$, $P_{0}$ is the starting point, $P_{1}$ is the first 
 control point, $P_{2}$ is the second control point, and $P_{3}$ is the 
 ending point
-\enternote
-This is a the definition of a cubic B\'ezier curve; other B\'eziers curve types 
-with different numbers of control points exist but are not relevant in this 
-\documenttypename{}.
-\exitnote
 
 \indexdefn{channel}
 \definition{channel}{\iotwod.general.defs.channel}
@@ -114,14 +110,19 @@ a path geometry with one or more path segments where the initial path segment's 
 \definition{color stop}{\iotwod.general.defns.colorstop}
 a tuple value composed of a floating point offset value in the range $[0, 1]$ and a color value
 
-\indexdefn{compose}
-\definition{compose}{\iotwod.general.defns.compose}
-to combine a source of raster graphics data with a raster graphics data graphics resource in the manner specified by a composition algorithm and store the result to the graphics resource
-\enternote
-The 'source of raster graphics' data may be the results of rendering or may be another raster graphics data graphics resource.
-
-Where a statement in the form 'compose X and Y' is encountered, X is the 'source of raster graphics data' and Y is the 'raster graphics data graphics resource'.
-\exitnote
+% %The following definition is malformed according to ISO/IEC Directives, Part 2, 2011 Appendix D
+%\indexdefn{compose}
+%\definition{compose}{\iotwod.general.defns.compose}
+%to combine a source of raster graphics data with a raster graphics data graphics resource in the manner specified by a composition algorithm and store the result to the graphics resource
+%\enternote
+%The 'source of raster graphics' data may be the results of rendering or may be another raster graphics data graphics resource.
+%
+%Where a statement in the form 'compose X and Y' is encountered, X is the 'source of raster graphics data' and Y is the 'raster graphics data graphics resource'.
+%\exitnote
+%
+\indexdefn{composing operation}
+\definition{composing operation}{\iotwod.general.defns.composingoperation}
+an operation that uses a composition algorithm
 
 \indexdefn{composition algorithm}
 \definition{composition algorithm}{\iotwod.general.defns.compositionalgorithm}
@@ -176,14 +177,11 @@ color data or transparency data
 
 \indexdefn{graphics resource}
 \definition{graphics resource}{\iotwod.general.defns.graphicsresource}
-an object used by an implementation to implement the requirements of this \documenttypename{}
-\enternote
-By its definition a graphics resource is an implementation detail. Typically it will be something like a graphics device, a render target, or some other graphics subsystem object. However it is also perfectly acceptable for it to be, e.g., an aggregate composed of multiple graphics subsystem objects which, together, allow the implementation to provide the required functionality.
+<graphics resource> an object of unspecified type used by an implementation
 
-This \documenttypename{} only imposes requirements involving graphics resources in a few instances. Where it does so, it only specifies that certain behavior is required and makes no imposition on how the required behavior should be implemented.
-
-A graphics resource is only directly accessible if an implementation chooses to expose it by providing a native handle (\ref{\iotwod.req.native}).
-\exitnote
+\indexdefn{graphics resource}
+\definition{graphics resource}{\iotwod.general.defns.graphicsresource.pathgeometry}
+<path geometry graphics resource> an object of unspecified type used by an implementation to store a collection of zero or more path geometries in an unspecified format
 
 \indexdefn{graphics state data}
 \definition{graphics state data}{\iotwod.general.defns.graphicsstatedata}
@@ -198,15 +196,6 @@ It is possible for the initial path segment and final path segment to be the sam
 \indexdefn{last-move-to point}
 \definition{last-move-to point}{\iotwod.general.defns.lastmovetopoint}
 the point in a path geometry that is the start point of the initial path segment
-
-\indexdefn{letterbox}
-\definition{letterbox}{\iotwod.general.defns.letterbox}
-to render one surface to another by scaling it, centering it, and filling the 
-areas outside of the  ***FIXME***
-
-\indexdefn{native path geometry}
-\definition{native path geometry}{\iotwod.general.defns.nativepathgeometry}
-a graphics resource representing a path geometry
 
 \indexdefn{normalize}
 \definition{normalize}{\iotwod.general.defns.normalize}
@@ -230,6 +219,7 @@ a collection of path segments where the end point of each path segment, except t
 \definition{path segment}{\iotwod.general.defns.pathsegment}
 is a line or a curve, each of which has a start point and an end point
 
+% The following may not be needed. Already defined in IEC 60050 723-05-31
 \indexdefn{pixel}
 \definition{pixel}{\iotwod.general.defns.pixel}
 a discrete visual data element with a format-dependent composition
@@ -244,7 +234,7 @@ texture composed of many pixels.
 \indexdefn{point}
 \definition{point}{\iotwod.general.defns.point}
 a coordinate designated by an X component and a Y component within the 
-coordinate space of a surface
+coordinate space of a raster graphics data graphics resource
 
 \indexdefn{premultiplied format}
 \definition{premultiplied format}{\iotwod.general.defns.premultipliedformat}
@@ -260,7 +250,11 @@ the alpha channel value.
 
 \indexdefn{render}
 \definition{render}{\iotwod.general.defns.render}
-to transform path geometries or text into raster graphics data in the manner specified by a set of graphics state data 
+to transform path geometries or text into raster graphics data in the manner specified by a set of graphics state data
+
+\indexdefn{rendering operation}
+\definition{rendering operation}{\iotwod.general.defns.renderingoperation}
+an operation that performs rendering
 
 \indexdefn{sample}
 \definition{sample}{\iotwod.general.defns.sample}
@@ -280,21 +274,14 @@ a filter
 integer intervals within a 2D space and conveys information about one or more 
 properties of the space
 
-\indexdefn{texture}
-\definition{texture}{\iotwod.general.defns.texture}
-***FIXME***
+\indexdefn{visual data}
+\definition{visual data}{\iotwod.general.defns.visualdata}
+***FIXME*** (Is this even needed?)
 
 % end definitions
 \indextext{definitions|)}
 
-\rSec1[\iotwod.general.compliance]{Implementation compliance}
-
 \pnum
-\indextext{conformance requirements|(}%
-\indextext{conformance requirements!general|(}%
-The set of
-\defn{diagnosable rules}
-consists of all syntactic and semantic rules in this International
-Standard except for those rules containing an explicit notation that
-``no diagnostic is required'' or which are described as resulting in
-``undefined behavior.''
+\enternote
+By its definition a graphics resource is an implementation detail. Often it will be a graphics subsystem object (e.g. a graphics device or a render target) or an aggregate composed of multiple graphics subsystem objects. However the only requirement placed upon a graphics resource is that the implementation is able to use it to provide the functionality required of the graphics resource.
+\exitnote

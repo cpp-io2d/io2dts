@@ -48,93 +48,27 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \pnum
 \indexlibrary{\idxcode{brush}}
-The class \tcode{brush} describes an opaque resource wrapper for color and alpha data.
+The class \tcode{brush} describes an opaque wrapper for a raster graphics data graphics resource.
 
 \pnum
 A \tcode{brush} object shall be usable with any \tcode{surface} or \tcode{surface}-derived object.
 
 \pnum
-A \tcode{brush} object's color and alpha data is immutable.
+A \tcode{brush} object's graphics data is immutable.
 
 \pnum
 A \tcode{brush} object also has mutable \tcode{extend}, \tcode{filter}, and \tcode{matrix_2d} values which affect how the color and alpha data is used and interpreted.
 
 \pnum
-Lastly, a \tcode{brush} object has immutable \tcode{brush_type} data which indicates the type of brush factory which was used in creating the \tcode{brush} object.
+A \tcode{brush} object has immutable \tcode{brush_type} data which indicates the type of brush factory that was used in creating the \tcode{brush} object (See Table \ref{tab:\iotwod.brushtype.meanings}).
 
 \pnum
-A \tcode{brush} object is usable as the color and alpha source for a surface's stroke, fill, mask, paint, and text rendering operations. See \ref{\iotwod.surface.modifiers.render} for more information.
-
-\pnum
-It is also usable as the mask for a surface's mask operation. Its alpha channel is used as the mask. See the description of \tcode{surface::mask} (\ref{\iotwod.surface.modifiers.render}) for more information.
-
-\pnum
-The internal storage format of a \tcode{brush} object's color and alpha data is unspecified.
-
-\pnum
-The \tcode{brush} object's color and alpha data may have less precision than the data of the brush factory object from which it was created.
+The \tcode{brush} object's graphics data may have less precision than the graphics data of the brush factory object from which it was created.
 
 \pnum
 \enterexample
-Several graphics and rendering technologies that are currently widely used store individual color and alpha channel data as 32-bit \tcode{float} values while \Cpp implementations that support using those technologies represent the \tcode{double} type that is used by \tcode{rgba_color} for individual color and alpha channels as a 64-bit value. It is precisely these situations which the preceding paragraph is intended to address.
+Several graphics and rendering technologies that are currently widely used store individual color and alpha channel data as 8-bit unsigned normalized integer values while the \tcode{double} type that is used by the \tcode{rgba_color} class for individual color and alpha is often a 64-bit value. It is precisely these situations which the preceding paragraph is intended to address.
 \exitexample
-
-\rSec1 [\iotwod.brush.extend] {Effects of its \tcode{extend} value on a \tcode{brush} object}
-
-\pnum
-In general, the effects of the \tcode{extend} value on a \tcode{brush} object are documented in \ref{\iotwod.extend}.
-
-\pnum
-The initial \tcode{extend} value of a \tcode{brush} object depends on the brush factory used to create it and is documented in the \tcode{brush} constructors for each type of brush factory.
-
-\pnum
-If the \tcode{brush}'s \tcode{brush_type} is \tcode{brush_type::mesh}, the \tcode{brush}'s \tcode{extend} value is ignored and all operations proceed as if the \tcode{extend} value is \tcode{extend::none}.
-
-\rSec1 [\iotwod.brush.filter] {Effects of its \tcode{filter} value of a \tcode{brush} object}
-
-\pnum
-The effects of the \tcode{filter} value on a \tcode{brush} object are documented in \ref{\iotwod.filter}.
-
-\pnum
-The initial \tcode{filter} value of a \tcode{brush} object depends on the brush factory used to create it and is documented in the \tcode{brush} constructors for each type of brush factory.
-
-\rSec1 [\iotwod.brush.matrix] {Effects of its \tcode{matrix_2d} value on a \tcode{brush} object}
-
-\pnum
-The initial \tcode{matrix_2d} value of a \tcode{brush} object is \tcode{matrix_2d::init_identity()}.
-
-\pnum
-If the \tcode{brush}'s \tcode{brush_type} is \tcode{brush_type::solid_color}, the brush is treated as if its data area is an infinite plane. As such\ the \tcode{brush}'s \tcode{extend}, \tcode{filter}, and \tcode{matrix_2d} values do not matter. Regardless of the coordinate from which data from the \tcode{brush} is requested, the \tcode{brush} will always return the color which the \tcode{solid_color_brush_factory} that was used to create it had at the time the \tcode{brush} was created.
-
-\pnum
-All brushes except \tcode{brush_type::solid_color} brushes are sensitive to coordinates and as such will need to have an appropriate \tcode{matrix_2d} value to achieve the desired outcome.
-
-\pnum
-\enternote
-Sometimes the initial \tcode{matrix_2d} value will be the appropriate value. As such there is no requirement to set a \tcode{matrix_2d} value unless you need something other than the initial value.
-\exitnote
-
-\pnum
-When it is necessary for the implementation to retrieve data from a \tcode{brush} object to calculate the resulting color value of a coordinate on a \tcode{surface}, the coordinate is first transformed using the \tcode{brush} object's \tcode{matrix_2d}.
-
-\pnum
-A \tcode{brush} object's \tcode{matrix_2d} value transforms a coordinate from the \tcode{surface}'s coordinate space to the \tcode{brush}'s coordinate space.
-
-\pnum
-\enterexample
-Take a \tcode{brush b} which has a \tcode{matrix_2d} value of \tcode{matrix_2d::init_scale(\{ 2.0, 0.25 \})}.
-
-\pnum
-If a request for data from \tcode{b} at the point \tcode{vector_2d(30.0, 18.0)} is made, by operation of \tcode{b}'s \tcode{matrix_2d}, the actual data that will be retrieved is the data at \tcode{vector_2d(60.0, 4.5)} (after application of \tcode{b}'s \tcode{extend} value as described above).
-
-\pnum
-Notice that although the \xaxis scale is set to \tcode{2.0} and the \yaxis scale is set to \tcode{0.25}, the actual effect is the same as if the \tcode{b}'s data itself had been scaled to the inverse of those values. This is because the transformation goes from the \tcode{surface}'s coordinate space to the \tcode{brush}'s coordinate space rather than from the \tcode{brush}'s coordinate space to the \tcode{surface}'s coordinate space.
-\exitexample
-
-\pnum
-\enternote
-For the same reason as explained in the example above, if you wish to translate the origin point of a \tcode{brush} to the point \tcode{vector_2d p} of a \tcode{surface}, you would do so by setting \tcode{matrix_2d::init_translate(-p)} as the brush's \tcode{matrix_2d} value.
-\exitnote
 
 \rSec1 [\iotwod.brush.cons] {\tcode{brush} constructors and assignment operators}
 

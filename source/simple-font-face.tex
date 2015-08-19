@@ -17,21 +17,21 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     simple_font_face& operator=(const simple_font_face&) noexcept;
     simple_font_face(simple_font_face&& other) noexcept;
     simple_font_face& operator=(simple_font_face&& other) noexcept;
-    simple_font_face(const string& fontFamily,
+    simple_font_face(const string& typeface,
       std::experimental::io2d::font_slant fs,
       std::experimental::io2d::font_weight fw);
-    simple_font_face(const string& fontFamily,
+    simple_font_face(const string& typeface,
       std::experimental::io2d::font_slant fs,
       std::experimental::io2d::font_weight fw, error_code& ec) noexcept;
 
     // \ref{\iotwod.simplefontface.observers}, observers:
-    string font_family() const;
-    void font_family(string& str, error_code& ec) const noexcept;
+    string typeface() const;
+    void typeface(string& str, error_code& ec) const noexcept;
     ::std::experimental::io2d::font_slant font_slant() const noexcept;
     ::std::experimental::io2d::font_weight font_weight() const noexcept;
 
   private:
-    string _Family;                                    // \expos
+    string _Typeface;                                    // \expos
     std::experimental::io2d::font_slant _Font_slant;   // \expos
     std::experimental::io2d::font_weight _Font_weight; // \expos
   };
@@ -42,7 +42,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \pnum
 \indexlibrary{\idxcode{simple_font_face}}
-The \tcode{simple_font_face} class represents a font face that is used to render text. It only guarantees rudimentary text rendering capabilities.
+The \tcode{simple_font_face} class represents a font that is used to render text. It only guarantees rudimentary text rendering capabilities.
 
 \pnum
 It shall correctly render text written horizontally in left-to-right scripts where there is a one-to-one mapping between characters and glyphs.
@@ -50,20 +50,20 @@ It shall correctly render text written horizontally in left-to-right scripts whe
 \pnum
 It may correctly render:
 \begin{itemize}
-	\item right-to-left scripts.
-	\item bi-directional text.
-	\item vertically-oriented text.
+	\item right-to-left scripts;
+	\item bi-directional text;
+	\item vertically-oriented text;
 	\item combining character sequences.
 \end{itemize}
 
 \pnum
 It may correctly handle some or all aspects of complex text rendering, e.g.:
 \begin{itemize}
-	\item Bi-directional text.
-	\item Context sensitive shaping.
-	\item Ligatures.
-	\item Cursive scripts.
-	\item Text where the proper \term{display order} (the order text is rendered) differs from the \term{logical order} (the order text is typed on a keyboard).
+	\item bi-directional text;
+	\item context sensitive shaping;
+	\item ligatures;
+	\item cursive scripts;
+	\item text where the proper \term{display order} (the order text is rendered) differs from the \term{logical order} (the order text is typed on a keyboard).
 \end{itemize}
 
 \rSec1 [\iotwod.simplefontface.cons] {\tcode{simple_font_face} constructors and 
@@ -71,34 +71,36 @@ assignment operators}
 
 \indexlibrary{\idxcode{simple_font_face}!constructor}
 \begin{itemdecl}
-    simple_font_face(const string& fontFamily,
+    simple_font_face(const string& typeface,
       std::experimental::io2d::font_slant fs,
       std::experimental::io2d::font_weight fw);
-    simple_font_face(const string& fontFamily,
+    simple_font_face(const string& typeface,
       std::experimental::io2d::font_slant fs,
       std::experimental::io2d::font_weight fw, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of class \tcode{simple_font_face}. A font face that can be used to render text to a \tcode{surface} object is associated with the object. Implementations should load font data into memory and perform any other necessary preparatory actions rather than delay such actions until the font face is actually used.
+	Constructs an object of class \tcode{simple_font_face}. A font that can be used to render text to a \tcode{surface} object is associated with the object.
+	
+	\pnum
+	Implementations should perform all possible actions that are required to use the font to render text rather than delay such actions until the font is actually used.
 	
 	\pnum
 	\postconditions
-	\tcode{_Family == fontFamily} if the implementation located a usable font family by that name, otherwise \tcode{_Family} will be set to the name of the \impldef{\tcode{simple_font_family}!font 
-	family} nearest match font family which the implementation selected instead.
+	\tcode{_Typeface == typeface} if the implementation located a usable typeface by that name, otherwise \tcode{_Typeface} will be set to the name of the \impldef{\tcode{simple_font_face}!typeface} nearest match typeface which the implementation selected instead.
 	\enternote
-	Implementations have been given control over deciding what the "nearest match" is because font family names are arbitrary and any individual with the proper tools can make a new font family.
+	Implementations have been given control over deciding what the "nearest match" is because typeface names are arbitrary and any individual with the proper tools can make a new typeface.
 	
-	Ideally an implementation which could not find an exact match would search for nearest matches in the following order. First it would run a search for font families that closely matched the requested family string based on common misspellings and typos. If no match was found it would then search some form of lookup table which stored distinguishing characteristics of a large number of font families (e.g. those which are provided by operating systems and applications which have an install base in excess of one million copies). If it found a listing in the table for the requested family or, barring that, a family which was a near match due to misspellings and typos, it would then use the characteristics provided by the table to make the nearest possible match. Optimally the table would include first preference matches where one font is known to have been developed to match another font as closely as legally permissible. The implementation would then use the results of the lookup table to find the closest available matching family. Lastly, only if the previous methods had failed would the implementation provide a font of its choosing.
+	Ideally an implementation which could not find an exact match would search for nearest matches in the following order. First it would run a search for typefaces with names that closely matched the requested typeface string based on common misspellings and typos. If no match was found it would then search some form of lookup table which stored distinguishing characteristics of a large number of typefaces (e.g. those which are provided by operating systems and applications which have an install base in excess of one million copies). If it found a listing in the table for the requested typeface or, barring that, a typeface which was a near match due to misspellings and typos, it would then use the characteristics provided by the table to make the nearest possible match. Optimally the table would include first preference matches where one font is known to have been developed to match another font as closely as legally permissible. The implementation would then use the results of the lookup table to find the closest available matching typeface. Lastly, only if the previous methods had failed would the implementation provide a font of its choosing.
 	
-	Nonetheless, implementations may, with equal validity, return as being the nearest match the same font family regardless of any information that could be gleaned from the unmatched request and without any consideration of spelling mistakes or typos.
+	Nonetheless, implementations may, with equal validity, return as being the nearest match the same typeface regardless of any information that could be gleaned from the unmatched request and without any consideration of spelling mistakes or typos.
 	\exitnote
 	
 	\pnum
-	\tcode{_Font_slant} shall equal the value determined according to the requirements set forth in \ref{\iotwod.fontslant} after the value of \tcode{_Family} has been determined. If that \tcode{font_slant} value is different than \tcode{fs}, \tcode{_Font_slant} shall be set to the actual value used.
+	\tcode{_Font_slant} shall equal the value determined according to the requirements set forth in \ref{\iotwod.fontslant} after the value of \tcode{_Typeface} has been determined. If that \tcode{font_slant} value is different than \tcode{fs}, \tcode{_Font_slant} shall be set to the actual value used.
 	\enterexample
-	If \tcode{font_slant::italic} is requested but an italic type does not exist for the chosen font family, then if an oblique type exists, it is chosen and \tcode{_Font_slant == font_slant::oblique}, otherwise the normal type is chosen and \tcode{_Font_slant == font_slant::normal}.
+	If \tcode{font_slant::italic} is requested but an italic type does not exist for the chosen typeface, then if an oblique type exists, it is chosen and \tcode{_Font_slant == font_slant::oblique}, otherwise the normal type is chosen and \tcode{_Font_slant == font_slant::normal}.
 	\exitexample
 	
 	\pnum
@@ -116,15 +118,15 @@ assignment operators}
 
 \rSec1 [\iotwod.simplefontface.observers] {\tcode{simple_font_face} observers}
 
-\indexlibrary{\idxcode{simple_font_face}!\idxcode{font_family}}
-\indexlibrary{\idxcode{font_family}!\idxcode{simple_font_face}}
+\indexlibrary{\idxcode{simple_font_face}!\idxcode{typeface}}
+\indexlibrary{\idxcode{typeface}!\idxcode{simple_font_face}}
 \begin{itemdecl}
-    string font_family() const;
+    string typeface() const;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Family}.
+	\tcode{_Typeface}.
 
 	\pnum
 	\throws
@@ -136,15 +138,15 @@ assignment operators}
 	
 \end{itemdescr}
 
-\indexlibrary{\idxcode{simple_font_face}!\idxcode{font_family}}
-\indexlibrary{\idxcode{font_family}!\idxcode{simple_font_face}}
+\indexlibrary{\idxcode{simple_font_face}!\idxcode{typeface}}
+\indexlibrary{\idxcode{typeface}!\idxcode{simple_font_face}}
 \begin{itemdecl}
-    void font_family(string& str, error_code& ec) const noexcept;
+    void typeface(string& str, error_code& ec) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	\tcode{str = _Family}.
+	\tcode{str = _Typeface}.
 
 	\pnum
 	\throws

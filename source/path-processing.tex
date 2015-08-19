@@ -16,15 +16,17 @@ A path geometry may contain degenerate path segments.
 There are special rules concerning the rendering of degenerate path segments. As such they shall be added to a path geometry when requested and shall not be removed from a path geometry when processing it.
 
 \pnum
-A \tcode{path} object is an immutable resource wrapper containing zero or more native path geometries (\ref{\iotwod.path}).
+A \tcode{path} object is an immutable resource wrapper containing a path geometry graphics resource (\ref{\iotwod.path}).
 
 \rSec1 [\iotwod.pathgeometries.processing] {Processing path geometries}
 
 \pnum
-This section describes how to process a properly formed \tcode{vector<path_data_item>} object into native path geometries that are ready to be rendered.
+\ref{\iotwod.pathgeometries.processing} describes how a properly formed \tcode{vector<path_data_item>} object shall be interpreted by an implementation in order to convert it into a path geometry graphics resource.
 
 \pnum
-For purposes of exposition, it is assumed that there is an object for forming native path geometries with the following non-normative interface:
+For purposes of exposition, the following class for forming a path geometry graphics resource object is used:
+
+***FIXME*** Doesn't provide or properly set state data, collections, etc. XXXXXXXXXX 
 
 \begin{codeblock}
 // \expos
@@ -93,7 +95,7 @@ public:
 
 \pnum
 \enternote
-It is possible to work with a native path geometry that only supports rendering triangles by using the triangles to form lines and to approximate curves. This description of path geometry processing assumes the existence of a native path geometry that performs those actions where needed.
+A path geometry graphics resource that only supports rendering triangles is possible. The triangles would be used to form lines and to approximate curves. This description assumes the existence of a path geometry graphics resource that performs those actions where needed.
 \exitnote
 
 \pnum
