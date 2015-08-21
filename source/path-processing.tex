@@ -24,12 +24,41 @@ A \tcode{path} object is an immutable resource wrapper containing a path geometr
 \ref{pathgeometries.processing} describes how a properly formed \tcode{vector<path_data_item>} object shall be interpreted by an implementation in order to convert it into a path geometry graphics resource.
 
 \pnum
-For purposes of exposition, the following class for forming a path geometry graphics resource object is used:
+The \tcode{native_geometry_collection} class, described below, is used for expository purposes only. It provides a hypothetical interface for forming a path geometry graphics resource object. It is not normative.
 
-***FIXME*** Doesn't provide or properly set state data, collections, etc. XXXXXXXXXX 
+\pnum
+The \tcode{native_geometry_collection} class has the following state data, the types of which are unspecified:
+
+\begin{libreqtab2}
+ {\tcode{native_geometry_collection} state data}
+ {tab:pathgeometries.processing.natgeocoll}
+ \\ \topline
+ \lhdr{Name}
+ & \rhdr{Use}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Name}
+ & \rhdr{Use}
+ \\ \capsep
+ \endhead
+ Current Point
+ & The start point for a path segment that is added to the Current Path Geometry.
+ \\
+ Close Point
+ & The start point for the initial path segment in the Current Path Geometry.
+ \\
+ Current Path Geometry
+ & The path geometry to which path segments are added.
+ \\
+ Collection
+ & The collection of all path geometries added to the \tcode{native_geometry_collection} object. A new path geometry that is added to the collection is added to the end of the collection.
+ \\
+\end{libreqtab2}
 
 \begin{codeblock}
-// \expos
+// \textit{This class is }\expos
 class native_geometry_collection {
 public:
   void current_point(const vector_2d& pt) noexcept;
@@ -39,7 +68,6 @@ public:
     const vector_2d& endPt) noexcept;
   void close_path() noexcept;
 };
-// \expos
 \end{codeblock}
 
 \begin{itemdecl}
@@ -48,8 +76,13 @@ public:
 \begin{itemdescr}
 	\pnum
 	\effects
-	Stores \tcode{pt} as the current point.
-
+	If the last member function called was not \tcode{current_point} or if the Collection contains no path geometries, a new path geometry is created, added to the Collection, and set as the Current Path Geometry.
+	
+	\pnum
+	If a new path geometry is created and the Collection contained at least one path geometry prior to this member function being called, then unless the last member function called was \tcode{close_path}, the previous Current Path Geometry shall be an open path geometry.
+	
+	\pnum
+	Sets \tcode{pt} as the Current Point.
 \end{itemdescr}
 
 \begin{itemdecl}
@@ -57,8 +90,12 @@ public:
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
+	\preconditions
+	There is a Current Path Geometry.
+	
+	\pnum
 	\effects
-	Stores \tcode{pt} as the close point.
+	Sets \tcode{pt} as the Close Point.
 
 \end{itemdescr}
 
@@ -67,8 +104,12 @@ public:
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
+	\preconditions
+	There is a Current Path Geometry.
+	
+	\pnum
 	\effects
-	Creates a line from the current point to \tcode{pt}.
+	Creates a line segment from the Current Point to \tcode{pt} and adds it to the Current Path Geometry.
 
 \end{itemdescr}
 
@@ -78,8 +119,12 @@ public:
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
+	\preconditions
+	There is a Current Path Geometry.
+	
+	\pnum
 	\effects
-	Creates a cubic B\'ezier curve from the current point to \tcode{endPt} using \tcode{cpt1} as the first control point and \tcode{cpt2} as the second control point.
+	Creates a cubic B\'ezier curve from the Current Point to \tcode{endPt} using \tcode{cpt1} as the first control point and \tcode{cpt2} as the second control point and adds it to the Current Path Geometry.
 
 \end{itemdescr}
 
@@ -88,8 +133,15 @@ public:
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
+	\preconditions
+	There is a Current Path Geometry.
+	
+	\pnum
 	\effects
-	Creates a line from the current point to the close point. If this geometry is stroked, the point where the close point meets the line or curve that began the path geometry shall be rendered as a join in accordance with the current \tcode{line_join} value.
+	Creates a line segment from the Current Point to the Close Point.
+	
+	\pnum
+	The Current Path Geometry becomes a closed path geometry.
 
 \end{itemdescr}
 
@@ -115,7 +167,7 @@ for (const auto& item : p) {
   switch(item.type()) {
   case path_data_type::move_to:
   {
-    currentPoint = item.get<move_to>().to();
+    currentPoint = item.get<path_data_item::move_to>().to();
     auto pt = m.transform_point(currentPoint - origin) + origin;
     n.current_point(pt);
     hasCurrentPoint = true;
@@ -124,7 +176,7 @@ for (const auto& item : p) {
   } break;
   case path_data_type::line_to:
   {
-    currentPoint = item.get<line_to>().to();
+    currentPoint = item.get<path_data_item::line_to>().to();
     auto pt = m.transform_point(currentPoint - origin) + origin;
     if (hasCurrentPoint) {
       n.line_to(pt);
@@ -138,7 +190,7 @@ for (const auto& item : p) {
   } break;
   case path_data_type::curve_to:
   {
-    auto cd = item.get<curve_to>();
+    auto cd = item.get<path_data_item::curve_to>();
     auto pt1 = m.transform_point(cd.control_point_1() - origin) + origin;
     auto pt2 = m.transform_point(cd.control_point_2() - origin) + origin;
     auto pt3 = m.transform_point(cd.end_point() - origin) + origin;
@@ -171,7 +223,7 @@ for (const auto& item : p) {
   case path_data_type::rel_move_to:
   {
     // If !hasCurrentPoint, error is io2d_error::no_current_point;
-    currentPoint = item.get<rel_move_to>().to() + currentPoint;
+    currentPoint = item.get<path_data_item::rel_move_to>().to() + currentPoint;
     auto pt = m.transform_point(currentPoint - origin) + origin;
     n.current_point(pt);
     hasCurrentPoint = true;
@@ -181,14 +233,14 @@ for (const auto& item : p) {
   case path_data_type::rel_line_to:
   {
     // If !hasCurrentPoint, error is io2d_error::no_current_point;
-    currentPoint = item.get<rel_line_to>().to() + currentPoint;
+    currentPoint = item.get<path_data_item::rel_line_to>().to() + currentPoint;
     auto pt = m.transform_point(currentPoint - origin) + origin;
     n.line_to(pt);
   } break;
   case path_data_type::rel_curve_to:
   {
     // If !hasCurrentPoint, error is io2d_error::no_current_point;
-    auto cd = item.get<rel_curve_to>();
+    auto cd = item.get<path_data_item::rel_curve_to>();
     auto pt1 = m.transform_point(cd.control_point_1() + currentPoint -
       origin) + origin;
     auto pt2 = m.transform_point(cd.control_point_2() + currentPoint -
@@ -200,7 +252,7 @@ for (const auto& item : p) {
   } break;
   case path_data_type::arc:
   {
-    auto ad = item.get<arc>();
+    auto ad = item.get<path_data_item::arc>();
     auto ctr = ad.center();
     auto rad = ad.radius();
     auto ang1 = ad.angle_1();
@@ -267,7 +319,7 @@ for (const auto& item : p) {
   } break;
   case path_data_type::arc_negative:
   {
-    auto ad = item.get<arc_negative>();
+    auto ad = item.get<path_data_item::arc_negative>();
     auto ctr = ad.center();
     auto rad = ad.radius();
     auto ang1 = ad.angle_1();
@@ -338,11 +390,11 @@ for (const auto& item : p) {
   } break;
   case path_data_type::change_matrix:
   {
-    m = item.get<change_matrix>().matrix();
+    m = item.get<path_data_item::change_matrix>().matrix();
   } break;
   case path_data_type::change_origin:
   {
-    origin = item.get<change_origin>().origin();
+    origin = item.get<path_data_item::change_origin>().origin();
   } break;
   }
 }

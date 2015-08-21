@@ -1,13 +1,17 @@
 %!TEX root = io2d.tex
-\rSec0 [pathdata] {Class \tcode{path_data}}
+\rSec0 [pathdataitem.pathdata] {Class \tcode{path_data_item::path_data}}
 
-\rSec1 [pathdata.synopsis] {\tcode{path_data} synopsis}
+\pnum
+\indexlibrary{\idxcode{path_data_item::path_data}}
+The class \tcode{path_data_item::path_data} serves as an abstract base class for classes that describe operations performed on path geometries.
+
+\rSec1 [pathdataitem.pathdata.synopsis] {\tcode{path_data_item::path_data} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class path_data {
+  class path_data_item::path_data {
   public:
-    // \ref{pathdata.cons}, construct/copy/move/destroy:
+    // \ref{pathdataitem.pathdata.cons}, construct/copy/move/destroy:
     path_data() noexcept;
     path_data(const path_data& other) noexcept;
     path_data& operator=(const path_data& other) noexcept;
@@ -15,21 +19,15 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     path_data& operator=(path_data&& other) noexcept;
     virtual ~path_data() noexcept;
 
-    // \ref{pathdata.observers}, observers:
+    // \ref{pathdataitem.pathdata.observers}, observers:
     virtual path_data_type type() const noexcept = 0;
   };
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdata.intro] {\tcode{path_data} Description}
+\rSec1 [pathdataitem.pathdata.cons] {\tcode{path_data_item::path_data} constructors and assignment operators}
 
-\pnum
-\indexlibrary{\idxcode{path_data}}
-The class \tcode{path_data} serves as an abstract base class for classes that describe operations performed on path geometries.
-
-\rSec1 [pathdata.cons] {\tcode{path_data} constructors and assignment operators}
-
-\indexlibrary{\idxcode{path_data}!destructor}
+\indexlibrary{\idxcode{path_data_item::path_data}!destructor}
 \begin{itemdecl}
     virtual ~path_data() noexcept;
 \end{itemdecl}
@@ -40,10 +38,10 @@ The class \tcode{path_data} serves as an abstract base class for classes that de
 	
 \end{itemdescr}
 
-\rSec1 [pathdata.observers]{\tcode{path_data} observers}
+\rSec1 [pathdataitem.pathdata.observers]{\tcode{path_data_item::path_data} observers}
 
-\indexlibrary{\idxcode{path_data}!\idxcode{type}}
-\indexlibrary{\idxcode{type}!\idxcode{path_data}}
+\indexlibrary{\idxcode{path_data_item::path_data}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{path_data_item::path_data}}
 \begin{itemdecl}
     virtual path_data_type type() const noexcept = 0;
 \end{itemdecl}
@@ -54,5 +52,5 @@ The class \tcode{path_data} serves as an abstract base class for classes that de
 	
 	\pnum
 	\realnote
-	This is used for casting to the correct type when iterating through a \tcode{vector<path_data>} object.
+	This is used for casting to the correct type when iterating through a collection of \tcode{path_data} objects.
 \end{itemdescr}

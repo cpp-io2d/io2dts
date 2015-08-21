@@ -22,7 +22,7 @@ double operator "" ubyte(unsigned long long int value);
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{::std::max(0.0, ::std::min(1.0, static_cast<double>(value) / 255.0))}
+	\tcode{max(0.0, min(1.0, static_cast<double>(value) / 255.0))}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{literals}!\idxcode{operator''''unorm}}%
@@ -33,6 +33,6 @@ double operator "" unorm(long double value);
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{::std::nearbyint(::std::max(0.0, ::std::min(1.0, 
+	\tcode{nearbyint(max(0.0, min(1.0, 
 	static_cast<double>(value))) * 255.0) / 255.0}
 \end{itemdescr}

@@ -19,7 +19,11 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   
   // \ref{\iotwoderrorcategory.nonmembers}, non-member functions:
   const error_category& io2d_category() noexcept;
-} } } }
+} } }
+
+  error_condition make_error_condition(
+    experimental::io2d::io2d_error e) noexcept;
+}
 \end{codeblock}
 
 \rSec1 [\iotwoderrorcategory.intro] {\tcode{io2d_error_category} 
@@ -126,4 +130,15 @@ non-member functions}
 	virtual functions shall behave as specified for the class 
 	\tcode{io2d_error_category}. The object's \tcode{name} virtual function 
 	shall return a pointer to the string \tcode{''io2d''}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{make_error_condition}}
+\begin{itemdecl}
+  error_condition make_error_condition(experimental::io2d::io2d_error e) 
+    noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	\tcode{error_condition(static_cast<int>(e), experimental::io2d::io2d_category());}.
 \end{itemdescr}

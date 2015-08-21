@@ -37,12 +37,16 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     double operator""unorm(long double value);
   }
   
-  class point;
-  bool operator==(const point& lhs, const point& rhs);
-  bool operator!=(const point& lhs, const point& rhs);
+  class vector_2d;
+  bool operator==(const vector_2d& lhs, const vector_2d& rhs) noexcept;
+  bool operator!=(const vector_2d& lhs, const vector_2d& rhs) noexcept;
+  vector_2d operator+(const vector_2d& lhs) noexcept;
+  vector_2d operator+(const vector_2d& lhs, const vector_2d& rhs) noexcept;
+  vector_2d operator-(const vector_2d& lhs) noexcept;
+  vector_2d operator-(const vector_2d& lhs, const vector_2d& rhs) noexcept;
+  vector_2d operator*(const vector_2d& lhs, double rhs) noexcept;
+  vector_2d operator*(double lhs, const vector_2d& rhs) noexcept;
 
-  class glyph;
-  class text_cluster;
   class font_extents;
   class text_extents;
 
@@ -53,19 +57,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   bool operator==(const matrix_2d& lhs, const matrix_2d& rhs);
   bool operator!=(const matrix_2d& lhs, const matrix_2d& rhs);
 
-  class path_data;
-  class move_to;
-  class line_to;
-  class rel_move_to;
-  class rel_line_to;
-  class curve_to;
-  class rel_curve_to;
-  class arc;
-  class arc_negative;
-  class new_sub_path;
-  class close_path;
-  class change_matrix;
-  
+  class path_data_item;
+
   class path;
   class path_factory;
   
@@ -103,12 +96,13 @@ namespace std {
 
 	template<>
 	struct is_error_code_enum<@\impdef@>
-		: public true_type{ };
+		: public true_type{ }; // \expos
 
 	std::error_condition make_error_condition(
 	  experimental::io2d::io2d_error e) noexcept;
 
-	std::error_code make_error_code(@\impdef@ e) noexcept;
+	std::error_code make_error_code(
+	  @\impdef@ e) noexcept; // \expos
 } // namespace std
 
 \end{codeblock}

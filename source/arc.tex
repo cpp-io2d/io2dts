@@ -1,56 +1,18 @@
 %!TEX root = io2d.tex
-\rSec0 [arc] {Class \tcode{arc}}
-
-\rSec1 [arc.synopsis] {\tcode{arc} synopsis}
-
-\begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class arc : public path_data {
-  public:
-    // \ref{arc.cons}, construct/copy/move/destroy:
-    arc() noexcept;
-    arc(const arc& other) noexcept;
-    arc& operator=(const arc& other) noexcept;
-    arc(arc&& other) noexcept;
-    arc& operator=(arc&& other) noexcept;
-    arc(const vector_2d& ctr, double rad, double angle1, double angle2) noexcept;
-
-    // \ref{arc.modifiers}, modifiers:
-    void center(const vector_2d& value) noexcept;
-    void radius(double value) noexcept;
-    void angle_1(double radians) noexcept;
-    void angle_2(double radians) noexcept;
-
-    // \ref{arc.observers}, observers:
-    vector_2d center() const noexcept;
-    double radius() const noexcept;
-    double angle_1() const noexcept;
-    double angle_2() const noexcept;
-    virtual path_data_type type() const noexcept override;
-
-  private:
-    vector_2d _Center; // \expos
-    double _Radius;    // \expos
-    double _Angle_1;   // \expos
-    double _Angle_2;   // \expos
-  };
-} } } }
-\end{codeblock}
-
-\rSec1 [arc.intro] {\tcode{arc} Description}
+\rSec0 [pathdataitem.arc] {Class \tcode{path_data_item::arc}}
 
 \pnum
-\indexlibrary{\idxcode{arc}}
-The class \tcode{arc} describes an operation on a path geometry collection.
+\indexlibrary{\idxcode{path_data_item::arc}}
+The class \tcode{path_data_item::arc} describes an operation on a path geometry collection.
 
 \pnum
-This operation creates a circular arc.
+This operation creates a circular arc with clockwise rotation.
 
 \pnum
-The unit for the values passed to and returned by \tcode{arc::angle_1} and \tcode{arc::angle_2} is the radian.
+The unit for the values passed to and returned by \tcode{path_data_item::arc::angle_1} and \tcode{path_data_item::arc::angle_2} is the radian.
 
 \pnum
-Its \term{start point} is \tcode{vector_2d\{ *this.radius() * cos(*this.angle_1(), -(*this.radius() * -sin(*this.angle_1())) \} + *this.center()}.
+The arc's \term{start point} is \tcode{vector_2d\{ *this.radius() * cos(*this.angle_1(), -(*this.radius() * -sin(*this.angle_1())) \} + *this.center()}.
 
 \pnum
 Its \term{end point} is \tcode{vector_2d\{ *this.radius() * cos(*this.angle_2(), -(*this.radius() * -sin(*this.angle_2())) \} + *this.center()}.
@@ -70,16 +32,52 @@ The current point is set be to the arc's end point at the end of this operation.
 \pnum
 For purposes of determining whether a point is on the arc, if the value returned by \tcode{*this.angle_2()} is less than the value returned by \tcode{*this.angle_1()} then the value returned by \tcode{*this.angle_2()} shall be continuously incremented by $2\pi$ until it is greater than the value returned by \tcode{*this.angle_1()}.
 
-\rSec1 [arc.cons] {\tcode{arc} constructors and assignment operators}
+\rSec1 [pathdataitem.arc.synopsis] {\tcode{path_data_item::arc} synopsis}
 
-\indexlibrary{\idxcode{arc}!constructor}
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class path_data_item::arc : public path_data_item::path_data {
+  public:
+    // \ref{pathdataitem.arc.cons}, construct/copy/move/destroy:
+    arc() noexcept;
+    arc(const arc& other) noexcept;
+    arc& operator=(const arc& other) noexcept;
+    arc(arc&& other) noexcept;
+    arc& operator=(arc&& other) noexcept;
+    arc(const vector_2d& ctr, double rad, double angle1, double angle2) noexcept;
+
+    // \ref{pathdataitem.arc.modifiers}, modifiers:
+    void center(const vector_2d& value) noexcept;
+    void radius(double value) noexcept;
+    void angle_1(double radians) noexcept;
+    void angle_2(double radians) noexcept;
+
+    // \ref{pathdataitem.arc.observers}, observers:
+    vector_2d center() const noexcept;
+    double radius() const noexcept;
+    double angle_1() const noexcept;
+    double angle_2() const noexcept;
+    virtual path_data_type type() const noexcept override;
+
+  private:
+    vector_2d _Center; // \expos
+    double _Radius;    // \expos
+    double _Angle_1;   // \expos
+    double _Angle_2;   // \expos
+  };
+} } } }
+\end{codeblock}
+
+\rSec1 [pathdataitem.arc.cons] {\tcode{path_data_item::arc} constructors and assignment operators}
+
+\indexlibrary{\idxcode{path_data_item::arc}!constructor}
 \begin{itemdecl}
     arc() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{arc}.
+	Constructs an object of type \tcode{path_data_item::arc}.
 	
 	\pnum
 	\postconditions
@@ -93,14 +91,14 @@ For purposes of determining whether a point is on the arc, if the value returned
 
 \end{itemdescr}
 
-\indexlibrary{\idxcode{arc}!constructor}
+\indexlibrary{\idxcode{path_data_item::arc}!constructor}
 \begin{itemdecl}
     arc(const vector_2d& ctr, double rad, double angle1, double angle2) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{arc}.
+	Constructs an object of type \tcode{path_data_item::arc}.
 	
 	\pnum
 	\postconditions
@@ -114,10 +112,10 @@ For purposes of determining whether a point is on the arc, if the value returned
 
 \end{itemdescr}
 
-\rSec1 [arc.modifiers]{\tcode{arc} modifiers}
+\rSec1 [pathdataitem.arc.modifiers]{\tcode{path_data_item::arc} modifiers}
 
-\indexlibrary{\idxcode{arc}!\idxcode{center}}
-\indexlibrary{\idxcode{center}!\idxcode{arc}}
+\indexlibrary{\idxcode{path_data_item::arc}!\idxcode{center}}
+\indexlibrary{\idxcode{center}!\idxcode{path_data_item::arc}}
 \begin{itemdecl}
     void center(const vector_2d& value) noexcept;
 \end{itemdecl}
@@ -128,8 +126,8 @@ For purposes of determining whether a point is on the arc, if the value returned
 	
 \end{itemdescr}
 
-\indexlibrary{\idxcode{arc}!\idxcode{radius}}
-\indexlibrary{\idxcode{radius}!\idxcode{arc}}
+\indexlibrary{\idxcode{path_data_item::arc}!\idxcode{radius}}
+\indexlibrary{\idxcode{radius}!\idxcode{path_data_item::arc}}
 \begin{itemdecl}
     void radius(double value) noexcept;
 \end{itemdecl}
@@ -140,8 +138,8 @@ For purposes of determining whether a point is on the arc, if the value returned
 	
 \end{itemdescr}
 
-\indexlibrary{\idxcode{arc}!\idxcode{angle_1}}
-\indexlibrary{\idxcode{angle_1}!\idxcode{arc}}
+\indexlibrary{\idxcode{path_data_item::arc}!\idxcode{angle_1}}
+\indexlibrary{\idxcode{angle_1}!\idxcode{path_data_item::arc}}
 \begin{itemdecl}
     void angle_1(double value) noexcept;
 \end{itemdecl}
@@ -152,8 +150,8 @@ For purposes of determining whether a point is on the arc, if the value returned
 	
 \end{itemdescr}
 
-\indexlibrary{\idxcode{arc}!\idxcode{angle_2}}
-\indexlibrary{\idxcode{angle_2}!\idxcode{arc}}
+\indexlibrary{\idxcode{path_data_item::arc}!\idxcode{angle_2}}
+\indexlibrary{\idxcode{angle_2}!\idxcode{path_data_item::arc}}
 \begin{itemdecl}
     void angle_2(double value) noexcept;
 \end{itemdecl}
@@ -164,10 +162,10 @@ For purposes of determining whether a point is on the arc, if the value returned
 	
 \end{itemdescr}
 
-\rSec1 [arc.observers]{\tcode{arc} observers}
+\rSec1 [pathdataitem.arc.observers]{\tcode{path_data_item::arc} observers}
 
-\indexlibrary{\idxcode{arc}!\idxcode{center}}
-\indexlibrary{\idxcode{center}!\idxcode{arc}}
+\indexlibrary{\idxcode{path_data_item::arc}!\idxcode{center}}
+\indexlibrary{\idxcode{center}!\idxcode{path_data_item::arc}}
 \begin{itemdecl}
     vector_2d center() const noexcept;
 \end{itemdecl}
@@ -178,8 +176,8 @@ For purposes of determining whether a point is on the arc, if the value returned
 
 \end{itemdescr}
 
-\indexlibrary{\idxcode{arc}!\idxcode{radius}}
-\indexlibrary{\idxcode{radius}!\idxcode{arc}}
+\indexlibrary{\idxcode{path_data_item::arc}!\idxcode{radius}}
+\indexlibrary{\idxcode{radius}!\idxcode{path_data_item::arc}}
 \begin{itemdecl}
     double radius() const noexcept;
 \end{itemdecl}
@@ -190,8 +188,8 @@ For purposes of determining whether a point is on the arc, if the value returned
 
 \end{itemdescr}
 
-\indexlibrary{\idxcode{arc}!\idxcode{angle_1}}
-\indexlibrary{\idxcode{angle_1}!\idxcode{arc}}
+\indexlibrary{\idxcode{path_data_item::arc}!\idxcode{angle_1}}
+\indexlibrary{\idxcode{angle_1}!\idxcode{path_data_item::arc}}
 \begin{itemdecl}
     double angle_1() const noexcept;
 \end{itemdecl}
@@ -202,8 +200,8 @@ For purposes of determining whether a point is on the arc, if the value returned
 
 \end{itemdescr}
 
-\indexlibrary{\idxcode{arc}!\idxcode{angle_2}}
-\indexlibrary{\idxcode{angle_2}!\idxcode{arc}}
+\indexlibrary{\idxcode{path_data_item::arc}!\idxcode{angle_2}}
+\indexlibrary{\idxcode{angle_2}!\idxcode{path_data_item::arc}}
 \begin{itemdecl}
     double angle_2() const noexcept;
 \end{itemdecl}
@@ -214,8 +212,8 @@ For purposes of determining whether a point is on the arc, if the value returned
 
 \end{itemdescr}
 
-\indexlibrary{\idxcode{arc}!\idxcode{type}}
-\indexlibrary{\idxcode{type}!\idxcode{arc}}
+\indexlibrary{\idxcode{path_data_item::arc}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{path_data_item::arc}}
 \begin{itemdecl}
     virtual path_data_type type() const noexcept override;
 \end{itemdecl}

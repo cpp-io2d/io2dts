@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [changematrix] {Class \tcode{change_matrix}}
+\rSec0 [pathdataitem.changematrix] {Class \tcode{change_matrix}}
 
-\rSec1 [changematrix.synopsis] {\tcode{change_matrix} synopsis}
+\rSec1 [pathdataitem.changematrix.synopsis] {\tcode{change_matrix} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class change_matrix : public path_data {
   public:
-    // \ref{changematrix.cons}, construct/copy/move/destroy:
+    // \ref{pathdataitem.changematrix.cons}, construct/copy/move/destroy:
     change_matrix() noexcept;
     change_matrix(const change_matrix& other) noexcept;
     change_matrix& operator=(const change_matrix& other) noexcept;
@@ -15,10 +15,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     change_matrix& operator=(change_matrix&& other) noexcept;
     change_matrix(const matrix_2d& m) noexcept;
 
-    // \ref{changematrix.modifiers}, modifiers:
+    // \ref{pathdataitem.changematrix.modifiers}, modifiers:
     void matrix(const matrix_2d& value) noexcept;
 
-    // \ref{changematrix.observers}, observers:
+    // \ref{pathdataitem.changematrix.observers}, observers:
     matrix_2d matrix() const noexcept;
     virtual path_data_type type() const noexcept override;
     
@@ -28,7 +28,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [changematrix.intro] {\tcode{change_matrix} Description}
+\rSec1 [pathdataitem.changematrix.intro] {\tcode{change_matrix} Description}
 
 \pnum
 \indexlibrary{\idxcode{change_matrix}}
@@ -37,7 +37,7 @@ The class \tcode{change_matrix} describes an operation on a path geometry collec
 \pnum
 This operation changes the transformation matrix for a path geometry collection to be the value returned by \tcode{*this.matrix()}. As shown in \ref{pathgeometries.processing}, the new transformation matrix does not affect any operations that came before this operation. It is only used in processing operations that come after it. It continues to be used until another \tcode{change_matrix} object is encountered or the end of the path geometry collection is reached.
 
-\rSec1 [changematrix.cons] {\tcode{change_matrix} constructors and assignment operators}
+\rSec1 [pathdataitem.changematrix.cons] {\tcode{change_matrix} constructors and assignment operators}
 
 \indexlibrary{\idxcode{change_matrix}!constructor}
 \begin{itemdecl}
@@ -67,7 +67,7 @@ This operation changes the transformation matrix for a path geometry collection 
 	\tcode{_Matrix == m}.
 \end{itemdescr}
 
-\rSec1 [changematrix.modifiers]{\tcode{change_matrix} modifiers}
+\rSec1 [pathdataitem.changematrix.modifiers]{\tcode{change_matrix} modifiers}
 
 \indexlibrary{\idxcode{change_matrix}!\idxcode{matrix}}
 \indexlibrary{\idxcode{matrix}!\idxcode{change_matrix}}
@@ -81,7 +81,7 @@ This operation changes the transformation matrix for a path geometry collection 
 	
 \end{itemdescr}
 
-\rSec1 [changematrix.observers]{\tcode{change_matrix} observers}
+\rSec1 [pathdataitem.changematrix.observers]{\tcode{change_matrix} observers}
 
 \indexlibrary{\idxcode{change_matrix}!\idxcode{matrix}}
 \indexlibrary{\idxcode{matrix}!\idxcode{change_matrix}}

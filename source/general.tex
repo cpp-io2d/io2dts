@@ -3,9 +3,9 @@
 \rSec1[\iotwod.general.scope]{Scope}
 \pnum
 \indextext{scope|(}%
-This Technical Specification specifies requirements for implementations
+This \documenttypename{} specifies requirements for implementations
 of an interface that computer programs written in the \Cpp programming
-language may use to render and display raster graphics.%
+language may use to render and display 2D computer graphics.
 \indextext{scope|)}
 
 \rSec1[\iotwod.general.refs]{Normative references}
@@ -89,15 +89,6 @@ signal not having a one-to-one mapping between their frequencies
 \definition{aspect ratio}{\iotwod.general.defns.aspectratio}
 the ratio of the width to the height of a rectangular area
 
-\indexdefn{cubic B\'ezier curve}
-\definition{cubic B\'ezier curve}{\iotwod.general.defns.bezier}
-a curve defined by the 
-equation $f(t) = (1 - t)^{3} \times P_{0} + 3 \times t \times (1 - t)^{2} 
-\times P_{1} + 3 \times t^{2} \times (1 - t) \times P_{2} + t^{3} \times P_{3}$ 
-where $0.0 \le t \le 1.0$, $P_{0}$ is the starting point, $P_{1}$ is the first 
-control point, $P_{2}$ is the second control point, and $P_{3}$ is the 
-ending point
-
 \indexdefn{channel}
 \definition{channel}{\iotwod.general.defs.channel}
 a bounded set of homogeneously-spaced rational numbers
@@ -131,6 +122,15 @@ an algorithm that combines a source pixel and a destination pixel producing a re
 \indexdefn{coordinate space}
 \definition{coordinate space}{\iotwod.general.defns.coordinatespace}
 a Euclidean plane described by a Cartesian coordinate system where the first coordinate is measured along a horizontal axis, called the \xaxis, oriented from left to right, the second coordinate is measured along a vertical axis, called the \yaxis, oriented from top to bottom, and rotation of a point around the origin by a positive value expressed in radians is clockwise
+
+\indexdefn{cubic B\'ezier curve}
+\definition{cubic B\'ezier curve}{\iotwod.general.defns.bezier}
+a curve defined by the 
+equation $f(t) = (1 - t)^{3} \times P_{0} + 3 \times t \times (1 - t)^{2} 
+\times P_{1} + 3 \times t^{2} \times (1 - t) \times P_{2} + t^{3} \times P_{3}$ 
+where $0.0 \le t \le 1.0$, $P_{0}$ is the starting point, $P_{1}$ is the first 
+control point, $P_{2}$ is the second control point, and $P_{3}$ is the 
+ending point
 
 \indexdefn{current point}
 \definition{current point}{\iotwod.general.defns.currentpoint}
@@ -192,6 +192,10 @@ a path segment whose start point is not defined as being the end point of anothe
 \enternote
 It is possible for the initial path segment and final path segment to be the same path segment.
 \exitnote
+
+\indexdefn{graphics subsystem}
+\definition{graphics subsystem}{\iotwod.general.defns.graphicssubsystem}
+collection of unspecified operating system and library functionality used to render and display 2D computer graphics
 
 \indexdefn{last-move-to point}
 \definition{last-move-to point}{\iotwod.general.defns.lastmovetopoint}

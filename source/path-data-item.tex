@@ -7,6 +7,20 @@
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path_data_item {
   public:
+    class path_data;
+    class arc;
+    class arc_negative;
+    class change_matrix;
+    class change_origin;
+    class close_path;
+    class curve_to;
+    class line_to;
+    class move_to;
+    class new_sub_path;
+    class rel_curve_to;
+    class rel_line_to;
+    class rel_move_to;
+    
     // \ref{pathdataitem.cons}, construct/copy/move/destroy:
     path_data_item() noexcept;
     path_data_item(const path_data_item& other) noexcept;
@@ -43,61 +57,61 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     // \ref{pathdataitem.observers}, observers:
     bool has_data() const noexcept;
     path_data_type type() const;
-    path_data_type type(::std::error_code& ec) const noexcept;
+    path_data_type type(error_code& ec) const noexcept;
 
     template <class T>
     T get() const;
     template <class T>
-    T get(::std::error_code& ec) const noexcept;
+    T get(error_code& ec) const noexcept;
 
     template <>
     arc get() const;
     template <>
-    arc get(::std::error_code& ec) const noexcept;
+    arc get(error_code& ec) const noexcept;
     template <>
     arc_negative get() const;
     template <>
-    arc_negative get(::std::error_code& ec) const noexcept;
+    arc_negative get(error_code& ec) const noexcept;
     template <>
     change_matrix get() const;
     template <>
-    change_matrix get(::std::error_code& ec) const noexcept;
+    change_matrix get(error_code& ec) const noexcept;
     template <>
     change_origin get() const;
     template <>
-    change_origin get(::std::error_code& ec) const noexcept;
+    change_origin get(error_code& ec) const noexcept;
     template <>
     close_path get() const;
     template <>
-    close_path get(::std::error_code& ec) const noexcept;
+    close_path get(error_code& ec) const noexcept;
     template <>
     curve_to get() const;
     template <>
-    curve_to get(::std::error_code& ec) const noexcept;
+    curve_to get(error_code& ec) const noexcept;
     template <>
     rel_curve_to get() const;
     template <>
-    rel_curve_to get(::std::error_code& ec) const noexcept;
+    rel_curve_to get(error_code& ec) const noexcept;
     template <>
     new_sub_path get() const;
     template <>
-    new_sub_path get(::std::error_code& ec) const noexcept;
+    new_sub_path get(error_code& ec) const noexcept;
     template <>
     line_to get() const;
     template <>
-    line_to get(::std::error_code& ec) const noexcept;
+    line_to get(error_code& ec) const noexcept;
     template <>
     move_to get() const;
     template <>
-    move_to get(::std::error_code& ec) const noexcept;
+    move_to get(error_code& ec) const noexcept;
     template <>
     rel_line_to get() const;
     template <>
-    rel_line_to get(::std::error_code& ec) const noexcept;
+    rel_line_to get(error_code& ec) const noexcept;
     template <>
     rel_move_to get() const;
     template <>
-    rel_move_to get(::std::error_code& ec) const noexcept;
+    rel_move_to get(error_code& ec) const noexcept;
 
   private:
     bool _Has_data;         // \expos
@@ -803,7 +817,7 @@ The class \tcode{path_data_item} describes an opaque container capable of storin
 \indexlibrary{\idxcode{type}!\idxcode{path_data_item}}
 \begin{itemdecl}
     path_data_type type() const;
-    path_data_type type(::std::error_code& ec) const noexcept;
+    path_data_type type(error_code& ec) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -828,22 +842,16 @@ The class \tcode{path_data_item} describes an opaque container capable of storin
 \indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
 \begin{itemdecl}
     template <>
-    arc get() const;
+    path_data_item::arc get() const;
     template <>
-    arc get(::std::error_code& ec) const noexcept;
+    path_data_item::arc get(error_code& ec) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\preconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::arc}.
-	
-	\pnum
 	\returns
-	\tcode{arc\{vector_2d\{ _Data.arc.centerX, _Data.arc.centerY \},
-	  _Data.arc.radius, _Data.arc.angle1, _Data.arc.angle2 \}}.
+	\tcode{path_data_item::arc\{vector_2d\{ _Data.arc.centerX, 
+	  _Data.arc.centerY \}, _Data.arc.radius, _Data.arc.angle1, 
+	  _Data.arc.angle2 \}}.
 	
 	\pnum
 	\throws
@@ -866,22 +874,16 @@ The class \tcode{path_data_item} describes an opaque container capable of storin
 \indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
 \begin{itemdecl}
     template <>
-    arc_negative get() const;
+    path_data_item::arc_negative get() const;
     template <>
-    arc_negative get(::std::error_code& ec) const noexcept;
+    path_data_item::arc_negative get(error_code& ec) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\preconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::arc_negative}.
-	
-	\pnum
 	\returns
-	\tcode{arc_negative\{vector_2d\{ _Data.arc.centerX, _Data.arc.centerY \},
-	  _Data.arc.radius, _Data.arc.angle1, _Data.arc.angle2 \}}.
+	\tcode{path_data_item::arc_negative\{vector_2d\{ _Data.arc.centerX, 
+	  _Data.arc.centerY \}, _Data.arc.radius, _Data.arc.angle1, 
+	  _Data.arc.angle2 \}}.
 	
 	\pnum
 	\throws
@@ -904,21 +906,16 @@ The class \tcode{path_data_item} describes an opaque container capable of storin
 \indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
 \begin{itemdecl}
     template <>
-    change_matrix get() const;
+    path_data_item::change_matrix get() const;
     template <>
-    change_matrix get(::std::error_code& ec) const noexcept;
+    path_data_item::change_matrix get(error_code& ec) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\preconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::change_matrix}.
-	
-	\pnum
 	\returns
-	\tcode{change_matrix\{ matrix_2d\{ _Data.matrix.m00, _Data.matrix.m01, _Data.matrix.m10, _Data.matrix.m11, _Data.matrix.m20, _Data.matrix.m21 \} \}}.
+	\tcode{path_data_item::change_matrix\{ matrix_2d\{ _Data.matrix.m00, 
+	  _Data.matrix.m01, _Data.matrix.m10, _Data.matrix.m11, _Data.matrix.m20, 
+	  _Data.matrix.m21 \} \}}.
 	
 	\pnum
 	\throws
@@ -941,21 +938,15 @@ The class \tcode{path_data_item} describes an opaque container capable of storin
 \indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
 \begin{itemdecl}
     template <>
-    change_origin get() const;
+    path_data_item::change_origin get() const;
     template <>
-    change_origin get(::std::error_code& ec) const noexcept;
+    path_data_item::change_origin get(error_code& ec) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\preconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::change_origin}.
-	
-	\pnum
 	\returns
-	\tcode{change_origin\{ vector_2d\{ _Data.point.x, _Data.point.y \} \}}.
+	\tcode{path_data_item::change_origin\{ vector_2d\{ _Data.point.x, 
+	  _Data.point.y \} \}}.
 	
 	\pnum
 	\throws
@@ -978,21 +969,14 @@ The class \tcode{path_data_item} describes an opaque container capable of storin
 \indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
 \begin{itemdecl}
     template <>
-    close_path get() const;
+    path_data_item::close_path get() const;
     template <>
-    close_path get(::std::error_code& ec) const noexcept;
+    path_data_item::close_path get(error_code& ec) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\preconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::close_path}.
-	
-	\pnum
 	\returns
-	\tcode{close_path\{ \}}.
+	\tcode{path_data_item::close_path\{ \}}.
 	
 	\pnum
 	\throws
@@ -1015,21 +999,16 @@ The class \tcode{path_data_item} describes an opaque container capable of storin
 \indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
 \begin{itemdecl}
     template <>
-    curve_to get() const;
+    path_data_item::curve_to get() const;
     template <>
-    curve_to get(::std::error_code& ec) const noexcept;
+    path_data_item::curve_to get(error_code& ec) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\preconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::curve_to}.
-	
-	\pnum
 	\returns
-	\tcode{curve_to\{ vector_2d\{ _Data.curve.cpt1x, _Data.curve.cpt1y \}, vector_2d\{ _Data.curve.cpt2x, _Data.curve.cpt2y \}, vector_2d\{ _Data.curve.eptx, _Data.curve.epty \} \}}.
+	\tcode{path_data_item::curve_to\{ vector_2d\{ _Data.curve.cpt1x, 
+	  _Data.curve.cpt1y \}, vector_2d\{ _Data.curve.cpt2x, _Data.curve.cpt2y 
+	  \}, vector_2d\{ _Data.curve.eptx, _Data.curve.epty \} \}}.
 	
 	\pnum
 	\throws
@@ -1052,21 +1031,14 @@ The class \tcode{path_data_item} describes an opaque container capable of storin
 \indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
 \begin{itemdecl}
     template <>
-    rel_curve_to get() const;
+    path_data_item::rel_curve_to get() const;
     template <>
-    rel_curve_to get(::std::error_code& ec) const noexcept;
+    path_data_item::rel_curve_to get(error_code& ec) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\preconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::rel_curve_to}.
-	
-	\pnum
 	\returns
-	\tcode{rel_curve_to\{ vector_2d\{ _Data.curve.cpt1x, _Data.curve.cpt1y \}, vector_2d\{ _Data.curve.cpt2x, _Data.curve.cpt2y \}, vector_2d\{ _Data.curve.eptx, _Data.curve.epty \} \}}.
+	\tcode{path_data_item::rel_curve_to\{ vector_2d\{ _Data.curve.cpt1x, _Data.curve.cpt1y \}, vector_2d\{ _Data.curve.cpt2x, _Data.curve.cpt2y \}, vector_2d\{ _Data.curve.eptx, _Data.curve.epty \} \}}.
 	
 	\pnum
 	\throws
@@ -1089,21 +1061,14 @@ The class \tcode{path_data_item} describes an opaque container capable of storin
 \indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
 \begin{itemdecl}
     template <>
-    new_sub_path get() const;
+    path_data_item::new_sub_path get() const;
     template <>
-    new_sub_path get(::std::error_code& ec) const noexcept;
+    path_data_item::new_sub_path get(error_code& ec) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\preconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::new_sub_path}.
-	
-	\pnum
 	\returns
-	\tcode{new_sub_path\{ \}}.
+	\tcode{path_data_item::new_sub_path\{ \}}.
 	
 	\pnum
 	\throws
@@ -1126,21 +1091,14 @@ The class \tcode{path_data_item} describes an opaque container capable of storin
 \indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
 \begin{itemdecl}
     template <>
-    line_to get() const;
+    path_data_item::line_to get() const;
     template <>
-    line_to get(::std::error_code& ec) const noexcept;
+    path_data_item::line_to get(error_code& ec) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\preconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::line_to}.
-	
-	\pnum
 	\returns
-	\tcode{line_to\{ vector_2d\{ _Data.point.x, _Data.point.y \} \}}.
+	\tcode{path_data_item::line_to\{ vector_2d\{ _Data.point.x, _Data.point.y \} \}}.
 	
 	\pnum
 	\throws
@@ -1163,21 +1121,14 @@ The class \tcode{path_data_item} describes an opaque container capable of storin
 \indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
 \begin{itemdecl}
     template <>
-    move_to get() const;
+    path_data_item::move_to get() const;
     template <>
-    move_to get(::std::error_code& ec) const noexcept;
+    path_data_item::move_to get(error_code& ec) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\preconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::move_to}.
-	
-	\pnum
 	\returns
-	\tcode{move_to\{ vector_2d\{ _Data.point.x, _Data.point.y \} \}}.
+	\tcode{path_data_item::move_to\{ vector_2d\{ _Data.point.x, _Data.point.y \} \}}.
 	
 	\pnum
 	\throws
@@ -1200,21 +1151,14 @@ The class \tcode{path_data_item} describes an opaque container capable of storin
 \indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
 \begin{itemdecl}
     template <>
-    rel_line_to get() const;
+    path_data_item::rel_line_to get() const;
     template <>
-    rel_line_to get(::std::error_code& ec) const noexcept;
+    path_data_item::rel_line_to get(error_code& ec) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\preconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::rel_line_to}.
-	
-	\pnum
 	\returns
-	\tcode{rel_line_to\{ vector_2d\{ _Data.point.x, _Data.point.y \} \}}.
+	\tcode{path_data_item::rel_line_to\{ vector_2d\{ _Data.point.x, _Data.point.y \} \}}.
 	
 	\pnum
 	\throws
@@ -1237,21 +1181,14 @@ The class \tcode{path_data_item} describes an opaque container capable of storin
 \indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
 \begin{itemdecl}
     template <>
-    rel_move_to get() const;
+    path_data_item::rel_move_to get() const;
     template <>
-    rel_move_to get(::std::error_code& ec) const noexcept;
+    path_data_item::rel_move_to get(error_code& ec) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\preconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::rel_move_to}.
-	
-	\pnum
 	\returns
-	\tcode{rel_move_to\{ vector_2d\{ _Data.point.x, _Data.point.y \} \}}.
+	\tcode{path_data_item::rel_move_to\{ vector_2d\{ _Data.point.x, _Data.point.y \} \}}.
 	
 	\pnum
 	\throws

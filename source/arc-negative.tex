@@ -1,57 +1,18 @@
 %!TEX root = io2d.tex
-\rSec0 [arcnegative] {Class \tcode{arc_negative}}
-
-\rSec1 [arcnegative.synopsis] {\tcode{arc_negative} synopsis}
-
-\begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class arc_negative : public path_data {
-  public:
-    // \ref{arcnegative.cons}, construct/copy/move/destroy:
-    arc_negative() noexcept;
-    arc_negative(const arc_negative& other) noexcept;
-    arc_negative& operator=(const arc_negative& other) noexcept;
-    arc_negative(arc_negative&& other) noexcept;
-    arc_negative& operator=(arc_negative&& other) noexcept;
-    arc_negative(const vector_2d& ctr, double rad, double angle1,
-      double angle2) noexcept;
-
-    // \ref{arcnegative.modifiers}, modifiers:
-    void center(const vector_2d& value) noexcept;
-    void radius(double value) noexcept;
-    void angle_1(double radians) noexcept;
-    void angle_2(double radians) noexcept;
-
-    // \ref{arcnegative.observers}, observers:
-    vector_2d center() const noexcept;
-    double radius() const noexcept;
-    double angle_1() const noexcept;
-    double angle_2() const noexcept;
-    virtual path_data_type type() const noexcept override;
-
-  private:
-    vector_2d _Center;   // \expos
-    double _Radius;  // \expos
-    double _Angle_1; // \expos
-    double _Angle_2; // \expos
-  };
-} } } }
-\end{codeblock}
-
-\rSec1 [arcnegative.intro] {\tcode{arc_negative} Description}
+\rSec0 [pathdataitem.arcnegative] {Class \tcode{path_data_item::arc_negative}}
 
 \pnum
-\indexlibrary{\idxcode{arc_negative}}
-The class \tcode{arc_negative} describes an operation on a path geometry collection.
+\indexlibrary{\idxcode{path_data_item::arc_negative}}
+The class \tcode{path_data_item::arc_negative} describes an operation on a path geometry collection.
 
 \pnum
-This operation creates a circular arc.
+This operation creates a circular arc with counterclockwise rotation.
 
 \pnum
-The unit for the values passed to and returned by \tcode{arc::angle_1} and \tcode{arc::angle_2} is the radian.
+The unit for the values passed to and returned by \tcode{path_data_item::arc_negative::angle_1} and \tcode{path_data_item::arc_negative::angle_2} is the radian.
 
 \pnum
-Its \term{start point} is \tcode{vector_2d\{ *this.radius() * cos(*this.angle_1(), *this.radius() * -sin(*this.angle_1()) \} + *this.center()}.
+The arc's \term{start point} is \tcode{vector_2d\{ *this.radius() * cos(*this.angle_1(), *this.radius() * -sin(*this.angle_1()) \} + *this.center()}.
 
 \pnum
 Its \term{end point} is \tcode{vector_2d\{ *this.radius() * cos(*this.angle_2(), *this.radius() * -sin(*this.angle_2()) \} + *this.center()}.
@@ -71,7 +32,44 @@ The current point is set be to the arc's end point at the end of this operation.
 \pnum
 For purposes of determining whether a point is on the arc, if the value returned by \tcode{*this.angle_2()} is greater than the value returned by \tcode{*this.angle_1()} then the value returned by \tcode{*this.angle_2()} shall be continuously decremented by $2\pi$ until it is less than the value returned by \tcode{*this.angle_1()}.
 
-\rSec1 [arcnegative.cons] {\tcode{arc_negative} constructors and assignment operators}
+\rSec1 [pathdataitem.arcnegative.synopsis] {\tcode{arc_negative} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class arc_negative : public path_data {
+  public:
+    // \ref{pathdataitem.arcnegative.cons}, construct/copy/move/destroy:
+    arc_negative() noexcept;
+    arc_negative(const arc_negative& other) noexcept;
+    arc_negative& operator=(const arc_negative& other) noexcept;
+    arc_negative(arc_negative&& other) noexcept;
+    arc_negative& operator=(arc_negative&& other) noexcept;
+    arc_negative(const vector_2d& ctr, double rad, double angle1,
+      double angle2) noexcept;
+
+    // \ref{pathdataitem.arcnegative.modifiers}, modifiers:
+    void center(const vector_2d& value) noexcept;
+    void radius(double value) noexcept;
+    void angle_1(double radians) noexcept;
+    void angle_2(double radians) noexcept;
+
+    // \ref{pathdataitem.arcnegative.observers}, observers:
+    vector_2d center() const noexcept;
+    double radius() const noexcept;
+    double angle_1() const noexcept;
+    double angle_2() const noexcept;
+    virtual path_data_type type() const noexcept override;
+
+  private:
+    vector_2d _Center;   // \expos
+    double _Radius;  // \expos
+    double _Angle_1; // \expos
+    double _Angle_2; // \expos
+  };
+} } } }
+\end{codeblock}
+
+\rSec1 [pathdataitem.arcnegative.cons] {\tcode{arc_negative} constructors and assignment operators}
 
 \indexlibrary{\idxcode{arc_negative}!constructor}
 \begin{itemdecl}
@@ -116,7 +114,7 @@ For purposes of determining whether a point is on the arc, if the value returned
 
 \end{itemdescr}
 
-\rSec1 [arcnegative.modifiers]{\tcode{arc_negative} modifiers}
+\rSec1 [pathdataitem.arcnegative.modifiers]{\tcode{arc_negative} modifiers}
 
 \indexlibrary{\idxcode{arc_negative}!\idxcode{center}}
 \indexlibrary{\idxcode{center}!\idxcode{arc_negative}}
@@ -166,7 +164,7 @@ For purposes of determining whether a point is on the arc, if the value returned
 	
 \end{itemdescr}
 
-\rSec1 [arcnegative.observers]{\tcode{arc_negative} observers}
+\rSec1 [pathdataitem.arcnegative.observers]{\tcode{arc_negative} observers}
 
 \indexlibrary{\idxcode{arc_negative}!\idxcode{center}}
 \indexlibrary{\idxcode{center}!\idxcode{arc_negative}}

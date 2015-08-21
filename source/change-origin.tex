@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [changeorigin] {Class \tcode{change_origin}}
+\rSec0 [pathdataitem.changeorigin] {Class \tcode{change_origin}}
 
-\rSec1 [changeorigin.synopsis] {\tcode{change_origin} synopsis}
+\rSec1 [pathdataitem.changeorigin.synopsis] {\tcode{change_origin} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class change_origin : public path_data {
   public:
-    // \ref{changeorigin.cons}, construct/copy/move/destroy:
+    // \ref{pathdataitem.changeorigin.cons}, construct/copy/move/destroy:
     change_origin() noexcept;
     change_origin(const change_origin& other) noexcept;
     change_origin& operator=(const change_origin& other) noexcept;
@@ -15,10 +15,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     change_origin& operator=(change_origin&& other) noexcept;
     change_origin(const vector_2d& pt) noexcept;
 
-    // \ref{changeorigin.modifiers}, modifiers:
+    // \ref{pathdataitem.changeorigin.modifiers}, modifiers:
     void origin(const vector_2d& value) noexcept;
 
-    // \ref{changeorigin.observers}, observers:
+    // \ref{pathdataitem.changeorigin.observers}, observers:
     vector_2d origin() const noexcept;
     virtual path_data_type type() const noexcept override;
     
@@ -28,7 +28,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [changeorigin.intro] {\tcode{change_origin} Description}
+\rSec1 [pathdataitem.changeorigin.intro] {\tcode{change_origin} Description}
 
 \pnum
 \indexlibrary{\idxcode{change_origin}}
@@ -37,7 +37,7 @@ The class \tcode{change_origin} describes an operation on a path geometry collec
 \pnum
 This operation changes the origin point for a path geometry collection to be the value returned by \tcode{*this.origin()}. As shown in \ref{pathgeometries.processing}, the new origin point does not affect any operations that came before this operation. It is only used in processing operations that come after it. It continues to be used until another \tcode{change_origin} object is encountered or the end of the path geometry collection is reached.
 
-\rSec1 [changeorigin.cons] {\tcode{change_origin} constructors and assignment operators}
+\rSec1 [pathdataitem.changeorigin.cons] {\tcode{change_origin} constructors and assignment operators}
 
 \indexlibrary{\idxcode{change_origin}!constructor}
 \begin{itemdecl}
@@ -67,7 +67,7 @@ This operation changes the origin point for a path geometry collection to be the
 	\tcode{_Data == pt}.
 \end{itemdescr}
 
-\rSec1 [changeorigin.modifiers]{\tcode{change_origin} modifiers}
+\rSec1 [pathdataitem.changeorigin.modifiers]{\tcode{change_origin} modifiers}
 
 \indexlibrary{\idxcode{change_origin}!\idxcode{origin}}
 \indexlibrary{\idxcode{origin}!\idxcode{change_origin}}
@@ -81,7 +81,7 @@ This operation changes the origin point for a path geometry collection to be the
 	
 \end{itemdescr}
 
-\rSec1 [changeorigin.observers]{\tcode{change_origin} observers}
+\rSec1 [pathdataitem.changeorigin.observers]{\tcode{change_origin} observers}
 
 \indexlibrary{\idxcode{change_origin}!\idxcode{origin}}
 \indexlibrary{\idxcode{origin}!\idxcode{change_origin}}
