@@ -3,7 +3,25 @@
 \rSec0 [brushes] {Brushes}
 
 \pnum
-Brushes... ***FIXME***
+Brushes serve as sources of visual data for composing operations.
+
+\pnum
+A brush has its own mutable coordinate space (by default the standard coordinate space). It also posses a mutable \tcode{extend} value and a mutable \tcode{filter} value.
+
+\pnum
+A brush is created using one of four factory classes:
+\begin{itemize}
+\item \tcode{solid_color_brush_factory},
+\item \tcode{linear_brush_factory},
+\item \tcode{radial_brush_factory}, and
+\item \tcode{surface_brush_factory}.
+\end{itemize}
+
+\pnum
+Excluding brushes created using a \tcode{solid_color_brush_factory} object, brushes produce very different composing operation results depending on the values of their mutable state.
+
+\pnum
+Brushes created using either a \tcode{linear_brush_factory} object or a \tcode{radial_brush_factory} object are considered to be gradient brushes. They share similarities with each other that are not shared by brushes created using the other brush factories. This is discussed in more detail below (\ref{gradients}).
 
 \addtocounter{SectionDepthBase}{1}
 \input{gradients}

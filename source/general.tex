@@ -25,21 +25,20 @@ Multilingual Plane}
 \item ISO/IEC TR 19769:2004, \doccite{Information technology --- Programming 
 languages, their environments and system software interfaces --- Extensions for 
 the programming language C to support new character data types}
+\item IEC 61966-2-1 \doccite{Colour Measurement and Management in Multimedia Systems and Equipment - Part 2-1: Default RGB Colour Space - sRGB}
 \item ISO 32000-1:2008, \doccite{Document management --- Portable document 
 format --- Part 1: PDF 1.7}
 \item Tantek \c{C}elik et al., \doccite{CSS Color Module Level 3 --- W3C 
 Recommendation 07 June 2011}, 
 Copyright~\textcopyright~2011~W3C\textsuperscript{\textregistered} (MIT, ERCIM, 
 Keio)
-\item ****FIXME**** The remaining references should probably be non-normative 
-and in an informative bibliography (ISO/IEC Directives, Part 2, 6.2.2 and 6.4.2)
-\item Carl D. Worth, Chris Wilson, et al., \doccite{cairo graphics library --- 
-Version 1.12.16}, 
-Copyright~\textcopyright~2002~University~of~Southern~California, 
-Copyright~\textcopyright~2005~Red~Hat,~Inc., 
-Copyright~\textcopyright~2011~Intel~Corporation
-\item Thomas Porter, Tom Duff, \doccite{Compositing Digital Images}, 
-Copyright~\textcopyright~1984~ACM
+%\item ****FIXME**** The remaining references should probably be non-normative 
+%and in an informative bibliography (ISO/IEC Directives, Part 2, 6.2.2 and 6.4.2)
+%\item Carl D. Worth, Chris Wilson, et al., \doccite{cairo graphics library --- 
+%Version 1.12.16}, 
+%Copyright~\textcopyright~2002~University~of~Southern~California, 
+%Copyright~\textcopyright~2005~Red~Hat,~Inc., 
+%Copyright~\textcopyright~2011~Intel~Corporation
 \end{itemize}
 
 \pnum
@@ -57,14 +56,47 @@ Specification}.
 \indextext{definitions|(}
 For the purposes of this document, the following definitions apply.
 
+\indexdefn{standard coordinate space}
+\definition{standard coordinate space}{\iotwod.general.defns.standardcoordinatespace}
+a Euclidean plane described by a Cartesian coordinate system where the first coordinate is measured along a horizontal axis, called the \xaxis, oriented from left to right, the second coordinate is measured along a vertical axis, called the \yaxis, oriented from top to bottom, and rotation of a point around the origin by a positive value expressed in radians is clockwise
+
+\indexdefn{visual data}
+\definition{visual data}{\iotwod.general.defns.visualdata}
+data representing color, transparency, or some combination thereof
+
+\indexdefn{channel}
+\definition{channel}{\iotwod.general.defs.channel}
+a bounded set of homogeneously-spaced real numbers in the range $[0,1]$
+
+%\indexdefn{channel}
+%\indexdefn{channel!color}
+%\definition{color channel}{\iotwod.general.defns.colorchannel}
+%a channel representing the intensity of a specific color
+%
+\indexdefn{visual data format}
+\definition{visual data format}{\iotwod.general.defns.visualdataformat}
+a specification of visual data channels which defines a total bit size for the format and each channel's role, bit size, and location relative to the upper (high-order) bit
+\enternote
+The total bit size may be larger than the sum of the bit sizes of all of the channels of the format.
+\exitnote
+
+\indexdefn{alpha}
+\definition{alpha}{\iotwod.general.defns.alpha}
+visual data representing transparency
+
+% The following may not be needed. Already defined in IEC 60050 723-05-31
+\indexdefn{pixel}
+\definition{pixel}{\iotwod.general.defns.pixel}
+a discrete visual data element with a visual data format-dependent composition
+
 \indexdefn{aliasing}
 \definition{aliasing}{\iotwod.general.defns.alias}
 the presence of visual artifacts in the results of rendering due to 
 sampling imperfections
 
-\indexdefn{alpha}
-\definition{alpha}{\iotwod.general.defns.alpha}
-visual data representing transparency
+\indexdefn{artifact}
+\definition{artifact}{\iotwod.general.defns.artifact}
+an error in the results of the application of a composing operation 
 
 \indexdefn{anti-aliasing}
 \definition{anti-aliasing}{\iotwod.general.defns.antialias}
@@ -79,27 +111,53 @@ rendering and another for all other rendering and to provide different sets of
 anti-aliasing types to choose from for each of the two operations.
 \exitnote
 
-\indexdefn{artifact}
-\definition{artifact}{\iotwod.general.defns.artifact}
-an error in the results of signal processing due to the input signal and output 
-signal not having a one-to-one mapping between their frequencies
-
 % The following may not be needed. Already defined in IEC 60050 723-05-05.
 \indexdefn{aspect ratio}
 \definition{aspect ratio}{\iotwod.general.defns.aspectratio}
 the ratio of the width to the height of a rectangular area
 
-\indexdefn{channel}
-\definition{channel}{\iotwod.general.defs.channel}
-a bounded set of homogeneously-spaced rational numbers
-
 \indexdefn{closed path geometry}
 \definition{closed path geometry}{\iotwod.general.defns.closedpathgeometry}
 a path geometry with one or more path segments where the initial path segment's start point is used to define the end point of the final path segment
 
-\indexdefn{color stop}
-\definition{color stop}{\iotwod.general.defns.colorstop}
-a tuple value composed of a floating point offset value in the range $[0, 1]$ and a color value
+\indexdefn{color model}
+\definition{color model}{\iotwod.general.defns.colormodel}
+an ideal, mathematical representation of colors which often uses color channels
+
+\indexdefn{additive color}
+\definition{additive color}{\iotwod.general.defns.additivecolor}
+a color defined by the emissive intensity of its color channels
+
+\indexdefn{color model}
+\indexdefn{color model!RGB}
+\definition{RGB color model}{\iotwod.general.defns.rgbcolormodel}
+an additive color model using red, green, and blue color channels
+
+\indexdefn{color model}
+\indexdefn{color model!RGBA}
+\definition{RGBA color model}{\iotwod.general.defns.rgbacolormodel}
+the RGB color model with an alpha channel
+\enternote
+RGBA is not a proper color model; it is a convenient way to refer to the RGB color model to which an alpha channel has been added.
+
+The interpretation of the alpha channel and its effect on the interpretation of the RGB color channels is intentionally not defined here because it is context-dependent.
+\exitnote
+
+\indexdefn{color space}
+\definition{color space}{\iotwod.general.defns.colorspace}
+an unambiguous mapping of values to colorimetric colors
+\enternote
+The difference between a color model and a color space is often obscured, and sometimes the terms themselves are mistakenly used interchangeably.
+
+A color model defines color mathematically without regard to how humans actually perceive color. Color models are useful for working with color computationally but, since they deal in ideal colors rather than perceived colors, they fail to provide the information necessary to allow for the uniform display of their colors on different output devices (e.g. LCD monitors, CRT TVs, and printers).
+
+A color space, by contrast, maps unambiguous values to perceived colors. Since the perception of color varies from person to person, color spaces use the science of colorimetry to define those perceived colors in order to obtain uniformity. As such, the uniform display of the colors in a color space on different output devices is possible.
+\exitnote
+
+\indexdefn{color space}
+\indexdefn{color space!sRGB}
+\definition{sRGB color space}{\iotwod.general.defns.srgbcolorspace}
+an additive color space defined in IEC 61966-2-1 that is based on the RGB color model
 
 % %The following definition is malformed according to ISO/IEC Directives, Part 2, 2011 Appendix D
 %\indexdefn{compose}
@@ -113,15 +171,11 @@ a tuple value composed of a floating point offset value in the range $[0, 1]$ an
 %
 \indexdefn{composing operation}
 \definition{composing operation}{\iotwod.general.defns.composingoperation}
-an operation that uses a composition algorithm
+an operation that uses a composition algorithm to combine part or all of a source of visual data capable of being treated as though it were a \pixmap with a \pixmap
 
 \indexdefn{composition algorithm}
 \definition{composition algorithm}{\iotwod.general.defns.compositionalgorithm}
-an algorithm that combines a source pixel and a destination pixel producing a result that has the same pixel format as the destination pixel
-
-\indexdefn{coordinate space}
-\definition{coordinate space}{\iotwod.general.defns.coordinatespace}
-a Euclidean plane described by a Cartesian coordinate system where the first coordinate is measured along a horizontal axis, called the \xaxis, oriented from left to right, the second coordinate is measured along a vertical axis, called the \yaxis, oriented from top to bottom, and rotation of a point around the origin by a positive value expressed in radians is clockwise
+an algorithm that combines a source pixel and a destination pixel producing a result that has the same visual data format as the destination pixel
 
 \indexdefn{cubic B\'ezier curve}
 \definition{cubic B\'ezier curve}{\iotwod.general.defns.bezier}
@@ -152,7 +206,7 @@ a path segment which has the same value for its start point and its end point is
 
 \indexdefn{filter}
 \definition{filter}{\iotwod.general.defns.filter}
-a mathematical function that transforms a signal into discrete data
+a mathematical function that determines the pixel value of a point for a \pixmap
 
 \indexdefn{final path segment}
 \definition{final path segment}{\iotwod.general.defns.finalpathsegment}
@@ -161,11 +215,6 @@ a path segment whose end point shall not be used to define the start point of an
 It is possible for the initial path segment and final path segment to be the same path segment.
 \exitnote
 
-\indexdefn{format}
-\definition{format}{\iotwod.general.defns.format}
-a well-defined visual data format composed of one or more channels representing 
-color data or transparency data
-
 \indexdefn{graphics data}
 \definition{graphics data}{\iotwod.general.defns.graphicsdata}
 <graphics data> visual data stored in an unspecified form
@@ -173,19 +222,53 @@ color data or transparency data
 \indexdefn{graphics data}
 \indexdefn{graphics data!raster}
 \definition{graphics data}{\iotwod.general.defns.graphics.raster}
-<raster graphics data> visual data stored as a rectangular grid of pixels
+<raster graphics data> visual data stored as pixels that is accessible as if it was an array of rows of pixels beginning with the pixel at the integral point $(0,0)$
 
 \indexdefn{graphics resource}
 \definition{graphics resource}{\iotwod.general.defns.graphicsresource}
 <graphics resource> an object of unspecified type used by an implementation
+\enternote
+By its definition a graphics resource is an implementation detail. Often it will be a graphics subsystem object (e.g. a graphics device or a render target) or an aggregate composed of multiple graphics subsystem objects. However the only requirement placed upon a graphics resource is that the implementation is able to use it to provide the functionality required of the graphics resource.
+\exitnote
 
 \indexdefn{graphics resource}
+\indexdefn{graphics resource!graphics data graphics resource}
+\definition{graphics resource}{\iotwod.general.defns.graphicsresource.graphicsdata}
+<graphics data graphics resource> an object of unspecified type used by an implementation to provide access to and allow manipulation of visual data
+
+\indexdefn{graphics resource}
+\indexdefn{graphics resource!path geometry graphics resource}
 \definition{graphics resource}{\iotwod.general.defns.graphicsresource.pathgeometry}
 <path geometry graphics resource> an object of unspecified type used by an implementation to store a collection of zero or more path geometries in an unspecified format
 
+\indexdefn{\pixmap}
+\definition{\pixmap}{\iotwod.general.defns.pixmap}
+a raster graphics data graphics resource
+
+\indexdefn{point}
+\definition{point}{\iotwod.general.defns.point}
+<point> a coordinate designated by a floating point \xaxis{} value and a floating point \yaxis{} value within the standard coordinate space
+
+\indexdefn{point}
+\definition{point}{\iotwod.general.defns.point.integral}
+<integral point> a coordinate designated by an integral \xaxis{} value and an integral \yaxis{} value within the standard coordinate space
+
+\indexdefn{premultiplied format}
+\definition{premultiplied format}{\iotwod.general.defns.premultipliedformat}
+a format with color and alpha where each color channel is normalized and then 
+multiplied by the normalized alpha channel value
+\enterexample
+Given the 32-bit non-premultiplied RGBA pixel with 8 bits per channel \{255, 0, 
+0, 127\} (half-transparent red), when normalized it would become \{1.0, 0.0, 
+0.0, 0.5\}. As such, in premultiplied, normalized format it would become \{0.5, 
+0.0, 0.0, 0.5\} as a result of multiplying each of the three color channels by 
+the alpha channel value.
+\exitexample
+
 \indexdefn{graphics state data}
 \definition{graphics state data}{\iotwod.general.defns.graphicsstatedata}
-data which specify how some part of the process of rendering or rasterizing shall be performed in part or in whole
+data which specify how some part of the process of rendering or of a composing operation shall be performed in part or in whole
+
 \indexdefn{initial path segment}
 \definition{initial path segment}{\iotwod.general.defns.initialpathsegment}
 a path segment whose start point is not defined as being the end point of another path segment
@@ -223,35 +306,6 @@ a collection of path segments where the end point of each path segment, except t
 \definition{path segment}{\iotwod.general.defns.pathsegment}
 is a line or a curve, each of which has a start point and an end point
 
-% The following may not be needed. Already defined in IEC 60050 723-05-31
-\indexdefn{pixel}
-\definition{pixel}{\iotwod.general.defns.pixel}
-a discrete visual data element with a format-dependent composition
-\enternote
-In raster graphics a pixel is obtained by sampling visual data, whether 
-electro-mechanically, e.g. by a digital camera when a picture is taken, or 
-manually, e.g. by an artist using a raster graphics editing program to create a 
-pixel representation of visual data; the given examples typically result in a 
-texture composed of many pixels.
-\exitnote
-
-\indexdefn{point}
-\definition{point}{\iotwod.general.defns.point}
-a coordinate designated by an X component and a Y component within the 
-coordinate space of a raster graphics data graphics resource
-
-\indexdefn{premultiplied format}
-\definition{premultiplied format}{\iotwod.general.defns.premultipliedformat}
-a format with color and alpha where each color channel is normalized and then 
-multiplied by the normalized alpha channel value
-\enterexample
-Given the 32-bit non-premultiplied RGBA pixel with 8 bits per channel \{255, 0, 
-0, 127\} (half-transparent red), when normalized it would become \{1.0, 0.0, 
-0.0, 0.5\}. As such, in premultiplied, normalized format it would become \{0.5, 
-0.0, 0.0, 0.5\} as a result of multiplying each of the three color channels by 
-the alpha channel value.
-\exitexample
-
 \indexdefn{render}
 \definition{render}{\iotwod.general.defns.render}
 to transform path geometries or text into raster graphics data in the manner specified by a set of graphics state data
@@ -262,30 +316,26 @@ an operation that performs rendering
 
 \indexdefn{sample}
 \definition{sample}{\iotwod.general.defns.sample}
-to transform continuous or discrete signals to discrete data by applying
-a filter
+to use a filter to obtain a pixel for a given coordinate from a pixmap
+%to provide a coordinate and obtain a pixel from a raster graphics data graphics resource by application of a filter
+%%to transform continuous or discrete signals to discrete data by applying
+%%a filter
 
-\indexdefn{signal}
-\indexdefn{signal!continuous}
-\definition{signal}{\iotwod.general.defns.signal.cont}
-<continuous signal> a real function which is defined at every point within a 
-2D space and conveys information about one or more properties of the space
-
-\indexdefn{signal}
-\indexdefn{signal!discrete}
-\definition{signal}{\iotwod.general.defns.signal}
-<discrete signal> a real function which is defined at points separated by 
-integer intervals within a 2D space and conveys information about one or more 
-properties of the space
-
-\indexdefn{visual data}
-\definition{visual data}{\iotwod.general.defns.visualdata}
-***FIXME*** (Is this even needed?)
+%\indexdefn{signal}
+%\indexdefn{signal!continuous}
+%\definition{signal}{\iotwod.general.defns.signal.cont}
+%<continuous signal> a real function which is defined at every point within a 
+%two-dimensional space and conveys information about one or more properties of the space
+%
+%\indexdefn{signal}
+%\indexdefn{signal!discrete}
+%\definition{signal}{\iotwod.general.defns.signal}
+%<discrete signal> a real function which is defined at points separated by 
+%uniform intervals within a two-dimensional space and conveys information about one or more properties of the space
+%
+\indexdefn{color stop}
+\definition{color stop}{\iotwod.general.defns.colorstop}
+a tuple composed of a floating point offset value in the range $[0, 1]$ and a color value
 
 % end definitions
 \indextext{definitions|)}
-
-\pnum
-\enternote
-By its definition a graphics resource is an implementation detail. Often it will be a graphics subsystem object (e.g. a graphics device or a render target) or an aggregate composed of multiple graphics subsystem objects. However the only requirement placed upon a graphics resource is that the implementation is able to use it to provide the functionality required of the graphics resource.
-\exitnote

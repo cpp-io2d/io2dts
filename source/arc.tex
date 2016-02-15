@@ -40,10 +40,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   public:
     // \ref{pathdataitem.arc.cons}, construct/copy/move/destroy:
     arc() noexcept;
-    arc(const arc& other) noexcept;
-    arc& operator=(const arc& other) noexcept;
-    arc(arc&& other) noexcept;
-    arc& operator=(arc&& other) noexcept;
+    arc(const arc&) noexcept;
+    path_data_item::arc& operator=(const arc&) noexcept;
+    arc(arc&&) noexcept;
+    path_data_item::arc& operator=(arc&&) noexcept;
     arc(const vector_2d& ctr, double rad, double angle1, double angle2) noexcept;
 
     // \ref{pathdataitem.arc.modifiers}, modifiers:
@@ -88,7 +88,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Angle_1 == 0.0}.
 
 	\tcode{_Angle_2 == 0.0}.
-
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item::arc}!constructor}
@@ -109,7 +108,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Angle_1 == angle1}.
 
 	\tcode{_Angle_2 == angle2}.
-
 \end{itemdescr}
 
 \rSec1 [pathdataitem.arc.modifiers]{\tcode{path_data_item::arc} modifiers}
@@ -123,7 +121,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\pnum
 	\postconditions
 	\tcode{_Center == value}.
-	
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item::arc}!\idxcode{radius}}
@@ -135,7 +132,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\pnum
 	\postconditions
 	\tcode{_Radius == value}.
-	
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item::arc}!\idxcode{angle_1}}
@@ -147,7 +143,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\pnum
 	\postconditions
 	\tcode{_Angle_1 == value}.
-	
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item::arc}!\idxcode{angle_2}}
@@ -159,7 +154,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\pnum
 	\postconditions
 	\tcode{_Angle_2 == value}.
-	
 \end{itemdescr}
 
 \rSec1 [pathdataitem.arc.observers]{\tcode{path_data_item::arc} observers}
@@ -173,7 +167,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\pnum
 	\returns
 	\tcode{_Center}.
-
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item::arc}!\idxcode{radius}}
@@ -185,7 +178,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\pnum
 	\returns
 	\tcode{_Radius}.
-
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item::arc}!\idxcode{angle_1}}
@@ -197,7 +189,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\pnum
 	\returns
 	\tcode{_Angle_1}.
-
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item::arc}!\idxcode{angle_2}}
@@ -209,7 +200,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\pnum
 	\returns
 	\tcode{_Angle_2}.
-
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item::arc}!\idxcode{type}}
@@ -221,5 +211,4 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\pnum
 	\returns
 	\tcode{path_data_type::arc}.
-
 \end{itemdescr}

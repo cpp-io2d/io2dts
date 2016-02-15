@@ -400,21 +400,24 @@ for (const auto& item : p) {
 }
 \end{codeblock}
 
-\rSec1 [pathgeometries.strokerules] {Stroking path geometries}
-
-\pnum
-The following rules shall apply when a \tcode{path} object is stroked by a call to \tcode{surface::stroke} or\\
-\tcode{surface::stroke_immediate}.
-
-\begin{enumerate}
-	\item Except as otherwise specified in these rules, the start point and end point of a path segment shall be rendered as specified by the meaning of the surface's current \tcode{line_cap} value (\ref{linecap}).
-	
-	\item If the end point of a path segment \textit{a} is set as the current point and is then used as the start point of another path segment, \textit{b}, the point where \tcode{a}'s end point meets \tcode{b}'s start point shall be rendered as specified by the meaning of the surface's current \tcode{line_join} value (\ref{linejoin}).
-	
-	\item ***FIXME***
-\end{enumerate}
-
-\rSec1 [pathgeometries.fillrules] {Filling path geometries}
-
-\pnum
-***FIXME***
+%\rSec1 [pathgeometries.strokerules] {Stroking path geometries}
+%
+%\pnum
+%The following rules shall apply when a Stroking operation (\ref{surface.stroking}) is carried out on a path geometry.
+%
+%\begin{enumerate}
+%\item If the path geometry only contains a degenerate path segment, then if the \tcode{line_cap} value is
+%\end{enumerate}
+%
+%\begin{enumerate}
+%	\item Except as otherwise specified in these rules, the start point and end point of a path segment shall be rendered as specified by the meaning of the surface's current \tcode{line_cap} value (\ref{linecap}).
+%	
+%	\item If the end point of a path segment \textit{a} is set as the current point and is then used as the start point of another path segment, \textit{b}, the point where \tcode{a}'s end point meets \tcode{b}'s start point shall be rendered as specified by the meaning of the surface's current \tcode{line_join} value (\ref{linejoin}).
+%	
+%	\item ***FIXME***
+%\end{enumerate}
+%
+%\rSec1 [pathgeometries.fillrules] {Filling path geometries}
+%
+%\pnum
+%***FIXME***

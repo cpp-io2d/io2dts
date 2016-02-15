@@ -1,18 +1,28 @@
 %!TEX root = io2d.tex
-\rSec0 [pathdataitem.curveto] {Class \tcode{curve_to}}
+\rSec0 [pathdataitem.curveto] {Class \tcode{path_data_item::curve_to}}
 
-\rSec1 [pathdataitem.curveto.synopsis] {\tcode{curve_to} synopsis}
+\pnum
+\indexlibrary{\idxcode{path_data_item::curve_to}}
+The class \tcode{path_data_item::curve_to} describes an operation on a path geometry collection.
+
+\pnum
+If the current path geometry has no current point, then this operation behaves exactly as if this object was preceded by a \tcode{path_data_item::move_to} object constructed with the value returned by \tcode{*this.control_point_1()} as its argument.
+
+\pnum
+This operation creates a cubic B\'ezier curve from the current point to the point returned by \tcode{*this.end_point()}, with the first control point being the point returned by \tcode{*this.control_point_1()} and the second control point being the point returned by \tcode{*this.control_point_2()}. It then sets the current point to be the point returned by \tcode{*this.end_point()}.
+
+\rSec1 [pathdataitem.curveto.synopsis] {\tcode{path_data_item::curve_to} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class curve_to : public path_data {
+  class path_data_item::curve_to : public path_data_item::path_data {
   public:
     // \ref{pathdataitem.curveto.cons}, construct/copy/move/destroy:
     curve_to() noexcept;
-    curve_to(const curve_to& other) noexcept;
-    curve_to& operator=(const curve_to& other) noexcept;
-    curve_to(curve_to&& other) noexcept;
-    curve_to& operator=(curve_to&& other) noexcept;
+    curve_to(const curve_to&) noexcept;
+    path_data_item::curve_to& operator=(const curve_to&) noexcept;
+    curve_to(curve_to&&) noexcept;
+    path_data_item::curve_to& operator=(curve_to&&) noexcept;
     curve_to(const vector_2d& controlPoint1, const vector_2d& controlPoint2,
       const vector_2d& endPoint) noexcept;
 
@@ -36,28 +46,16 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdataitem.curveto.intro] {\tcode{curve_to} Description}
+\rSec1 [pathdataitem.curveto.cons] {\tcode{path_data_item::curve_to} constructors and assignment operators}
 
-\pnum
-\indexlibrary{\idxcode{curve_to}}
-The class \tcode{curve_to} describes an operation on a path geometry collection.
-
-\pnum
-If the current path geometry has no current point, then this operation behaves exactly as if this object was preceded by a \tcode{move_to} object with the value returned by \tcode{*this.control_point_1()} taking the place of the value returned by \tcode{move_to::to()}. As per the semantics of the \tcode{move_to} type, the path geometry will now have a current point.
-
-\pnum
-When the current path geometry has a current point, this operation creates a B\'ezier curve from the current point to point returned by \tcode{*this.end_point()}, with the first control point being the point returned by \tcode{*this.control_point_1()} and the second control point being the point returned by \tcode{*this.control_point_2()}. It then sets the current point to be the point returned by \tcode{*this.end_point()}.
-
-\rSec1 [pathdataitem.curveto.cons] {\tcode{curve_to} constructors and assignment operators}
-
-\indexlibrary{\idxcode{curve_to}!constructor}
+\indexlibrary{\idxcode{path_data_item::curve_to}!constructor}
 \begin{itemdecl}
     curve_to() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{curve_to}.
+	Constructs an object of type \tcode{path_data_item::curve_to}.
 	
 	\pnum
 	\postconditions
@@ -66,10 +64,9 @@ When the current path geometry has a current point, this operation creates a B\'
 	\tcode{_Control_pt2 == vector_2d(0.0, 0.0)}.
 
 	\tcode{_End_pt == vector_2d(0.0, 0.0)}.
-
 \end{itemdescr}
 
-\indexlibrary{\idxcode{curve_to}!constructor}
+\indexlibrary{\idxcode{path_data_item::curve_to}!constructor}
 \begin{itemdecl}
     curve_to(const vector_2d& controlPoint1, const vector_2d& controlPoint2,
       const vector_2d& endPoint) noexcept;
@@ -77,7 +74,7 @@ When the current path geometry has a current point, this operation creates a B\'
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{curve_to}.
+	Constructs an object of type \tcode{path_data_item::curve_to}.
 	
 	\pnum
 	\postconditions
@@ -86,13 +83,12 @@ When the current path geometry has a current point, this operation creates a B\'
 	\tcode{_Control_pt2 == controlPoint2}.
 
 	\tcode{_End_pt == endPoint}.
-
 \end{itemdescr}
 
-\rSec1 [pathdataitem.curveto.modifiers]{\tcode{curve_to} modifiers}
+\rSec1 [pathdataitem.curveto.modifiers]{\tcode{path_data_item::curve_to} modifiers}
 
-\indexlibrary{\idxcode{curve_to}!\idxcode{control_point_1}}
-\indexlibrary{\idxcode{control_point_1}!\idxcode{curve_to}}
+\indexlibrary{\idxcode{path_data_item::curve_to}!\idxcode{control_point_1}}
+\indexlibrary{\idxcode{control_point_1}!\idxcode{path_data_item::curve_to}}
 \begin{itemdecl}
     void control_point_1(const vector_2d& value) noexcept;
 \end{itemdecl}
@@ -100,11 +96,10 @@ When the current path geometry has a current point, this operation creates a B\'
 	\pnum
 	\postconditions
 	\tcode{_Control_pt_1 == value}.
-	
 \end{itemdescr}
 
-\indexlibrary{\idxcode{curve_to}!\idxcode{control_point_2}}
-\indexlibrary{\idxcode{control_point_2}!\idxcode{curve_to}}
+\indexlibrary{\idxcode{path_data_item::curve_to}!\idxcode{control_point_2}}
+\indexlibrary{\idxcode{control_point_2}!\idxcode{path_data_item::curve_to}}
 \begin{itemdecl}
     void control_point_2(const vector_2d& value) noexcept;
 \end{itemdecl}
@@ -112,11 +107,10 @@ When the current path geometry has a current point, this operation creates a B\'
 	\pnum
 	\postconditions
 	\tcode{_Control_pt_2 == value}.
-	
 \end{itemdescr}
 
-\indexlibrary{\idxcode{curve_to}!\idxcode{end_point}}
-\indexlibrary{\idxcode{end_point}!\idxcode{curve_to}}
+\indexlibrary{\idxcode{path_data_item::curve_to}!\idxcode{end_point}}
+\indexlibrary{\idxcode{end_point}!\idxcode{path_data_item::curve_to}}
 \begin{itemdecl}
     void end_point(const vector_2d& value) noexcept;
 \end{itemdecl}
@@ -124,13 +118,12 @@ When the current path geometry has a current point, this operation creates a B\'
 	\pnum
 	\postconditions
 	\tcode{_End_pt == value}.
-	
 \end{itemdescr}
 
-\rSec1 [pathdataitem.curveto.observers]{\tcode{curve_to} observers}
+\rSec1 [pathdataitem.curveto.observers]{\tcode{path_data_item::curve_to} observers}
 
-\indexlibrary{\idxcode{curve_to}!\idxcode{control_point_1}}
-\indexlibrary{\idxcode{control_point_1}!\idxcode{curve_to}}
+\indexlibrary{\idxcode{path_data_item::curve_to}!\idxcode{control_point_1}}
+\indexlibrary{\idxcode{control_point_1}!\idxcode{path_data_item::curve_to}}
 \begin{itemdecl}
     vector_2d control_point_1() const noexcept;
 \end{itemdecl}
@@ -138,11 +131,10 @@ When the current path geometry has a current point, this operation creates a B\'
 	\pnum
 	\returns
 	\tcode{_Control_pt_1}.
-
 \end{itemdescr}
 
-\indexlibrary{\idxcode{curve_to}!\idxcode{control_point_2}}
-\indexlibrary{\idxcode{control_point_2}!\idxcode{curve_to}}
+\indexlibrary{\idxcode{path_data_item::curve_to}!\idxcode{control_point_2}}
+\indexlibrary{\idxcode{control_point_2}!\idxcode{path_data_item::curve_to}}
 \begin{itemdecl}
     vector_2d control_point_2() const noexcept;
 \end{itemdecl}
@@ -150,11 +142,10 @@ When the current path geometry has a current point, this operation creates a B\'
 	\pnum
 	\returns
 	\tcode{_Control_pt_2}.
-
 \end{itemdescr}
 
-\indexlibrary{\idxcode{curve_to}!\idxcode{end_point}}
-\indexlibrary{\idxcode{end_point}!\idxcode{curve_to}}
+\indexlibrary{\idxcode{path_data_item::curve_to}!\idxcode{end_point}}
+\indexlibrary{\idxcode{end_point}!\idxcode{path_data_item::curve_to}}
 \begin{itemdecl}
     vector_2d end_point() const noexcept;
 \end{itemdecl}
@@ -162,11 +153,10 @@ When the current path geometry has a current point, this operation creates a B\'
 	\pnum
 	\returns
 	\tcode{_End_pt}.
-
 \end{itemdescr}
 
-\indexlibrary{\idxcode{curve_to}!\idxcode{type}}
-\indexlibrary{\idxcode{type}!\idxcode{curve_to}}
+\indexlibrary{\idxcode{path_data_item::curve_to}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{path_data_item::curve_to}}
 \begin{itemdecl}
     virtual path_data_type type() const noexcept override;
 \end{itemdecl}
@@ -174,5 +164,4 @@ When the current path geometry has a current point, this operation creates a B\'
 	\pnum
 	\returns
 	\tcode{path_data_type::curve_to}.
-
 \end{itemdescr}

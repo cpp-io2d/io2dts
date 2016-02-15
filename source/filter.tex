@@ -4,10 +4,15 @@
 \rSec1 [filter.summary] {\tcode{filter} Summary}
 
 \pnum
-The \tcode{filter} enum class specifies the type of signal filter to use when 
-sampling from a \tcode{brush} or \tcode{surface}. Some values specify 
-attributes, leaving the choice of specific filter to the implementation, while 
-others denote a specific type of filter that shall be used.
+The \tcode{filter} enum class specifies the type of filter to use when sampling from a \pixmap.
+
+\pnum
+Three of the \tcode{filter} enumerators, \tcode{filter::fast}, \tcode{filter::good}, and \tcode{filter::best}, specify desired characteristics of the filter, leaving the choice of a specific filter to the implementation. 
+
+The other two, \tcode{filter::nearest} and \tcode{filter::bilinear}, each specify a particular filter that shall be used.
+
+\pnum
+The result of sampling from a \tcode{brush} object \tcode{b} constructed from a \tcode{solid_color_brush_factory} is the same regardless of what filter is used and, as such, in these circumstances implementations should disregard the filter specified by the result of calling \tcode{b.filter()} when sampling from \tcode{b} and instead use an \unspecnorm filter, even if that filter does not correspond to a filter specified by one of the \tcode{filter} enumerators.
 
 \pnum
 See Table~\ref{tab:filter.meanings} for the meaning of each
@@ -43,33 +48,30 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \\ \capsep
  \endhead
  \tcode{fast}
- & The meaning of this value is \impldef{filter!fast}.
+ & The filter that corresponds to this value is \impldef{filter!fast}. The implementation shall ensure that the time complexity of the chosen filter is not greater than the time complexity of the filter that corresponds to \tcode{filter::good}.
  \enternote
- By choosing this value, the user is hinting that performance is more important 
- that quality. Typically this would mean nearest-neighbor filtering, but if 
- implementations can perform, e.g., bilinear filtering at nearly identical 
- speeds, they are free to set that as the fast filter.
+ By choosing this value, the user is hinting that performance is more important than quality.
  \exitnote
  \\
  \tcode{good}
- & The meaning of this value is \impldef{filter!good}.
+ & The filter that corresponds to this value is \impldef{filter!good}. The implementation shall ensure that the time complexity of the chosen formula is not greater than the time complexity of the formula for \tcode{filter::best}.
  \enternote
- By choosing this value, the user is hinting that quality is important but that 
- performance is also still a consideration. Typically this would mean bilinear 
- filtering, but if implementations can perform, e.g., bicubic filtering at nearly identical speeds, they are free to set that as the good filter.
+ By choosing this value, the user is hinting that quality and performance are equally important.
  \exitnote
  \\
  \tcode{best}
- & The meaning of this value is \impldef{filter!best}.
+ & The filter that corresponds to this value is \impldef{filter!best}.
  \enternote
  By choosing this value, the user is hinting that quality is more important 
- than performance. Typically this would mean bicubic filtering (possibly with mipmapping).
+ than performance.
  \exitnote
  \\
  \tcode{nearest}
- & Nearest-neighbor filtering shall be used. This is sometimes also called point sampling. The color of the nearest source pixel is used with no interpolation performed. Whether mipmapping is used and whether mipmaps are generated for sources that do not have them is \impldef{filter!nearest mipmapping}.
+ & Nearest-neighbor interpolation filtering shall be used.
+% The color of the pixel whose coordinates are nearest to the requested coordinates shall be produced. When two or more pixels are equally near to the requested coordinates, it is unspecified which of the equally near pixels shall be the pixel whose color shall be produced.
  \\
  \tcode{bilinear}
- & Bilinear filtering shall be used. The distance-weighted average of the nearest 2x2 grid of source pixels is used to create an interpolated color for the destination pixel. If some source pixel values do not exist (e.g. because an edge or corner of the source has been reached) then the current \tcode{extend} should be considered in order to determine the values for the missing source pixels. If a hardware sampler is available and offers bilinear filtering, implementations may use it even if its results do not conform to those produced by the description of bilinear filtering provided by this standard. Whether mipmapping is used and whether mipmaps are generated for sources that do not have them is \impldef{filter!bilinear mipmapping}.
+ & Bilinear interpolation filtering shall be used.
+% The distance-weighted average of the four nearest pixels is used to create an interpolated color for the destination pixel. If some source pixel values do not exist (e.g. because an edge or corner of the source has been reached) then the current \tcode{extend} should be considered in order to determine the values for the missing source pixels. If a hardware sampler is available and offers bilinear filtering, implementations may use it even if its results do not conform to those produced by the description of bilinear filtering provided by this standard.% Whether mipmapping is used and whether mipmaps are generated for sources that do not have them is \impldef{filter!bilinear mipmapping}.
  \\
 \end{libreqtab2}

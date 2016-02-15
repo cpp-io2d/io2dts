@@ -3,7 +3,14 @@
 \rSec0 [fonts] {Fonts}
 
 \pnum
-Fonts... ***FIXME***
+Fonts describe how text should be rendered and composed. This \documenttypename{} leaves much of how the rendering and composing happens up to the implementors.
+
+\pnum
+Fonts exist to describe how text is rendered. The only requirements that exist in this \documenttypename{} are:
+\begin{itemize}
+\item The text to be rendered is in the UTF-8 character encoding.
+\item The default font face of the implementation shall correctly render all of the characters of the Unicode Basic Multilingual Plane C0 Controls and Basic Latin.
+\end{itemize}
 
 \addtocounter{SectionDepthBase}{1}
 \input{font-slant}

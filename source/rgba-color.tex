@@ -1,6 +1,22 @@
 %!TEX root = io2d.tex
 \rSec0 [rgbacolor] {Class \tcode{rgba_color}}
 
+\pnum
+\indexlibrary{\idxcode{rgba_color}}
+The class \tcode{rgba_color} describes a four channel color in premultiplied format.
+
+\pnum
+There are three color channels, red, green, and blue, each of which is a \tcode{double}.
+
+\pnum
+There is also an alpha channel, which is a \tcode{double}.
+
+\pnum
+Legal values for each channel are in the range $[0, 1]$.
+
+\pnum
+The type predefines a set of named colors, for which each channel is an unsigned normalized 8-bit integer.
+
 \rSec1 [rgbacolor.synopsis] {\tcode{rgba_color} synopsis}
 
 \begin{codeblock}
@@ -194,24 +210,6 @@ private:
   bool operator!=(const rgba_color& lhs, const rgba_color& rhs) noexcept;
 } } } }
 \end{codeblock}
-
-\rSec1 [rgbacolor.intro] {\tcode{rgba_color} Description}
-
-\pnum
-\indexlibrary{\idxcode{rgba_color}}%
-The class \tcode{rgba_color} describes a four channel color in premultiplied format.
-
-\pnum
-There are three color channels, red, green, and blue, each of which is \tcode{double}.
-
-\pnum
-There is also an alpha channel, which is a \tcode{double}.
-
-\pnum
-Legal values for each channel are in the range $[0, 1]$.
-
-\pnum
-The type predefines a set of named colors, for which each channel is an unsigned normalized 8-bit integer.
 
 \rSec1 [rgbacolor.cons] {\tcode{rgba_color} constructors and assignment operators}
 

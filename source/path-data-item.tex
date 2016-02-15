@@ -27,32 +27,32 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     path_data_item& operator=(const path_data_item& other) noexcept;
     path_data_item(path_data_item&& other) noexcept;
     path_data_item& operator=(path_data_item&& other) noexcept;
-    path_data_item(const arc& value) noexcept;
-    path_data_item(const arc_negative& value) noexcept;
-    path_data_item(const change_matrix& value) noexcept;
-    path_data_item(const change_origin& value) noexcept;
-    path_data_item(const close_path& value) noexcept;
-    path_data_item(const curve_to& value) noexcept;
-    path_data_item(const rel_curve_to& value) noexcept;
-    path_data_item(const new_sub_path& value) noexcept;
-    path_data_item(const line_to& value) noexcept;
-    path_data_item(const move_to& value) noexcept;
-    path_data_item(const rel_line_to& value) noexcept;
-    path_data_item(const rel_move_to& value) noexcept;
+    path_data_item(const path_data_item::arc& value) noexcept;
+    path_data_item(const path_data_item::arc_negative& value) noexcept;
+    path_data_item(const path_data_item::change_matrix& value) noexcept;
+    path_data_item(const path_data_item::change_origin& value) noexcept;
+    path_data_item(const path_data_item::close_path& value) noexcept;
+    path_data_item(const path_data_item::curve_to& value) noexcept;
+    path_data_item(const path_data_item::rel_curve_to& value) noexcept;
+    path_data_item(const path_data_item::new_sub_path& value) noexcept;
+    path_data_item(const path_data_item::line_to& value) noexcept;
+    path_data_item(const path_data_item::move_to& value) noexcept;
+    path_data_item(const path_data_item::rel_line_to& value) noexcept;
+    path_data_item(const path_data_item::rel_move_to& value) noexcept;
 
     // \ref{pathdataitem.modifiers}, modifiers:
-    void assign(const arc& value) noexcept;
-    void assign(const arc_negative& value) noexcept;
-    void assign(const change_matrix& value) noexcept;
-    void assign(const change_origin& value) noexcept;
-    void assign(const close_path& value) noexcept;
-    void assign(const curve_to& value) noexcept;
-    void assign(const rel_curve_to& value) noexcept;
-    void assign(const new_sub_path& value) noexcept;
-    void assign(const line_to& value) noexcept;
-    void assign(const move_to& value) noexcept;
-    void assign(const rel_line_to& value) noexcept;
-    void assign(const rel_move_to& value) noexcept;
+    void assign(const path_data_item::arc& value) noexcept;
+    void assign(const path_data_item::arc_negative& value) noexcept;
+    void assign(const path_data_item::change_matrix& value) noexcept;
+    void assign(const path_data_item::change_origin& value) noexcept;
+    void assign(const path_data_item::close_path& value) noexcept;
+    void assign(const path_data_item::curve_to& value) noexcept;
+    void assign(const path_data_item::rel_curve_to& value) noexcept;
+    void assign(const path_data_item::new_sub_path& value) noexcept;
+    void assign(const path_data_item::line_to& value) noexcept;
+    void assign(const path_data_item::move_to& value) noexcept;
+    void assign(const path_data_item::rel_line_to& value) noexcept;
+    void assign(const path_data_item::rel_move_to& value) noexcept;
 
     // \ref{pathdataitem.observers}, observers:
     bool has_data() const noexcept;
@@ -63,55 +63,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     T get() const;
     template <class T>
     T get(error_code& ec) const noexcept;
-
-    template <>
-    arc get() const;
-    template <>
-    arc get(error_code& ec) const noexcept;
-    template <>
-    arc_negative get() const;
-    template <>
-    arc_negative get(error_code& ec) const noexcept;
-    template <>
-    change_matrix get() const;
-    template <>
-    change_matrix get(error_code& ec) const noexcept;
-    template <>
-    change_origin get() const;
-    template <>
-    change_origin get(error_code& ec) const noexcept;
-    template <>
-    close_path get() const;
-    template <>
-    close_path get(error_code& ec) const noexcept;
-    template <>
-    curve_to get() const;
-    template <>
-    curve_to get(error_code& ec) const noexcept;
-    template <>
-    rel_curve_to get() const;
-    template <>
-    rel_curve_to get(error_code& ec) const noexcept;
-    template <>
-    new_sub_path get() const;
-    template <>
-    new_sub_path get(error_code& ec) const noexcept;
-    template <>
-    line_to get() const;
-    template <>
-    line_to get(error_code& ec) const noexcept;
-    template <>
-    move_to get() const;
-    template <>
-    move_to get(error_code& ec) const noexcept;
-    template <>
-    rel_line_to get() const;
-    template <>
-    rel_line_to get(error_code& ec) const noexcept;
-    template <>
-    rel_move_to get() const;
-    template <>
-    rel_move_to get(error_code& ec) const noexcept;
 
   private:
     bool _Has_data;         // \expos
@@ -160,347 +111,346 @@ The class \tcode{path_data_item} describes an opaque container capable of storin
 
 \indexlibrary{\idxcode{path_data_item}!constructor}
 \begin{itemdecl}
-    path_data_item() noexcept;
+path_data_item() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_data_item}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Has_data == false}.
+\pnum
+\effects
+Constructs an object of type \tcode{path_data_item}.
+
+\pnum
+\postconditions
+\tcode{_Has_data == false}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_data_item}!constructor}
+\begin{itemdecl}
+path_data_item(const path_data_item::arc& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{path_data_item}.
+
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
+
+\pnum
+\tcode{_Type == path_data_type::arc}.
+
+\pnum
+\tcode{_Data.arc.centerX == value.center().x()}.
+
+\pnum
+\tcode{_Data.arc.centerY == value.center().y()}.
+
+\pnum
+\tcode{_Data.arc.radius == value.radius()}.
+
+\pnum
+\tcode{_Data.arc.angle1 == value.angle_1()}.
+
+\pnum
+\tcode{_Data.arc.angle2 == value.angle_2()}.
 
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item}!constructor}
 \begin{itemdecl}
-    path_data_item(const arc& value) noexcept;
+path_data_item(const path_data_item::arc_negative& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_data_item}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::arc}.
-	
-	\pnum
-	\tcode{_Data.arc.centerX == value.center().x()}.
-	
-	\pnum
-	\tcode{_Data.arc.centerY == value.center().y()}.
-	
-	\pnum
-	\tcode{_Data.arc.radius == value.radius()}.
-	
-	\pnum
-	\tcode{_Data.arc.angle1 == value.angle_1()}.
-	
-	\pnum
-	\tcode{_Data.arc.angle2 == value.angle_2()}.
-	
-\end{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{path_data_item}.
 
-\indexlibrary{\idxcode{path_data_item}!constructor}
-\begin{itemdecl}
-    path_data_item(const arc_negative& value) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_data_item}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::arc_negative}.
-	
-	\pnum
-	\tcode{_Data.arc.centerX == value.center().x()}.
-	
-	\pnum
-	\tcode{_Data.arc.centerY == value.center().y()}.
-	
-	\pnum
-	\tcode{_Data.arc.radius == value.radius()}.
-	
-	\pnum
-	\tcode{_Data.arc.angle1 == value.angle_1()}.
-	
-	\pnum
-	\tcode{_Data.arc.angle2 == value.angle_2()}.
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
+
+\pnum
+\tcode{_Type == path_data_type::arc_negative}.
+
+\pnum
+\tcode{_Data.arc.centerX == value.center().x()}.
+
+\pnum
+\tcode{_Data.arc.centerY == value.center().y()}.
+
+\pnum
+\tcode{_Data.arc.radius == value.radius()}.
+
+\pnum
+\tcode{_Data.arc.angle1 == value.angle_1()}.
+
+\pnum
+\tcode{_Data.arc.angle2 == value.angle_2()}.
 
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item}!constructor}
 \begin{itemdecl}
-    path_data_item(const change_matrix& value) noexcept;
+path_data_item(const path_data_item::change_matrix& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_data_item}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::change_matrix}.
-	
-	\pnum
-	\tcode{_Data.matrix.m00 == value.matrix().m00()}.
-	
-	\pnum
-	\tcode{_Data.matrix.m01 == value.matrix().m01()}.
-	
-	\pnum
-	\tcode{_Data.matrix.m10 == value.matrix().m10()}.
-	
-	\pnum
-	\tcode{_Data.matrix.m11 == value.matrix().m11()}.
-	
-	\pnum
-	\tcode{_Data.matrix.m20 == value.matrix().m20()}.
-	
-	\pnum
-	\tcode{_Data.matrix.m21 == value.matrix().m21()}.
-	
-\end{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{path_data_item}.
 
-\indexlibrary{\idxcode{path_data_item}!constructor}
-\begin{itemdecl}
-    path_data_item(const change_origin& value) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_data_item}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::change_origin}.
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
 
-	\pnum
-	\tcode{_Data.point.x == value.origin().x()}.	
+\pnum
+\tcode{_Type == path_data_type::change_matrix}.
 
-	\pnum
-	\tcode{_Data.point.y == value.origin().y()}.	
-	
-\end{itemdescr}
+\pnum
+\tcode{_Data.matrix.m00 == value.matrix().m00()}.
 
-\indexlibrary{\idxcode{path_data_item}!constructor}
-\begin{itemdecl}
-    path_data_item(const close_path& value) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_data_item}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::close_path}.
-	
-\end{itemdescr}
+\pnum
+\tcode{_Data.matrix.m01 == value.matrix().m01()}.
 
-\indexlibrary{\idxcode{path_data_item}!constructor}
-\begin{itemdecl}
-    path_data_item(const curve_to& value) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_data_item}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::curve_to}.
-	
-	\pnum
-	\tcode{_Data.curve.cpt1x == value.control_point_1().x()}.
-	
-	\pnum
-	\tcode{_Data.curve.cpt1y == value.control_point_1().y()}.
-	
-	\pnum
-	\tcode{_Data.curve.cpt2x == value.control_point_2().x()}.
-	
-	\pnum
-	\tcode{_Data.curve.cpt2y == value.control_point_2().y()}.
-	
-	\pnum
-	\tcode{_Data.curve.eptx == value.end_point().x()}.
-	
-	\pnum
-	\tcode{_Data.curve.epty == value.end_point().y()}.
-	
-\end{itemdescr}
+\pnum
+\tcode{_Data.matrix.m10 == value.matrix().m10()}.
 
-\indexlibrary{\idxcode{path_data_item}!constructor}
-\begin{itemdecl}
-    path_data_item(const rel_curve_to& value) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_data_item}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::rel_curve_to}.
-	
-	\pnum
-	\tcode{_Data.curve.cpt1x == value.control_point_1().x()}.
-	
-	\pnum
-	\tcode{_Data.curve.cpt1y == value.control_point_1().y()}.
-	
-	\pnum
-	\tcode{_Data.curve.cpt2x == value.control_point_2().x()}.
-	
-	\pnum
-	\tcode{_Data.curve.cpt2y == value.control_point_2().y()}.
-	
-	\pnum
-	\tcode{_Data.curve.eptx == value.end_point().x()}.
-	
-	\pnum
-	\tcode{_Data.curve.epty == value.end_point().y()}.
+\pnum
+\tcode{_Data.matrix.m11 == value.matrix().m11()}.
+
+\pnum
+\tcode{_Data.matrix.m20 == value.matrix().m20()}.
+
+\pnum
+\tcode{_Data.matrix.m21 == value.matrix().m21()}.
 
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item}!constructor}
 \begin{itemdecl}
-    path_data_item(const new_sub_path& value) noexcept;
+path_data_item(const path_data_item::change_origin& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_data_item}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::new_sub_path}.
-	
+\pnum
+\effects
+Constructs an object of type \tcode{path_data_item}.
+
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
+
+\pnum
+\tcode{_Type == path_data_type::change_origin}.
+
+\pnum
+\tcode{_Data.point.x == value.origin().x()}.
+
+\pnum
+\tcode{_Data.point.y == value.origin().y()}.
+
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item}!constructor}
 \begin{itemdecl}
-    path_data_item(const line_to& value) noexcept;
+path_data_item(const path_data_item::close_path& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_data_item}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::line_to}.
+\pnum
+\effects
+Constructs an object of type \tcode{path_data_item}.
 
-	\pnum
-	\tcode{_Data.point.x == value.to().x()}.	
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
 
-	\pnum
-	\tcode{_Data.point.y == value.to().y()}.	
-	
+\pnum
+\tcode{_Type == path_data_type::close_path}.
+
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item}!constructor}
 \begin{itemdecl}
-    path_data_item(const move_to& value) noexcept;
+path_data_item(const path_data_item::curve_to& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_data_item}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::move_to}.
+\pnum
+\effects
+Constructs an object of type \tcode{path_data_item}.
 
-	\pnum
-	\tcode{_Data.point.x == value.to().x()}.	
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
 
-	\pnum
-	\tcode{_Data.point.y == value.to().y()}.	
-	
+\pnum
+\tcode{_Type == path_data_type::curve_to}.
+
+\pnum
+\tcode{_Data.curve.cpt1x == value.control_point_1().x()}.
+
+\pnum
+\tcode{_Data.curve.cpt1y == value.control_point_1().y()}.
+
+\pnum
+\tcode{_Data.curve.cpt2x == value.control_point_2().x()}.
+
+\pnum
+\tcode{_Data.curve.cpt2y == value.control_point_2().y()}.
+
+\pnum
+\tcode{_Data.curve.eptx == value.end_point().x()}.
+
+\pnum
+\tcode{_Data.curve.epty == value.end_point().y()}.
+
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item}!constructor}
 \begin{itemdecl}
-    path_data_item(const rel_line_to& value) noexcept;
+path_data_item(const path_data_item::rel_curve_to& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_data_item}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::rel_line_to}.
+\pnum
+\effects
+Constructs an object of type \tcode{path_data_item}.
 
-	\pnum
-	\tcode{_Data.point.x == value.to().x()}.	
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
 
-	\pnum
-	\tcode{_Data.point.y == value.to().y()}.	
-	
+\pnum
+\tcode{_Type == path_data_type::rel_curve_to}.
+
+\pnum
+\tcode{_Data.curve.cpt1x == value.control_point_1().x()}.
+
+\pnum
+\tcode{_Data.curve.cpt1y == value.control_point_1().y()}.
+
+\pnum
+\tcode{_Data.curve.cpt2x == value.control_point_2().x()}.
+
+\pnum
+\tcode{_Data.curve.cpt2y == value.control_point_2().y()}.
+
+\pnum
+\tcode{_Data.curve.eptx == value.end_point().x()}.
+
+\pnum
+\tcode{_Data.curve.epty == value.end_point().y()}.
+
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item}!constructor}
 \begin{itemdecl}
-    path_data_item(const rel_move_to& value) noexcept;
+path_data_item(const path_data_item::new_sub_path& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_data_item}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::rel_move_to}.
+\pnum
+\effects
+Constructs an object of type \tcode{path_data_item}.
 
-	\pnum
-	\tcode{_Data.point.x == value.to().x()}.	
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
 
-	\pnum
-	\tcode{_Data.point.y == value.to().y()}.	
-	
+\pnum
+\tcode{_Type == path_data_type::new_sub_path}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_data_item}!constructor}
+\begin{itemdecl}
+path_data_item(const path_data_item::line_to& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{path_data_item}.
+
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
+
+\pnum
+\tcode{_Type == path_data_type::line_to}.
+
+\pnum
+\tcode{_Data.point.x == value.to().x()}.
+
+\pnum
+\tcode{_Data.point.y == value.to().y()}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_data_item}!constructor}
+\begin{itemdecl}
+path_data_item(const path_data_item::move_to& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{path_data_item}.
+
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
+
+\pnum
+\tcode{_Type == path_data_type::move_to}.
+
+\pnum
+\tcode{_Data.point.x == value.to().x()}.
+
+\pnum
+\tcode{_Data.point.y == value.to().y()}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_data_item}!constructor}
+\begin{itemdecl}
+path_data_item(const path_data_item::rel_line_to& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{path_data_item}.
+
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
+
+\pnum
+\tcode{_Type == path_data_type::rel_line_to}.
+
+\pnum
+\tcode{_Data.point.x == value.to().x()}.
+
+\pnum
+\tcode{_Data.point.y == value.to().y()}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_data_item}!constructor}
+\begin{itemdecl}
+path_data_item(const path_data_item::rel_move_to& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{path_data_item}.
+
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
+
+\pnum
+\tcode{_Type == path_data_type::rel_move_to}.
+
+\pnum
+\tcode{_Data.point.x == value.to().x()}.
+
+\pnum
+\tcode{_Data.point.y == value.to().y()}.
+
 \end{itemdescr}
 
 \rSec1 [pathdataitem.modifiers] {\tcode{path_data_item} modifiers}
@@ -508,295 +458,295 @@ The class \tcode{path_data_item} describes an opaque container capable of storin
 \indexlibrary{\idxcode{path_data_item}!\idxcode{assign}}
 \indexlibrary{\idxcode{assign}!\idxcode{path_data_item}}
 \begin{itemdecl}
-    void assign(const arc& value) noexcept;
+void assign(const path_data_item::arc& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::arc}.
-	
-	\pnum
-	\tcode{_Data.arc.centerX == value.center().x()}.
-	
-	\pnum
-	\tcode{_Data.arc.centerY == value.center().y()}.
-	
-	\pnum
-	\tcode{_Data.arc.radius == value.radius()}.
-	
-	\pnum
-	\tcode{_Data.arc.angle1 == value.angle_1()}.
-	
-	\pnum
-	\tcode{_Data.arc.angle2 == value.angle_2()}.
-	
-\end{itemdescr}
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
 
-\indexlibrary{\idxcode{path_data_item}!\idxcode{assign}}
-\indexlibrary{\idxcode{assign}!\idxcode{path_data_item}}
-\begin{itemdecl}
-    void assign(const arc_negative& value) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::arc_negative}.
-	
-	\pnum
-	\tcode{_Data.arc.centerX == value.center().x()}.
-	
-	\pnum
-	\tcode{_Data.arc.centerY == value.center().y()}.
-	
-	\pnum
-	\tcode{_Data.arc.radius == value.radius()}.
-	
-	\pnum
-	\tcode{_Data.arc.angle1 == value.angle_1()}.
-	
-	\pnum
-	\tcode{_Data.arc.angle2 == value.angle_2()}.
-	
-\end{itemdescr}
+\pnum
+\tcode{_Type == path_data_type::arc}.
 
-\indexlibrary{\idxcode{path_data_item}!\idxcode{assign}}
-\indexlibrary{\idxcode{assign}!\idxcode{path_data_item}}
-\begin{itemdecl}
-    void assign(const change_matrix& value) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::change_matrix}.
-	
-	\pnum
-	\tcode{_Data.matrix.m00 == value.matrix().m00()}.
-	
-	\pnum
-	\tcode{_Data.matrix.m01 == value.matrix().m01()}.
-	
-	\pnum
-	\tcode{_Data.matrix.m10 == value.matrix().m10()}.
-	
-	\pnum
-	\tcode{_Data.matrix.m11 == value.matrix().m11()}.
-	
-	\pnum
-	\tcode{_Data.matrix.m20 == value.matrix().m20()}.
-	
-	\pnum
-	\tcode{_Data.matrix.m21 == value.matrix().m21()}.
-	
-\end{itemdescr}
+\pnum
+\tcode{_Data.arc.centerX == value.center().x()}.
 
-\indexlibrary{\idxcode{path_data_item}!\idxcode{assign}}
-\indexlibrary{\idxcode{assign}!\idxcode{path_data_item}}
-\begin{itemdecl}
-    void assign(const change_origin& value) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::change_origin}.
+\pnum
+\tcode{_Data.arc.centerY == value.center().y()}.
 
-	\pnum
-	\tcode{_Data.point.x == value.origin().x()}.	
+\pnum
+\tcode{_Data.arc.radius == value.radius()}.
 
-	\pnum
-	\tcode{_Data.point.y == value.origin().y()}.	
-	
-\end{itemdescr}
+\pnum
+\tcode{_Data.arc.angle1 == value.angle_1()}.
 
-\indexlibrary{\idxcode{path_data_item}!\idxcode{assign}}
-\indexlibrary{\idxcode{assign}!\idxcode{path_data_item}}
-\begin{itemdecl}
-    void assign(const close_path& value) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::close_path}.
+\pnum
+\tcode{_Data.arc.angle2 == value.angle_2()}.
 
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item}!\idxcode{assign}}
 \indexlibrary{\idxcode{assign}!\idxcode{path_data_item}}
 \begin{itemdecl}
-    void assign(const curve_to& value) noexcept;
+void assign(const path_data_item::arc_negative& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::curve_to}.
-	
-	\pnum
-	\tcode{_Data.curve.cpt1x == value.control_point_1().x()}.
-	
-	\pnum
-	\tcode{_Data.curve.cpt1y == value.control_point_1().y()}.
-	
-	\pnum
-	\tcode{_Data.curve.cpt2x == value.control_point_2().x()}.
-	
-	\pnum
-	\tcode{_Data.curve.cpt2y == value.control_point_2().y()}.
-	
-	\pnum
-	\tcode{_Data.curve.eptx == value.end_point().x()}.
-	
-	\pnum
-	\tcode{_Data.curve.epty == value.end_point().y()}.
-	
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
+
+\pnum
+\tcode{_Type == path_data_type::arc_negative}.
+
+\pnum
+\tcode{_Data.arc.centerX == value.center().x()}.
+
+\pnum
+\tcode{_Data.arc.centerY == value.center().y()}.
+
+\pnum
+\tcode{_Data.arc.radius == value.radius()}.
+
+\pnum
+\tcode{_Data.arc.angle1 == value.angle_1()}.
+
+\pnum
+\tcode{_Data.arc.angle2 == value.angle_2()}.
+
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item}!\idxcode{assign}}
 \indexlibrary{\idxcode{assign}!\idxcode{path_data_item}}
 \begin{itemdecl}
-    void assign(const rel_curve_to& value) noexcept;
+void assign(const path_data_item::change_matrix& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::rel_curve_to}.
-	
-	\pnum
-	\tcode{_Data.curve.cpt1x == value.control_point_1().x()}.
-	
-	\pnum
-	\tcode{_Data.curve.cpt1y == value.control_point_1().y()}.
-	
-	\pnum
-	\tcode{_Data.curve.cpt2x == value.control_point_2().x()}.
-	
-	\pnum
-	\tcode{_Data.curve.cpt2y == value.control_point_2().y()}.
-	
-	\pnum
-	\tcode{_Data.curve.eptx == value.end_point().x()}.
-	
-	\pnum
-	\tcode{_Data.curve.epty == value.end_point().y()}.
-	
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
+
+\pnum
+\tcode{_Type == path_data_type::change_matrix}.
+
+\pnum
+\tcode{_Data.matrix.m00 == value.matrix().m00()}.
+
+\pnum
+\tcode{_Data.matrix.m01 == value.matrix().m01()}.
+
+\pnum
+\tcode{_Data.matrix.m10 == value.matrix().m10()}.
+
+\pnum
+\tcode{_Data.matrix.m11 == value.matrix().m11()}.
+
+\pnum
+\tcode{_Data.matrix.m20 == value.matrix().m20()}.
+
+\pnum
+\tcode{_Data.matrix.m21 == value.matrix().m21()}.
+
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item}!\idxcode{assign}}
 \indexlibrary{\idxcode{assign}!\idxcode{path_data_item}}
 \begin{itemdecl}
-    void assign(const new_sub_path& value) noexcept;
+void assign(const path_data_item::change_origin& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::new_sub_path}.
-	
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
+
+\pnum
+\tcode{_Type == path_data_type::change_origin}.
+
+\pnum
+\tcode{_Data.point.x == value.origin().x()}.
+
+\pnum
+\tcode{_Data.point.y == value.origin().y()}.
+
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item}!\idxcode{assign}}
 \indexlibrary{\idxcode{assign}!\idxcode{path_data_item}}
 \begin{itemdecl}
-    void assign(const line_to& value) noexcept;
+void assign(const path_data_item::close_path& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::line_to}.
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
 
-	\pnum
-	\tcode{_Data.point.x == value.to().x()}.	
+\pnum
+\tcode{_Type == path_data_type::close_path}.
 
-	\pnum
-	\tcode{_Data.point.y == value.to().y()}.	
-	
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item}!\idxcode{assign}}
 \indexlibrary{\idxcode{assign}!\idxcode{path_data_item}}
 \begin{itemdecl}
-    void assign(const move_to& value) noexcept;
+void assign(const path_data_item::curve_to& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::move_to}.
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
 
-	\pnum
-	\tcode{_Data.point.x == value.to().x()}.	
+\pnum
+\tcode{_Type == path_data_type::curve_to}.
 
-	\pnum
-	\tcode{_Data.point.y == value.to().y()}.	
-	
+\pnum
+\tcode{_Data.curve.cpt1x == value.control_point_1().x()}.
+
+\pnum
+\tcode{_Data.curve.cpt1y == value.control_point_1().y()}.
+
+\pnum
+\tcode{_Data.curve.cpt2x == value.control_point_2().x()}.
+
+\pnum
+\tcode{_Data.curve.cpt2y == value.control_point_2().y()}.
+
+\pnum
+\tcode{_Data.curve.eptx == value.end_point().x()}.
+
+\pnum
+\tcode{_Data.curve.epty == value.end_point().y()}.
+
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item}!\idxcode{assign}}
 \indexlibrary{\idxcode{assign}!\idxcode{path_data_item}}
 \begin{itemdecl}
-    void assign(const rel_line_to& value) noexcept;
+void assign(const path_data_item::rel_curve_to& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::rel_line_to}.
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
 
-	\pnum
-	\tcode{_Data.point.x == value.to().x()}.	
+\pnum
+\tcode{_Type == path_data_type::rel_curve_to}.
 
-	\pnum
-	\tcode{_Data.point.y == value.to().y()}.	
-	
+\pnum
+\tcode{_Data.curve.cpt1x == value.control_point_1().x()}.
+
+\pnum
+\tcode{_Data.curve.cpt1y == value.control_point_1().y()}.
+
+\pnum
+\tcode{_Data.curve.cpt2x == value.control_point_2().x()}.
+
+\pnum
+\tcode{_Data.curve.cpt2y == value.control_point_2().y()}.
+
+\pnum
+\tcode{_Data.curve.eptx == value.end_point().x()}.
+
+\pnum
+\tcode{_Data.curve.epty == value.end_point().y()}.
+
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item}!\idxcode{assign}}
 \indexlibrary{\idxcode{assign}!\idxcode{path_data_item}}
 \begin{itemdecl}
-    void assign(const rel_move_to& value) noexcept;
+void assign(const path_data_item::new_sub_path& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\postconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\tcode{_Type == path_data_type::rel_move_to}.
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
 
-	\pnum
-	\tcode{_Data.point.x == value.to().x()}.	
+\pnum
+\tcode{_Type == path_data_type::new_sub_path}.
 
-	\pnum
-	\tcode{_Data.point.y == value.to().y()}.	
-	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_data_item}!\idxcode{assign}}
+\indexlibrary{\idxcode{assign}!\idxcode{path_data_item}}
+\begin{itemdecl}
+void assign(const path_data_item::line_to& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
+
+\pnum
+\tcode{_Type == path_data_type::line_to}.
+
+\pnum
+\tcode{_Data.point.x == value.to().x()}.
+
+\pnum
+\tcode{_Data.point.y == value.to().y()}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_data_item}!\idxcode{assign}}
+\indexlibrary{\idxcode{assign}!\idxcode{path_data_item}}
+\begin{itemdecl}
+void assign(const path_data_item::move_to& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
+
+\pnum
+\tcode{_Type == path_data_type::move_to}.
+
+\pnum
+\tcode{_Data.point.x == value.to().x()}.
+
+\pnum
+\tcode{_Data.point.y == value.to().y()}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_data_item}!\idxcode{assign}}
+\indexlibrary{\idxcode{assign}!\idxcode{path_data_item}}
+\begin{itemdecl}
+void assign(const path_data_item::rel_line_to& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
+
+\pnum
+\tcode{_Type == path_data_type::rel_line_to}.
+
+\pnum
+\tcode{_Data.point.x == value.to().x()}.
+
+\pnum
+\tcode{_Data.point.y == value.to().y()}.
+
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_data_item}!\idxcode{assign}}
+\indexlibrary{\idxcode{assign}!\idxcode{path_data_item}}
+\begin{itemdecl}
+void assign(const path_data_item::rel_move_to& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\postconditions
+\tcode{_Has_data == true}.
+
+\pnum
+\tcode{_Type == path_data_type::rel_move_to}.
+
+\pnum
+\tcode{_Data.point.x == value.to().x()}.
+
+\pnum
+\tcode{_Data.point.y == value.to().y()}.
+
 \end{itemdescr}
 
 \rSec1 [pathdataitem.observers] {\tcode{path_data_item} observers}
@@ -804,405 +754,35 @@ The class \tcode{path_data_item} describes an opaque container capable of storin
 \indexlibrary{\idxcode{path_data_item}!\idxcode{has_data}}
 \indexlibrary{\idxcode{has_data}!\idxcode{path_data_item}}
 \begin{itemdecl}
-    bool has_data() const noexcept;
+bool has_data() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{_Has_data}.
-	
+\pnum
+\returns
+\tcode{_Has_data}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_data_item}!\idxcode{type}}
 \indexlibrary{\idxcode{type}!\idxcode{path_data_item}}
 \begin{itemdecl}
-    path_data_type type() const;
-    path_data_type type(error_code& ec) const noexcept;
+path_data_type type() const;
+path_data_type type(error_code& ec) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\preconditions
-	\tcode{_Has_data == true}.
-	
-	\pnum
-	\returns
-	\tcode{_Type}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\errors
-	\tcode{errc::operation_not_permitted} if the preconditions are violated.
+\pnum
+\returns
+\tcode{_Type}.
 
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+\tcode{errc::operation_not_permitted} if \tcode{!this->has_data()}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_data_item}!\idxcode{get}}
-\indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
-\begin{itemdecl}
-    template <>
-    path_data_item::arc get() const;
-    template <>
-    path_data_item::arc get(error_code& ec) const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{path_data_item::arc\{vector_2d\{ _Data.arc.centerX, 
-	  _Data.arc.centerY \}, _Data.arc.radius, _Data.arc.angle1, 
-	  _Data.arc.angle2 \}}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\remarks
-	If a non-throwing error occurs, this function returns a default constructed object of its specified return type.
-	
-	\pnum
-	\errors
-	\tcode{errc::operation_not_permitted} if \tcode{!_Has_data}.
-	
-	\pnum
-	\tcode{errc::invalid_argument} if \tcode{_Type != path_data_type::arc}.
+\rSec1 [pathdataitem.functiontemplates] {\tcode{path_data_item} member function templates}
 
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_data_item}!\idxcode{get}}
-\indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
-\begin{itemdecl}
-    template <>
-    path_data_item::arc_negative get() const;
-    template <>
-    path_data_item::arc_negative get(error_code& ec) const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{path_data_item::arc_negative\{vector_2d\{ _Data.arc.centerX, 
-	  _Data.arc.centerY \}, _Data.arc.radius, _Data.arc.angle1, 
-	  _Data.arc.angle2 \}}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\remarks
-	If a non-throwing error occurs, this function returns a default constructed object of its specified return type.
-	
-	\pnum
-	\errors
-	\tcode{errc::operation_not_permitted} if \tcode{!_Has_data}.
-	
-	\pnum
-	\tcode{errc::invalid_argument} if \tcode{_Type != path_data_type::arc_negative}.
-
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_data_item}!\idxcode{get}}
-\indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
-\begin{itemdecl}
-    template <>
-    path_data_item::change_matrix get() const;
-    template <>
-    path_data_item::change_matrix get(error_code& ec) const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{path_data_item::change_matrix\{ matrix_2d\{ _Data.matrix.m00, 
-	  _Data.matrix.m01, _Data.matrix.m10, _Data.matrix.m11, _Data.matrix.m20, 
-	  _Data.matrix.m21 \} \}}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\remarks
-	If a non-throwing error occurs, this function returns a default constructed object of its specified return type.
-	
-	\pnum
-	\errors
-	\tcode{errc::operation_not_permitted} if \tcode{!_Has_data}.
-	
-	\pnum
-	\tcode{errc::invalid_argument} if \tcode{_Type != path_data_type::change_matrix}.
-
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_data_item}!\idxcode{get}}
-\indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
-\begin{itemdecl}
-    template <>
-    path_data_item::change_origin get() const;
-    template <>
-    path_data_item::change_origin get(error_code& ec) const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{path_data_item::change_origin\{ vector_2d\{ _Data.point.x, 
-	  _Data.point.y \} \}}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\remarks
-	If a non-throwing error occurs, this function returns a default constructed object of its specified return type.
-	
-	\pnum
-	\errors
-	\tcode{errc::operation_not_permitted} if \tcode{!_Has_data}.
-	
-	\pnum
-	\tcode{errc::invalid_argument} if \tcode{_Type != path_data_type::change_origin}.
-
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_data_item}!\idxcode{get}}
-\indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
-\begin{itemdecl}
-    template <>
-    path_data_item::close_path get() const;
-    template <>
-    path_data_item::close_path get(error_code& ec) const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{path_data_item::close_path\{ \}}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\remarks
-	If a non-throwing error occurs, this function returns a default constructed object of its specified return type.
-	
-	\pnum
-	\errors
-	\tcode{errc::operation_not_permitted} if \tcode{!_Has_data}.
-	
-	\pnum
-	\tcode{errc::invalid_argument} if \tcode{_Type != path_data_type::close_path}.
-
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_data_item}!\idxcode{get}}
-\indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
-\begin{itemdecl}
-    template <>
-    path_data_item::curve_to get() const;
-    template <>
-    path_data_item::curve_to get(error_code& ec) const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{path_data_item::curve_to\{ vector_2d\{ _Data.curve.cpt1x, 
-	  _Data.curve.cpt1y \}, vector_2d\{ _Data.curve.cpt2x, _Data.curve.cpt2y 
-	  \}, vector_2d\{ _Data.curve.eptx, _Data.curve.epty \} \}}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\remarks
-	If a non-throwing error occurs, this function returns a default constructed object of its specified return type.
-	
-	\pnum
-	\errors
-	\tcode{errc::operation_not_permitted} if \tcode{!_Has_data}.
-	
-	\pnum
-	\tcode{errc::invalid_argument} if \tcode{_Type != path_data_type::curve_to}.
-
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_data_item}!\idxcode{get}}
-\indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
-\begin{itemdecl}
-    template <>
-    path_data_item::rel_curve_to get() const;
-    template <>
-    path_data_item::rel_curve_to get(error_code& ec) const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{path_data_item::rel_curve_to\{ vector_2d\{ _Data.curve.cpt1x, _Data.curve.cpt1y \}, vector_2d\{ _Data.curve.cpt2x, _Data.curve.cpt2y \}, vector_2d\{ _Data.curve.eptx, _Data.curve.epty \} \}}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\remarks
-	If a non-throwing error occurs, this function returns a default constructed object of its specified return type.
-	
-	\pnum
-	\errors
-	\tcode{errc::operation_not_permitted} if \tcode{!_Has_data}.
-	
-	\pnum
-	\tcode{errc::invalid_argument} if \tcode{_Type != path_data_type::rel_curve_to}.
-
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_data_item}!\idxcode{get}}
-\indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
-\begin{itemdecl}
-    template <>
-    path_data_item::new_sub_path get() const;
-    template <>
-    path_data_item::new_sub_path get(error_code& ec) const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{path_data_item::new_sub_path\{ \}}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\remarks
-	If a non-throwing error occurs, this function returns a default constructed object of its specified return type.
-	
-	\pnum
-	\errors
-	\tcode{errc::operation_not_permitted} if \tcode{!_Has_data}.
-	
-	\pnum
-	\tcode{errc::invalid_argument} if \tcode{_Type != path_data_type::new_sub_path}.
-
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_data_item}!\idxcode{get}}
-\indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
-\begin{itemdecl}
-    template <>
-    path_data_item::line_to get() const;
-    template <>
-    path_data_item::line_to get(error_code& ec) const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{path_data_item::line_to\{ vector_2d\{ _Data.point.x, _Data.point.y \} \}}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\remarks
-	If a non-throwing error occurs, this function returns a default constructed object of its specified return type.
-	
-	\pnum
-	\errors
-	\tcode{errc::operation_not_permitted} if \tcode{!_Has_data}.
-	
-	\pnum
-	\tcode{errc::invalid_argument} if \tcode{_Type != path_data_type::line_to}.
-
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_data_item}!\idxcode{get}}
-\indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
-\begin{itemdecl}
-    template <>
-    path_data_item::move_to get() const;
-    template <>
-    path_data_item::move_to get(error_code& ec) const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{path_data_item::move_to\{ vector_2d\{ _Data.point.x, _Data.point.y \} \}}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\remarks
-	If a non-throwing error occurs, this function returns a default constructed object of its specified return type.
-	
-	\pnum
-	\errors
-	\tcode{errc::operation_not_permitted} if \tcode{!_Has_data}.
-	
-	\pnum
-	\tcode{errc::invalid_argument} if \tcode{_Type != path_data_type::move_to}.
-
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_data_item}!\idxcode{get}}
-\indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
-\begin{itemdecl}
-    template <>
-    path_data_item::rel_line_to get() const;
-    template <>
-    path_data_item::rel_line_to get(error_code& ec) const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{path_data_item::rel_line_to\{ vector_2d\{ _Data.point.x, _Data.point.y \} \}}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\remarks
-	If a non-throwing error occurs, this function returns a default constructed object of its specified return type.
-	
-	\pnum
-	\errors
-	\tcode{errc::operation_not_permitted} if \tcode{!_Has_data}.
-	
-	\pnum
-	\tcode{errc::invalid_argument} if \tcode{_Type != path_data_type::rel_line_to}.
-
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_data_item}!\idxcode{get}}
-\indexlibrary{\idxcode{get}!\idxcode{path_data_item}}
-\begin{itemdecl}
-    template <>
-    path_data_item::rel_move_to get() const;
-    template <>
-    path_data_item::rel_move_to get(error_code& ec) const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{path_data_item::rel_move_to\{ vector_2d\{ _Data.point.x, _Data.point.y \} \}}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\remarks
-	If a non-throwing error occurs, this function returns a default constructed object of its specified return type.
-	
-	\pnum
-	\errors
-	\tcode{errc::operation_not_permitted} if \tcode{!_Has_data}.
-	
-	\pnum
-	\tcode{errc::invalid_argument} if \tcode{_Type != path_data_type::rel_move_to}.
-
-\end{itemdescr}
+\pnum
+The specializations of the \tcode{path_data_item::get} member function template are specified at \ref{pathdataitem.get}.

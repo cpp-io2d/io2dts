@@ -1,18 +1,31 @@
 %!TEX root = io2d.tex
-\rSec0 [pathdataitem.closepath] {Class \tcode{close_path}}
+\rSec0 [pathdataitem.closepath] {Class \tcode{path_data_item::close_path}}
 
-\rSec1 [pathdataitem.closepath.synopsis] {\tcode{close_path} synopsis}
+\pnum
+\indexlibrary{\idxcode{path_data_item::close_path}}
+The class \tcode{path_data_item::close_path} describes an operation on a path geometry collection.
+
+\pnum
+If the current path geometry has a current point, this operation creates a line from the current point to the last-move-to point. It then starts a new path geometry and sets its current point and last-move-to point to the value of the previous path geometry's last-move-to point.
+
+\pnum
+If there is no current point, then this operation does nothing.
+\enternote
+Because this operation does nothing if there is no current point, there is no need to track whether or not a path geometry has a valid last-move-to point. This operation is the only operation that uses the last-move-to point and all operations that establish a current point for a path geometry also establish a valid last-move-to point for that path geometry.
+\exitnote
+
+\rSec1 [pathdataitem.closepath.synopsis] {\tcode{path_data_item::close_path} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class close_path {
+  class path_data_item::close_path : public path_data_item::path_data {
   public:
     // construct/copy/move/destroy:
     close_path() noexcept;
-    close_path(const close_path& other) noexcept;
-    close_path& operator=(const close_path& other) noexcept;
-    close_path(close_path&& other) noexcept;
-    close_path& operator=(close_path&& other) noexcept;
+    close_path(const close_path&) noexcept;
+    path_data_item::close_path& operator=(const close_path&) noexcept;
+    close_path(close_path&&) noexcept;
+    path_data_item::close_path& operator=(close_path&&) noexcept;
 
     // \ref{pathdataitem.closepath.observers}, observers:
     virtual path_data_type type() const noexcept override;
@@ -20,22 +33,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdataitem.closepath.intro] {\tcode{close_path} Description}
-
-\pnum
-\indexlibrary{\idxcode{close_path}}
-The class \tcode{close_path} describes an operation on a path geometry collection.
-
-\pnum
-If the current path geometry has a current point, this operation creates a line from the current point to the last-move-to point. It then starts a new path geometry and sets its current point and last-move-to point to the value of the previous path geometry's last-move-to point.
-
-\pnum
-If there is no current point when this operation is requested, then this operation does nothing.
-\enternote
-Because this operation does nothing if there is no current point, there is no need to track whether or not a path geometry has a valid last-move-to point. This operation is the only operation that uses the last-move-to point and all operations that establish a current point when no current point existed for a path geometry also establish a valid last-move-to point for that path geometry.
-\exitnote
-
-\rSec1 [pathdataitem.closepath.observers]{\tcode{close_path} observers}
+\rSec1 [pathdataitem.closepath.observers]{\tcode{path_data_item::close_path} observers}
 
 \indexlibrary{\idxcode{close_path}!\idxcode{type}}
 \indexlibrary{\idxcode{type}!\idxcode{close_path}}
@@ -46,5 +44,4 @@ Because this operation does nothing if there is no current point, there is no ne
 	\pnum
 	\returns
 	\tcode{path_data_type::close_path}.
-
 \end{itemdescr}

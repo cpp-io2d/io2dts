@@ -1,6 +1,18 @@
 %!TEX root = io2d.tex
 \rSec0 [path] {Class \tcode{path}}
 
+\pnum
+\indexlibrary{\idxcode{path}}
+The \tcode{path} class represents an immutable resource wrapper containing a path geometry graphics resource.
+
+\pnum
+When a \tcode{path} object is set on a \tcode{surface} object using 
+\tcode{surface::path}, the geometric paths represented by it can be 
+stroked or filled.
+
+\pnum
+A \tcode{path} object shall be usable with any \tcode{surface} or \tcode{surface}-derived object.
+
 \rSec1 [path.synopsis] {\tcode{path} synopsis}
 
 \begin{codeblock}
@@ -11,29 +23,15 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     path() = delete;
     explicit path(const path_factory& pb);
     path(const path_factory& pb, error_code& ec) noexcept;
-    path(const vector<path_data_item>& p);
+    explicit path(const vector<path_data_item>& p);
     path(const vector<path_data_item>& p, error_code& ec) noexcept;
-    path(const path& other) noexcept;
-    path& operator=(const path& other) noexcept;
-    path(path&& other) noexcept;
-    path& operator=(path&& other) noexcept;
+    path(const path&) noexcept;
+    path& operator=(const path&) noexcept;
+    path(path&&) noexcept;
+    path& operator=(path&&) noexcept;
   };
 } } } }
 \end{codeblock}
-
-\rSec1 [path.intro] {\tcode{path} Description}
-
-\pnum
-\indexlibrary{\idxcode{path}}
-The \tcode{path} class represents an immutable resource wrapper containing zero or more path geometries.
-
-\pnum
-When a \tcode{path} object is set on a \tcode{surface} object using 
-\tcode{surface::path}, the geometric paths represented by it can be 
-stroked or filled.
-
-\pnum
-A \tcode{path} object shall be usable with any \tcode{surface} or \tcode{surface}-derived object.
 
 \rSec1 [path.cons] {\tcode{path} constructors and assignment operators}
 
@@ -41,13 +39,13 @@ A \tcode{path} object shall be usable with any \tcode{surface} or \tcode{surface
 \begin{itemdecl}
     explicit path(const path_factory& pb);
     path(const path_factory& pb, error_code& ec) noexcept;
-    path(const vector<path_data_item>& p);
+    explicit path(const vector<path_data_item>& p);
     path(const vector<path_data_item>& p, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of class \tcode{path}. Implementations shall create native path geometries from the path geometries contained in \tcode{p} or \tcode{pb.data_ref()} as if they followed the procedure set forth in \ref{pathgeometries.processing}.
+	Constructs an object of class \tcode{path}. Implementations shall create a path geometry graphics resource from the path geometries contained in \tcode{p} or \tcode{pb.data_ref()} as if they followed the procedure set forth in \ref{pathgeometries.processing}.
 
 	\pnum
 	\throws

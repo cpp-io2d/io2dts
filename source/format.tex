@@ -4,27 +4,26 @@
 \rSec1 [format.summary] {\tcode{format} Summary}
 
 \pnum
-The \tcode{format} enum class describes the data format of the pixels of an 
-\tcode{image_surface}. See Table~\ref{tab:format.meanings} for 
+The \tcode{format} enum class indicates a visual data format. See Table~\ref{tab:format.meanings} for 
 the meaning of each \tcode{format} enumerator.
 
+%\pnum
+%A pixel is a value composed from one or more channels.
+%
+%\pnum
+%A \term{channel} is a visual data element that represents color data (red, green,
+%or blue) or transparency data (alpha). A pixel can be comprised of color data,
+%transparency data, or both color and transparency data.
+%
 \pnum
-A pixel is a value composed from one or more channels.
-
-\pnum
-A \term{channel} is a visual data element that represents color data (red, green,
-or blue) or transparency data (alpha). A pixel can be comprised of color data,
-transparency data, or both color and transparency data.
-
-\pnum
-Unless otherwise specified, a pixel shall be treated as an unsigned integral
+Unless otherwise specified, a visual data format shall be an unsigned integral
 value of the specified bit size in native-endian format.
 
-\pnum
-Unless otherwise specified, each channel of a pixel shall be treated as an 
-unsigned integral value of the specified bit size at the specified bit location
-within the pixel.
-
+%\pnum
+%Unless otherwise specified, each channel of a pixel shall be treated as an 
+%unsigned integral value of the specified bit size at the specified bit location
+%within the pixel.
+%
 \pnum
 A channel value of 0x0 means that there is no contribution from that channel. 
 As the channel value increases towards the maximum unsigned integral value 
@@ -32,7 +31,7 @@ representable by the number of bits of the channel, the contribution from that
 channel also increases, with the maximum value representing the maximum
 contribution from that channel.
 \enterexample
-Given a 5-bit red channel, a value of 0x0 means that the red channel does not 
+Given a 5-bit channel representing the color , a value of 0x0 means that the red channel does not 
 contribute any value towards the final color of the pixel. A value of 0x1F 
 means that the red channel makes its maximum contribution to the final color of 
 the pixel.

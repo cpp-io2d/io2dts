@@ -46,6 +46,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     double m11() const noexcept;
     double m20() const noexcept;
     double m21() const noexcept;
+    bool is_invertible const noexcept;
     double determinant() const;
     double determinant(error_code& ec) const noexcept;
     vector_2d transform_distance(const vector_2d& dist) const noexcept;
@@ -135,7 +136,6 @@ $
 	\pnum
 	\realnote
 	The resulting matrix is the identity matrix, which can also be obtained from \tcode{matrix_2d::init_identity()}.
-
 \end{itemdescr}
 
 \indexlibrary{\idxcode{matrix_2d}!constructor}
@@ -430,11 +430,7 @@ _M21 = inverseDet * adjugateM21;
 	
 	\pnum
 	\errors
-	\tcode{io2d_error::invalid_matrix} if \tcode{isnan(_M00) || isnan(_M01) || isnan(_M10) || isnan(_M11) || isnan(_M20) || isnan(_M21)}.
-
-	\tcode{io2d_error::invalid_matrix} if \tcode{determinant() == 0.0}.
-	
-	\tcode{io2d_error::invalid_matrix} if \tcode{!isfinite(determinant())}.
+	\tcode{io2d_error::invalid_matrix} if \tcode{this->is_invertible() == false}.
 	
 	\pnum
 	\remark
@@ -510,6 +506,30 @@ _M21 = inverseDet * adjugateM21;
 	\tcode{_M21}.
 \end{itemdescr}
 
+\indexlibrary{\idxcode{matrix_2d}!\idxcode{is_invertible}}
+\indexlibrary{\idxcode{is_invertible}!\idxcode{matrix_2d}}
+\begin{itemdecl}
+bool is_invertible const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{true} if all of the following are true:
+\begin{itemize}
+	\item \tcode{isfinite(_M00)}
+	\item \tcode{isfinite(_M01)}
+	\item \tcode{isfinite(_M10)}
+	\item \tcode{isfinite(_M11)}
+	\item \tcode{isfinite(_M20)}
+	\item \tcode{isfinite(_M21)}
+	\item \tcode{(_M00 * _M11 - _M01 * M10) != 0.0}
+\end{itemize}
+
+\pnum
+Otherwise returns \tcode{false}.
+\end{itemdescr}
+
+
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{determinant}}
 \indexlibrary{\idxcode{determinant}!\idxcode{matrix_2d}}
 \begin{itemdecl}
@@ -530,7 +550,7 @@ double determinant(error_code& ec) const noexcept;
 
 	\pnum
 	\errors
-	\tcode{io2d_error::invalid_matrix} if \tcode{isnan(_M00) || isnan(_M01) || isnan(_M10) || isnan(_M11) || isnan(_M20) || isnan(_M21)}.
+	\tcode{io2d_error::invalid_matrix} if \tcode{!isfinite(_M00) || !isfinite(_M01) || !isfinite(_M10) || !isfinite(_M11) || !isfinite(_M20) || !isfinite(_M21)}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{transform_distance}}

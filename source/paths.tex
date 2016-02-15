@@ -3,7 +3,13 @@
 \rSec0 [paths] {Paths}
 
 \pnum
-Paths are used... ***FIXME***
+Paths define geometric objects which can be stroked (Table~\ref{tab:surface.rendering.operations}), filled, masked, and used to define or modify a Clip Area (Table~\ref{tab:surface.state.listing}).
+
+\pnum
+Paths are created using a \tcode{path_factory} object.
+
+\pnum
+They provide vector graphics functionality and as such are particularly useful in situations where an application is intended to run on a variety of platforms whose output devices (\ref{displaysurface.intro}) span a large gamut of sizes, both physical and in terms of pixel dimensions.
 
 \addtocounter{SectionDepthBase}{1}
 \input{path-processing}
@@ -23,6 +29,7 @@ Paths are used... ***FIXME***
 \input{rel-curve-to}
 \input{rel-line-to}
 \input{rel-move-to}
+\input{path-data-item-get}
 \addtocounter{SectionDepthBase}{-1}
 \input{path}
 \input{path-factory}

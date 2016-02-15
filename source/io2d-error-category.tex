@@ -23,6 +23,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
   error_condition make_error_condition(
     experimental::io2d::io2d_error e) noexcept;
+  error_code make_error_code(experimental::io2d::io2d_error e) noexcept;
 }
 \end{codeblock}
 
@@ -134,11 +135,20 @@ non-member functions}
 
 \indexlibrary{\idxcode{make_error_condition}}
 \begin{itemdecl}
-  error_condition make_error_condition(experimental::io2d::io2d_error e) 
-    noexcept;
+error_condition make_error_condition(experimental::io2d::io2d_error e) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{error_condition(static_cast<int>(e), experimental::io2d::io2d_category());}.
+\pnum
+\returns
+\tcode{error_condition(static_cast<int>(e), experimental::io2d::io2d_category());}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{make_error_code}}
+\begin{itemdecl}
+error_code make_error_code(experimental::io2d::io2d_error e) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{error_code(static_cast<int>(e), experimental::io2d::io2d_category());}.
 \end{itemdescr}

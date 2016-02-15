@@ -20,10 +20,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       int width, int height);
     image_surface(vector<unsigned char>& data, experimental::io2d::format fmt,
       int width, int height, error_code& ec) noexcept;
-    image_surface(const surface& other, experimental::io2d::format fmt, int width,
-      int height);
-    image_surface(const surface& other, experimental::io2d::format fmt, int width,
-      int height, error_code& ec) noexcept;
     virtual ~image_surface();
     
     // \ref{imagesurface.modifiers}, modifiers:
@@ -45,43 +41,226 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \pnum
 \indexlibrary{\idxcode{image_surface}}
-The class \tcode{image_surface} describes 
+The class \tcode{image_surface} derives from the \tcode{surface} class and provides an interface to a raster graphics data graphics resource.
+
+\pnum
+\enternote
+Because of the functionality it provides and what it can be used for, it is expected that developers familiar with other graphics technologies will think of the \tcode{image_surface} class as being a form of \term{render target}. This is intentional, though this \documenttypename{} does not formally define or use that term to avoid any minor ambiguities and differences in its meaning between the various graphics technologies that do use it.
+\exitnote
 
 \rSec1 [imagesurface.cons] {\tcode{image_surface} constructors and assignment operators}
 
 \indexlibrary{\idxcode{image_surface}!constructor}
 \begin{itemdecl}
+image_surface(experimental::io2d::format fmt, int width, int height);
+image_surface(experimental::io2d::format fmt, int width, int height, 
+  error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{image_surface}.
-	
-	\pnum
-	\postconditions
-	
+\pnum
+\effects
+Constructs an object of type \tcode{image_surface}.
+
+\pnum
+\postconditions
+\tcode{this->format() == fmt}.
+
+\pnum
+\tcode{this->width() == width}.
+
+\pnum
+\tcode{this->height() == height}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\remarks
+The result of calling \tcode{this->data()} shall be \tcode{0} for all bits that are defined by the specification of that function.
+\enternote
+Given implementation-specific details, it is possible that not all bits of the \tcode{image_surface} object's \underlyingimagesurface will be used to determine its pixel data. The values of those unused bits are irrelevant and the above paragraph makes it clear that only the bits that matter in determining pixel data have defined values, which are specified to have the same value as the bits of \tcode{data}; the value of the other bits, if any, do not have any defined value.
+\exitnote
+
+\pnum
+\errors
+The errors, if any, produced by this function are \impldef{image_surface!constructor}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{image_surface}!constructor}
+\begin{itemdecl}
+image_surface(vector<unsigned char>& data, experimental::io2d::format fmt,
+  int width, int height);
+image_surface(vector<unsigned char>& data, experimental::io2d::format fmt,
+  int width, int height, error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{image_surface}.
+
+\pnum
+\postconditions
+\tcode{this->format() == fmt}.
+
+\pnum
+\tcode{this->width() == width}.
+
+\pnum
+\tcode{this->height() == height}.
+
+\pnum
+\tcode{this->data() == data} for all bits that are defined by the specification of that function.
+\enternote
+Given implementation-specific details, it is possible that not all bits of the \tcode{image_surface} object's \underlyingimagesurface will be used to determine its pixel data. The values of those unused bits are irrelevant and the above paragraph makes it clear that only the bits that matter in determining pixel data have defined values, which are specified to have the same value as the bits of \tcode{data}; the value of the other bits, if any, do not have any defined value.
+\exitnote
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+\tcode{io2d_error::invalid_stride} if \tcode{format_stride_for_width(fmt, width) * height != data.size()}.
+
+\pnum
+Other errors, if any, produced by this function are \impldef{image_surface!constructor}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{image_surface}!destructor}
+\begin{itemdecl}
+virtual ~image_surface();
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Destroys an object of type \tcode{image_surface}.
 \end{itemdescr}
 
 \rSec1 [imagesurface.modifiers] {\tcode{image_surface} modifiers}
 
-\indexlibrary{\idxcode{image_surface}!\idxcode{}}
-\indexlibrary{\idxcode{}!\idxcode{image_surface}}
+\indexlibrary{\idxcode{image_surface}!\idxcode{data}}
+\indexlibrary{\idxcode{data}!\idxcode{image_surface}}
 \begin{itemdecl}
+void data(const vector<unsigned char>& data);
+void data(const vector<unsigned char>& data, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\postconditions
-	
+\pnum
+\effects
+Any pending rendering and composing operations (\ref{surface.rendering}) shall be performed.
+
+\pnum
+\postconditions
+\tcode{this->data() == data} for all bits that are defined by the specification of that function.
+\enternote
+Given implementation-specific details, it is possible that not all bits of the \tcode{image_surface} object's \underlyingimagesurface will be used to determine its pixel data. The values of those unused bits are irrelevant and the above paragraph makes it clear that only the bits that matter in determining pixel data have defined values, which are specified to have the same value as the bits of \tcode{data}; the value of the other bits, if any, do not have any defined value.
+\exitnote
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+\tcode{io2d_error::invalid_stride} if \tcode{format_stride_for_width(fmt, width) * height != data.size()}.
+
+\pnum
+Other errors, if any, produced by this function are \impldef{image_surface!data}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{image_surface}!\idxcode{data}}
+\indexlibrary{\idxcode{data}!\idxcode{image_surface}}
+\begin{itemdecl}
+vector<unsigned char> data();
+vector<unsigned char> data(error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Any pending rendering and composing operations (\ref{surface.rendering}) shall be performed.
+
+\pnum
+\returns
+A \tcode{vector<unsigned char>} containing the byte values of the pixel data of the \underlyingimagesurface. Where the result of \tcode{this->format()} is a \tcode{format} value which denotes a multi-byte pixel format, the pixel data shall be in native-endian order.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
+
+\pnum
+\realnotes
+This would normally be an observer function but the requirement that "[a]ny pending rendering and composing operations (\ref{surface.rendering}) shall be performed" means that calling this function might modify the \underlyingimagesurface. As such this function cannot be marked \tcode{const} and thus cannot strictly be classified as an observer function.
+
+\pnum
+Developers using this function are cautioned that in many graphics technologies that implementers might use to implement this functionality, the effects of this function will typically cause a large performance degradation and as such it should be used with care and avoided where possible.
 \end{itemdescr}
 
 \rSec1 [imagesurface.observers] {\tcode{image_surface} observers}
 
-\indexlibrary{\idxcode{image_surface}!\idxcode{}}
-\indexlibrary{\idxcode{}!\idxcode{image_surface}}
+\indexlibrary{\idxcode{image_surface}!\idxcode{format}}
+\indexlibrary{\idxcode{format}!\idxcode{image_surface}}
 \begin{itemdecl}
+experimental::io2d::format format() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
+\pnum
+\returns
+The pixel format of the \tcode{image_surface} object.
 
+\pnum
+\remarks
+If the \tcode{image_surface} object is invalid, this function shall return \tcode{experimental::io2d::format::invalid}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{image_surface}!\idxcode{width}}
+\indexlibrary{\idxcode{width}!\idxcode{image_surface}}
+\begin{itemdecl}
+int width() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The number of pixels per horizontal line of the \tcode{image_surface} object.
+
+\pnum
+\remarks
+This function shall return the value \tcode{0} if \tcode{this->format() == experimental::io2d::format::unknown || this->format() == experimental::io2d::format::invalid}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{image_surface}!\idxcode{height}}
+\indexlibrary{\idxcode{height}!\idxcode{image_surface}}
+\begin{itemdecl}
+int height() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The number of horizontal lines of pixels in the \tcode{image_surface} object.
+
+\pnum
+\remarks
+This function shall return the value \tcode{0} if \tcode{this->format() == experimental::io2d::format::unknown || this->format() == experimental::io2d::format::invalid}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{image_surface}!\idxcode{stride}}
+\indexlibrary{\idxcode{stride}!\idxcode{image_surface}}
+\begin{itemdecl}
+int stride() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The length, in bytes, of a horizontal line of the \tcode{image_surface} object.
+\enternote
+This value is at least as large as the width in pixels of a horizontal line multiplied by the number of bytes per pixel but may be larger as a result of padding.
+\exitnote
+
+\pnum
+\remarks
+This function shall return the value \tcode{0} if \tcode{this->format() == experimental::io2d::format::unknown || this->format() == experimental::io2d::format::invalid}.
 \end{itemdescr}

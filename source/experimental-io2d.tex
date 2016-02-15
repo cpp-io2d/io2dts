@@ -5,7 +5,13 @@
 \indextext{2D graphics!synopsis|(}
 \begin{codeblock}
 
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std { namespace experimental {
+  // From C++ Extensions for Library Fundamentals, N4335
+  struct nullopt_t;
+  constexpr nullopt_t nullopt{ @\impdef@ };
+
+  namespace io2d { inline namespace v1 {
+
   typedef tuple<vector<double>, double> dashes;
 
   enum class io2d_error;
@@ -58,52 +64,74 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   bool operator!=(const matrix_2d& lhs, const matrix_2d& rhs);
 
   class path_data_item;
+  class path_data_item::arc;
+  class path_data_item::arc_negative;
+  class path_data_item::change_matrix;
+  class path_data_item::change_origin;
+  class path_data_item::close_path;
+  class path_data_item::curve_to;
+  class path_data_item::line_to;
+  class path_data_item::move_to;
+  class path_data_item::new_sub_path;
+  class path_data_item::path_data;
+  class path_data_item::rel_curve_to;
+  class path_data_item::rel_line_to;
+  class path_data_item::rel_move_to;
 
   class path;
   class path_factory;
   
   class device;
 
-  class font_options_factory;
   class font_options;
 
   class font_face;
   class simple_font_face;
 
-  class scaled_font;
-
   class brush;
   class solid_color_brush_factory;
   class linear_brush_factory;
   class radial_brush_factory;
-  class mesh_brush_factory;
   class surface_brush_factory;
   
   class surface;
   class image_surface;
   class display_surface;
+  class mapped_surface;
   
-  int format_stride_for_width(format fmt, int width);
-  display_surface make_display_surface(int pw, int ph, format pf,
+  int format_stride_for_width(format format, int width) noexcept;
+  display_surface make_display_surface(int preferredWidth,
+    int preferredHeight, format preferredFormat,
     scaling scl = scaling::letterbox);
-  image_surface make_image_surface(format fmt, int width, int height);
+  display_surface make_display_surface(int preferredWidth,
+    int preferredHeight, format preferredFormat, error_code& ec,
+    scaling scl = scaling::letterbox) noexcept;
+  display_surface make_display_surface(int preferredWidth,
+    int preferredHeight, format preferredFormat, int preferredDisplayWidth, 
+    int preferredDisplayHeight, scaling scl = scaling::letterbox);
+  display_surface make_display_surface(int preferredWidth,
+    int preferredHeight, format preferredFormat, int preferredDisplayWidth, 
+    int preferredDisplayHeight, ::std::error_code& ec,
+    scaling scl = scaling::letterbox) noexcept;
+  image_surface make_image_surface(format format, int width, int height);
+  image_surface make_image_surface(format format, int width, int height, 
+    error_code& ec) noexcept;
 } } } }
 
 namespace std {
-	template<>
-	struct is_error_condition_enum<experimental::io2d::io2d_error>
-		: public std::true_type{ };
+  template<>
+  struct is_error_condition_enum<experimental::io2d::io2d_error>
+    : public std::true_type{ };
 
-	template<>
-	struct is_error_code_enum<@\impdef@>
-		: public true_type{ }; // \expos
+  template<>
+  struct is_error_code_enum<@\impdef@>
+    : public true_type{ }; // \expos
 
-	std::error_condition make_error_condition(
-	  experimental::io2d::io2d_error e) noexcept;
+  std::error_condition make_error_condition(experimental::io2d::io2d_error e) 
+    noexcept;
 
-	std::error_code make_error_code(
-	  @\impdef@ e) noexcept; // \expos
-} // namespace std
+  std::error_code make_error_code(experimental::io2d::io2d_error e) noexcept;
+}
 
 \end{codeblock}
 \indextext{2D graphics!synopsis|)}%

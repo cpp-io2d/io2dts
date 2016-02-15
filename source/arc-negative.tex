@@ -32,18 +32,18 @@ The current point is set be to the arc's end point at the end of this operation.
 \pnum
 For purposes of determining whether a point is on the arc, if the value returned by \tcode{*this.angle_2()} is greater than the value returned by \tcode{*this.angle_1()} then the value returned by \tcode{*this.angle_2()} shall be continuously decremented by $2\pi$ until it is less than the value returned by \tcode{*this.angle_1()}.
 
-\rSec1 [pathdataitem.arcnegative.synopsis] {\tcode{arc_negative} synopsis}
+\rSec1 [pathdataitem.arcnegative.synopsis] {\tcode{path_data_item::arc_negative} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class arc_negative : public path_data {
+  class path_data_item::arc_negative : public path_data_item::path_data {
   public:
     // \ref{pathdataitem.arcnegative.cons}, construct/copy/move/destroy:
     arc_negative() noexcept;
-    arc_negative(const arc_negative& other) noexcept;
-    arc_negative& operator=(const arc_negative& other) noexcept;
-    arc_negative(arc_negative&& other) noexcept;
-    arc_negative& operator=(arc_negative&& other) noexcept;
+    arc_negative(const arc_negative&) noexcept;
+    path_data_item::arc_negative& operator=(const arc_negative&) noexcept;
+    arc_negative(arc_negative&&) noexcept;
+    path_data_item::arc_negative& operator=(arc_negative&&) noexcept;
     arc_negative(const vector_2d& ctr, double rad, double angle1,
       double angle2) noexcept;
 
@@ -69,16 +69,16 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdataitem.arcnegative.cons] {\tcode{arc_negative} constructors and assignment operators}
+\rSec1 [pathdataitem.arcnegative.cons] {\tcode{path_data_item::arc_negative} constructors and assignment operators}
 
-\indexlibrary{\idxcode{arc_negative}!constructor}
+\indexlibrary{\idxcode{path_data_item::arc_negative}!constructor}
 \begin{itemdecl}
     arc_negative() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{arc_negative}.
+	Constructs an object of type \tcode{path_data_item::arc_negative}.
 	
 	\pnum
 	\postconditions
@@ -89,10 +89,9 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Angle_1 == 0.0}.
 
 	\tcode{_Angle_2 == 0.0}.
-
 \end{itemdescr}
 
-\indexlibrary{\idxcode{arc_negative}!constructor}
+\indexlibrary{\idxcode{path_data_item::arc_negative}!constructor}
 \begin{itemdecl}
     arc_negative(const vector_2d& ctr, double rad, double angle1,
       double angle2) noexcept;
@@ -100,7 +99,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{arc_negative}.
+	Constructs an object of type \tcode{path_data_item::arc_negative}.
 	
 	\pnum
 	\postconditions
@@ -111,13 +110,12 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Angle_1 == angle1}.
 
 	\tcode{_Angle_2 == angle2}.
-
 \end{itemdescr}
 
-\rSec1 [pathdataitem.arcnegative.modifiers]{\tcode{arc_negative} modifiers}
+\rSec1 [pathdataitem.arcnegative.modifiers]{\tcode{path_data_item::arc_negative} modifiers}
 
-\indexlibrary{\idxcode{arc_negative}!\idxcode{center}}
-\indexlibrary{\idxcode{center}!\idxcode{arc_negative}}
+\indexlibrary{\idxcode{path_data_item::arc_negative}!\idxcode{center}}
+\indexlibrary{\idxcode{center}!\idxcode{path_data_item::arc_negative}}
 \begin{itemdecl}
     void center(const vector_2d& value) noexcept;
 \end{itemdecl}
@@ -125,11 +123,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\pnum
 	\postconditions
 	\tcode{_Center == value}.
-	
 \end{itemdescr}
 
-\indexlibrary{\idxcode{arc_negative}!\idxcode{radius}}
-\indexlibrary{\idxcode{radius}!\idxcode{arc_negative}}
+\indexlibrary{\idxcode{path_data_item::arc_negative}!\idxcode{radius}}
+\indexlibrary{\idxcode{radius}!\idxcode{path_data_item::arc_negative}}
 \begin{itemdecl}
     void radius(double value) noexcept;
 \end{itemdecl}
@@ -137,11 +134,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\pnum
 	\postconditions
 	\tcode{_Radius == value}.
-	
 \end{itemdescr}
 
-\indexlibrary{\idxcode{arc_negative}!\idxcode{angle_1}}
-\indexlibrary{\idxcode{angle_1}!\idxcode{arc_negative}}
+\indexlibrary{\idxcode{path_data_item::arc_negative}!\idxcode{angle_1}}
+\indexlibrary{\idxcode{angle_1}!\idxcode{path_data_item::arc_negative}}
 \begin{itemdecl}
     void angle_1(double value) noexcept;
 \end{itemdecl}
@@ -149,11 +145,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\pnum
 	\postconditions
 	\tcode{_Angle_1 == value}.
-	
 \end{itemdescr}
 
-\indexlibrary{\idxcode{arc_negative}!\idxcode{angle_2}}
-\indexlibrary{\idxcode{angle_2}!\idxcode{arc_negative}}
+\indexlibrary{\idxcode{path_data_item::arc_negative}!\idxcode{angle_2}}
+\indexlibrary{\idxcode{angle_2}!\idxcode{path_data_item::arc_negative}}
 \begin{itemdecl}
     void angle_2(double value) noexcept;
 \end{itemdecl}
@@ -161,13 +156,12 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\pnum
 	\postconditions
 	\tcode{_Angle_2 == value}.
-	
 \end{itemdescr}
 
-\rSec1 [pathdataitem.arcnegative.observers]{\tcode{arc_negative} observers}
+\rSec1 [pathdataitem.arcnegative.observers]{\tcode{path_data_item::arc_negative} observers}
 
-\indexlibrary{\idxcode{arc_negative}!\idxcode{center}}
-\indexlibrary{\idxcode{center}!\idxcode{arc_negative}}
+\indexlibrary{\idxcode{path_data_item::arc_negative}!\idxcode{center}}
+\indexlibrary{\idxcode{center}!\idxcode{path_data_item::arc_negative}}
 \begin{itemdecl}
     vector_2d center() const noexcept;
 \end{itemdecl}
@@ -175,11 +169,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\pnum
 	\returns
 	\tcode{_Center}.
-
 \end{itemdescr}
 
-\indexlibrary{\idxcode{arc_negative}!\idxcode{radius}}
-\indexlibrary{\idxcode{radius}!\idxcode{arc_negative}}
+\indexlibrary{\idxcode{path_data_item::arc_negative}!\idxcode{radius}}
+\indexlibrary{\idxcode{radius}!\idxcode{path_data_item::arc_negative}}
 \begin{itemdecl}
     double radius() const noexcept;
 \end{itemdecl}
@@ -187,11 +180,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\pnum
 	\returns
 	\tcode{_Radius}.
-
 \end{itemdescr}
 
-\indexlibrary{\idxcode{arc_negative}!\idxcode{angle_1}}
-\indexlibrary{\idxcode{angle_1}!\idxcode{arc_negative}}
+\indexlibrary{\idxcode{path_data_item::arc_negative}!\idxcode{angle_1}}
+\indexlibrary{\idxcode{angle_1}!\idxcode{path_data_item::arc_negative}}
 \begin{itemdecl}
     double angle_1() const noexcept;
 \end{itemdecl}
@@ -199,11 +191,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\pnum
 	\returns
 	\tcode{_Angle_1}.
-
 \end{itemdescr}
 
-\indexlibrary{\idxcode{arc_negative}!\idxcode{angle_2}}
-\indexlibrary{\idxcode{angle_2}!\idxcode{arc_negative}}
+\indexlibrary{\idxcode{path_data_item::arc_negative}!\idxcode{angle_2}}
+\indexlibrary{\idxcode{angle_2}!\idxcode{path_data_item::arc_negative}}
 \begin{itemdecl}
     double angle_2() const noexcept;
 \end{itemdecl}
@@ -211,11 +202,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\pnum
 	\returns
 	\tcode{_Angle_2}.
-
 \end{itemdescr}
 
-\indexlibrary{\idxcode{arc_negative}!\idxcode{type}}
-\indexlibrary{\idxcode{type}!\idxcode{arc_negative}}
+\indexlibrary{\idxcode{path_data_item::arc_negative}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{path_data_item::arc_negative}}
 \begin{itemdecl}
     virtual path_data_type type() const noexcept override;
 \end{itemdecl}
@@ -223,5 +213,4 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\pnum
 	\returns
 	\tcode{path_data_type::arc_negative}.
-
 \end{itemdescr}

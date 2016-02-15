@@ -1,19 +1,29 @@
 %!TEX root = io2d.tex
-\rSec0 [pathdataitem.rellineto] {Class \tcode{rel_line_to}}
+\rSec0 [pathdataitem.rellineto] {Class \tcode{path_data_item::rel_line_to}}
 
-\rSec1 [pathdataitem.rellineto.synopsis] {\tcode{rel_line_to} synopsis}
+\pnum
+\indexlibrary{\idxcode{path_data_item::rel_line_to}}
+The class \tcode{path_data_item::rel_line_to} describes an operation on a path geometry collection.
+
+\pnum
+This operation creates a line from the current point to the point that is the sum of the current point and the point returned by \tcode{*this.to()}. It then sets current point to be the sum of the current point and the point returned by \tcode{*this.to()}.
+
+\pnum
+If the current path geometry does not have a current point when this operation is requested the path geometry collection is malformed.
+
+\rSec1 [pathdataitem.rellineto.synopsis] {\tcode{path_data_item::rel_line_to} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class rel_line_to : public path_data {
+  class path_data_item::rel_line_to : public path_data_item::path_data {
   public:
     // \ref{pathdataitem.rellineto.cons}, construct/copy/move/destroy:
-    line_to() noexcept;
-    line_to(const line_to& other) noexcept;
-    line_to& operator=(const line_to& other) noexcept;
-    line_to(line_to&& other) noexcept;
-    line_to& operator=(line_to&& other) noexcept;
-    line_to(const vector_2d& pt) noexcept;
+    rel_line_to() noexcept;
+    rel_line_to(const line_to&) noexcept;
+    path_data_item::rel_line_to& operator=(const line_to&) noexcept;
+    rel_line_to(line_to&&) noexcept;
+    path_data_item::rel_line_to& operator=(line_to&&) noexcept;
+    explicit rel_line_to(const vector_2d& pt) noexcept;
 
     // \ref{pathdataitem.rellineto.modifiers}, modifiers:
     void to(const vector_2d& pt) noexcept;
@@ -28,52 +38,40 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdataitem.rellineto.intro] {\tcode{rel_line_to} Description}
+\rSec1 [pathdataitem.rellineto.cons] {\tcode{path_data_item::rel_line_to} constructors and assignment operators}
 
-\pnum
-\indexlibrary{\idxcode{rel_line_to}}
-The class \tcode{rel_line_to} describes an operation on a path geometry collection.
-
-\pnum
-This operation creates a line from the current point to the point that is the sum of the current point and the point returned by \tcode{*this.to()}. It then sets current point to be the sum of the current point and the point returned by \tcode{*this.to()}.
-
-\pnum
-If the current path geometry does not have a current point when this operation is requested the path geometry collection is malformed.
-
-\rSec1 [pathdataitem.rellineto.cons] {\tcode{rel_line_to} constructors and assignment operators}
-
-\indexlibrary{\idxcode{rel_line_to}!constructor}
+\indexlibrary{\idxcode{path_data_item::rel_line_to}!constructor}
 \begin{itemdecl}
     rel_line_to() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{rel_line_to}.
+	Constructs an object of type \tcode{path_data_item::rel_line_to}.
 	
 	\pnum
 	\postconditions
 	\tcode{_Data == vector_2d(0.0, 0.0)}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rel_line_to}!constructor}
+\indexlibrary{\idxcode{path_data_item::rel_line_to}!constructor}
 \begin{itemdecl}
-    rel_line_to(const vector_2d& pt) noexcept;
+    explicit rel_line_to(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{rel_line_to}.
+	Constructs an object of type \tcode{path_data_item::rel_line_to}.
 	
 	\pnum
 	\postconditions
 	\tcode{_Data == pt}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.rellineto.modifiers]{\tcode{rel_line_to} modifiers}
+\rSec1 [pathdataitem.rellineto.modifiers]{\tcode{path_data_item::rel_line_to} modifiers}
 
-\indexlibrary{\idxcode{rel_line_to}!\idxcode{to}}
-\indexlibrary{\idxcode{to}!\idxcode{rel_line_to}}
+\indexlibrary{\idxcode{path_data_item::rel_line_to}!\idxcode{to}}
+\indexlibrary{\idxcode{to}!\idxcode{path_data_item::rel_line_to}}
 \begin{itemdecl}
     void to(const vector_2d& pt) noexcept;
 \end{itemdecl}
@@ -81,13 +79,12 @@ If the current path geometry does not have a current point when this operation i
 	\pnum
 	\postconditions
 	\tcode{_Data == pt}.
-	
 \end{itemdescr}
 
-\rSec1 [pathdataitem.rellineto.observers]{\tcode{rel_line_to} observers}
+\rSec1 [pathdataitem.rellineto.observers]{\tcode{path_data_item::rel_line_to} observers}
 
-\indexlibrary{\idxcode{rel_line_to}!\idxcode{to}}
-\indexlibrary{\idxcode{to}!\idxcode{rel_line_to}}
+\indexlibrary{\idxcode{path_data_item::rel_line_to}!\idxcode{to}}
+\indexlibrary{\idxcode{to}!\idxcode{path_data_item::rel_line_to}}
 \begin{itemdecl}
     vector_2d to() const noexcept;
 \end{itemdecl}
@@ -95,11 +92,10 @@ If the current path geometry does not have a current point when this operation i
 	\pnum
 	\returns
 	\tcode{_Data}.
-
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rel_line_to}!\idxcode{type}}
-\indexlibrary{\idxcode{type}!\idxcode{rel_line_to}}
+\indexlibrary{\idxcode{path_data_item::rel_line_to}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{path_data_item::rel_line_to}}
 \begin{itemdecl}
     virtual path_data_type type() const noexcept override;
 \end{itemdecl}
@@ -107,5 +103,4 @@ If the current path geometry does not have a current point when this operation i
 	\pnum
 	\returns
 	\tcode{path_data_type::rel_line_to}.
-
 \end{itemdescr}

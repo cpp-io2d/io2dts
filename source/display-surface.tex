@@ -40,12 +40,9 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     virtual void restore() override;
     virtual void restore(error_code& ec) noexcept override;
     
-    void draw_fn(const function<void(display_surface& sfc)>& fn);
-    void draw_fn(const function<void(display_surface& sfc)>& fn,
-      error_code& ec) noexcept;
-    void size_change_fn(const function<void(display_surface& sfc)>& fn);
-    void size_change_fn(const function<void(display_surface& sfc)>& fn,
-      error_code& ec) noexcept;
+    void draw_callback(const function<void(display_surface& sfc)>& fn) noexcept;
+    void size_change_callback(const function<void(display_surface& sfc)>& fn)
+      noexcept;
     void width(int w);
     void width(int w, error_code& ec) noexcept;
     void height(int h);
@@ -59,17 +56,19 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void display_dimensions(int dw, int dh);
     void display_dimensions(int dw, int dh, error_code& ec) noexcept;
     void scaling(experimental::io2d::scaling scl) noexcept;
-    void user_scaling_fn(const function<experimental::io2d::rectangle(
-      const display_surface&, bool&)>& fn);
-    void user_scaling_fn(const function<experimental::io2d::rectangle(
-      const display_surface&, bool&)>& fn, error_code& ec) noexcept;
-    void reset_letterbox_brush() noexcept;
+    void user_scaling_callback(const function<experimental::io2d::rectangle(
+      const display_surface&, bool&)>& fn) noexcept;
+    void letterbox_brush(experimental::nullopt_t) noexcept;
     void letterbox_brush(const rgba_color& c);
     void letterbox_brush(const rgba_color& c, error_code& ec) noexcept;
     void letterbox_brush(const experimental::io2d::brush& b);
-    void letterbox_brush(const experimental::io2d::brush& b, error_code& ec) noexcept;
-    int join();
-    int join(error_code& ec);
+    void letterbox_brush(const experimental::io2d::brush& b, error_code& ec) 
+      noexcept;
+    void auto_clear(bool val) noexcept;
+    int show();
+    int show(error_code& ec);
+    void exit_show(int milliseconds);
+    void exit_show(int milliseconds, error_code& ec);
     
     // \ref{displaysurface.observers}, observers:
     experimental::io2d::format format() const noexcept;
@@ -80,24 +79,12 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     tuple<int, int> dimensions() const noexcept;
     tuple<int, int> display_dimensions() const noexcept;
     experimental::io2d::scaling scaling() const noexcept;
-    const function<experimental::io2d::rectangle(const display_surface&,
-      bool&)>& user_scaling_fn() const noexcept;
+    function<experimental::io2d::rectangle(const display_surface&,
+      bool&)> user_scaling_callback() const;
+    function<experimental::io2d::rectangle(const display_surface&,
+      bool&)> user_scaling_callback(error_code& ec) const noexcept;
     experimental::io2d::brush letterbox_brush() const noexcept;
-
-  private:
-    experimental::io2d::brush _Default_brush;             // \expos
-    experimental::io2d::scaling _Scaling;                 // \expos
-    int _Width;                                           // \expos
-    int _Height;                                          // \expos
-    int _Display_width;                                   // \expos
-    int _Display_height;                                  // \expos
-    function<void(display_surface& sfc)> _Draw_fn;        // \expos
-    function<void(display_surface& sfc)> _Size_change_fn; // \expos
-    function<experimental::io2d::rectangle(const display_surface&, bool&)> 
-      _User_scaling_fn;                                   // \expos
-    experimental::io2d::brush _Letterbox_brush;           // \expos    
-    unique_ptr<@\impdef@> _Native_surface;   // \expos
-    unique_ptr<@\impdef@> _Native_context;   // \expos
+    bool auto_clear() const noexcept;
   };
 } } } }
 \end{codeblock}
@@ -106,7 +93,119 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \pnum
 \indexlibrary{\idxcode{display_surface}}
-The class \tcode{display_surface} describes .
+The class \tcode{display_surface} derives from the \tcode{surface} class and provides an interface to a raster graphics data graphics resource called the \tcode{Back Buffer} and to a second raster graphics data graphics resource called the \tcode{Display Buffer}.
+
+\pnum
+The pixel data of the Display Buffer can never be accessed by the user except through a native handle, if one is provided. As such, its pixel format need not equate to any of the pixel formats described by the \tcode{experimental::io2d::format} enumerators. This is meant to give implementors more flexibility in trying to display the pixels of the Back Buffer in a way that is visually as close as possible to the colors of those pixels.
+
+\pnum
+The Draw Callback (Table~\ref{tab:displaysurface.state.listing}) is called in a continous loop in order to dynamically update the pixel content of the Back Buffer.
+
+\pnum
+After each execution of the Draw Callback, the contents of the Back Buffer are transferred using sampling to the Display Buffer. The Display Buffer is then shown to the user via the \term{output device}.
+
+\pnum
+What constitutes an output device is \impldef{output device}, with the sole constraint being that an output device shall allow the user to see the dynamically-updated contents of the Display Buffer.
+
+\pnum
+Implementations need not support the simultaneous existence of multiple \tcode{display_surface} objects.
+
+\pnum
+All functions inherited from \tcode{surface} that operate on its \underlyingsurface shall operate on the Back Buffer.
+
+\rSec1 [displaysurface.state] {\tcode{display_surface} state}
+
+\pnum
+Table~Table~\ref{tab:displaysurface.state.listing} specifies the name, type, function, and default value for each item of a display surface's observable state.
+
+\pnum
+Because the \tcode{display_surface} class publicly derives from the \tcode{surface} class, the observable state of a display surface also includes the observable state of a surface, as specified at \ref{surface.state.default}.
+
+\begin{libreqtab4b}
+	{Display surface observable state}
+	{tab:displaysurface.state.listing}
+	\\ \topline
+	\lhdr{Name}   &   \chdr{Type}  &   \chdr{Function}  &   \rhdr{Default value}       \\ \capsep
+	\endfirsthead
+	\continuedcaption\\
+	\hline
+	\lhdr{Name}   &   \chdr{Type}  &   \chdr{Function}  &   \rhdr{Default value}       \\ \capsep
+	\endhead
+	
+	\term{Letterbox Brush} &
+	\tcode{brush} &
+	This is the brush that shall be used as specified by \tcode{scaling::letterbox} (Table~\ref{tab:scaling.meanings}) &
+	\tcode{brush\{ \{ rgba_color::black() \} \}} \\ \rowsep
+	
+	\term{Scaling Type} &
+	\tcode{scaling} &
+	When the User Scaling Callback is equal to its default value, this is the type of scaling that shall be used when transferring the Back Buffer to the Display Buffer &
+	\tcode{antialias::default_antialias}\\ \rowsep
+	
+	\term{Draw Width} &
+	\tcode{int} &
+	The width in pixels of the Back Buffer. The minimum value is \tcode{1}. The maximum value is \unspecnorm. Because users can only request a preferred value for the Draw Width when setting and altering it, the maximum value may be a run-time determined value. If the preferred Draw Width exceeds the maximum value, then if a preferred Draw Height has also been supplied then implementations should provide a Back Buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the preferred Draw Width and the preferred Draw Height otherwise implementations should provide a Back Buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the preferred Draw Width and the current Draw Height &
+	\textit{N/A}
+	\enternote
+	It is impossible to create a \tcode{display_surface} object without providing a preferred Draw Width value; as such a default value cannot exist.
+	\exitnote \\ \rowsep
+	
+	\term{Draw Height} &
+	\tcode{int} &
+	The height in pixels of the Back Buffer. The minimum value is \tcode{1}. The maximum value is \unspecnorm. Because users can only request a preferred value for the Draw Height when setting and altering it, the maximum value may be a run-time determined value. If the preferred Draw Height exceeds the maximum value, then if a preferred Draw Width has also been supplied then implementations should provide a Back Buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the preferred Draw Width and the preferred Draw Height otherwise implementations should provide a Back Buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the current Draw Width and the preferred Draw Height &
+	\textit{N/A}
+	\enternote
+	It is impossible to create a \tcode{display_surface} object without providing a preferred Draw Height value; as such a default value cannot exist.
+	\exitnote \\ \rowsep
+	
+	\term{Draw Format} &
+	\tcode{experimental::io2d::format} &
+	The pixel format of the Back Buffer. When a \tcode{display_surface} object is created, a preferred pixel format value is provided. If the implementation does not support the preferred pixel format value as the value of Draw Format, the resulting value of Draw Format is \impldef{display_surface!unsupported Draw Format} &
+	\textit{N/A}
+	\enternote
+	It is impossible to create a \tcode{display_surface} object without providing a preferred Draw Format value; as such a default value cannot exist.
+	\exitnote \\ \rowsep
+	
+	\term{Display Width} &
+	\tcode{int} &
+	The width in pixels of the Display Buffer. The minimum value is \unspecnorm. The maximum value is \unspecnorm. Because users can only request a preferred value for the Display Width when setting and altering it, both the minimum value and the maximum value may be run-time determined values. If the preferred Display Width is not within the range between the minimum value and the maximum value, inclusive, then if a preferred Display Height has also been supplied then implementations should provide a Display Buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the preferred Display Width and the preferred Display Height otherwise implementations should provide a Display Buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the preferred Display Width and the current Display Height &
+	\textit{N/A}
+	\enternote
+	It is impossible to create a \tcode{display_surface} object without providing a preferred Display Width value since in the absence of an explicit Display Width argument the mandatory preferred Draw Width argument is used as the preferred Display Width; as such a default value cannot exist.
+	\exitnote \\ \rowsep
+	
+	\term{Display Height} &
+	\tcode{int} &
+	The height in pixels of the Display Buffer. The minimum value is \unspecnorm. The maximum value is \unspecnorm. Because users can only request a preferred value for the Display Height when setting and altering it, both the minimum value and the maximum value may be run-time determined values. If the preferred Display Height is not within the range between the minimum value and the maximum value, inclusive, then if a preferred Display Width has also been supplied then implementations should provide a Display Buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the preferred Display Width and the preferred Display Height otherwise implementations should provide a Display Buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the current Display Width and the preferred Display Height &
+	\textit{N/A}
+	\enternote
+	It is impossible to create a \tcode{display_surface} object without providing a preferred Display Height value since in the absence of an explicit Display Height argument the mandatory preferred Draw Height argument is used as the preferred Display Height; as such a default value cannot exist.
+	\exitnote \\ \rowsep
+	
+	\term{Draw Callback} &
+	\tcode{function<void(display_surface\&)>} &
+	This function shall be called in a continuous loop when \tcode{display_surface::show} is executing. It is used to draw to the Back Buffer, which in turn results in the display of the drawn content to the user &
+	\tcode{nullptr} \\ \rowsep
+	
+	\term{Size Change Callback} &
+	\tcode{function<void(display_surface\&)>} &
+	If it exists, this function shall be called whenever the Display Buffer has been resized. Neither the Display Width nor the Display Height shall be changed by the Size Change Callback; no diagnostic is required
+	\enternote
+	This means that there has been a change to the Display Width, Display Height, or both. Its intent is to allow the user the opportunity to change other observable state, such as the Draw Width, Draw Height, or Scaling Type, in reaction to the change.
+	\exitnote &
+	\tcode{nullptr} \\ \rowsep
+	
+	\term{User Scaling Callback} &
+	\tcode{function<experimental::io2d::rectangle(const display_surface\&, bool\&)>} &
+	If it exists, this function shall be called whenever the contents of the Back Buffer need to be copied to the Display Buffer. The function is called with the const reference to \tcode{display_surface} object and a reference to a \tcode{bool} variable which has the value \tcode{false}. If the value of the \tcode{bool} is \tcode{true} when the function returns, the Letterbox Brush shall be used as specified by \tcode{scaling::letterbox} (Table~\ref{tab:scaling.meanings}). The function shall return a \tcode{rectangle} object that defines the area within the Display Buffer to which the Back Buffer shall be transferred. The \tcode{rectangle} may include areas outside of the bounds of the Display Buffer, in which case only the area of the Back Buffer that lies within the bounds of the Display Buffer will ultimately be visible to the user &
+	\tcode{nullptr} \\ \rowsep
+	
+	\term{Auto Clear} &
+	\tcode{bool} &
+	If \tcode{true} the implementation shall call \tcode{surface::clear}, which shall clear the Back Buffer, immediately before it is required to execute the Draw Callback &
+	\tcode{false} \\ \rowsep
+	
+\end{libreqtab4b}
 
 \rSec1 [displaysurface.cons] {\tcode{display_surface} constructors and assignment operators}
 
@@ -121,12 +220,34 @@ display_surface(int preferredWidth, int preferredHeight,
   noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{display_surface}.
-	
-	\pnum
-	\postconditions
+\pnum
+\effects
+Constructs an object of type \tcode{display_surface}.
+
+\pnum
+The preferredWidth parameter specifies the preferred width value for Draw Width and Display Width. The preferredHeight parameter specifies the preferred height value for Draw Height and Display Height. Draw Width and Display Width need not have the same value. Draw Height and Display Height need not have the same value.
+
+\pnum
+The preferredFormat parameter specifies the preferred pixel format value for Draw Format.
+
+\pnum
+The value of Scaling Type shall be the value of \tcode{scl}.
+
+\pnum
+All other observable state data shall have their default values.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+\tcode{errc::invalid_argument} if \tcode{preferredWidth <= 0}, \tcode{preferredHeight <= 0}, or \tcode{preferredFormat == experimental::io2d::format::invalid}.
+
+\tcode{io2d::device_error} if successful creation of the \tcode{display_surface} object would exceed the maximum number of simultaneous valid \tcode{display_surface} objects that the implementation supports.
+
+\pnum
+Other errors, if any, produced by this function are \impldef{display_surface!constructor}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!constructor}
@@ -142,12 +263,34 @@ display_surface(int preferredWidth, int preferredHeight,
   noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{display_surface}.
-	
-	\pnum
-	\postconditions
+\pnum
+\effects
+Constructs an object of type \tcode{display_surface}.
+
+\pnum
+The preferredWidth parameter specifies the preferred width value for Draw Width. The preferredDisplayWidth parameter specifies the preferred display width value for Display Width. The preferredHeight parameter specifies the preferred height value for Draw Height. The preferredDisplayHeight parameter specifies the preferred display height value for Display Height.
+
+\pnum
+The preferredFormat parameter specifies the preferred pixel format value for Draw Format.
+
+\pnum
+The value of Scaling Type shall be the value of \tcode{scl}.
+
+\pnum
+All other observable state data shall have their default values.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+\tcode{errc::invalid_argument} if \tcode{preferredWidth <= 0}, \tcode{preferredHeight <= 0}, \tcode{preferredDisplayWidth <= 0}, \tcode{preferredDisplayHeight <= 0}, or \tcode{preferredFormat == experimental::io2d::format::invalid}.
+
+\tcode{io2d::device_error} if successful creation of the \tcode{display_surface} object would exceed the maximum number of simultaneous valid \tcode{display_surface} objects that the implementation supports.
+
+\pnum
+Other errors, if any, produced by this function are \impldef{display_surface!constructor}.
 \end{itemdescr}
 
 \rSec1 [displaysurface.modifiers]{\tcode{display_surface} modifiers}
@@ -155,230 +298,412 @@ display_surface(int preferredWidth, int preferredHeight,
 \indexlibrary{\idxcode{display_surface}!\idxcode{save}}
 \indexlibrary{\idxcode{save}!\idxcode{display_surface}}
 \begin{itemdecl}
-    virtual void save() override;
-    virtual void save(error_code& ec) noexcept override;
+virtual void save() override;
+virtual void save(error_code& ec) noexcept override;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	
-	\pnum
-	\postconditions
-	
+\pnum
+\effects
+Calls \tcode{surface::save}.
+
+\pnum
+Implementations may save additional data provided that it does not alter the observable state of the \tcode{display_surface} object.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+\tcode{errc::not_enough_memory} if the state cannot be saved.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{restore}}
 \indexlibrary{\idxcode{restore}!\idxcode{display_surface}}
 \begin{itemdecl}
-    virtual void restore() override;
-    virtual void restore(error_code& ec) noexcept override;
+virtual void restore() override;
+virtual void restore(error_code& ec) noexcept override;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	
-	\pnum
-	\postconditions
-	
+\pnum
+\effects
+Calls \tcode{surface::restore}.
+
+\pnum
+If the implementation saved additional data as per \tcode{display_surface::save}, it should restore that data. Otherwise it shall discard that data.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\remarks
+Because this function is only restoring previously saved state, except where the conditions for \tcode{io2d_error::invalid_restore} are met, implementations should not generate errors.
+
+\pnum
+\errors
+\tcode{io2d_error::invalid_restore} if this function is called without a previous matching call to \tcode{surface::save}. Implementations shall not produce \tcode{io2d_error::invalid_restore} except under the conditions stated in this paragraph.
+
+\pnum
+Excluding the previously specified error, any errors produced by calling this function are \impldef{display_surface!restore}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{draw_fn}}
-\indexlibrary{\idxcode{draw_fn}!\idxcode{display_surface}}
+\indexlibrary{\idxcode{display_surface}!\idxcode{draw_callback}}
+\indexlibrary{\idxcode{draw_callback}!\idxcode{display_surface}}
 \begin{itemdecl}
-    void draw_fn(const function<void(display_surface& sfc)>& fn);
-    void draw_fn(const function<void(display_surface& sfc)>& fn,
-      error_code& ec) noexcept;
+void draw_callback(const function<void(display_surface& sfc)>& fn) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	
-	\pnum
-	\postconditions
-	
+\pnum
+\effects
+Sets the Draw Callback to \tcode{fn}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{size_change_fn}}
-\indexlibrary{\idxcode{size_change_fn}!\idxcode{display_surface}}
+\indexlibrary{\idxcode{display_surface}!\idxcode{size_change_callback}}
+\indexlibrary{\idxcode{size_change_callback}!\idxcode{display_surface}}
 \begin{itemdecl}
-    void size_change_fn(const function<void(display_surface& sfc)>& fn);
-    void size_change_fn(const function<void(display_surface& sfc)>& fn,
-      error_code& ec) noexcept;
+void size_change_callback(const function<void(display_surface& sfc)>& fn)
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	
-	\pnum
-	\postconditions
-	
+\pnum
+\effects
+Sets the Size Change Callback to \tcode{fn}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{width}}
 \indexlibrary{\idxcode{width}!\idxcode{display_surface}}
 \begin{itemdecl}
-    void width(int w);
-    void width(int w, error_code& ec) noexcept;
+void width(int w);
+void width(int w, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	
-	\pnum
-	\postconditions
-	
+\pnum
+\effects
+If the value of Draw Width is the same as \tcode{w}, this function does nothing.
+
+\pnum
+Otherwise, Draw Width is set as specified by Table~\ref{tab:displaysurface.state.listing} with \tcode{w} treated as being the preferred Draw Width.
+
+\pnum
+If the value of Draw Width changes as a result, the implementation shall attempt to create a new Back Buffer with the updated dimensions while retaining the existing Back Buffer. The implementation may destroy the existing Back Buffer prior to creating a new Back Buffer with the updated dimensions only if it can guarantee that in doing so it will either succeed in creating the new Back Buffer or will be able to create a Back Buffer with the previous dimensions in the event of failure. In the event of failure, Draw Width shall retain its previous value.
+
+\pnum
+\enternote
+The intent of the previous paragraph is to ensure that, no matter the result, a valid Back Buffer continues to exist. Sometimes implementations will be able to determine that the new dimensions are valid but that to create the new Back Buffer successfully the previous one must be destroyed. The previous paragraph gives implementors that leeway. It goes even further in that it allows implementations to destroy the existing Back Buffer even if they cannot determine in advance that creating the new Back Buffer will succeed, provided that they can guarantee that if the attempt fails they can always successfully recreate a Back Buffer with the previous dimensions. Regardless, there must be a valid Back Buffer when this call completes.
+\exitnote
+
+\pnum
+The value of the Back Buffer's pixel data shall be \unspecnorm upon completion of this function regardless of whether it succeeded.
+
+\pnum
+If the attempt to create a new Back Buffer with the updated dimensions fails, implementations shall attempt to recreate the Back Buffer with its old dimensions.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+\tcode{errc::invalid_argument} if \tcode{w <= 0} or if the value of \tcode{w} is greater than the maximum value for Draw Width.
+
+\tcode{errc::not_enough_memory} if there is insufficient memory to create a Back Buffer with the updated dimensions.
+
+Other errors, if any, produced by this function are \impldef{display_surface!width}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{height}}
 \indexlibrary{\idxcode{height}!\idxcode{display_surface}}
 \begin{itemdecl}
-    void height(int h);
-    void height(int h, error_code& ec) noexcept;
+void height(int h);
+void height(int h, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	
-	\pnum
-	\postconditions
-	
+\pnum
+\effects
+If the value of Draw Height is the same as \tcode{h}, this function does nothing.
+
+\pnum
+Otherwise, Draw Height is set as specified by Table~\ref{tab:displaysurface.state.listing} with \tcode{h} treated as being the preferred Draw Height.
+
+\pnum
+If the value of Draw Height changes as a result, the implementation shall attempt to create a new Back Buffer with the updated dimensions while retaining the existing Back Buffer. The implementation may destroy the existing Back Buffer prior to creating a new Back Buffer with the updated dimensions only if it can guarantee that in doing so it will either succeed in creating the new Back Buffer or will be able to create a Back Buffer with the previous dimensions in the event of failure. In the event of failure, Draw Height shall retain its previous value.
+
+\pnum
+\enternote
+The intent of the previous paragraph is to ensure that, no matter the result, a valid Back Buffer continues to exist. Sometimes implementations will be able to determine that the new dimensions are valid but that to create the new Back Buffer successfully the previous one must be destroyed. The previous paragraph gives implementors that leeway. It goes even further in that it allows implementations to destroy the existing Back Buffer even if they cannot determine in advance that creating the new Back Buffer will succeed, provided that they can guarantee that if the attempt fails they can always successfully recreate a Back Buffer with the previous dimensions. Regardless, there must be a valid Back Buffer when this call completes.
+\exitnote
+
+\pnum
+The value of the Back Buffer's pixel data shall be \unspecnorm upon completion of this function regardless of whether it succeeded.
+
+\pnum
+If the attempt to create a new Back Buffer with the updated dimensions fails, implementations shall attempt to recreate the Back Buffer with its old dimensions.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+\tcode{errc::invalid_argument} if \tcode{h <= 0} or if the value of \tcode{h} is greater than the maximum value for Draw Height.
+
+\tcode{errc::not_enough_memory} if there is insufficient memory to create a Back Buffer with the updated dimensions.
+
+Other errors, if any, produced by this function are \impldef{display_surface!height}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{display_width}}
 \indexlibrary{\idxcode{display_width}!\idxcode{display_surface}}
 \begin{itemdecl}
-    void display_width(int w);
-    void display_width(int w, error_code& ec) noexcept;
+void display_width(int w);
+void display_width(int w, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	
-	\pnum
-	\postconditions
-	
+\pnum
+\effects
+
+\pnum
+\postconditions
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{display_height}}
 \indexlibrary{\idxcode{display_height}!\idxcode{display_surface}}
 \begin{itemdecl}
-    void display_height(int h);
-    void display_height(int h, error_code& ec) noexcept;
+void display_height(int h);
+void display_height(int h, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	
-	\pnum
-	\postconditions
-	
+\pnum
+\effects
+
+\pnum
+\postconditions
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{dimensions}}
 \indexlibrary{\idxcode{dimensions}!\idxcode{display_surface}}
 \begin{itemdecl}
-    void dimensions(int w, int h);
-    void dimensions(int w, int h, error_code& ec) noexcept;
+void dimensions(int w, int h);
+void dimensions(int w, int h, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	
-	\pnum
-	\postconditions
-	
+\pnum
+\effects
+
+\pnum
+\postconditions
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{display_dimensions}}
 \indexlibrary{\idxcode{display_dimensions}!\idxcode{display_surface}}
 \begin{itemdecl}
-    void display_dimensions(int dw, int dh);
-    void display_dimensions(int dw, int dh, error_code& ec) noexcept;
+void display_dimensions(int dw, int dh);
+void display_dimensions(int dw, int dh, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	
-	\pnum
-	\postconditions
-	
+\pnum
+\effects
+
+\pnum
+\postconditions
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{scaling}}
 \indexlibrary{\idxcode{scaling}!\idxcode{display_surface}}
 \begin{itemdecl}
-    void scaling(experimental::io2d::scaling scl) noexcept;
+void scaling(experimental::io2d::scaling scl) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	
-	\pnum
-	\postconditions
-	
+\pnum
+\effects
+Sets Scaling Type to the value of \tcode{scl}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{user_scaling_fn}}
-\indexlibrary{\idxcode{user_scaling_fn}!\idxcode{display_surface}}
+\indexlibrary{\idxcode{display_surface}!\idxcode{user_scaling_callback}}
+\indexlibrary{\idxcode{user_scaling_callback}!\idxcode{display_surface}}
 \begin{itemdecl}
-    void user_scaling_fn(const function<experimental::io2d::rectangle(
-      const display_surface&, bool&)>& fn);
-    void user_scaling_fn(const function<experimental::io2d::rectangle(
-      const display_surface&, bool&)>& fn, error_code& ec) noexcept;
+void user_scaling_callback(const function<experimental::io2d::rectangle(
+  const display_surface&, bool&)>& fn) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	
-	\pnum
-	\postconditions
-	
-\end{itemdescr}
-
-\indexlibrary{\idxcode{display_surface}!\idxcode{reset_letterbox_brush}}
-\indexlibrary{\idxcode{reset_letterbox_brush}!\idxcode{display_surface}}
-\begin{itemdecl}
-    void reset_letterbox_brush() noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	
-	\pnum
-	\postconditions
-	
+\pnum
+\effects
+Sets the User Scaling Callback to \tcode{fn}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{letterbox_brush}}
 \indexlibrary{\idxcode{letterbox_brush}!\idxcode{display_surface}}
 \begin{itemdecl}
-    void letterbox_brush(const rgba_color& c);
-    void letterbox_brush(const rgba_color& c, error_code& ec) noexcept;
-    void letterbox_brush(const experimental::io2d::brush& b);
-    void letterbox_brush(const experimental::io2d::brush& b, error_code& ec) noexcept;
+void letterbox_brush(experimental::nullopt_t) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	
-	\pnum
-	\postconditions
-	
+\pnum
+\effects
+Sets the Letterbox Brush to its default value.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{join}}
-\indexlibrary{\idxcode{join}!\idxcode{display_surface}}
+\indexlibrary{\idxcode{display_surface}!\idxcode{letterbox_brush}}
+\indexlibrary{\idxcode{letterbox_brush}!\idxcode{display_surface}}
 \begin{itemdecl}
-    int join();
-    int join(error_code& ec);
+void letterbox_brush(const rgba_color& c);
+void letterbox_brush(const rgba_color& c, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	
-	\pnum
-	\postconditions
-	
+\pnum
+\effects
+Sets the Letterbox Brush to a value as if \tcode{experimental::io2d::brush\{ solid_color_brush_factory\{ \} \}}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+The errors, if any, produced by this function are \impldef{display_surface!letterbox_brush}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{letterbox_brush}}
+\indexlibrary{\idxcode{letterbox_brush}!\idxcode{display_surface}}
+\begin{itemdecl}
+void letterbox_brush(const experimental::io2d::brush& b);
+void letterbox_brush(const experimental::io2d::brush& b, error_code& ec) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Sets the Letterbox Brush to \tcode{b}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+The errors, if any, produced by this function are \impldef{display_surface!letterbox_brush}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{auto_clear}}
+\indexlibrary{\idxcode{auto_clear}!\idxcode{display_surface}}
+\begin{itemdecl}
+void auto_clear(bool val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Sets Auto Clear to the value of \tcode{val}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{show}}
+\indexlibrary{\idxcode{show}!\idxcode{display_surface}}
+\begin{itemdecl}
+int show();
+int show(error_code& ec);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Performs the following actions in a continuous loop:
+\begin{itemize}
+	\item Handle any implementation and host environment matters. If there are no pending implementation or host environment matters to handle, proceed immediately to the next action.
+	\item Run the Size Change Callback if doing so is required by its specification and it does not have a value equivalent to its default value. 
+	\item Evaluate Auto Clear and perform the actions required by its specification, if any.
+	\item Run the Draw Callback.
+	\item Ensure that all operations from the Draw Callback that can effect the Back Buffer have completed.
+	\item Transfer the contents of the Back Buffer to the Display Buffer using sampling. If the User Scaling Callback does not have a value equivalent to its default value, use it to determine the position where the contents of the Back Buffer shall be transferred to and whether or not the Letterbox Brush should be used. Otherwise use the value of Scaling Type to determine the position and whether the Letterbox Brush should be used.
+\end{itemize}
+
+\pnum
+If \tcode{display_surface::exit_show} is called from the Draw Callback, the implementation shall finish executing the Draw Callback and shall immediately cease to perform any actions in the continuous loop other than handling any implementation and host environment matters.
+
+\pnum
+No later than when this function returns, the output device shall cease to display the contents of the Display Buffer.
+
+\pnum
+What the output device shall display when it is not displaying the contents of the Display Buffer is \unspecnorm.
+
+\pnum
+\returns
+The possible values and meanings of the possible values returned are \impldef{display_surface!show return value}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\remarks
+Since this function calls the Draw Callback and can call the Size Change Callback and the User Scaling Callback, in addition to the errors documented below, any errors that the callback functions produce can also occur.
+
+\pnum
+\errors
+\pnum
+\tcode{errc::operation_would_block} if the value of Draw Callback is equivalent to its default value or if it becomes equivalent to its default value before this function returns.
+
+\pnum
+Other errors, if any, produced by this function are \impldef{display_surface!letterbox_brush}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{exit_show}}
+\indexlibrary{\idxcode{exit_show}!\idxcode{display_surface}}
+\begin{itemdecl}
+void exit_show(int ms) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+This function shall only be called from the Draw Callback; no diagnostic is required.
+
+\pnum
+\effects
+The implementation shall initiate the process of exiting the \tcode{display_surface::show} function's continuous loop.
+
+\pnum
+Implementations shall not wait until the \tcode{display_surface::show} function's continuous loop ends before returning from this function.
+
+\pnum
+Implementations should follow any procedures that the host environment requires in order to cause the \tcode{display_surface::show} function's continuous loop to stop executing without error.
+
+\pnum
+A \term{termination time duration} shall then be determined as follows:
+\begin{itemize}
+\item If the value \tcode{ms} is negative, the termination time duration shall be an \unspecnorm number of milliseconds.
+\item Otherwise the termination time duration shall be \tcode{ms} milliseconds.
+\end{itemize}
+
+\pnum
+The implementation shall continue to execute the \tcode{display_surface::show} function until it returns or until termination time duration milliseconds have passed since the termination time duration was determined, whichever comes first.
+
+\pnum
+If the \tcode{display_surface::show} function has not returned before termination time duration milliseconds have passed since the termination time duration was determined the implementation shall force the \tcode{display_surface::show} function's continuous loop to stop executing and shall then cause \tcode{display_surface::show} to return.
 \end{itemdescr}
 
 \rSec1 [displaysurface.observers]{\tcode{display_surface} observers}
@@ -386,110 +711,131 @@ display_surface(int preferredWidth, int preferredHeight,
 \indexlibrary{\idxcode{display_surface}!\idxcode{format}}
 \indexlibrary{\idxcode{format}!\idxcode{display_surface}}
 \begin{itemdecl}
-    experimental::io2d::format format() const noexcept;
+experimental::io2d::format format() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-
+\pnum
+\returns
+The value of Draw Format.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{width}}
 \indexlibrary{\idxcode{width}!\idxcode{display_surface}}
 \begin{itemdecl}
-    int width() const noexcept;
+int width() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	
+\pnum
+\returns
+The Draw Width.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{height}}
 \indexlibrary{\idxcode{height}!\idxcode{display_surface}}
 \begin{itemdecl}
-    int height() const noexcept;
+int height() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	
+\pnum
+\returns
+The Draw Height.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{display_width}}
 \indexlibrary{\idxcode{display_width}!\idxcode{display_surface}}
 \begin{itemdecl}
-    int display_width() const noexcept;
+int display_width() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	
+\pnum
+\returns
+The Display Width.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{display_height}}
 \indexlibrary{\idxcode{display_height}!\idxcode{display_surface}}
 \begin{itemdecl}
-    int display_height() const noexcept;
+int display_height() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	
+\pnum
+\returns
+The Display Height.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{dimensions}}
 \indexlibrary{\idxcode{dimensions}!\idxcode{display_surface}}
 \begin{itemdecl}
-    tuple<int, int> dimensions() const noexcept;
+tuple<int, int> dimensions() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	
+\pnum
+\returns
+A \tcode{tuple<int, int>} where the first element is the Draw Width and the second element is the Draw Height.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{display_dimensions}}
 \indexlibrary{\idxcode{display_dimensions}!\idxcode{display_surface}}
 \begin{itemdecl}
-    tuple<int, int> display_dimensions() const noexcept;
+tuple<int, int> display_dimensions() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	
+\pnum
+\returns
+A \tcode{tuple<int, int>} where the first element is the Display Width and the second element is the Display Height.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{scaling}}
 \indexlibrary{\idxcode{scaling}!\idxcode{display_surface}}
 \begin{itemdecl}
-    experimental::io2d::scaling scaling() const noexcept;
+experimental::io2d::scaling scaling() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	
+\pnum
+\returns
+The Scaling Type.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{user_scaling_fn}}
-\indexlibrary{\idxcode{user_scaling_fn}!\idxcode{display_surface}}
+\indexlibrary{\idxcode{display_surface}!\idxcode{user_scaling_callback}}
+\indexlibrary{\idxcode{user_scaling_callback}!\idxcode{display_surface}}
 \begin{itemdecl}
-    const function<experimental::io2d::rectangle(const display_surface&,
-      bool&)>& user_scaling_fn() const noexcept;
+function<experimental::io2d::rectangle(const display_surface&, bool&)>
+  user_scaling_callback() const;
+function<experimental::io2d::rectangle(const display_surface&, bool&)>
+  user_scaling_callback(error_code& ec) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	
+\pnum
+\returns
+A copy of User Scaling Callback.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+\tcode{errc::not_enough_memory} if a failure to allocate memory occurs.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{letterbox_brush}}
 \indexlibrary{\idxcode{letterbox_brush}!\idxcode{display_surface}}
 \begin{itemdecl}
-    experimental::io2d::brush letterbox_brush() const noexcept;
+experimental::io2d::brush letterbox_brush() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	
+\pnum
+\returns
+The Letterbox Brush.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{display_surface}!\idxcode{auto_clear}}
+\indexlibrary{\idxcode{auto_clear}!\idxcode{display_surface}}
+\begin{itemdecl}
+bool auto_clear() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The value of Auto Clear.
 \end{itemdescr}

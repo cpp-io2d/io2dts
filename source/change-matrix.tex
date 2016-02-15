@@ -1,19 +1,26 @@
 %!TEX root = io2d.tex
-\rSec0 [pathdataitem.changematrix] {Class \tcode{change_matrix}}
+\rSec0 [pathdataitem.changematrix] {Class \tcode{path_data_item::change_matrix}}
 
-\rSec1 [pathdataitem.changematrix.synopsis] {\tcode{change_matrix} synopsis}
+\rSec1 [pathdataitem.changematrix.synopsis] {\tcode{path_data_item::change_matrix} synopsis}
+
+\pnum
+\indexlibrary{\idxcode{path_data_item::change_matrix}}
+The class \tcode{path_data_item::change_matrix} describes an operation on a path geometry collection.
+
+\pnum
+This operation changes the transformation matrix for a path geometry collection to be the value returned by \tcode{*this.matrix()}. As shown in \ref{pathgeometries.processing}, the new transformation matrix does not affect any operations that came before this operation. It is only used in processing operations that come after it. It continues to be used until another \tcode{path_data_item::change_matrix} object is encountered or the end of the path geometry collection is reached.
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class change_matrix : public path_data {
+  class path_data_item::change_matrix : public path_data_item::path_data {
   public:
     // \ref{pathdataitem.changematrix.cons}, construct/copy/move/destroy:
     change_matrix() noexcept;
-    change_matrix(const change_matrix& other) noexcept;
-    change_matrix& operator=(const change_matrix& other) noexcept;
-    change_matrix(change_matrix&& other) noexcept;
-    change_matrix& operator=(change_matrix&& other) noexcept;
-    change_matrix(const matrix_2d& m) noexcept;
+    change_matrix(const change_matrix&) noexcept;
+    path_data_item::change_matrix& operator=(const change_matrix&) noexcept;
+    change_matrix(change_matrix&&) noexcept;
+    path_data_item::change_matrix& operator=(change_matrix&&) noexcept;
+    explicit change_matrix(const matrix_2d& m) noexcept;
 
     // \ref{pathdataitem.changematrix.modifiers}, modifiers:
     void matrix(const matrix_2d& value) noexcept;
@@ -28,49 +35,40 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdataitem.changematrix.intro] {\tcode{change_matrix} Description}
+\rSec1 [pathdataitem.changematrix.cons] {\tcode{path_data_item::change_matrix} constructors and assignment operators}
 
-\pnum
-\indexlibrary{\idxcode{change_matrix}}
-The class \tcode{change_matrix} describes an operation on a path geometry collection.
-
-\pnum
-This operation changes the transformation matrix for a path geometry collection to be the value returned by \tcode{*this.matrix()}. As shown in \ref{pathgeometries.processing}, the new transformation matrix does not affect any operations that came before this operation. It is only used in processing operations that come after it. It continues to be used until another \tcode{change_matrix} object is encountered or the end of the path geometry collection is reached.
-
-\rSec1 [pathdataitem.changematrix.cons] {\tcode{change_matrix} constructors and assignment operators}
-
-\indexlibrary{\idxcode{change_matrix}!constructor}
+\indexlibrary{\idxcode{path_data_item::change_matrix}!constructor}
 \begin{itemdecl}
     change_matrix() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{change_matrix}.
+	Constructs an object of type \tcode{path_data_item::change_matrix}.
 	
 	\pnum
 	\postconditions
 	\tcode{_Matrix == matrix_2d\{\}}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{change_matrix}!constructor}
+\indexlibrary{\idxcode{path_data_item::change_matrix}!constructor}
 \begin{itemdecl}
-    change_matrix(const matrix_2d& m) noexcept;
+    explicit change_matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{change_matrix}.
+	Constructs an object of type \tcode{path_data_item::change_matrix}.
 	
 	\pnum
 	\postconditions
 	\tcode{_Matrix == m}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.changematrix.modifiers]{\tcode{change_matrix} modifiers}
+\rSec1 [pathdataitem.changematrix.modifiers]{\tcode{path_data_item::change_matrix} modifiers}
 
-\indexlibrary{\idxcode{change_matrix}!\idxcode{matrix}}
-\indexlibrary{\idxcode{matrix}!\idxcode{change_matrix}}
+\indexlibrary{\idxcode{path_data_item::change_matrix}!\idxcode{matrix}}
+\indexlibrary{\idxcode{matrix}!\idxcode{path_data_item::change_matrix}}
 \begin{itemdecl}
     void matrix(const matrix_2d& value) noexcept;
 \end{itemdecl}
@@ -78,13 +76,12 @@ This operation changes the transformation matrix for a path geometry collection 
 	\pnum
 	\postconditions
 	\tcode{_Matrix == value}.
-	
 \end{itemdescr}
 
-\rSec1 [pathdataitem.changematrix.observers]{\tcode{change_matrix} observers}
+\rSec1 [pathdataitem.changematrix.observers]{\tcode{path_data_item::change_matrix} observers}
 
-\indexlibrary{\idxcode{change_matrix}!\idxcode{matrix}}
-\indexlibrary{\idxcode{matrix}!\idxcode{change_matrix}}
+\indexlibrary{\idxcode{path_data_item::change_matrix}!\idxcode{matrix}}
+\indexlibrary{\idxcode{matrix}!\idxcode{path_data_item::change_matrix}}
 \begin{itemdecl}
     matrix_2d matrix() const noexcept;
 \end{itemdecl}
@@ -92,11 +89,10 @@ This operation changes the transformation matrix for a path geometry collection 
 	\pnum
 	\returns
 	\tcode{_Matrix}.
-
 \end{itemdescr}
 
-\indexlibrary{\idxcode{change_matrix}!\idxcode{type}}
-\indexlibrary{\idxcode{type}!\idxcode{change_matrix}}
+\indexlibrary{\idxcode{path_data_item::change_matrix}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{path_data_item::change_matrix}}
 \begin{itemdecl}
     virtual path_data_type type() const noexcept override;
 \end{itemdecl}
@@ -104,5 +100,4 @@ This operation changes the transformation matrix for a path geometry collection 
 	\pnum
 	\returns
 	\tcode{path_data_type::change_matrix}.
-
 \end{itemdescr}

@@ -1,18 +1,28 @@
 %!TEX root = io2d.tex
-\rSec0 [pathdataitem.relcurveto] {Class \tcode{rel_curve_to}}
+\rSec0 [pathdataitem.relcurveto] {Class \tcode{path_data_item::rel_curve_to}}
 
-\rSec1 [pathdataitem.relcurveto.synopsis] {\tcode{rel_curve_to} synopsis}
+\pnum
+\indexlibrary{\idxcode{path_data_item::rel_curve_to}}
+The class \tcode{path_data_item::rel_curve_to} describes an operation on a path geometry collection.
+
+\pnum
+This operation creates a cubic B\'ezier curve from the current point to the point that is the sum of the current point and the point returned by \tcode{*this.end_point()}, with the first control point being the point that is the sum of the current point and the point returned by \tcode{*this.control_point_1()} and the second control point being the point that is the sum of the current point and the point returned by \tcode{*this.control_point_2()}. It then sets the current point to be the point that is the sum of the current point and the point returned by \tcode{*this.end_point()}.
+
+\pnum
+If the current path geometry does not have a current point when this operation is requested the path geometry collection is malformed.
+
+\rSec1 [pathdataitem.relcurveto.synopsis] {\tcode{path_data_item::rel_curve_to} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class rel_curve_to : public path_data {
+  class path_data_item::rel_curve_to : public path_data_item::path_data {
   public:
     // \ref{pathdataitem.relcurveto.cons}, construct/copy/move/destroy:
     rel_curve_to() noexcept;
-    rel_curve_to(const rel_curve_to& other) noexcept;
-    rel_curve_to& operator=(const rel_curve_to& other) noexcept;
-    curve_to(curve_to&& other) noexcept;
-    rel_curve_to& operator=(rel_curve_to&& other) noexcept;
+    rel_curve_to(const rel_curve_to&) noexcept;
+    path_data_item::rel_curve_to& operator=(const rel_curve_to&) noexcept;
+    rel_curve_to(rel_curve_to&&) noexcept;
+    path_data_item::rel_curve_to& operator=(rel_curve_to&&) noexcept;
     rel_curve_to(const vector_2d& controlPoint1, const vector_2d& controlPoint2,
       const vector_2d& endPoint) noexcept;
 
@@ -20,7 +30,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void control_point_1(const vector_2d& value) noexcept;
     void control_point_2(const vector_2d& value) noexcept;
     void end_point(const vector_2d& value) noexcept;
-
 
     // \ref{pathdataitem.relcurveto.observers}, observers:
     vector_2d control_point_1() const noexcept;
@@ -36,28 +45,16 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdataitem.relcurveto.intro] {\tcode{rel_curve_to} Description}
+\rSec1 [pathdataitem.relcurveto.cons] {\tcode{path_data_item::rel_curve_to} constructors and assignment operators}
 
-\pnum
-\indexlibrary{\idxcode{rel_curve_to}}
-The class \tcode{rel_curve_to} describes an operation on a path geometry collection.
-
-\pnum
-This operation creates a B\'ezier curve from the current point to the point that is the sum of the current point and the point returned by \tcode{*this.end_point()}, with the first control point being the point that is the sum of the current point and the point returned by \tcode{*this.control_point_1()} and the second control point being the point that is the sum of the current point and the point returned by \tcode{*this.control_point_2()}. It then sets the current point to be the point that is the sum of the current point and the point returned by \tcode{*this.end_point()}.
-
-\pnum
-If the current path geometry does not have a current point when this operation is requested the path geometry collection is malformed.
-
-\rSec1 [pathdataitem.relcurveto.cons] {\tcode{rel_curve_to} constructors and assignment operators}
-
-\indexlibrary{\idxcode{rel_curve_to}!constructor}
+\indexlibrary{\idxcode{path_data_item::rel_curve_to}!constructor}
 \begin{itemdecl}
     rel_curve_to() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{rel_curve_to}.
+	Constructs an object of type \tcode{path_data_item::rel_curve_to}.
 	
 	\pnum
 	\postconditions
@@ -66,10 +63,9 @@ If the current path geometry does not have a current point when this operation i
 	\tcode{_Control_pt2 == vector_2d(0.0, 0.0)}.
 
 	\tcode{_End_pt == vector_2d(0.0, 0.0)}.
-
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rel_curve_to}!constructor}
+\indexlibrary{\idxcode{path_data_item::rel_curve_to}!constructor}
 \begin{itemdecl}
     rel_curve_to(const vector_2d& controlPoint1, const vector_2d& controlPoint2,
       const vector_2d& endPoint) noexcept;
@@ -77,7 +73,7 @@ If the current path geometry does not have a current point when this operation i
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{rel_curve_to}.
+	Constructs an object of type \tcode{path_data_item::rel_curve_to}.
 	
 	\pnum
 	\postconditions
@@ -86,13 +82,12 @@ If the current path geometry does not have a current point when this operation i
 	\tcode{_Control_pt2 == controlPoint2}.
 
 	\tcode{_End_pt == endPoint}.
-
 \end{itemdescr}
 
-\rSec1 [pathdataitem.relcurveto.modifiers]{\tcode{rel_curve_to} modifiers}
+\rSec1 [pathdataitem.relcurveto.modifiers]{\tcode{path_data_item::rel_curve_to} modifiers}
 
-\indexlibrary{\idxcode{rel_curve_to}!\idxcode{control_point_1}}
-\indexlibrary{\idxcode{control_point_1}!\idxcode{rel_curve_to}}
+\indexlibrary{\idxcode{path_data_item::rel_curve_to}!\idxcode{control_point_1}}
+\indexlibrary{\idxcode{control_point_1}!\idxcode{path_data_item::rel_curve_to}}
 \begin{itemdecl}
     void control_point_1(const vector_2d& value) noexcept;
 \end{itemdecl}
@@ -100,11 +95,10 @@ If the current path geometry does not have a current point when this operation i
 	\pnum
 	\postconditions
 	\tcode{_Control_pt_1 == value}.
-	
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rel_curve_to}!\idxcode{control_point_2}}
-\indexlibrary{\idxcode{control_point_2}!\idxcode{rel_curve_to}}
+\indexlibrary{\idxcode{path_data_item::rel_curve_to}!\idxcode{control_point_2}}
+\indexlibrary{\idxcode{control_point_2}!\idxcode{path_data_item::rel_curve_to}}
 \begin{itemdecl}
     void control_point_2(const vector_2d& value) noexcept;
 \end{itemdecl}
@@ -112,11 +106,10 @@ If the current path geometry does not have a current point when this operation i
 	\pnum
 	\postconditions
 	\tcode{_Control_pt_2 == value}.
-	
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rel_curve_to}!\idxcode{end_point}}
-\indexlibrary{\idxcode{end_point}!\idxcode{rel_curve_to}}
+\indexlibrary{\idxcode{path_data_item::rel_curve_to}!\idxcode{end_point}}
+\indexlibrary{\idxcode{end_point}!\idxcode{path_data_item::rel_curve_to}}
 \begin{itemdecl}
     void end_point(const vector_2d& value) noexcept;
 \end{itemdecl}
@@ -124,13 +117,12 @@ If the current path geometry does not have a current point when this operation i
 	\pnum
 	\postconditions
 	\tcode{_End_pt == value}.
-	
 \end{itemdescr}
 
-\rSec1 [pathdataitem.relcurveto.observers]{\tcode{rel_curve_to} observers}
+\rSec1 [pathdataitem.relcurveto.observers]{\tcode{path_data_item::rel_curve_to} observers}
 
-\indexlibrary{\idxcode{rel_curve_to}!\idxcode{control_point_1}}
-\indexlibrary{\idxcode{control_point_1}!\idxcode{rel_curve_to}}
+\indexlibrary{\idxcode{path_data_item::rel_curve_to}!\idxcode{control_point_1}}
+\indexlibrary{\idxcode{control_point_1}!\idxcode{path_data_item::rel_curve_to}}
 \begin{itemdecl}
     vector_2d control_point_1() const noexcept;
 \end{itemdecl}
@@ -138,11 +130,10 @@ If the current path geometry does not have a current point when this operation i
 	\pnum
 	\returns
 	\tcode{_Control_pt_1}.
-
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rel_curve_to}!\idxcode{control_point_2}}
-\indexlibrary{\idxcode{control_point_2}!\idxcode{rel_curve_to}}
+\indexlibrary{\idxcode{path_data_item::rel_curve_to}!\idxcode{control_point_2}}
+\indexlibrary{\idxcode{control_point_2}!\idxcode{path_data_item::rel_curve_to}}
 \begin{itemdecl}
     vector_2d control_point_2() const noexcept;
 \end{itemdecl}
@@ -150,11 +141,10 @@ If the current path geometry does not have a current point when this operation i
 	\pnum
 	\returns
 	\tcode{_Control_pt_2}.
-
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rel_curve_to}!\idxcode{end_point}}
-\indexlibrary{\idxcode{end_point}!\idxcode{rel_curve_to}}
+\indexlibrary{\idxcode{path_data_item::rel_curve_to}!\idxcode{end_point}}
+\indexlibrary{\idxcode{end_point}!\idxcode{path_data_item::rel_curve_to}}
 \begin{itemdecl}
     vector_2d end_point() const noexcept;
 \end{itemdecl}
@@ -162,11 +152,10 @@ If the current path geometry does not have a current point when this operation i
 	\pnum
 	\returns
 	\tcode{_End_pt}.
-
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rel_curve_to}!\idxcode{type}}
-\indexlibrary{\idxcode{type}!\idxcode{rel_curve_to}}
+\indexlibrary{\idxcode{path_data_item::rel_curve_to}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{path_data_item::rel_curve_to}}
 \begin{itemdecl}
     virtual path_data_type type() const noexcept override;
 \end{itemdecl}
@@ -174,5 +163,4 @@ If the current path geometry does not have a current point when this operation i
 	\pnum
 	\returns
 	\tcode{path_data_type::rel_curve_to}.
-
 \end{itemdescr}

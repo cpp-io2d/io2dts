@@ -1,18 +1,25 @@
 %!TEX root = io2d.tex
-\rSec0 [pathdataitem.newsubpath] {Class \tcode{new_sub_path}}
+\rSec0 [pathdataitem.newsubpath] {Class \tcode{path_data_item::new_sub_path}}
 
-\rSec1 [pathdataitem.newsubpath.synopsis] {\tcode{new_sub_path} synopsis}
+\pnum
+\indexlibrary{\idxcode{path_data_item::new_sub_path}}
+The class \tcode{path_data_item::new_sub_path} describes an operation on a path geometry collection.
+
+\pnum
+This operation starts a new path geometry. The new path geometry has no current point.
+
+\rSec1 [pathdataitem.newsubpath.synopsis] {\tcode{path_data_item::new_sub_path} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class new_sub_path : public path_data {
+  class path_data_item::new_sub_path : public path_data_item::path_data {
   public:
     // construct/copy/move/destroy:
     new_sub_path() noexcept;
-    new_sub_path(const new_sub_path& other) noexcept;
-    new_sub_path& operator=(const new_sub_path& other) noexcept;
-    new_sub_path(new_sub_path&& other) noexcept;
-    new_sub_path& operator=(new_sub_path&& other) noexcept;
+    new_sub_path(const new_sub_path&) noexcept;
+    path_data_item::new_sub_path& operator=(const new_sub_path&) noexcept;
+    new_sub_path(new_sub_path&&) noexcept;
+    path_data_item::new_sub_path& operator=(new_sub_path&&) noexcept;
 
     // \ref{pathdataitem.newsubpath.observers}, observers:
     virtual path_data_type type() const noexcept override;
@@ -20,19 +27,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdataitem.newsubpath.intro] {\tcode{new_sub_path} Description}
+\rSec1 [pathdataitem.newsubpath.observers]{\tcode{path_data_item::new_sub_path} observers}
 
-\pnum
-\indexlibrary{\idxcode{new_sub_path}}
-The class \tcode{new_sub_path} describes an operation on a path geometry collection.
-
-\pnum
-This operation starts a new path geometry. The new path geometry has no current point.
-
-\rSec1 [pathdataitem.newsubpath.observers]{\tcode{new_sub_path} observers}
-
-\indexlibrary{\idxcode{new_sub_path}!\idxcode{type}}
-\indexlibrary{\idxcode{type}!\idxcode{new_sub_path}}
+\indexlibrary{\idxcode{path_data_item::new_sub_path}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{path_data_item::new_sub_path}}
 \begin{itemdecl}
     virtual path_data_type type() const noexcept override;
 \end{itemdecl}

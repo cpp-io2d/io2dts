@@ -19,8 +19,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     brush(const linear_brush_factory& f, error_code& ec) noexcept;
     brush(const radial_brush_factory& f);
     brush(const radial_brush_factory& f, error_code& ec) noexcept;
-    brush(const mesh_brush_factory& f);
-    brush(const mesh_brush_factory& f, error_code& ec) noexcept;
     brush(surface_brush_factory& f);
     brush(surface_brush_factory& f, error_code& ec) noexcept;
 
@@ -74,165 +72,160 @@ Several graphics and rendering technologies that are currently widely used store
 
 \indexlibrary{\idxcode{brush}!constructor}
 \begin{itemdecl}
-    brush(const solid_color_brush_factory& f);
-    brush(const solid_color_brush_factory& f, error_code& ec) noexcept;
+brush(const solid_color_brush_factory& f);
+brush(const solid_color_brush_factory& f, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{brush}.
-	
-	\pnum
-	The brush has uniform color and alpha data which is created from the value of \tcode{f.color()}. The precision and storage format of the color and alpha data is unspecified. The precision may be less than that  
-	
-	\pnum
-	\postconditions
-	\tcode{_Brush_type == brush_type::solid_color}.
-	
-	\tcode{_Extend == std::experimental::io2d::extend::none}.
-	
-	\tcode{_Filter == std::experimental::io2d::filter::fast}.
-	
-	\tcode{_Matrix == matrix_2d::init_identity()}.
+\pnum
+\effects
+Constructs an object of type \tcode{brush}.
 
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
-	
-	\tcode{errc::protocol_error} if there was a failure to allocate a resource other than memory.
-	
+\pnum
+The brush has uniform color and alpha data which is created from the value of \tcode{f.color()}. The precision and storage format of the color and alpha data is unspecified. The precision may be less than that  
+
+\pnum
+\postconditions
+\tcode{_Brush_type == brush_type::solid_color}.
+
+\tcode{_Extend == std::experimental::io2d::extend::none}.
+
+\tcode{_Filter == std::experimental::io2d::filter::fast}.
+
+\tcode{_Matrix == matrix_2d::init_identity()}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
+
+\tcode{io2d_error::invalid_status} if there was a failure to allocate a resource other than memory.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{brush}!constructor}
 \begin{itemdecl}
-    brush(const linear_brush_factory& f);
-    brush(const linear_brush_factory& f, error_code& ec) noexcept;
+brush(const linear_brush_factory& f);
+brush(const linear_brush_factory& f, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{brush}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Brush_type == brush_type::linear}.
-	
-	\tcode{_Extend == std::experimental::io2d::extend::none}.
-	
-	\tcode{_Filter == std::experimental::io2d::extend::good}.
-	
-	\tcode{_Extend == std::experimental::io2d::extend::none}.
+\pnum
+\effects
+Constructs an object of type \tcode{brush}.
 
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
-	
-	\tcode{errc::protocol_error} if there was a failure to allocate a resource other than memory.
-	
+\pnum
+\postconditions
+\tcode{_Brush_type == brush_type::linear}.
+
+\tcode{_Extend == std::experimental::io2d::extend::none}.
+
+\tcode{_Filter == std::experimental::io2d::extend::good}.
+
+\tcode{_Extend == std::experimental::io2d::extend::none}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
+
+\tcode{io2d_error::invalid_status} if there was a failure to allocate a resource other than memory.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{brush}!constructor}
 \begin{itemdecl}
-    brush(const radial_brush_factory& f);
-    brush(const radial_brush_factory& f, error_code& ec) noexcept;
+brush(const radial_brush_factory& f);
+brush(const radial_brush_factory& f, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{brush}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Brush_type == brush_type::radial}.
-	
-	\tcode{_Extend == std::experimental::io2d::extend::none}.
-	
-	\tcode{_Filter == std::experimental::io2d::extend::good}.
-	
-	\tcode{_Extend == std::experimental::io2d::extend::none}.
+\pnum
+\effects
+Constructs an object of type \tcode{brush}.
 
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
-	
-	\tcode{errc::protocol_error} if there was a failure to allocate a resource other than memory.
-	
+\pnum
+\postconditions
+\tcode{_Brush_type == brush_type::radial}.
+
+\tcode{_Extend == std::experimental::io2d::extend::none}.
+
+\tcode{_Filter == std::experimental::io2d::extend::good}.
+
+\tcode{_Extend == std::experimental::io2d::extend::none}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
+
+\tcode{io2d_error::invalid_status} if there was a failure to allocate a resource other than memory.
 \end{itemdescr}
 
+%\indexlibrary{\idxcode{brush}!constructor}
+%\begin{itemdecl}
+%brush(const mesh_brush_factory& f);
+%brush(const mesh_brush_factory& f, error_code& ec) noexcept;
+%\end{itemdecl}
+%\begin{itemdescr}
+%\pnum
+%\effects
+%Constructs an object of type \tcode{brush}.
+%
+%\pnum
+%\postconditions
+%\tcode{_Brush_type == brush_type::mesh}.
+%
+%\tcode{_Extend == std::experimental::io2d::extend::none}.
+%
+%\tcode{_Filter == std::experimental::io2d::extend::good}.
+%
+%\tcode{_Extend == std::experimental::io2d::extend::none}.
+%
+%\pnum
+%\throws
+%As specified in Error reporting (\ref{\iotwod.err.report}).
+%
+%\pnum
+%\errors
+%\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
+%
+%\tcode{io2d_error::invalid_status} if there was a failure to allocate a resource other than memory.
+%\end{itemdescr}
+%
 \indexlibrary{\idxcode{brush}!constructor}
 \begin{itemdecl}
-    brush(const mesh_brush_factory& f);
-    brush(const mesh_brush_factory& f, error_code& ec) noexcept;
+brush(surface_brush_factory& f);
+brush(surface_brush_factory& f, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{brush}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Brush_type == brush_type::mesh}.
-	
-	\tcode{_Extend == std::experimental::io2d::extend::none}.
-	
-	\tcode{_Filter == std::experimental::io2d::extend::good}.
-	
-	\tcode{_Extend == std::experimental::io2d::extend::none}.
+\pnum
+\effects
+Constructs an object of type \tcode{brush}.
 
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
-	
-	\tcode{errc::protocol_error} if there was a failure to allocate a resource other than memory.
-	
-\end{itemdescr}
+\pnum
+\postconditions
+\tcode{_Brush_type == brush_type::surface}.
 
-\indexlibrary{\idxcode{brush}!constructor}
-\begin{itemdecl}
-    brush(surface_brush_factory& f);
-    brush(surface_brush_factory& f, error_code& ec) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{brush}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Brush_type == brush_type::surface}.
-	
-	\tcode{_Extend == std::experimental::io2d::extend::none}.
-	
-	\tcode{_Filter == std::experimental::io2d::extend::good}.
-	
-	\tcode{_Extend == std::experimental::io2d::extend::none}.
+\tcode{_Extend == std::experimental::io2d::extend::none}.
 
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
-	
-	\tcode{errc::protocol_error} if there was a failure to allocate a resource other than memory.
-	
+\tcode{_Filter == std::experimental::io2d::extend::good}.
+
+\tcode{_Extend == std::experimental::io2d::extend::none}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
+
+\tcode{io2d_error::invalid_status} if there was a failure to allocate a resource other than memory.
 \end{itemdescr}
 
 \rSec1 [brush.modifiers]{\tcode{brush} modifiers}
@@ -240,97 +233,90 @@ Several graphics and rendering technologies that are currently widely used store
 \indexlibrary{\idxcode{brush}!\idxcode{extend}}
 \indexlibrary{\idxcode{extend}!\idxcode{brush}}
 \begin{itemdecl}
-    void extend(experimental::io2d::extend e) noexcept;
+void extend(experimental::io2d::extend e) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Sets the \tcode{extend} value for the brush.
-	
-	\pnum
-	\postconditions
-	\tcode{_Extend == e}.
-	
+\pnum
+\effects
+Sets the \tcode{extend} value for the \tcode{brush} object.
+
+\pnum
+\postconditions
+\tcode{_Extend == e}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{brush}!\idxcode{filter}}
 \indexlibrary{\idxcode{filter}!\idxcode{brush}}
 \begin{itemdecl}
-    void filter(experimental::io2d::filter f) noexcept;
+void filter(experimental::io2d::filter f) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Sets the \tcode{filter} value for the brush.
-	
-	\pnum
-	\postconditions
-	\tcode{_Filter == f}.
-	
+\pnum
+\effects
+Sets the \tcode{filter} value for the \tcode{brush} object.
+
+\pnum
+\postconditions
+\tcode{_Filter == f}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{brush}!\idxcode{matrix}}
 \indexlibrary{\idxcode{matrix}!\idxcode{brush}}
 \begin{itemdecl}
-    void matrix(const matrix_2d& m) noexcept;
+void matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Sets the \tcode{matrix_2d} value for the brush.
-	
-	\pnum
-	\postconditions
-	\tcode{_Matrix == m}.
-	
+\pnum
+\effects
+Sets the \tcode{matrix_2d} value for the \tcode{brush} object.
+
+\pnum
+\postconditions
+\tcode{_Matrix == m}.
 \end{itemdescr}
 
 \rSec1 [brush.observers]{\tcode{brush} observers}
 
-\indexlibrary{\idxcode{brush}!\idxcode{}}
-\indexlibrary{\idxcode{}!\idxcode{brush}}
+\indexlibrary{\idxcode{brush}!\idxcode{extend}}
+\indexlibrary{\idxcode{extend}!\idxcode{brush}}
 \begin{itemdecl}
-    experimental::io2d::extend extend() const noexcept;
+experimental::io2d::extend extend() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{_Extend}.
-
+\pnum
+\returns
+\tcode{_Extend}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{brush}!\idxcode{}}
-\indexlibrary{\idxcode{}!\idxcode{brush}}
+\indexlibrary{\idxcode{brush}!\idxcode{filter}}
+\indexlibrary{\idxcode{filter}!\idxcode{brush}}
 \begin{itemdecl}
-    experimental::io2d::filter filter() const noexcept;
+experimental::io2d::filter filter() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{_Filter}.
-
+\pnum
+\returns
+\tcode{_Filter}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{brush}!\idxcode{}}
-\indexlibrary{\idxcode{}!\idxcode{brush}}
+\indexlibrary{\idxcode{brush}!\idxcode{matrix}}
+\indexlibrary{\idxcode{matrix}!\idxcode{brush}}
 \begin{itemdecl}
-    matrix_2d matrix() const noexcept;
+matrix_2d matrix() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{_Matrix}.
-
+\pnum
+\returns
+\tcode{_Matrix}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{brush}!\idxcode{type}}
 \indexlibrary{\idxcode{type}!\idxcode{brush}}
 \begin{itemdecl}
-    brush_type type() const noexcept;
+brush_type type() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{_Brush_type}.
-
+\pnum
+\returns
+\tcode{_Brush_type}.
 \end{itemdescr}
