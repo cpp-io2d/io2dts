@@ -627,91 +627,96 @@ Because of this, mention of the applicability of the Clip Area will be omitted i
 \pnum
 Each of the five fundamental rendering and composing operations has its own set of minimum arguments.
 \begin{enumerate}
-	\item The painting operation has no minimum arguments.
-	\item The filling operation has no minimum arguments.
-	\item The stroking operation has no minimum arguments.
-	\item The masking operation has one minimum argument: an object, used as the mask (see \ref{surface.masking}), that is of type \tcode{brush} or type \tcode{surface}.
-	\item The typesetting operation has two minimum arguments: an object, used as the text that is rendered and composed to the surface (see \ref{surface.typesetting}), that is of type \tcode{string}; and, an object, used to specify the coordinates at which the origin of the first character of the text is positioned (see \ref{surface.typesetting}), of type \tcode{vector_2d}.
+	\item The Painting operation has no minimum arguments.
+	\item The Filling operation has no minimum arguments.
+	\item The Stroking operation has no minimum arguments.
+	\item The Masking operation has one minimum argument: an object, used as the \term{Mask Brush} (see \ref{surface.masking}), that is of type \tcode{brush} or type \tcode{surface}.
+	\item The Typesetting operation has two minimum arguments: an object, used as the text that is rendered and composed to the surface (see \ref{surface.typesetting}), that is of type \tcode{string}; and, an object, used to specify the coordinates at which the origin of the first character of the text is positioned (see \ref{surface.typesetting}), of type \tcode{vector_2d}.
 \end{enumerate}
 
 \pnum
 If a reference to an \tcode{error_code} object (see \ref{\iotwod.err.report}) is passed to a rendering and composing operation, it shall be considered part of the set of minimum arguments for that operation.
 
 \pnum
-For the masking operation, where a \tcode{surface} object is used as the mask argument, it may be immediately followed by an argument of type \tcode{vector_2d} which shall be used as the mask surface origin (see \ref{surface.masking}). If a mask surface origin argument is passed to the masking operation, it shall be considered part of the set of minimum arguments for that operation.
+For the Masking operation, where a \tcode{surface} object is used as the Mask Brush argument, it may be immediately followed by an argument of type \tcode{vector_2d} which shall be used as the origin of the \tcode{surface} object used as the Mask Brush (see \ref{surface.masking}) and it shall be considered part of the set of minimum arguments for that operation.
+
+\rSec1 [surface.sourcebrush]{Source Brush for rendering and composing operations}
 
 \pnum
-A \term{source brush} is composed of a pixmap, an \tcode{extend} value, a \tcode{filter} value, and a \tcode{matrix_2d} object.
+A \term{Source Brush} is composed of a pixmap, an \tcode{extend} value, a \tcode{filter} value, and a \tcode{matrix_2d} object.
 
 \pnum
 \enternote
-A \tcode{brush} object provides all of the components of a source brush. As such, \tcode{brush} objects will commonly be used as source brushes.
+A \tcode{brush} object provides all of the components of a Source Brush. As such, \tcode{brush} objects will commonly be used as Source Brushes.
 \exitnote
 
 \pnum
-The rendering and composing operations shall be provided with a source brush each time they are invoked.
+The rendering and composing operations require a Source Brush each time they are invoked. The following paragraphs specify how the Source Brush shall be determined.
 
 \pnum
-A source brush may be provided by a \tcode{brush} object or by an identified set of arguments which, together, provide all of the components of a source brush.
+A Source Brush can be provided as a \tcode{brush} object or as an identified set of arguments which, together, provide all of the components of a Source Brush.
 
 \pnum
-When a rendering and composing operation is invoked with only those arguments that are part of its set of minimum arguments, the surface's Current Brush shall be the source brush.
+When a rendering and composing operation is invoked with only those arguments that are part of its set of minimum arguments, the \tcode{surface} object's Current Brush shall be the Source Brush.
 
 \pnum
-When a rendering and composing operation is invoked with \term{extra arguments}, which are additional arguments beyond those that are part of its set of minimum arguments, the source brush shall be as follows, with any errors reported as specified in Error reporting (\ref{\iotwod.err.report}):
+When a rendering and composing operation is invoked with \term{extra arguments}, which are additional arguments beyond those that are part of its set of minimum arguments, the Source Brush shall be as follows, with any errors reported as specified in Error reporting (\ref{\iotwod.err.report}):
 \begin{itemize}
-	\item Where there is one extra argument and it is a \tcode{brush} object, the source brush shall be that \tcode{brush} object.
-	\item Where there is one extra argument and it is an \tcode{rgba_color} object, the source brush shall be the same as if it were a \tcode{brush} object constructed from a \tcode{solid_color_brush_factory} constructed from the extra argument.
-	\item Where there is more than one extra argument, including default arguments, and the first extra argument is a \tcode{surface} object, the source brush shall be the same as if it were a \tcode{brush} object \tcode{b} constructed from a \tcode{surface_brush_factory} constructed from the \tcode{surface} object extra argument with the following adjustments:
+	\item Where there is one extra argument and it is a \tcode{brush} object, the Source Brush shall be that \tcode{brush} object.
+	\item Where there is one extra argument and it is an \tcode{rgba_color} object, the Source Brush shall be the same as if it were a \tcode{brush} object constructed from a \tcode{solid_color_brush_factory} constructed from the extra argument and sampling from it shall be as specified by \ref{brush.sampling} and \ref{brush.sampling.solidcolor}.
+	\item Where there is more than one extra argument, including default arguments, and the first extra argument is a \tcode{surface} object, the Source Brush shall be the same as if it were a \tcode{brush} object \tcode{b} constructed from a \tcode{surface_brush_factory} constructed from the \tcode{surface} object extra argument and sampling from it shall be as specified by \ref{brush.sampling} and \ref{brush.sampling.surface}, subject to the following adjustments:
 	\begin{enumerate}
-		\item The \tcode{surface} object extra argument should be used directly; no copy of it should be made. This differs from the \tcode{surface_brush_factory} class, which requires that a copy be made and that only the copy be used.
-		\item The source brush shall produce the same observable results that \tcode{b} would produce after \tcode{brush::extend} was called on \tcode{b} with the \tcode{extend} object extra argument passed to \tcode{brush::extend} as an argument.
-		\item The source brush shall produce the same observable results that \tcode{b} would produce after \tcode{brush::filter} was called on \tcode{b} with the \tcode{filter} object extra argument passed to \tcode{brush::filter} as an argument.
-		\item If there is an extra argument of type \tcode{vector_2d}, the source brush shall produce the same observable results that \tcode{b} would produce after \tcode{brush::matrix} was called on \tcode{b} with the result of passing the \tcode{vector_2d} object extra argument to \tcode{matrix_2d::init_translate} passed to \tcode{brush::matrix} as an argument.
-		\item If there is an extra argument of type \tcode{matrix_2d}, the source brush shall produce the same observable results that \tcode{b} would produce after \tcode{brush::matrix} was called on \tcode{b} with the \tcode{matrix} object extra argument passed to \tcode{brush::matrix} as an argument.
+		\item The \tcode{surface} object extra argument should be used directly; no copy of it should be made. This differs from the \tcode{surface_brush_factory} class, which requires that a copy of the surface be made and that only the copy be used.
+		\item The Source Brush shall produce the same observable results that \tcode{b} would produce after \tcode{brush::extend} was called on \tcode{b} with the \tcode{extend} object extra argument passed to \tcode{brush::extend} as an argument.
+		\item The Source Brush shall produce the same observable results that \tcode{b} would produce after \tcode{brush::filter} was called on \tcode{b} with the \tcode{filter} object extra argument passed to \tcode{brush::filter} as an argument.
+		\item If there is an extra argument of type \tcode{vector_2d}, the Source Brush shall produce the same observable results that \tcode{b} would produce after \tcode{brush::matrix} was called on \tcode{b} with the result of passing the \tcode{vector_2d} object extra argument to \tcode{matrix_2d::init_translate} passed to \tcode{brush::matrix} as an argument.
+		\item If there is an extra argument of type \tcode{matrix_2d}, the Source Brush shall produce the same observable results that \tcode{b} would produce after \tcode{brush::matrix} was called on \tcode{b} with the \tcode{matrix} object extra argument passed to \tcode{brush::matrix} as an argument.
 	\end{enumerate}
 \end{itemize}
 
 \pnum
 \enternote
-The rendering and composing operations each have the same combinations of extra arguments, all of which are covered by the above requirements that determine the source brush when extra arguments are present.
+The rendering and composing operations each have the same combinations of extra arguments, all of which are covered by the above requirements that determine the Source Brush when extra arguments are present.
 \exitnote
 
+%\pnum
+%When a rendering and composing operation needs to obtain a value for a pixel from its Source Brush, it shall do so as specified in \ref{surface.sampling}. %% If the Source Brush is an object of type \tcode{brush}, and invoking \tcode{brush::type} on it returns \tcode{brush_type::linear} or \tcode{brush_type::radial}, \ref{gradients.sampling} shall also apply.
+%
 \pnum
-When a rendering and composing operation needs to obtain a value for a pixel from its source brush, it shall do so as specified in \ref{surface.sampling}. %% If the source brush is an object of type \tcode{brush}, and invoking \tcode{brush::type} on it returns \tcode{brush_type::linear} or \tcode{brush_type::radial}, \ref{gradients.sampling} shall also apply.
-
-\pnum
-A \tcode{surface} object shall not be used as a mask or as a source brush for any rendering and composing operations invoked on that \tcode{surface} object. No diagnostic is required.
+A \tcode{surface} object shall not be used as a Mask Brush or as a Source Brush for any rendering and composing operations invoked on that \tcode{surface} object; no diagnostic is required.
 \enternote
-When a \tcode{brush} object \tcode{b} is created from a \tcode{surface} object \tcode{s} using the \tcode{surface_brush_factory} class, \tcode{b} may be used as a mask or as a source brush for rendering and composing operations invoked on \tcode{s} because the \tcode{surface_brush_factory} class creates a copy of \tcode{s} (see \ref{surfacebrushfact}), thereby avoiding the aliasing problems and race conditions that this requirement exists to block.
+When a \tcode{brush} object \tcode{b} is created from a \tcode{surface} object \tcode{s} using the \tcode{surface_brush_factory} class, \tcode{b} can be used as a Mask Brush or as a Source Brush for rendering and composing operations invoked on \tcode{s} because the \tcode{surface_brush_factory} class creates a copy of \tcode{s} (see \ref{surfacebrushfact}), thereby avoiding the aliasing problems and potential race conditions that would otherwise exist.
 \exitnote
 
-\rSec1 [surface.sampling] {Sampling from a source brush}
-
-\pnum
-This section is forthcoming in a future revision.
-
+%\rSec1 [surface.sampling] {Sampling from a Source Brush}
+%
+%\pnum
+%If the Source Brush is a \tcode{brush} object, sampling from it shall be as specified by \ref{brush.sampling}.
+%
+%
+%When \tcode{b} is a surface brush, then when sampling from \tcode{b}, the visual data returned shall be from the point \tcode{pt} in the graphics data of the brush, where \tcode{pt} is the return value when passing the point to be sampled to \tcode{b.matrix().transform_coords}, taking into account the value of \tcode{b.extend()} and \tcode{b.filter()}
+%
 %%\pnum
 %%\enternote
 %%A pixmap can be thought of ***FIXME*** Is it really a discrete signal? What does it mean to sample from a texture? Should there even be a note here or should I just explain the process along the lines of how path processing is explained?
 %%\exitnote
 %%
 %\pnum
-%When performing a composing operation, the source pixels for the composition algorithm shall be sampled from the source brush and the destination pixels shall be sampled from the \tcode{surface} object. The \tcode{surface} object shall be modified in the manner specified by the composition algorithm.
+%When performing a composing operation, the source pixels for the composition algorithm shall be sampled from the Source Brush and the destination pixels shall be sampled from the \tcode{surface} object. The \tcode{surface} object shall be modified in the manner specified by the composition algorithm.
 %
 %\pnum
-%The source brush and the \tcode{surface} object may have different visual data formats. 
+%The Source Brush and the \tcode{surface} object may have different visual data formats. 
 %
 %\pnum
-%When performing a composing operation, the coordinate space of a \tcode{surface} object and the coordinate space of a source brush's pixmap shall be the same, subject to the following rules:
+%When performing a composing operation, the coordinate space of a \tcode{surface} object and the coordinate space of a Source Brush's pixmap shall be the same, subject to the following rules:
 %\begin{itemize}
-%	\item When sampling from a source brush, each point shall be transformed by calling \tcode{matrix_2d::transform_point} on the source brush's \tcode{matrix_2d} object and using the return value as the point which shall be sampled.
+%	\item When sampling from a Source Brush, each point shall be transformed by calling \tcode{matrix_2d::transform_point} on the Source Brush's \tcode{matrix_2d} object and using the return value as the point which shall be sampled.
 %	\item When sampling from the \tcode{surface} object, each point shall be transformed by calling \tcode{matrix_2d::transform_point} on the \tcode{matrix_2d} object returned by calling \tcode{surface::matrix()} on the \tcode{surface} object and using the return value as the point which shall be sampled.
 %\end{itemize}
 %
 %\pnum
 %\enternote
-%Each source brush and surface has its own local coordinate space.
+%Each Source Brush and surface has its own local coordinate space.
 %
 %\pnum
 %Its \tcode{matrix_2d} object, identified in the list above, maps the default coordinate space to its local coordinate space.
@@ -728,7 +733,7 @@ This section is forthcoming in a future revision.
 %***FIXME***
 %
 %\pnum
-%For every raster graphics data graphics resource that may be used as a source brush or a mask it shall be possible to provide an input value in the form of a point and receive an output value in the form of a pixel. ***FIXME*** Need to deal with formats - are they an input or is the returned pixel always in the RGBA color space with the conversion to the required format happening as a subsequent step? Also, something needs to be done to ensure that the output is the same value both for every call with the same input and state and for all implementations - a graphics data graphics resource currently has no coordinate system which makes that problematic or even impossible. together with its graphics state data, if any,
+%For every raster graphics data graphics resource that may be used as a Source Brush or a mask it shall be possible to provide an input value in the form of a point and receive an output value in the form of a pixel. ***FIXME*** Need to deal with formats - are they an input or is the returned pixel always in the RGBA color space with the conversion to the required format happening as a subsequent step? Also, something needs to be done to ensure that the output is the same value both for every call with the same input and state and for all implementations - a graphics data graphics resource currently has no coordinate system which makes that problematic or even impossible. together with its graphics state data, if any,
 %
 %\pnum
 %
@@ -738,61 +743,61 @@ This section is forthcoming in a future revision.
 %%\pnum
 %%If the \tcode{brush}'s \tcode{brush_type} is \tcode{brush_type::mesh}, the \tcode{brush}'s \tcode{extend} value is ignored and all operations proceed as if the \tcode{extend} value is \tcode{extend::none}.
 %%
-\rSec1 [brush.filter] {Effects of its \tcode{filter} value of a \tcode{brush} object}
+%\rSec1 [brush.filter] {Effects of its \tcode{filter} value of a \tcode{brush} object}
+%
+%\pnum
+%The effects of the \tcode{filter} value on a \tcode{brush} object are documented in \ref{filter}.
+%
+%\pnum
+%The initial \tcode{filter} value of a \tcode{brush} object depends on the brush factory used to create it and is documented in the \tcode{brush} constructors for each type of brush factory.
+%
+%\rSec1 [brush.matrix] {Effects of its \tcode{matrix_2d} value on a \tcode{brush} object}
+%
+%\pnum
+%The initial \tcode{matrix_2d} value of a \tcode{brush} object is \tcode{matrix_2d::init_identity()}.
+%
+%\pnum
+%If the \tcode{brush}'s \tcode{brush_type} is \tcode{brush_type::solid_color}, the brush is treated as if its data area is an infinite plane. As such\ the \tcode{brush}'s \tcode{extend}, \tcode{filter}, and \tcode{matrix_2d} values do not matter. Regardless of the coordinate from which data from the \tcode{brush} is requested, the \tcode{brush} will always return the color which the \tcode{solid_color_brush_factory} that was used to create it had at the time the \tcode{brush} was created.
+%
+%\pnum
+%All brushes except \tcode{brush_type::solid_color} brushes are sensitive to coordinates and as such will need to have an appropriate \tcode{matrix_2d} value to achieve the desired outcome.
+%
+%\pnum
+%\enternote
+%Sometimes the initial \tcode{matrix_2d} value will be the appropriate value. As such there is no requirement to set a \tcode{matrix_2d} value unless you need something other than the initial value.
+%\exitnote
+%
+%\pnum
+%When it is necessary for the implementation to retrieve data from a \tcode{brush} object to calculate the resulting color value of a coordinate on a \tcode{surface}, the coordinate is first transformed using the \tcode{brush} object's \tcode{matrix_2d}.
+%
+%\pnum
+%A \tcode{brush} object's \tcode{matrix_2d} value transforms a coordinate from the \tcode{surface}'s coordinate space to the \tcode{brush}'s coordinate space.
+%
+%\pnum
+%\enterexample
+%Take a \tcode{brush b} which has a \tcode{matrix_2d} value of \tcode{matrix_2d::init_scale(\{ 2.0, 0.25 \})}.
+%
+%\pnum
+%If a request for visual data from \tcode{b} at the point \tcode{vector_2d(30.0, 18.0)} is made, then by operation of \tcode{b}'s \tcode{matrix_2d}, the actual data that will be retrieved is the visual data at \tcode{vector_2d(60.0, 4.5)} (after application of \tcode{b}'s \tcode{extend} value as described above).
+%
+%\pnum
+%Notice that although the \xaxis scale is set to \tcode{2.0} and the \yaxis scale is set to \tcode{0.25}, the actual effect is the same as if the \tcode{b}'s data itself had been scaled to the inverse of those values. This is because the transformation goes from the \tcode{surface} object's coordinate space to \tcode{b}'s coordinate space rather than from the \tcode{b}'s coordinate space to the \tcode{surface} object's coordinate space.
+%\exitexample
+%
+%\pnum
+%\enternote
+%For the same reason as explained in the example above, if you wish to translate the origin point of a \tcode{brush} to the point \tcode{vector_2d p} of a \tcode{surface}, you would do so by setting \tcode{matrix_2d::init_translate(-p)} as the brush's \tcode{matrix_2d} value.
+%\exitnote
+%
+\rSec1 [surface.painting] {\tcode{surface} painting}
 
 \pnum
-The effects of the \tcode{filter} value on a \tcode{brush} object are documented in \ref{filter}.
-
-\pnum
-The initial \tcode{filter} value of a \tcode{brush} object depends on the brush factory used to create it and is documented in the \tcode{brush} constructors for each type of brush factory.
-
-\rSec1 [brush.matrix] {Effects of its \tcode{matrix_2d} value on a \tcode{brush} object}
-
-\pnum
-The initial \tcode{matrix_2d} value of a \tcode{brush} object is \tcode{matrix_2d::init_identity()}.
-
-\pnum
-If the \tcode{brush}'s \tcode{brush_type} is \tcode{brush_type::solid_color}, the brush is treated as if its data area is an infinite plane. As such\ the \tcode{brush}'s \tcode{extend}, \tcode{filter}, and \tcode{matrix_2d} values do not matter. Regardless of the coordinate from which data from the \tcode{brush} is requested, the \tcode{brush} will always return the color which the \tcode{solid_color_brush_factory} that was used to create it had at the time the \tcode{brush} was created.
-
-\pnum
-All brushes except \tcode{brush_type::solid_color} brushes are sensitive to coordinates and as such will need to have an appropriate \tcode{matrix_2d} value to achieve the desired outcome.
-
-\pnum
-\enternote
-Sometimes the initial \tcode{matrix_2d} value will be the appropriate value. As such there is no requirement to set a \tcode{matrix_2d} value unless you need something other than the initial value.
-\exitnote
-
-\pnum
-When it is necessary for the implementation to retrieve data from a \tcode{brush} object to calculate the resulting color value of a coordinate on a \tcode{surface}, the coordinate is first transformed using the \tcode{brush} object's \tcode{matrix_2d}.
-
-\pnum
-A \tcode{brush} object's \tcode{matrix_2d} value transforms a coordinate from the \tcode{surface}'s coordinate space to the \tcode{brush}'s coordinate space.
-
-\pnum
-\enterexample
-Take a \tcode{brush b} which has a \tcode{matrix_2d} value of \tcode{matrix_2d::init_scale(\{ 2.0, 0.25 \})}.
-
-\pnum
-If a request for data from \tcode{b} at the point \tcode{vector_2d(30.0, 18.0)} is made, by operation of \tcode{b}'s \tcode{matrix_2d}, the actual data that will be retrieved is the data at \tcode{vector_2d(60.0, 4.5)} (after application of \tcode{b}'s \tcode{extend} value as described above).
-
-\pnum
-Notice that although the \xaxis scale is set to \tcode{2.0} and the \yaxis scale is set to \tcode{0.25}, the actual effect is the same as if the \tcode{b}'s data itself had been scaled to the inverse of those values. This is because the transformation goes from the \tcode{surface}'s coordinate space to the \tcode{brush}'s coordinate space rather than from the \tcode{brush}'s coordinate space to the \tcode{surface}'s coordinate space.
-\exitexample
-
-\pnum
-\enternote
-For the same reason as explained in the example above, if you wish to translate the origin point of a \tcode{brush} to the point \tcode{vector_2d p} of a \tcode{surface}, you would do so by setting \tcode{matrix_2d::init_translate(-p)} as the brush's \tcode{matrix_2d} value.
-\exitnote
-
-\rSec2 [surface.painting] {\tcode{surface} painting}
-
-\pnum
-When a Painting operation is initiated on a surface, the implementation shall compose the source brush with the \underlyingsurface in the manner specified by the surface's current Composition Operator and modify the \underlyingsurface to reflect the results of that operation.
+When a Painting operation is initiated on a surface, the implementation shall compose the Source Brush with the \underlyingsurface in the manner specified by the surface's current Composition Operator and modify the \underlyingsurface to reflect the results of that operation.
 
 \pnum
 No part of the \underlyingsurface that is outside of the Clip Area shall be modified.
 
-\rSec2 [surface.filling] {\tcode{surface} filling}
+\rSec1 [surface.filling] {\tcode{surface} filling}
 
 \pnum
 This section is forthcoming in a future revision.
@@ -803,7 +808,7 @@ This section is forthcoming in a future revision.
 %	\item The surface's ***FIXME***
 %\end{itemize}
 
-\rSec2 [surface.stroking] {\tcode{surface} stroking}
+\rSec1 [surface.stroking] {\tcode{surface} stroking}
 
 \pnum
 When a Stroking operation is initiated on a surface, the implementation shall carry out the Stroking operation for each path geometry in the source path.
@@ -830,12 +835,12 @@ The following rules shall apply when a Stroking operation is carried out on a pa
 \item If the Dash Pattern's \tcode{vector<double>} member contains two or more values, the values shall be used to define a pattern in which the path is alternatively shown then hidden for the length specified by the value. The ends of each shown portion of the path shall be rendered as specified by the Line Cap value. If the Dash Pattern's \tcode{double} member, which specifies an offset value, is not \tcode{0.0}, the meaning of its value is \impldef{Dash Pattern!offset value}.
 \end{enumerate}
 
-\rSec2 [surface.masking] {\tcode{surface} masking}
+\rSec1 [surface.masking] {\tcode{surface} masking}
 
 \pnum
 This section is forthcoming in a future revision.
 
-\rSec2 [surface.typesetting] {\tcode{surface} typesetting}
+\rSec1 [surface.typesetting] {\tcode{surface} typesetting}
 
 \pnum
 This section is forthcoming in a future revision.

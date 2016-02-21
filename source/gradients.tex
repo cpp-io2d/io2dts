@@ -134,7 +134,7 @@ An interpolated circle shall not be rendered if its value for $o$ results in $ra
 \pnum
 For any offset value $o$, its color value shall be determined according to the following rules:
 
-\begin{itemize}
+\begin{enumeratea}
 \item If there are less than two color stops or if all color stops have the same offset value, then the color value of every offset value shall be \tcode{rgba_color::transparent_black()} and the remainder of \ref{gradients.sampling} is inapplicable.
 
 \item If exactly one color stop has an offset value equal to $o$, $o$'s color value shall be the color value of that color stop and the remainder of \ref{gradients.sampling} is inapplicable.
@@ -181,7 +181,7 @@ This includes any color stops with an offset value of \tcode{1.0} provided that 
 
 \item Where the value of $o$ is in the range $[0,1]$, its color value shall be determined by interpolating between the color stop, $r$, which is the color stop whose offset value is closest to $o$ without being less than $o$ and which can have an adjacent color stop to its left, and the color stop that is adjacent to $r$ on $r$'s left. The acceptable forms of interpolating between color values is set forth later in this section.
 
-\item Where the value of $o$ is outside the range $[0,1]$, its color value depends on the \tcode{extend} value of the brush which is created using the gradient.
+\item Where the value of $o$ is outside the range $[0,1]$, its color value depends on the \tcode{extend} value of the brush which is created using the gradient:
 	\begin{itemize}
 	\item If the \tcode{extend} value is \tcode{extend::none}, the color value of $o$ shall be \tcode{rgba_color::transparent_black()}.
 	
@@ -205,7 +205,7 @@ This includes any color stops with an offset value of \tcode{1.0} provided that 
 	Given $o == -5.8$, after application of this rule $o == 0.2$ and the color value of $o$ shall be the same as if the initial value of $o$ was $0.2$.
 	\exitexample
 	\end{itemize}
-\end{itemize}
+\end{enumeratea}
 
 \pnum
 It is unspecified whether the interpolation between the color values of two adjacent color stops is performed linearly on each color channel, is performed within an RGB color space (with or without gamma correction), or is performed by a linear color interpolation algorithm implemented in hardware (typically in a graphics processing unit).

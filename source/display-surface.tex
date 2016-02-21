@@ -102,7 +102,12 @@ The pixel data of the Display Buffer can never be accessed by the user except th
 The Draw Callback (Table~\ref{tab:displaysurface.state.listing}) is called in a continous loop in order to dynamically update the pixel content of the Back Buffer.
 
 \pnum
-After each execution of the Draw Callback, the contents of the Back Buffer are transferred using sampling to the Display Buffer. The Display Buffer is then shown to the user via the \term{output device}.
+After each execution of the Draw Callback, the contents of the Back Buffer are transferred using sampling with an \unspecnorm filter to the Display Buffer. The Display Buffer is then shown to the user via the \term{output device}.
+\enternote
+The filter is \unspecnorm to allow implementations to achieve the best possible result, including by changing filters at runtime depending on factors such as whether scaling is required and by using specialty hardware if available, while maintaining a balance between quality and performance that the implementer deems acceptable.
+
+In the absence of specialty hardware, implementers are encouraged to use a filter that is the equivalent of a nearest neighbor interpolation filter if no scaling is required and otherwise to use a filter that produces results that are at least as good as those that would be obtained by using a bilinear interpolation filter.
+\exitnote
 
 \pnum
 What constitutes an output device is \impldef{output device}, with the sole constraint being that an output device shall allow the user to see the dynamically-updated contents of the Display Buffer.
@@ -639,7 +644,7 @@ Performs the following actions in a continuous loop:
 	\item Evaluate Auto Clear and perform the actions required by its specification, if any.
 	\item Run the Draw Callback.
 	\item Ensure that all operations from the Draw Callback that can effect the Back Buffer have completed.
-	\item Transfer the contents of the Back Buffer to the Display Buffer using sampling. If the User Scaling Callback does not have a value equivalent to its default value, use it to determine the position where the contents of the Back Buffer shall be transferred to and whether or not the Letterbox Brush should be used. Otherwise use the value of Scaling Type to determine the position and whether the Letterbox Brush should be used.
+	\item Transfer the contents of the Back Buffer to the Display Buffer using sampling with an \unspecnorm filter. If the User Scaling Callback does not have a value equivalent to its default value, use it to determine the position where the contents of the Back Buffer shall be transferred to and whether or not the Letterbox Brush should be used. Otherwise use the value of Scaling Type to determine the position and whether the Letterbox Brush should be used.
 \end{itemize}
 
 \pnum
