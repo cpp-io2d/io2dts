@@ -1,31 +1,35 @@
 %!TEX root = io2d.tex
-\rSec0 [nonmemberfunctions] {Non-member functions}
+\rSec0 [\iotwod.standalone] {Standalone functions}
 
-\rSec1 [nonmemberfunctions.synopsis] {Non-member functions synopsis}
+\rSec1 [\iotwod.standalone.synopsis] {Standalone functions synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   int format_stride_for_width(format format, int width) noexcept;
   display_surface make_display_surface(int preferredWidth,
     int preferredHeight, format preferredFormat,
-    scaling scl = scaling::letterbox);
+    scaling scl = scaling::letterbox,
+    refresh_rate rr = refresh_rate::as_fast_as_possible, double fps = 30.0);
   display_surface make_display_surface(int preferredWidth,
     int preferredHeight, format preferredFormat, error_code& ec,
-    scaling scl = scaling::letterbox) noexcept;
+    scaling scl = scaling::letterbox,
+    refresh_rate rr = refresh_rate::as_fast_as_possible, double fps = 30.0) noexcept;
   display_surface make_display_surface(int preferredWidth,
     int preferredHeight, format preferredFormat, int preferredDisplayWidth, 
-    int preferredDisplayHeight, scaling scl = scaling::letterbox);
+    int preferredDisplayHeight, scaling scl = scaling::letterbox,
+    refresh_rate rr = refresh_rate::as_fast_as_possible, double fps = 30.0);
   display_surface make_display_surface(int preferredWidth,
     int preferredHeight, format preferredFormat, int preferredDisplayWidth, 
     int preferredDisplayHeight, ::std::error_code& ec,
-    scaling scl = scaling::letterbox) noexcept;
+    scaling scl = scaling::letterbox,
+    refresh_rate rr = refresh_rate::as_fast_as_possible, double fps = 30.0) noexcept;
   image_surface make_image_surface(format format, int width, int height);
   image_surface make_image_surface(format format, int width, int height, 
     error_code& ec) noexcept;
 } } } } // namespaces std::experimental::io2d::v1
 \end{codeblock}
 
-\rSec1 [nonmemberfunctions.formatstrideforwidth] {\tcode{format_stride_for_width}}
+\rSec1 [\iotwod.standalone.formatstrideforwidth] {\tcode{format_stride_for_width}}
 
 \indexlibrary{\idxcode{format_stride_for_width}}
 \begin{itemdecl}
@@ -40,28 +44,34 @@ The size in bytes of a row of pixels with a visual data format of \tcode{fmt} th
 If \tcode{fmt == format::invalid}, this function shall return \tcode{0}.
 \end{itemdescr}
 
-\rSec1 [nonmemberfunctions.makedisplaysurface] {\tcode{make_display_surface}}
+\rSec1 [\iotwod.standalone.makedisplaysurface] {\tcode{make_display_surface}}
 
 \indexlibrary{\idxcode{make_display_surface}}
 \begin{itemdecl}
 display_surface make_display_surface(int preferredWidth,
   int preferredHeight, format preferredFormat,
-  scaling scl = scaling::letterbox);
+  scaling scl = scaling::letterbox,
+  refresh_rate rr = refresh_rate::as_fast_as_possible, double fps = 30.0);
 display_surface make_display_surface(int preferredWidth,
   int preferredHeight, format preferredFormat, error_code& ec,
-  scaling scl = scaling::letterbox) noexcept;
+  scaling scl = scaling::letterbox,
+  refresh_rate rr = refresh_rate::as_fast_as_possible, double fps = 30.0) 
+  noexcept;
 display_surface make_display_surface(int preferredWidth,
   int preferredHeight, format preferredFormat, int preferredDisplayWidth, 
-  int preferredDisplayHeight, scaling scl = scaling::letterbox);
+  int preferredDisplayHeight, scaling scl = scaling::letterbox,
+  refresh_rate rr = refresh_rate::as_fast_as_possible, double fps = 30.0);
 display_surface make_display_surface(int preferredWidth,
   int preferredHeight, format preferredFormat, int preferredDisplayWidth, 
   int preferredDisplayHeight, ::std::error_code& ec,
-  scaling scl = scaling::letterbox) noexcept;
+  scaling scl = scaling::letterbox,
+  refresh_rate rr = refresh_rate::as_fast_as_possible, double fps = 30.0) 
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-Returns a \tcode{display_surface} object that is exactly the same as if the \tcode{display_surface} constructor was called with the same arguments.
+Returns a \tcode{display_surface} object that is exactly the same as if the equivalent \tcode{display_surface} constructor was called with the same arguments.
 
 \pnum
 \throws
@@ -72,13 +82,14 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 The errors, if any, produced by this function are the same as the errors for the equivalent \tcode{display_surface} constructor (\ref{displaysurface.cons}).
 \end{itemdescr}
 
-\rSec1 [nonmemberfunctions.makeimagesurface] {\tcode{make_image_surface}}
+\rSec1 [\iotwod.standalone.makeimagesurface] {\tcode{make_image_surface}}
 
-\indexlibrary{\idxcode{}}
+\indexlibrary{\idxcode{make_image_surface}}
 \begin{itemdecl}
-image_surface make_image_surface(format format, int width, int height);
-image_surface make_image_surface(format format, int width, int height, 
-  error_code& ec) noexcept;
+image_surface make_image_surface(int width, int height,
+  format fmt = format::argb32);
+image_surface make_image_surface(int width, int height,
+  error_code& ec, format fmt = format::argb32) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

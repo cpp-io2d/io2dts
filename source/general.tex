@@ -25,20 +25,15 @@ Multilingual Plane}
 \item ISO/IEC TR 19769:2004, \doccite{Information technology --- Programming 
 languages, their environments and system software interfaces --- Extensions for 
 the programming language C to support new character data types}
-\item IEC 61966-2-1 \doccite{Colour Measurement and Management in Multimedia Systems and Equipment - Part 2-1: Default RGB Colour Space - sRGB}
+\item ISO 15076-1, \doccite{Image technology colour management --- Architecture, profile format and data structure --- Part 1: Based on ICC.1:2004-10}
+\item IEC 61966-2-1, \doccite{Colour Measurement and Management in Multimedia Systems and Equipment - Part 2-1: Default RGB Colour Space - sRGB}
 \item ISO 32000-1:2008, \doccite{Document management --- Portable document 
 format --- Part 1: PDF 1.7}
+\item ISO/IEC 9541-1:2012, \doccite{Information technology --- Font information interchange --- Part 1: Architecture}
 \item Tantek \c{C}elik et al., \doccite{CSS Color Module Level 3 --- W3C 
 Recommendation 07 June 2011}, 
 Copyright~\textcopyright~2011~W3C\textsuperscript{\textregistered} (MIT, ERCIM, 
 Keio)
-%\item ****FIXME**** The remaining references should probably be non-normative 
-%and in an informative bibliography (ISO/IEC Directives, Part 2, 6.2.2 and 6.4.2)
-%\item Carl D. Worth, Chris Wilson, et al., \doccite{cairo graphics library --- 
-%Version 1.12.16}, 
-%Copyright~\textcopyright~2002~University~of~Southern~California, 
-%Copyright~\textcopyright~2005~Red~Hat,~Inc., 
-%Copyright~\textcopyright~2011~Intel~Corporation
 \end{itemize}
 
 \pnum
@@ -80,6 +75,10 @@ a specification of visual data channels which defines a total bit size for the f
 The total bit size may be larger than the sum of the bit sizes of all of the channels of the format.
 \exitnote
 
+\indexdefn{visual data element}
+\definition{visual data element}{\iotwod.general.defns.visualdataelement}
+an item of visual data with a defined visual data format
+
 \indexdefn{alpha}
 \definition{alpha}{\iotwod.general.defns.alpha}
 visual data representing transparency
@@ -87,7 +86,7 @@ visual data representing transparency
 % The following may not be needed. Already defined in IEC 60050 723-05-31
 \indexdefn{pixel}
 \definition{pixel}{\iotwod.general.defns.pixel}
-a discrete visual data element with a visual data format-dependent composition
+a discrete, rectangular visual data element
 
 \indexdefn{aliasing}
 \definition{aliasing}{\iotwod.general.defns.alias}
@@ -169,14 +168,6 @@ an additive color space defined in IEC 61966-2-1 that is based on the RGB color 
 %Where a statement in the form 'compose X and Y' is encountered, X is the 'source of raster graphics data' and Y is the 'raster graphics data graphics resource'.
 %\exitnote
 %
-\indexdefn{composing operation}
-\definition{composing operation}{\iotwod.general.defns.composingoperation}
-an operation that uses a composition algorithm to combine part or all of a source of visual data capable of being treated as though it were a \pixmap with a \pixmap
-
-\indexdefn{composition algorithm}
-\definition{composition algorithm}{\iotwod.general.defns.compositionalgorithm}
-an algorithm that combines a source pixel and a destination pixel producing a result that has the same visual data format as the destination pixel
-
 \indexdefn{cubic B\'ezier curve}
 \definition{cubic B\'ezier curve}{\iotwod.general.defns.bezier}
 a curve defined by the 
@@ -206,7 +197,7 @@ a path segment which has the same value for its start point and its end point is
 
 \indexdefn{filter}
 \definition{filter}{\iotwod.general.defns.filter}
-a mathematical function that determines the pixel value of a point for a \pixmap
+a mathematical function that determines the visual data value of a point for a graphics data graphics resource
 
 \indexdefn{final path segment}
 \definition{final path segment}{\iotwod.general.defns.finalpathsegment}
@@ -308,34 +299,57 @@ is a line or a curve, each of which has a start point and an end point
 
 \indexdefn{render}
 \definition{render}{\iotwod.general.defns.render}
-to transform path geometries or text into raster graphics data in the manner specified by a set of graphics state data
+to transform path geometries or text into graphics data in the manner specified by a set of graphics state data
 
 \indexdefn{rendering operation}
 \definition{rendering operation}{\iotwod.general.defns.renderingoperation}
 an operation that performs rendering
 
+\indexdefn{compose}
+\definition{compose}{\iotwod.general.defns.compose}
+to combine part or all of a source graphics data graphics resource with a destination graphics data graphics resource in the manner specified by a composition algorithm
+
+\indexdefn{composing operation}
+\definition{composing operation}{\iotwod.general.defns.composingoperation}
+an operation that performs composing
+%an operation that uses a composition algorithm to combine part or all of a source of visual data capable of being treated as though it were a \pixmap with a \pixmap
+
+\indexdefn{composition algorithm}
+\definition{composition algorithm}{\iotwod.general.defns.compositionalgorithm}
+an algorithm that combines a source visual data element and a destination visual data element producing a visual data element that has the same visual data format as the destination visual data element
+
+\indexdefn{rendering and composing operation}
+\definition{rendering and composing operation}{\iotwod.general.defns.renderingandcomposingop}
+an operation that is either a composing operation or a rendering operation followed by a composing operation
+
 \indexdefn{sample}
 \definition{sample}{\iotwod.general.defns.sample}
-to use a filter to obtain a pixel for a given coordinate from a pixmap
-%to provide a coordinate and obtain a pixel from a raster graphics data graphics resource by application of a filter
-%%to transform continuous or discrete signals to discrete data by applying
-%%a filter
+to use a filter to obtain the visual data for a given point from a graphics data graphics resource
 
-%\indexdefn{signal}
-%\indexdefn{signal!continuous}
-%\definition{signal}{\iotwod.general.defns.signal.cont}
-%<continuous signal> a real function which is defined at every point within a 
-%two-dimensional space and conveys information about one or more properties of the space
-%
-%\indexdefn{signal}
-%\indexdefn{signal!discrete}
-%\definition{signal}{\iotwod.general.defns.signal}
-%<discrete signal> a real function which is defined at points separated by 
-%uniform intervals within a two-dimensional space and conveys information about one or more properties of the space
-%
 \indexdefn{color stop}
 \definition{color stop}{\iotwod.general.defns.colorstop}
 a tuple composed of a floating point offset value in the range $[0, 1]$ and a color value
 
+%\input{definitions-fonts}
+
 % end definitions
 \indextext{definitions|)}
+
+\rSec1 [\iotwod.general.helloworld] {Hello world example}
+
+\pnum
+The following is an example of a complete "hello world" program written using this library:
+
+\begin{codeblock}
+#include <experimental/io2d>
+using namespace std::experimental::io2d;
+
+int main() {
+  auto ds = make_display_surface(640, 480, format::argb32);
+  ds.draw_callback([](display_surface& ds) {
+    ds.paint(rgba_color::cornflower_blue());
+    ds.render_text("Hello world!", { 50.0, 50.0 }, rgba_color::black());
+  });
+  return ds.show();
+}
+\end{codeblock}

@@ -18,7 +18,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     
     // \ref{surfacebrushfact.modifiers}, modifiers:
     image_surface surface(experimental::io2d::surface& s);
-    void surface(experimental::io2d::surface& s, image_surface& oldSurface, error_code& ec) noexcept;
+    void surface(experimental::io2d::surface& s, image_surface& oldSurface, 
+      error_code& ec) noexcept;
     void surface(experimental::io2d::surface& s, error_code& ec) noexcept;
     
     // \ref{surfacebrushfact.observers}, observers:

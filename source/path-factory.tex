@@ -10,6 +10,7 @@ The \tcode{path_factory} class is a factory class used to create path geometry c
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path_factory {
+  public:
     // \ref{pathfactory.cons}, construct/copy/destroy:
     path_factory() noexcept;
     path_factory(const path_factory&);
@@ -119,9 +120,24 @@ assignment operators}
     void append(const path_factory& p, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\postconditions
-This section is forthcoming in a future revision.
+\pnum
+\effects
+Appends the result of calling \tcode{p.data_ref()} to \tcode{_Data} as if each \tcode{path_data_item} object was added to \tcode{*this} by calling the member function that adds a \tcode{path_data_item} of the same type to \tcode{*this}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\remarks
+In the event of an error, the object shall not be modified.
+
+\pnum
+\errors
+\tcode{errc::not_enough_memory} if the attempt to append the \tcode{p.data_ref()} failed. The object shall not be modified.
+
+\pnum
+\tcode{io2d_error::no_current_point} if the first item to be appended required a current point and \tcode{_Has_current_point == false}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{append}}
@@ -131,9 +147,27 @@ This section is forthcoming in a future revision.
     void append(const vector<path_data_item>& p, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\postconditions
-This section is forthcoming in a future revision.
+\pnum
+\effects
+Appends the result of calling \tcode{p.data_ref()} to \tcode{_Data} as if each \tcode{path_data_item} object was added to \tcode{*this} by calling the member function that adds a \tcode{path_data_item} of the same type to \tcode{*this}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\remarks
+In the event of an error, the object shall not be modified.
+
+\pnum
+\errors
+\tcode{errc::not_enough_memory} if the attempt to append the \tcode{p.data_ref()} failed. The object shall not be modified.
+
+\pnum
+\tcode{io2d_error::no_current_point} if the first item to be appended required a current point and \tcode{_Has_current_point == false}.
+
+\pnum
+\tcode{io2d_error::invalid_path_data} if \tcode{p} contains one or more invalid path geometries.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{new_sub_path}}

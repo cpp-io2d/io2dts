@@ -52,13 +52,13 @@ The class \tcode{brush} describes an opaque wrapper for a graphics data graphics
 A \tcode{brush} object shall be usable with any \tcode{surface} or \tcode{surface}-derived object.
 
 \pnum
-A \tcode{brush} object's graphics data is immutable and not directly observable. It is observable only in the effect that it produces when the brush is used as a Source Brush (\ref{surface.sourcebrush}) or as a Mask Brush (\ref{surface.rendering} and \ref{surface.masking}).
+A \tcode{brush} object's graphics data is immutable. It is observable only by the effect that it produces when the brush is used as a Source Brush (\ref{surface.sourcebrush}) or as a Mask Brush (\ref{surface.rendering} and \ref{surface.masking}).
 
 \pnum
-A \tcode{brush} object also has mutable \tcode{extend}, \tcode{filter}, and \tcode{matrix_2d} values which affect how the color and alpha data is used and interpreted.
+A \tcode{brush} object also has mutable \tcode{extend}, \tcode{filter}, and \tcode{matrix_2d} observable state data values.
 
 \pnum
-A \tcode{brush} object has immutable \tcode{brush_type} data which indicates the type of brush factory that was used in creating the \tcode{brush} object (See Table \ref{tab:brushtype.meanings}).
+A \tcode{brush} object has an immutable \tcode{brush_type} observable state data value which indicates the type of brush factory that was used in creating the \tcode{brush} object (Table~\ref{tab:brushtype.meanings}).
 
 \pnum
 The \tcode{brush} object's graphics data may have less precision than the graphics data of the brush factory object from which it was created.

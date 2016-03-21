@@ -34,7 +34,7 @@ This macro allows users to determine which version of this \documenttypename{} i
 Header \tcode{<experimental/io2d>} shall supply the following macro definition:
 
 \pnum
-\tcode{\#define __cpp_lib_experimental_io2d 201507}
+\tcode{\#define __cpp_lib_experimental_io2d 201603}
 
 \pnum
 \enternote
@@ -57,7 +57,7 @@ detection. Actual use of these members is inherently non-portable.
 \rSec1 [\iotwod.req.\iecfivefivenine] {IEC 559 floating point support}
 
 \pnum
-In order to implement this \documenttypename{}, \tcode{numeric_limits<double>::is_iec559 == true} shall evaluate to \tcode{true}. 
+Certain requirements of this \documenttypename{} assume that \tcode{numeric_limits<double>::is_iec559} evaluates to \tcode{true}. The behavior of these requirements is \impldef{\tcode{numeric_limits<double>::is_iec559} evaluates to \tcode{false}} if \tcode{numeric_limits<double>::is_iec559} evaluates to \tcode{false}.
 
 \rSec1 [\iotwod.req.cstdintopttypes] {Exact width integer types}
 
