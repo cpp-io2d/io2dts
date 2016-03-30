@@ -18,3 +18,5 @@ tools/sections
 *.synctex.gz
 *.txss
 Thumbs.db
+/source/io2d.bbl
+/source/io2d.blg

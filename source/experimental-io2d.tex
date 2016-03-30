@@ -100,6 +100,18 @@ namespace std { namespace experimental {
   class display_surface;
   class mapped_surface;
   
+  template <class T>
+  constexpr T pi = T(3.14159265358979323846264338327950288L);
+  
+  template <class T>
+  constexpr T two_pi = T(6.28318530717958647692528676655900576L);
+  
+  template <class T>
+  constexpr T half_pi = T(1.57079632679489661923132169163975144L);
+  
+  template <class T>
+  constexpr T three_pi_over_two = T(4.71238898038468985769396507491925432L);
+  
   int format_stride_for_width(format format, int width) noexcept;
   display_surface make_display_surface(int preferredWidth,
     int preferredHeight, format preferredFormat,
