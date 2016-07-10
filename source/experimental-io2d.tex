@@ -54,9 +54,6 @@ namespace std { namespace experimental {
   vector_2d operator*(const vector_2d& lhs, double rhs) noexcept;
   vector_2d operator*(double lhs, const vector_2d& rhs) noexcept;
 
-  class font_extents;
-  class text_extents;
-
   class matrix_2d;
 
   matrix_2d operator*(const matrix_2d& lhs, const matrix_2d& rhs);
@@ -84,10 +81,14 @@ namespace std { namespace experimental {
   
   class device;
 
+  class font_extents;
+  class text_extents;
   class font_options;
-
-  class font_face;
-  class simple_font_face;
+  class font_resource_factory;
+  class font_resource;
+  class glyph_run;
+  class glyph_run::glyph;
+  class glyph_run::cluster;
 
   class brush;
   class solid_color_brush_factory;

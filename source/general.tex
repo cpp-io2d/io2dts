@@ -330,7 +330,7 @@ to use a filter to obtain the visual data for a given point from a graphics data
 \definition{color stop}{\iotwod.general.defns.colorstop}
 a tuple composed of a floating point offset value in the range $[0, 1]$ and a color value
 
-%\input{definitions-fonts}
+\input{definitions-fonts}
 
 % end definitions
 \indextext{definitions|)}
@@ -347,8 +347,8 @@ using namespace std::experimental::io2d;
 int main() {
   auto ds = make_display_surface(640, 480, format::argb32);
   ds.draw_callback([](display_surface& ds) {
-    ds.paint(rgba_color::cornflower_blue());
-    ds.render_text("Hello world!", { 50.0, 50.0 }, rgba_color::black());
+    ds.paint(rgba_color::firebrick());
+    ds.render_text("Hello world!", { 50.0, 50.0 }, rgba_color::aqua());
   });
   return ds.show();
 }

@@ -1,9 +1,6 @@
 %!TEX root = io2d.tex
 \rSec0 [surface] {Class \tcode{surface}}
 
-%\pnum
-%A \term{rendering and composing operation} is an operation that is either a single-phase operation consisting of a composing operation or a multi-phase operation consisting of a rendering operation followed by a composing operation.
-%
 \rSec1 [surface.synopsis] {\tcode{surface} synopsis}
 
 \begin{codeblock}
@@ -250,7 +247,23 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       const surface& s, const matrix_2d& m = matrix_2d::init_identity(),
       extend e = extend::none, filter f = filter::good);
     vector_2d render_text(const string& utf8, const vector_2d& pos,
-      const surface& s, const matrix_2d& m = matrix_2d::init_identity(), error_code& ec,
+      const surface& s, const matrix_2d& m = matrix_2d::init_identity(),
+      error_code& ec, extend e = extend::none,
+      filter f = filter::good) noexcept;
+    void render_glyph_run(const glyph_run& gr);
+    void render_glyph_run(const glyph_run& gr, error_code& ec) noexcept;
+    void render_glyph_run(const glyph_run& gr, const rgba_color& c);
+    void render_glyph_run(const glyph_run& gr, const rgba_color& c,
+      error_code& ec) noexcept;
+    void render_glyph_run(const glyph_run& gr,
+      const experimental::io2d::brush& b);
+    void render_glyph_run(const glyph_run& gr,
+      const experimental::io2d::brush& b, error_code& ec) noexcept;
+    void render_glyph_run(const glyph_run& gr, const surface& s,
+      const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none,
+      filter f = filter::good);
+    void render_glyph_run(const glyph_run& gr, const surface& s,
+      error_code& ec, const matrix_2d& m = matrix_2d::init_identity(),
       extend e = extend::none, filter f = filter::good) noexcept;
     
     // \ref{surface.modifiers.transform}, transformation modifiers:
@@ -258,16 +271,12 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void matrix(const matrix_2d& matrix, error_code& ec) noexcept;
     
     // \ref{surface.modifiers.font}, font modifiers:
-    void font_face(const string& typeface, font_slant sl, font_weight w);
-    void font_face(const string& typeface, font_slant sl, font_weight w,
-      error_code& ec) noexcept;
-    void font_face(const experimental::io2d::font_face& f);
-    void font_face(const experimental::io2d::font_face& f, error_code& ec)
-      noexcept;
-    void font_size(double s) noexcept;
-    void font_matrix(const matrix_2d& m);
-    void font_matrix(const matrix_2d& m, error_code& ec) noexcept;
-    void font_options(const font_options& fo) noexcept;
+    void font_resource(const experimental::io2d::font_resource& f) noexcept;
+    void font_resource(const ::std::string& family, double size,
+      font_slant sl = font_slant::normal, font_weight w = font_weight::normal);
+    void font_resource(const ::std::string& family, double size,
+      error_code& ec, font_slant sl = font_slant::normal,
+      font_weight w = font_weight::normal) noexcept;
     
     // \ref{surface.observers.state}, state observers:
     bool is_finished() const noexcept;
@@ -315,10 +324,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     vector_2d surface_to_user_distance(const vector_2d& dpt) const noexcept;
     
     // \ref{surface.observers.font}, font observers:
-    matrix_2d font_matrix() const noexcept;
-    experimental::io2d::font_options font_options() const noexcept;
-    experimental::io2d::font_face font_face() const;
-    experimental::io2d::font_face font_face(error_code& ec) const noexcept;
+    experimental::io2d::font_resource font_resource() const noexcept;
   };
 } } } }
 \end{codeblock}
@@ -440,20 +446,10 @@ Table~\ref{tab:surface.state.listing} specifies the name, type, function, and de
 	This is the \tcode{matrix_2d} object that shall be used to transform points to and from the Surface Coordinate Space (\ref{surface.coordinatespaces}) &
 	\tcode{matrix_2d::init_identity\{ \}} \\ \rowsep
 	
-	\term{Font Face} &
-	\tcode{font_face} &
+	\term{Font Resource} &
+	\tcode{font_resource} &
 	This is the font that shall be used when performing text rendering operations &
-	\tcode{\impldef{\tcode{surface}!Font Face}} \\ \rowsep
-	
-	\term{Font Matrix} &
-	\tcode{matrix_2d} &
-	This is the \tcode{matrix_2d} object that shall be used to transform coordinates from a font's local coordinate space to the surface's coordinate space when performing text rendering operations &
-	\tcode{matrix_2d::init_scale\{ \{ 16.0, 16.0 \} \}} \\ \rowsep
-	
-	\term{Font Options} &
-	\tcode{font_options} &
-	This is the \tcode{font_options} object that shall be used to determine certain aspects of how a font should be rendered when performing text rendering operations &
-	\tcode{font_option\{ antialias::default_antialias, subpixel_order::default_subpixel_order \}} \\ \rowsep
+	\tcode{font_resource\{ font_resource_factory\{ \} \}} \\ \rowsep
 	
 \end{libreqtab4b}
 
@@ -494,9 +490,7 @@ The following list denotes each item of observable state that shall be saved by 
 	\item Current Path
 	\item Immediate Path
 	\item Transformation Matrix
-	\item Font Face
-	\item Font Matrix
-	\item Font Options
+	\item Font Resource
 \end{itemize}
 
 \rSec1 [surface.rendering] {\tcode{surface} rendering and composing operations}
@@ -530,12 +524,12 @@ The \tcode{surface} class provides five fundamental rendering and composing oper
  & \tcode{surface::mask}, \tcode{surface::mask_immediate}
  \\
  Typesetting
- & \tcode{surface::draw_text}
+ & \tcode{surface::render_text}, \tcode{surface::render_glyph_run}
  \\
 \end{libreqtab2}
 
 \pnum
-The filling, stroking, and masking operations each provide two functions, not including overloads, for invoking their functionality.
+The filling, stroking, masking, and typesetting operations each provide two functions, not including overloads, for invoking their functionality.
 
 \pnum
 Certain rendering and composing operations require a \term{Source Path}, which is a path geometry graphics resource.
@@ -572,7 +566,7 @@ Each of the five fundamental rendering and composing operations has its own set 
 	\item The Filling operation has no minimum arguments.
 	\item The Stroking operation has no minimum arguments.
 	\item The Masking operation has a Mask Brush (\ref{surface.masking}) which can be composed of one or four minimum arguments: if the first argument to the Masking operation is of type \tcode{brush}, it has one minimum argument (that \tcode{brush} object); otherwise the first argument is of type \tcode{surface} and other three arguments are the first \tcode{matrix_2d} argument, the first \tcode{extend} argument, and the first \tcode{filter} argument, resulting in four minimum arguments.
-	\item The Typesetting operation has two minimum arguments: an object, used as the text that is rendered and composed to the surface (see \ref{surface.typesetting}), that is of type \tcode{string}; and, an object, used to specify the coordinates at which the origin of the first character of the text is positioned (see \ref{surface.typesetting}), of type \tcode{vector_2d}.
+	\item The Typesetting operation has one or two minimum arguments: if the Typesetting operation is invoked using \tcode{surface::render_text}, it has two minimum arguments, an object of type \tcode{string} that is used as the text that is rendered and composed to the surface and an object of type \tcode{vector_2d} that is used to specify the coordinates at which the origin of the first character of the text is positioned (see \ref{surface.typesetting}); if the Typesetting operation is invoked using \tcode{surface::render_glyph_run}, it has one minimum argument, an object of type \tcode{glyph_run} that specifies the glyphs that shall be rendered, the coordinates at which each of those glyphs shall be rendered, and the \tcode{font_resource} object that shall be used to render those glyphs.
 \end{enumerate}
 
 \pnum
@@ -629,7 +623,7 @@ When a \tcode{brush} object \tcode{b} is created from a \tcode{surface} object \
 There are four standard coordinate spaces relevant to the rendering and composing operations (\ref{surface.rendering}):
 \begin{itemize}
 \item the Brush Coordinate Space;
-\item the Mask Coordinate Space;
+\item the Mask Coordinate Space; ***FIXME*** the Font Coordinate Space(?)
 \item the User Coordinate Space; and
 \item the Surface Coordinate Space.
 \end{itemize}
@@ -1575,6 +1569,21 @@ vector_2d render_text(const string& utf8, const vector_2d& pos,
   const surface& s, error_code& ec,
   const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
   filter f = filter::good) noexcept;
+void render_glyph_run(const glyph_run& gr);
+void render_glyph_run(const glyph_run& gr, error_code& ec) noexcept;
+void render_glyph_run(const glyph_run& gr, const rgba_color& c);
+void render_glyph_run(const glyph_run& gr, const rgba_color& c,
+  error_code& ec) noexcept;
+void render_glyph_run(const glyph_run& gr,
+  const experimental::io2d::brush& b);
+void render_glyph_run(const glyph_run& gr,
+  const experimental::io2d::brush& b, error_code& ec) noexcept;
+void render_glyph_run(const glyph_run& gr, const surface& s,
+  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none,
+  filter f = filter::good);
+void render_glyph_run(const glyph_run& gr, const surface& s, error_code& ec, 
+  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+  filter f = filter::good) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -1595,6 +1604,42 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 \pnum
 \errors
 The errors, if any, produced by this function are \impldef{surface!render_text}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{surface}!\idxcode{render_glyph_run}}
+\indexlibrary{\idxcode{render_text_run}!\idxcode{surface}}
+\begin{itemdecl}
+void render_glyph_run(const glyph_run& gr);
+void render_glyph_run(const glyph_run& gr, error_code& ec) noexcept;
+void render_glyph_run(const glyph_run& gr, const rgba_color& c);
+void render_glyph_run(const glyph_run& gr, const rgba_color& c,
+  error_code& ec) noexcept;
+void render_glyph_run(const glyph_run& gr,
+  const experimental::io2d::brush& b);
+void render_glyph_run(const glyph_run& gr,
+  const experimental::io2d::brush& b, error_code& ec) noexcept;
+void render_glyph_run(const glyph_run& gr, const surface& s,
+  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none,
+  filter f = filter::good);
+void render_glyph_run(const glyph_run& gr, const surface& s, error_code& ec, 
+  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+  filter f = filter::good) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Performs the Typesetting rendering and composing operation as specified by \ref{surface.typesetting}.
+
+\pnum
+The meanings of the parameters are specified by \ref{surface.rendering}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+The errors, if any, produced by this function are \impldef{surface!render_glyph_run}.
 \end{itemdescr}
 
 \rSec1 [surface.modifiers.transform] {\tcode{surface} transformation modifiers}
@@ -1622,17 +1667,30 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \rSec1 [surface.modifiers.font] {\tcode{surface} font modifiers}
 
-\indexlibrary{\idxcode{surface}!\idxcode{font_face}}
-\indexlibrary{\idxcode{font_face}!\idxcode{surface}}
+\indexlibrary{\idxcode{surface}!\idxcode{font_resource}}
+\indexlibrary{\idxcode{font_resource}!\idxcode{surface}}
 \begin{itemdecl}
-void font_face(const string& typeface, font_slant sl, font_weight w);
-void font_face(const string& typeface, font_slant sl, font_weight w,
-  error_code& ec) noexcept;
+void font_resource(const experimental::io2d::font_resource& f) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Sets Font Face (Table~\ref{tab:surface.state.listing}) to the result of constructing a \tcode{simple_font_face} object using the arguments to this function.
+***FIXME*** Sets Font Face (Table~\ref{tab:surface.state.listing}) to \tcode{f}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{surface}!\idxcode{font_resource}}
+\indexlibrary{\idxcode{font_resource}!\idxcode{surface}}
+\begin{itemdecl}
+void font_resource(const ::std::string& family, double size,
+  font_slant sl = font_slant::normal, font_weight w = font_weight::normal);
+void font_resource(const ::std::string& family, double size, error_code& ec,
+  font_slant sl = font_slant::normal,
+  font_weight w = font_weight::normal) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+***FIXME***Sets Font Face (Table~\ref{tab:surface.state.listing}) to the result of constructing a \tcode{simple_font_face} object using the arguments to this function.
 
 \pnum
 If an error occurs in constructing the \tcode{simple_font_face} object, Font Face shall retain the value it had prior to the execution of this function and that error shall be propagated back.
@@ -1643,79 +1701,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \pnum
 \errors
-The errors, if any, produced by this function are \impldef{surface!font_face}.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{surface}!\idxcode{font_face}}
-\indexlibrary{\idxcode{font_face}!\idxcode{surface}}
-\begin{itemdecl}
-void font_face(const experimental::io2d::font_face& f);
-void font_face(const experimental::io2d::font_face& f, error_code& ec)
-  noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Sets Font Face (Table~\ref{tab:surface.state.listing}) to \tcode{f}.
-
-\pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-\pnum
-\errors
-The errors, if any, produced by this function are \impldef{surface!font_face}.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{surface}!\idxcode{font_size}}
-\indexlibrary{\idxcode{font_size}!\idxcode{surface}}
-\begin{itemdecl}
-void font_size(double s);
-void font_size(double s, error_code& ec) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Sets Font Matrix (Table~\ref{tab:surface.state.listing}) to the value of \tcode{matrix_2d::init_scale\{ \{ s, s \} \}}.
-
-\pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-\pnum
-\errors
-\tcode{errc::invalid_argument} if \tcode{s <= 0.0}.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{surface}!\idxcode{font_matrix}}
-\indexlibrary{\idxcode{font_matrix}!\idxcode{surface}}
-\begin{itemdecl}
-void font_matrix(const matrix_2d& m);
-void font_matrix(const matrix_2d& m, error_code& ec) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Sets Font Matrix (Table~\ref{tab:surface.state.listing}) to the value of \tcode{m}.
-
-\pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-\pnum
-\errors
-\tcode{io2d_error::invalid_matrix} if calling \tcode{!m.is_invertible()}.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{surface}!\idxcode{font_options}}
-\indexlibrary{\idxcode{font_options}!\idxcode{surface}}
-\begin{itemdecl}
-void font_options(const font_options& fo) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Sets Font Options (Table~\ref{tab:surface.state.listing}) to \tcode{fo}.
+The errors, if any, produced by this function are \impldef{surface!font_resource}.
 \end{itemdescr}
 
 \rSec1 [surface.observers.state] {\tcode{surface} state observers}
@@ -2228,43 +2214,13 @@ The result of creating a copy of Transformation Matrix (Table~\ref{tab:surface.s
 
 \rSec1 [surface.observers.font] {\tcode{surface} font observers}
 
-\indexlibrary{\idxcode{surface}!\idxcode{font_matrix}}
-\indexlibrary{\idxcode{font_matrix}!\idxcode{surface}}
+\indexlibrary{\idxcode{surface}!\idxcode{font_resource}}
+\indexlibrary{\idxcode{font_resource}!\idxcode{surface}}
 \begin{itemdecl}
-matrix_2d font_matrix() const noexcept;
+experimental::io2d::font_resource font_resource() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The Font Matrix (Table~\ref{tab:surface.state.listing}).
-\end{itemdescr}
-
-\indexlibrary{\idxcode{surface}!\idxcode{font_options}}
-\indexlibrary{\idxcode{font_options}!\idxcode{surface}}
-\begin{itemdecl}
-experimental::io2d::font_options font_options() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-The Font Options (Table~\ref{tab:surface.state.listing}).
-\end{itemdescr}
-
-\indexlibrary{\idxcode{surface}!\idxcode{font_face}}
-\indexlibrary{\idxcode{font_face}!\idxcode{surface}}
-\begin{itemdecl}
-experimental::io2d::font_face font_face() const;
-experimental::io2d::font_face font_face(error_code& ec) const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-The Font Face (Table~\ref{tab:surface.state.listing}).
-\pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-\pnum
-\errors
-The errors, if any, produced by this function are \impldef{surface!font_face}.
+***FIXME*** The Font Matrix (Table~\ref{tab:surface.state.listing}).
 \end{itemdescr}
