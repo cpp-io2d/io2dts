@@ -58,12 +58,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void transform_matrix(const matrix_2d& m, error_code& ec) noexcept;
     void origin(const vector_2d& pt);
     void origin(const vector_2d& pt, error_code& ec) noexcept;
-    void add_text(const font_resource& fr, const string& utf8,
-      const vector_2d& pt);
-    void add_text(const font_resource& fr, const string& utf8,
-      const vector_2d& pt, error_code& ec) noexcept;
-    void add_glyph_run(const glyph_run& gr);
-    void add_glyph_run(const glyph_run& gr, error_code& ec) noexcept;
     void clear() noexcept;
     
     // \ref{pathfactory.observers}, observers:
@@ -579,56 +573,6 @@ In the event of an error, the object shall not be modified.
 	\postconditions
 	\tcode{_Origin == pt}.
 	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\remarks
-	In the event of an error, the object shall not be modified.
-
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if the attempt to add the \tcode{path_data_item} failed.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_factory}!\idxcode{origin}}
-\indexlibrary{\idxcode{origin}!\idxcode{path_factory}}
-\begin{itemdecl}
-    void add_text(const font_resource& fr, const string& utf8,
-      const vector_2d& pt);
-    void add_text(const font_resource& fr, const string& utf8,
-      const vector_2d& pt, error_code& ec) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	***FIXME***
-
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\remarks
-	In the event of an error, the object shall not be modified.
-
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if the attempt to add the \tcode{path_data_item} failed.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_factory}!\idxcode{origin}}
-\indexlibrary{\idxcode{origin}!\idxcode{path_factory}}
-\begin{itemdecl}
-    void add_glyph_run(const glyph_run& gr);
-    void add_glyph_run(const glyph_run& gr, error_code& ec) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	***FIXME***
-
 	\pnum
 	\throws
 	As specified in Error reporting (\ref{\iotwod.err.report}).
