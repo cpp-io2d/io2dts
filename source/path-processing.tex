@@ -252,7 +252,7 @@ for (const auto& item : p) {
   } break;
   case path_data_type::arc:
   {
-    auto ad = item.get<path_data_item::arc>();
+    auto ad = item.get<path_factory::path_arc_clockwise>();
     auto ctr = ad.center();
     auto rad = ad.radius();
     auto ang1 = ad.angle_1();
@@ -319,7 +319,7 @@ for (const auto& item : p) {
   } break;
   case path_data_type::arc_negative:
   {
-    auto ad = item.get<path_data_item::arc_negative>();
+    auto ad = item.get<path_factory::path_arc_counterclockwise>();
     auto ctr = ad.center();
     auto rad = ad.radius();
     auto ang1 = ad.angle_1();

@@ -79,9 +79,9 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       vector_2d end_point() const noexcept;
     };
     
-    class path_arc {
+    class path_arc_clockwise {
     public:
-      path_arc(const vector_2d& center, double radius, double angle1, double angle2) noexcept;
+      path_arc_clockwise(const vector_2d& center, double radius, double angle1, double angle2) noexcept;
       
       void center(const vector_2d& value) noexcept;
       void radius(double value) noexcept;
@@ -94,9 +94,9 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       double angle_2() const noexcept;
     };
     
-    class path_arc_negative {
+    class path_arc_counterclockwise {
     public:
-      path_arc_negative(const vector_2d& center, double radius, double angle1, double angle2) noexcept;
+      path_arc_counterclockwise(const vector_2d& center, double radius, double angle1, double angle2) noexcept;
       
       void center(const vector_2d& value) noexcept;
       void radius(double value) noexcept;
@@ -131,9 +131,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       vector_2d origin() const noexcept;
     };
     
-    using path_data      = typename variant<path_abs_move, path_abs_line, path_rel_move,
-      path_curve, path_rel_curve, path_arc, path_arc_negative, path_new_sub_path,
-      path_close_path, path_change_matrix, path_change_origin>;
+    using path_data      = typename variant<path_abs_move, path_abs_line, 
+      path_rel_move, path_curve, path_rel_curve, path_arc_clockwise, 
+      path_arc_counterclockwise, path_new_sub_path, path_close_path, 
+      path_change_matrix, path_change_origin>;
     
     using iterator       = @\impdefx{type of \tcode{path_factory::iterator}}@. // See [container.requirements] in \cppseventeen.
     using const_iterator = @\impdefx{type of \tcode{path_factory::const_iterator}}@. // See [container.requirements] in \cppseventeen.
@@ -366,7 +367,7 @@ In the event of an error, the object shall not be modified.
 \begin{itemdescr}
 	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_data_item::arc(center, radius, angle1, angle2))}.
+	\tcode{_Data.emplace_back(path_factory::path_arc_clockwise(center, radius, angle1, angle2))}.
 	
 	\pnum
 	\tcode{_Current_point == vector_2\{ radius * cos(angle2), -(radius * -sin(angle2)) \} + center}.
@@ -403,7 +404,7 @@ In the event of an error, the object shall not be modified.
 \begin{itemdescr}
 	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_data_item::arc_negative(center, radius, angle1, angle2))}.
+	\tcode{_Data.emplace_back(path_factory::path_arc_counterclockwise(center, radius, angle1, angle2))}.
 	
 	\pnum
 	\tcode{_Current_point = vector_2\{ radius * cos(angle1), radius * -sin(angle1) \} + center}.
