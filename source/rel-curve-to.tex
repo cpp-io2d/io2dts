@@ -1,9 +1,9 @@
 %!TEX root = io2d.tex
-\rSec0 [pathdataitem.relcurveto] {Class \tcode{path_data_item::rel_curve_to}}
+\rSec0 [pathdataitem.relcurveto] {Class \tcode{path_factory::path_rel_curve_to}}
 
 \pnum
-\indexlibrary{\idxcode{path_data_item::rel_curve_to}}
-The class \tcode{path_data_item::rel_curve_to} describes an operation on a path geometry collection.
+\indexlibrary{\idxcode{path_factory::path_rel_curve_to}}
+The class \tcode{path_factory::path_rel_curve_to} describes an operation on a path geometry collection.
 
 \pnum
 This operation creates a cubic B\'ezier curve from the current point to the point that is the sum of the current point and the point returned by \tcode{*this.end_point()}, with the first control point being the point that is the sum of the current point and the point returned by \tcode{*this.control_point_1()} and the second control point being the point that is the sum of the current point and the point returned by \tcode{*this.control_point_2()}. It then sets the current point to be the point that is the sum of the current point and the point returned by \tcode{*this.end_point()}.
@@ -11,18 +11,18 @@ This operation creates a cubic B\'ezier curve from the current point to the poin
 \pnum
 If the current path geometry does not have a current point when this operation is requested the path geometry collection is malformed.
 
-\rSec1 [pathdataitem.relcurveto.synopsis] {\tcode{path_data_item::rel_curve_to} synopsis}
+\rSec1 [pathdataitem.relcurveto.synopsis] {\tcode{path_factory::path_rel_curve_to} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class path_data_item::rel_curve_to {
+  class path_factory::path_rel_curve_to {
   public:
     // \ref{pathdataitem.relcurveto.cons}, construct/copy/move/destroy:
     rel_curve_to() noexcept;
     rel_curve_to(const rel_curve_to&) noexcept;
-    path_data_item::rel_curve_to& operator=(const rel_curve_to&) noexcept;
+    path_factory::path_rel_curve_to& operator=(const rel_curve_to&) noexcept;
     rel_curve_to(rel_curve_to&&) noexcept;
-    path_data_item::rel_curve_to& operator=(rel_curve_to&&) noexcept;
+    path_factory::path_rel_curve_to& operator=(rel_curve_to&&) noexcept;
     rel_curve_to(const vector_2d& controlPoint1, const vector_2d& controlPoint2,
       const vector_2d& endPoint) noexcept;
 
@@ -45,16 +45,16 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdataitem.relcurveto.cons] {\tcode{path_data_item::rel_curve_to} constructors and assignment operators}
+\rSec1 [pathdataitem.relcurveto.cons] {\tcode{path_factory::path_rel_curve_to} constructors and assignment operators}
 
-\indexlibrary{\idxcode{path_data_item::rel_curve_to}!constructor}
+\indexlibrary{\idxcode{path_factory::path_rel_curve_to}!constructor}
 \begin{itemdecl}
     rel_curve_to() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{path_data_item::rel_curve_to}.
+	Constructs an object of type \tcode{path_factory::path_rel_curve_to}.
 	
 	\pnum
 	\postconditions
@@ -65,7 +65,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_End_pt == vector_2d(0.0, 0.0)}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_data_item::rel_curve_to}!constructor}
+\indexlibrary{\idxcode{path_factory::path_rel_curve_to}!constructor}
 \begin{itemdecl}
     rel_curve_to(const vector_2d& controlPoint1, const vector_2d& controlPoint2,
       const vector_2d& endPoint) noexcept;
@@ -73,7 +73,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{path_data_item::rel_curve_to}.
+	Constructs an object of type \tcode{path_factory::path_rel_curve_to}.
 	
 	\pnum
 	\postconditions
@@ -84,10 +84,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_End_pt == endPoint}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.relcurveto.modifiers]{\tcode{path_data_item::rel_curve_to} modifiers}
+\rSec1 [pathdataitem.relcurveto.modifiers]{\tcode{path_factory::path_rel_curve_to} modifiers}
 
-\indexlibrary{\idxcode{path_data_item::rel_curve_to}!\idxcode{control_point_1}}
-\indexlibrary{\idxcode{control_point_1}!\idxcode{path_data_item::rel_curve_to}}
+\indexlibrary{\idxcode{path_factory::path_rel_curve_to}!\idxcode{control_point_1}}
+\indexlibrary{\idxcode{control_point_1}!\idxcode{path_factory::path_rel_curve_to}}
 \begin{itemdecl}
     void control_point_1(const vector_2d& value) noexcept;
 \end{itemdecl}
@@ -97,8 +97,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Control_pt_1 == value}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_data_item::rel_curve_to}!\idxcode{control_point_2}}
-\indexlibrary{\idxcode{control_point_2}!\idxcode{path_data_item::rel_curve_to}}
+\indexlibrary{\idxcode{path_factory::path_rel_curve_to}!\idxcode{control_point_2}}
+\indexlibrary{\idxcode{control_point_2}!\idxcode{path_factory::path_rel_curve_to}}
 \begin{itemdecl}
     void control_point_2(const vector_2d& value) noexcept;
 \end{itemdecl}
@@ -108,8 +108,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Control_pt_2 == value}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_data_item::rel_curve_to}!\idxcode{end_point}}
-\indexlibrary{\idxcode{end_point}!\idxcode{path_data_item::rel_curve_to}}
+\indexlibrary{\idxcode{path_factory::path_rel_curve_to}!\idxcode{end_point}}
+\indexlibrary{\idxcode{end_point}!\idxcode{path_factory::path_rel_curve_to}}
 \begin{itemdecl}
     void end_point(const vector_2d& value) noexcept;
 \end{itemdecl}
@@ -119,10 +119,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_End_pt == value}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.relcurveto.observers]{\tcode{path_data_item::rel_curve_to} observers}
+\rSec1 [pathdataitem.relcurveto.observers]{\tcode{path_factory::path_rel_curve_to} observers}
 
-\indexlibrary{\idxcode{path_data_item::rel_curve_to}!\idxcode{control_point_1}}
-\indexlibrary{\idxcode{control_point_1}!\idxcode{path_data_item::rel_curve_to}}
+\indexlibrary{\idxcode{path_factory::path_rel_curve_to}!\idxcode{control_point_1}}
+\indexlibrary{\idxcode{control_point_1}!\idxcode{path_factory::path_rel_curve_to}}
 \begin{itemdecl}
     vector_2d control_point_1() const noexcept;
 \end{itemdecl}
@@ -132,8 +132,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Control_pt_1}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_data_item::rel_curve_to}!\idxcode{control_point_2}}
-\indexlibrary{\idxcode{control_point_2}!\idxcode{path_data_item::rel_curve_to}}
+\indexlibrary{\idxcode{path_factory::path_rel_curve_to}!\idxcode{control_point_2}}
+\indexlibrary{\idxcode{control_point_2}!\idxcode{path_factory::path_rel_curve_to}}
 \begin{itemdecl}
     vector_2d control_point_2() const noexcept;
 \end{itemdecl}
@@ -143,8 +143,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Control_pt_2}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_data_item::rel_curve_to}!\idxcode{end_point}}
-\indexlibrary{\idxcode{end_point}!\idxcode{path_data_item::rel_curve_to}}
+\indexlibrary{\idxcode{path_factory::path_rel_curve_to}!\idxcode{end_point}}
+\indexlibrary{\idxcode{end_point}!\idxcode{path_factory::path_rel_curve_to}}
 \begin{itemdecl}
     vector_2d end_point() const noexcept;
 \end{itemdecl}
@@ -154,8 +154,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_End_pt}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_data_item::rel_curve_to}!\idxcode{type}}
-\indexlibrary{\idxcode{type}!\idxcode{path_data_item::rel_curve_to}}
+\indexlibrary{\idxcode{path_factory::path_rel_curve_to}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{path_factory::path_rel_curve_to}}
 \begin{itemdecl}
     virtual path_data_type type() const noexcept override;
 \end{itemdecl}

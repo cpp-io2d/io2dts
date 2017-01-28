@@ -1,9 +1,9 @@
 %!TEX root = io2d.tex
-\rSec0 [pathdataitem.relmoveto] {Class \tcode{path_data_item::rel_move_to}}
+\rSec0 [pathdataitem.relmoveto] {Class \tcode{path_factory::path_rel_move_to}}
 
 \pnum
-\indexlibrary{\idxcode{path_data_item::rel_move_to}}
-The class \tcode{path_data_item::rel_move_to} describes an operation on a path geometry collection.
+\indexlibrary{\idxcode{path_factory::path_rel_move_to}}
+The class \tcode{path_factory::path_rel_move_to} describes an operation on a path geometry collection.
 
 \pnum
 This operation starts a new path geometry and sets its current point and last-move-to point to the point that is the sum of the previous path geometry's current point and the point returned by \tcode{*this.to()}.
@@ -11,18 +11,18 @@ This operation starts a new path geometry and sets its current point and last-mo
 \pnum
 If the existing path geometry does not have a current point when this operation is requested the path geometry collection is malformed.
 
-\rSec1 [pathdataitem.relmoveto.synopsis] {\tcode{path_data_item::rel_move_to} synopsis}
+\rSec1 [pathdataitem.relmoveto.synopsis] {\tcode{path_factory::path_rel_move_to} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class path_data_item::rel_move_to {
+  class path_factory::path_rel_move_to {
   public:
     // \ref{pathdataitem.relmoveto.cons}, construct/copy/move/destroy:
     rel_move_to() noexcept;
     rel_move_to(const rel_move_to&) noexcept;
-    path_data_item::rel_move_to& operator=(const rel_move_to&) noexcept;
+    path_factory::path_rel_move_to& operator=(const rel_move_to&) noexcept;
     rel_move_to(rel_move_to&&) noexcept;
-    path_data_item::rel_move_to& operator=(rel_move_to&&) noexcept;
+    path_factory::path_rel_move_to& operator=(rel_move_to&&) noexcept;
     explicit rel_move_to(const vector_2d& pt) noexcept;
 
     // \ref{pathdataitem.relmoveto.modifiers}, modifiers:
@@ -38,40 +38,40 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdataitem.relmoveto.cons] {\tcode{path_data_item::rel_move_to} constructors and assignment operators}
+\rSec1 [pathdataitem.relmoveto.cons] {\tcode{path_factory::path_rel_move_to} constructors and assignment operators}
 
-\indexlibrary{\idxcode{path_data_item::rel_move_to}!constructor}
+\indexlibrary{\idxcode{path_factory::path_rel_move_to}!constructor}
 \begin{itemdecl}
     rel_move_to() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{path_data_item::rel_move_to}.
+	Constructs an object of type \tcode{path_factory::path_rel_move_to}.
 	
 	\pnum
 	\postconditions
 	\tcode{_Data == vector_2d(0.0, 0.0)}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_data_item::rel_move_to}!constructor}
+\indexlibrary{\idxcode{path_factory::path_rel_move_to}!constructor}
 \begin{itemdecl}
     explicit rel_move_to(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{path_data_item::rel_move_to}.
+	Constructs an object of type \tcode{path_factory::path_rel_move_to}.
 	
 	\pnum
 	\postconditions
 	\tcode{_Data == pt}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.relmoveto.modifiers]{\tcode{path_data_item::rel_move_to} modifiers}
+\rSec1 [pathdataitem.relmoveto.modifiers]{\tcode{path_factory::path_rel_move_to} modifiers}
 
-\indexlibrary{\idxcode{path_data_item::rel_move_to}!\idxcode{to}}
-\indexlibrary{\idxcode{to}!\idxcode{path_data_item::rel_move_to}}
+\indexlibrary{\idxcode{path_factory::path_rel_move_to}!\idxcode{to}}
+\indexlibrary{\idxcode{to}!\idxcode{path_factory::path_rel_move_to}}
 \begin{itemdecl}
     void to(const vector_2d& pt) noexcept;
 \end{itemdecl}
@@ -81,10 +81,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Data == pt}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.relmoveto.observers]{\tcode{path_data_item::rel_move_to} observers}
+\rSec1 [pathdataitem.relmoveto.observers]{\tcode{path_factory::path_rel_move_to} observers}
 
-\indexlibrary{\idxcode{path_data_item::rel_move_to}!\idxcode{to}}
-\indexlibrary{\idxcode{to}!\idxcode{path_data_item::rel_move_to}}
+\indexlibrary{\idxcode{path_factory::path_rel_move_to}!\idxcode{to}}
+\indexlibrary{\idxcode{to}!\idxcode{path_factory::path_rel_move_to}}
 \begin{itemdecl}
     vector_2d to() const noexcept;
 \end{itemdecl}
@@ -94,8 +94,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Data}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_data_item::rel_move_to}!\idxcode{type}}
-\indexlibrary{\idxcode{type}!\idxcode{path_data_item::rel_move_to}}
+\indexlibrary{\idxcode{path_factory::path_rel_move_to}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{path_factory::path_rel_move_to}}
 \begin{itemdecl}
     virtual path_data_type type() const noexcept override;
 \end{itemdecl}

@@ -309,7 +309,7 @@ In the event of an error, the object shall not be modified.
 \begin{itemdescr}
 	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_data_item::new_sub_path())}.
+	\tcode{_Data.emplace_back(path_factory::path_new_sub_path())}.
 	
 	\pnum
 	\tcode{_Has_current_point = false}.
@@ -338,7 +338,7 @@ In the event of an error, the object shall not be modified.
 	\effects
 	If \tcode{_Has_current_point == true}:
 	\begin{itemize}
-	\item \tcode{_Data.emplace_back(path_data_item::close_path())}.
+	\item \tcode{_Data.emplace_back(path_factory::path_close_path())}.
 	
 	\item \tcode{_Current_point = _Last_move_to_point}.
 	\end{itemize}
@@ -449,7 +449,7 @@ In the event of an error, the object shall not be modified.
 	\end{itemize}
 	
 	\pnum
-	\tcode{_Data.emplace_back(path_data_item::curve_to(pt0, pt1, pt2))}.
+	\tcode{_Data.emplace_back(path_factory::path_curve_to(pt0, pt1, pt2))}.
 	
 	\pnum
 	\throws
@@ -473,7 +473,7 @@ In the event of an error, the object shall not be modified.
 \begin{itemdescr}
 	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_data_item::line_to(pt))}.
+	\tcode{_Data.emplace_back(path_factory::path_line_to(pt))}.
 	
 	\pnum
 	If \tcode{_Has_current_point == false}:
@@ -508,7 +508,7 @@ In the event of an error, the object shall not be modified.
 \begin{itemdescr}
 	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_data_item::move_to(pt))}.
+	\tcode{_Data.emplace_back(path_factory::path_move_to(pt))}.
 	
 	\pnum
 	\tcode{_Has_current_point = true}.
@@ -577,7 +577,7 @@ In the event of an error, the object shall not be modified.
 \begin{itemdescr}
 	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_data_item::rel_curve_to(dpt0, dpt1, dpt2))}.
+	\tcode{_Data.emplace_back(path_factory::path_rel_curve_to(dpt0, dpt1, dpt2))}.
 	
 	\pnum
 	\tcode{_Current_point = dpt2 + _Current_point}.
@@ -607,7 +607,7 @@ In the event of an error, the object shall not be modified.
 \begin{itemdescr}
 	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_data_item::rel_line_to(pt))}.
+	\tcode{_Data.emplace_back(path_factory::path_rel_line_to(pt))}.
 	
 	\pnum
 	\tcode{_Current_point = dpt + _Current_point}.
@@ -637,7 +637,7 @@ In the event of an error, the object shall not be modified.
 \begin{itemdescr}
 	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_data_item::rel_move_to(dpt))}.
+	\tcode{_Data.emplace_back(path_factory::path_rel_move_to(dpt))}.
 	
 	\pnum
 	\tcode{_Current_point = dpt + _Current_point}.
@@ -667,7 +667,7 @@ In the event of an error, the object shall not be modified.
 \begin{itemdescr}
 	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_data_item::change_matrix(m))}.
+	\tcode{_Data.emplace_back(path_factory::path_change_matrix(m))}.
 	
 	\pnum
 	\tcode{_Transform_matrix = m}.
@@ -694,7 +694,7 @@ In the event of an error, the object shall not be modified.
 \begin{itemdescr}
 	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_data_item::change_origin(pt)))}.
+	\tcode{_Data.emplace_back(path_factory::path_change_origin(pt)))}.
 	
 	\pnum
 	\tcode{_Origin = pt}.

@@ -167,7 +167,7 @@ for (const auto& item : p) {
   switch(item.type()) {
   case path_data_type::move_to:
   {
-    currentPoint = item.get<path_data_item::move_to>().to();
+    currentPoint = item.get<path_factory::path_move_to>().to();
     auto pt = m.transform_point(currentPoint - origin) + origin;
     n.current_point(pt);
     hasCurrentPoint = true;
@@ -176,7 +176,7 @@ for (const auto& item : p) {
   } break;
   case path_data_type::line_to:
   {
-    currentPoint = item.get<path_data_item::line_to>().to();
+    currentPoint = item.get<path_factory::path_line_to>().to();
     auto pt = m.transform_point(currentPoint - origin) + origin;
     if (hasCurrentPoint) {
       n.line_to(pt);
@@ -190,7 +190,7 @@ for (const auto& item : p) {
   } break;
   case path_data_type::curve_to:
   {
-    auto cd = item.get<path_data_item::curve_to>();
+    auto cd = item.get<path_factory::path_curve_to>();
     auto pt1 = m.transform_point(cd.control_point_1() - origin) + origin;
     auto pt2 = m.transform_point(cd.control_point_2() - origin) + origin;
     auto pt3 = m.transform_point(cd.end_point() - origin) + origin;
@@ -223,7 +223,7 @@ for (const auto& item : p) {
   case path_data_type::rel_move_to:
   {
     // If !hasCurrentPoint, error is io2d_error::no_current_point;
-    currentPoint = item.get<path_data_item::rel_move_to>().to() + currentPoint;
+    currentPoint = item.get<path_factory::path_rel_move_to>().to() + currentPoint;
     auto pt = m.transform_point(currentPoint - origin) + origin;
     n.current_point(pt);
     hasCurrentPoint = true;
@@ -233,14 +233,14 @@ for (const auto& item : p) {
   case path_data_type::rel_line_to:
   {
     // If !hasCurrentPoint, error is io2d_error::no_current_point;
-    currentPoint = item.get<path_data_item::rel_line_to>().to() + currentPoint;
+    currentPoint = item.get<path_factory::path_rel_line_to>().to() + currentPoint;
     auto pt = m.transform_point(currentPoint - origin) + origin;
     n.line_to(pt);
   } break;
   case path_data_type::rel_curve_to:
   {
     // If !hasCurrentPoint, error is io2d_error::no_current_point;
-    auto cd = item.get<path_data_item::rel_curve_to>();
+    auto cd = item.get<path_factory::path_rel_curve_to>();
     auto pt1 = m.transform_point(cd.control_point_1() + currentPoint -
       origin) + origin;
     auto pt2 = m.transform_point(cd.control_point_2() + currentPoint -
@@ -390,11 +390,11 @@ for (const auto& item : p) {
   } break;
   case path_data_type::change_matrix:
   {
-    m = item.get<path_data_item::change_matrix>().matrix();
+    m = item.get<path_factory::path_change_matrix>().matrix();
   } break;
   case path_data_type::change_origin:
   {
-    origin = item.get<path_data_item::change_origin>().origin();
+    origin = item.get<path_factory::path_change_origin>().origin();
   } break;
   }
 }
