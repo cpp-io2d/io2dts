@@ -3,13 +3,10 @@
 
 \pnum
 \indexlibrary{\idxcode{path_data_item::arc}}
-The class \tcode{path_data_item::arc} describes an operation on a path geometry collection.
+The class \tcode{path_data_item::arc} describes a circular arc with clockwise rotation.
 
 \pnum
-This operation creates a circular arc with clockwise rotation.
-
-\pnum
-The unit for the values passed to and returned by \tcode{path_data_item::arc::angle_1} and \tcode{path_data_item::arc::angle_2} is the radian.
+The values passed to and returned by \tcode{path_data_item::arc::angle_1} and \tcode{path_data_item::arc::angle_2} are in radians.
 
 \pnum
 The arc's \term{start point} is \tcode{vector_2d\{ *this.radius() * cos(*this.angle_1(), -(*this.radius() * -sin(*this.angle_1())) \} + *this.center()}.
@@ -18,7 +15,7 @@ The arc's \term{start point} is \tcode{vector_2d\{ *this.radius() * cos(*this.an
 Its \term{end point} is \tcode{vector_2d\{ *this.radius() * cos(*this.angle_2(), -(*this.radius() * -sin(*this.angle_2())) \} + *this.center()}.
 
 \pnum
-If the current path geometry has a current point, a line is created from the current point to the start point before this arc operation is processed. Otherwise the start point is set as the current point and last-move-to point of the current path geometry.
+When a \tcode{path_arc} object is added to a path geometry that has a current point, a line is created from that current point to the arc's start point before the arc is. Otherwise the start point is set as the current point and last-move-to point of the current path geometry.
 
 \pnum
 The arc rotates around the point returned by \tcode{*this.center()}.

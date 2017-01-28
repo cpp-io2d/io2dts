@@ -3,16 +3,22 @@
 
 \pnum
 \indexlibrary{\idxcode{path}}
-The \tcode{path} class represents an immutable resource wrapper containing a path geometry graphics resource.
+The class \tcode{path} contains a path geometry graphics resource that is usable with a \tcode{surface}-derived object.
+
+\pnum
+A \tcode{path} object is constructed from the path geometry collection data of a \tcode{path_factory} object. The path geometries of its path geometry graphics resource are immutable, however its path geometry graphics resource can be changed using copy assignment or move assignment.
+
+\pnum
+An \tcode{path} object can be default constructed. Default construction of a \tcode{path} object results in a \tcode{path} object which has a path geometry graphics resource that contains no path geometries.
 
 \pnum
 When a \tcode{path} object is set on a \tcode{surface} object using 
 \tcode{surface::path}, the geometric paths represented by it can be 
 stroked or filled.
 
-\pnum
-A \tcode{path} object shall be usable with any \tcode{surface} or \tcode{surface}-derived object.
-
+%\pnum
+%A \tcode{path} object shall be usable with any \tcode{surface} or \tcode{surface}-derived object.
+%
 \rSec1 [path.synopsis] {\tcode{path} synopsis}
 
 \begin{codeblock}
@@ -20,15 +26,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path {
     public:
     // \ref{path.cons}, construct/copy/destroy:
-    path() = delete;
     explicit path(const path_factory& pb);
     path(const path_factory& pb, error_code& ec) noexcept;
-    explicit path(const vector<path_data_item>& p);
-    path(const vector<path_data_item>& p, error_code& ec) noexcept;
-    path(const path&) noexcept;
-    path& operator=(const path&) noexcept;
-    path(path&&) noexcept;
-    path& operator=(path&&) noexcept;
   };
 } } } }
 \end{codeblock}
@@ -39,13 +38,11 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \begin{itemdecl}
     explicit path(const path_factory& pb);
     path(const path_factory& pb, error_code& ec) noexcept;
-    explicit path(const vector<path_data_item>& p);
-    path(const vector<path_data_item>& p, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of class \tcode{path}. Implementations shall create a path geometry graphics resource from the path geometries contained in \tcode{p} or \tcode{pb.data_ref()} as if they followed the procedure set forth in \ref{pathgeometries.processing}.
+	Constructs an object of class \tcode{path}. Implementations shall create a path geometry graphics resource from the path geometries contained in \tcode{pb.data_ref()} as if they followed the procedure set forth in \ref{pathgeometries.processing}.
 
 	\pnum
 	\throws
@@ -62,10 +59,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\errors
 	\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
 	
-	\pnum
-	\tcode{io2d_error::no_current_point} if, when processing the path geometries, an operation was encountered which required a current point and the current path geometry had no current point.
-	
-	\pnum
-	\tcode{io2d_error::invalid_matrix} if, when processing the path geometries, an operation was encountered which required the current transformation matrix to be invertible and the matrix was not invertible.
+%	\pnum
+%	\tcode{io2d_error::no_current_point} if, when processing the path geometries, an operation was encountered which required a current point and the current path geometry had no current point.
+%	
+%	\pnum
+%	\tcode{io2d_error::invalid_matrix} if, when processing the path geometries, an operation was encountered which required the current transformation matrix to be invertible and the matrix was not invertible.
 	
 \end{itemdescr}

@@ -3,20 +3,149 @@
 
 \pnum
 \indexlibrary{\idxcode{path_factory}}
-The \tcode{path_factory} class is a factory class used to create path geometry collection data from which \tcode{path} objects are created.
+The class \tcode{path_factory} is a container that stores and manipulates path
+geometry collection data from which \tcode{path} objects are created.
 
+\pnum
+A \tcode{path_factory} is a contiguous container. (See [container.requirements.general] in \cppseventeen.) This means that the consecutive path geometries within its path geometry collection data and the path segments contained in each of those path geometries are contiguous. As such the iterators for a \tcode{path_geometry} object present the path geometry collection data as a contiguous series of path segments.
+
+\pnum
+The type of a path segment in a \tcode{path_factory} object is  \tcode{path_factory::path_data}.
+
+%\pnum
+%Any manipulation of the path geometry collection data which results in path geometry collection data that cannot be processed in the manner specified in \ref{pathgeometries.processing} shall result in undefined behavior.
+%
 \rSec1 [pathfactory.synopsis] {\tcode{path_factory} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path_factory {
   public:
+    class path_abs_move {
+    public:
+      explicit path_abs_move(const vector_2d& to) noexcept;
+      
+      vector_2d to() const noexcept;
+      void to(const vector_2d& value) noexcept;
+    };
+    
+    class path_abs_line {
+    public:
+      explicit path_abs_line(const vector_2d& to) noexcept;
+      
+      vector_2d to() const noexcept;
+      void to(const vector_2d& value) noexcept;
+    };
+    
+    class path_rel_move {
+    public:
+      explicit path_rel_move(const vector_2d& to) noexcept;
+      
+      vector_2d to() const noexcept;
+      void to(const vector_2d& value) noexcept;
+    };
+    
+    class path_rel_line {
+    public:
+      explicit path_rel_line(const vector_2d& to) noexcept;
+      
+      vector_2d to() const noexcept;
+      void to(const vector_2d& value) noexcept;
+    };
+    
+    class path_abs_curve {
+    public:
+      path_abs_curve(const vector_2d& controlPoint1, const vector_2d& controlPoint2, const vector_2d& endPoint) noexcept;
+      
+      void control_point_1(const vector_2d& value) noexcept;
+      void control_point_2(const vector_2d& value) noexcept;
+      void end_point(const vector_2d& value) noexcept;
+      
+      vector_2d control_point_1() const noexcept;
+      vector_2d control_point_2() const noexcept;
+      vector_2d end_point() const noexcept;
+    };
+    
+    class path_rel_curve {
+    public:
+      path_rel_curve(const vector_2d& controlPoint1, const vector_2d& controlPoint2, const vector_2d& endPoint) noexcept;
+      
+      void control_point_1(const vector_2d& value) noexcept;
+      void control_point_2(const vector_2d& value) noexcept;
+      void end_point(const vector_2d& value) noexcept;
+      
+      vector_2d control_point_1() const noexcept;
+      vector_2d control_point_2() const noexcept;
+      vector_2d end_point() const noexcept;
+    };
+    
+    class path_arc {
+    public:
+      path_arc(const vector_2d& center, double radius, double angle1, double angle2) noexcept;
+      
+      void center(const vector_2d& value) noexcept;
+      void radius(double value) noexcept;
+      void angle_1(double radians) noexcept;
+      void angle_2(double radians) noexcept;
+      
+      vector_2d center() const noexcept;
+      double radius() const noexcept;
+      double angle_1() const noexcept;
+      double angle_2() const noexcept;
+    };
+    
+    class path_arc_negative {
+    public:
+      path_arc_negative(const vector_2d& center, double radius, double angle1, double angle2) noexcept;
+      
+      void center(const vector_2d& value) noexcept;
+      void radius(double value) noexcept;
+      void angle_1(double radians) noexcept;
+      void angle_2(double radians) noexcept;
+      
+      vector_2d center() const noexcept;
+      double radius() const noexcept;
+      double angle_1() const noexcept;
+      double angle_2() const noexcept;
+    };
+    
+    class path_new_sub_path {
+    };
+    
+    class path_close_path {
+    };
+    
+    class path_change_matrix {
+    public:
+      explicit path_change_matrix(const matrix_2d& m) noexcept;
+      
+      void matrix(const matrix_2d& value) noexcept;
+      matrix_2d matrix() const noexcept;
+    };
+    
+    class path_change_origin {
+    public:
+      explicit path_change_origin(const vector_2d& origin) noexcept;
+      
+      void origin(const vector_2d& value) noexcept;
+      vector_2d origin() const noexcept;
+    };
+    
+    using path_data      = typename variant<path_abs_move, path_abs_line, path_rel_move,
+      path_curve, path_rel_curve, path_arc, path_arc_negative, path_new_sub_path,
+      path_close_path, path_change_matrix, path_change_origin>;
+    
+    using iterator       = @\impdefx{type of \tcode{path_factory::iterator}}@. // See [container.requirements] in \cppseventeen.
+    using const_iterator = @\impdefx{type of \tcode{path_factory::const_iterator}}@. // See [container.requirements] in \cppseventeen.
+    using reverse_iterator       = std::reverse_iterator<iterator>;
+    using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+    
     // \ref{pathfactory.cons}, construct/copy/destroy:
-    path_factory() noexcept;
-    path_factory(const path_factory&);
-    path_factory& operator=(const path_factory&);
-    path_factory(path_factory&&) noexcept;
-    path_factory& operator=(path_factory&&) noexcept;
+    constexpr path_factory() noexcept;
+    path_factory(const path_factory&) = default;
+    path_factory& operator=(const path_factory&) = default;
+    path_factory(path_factory&&) noexcept = default;
+    path_factory& operator=(path_factory&&) noexcept = default;
     
     // \ref{pathfactory.modifiers}, modifiers:
     void append(const path_factory& p);
