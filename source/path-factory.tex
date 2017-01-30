@@ -189,6 +189,22 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void origin(const vector_2d& pt);
     void origin(const vector_2d& pt, error_code& ec) noexcept;
     void clear() noexcept;
+
+    // \ref{pathfactory.iterators}, iterators:
+    iterator begin() noexcept;
+    const_iterator begin() const noexcept;
+    iterator end() noexcept;
+    const_iterator end() const noexcept;
+    
+    reverse_iterator rbegin() noexcept;
+    const_reverse_iterator rbegin() const noexcept;
+    reverse_iterator rend() noexcept;
+    const_reverse_iterator rend() const noexcept;
+
+    const_iterator cbegin() const noexcept;
+    const_iterator cend() const noexcept;
+    const_reverse_iterator crbegin() const noexcept;
+    const_reverse_iterator crend() const noexcept;
     
     // \ref{pathfactory.observers}, observers:
     experimental::io2d::rectangle path_extents() const;
@@ -242,63 +258,6 @@ assignment operators}
 \end{itemdescr}
 
 \rSec1 [pathfactory.modifiers] {\tcode{path_factory} modifiers}
-
-\indexlibrary{\idxcode{path_factory}!\idxcode{append}}
-\indexlibrary{\idxcode{append}!\idxcode{path_factory}}
-\begin{itemdecl}
-    void append(const path_factory& p);
-    void append(const path_factory& p, error_code& ec) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Appends the result of calling \tcode{p.data_ref()} to \tcode{_Data} as if each \tcode{path_data_item} object was added to \tcode{*this} by calling the member function that adds a \tcode{path_data_item} of the same type to \tcode{*this}.
-
-\pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-\pnum
-\remarks
-In the event of an error, the object shall not be modified.
-
-\pnum
-\errors
-\tcode{errc::not_enough_memory} if the attempt to append the \tcode{p.data_ref()} failed. The object shall not be modified.
-
-\pnum
-\tcode{io2d_error::no_current_point} if the first item to be appended required a current point and \tcode{_Has_current_point == false}.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_factory}!\idxcode{append}}
-\indexlibrary{\idxcode{append}!\idxcode{path_factory}}
-\begin{itemdecl}
-    void append(const vector<path_data_item>& p);
-    void append(const vector<path_data_item>& p, error_code& ec) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Appends the result of calling \tcode{p.data_ref()} to \tcode{_Data} as if each \tcode{path_data_item} object was added to \tcode{*this} by calling the member function that adds a \tcode{path_data_item} of the same type to \tcode{*this}.
-
-\pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-\pnum
-\remarks
-In the event of an error, the object shall not be modified.
-
-\pnum
-\errors
-\tcode{errc::not_enough_memory} if the attempt to append the \tcode{p.data_ref()} failed. The object shall not be modified.
-
-\pnum
-\tcode{io2d_error::no_current_point} if the first item to be appended required a current point and \tcode{_Has_current_point == false}.
-
-\pnum
-\tcode{io2d_error::invalid_path_data} if \tcode{p} contains one or more invalid path geometries.
-\end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{new_sub_path}}
 \indexlibrary{\idxcode{new_sub_path}!\idxcode{path_factory}}
