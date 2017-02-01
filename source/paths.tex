@@ -6,13 +6,426 @@
 Paths define geometric objects which can be stroked (Table~\ref{tab:surface.rendering.operations}), filled, masked, and used to define or modify a Clip Area (Table~\ref{tab:surface.state.listing}).
 
 \pnum
-Paths are created using a \tcode{path_factory} object.
+Paths are created using a \tcode{path_factory} object, which stores a path group. 
 
 \pnum
-They provide vector graphics functionality and as such are particularly useful in situations where an application is intended to run on a variety of platforms whose output devices (\ref{displaysurface.intro}) span a large gamut of sizes, both physical and in terms of pixel dimensions.
+Paths provide vector graphics functionality. As such they are particularly useful in situations where an application is intended to run on a variety of platforms whose output devices (\ref{displaysurface.intro}) span a large gamut of sizes, both in terms of measurement units and in terms of a horizontal and vertical pixel count, in that order. For example, a pixel count expressed as 1280x720 means that there are 1280 horizontal pixels per row of pixels and 720 vertical pixels per column of pixels for a total of 921600 pixels.
+%
+%\pnum
+%For output devices, the measurement size of a pixel is determined by the physical size of the output device. Many output devices represent pixels as having the same horizontal and vertical measurement sizes. As such, when they display a rendered image which does not have the same horizontal to vertical pixel ratio as the output device, it 
+
+\pnum
+A path may contain degenerate path segments because of special rules, which are set forth below.
+
+\pnum
+A \tcode{path_group} object is an immutable resource wrapper containing a path group (\ref{pathgroup}). A \tcode{path_group} object is created from a \tcode{path_factory} object. It can also be default constructed, in which case the \tcode{path_group} object contains no paths.
+
+\rSec1 [paths.processing] {Processing paths}
+
+\pnum
+This section provides an informative example of how a properly formed \tcode{path_factory} object is interpreted in order to eliminate extraneous path instructions.
+
+\pnum
+The \tcode{native_geometry_collection} class, described below, is used for expository purposes only. It provides a hypothetical interface for forming a path geometry graphics resource object. It is not normative.
+
+\pnum
+The \tcode{native_geometry_collection} class has the following state data, the types of which are unspecified:
+
+\begin{libreqtab2}
+	{\tcode{native_geometry_collection} state data}
+	{tab:pathgeometries.processing.natgeocoll}
+	\\ \topline
+	\lhdr{Name}
+	& \rhdr{Use}
+	\\ \capsep
+	\endfirsthead
+	\continuedcaption\\
+	\hline
+	\lhdr{Name}
+	& \rhdr{Use}
+	\\ \capsep
+	\endhead
+	Current Point
+	& The start point for a path segment that is added to the Current Path Geometry.
+	\\
+	Close Point
+	& The start point for the initial path segment in the Current Path Geometry.
+	\\
+	Current Path Geometry
+	& The path geometry to which path segments are added.
+	\\
+	Collection
+	& The collection of all path geometries added to the \tcode{native_geometry_collection} object. A new path geometry that is added to the collection is added to the end of the collection.
+	\\
+\end{libreqtab2}
+
+\begin{codeblock}
+	// \textit{This class is }\expos
+	class native_geometry_collection {
+		public:
+		void current_point(const vector_2d& pt) noexcept;
+		void close_point(const vector_2d& pt) noexcept;
+		void line_to(const vector_2d& pt) noexcept;
+		void curve_to(const vector_2d& control1, const vector_2d& control2,
+		const vector_2d& endPt) noexcept;
+		void close_path() noexcept;
+	};
+\end{codeblock}
+
+\begin{itemdecl}
+	void current_point(const vector_2d& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	If the last member function called was not \tcode{current_point} or if the Collection contains no path geometries, a new path geometry is created, added to the Collection, and set as the Current Path Geometry.
+	
+	\pnum
+	If a new path geometry is created and the Collection contained at least one path geometry prior to this member function being called, then unless the last member function called was \tcode{close_path}, the previous Current Path Geometry shall be an open path geometry.
+	
+	\pnum
+	Sets \tcode{pt} as the Current Point.
+\end{itemdescr}
+
+\begin{itemdecl}
+	void close_point(const vector_2d& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\preconditions
+	There is a Current Path Geometry.
+	
+	\pnum
+	\effects
+	Sets \tcode{pt} as the Close Point.
+	
+\end{itemdescr}
+
+\begin{itemdecl}
+	void line_to(const vector_2d& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\preconditions
+	There is a Current Path Geometry.
+	
+	\pnum
+	\effects
+	Creates a line segment from the Current Point to \tcode{pt} and adds it to the Current Path Geometry.
+	
+\end{itemdescr}
+
+\begin{itemdecl}
+	void curve_to(const vector_2d& cpt1, const vector_2d& cpt2,
+	const vector_2d& endPt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\preconditions
+	There is a Current Path Geometry.
+	
+	\pnum
+	\effects
+	Creates a cubic B\'ezier curve from the Current Point to \tcode{endPt} using \tcode{cpt1} as the first control point and \tcode{cpt2} as the second control point and adds it to the Current Path Geometry.
+	
+\end{itemdescr}
+
+\begin{itemdecl}
+	void close_path() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\preconditions
+	There is a Current Path Geometry.
+	
+	\pnum
+	\effects
+	Creates a line segment from the Current Point to the Close Point.
+	
+	\pnum
+	The Current Path Geometry becomes a closed path geometry.
+	
+\end{itemdescr}
+
+\pnum
+\enternote
+A path geometry graphics resource that only supports rendering triangles is possible. The triangles would be used to form lines and to approximate curves. This description assumes the existence of a path geometry graphics resource that performs those actions where needed.
+\exitnote
+
+\pnum
+The following code shows how to properly process \tcode{vector<path_data_item> p} and store the results into \tcode{native_geometry_collection n}:
+
+\begin{codeblock}
+	const double pi =     3.1415926535897932384626433832795;
+	const double halfpi = 1.57079632679489661923132169163985;
+	const double twopi =  6.283185307179586476925286766559;
+	matrix_2d m;
+	vector_2d origin;
+	vector_2d currentPoint;
+	bool hasCurrentPoint = false;
+	vector_2d closePoint;
+	
+	for (const auto& item : p) {
+		switch(item.type()) {
+			case path_data_type::move_to:
+			{
+				currentPoint = item.get<path_factory::path_move_to>().to();
+				auto pt = m.transform_point(currentPoint - origin) + origin;
+				n.current_point(pt);
+				hasCurrentPoint = true;
+				closePoint = pt
+				n.close_point(pt);
+			} break;
+			case path_data_type::line_to:
+			{
+				currentPoint = item.get<path_factory::path_line_to>().to();
+				auto pt = m.transform_point(currentPoint - origin) + origin;
+				if (hasCurrentPoint) {
+					n.line_to(pt);
+				}
+				else {
+					n.current_point(pt);
+					hasCurrentPoint = true;
+					closePoint = pt;
+					n.close_point(pt);
+				}
+			} break;
+			case path_data_type::curve_to:
+			{
+				auto cd = item.get<path_factory::path_curve_to>();
+				auto pt1 = m.transform_point(cd.control_point_1() - origin) + origin;
+				auto pt2 = m.transform_point(cd.control_point_2() - origin) + origin;
+				auto pt3 = m.transform_point(cd.end_point() - origin) + origin;
+				if (!hasCurrentPoint) {
+					currentPoint = cd.control_point_1();
+					n.current_point(pt1);
+					hasCurrentPoint = true;
+					closePoint = pt1;
+					n.close_point(pt1);
+				}
+				n.curve_to(pt1, pt2, pt3);
+				currentPoint = cd.end_point();
+			} break;
+			case path_data_type::new_sub_path:
+			{
+				hasCurrentPoint = false;
+			} break;
+			case path_data_type::close_path:
+			{
+				if (!hasCurrentPoint) {
+					break;
+				}
+				n.close_path();
+				n.current_point(closePoint);
+				// Invert can error so use correct overload; here is the throw version.
+				auto invM = matrix_2d{m}.invert();
+				// Need the untransformed value for currentPoint.
+				currentPoint = invM.transform_point(closePoint - origin) + origin;
+			} break;
+			case path_data_type::rel_move_to:
+			{
+				// If !hasCurrentPoint, error is io2d_error::no_current_point;
+				currentPoint = item.get<path_factory::path_rel_move_to>().to() + currentPoint;
+				auto pt = m.transform_point(currentPoint - origin) + origin;
+				n.current_point(pt);
+				hasCurrentPoint = true;
+				closePoint = pt    
+				n.close_point(pt);
+			} break;
+			case path_data_type::rel_line_to:
+			{
+				// If !hasCurrentPoint, error is io2d_error::no_current_point;
+				currentPoint = item.get<path_factory::path_rel_line_to>().to() + currentPoint;
+				auto pt = m.transform_point(currentPoint - origin) + origin;
+				n.line_to(pt);
+			} break;
+			case path_data_type::rel_curve_to:
+			{
+				// If !hasCurrentPoint, error is io2d_error::no_current_point;
+				auto cd = item.get<path_factory::path_rel_curve_to>();
+				auto pt1 = m.transform_point(cd.control_point_1() + currentPoint -
+				origin) + origin;
+				auto pt2 = m.transform_point(cd.control_point_2() + currentPoint -
+				origin) + origin;
+				auto pt3 = m.transform_point(cd.end_point() + currentPoint - origin) +
+				origin;
+				n.curve_to(pt1, pt2, pt3);
+				currentPoint = cd.end_point() + currentPoint;
+			} break;
+			case path_data_type::arc:
+			{
+				auto ad = item.get<path_factory::path_arc_clockwise>();
+				auto ctr = ad.center();
+				auto rad = ad.radius();
+				auto ang1 = ad.angle_1();
+				auto ang2 = ad.angle_2();
+				while(ang2 < ang1) {
+					ang2 += twopi;
+				}
+				vector_2d pt0, pt1, pt2, pt3;
+				int bezCount = 1;
+				double theta = ang2 - ang1;
+				double phi;
+				while (theta >= halfpi) {
+					theta /= 2.0;
+					bezCount += bezCount;
+				}
+				phi = theta / 2.0;
+				auto cosPhi = cos(phi);
+				auto sinPhi = sin(phi);
+				pt0.x(cosPhi);
+				pt0.y(-sinPhi);
+				pt3.x(pt0.x());
+				pt3.y(-pt0.y());
+				pt1.x((4.0 - cosPhi) / 3.0);
+				pt1.y(-(((1.0 - cosPhi) * (3.0 - cosPhi)) / (3.0 * sinPhi)));
+				pt2.x(pt1.x());
+				pt2.y(-pt1.y());
+				phi = -phi;
+				auto rotCwFn = [](const vector_2d& pt, double a) -> vector_2d {
+					return { pt.x() * cos(a) + pt.y() * sin(a),
+						-(pt.x() * -(sin(a)) + pt.y() * cos(a)) };
+				};
+				pt0 = rotCwFn(pt0, phi);
+				pt1 = rotCwFn(pt1, phi);
+				pt2 = rotCwFn(pt2, phi);
+				pt3 = rotCwFn(pt3, phi);
+				
+				auto currTheta = ang1;
+				const auto startPt =
+				ctr + rotCwFn({ pt0.x() * rad, pt0.y() * rad }, currTheta);
+				if (hasCurrentPoint) {
+					currentPoint = startPt;
+					auto pt = m.transform_point(currentPoint - origin) + origin;
+					n.line_to(pt);
+				}
+				else {
+					currentPoint = startPt;
+					auto pt = m.transform_point(currentPoint - origin) + origin;
+					n.current_point(pt);
+					hasCurrentPoint = true;
+					closePt = pt;
+					n.close_point(pt);
+				}
+				for (; bezCount > 0; bezCount--) {
+					auto cpt1 = ctr + rotCwFn({ pt1.x() * rad, pt1.y() * rad }, currTheta);
+					auto cpt2 = ctr + rotCwFn({ pt2.x() * rad, pt2.y() * rad }, currTheta);
+					auto cpt3 = ctr + rotCwFn({ pt3.x() * rad, pt3.y() * rad }, currTheta);
+					currentPoint = cpt3;
+					cpt1 = m.transform_point(cpt1 - origin) + origin;
+					cpt2 = m.transform_point(cpt2 - origin) + origin;
+					cpt3 = m.transform_point(cpt3 - origin) + origin;
+					n.curve_to(cpt1, cpt2, cpt3);
+					currTheta += theta;
+				}
+			} break;
+			case path_data_type::arc_negative:
+			{
+				auto ad = item.get<path_factory::path_arc_counterclockwise>();
+				auto ctr = ad.center();
+				auto rad = ad.radius();
+				auto ang1 = ad.angle_1();
+				auto ang2 = ad.angle_2();
+				while(ang2 > ang1) {
+					ang2 -= twopi;
+				}
+				vector_2d pt0, pt1, pt2, pt3;
+				int bezCount = 1;
+				double theta = ang1 - ang2;
+				double phi;
+				while (theta >= halfpi) {
+					theta /= 2.0;
+					bezCount += bezCount;
+				}
+				phi = theta / 2.0;
+				auto cosPhi = cos(phi);
+				auto sinPhi = sin(phi);
+				pt0.x(cosPhi);
+				pt0.y(-sinPhi);
+				pt3.x(pt0.x());
+				pt3.y(-pt0.y());
+				pt1.x((4.0 - cosPhi) / 3.0);
+				pt1.y(-(((1.0 - cosPhi) * (3.0 - cosPhi)) / (3.0 * sinPhi)));
+				pt2.x(pt1.x());
+				pt2.y(-pt1.y());
+				auto rotCwFn = [](const vector_2d& pt, double a) -> vector_2d {
+					return { pt.x() * cos(a) + pt.y() * sin(a),
+						-(pt.x() * -(sin(a)) + pt.y() * cos(a)) };
+				};
+				pt0 = rotCwFn(pt0, phi);
+				pt1 = rotCwFn(pt1, phi);
+				pt2 = rotCwFn(pt2, phi);
+				pt3 = rotCwFn(pt3, phi);
+				auto shflPt = pt3;
+				pt3 = pt0;
+				pt0 = shflPt;
+				shflPt = pt2;
+				pt2 = pt1;
+				pt1 = shflPt;
+				auto currTheta = ang1;
+				const auto startPt =
+				ctr + rotCwFn({ pt0.x() * rad, pt0.y() * rad }, currTheta);
+				if (hasCurrentPoint) {
+					currentPoint = startPt;
+					auto pt = m.transform_point(currentPoint - origin) + origin;
+					n.line_to(pt);
+				}
+				else {
+					currentPoint = startPt;
+					auto pt = m.transform_point(currentPoint - origin) + origin;
+					n.current_point(pt);
+					hasCurrentPoint = true;
+					closePt = pt;
+					n.close_point(pt);
+				}
+				for (; bezCount > 0; bezCount--) {
+					auto cpt1 = ctr + rotCwFn({ pt1.x() * rad, pt1.y() * rad }, currTheta);
+					auto cpt2 = ctr + rotCwFn({ pt2.x() * rad, pt2.y() * rad }, currTheta);
+					auto cpt3 = ctr + rotCwFn({ pt3.x() * rad, pt3.y() * rad }, currTheta);
+					currentPoint = cpt3;
+					cpt1 = m.transform_point(cpt1 - origin) + origin;
+					cpt2 = m.transform_point(cpt2 - origin) + origin;
+					cpt3 = m.transform_point(cpt3 - origin) + origin;
+					n.curve_to(cpt1, cpt2, cpt3);
+					currTheta -= theta;
+				}
+			} break;
+			case path_data_type::change_matrix:
+			{
+				m = item.get<path_factory::path_change_matrix>().matrix();
+			} break;
+			case path_data_type::change_origin:
+			{
+				origin = item.get<path_factory::path_change_origin>().origin();
+			} break;
+		}
+	}
+\end{codeblock}
+
+%\rSec1 [pathgeometries.strokerules] {Stroking path geometries}
+%
+%\pnum
+%The following rules shall apply when a Stroking operation (\ref{surface.stroking}) is carried out on a path geometry.
+%
+%\begin{enumerate}
+%\item If the path geometry only contains a degenerate path segment, then if the \tcode{line_cap} value is
+%\end{enumerate}
+%
+%\begin{enumerate}
+%	\item Except as otherwise specified in these rules, the start point and end point of a path segment shall be rendered as specified by the meaning of the surface's current \tcode{line_cap} value (\ref{linecap}).
+%	
+%	\item If the end point of a path segment \textit{a} is set as the current point and is then used as the start point of another path segment, \textit{b}, the point where \tcode{a}'s end point meets \tcode{b}'s start point shall be rendered as specified by the meaning of the surface's current \tcode{line_join} value (\ref{linejoin}).
+%	
+%	\item ***FIXME***
+%\end{enumerate}
+%
+%\rSec1 [pathgeometries.fillrules] {Filling path geometries}
+%
+%\pnum
+%***FIXME***
 
 \addtocounter{SectionDepthBase}{1}
-\input{path-processing}
+%\input{path-processing}
 %\input{path-data-type}
 %\input{path-data-item}
 \input{path}

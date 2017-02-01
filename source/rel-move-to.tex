@@ -3,13 +3,13 @@
 
 \pnum
 \indexlibrary{\idxcode{path_factory::path_rel_move_to}}
-The class \tcode{path_factory::path_rel_move_to} describes an operation on a path geometry collection.
+The class \tcode{path_factory::path_rel_move_to} describes an operation on a path group.
 
 \pnum
 This operation starts a new path geometry and sets its current point and last-move-to point to the point that is the sum of the previous path geometry's current point and the point returned by \tcode{*this.to()}.
 
 \pnum
-If the existing path geometry does not have a current point when this operation is requested the path geometry collection is malformed.
+If the existing path geometry does not have a current point when this operation is requested the path group is malformed.
 
 \rSec1 [pathdataitem.relmoveto.synopsis] {\tcode{path_factory::path_rel_move_to} synopsis}
 

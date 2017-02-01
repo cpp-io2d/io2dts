@@ -3,13 +3,13 @@
 
 \pnum
 \indexlibrary{\idxcode{path_factory::path_rel_curve_to}}
-The class \tcode{path_factory::path_rel_curve_to} describes an operation on a path geometry collection.
+The class \tcode{path_factory::path_rel_curve_to} describes an operation on a path group.
 
 \pnum
 This operation creates a cubic B\'ezier curve from the current point to the point that is the sum of the current point and the point returned by \tcode{*this.end_point()}, with the first control point being the point that is the sum of the current point and the point returned by \tcode{*this.control_point_1()} and the second control point being the point that is the sum of the current point and the point returned by \tcode{*this.control_point_2()}. It then sets the current point to be the point that is the sum of the current point and the point returned by \tcode{*this.end_point()}.
 
 \pnum
-If the current path geometry does not have a current point when this operation is requested the path geometry collection is malformed.
+If the current path geometry does not have a current point when this operation is requested the path group is malformed.
 
 \rSec1 [pathdataitem.relcurveto.synopsis] {\tcode{path_factory::path_rel_curve_to} synopsis}
 

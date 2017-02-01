@@ -4,16 +4,16 @@
 \pnum
 \indexlibrary{\idxcode{path_factory}}
 The class \tcode{path_factory} is a container that stores and manipulates path
-geometry collection data from which \tcode{path} objects are created.
+group data from which \tcode{path} objects are created.
 
 \pnum
-A \tcode{path_factory} is a contiguous container. (See [container.requirements.general] in \cppseventeen.) This means that the consecutive path geometries within its path geometry collection data and the path segments contained in each of those path geometries are contiguous. As such the iterators for a \tcode{path_geometry} object present the path geometry collection data as a contiguous series of path segments.
+A \tcode{path_factory} is a contiguous container. (See [container.requirements.general] in \cppseventeen.) This means that the consecutive path geometries within its path group data and the path segments contained in each of those path geometries are contiguous. As such the iterators for a \tcode{path_geometry} object present the path group data as a contiguous series of path segments.
 
 \pnum
 The type of a path segment in a \tcode{path_factory} object is  \tcode{path_factory::path_data}.
 
 %\pnum
-%Any manipulation of the path geometry collection data which results in path geometry collection data that cannot be processed in the manner specified in \ref{pathgeometries.processing} shall result in undefined behavior.
+%Any manipulation of the path group data which results in path group data that cannot be processed in the manner specified in \ref{pathgeometries.processing} shall result in undefined behavior.
 %
 \rSec1 [pathfactory.synopsis] {\tcode{path_factory} synopsis}
 

@@ -115,10 +115,6 @@ anti-aliasing types to choose from for each of the two operations.
 \definition{aspect ratio}{\iotwod.general.defns.aspectratio}
 the ratio of the width to the height of a rectangular area
 
-\indexdefn{closed path geometry}
-\definition{closed path geometry}{\iotwod.general.defns.closedpathgeometry}
-a path geometry with one or more path segments where the initial path segment's start point is used to define the end point of the final path segment
-
 \indexdefn{color model}
 \definition{color model}{\iotwod.general.defns.colormodel}
 an ideal, mathematical representation of colors which often uses color channels
@@ -177,34 +173,9 @@ where $0.0 \le t \le 1.0$, $P_{0}$ is the starting point, $P_{1}$ is the first
 control point, $P_{2}$ is the second control point, and $P_{3}$ is the 
 ending point
 
-\indexdefn{current point}
-\definition{current point}{\iotwod.general.defns.currentpoint}
-a point established by various operations used in creating a path geometry
-\enternote
-A new path geometry has no current point except as otherwise specified.
-\exitnote
-
-\indexdefn{degenerate path geometry}
-\definition{degenerate path geometry}{\iotwod.general.defns.degeneratepathgeometry}
-a path geometry with only one path segment
-\enternote
-The path segment is not required to be a degenerate path segment.
-\exitnote
-
-\indexdefn{degenerate path segment}
-\definition{degenerate path segment}{\iotwod.general.defns.degeneratepathsegment}
-a path segment which has the same value for its start point and its end point is a \term{degenerate path segment}
-
 \indexdefn{filter}
 \definition{filter}{\iotwod.general.defns.filter}
 a mathematical function that determines the visual data value of a point for a graphics data graphics resource
-
-\indexdefn{final path segment}
-\definition{final path segment}{\iotwod.general.defns.finalpathsegment}
-a path segment whose end point shall not be used to define the start point of any other path segment
-\enternote
-It is possible for the initial path segment and final path segment to be the same path segment.
-\exitnote
 
 \indexdefn{graphics data}
 \definition{graphics data}{\iotwod.general.defns.graphicsdata}
@@ -227,11 +198,11 @@ By its definition a graphics resource is an implementation detail. Often it will
 \definition{graphics resource}{\iotwod.general.defns.graphicsresource.graphicsdata}
 <graphics data graphics resource> an object of unspecified type used by an implementation to provide access to and allow manipulation of visual data
 
-\indexdefn{graphics resource}
-\indexdefn{graphics resource!path geometry graphics resource}
-\definition{graphics resource}{\iotwod.general.defns.graphicsresource.pathgeometry}
-<path geometry graphics resource> an object of unspecified type used by an implementation to store a collection of zero or more path geometries in an unspecified format
-
+%\indexdefn{graphics resource}
+%\indexdefn{graphics resource!path geometry graphics resource}
+%\definition{graphics resource}{\iotwod.general.defns.graphicsresource.pathgeometry}
+%<path geometry graphics resource> an object of unspecified type used by an implementation to store a collection of zero or more path geometries in an unspecified format
+%
 \indexdefn{\pixmap}
 \definition{\pixmap}{\iotwod.general.defns.pixmap}
 a raster graphics data graphics resource
@@ -260,20 +231,9 @@ the alpha channel value.
 \definition{graphics state data}{\iotwod.general.defns.graphicsstatedata}
 data which specify how some part of the process of rendering or of a composing operation shall be performed in part or in whole
 
-\indexdefn{initial path segment}
-\definition{initial path segment}{\iotwod.general.defns.initialpathsegment}
-a path segment whose start point is not defined as being the end point of another path segment
-\enternote
-It is possible for the initial path segment and final path segment to be the same path segment.
-\exitnote
-
 \indexdefn{graphics subsystem}
 \definition{graphics subsystem}{\iotwod.general.defns.graphicssubsystem}
 collection of unspecified operating system and library functionality used to render and display 2D computer graphics
-
-\indexdefn{last-move-to point}
-\definition{last-move-to point}{\iotwod.general.defns.lastmovetopoint}
-the point in a path geometry that is the start point of the initial path segment
 
 \indexdefn{normalize}
 \definition{normalize}{\iotwod.general.defns.normalize}
@@ -281,21 +241,6 @@ to map a closed set of evenly spaced values in the range $[0, x]$ to an evenly s
 \enternote
 The definition of normalize given is the definition for normalizing unsigned input. Signed normalization, i.e. the mapping of a closed set of evenly spaced values in the range $[-x, x)$ to an evenly spaced sequence of floating point values in the range $[-1, 1]$, also exists but is not used in this \documenttypename{}.
 \exitnote
-
-\indexdefn{open path geometry}
-\definition{open path geometry}{\iotwod.general.defns.openpathgeometry}
-a path geometry with one or more path segments where the initial path segment's start point is not used to define the end point of the final path segment
-\enternote
-Even if the start point of the initial path segment and the end point of the final path segment are assigned the same coordinates, the path geometry is still an open path geometry since the final path segment's end point is not defined as being the start point of the initial segment but instead merely happens to have the same value as that point.
-\exitnote
-
-\indexdefn{path geometry}
-\definition{path geometry}{\iotwod.general.defns.pathgeometry}
-a collection of path segments where the end point of each path segment, except the final path segment, shall be used to define the start point of exactly one other path segment in the collection
-
-\indexdefn{path segment}
-\definition{path segment}{\iotwod.general.defns.pathsegment}
-is a line or a curve, each of which has a start point and an end point
 
 \indexdefn{render}
 \definition{render}{\iotwod.general.defns.render}
@@ -329,6 +274,8 @@ to use a filter to obtain the visual data for a given point from a graphics data
 \indexdefn{color stop}
 \definition{color stop}{\iotwod.general.defns.colorstop}
 a tuple composed of a floating point offset value in the range $[0, 1]$ and a color value
+
+\input{definitions-paths}
 
 \input{definitions-fonts}
 

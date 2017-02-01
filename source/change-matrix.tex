@@ -5,10 +5,10 @@
 
 \pnum
 \indexlibrary{\idxcode{path_factory::path_change_matrix}}
-The class \tcode{path_factory::path_change_matrix} describes an operation on a path geometry collection.
+The class \tcode{path_factory::path_change_matrix} describes an operation on a path group.
 
 \pnum
-This operation changes the transformation matrix for a path geometry collection to be the value returned by \tcode{*this.matrix()}. As shown in \ref{pathgeometries.processing}, the new transformation matrix does not affect any operations that came before this operation. It is only used in processing operations that come after it. It continues to be used until another \tcode{path_factory::path_change_matrix} object is encountered or the end of the path geometry collection is reached.
+This operation changes the transformation matrix for a path group to be the value returned by \tcode{*this.matrix()}. As shown in \ref{pathgeometries.processing}, the new transformation matrix does not affect any operations that came before this operation. It is only used in processing operations that come after it. It continues to be used until another \tcode{path_factory::path_change_matrix} object is encountered or the end of the path group is reached.
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
