@@ -3,18 +3,27 @@
 
 \pnum
 \indexlibrary{\idxcode{path_factory}}
-The class \tcode{path_factory} is a container that stores and manipulates path
-group data from which \tcode{path} objects are created.
+The class \tcode{path_factory} is a container that stores and manipulates objects of type \tcode{path_factory::path_data} from which \tcode{path_group} objects are created.
 
 \pnum
-A \tcode{path_factory} is a contiguous container. (See [container.requirements.general] in \cppseventeen.) This means that the consecutive path geometries within its path group data and the path segments contained in each of those path geometries are contiguous. As such the iterators for a \tcode{path_geometry} object present the path group data as a contiguous series of path segments.
+A \tcode{path_factory} is a contiguous container. (See [container.requirements.general] in \cppseventeen.)
 
 \pnum
-The type of a path segment in a \tcode{path_factory} object is  \tcode{path_factory::path_data}.
+The collection of \tcode{path_factory::path_data} objects in a path factory is referred to as its path group.
 
-%\pnum
-%Any manipulation of the path group data which results in path group data that cannot be processed in the manner specified in \ref{pathgeometries.processing} shall result in undefined behavior.
-%
+\pnum
+In addition to its path group, a path factory has an origin of type \tcode{vector_2d}, a transformation matrix of type \tcode{matrix_2d}, a current point of type \tcode{std::optional<vector_2d>}, and a last-move-to point of type \tcode{vector_2d}.
+
+\pnum
+When a path factory is default constructed:
+
+\begin{itemize}
+	\item The path group shall be empty.
+	\item The current point shall not contain a value.
+	\item The transformation matrix shall have a value of \tcode{matrix_2d::init_identity\{ \}}.
+	\item The origin shall have a value of \tcode{vector_2d\{ \}}.
+\end{itemize}
+
 \rSec1 [pathfactory.synopsis] {\tcode{path_factory} synopsis}
 
 \begin{codeblock}
@@ -109,7 +118,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       double angle_2() const noexcept;
     };
     
-    class path_new_sub_path {
+    class path_new_path {
     };
     
     class path_close_path {
@@ -132,8 +141,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     };
     
     using path_data      = typename variant<path_abs_move, path_abs_line, 
-      path_rel_move, path_curve, path_rel_curve, path_arc_clockwise, 
-      path_arc_counterclockwise, path_new_sub_path, path_close_path, 
+      path_rel_move, path_abs_curve, path_rel_curve, path_arc_clockwise, 
+      path_arc_counterclockwise, path_new_path, path_close_path, 
       path_change_matrix, path_change_origin>;
     
     using iterator       = @\impdefx{type of \tcode{path_factory::iterator}}@. // See [container.requirements] in \cppseventeen.
@@ -141,538 +150,280 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
     
-    // \ref{pathfactory.cons}, construct/copy/destroy:
-    constexpr path_factory() noexcept;
-    path_factory(const path_factory&) = default;
-    path_factory& operator=(const path_factory&) = default;
-    path_factory(path_factory&&) noexcept = default;
-    path_factory& operator=(path_factory&&) noexcept = default;
-    
     // \ref{pathfactory.modifiers}, modifiers:
-    void append(const path_factory& p);
-    void append(const path_factory& p, error_code& ec) noexcept;
-    void append(const vector<path_data_item>& p);
-    void append(const vector<path_data_item>& p, error_code& ec) noexcept;
-    void new_sub_path();
-    void new_sub_path(error_code& ec) noexcept;
-    void close_path();
-    void close_path(error_code& ec) noexcept;
-    void arc(const vector_2d& center, double radius, double angle1,
-      double angle2);
-    void arc(const vector_2d& center, double radius, double angle1,
-      double angle2, error_code& ec) noexcept;
-    void arc_negative(const vector_2d& center, double radius, double angle1,
-      double angle2);
-    void arc_negative(const vector_2d& center, double radius, double angle1,
-      double angle2, error_code& ec) noexcept;
+    void new_path() noexcept;
+    void close_path() noexcept;
+    void arc_clockwise(const vector_2d& center, double radius, double angle1,
+      double angle2) noexcept;
+    void arc_counterclockwise(const vector_2d& center, double radius,
+      double angle1, double angle2) noexcept;
     void curve_to(const vector_2d& pt0, const vector_2d& pt1,
-      const vector_2d& pt2);
-    void curve_to(const vector_2d& pt0, const vector_2d& pt1,
-      const vector_2d& pt2, error_code& ec) noexcept;
-    void line_to(const vector_2d& pt);
-    void line_to(const vector_2d& pt, error_code& ec) noexcept;
-    void move_to(const vector_2d& pt);
-    void move_to(const vector_2d& pt, error_code& ec) noexcept;
-    void rectangle(const experimental::io2d::rectangle& r);
-    void rectangle(const experimental::io2d::rectangle& r,
-      error_code& ec) noexcept;
+      const vector_2d& pt2) noexcept;
+    void line_to(const vector_2d& pt) noexcept;
+    void move_to(const vector_2d& pt) noexcept;
+    void rectangle(const experimental::io2d::rectangle& r) noexcept;
     void rel_curve_to(const vector_2d& dpt0, const vector_2d& dpt1,
-      const vector_2d& dpt2);
-    void rel_curve_to(const vector_2d& dpt0, const vector_2d& dpt1,
-      const vector_2d& dpt2, error_code& ec) noexcept;
-    void rel_line_to(const vector_2d& dpt);
-    void rel_line_to(const vector_2d& dpt, error_code& ec) noexcept;
-    void rel_move_to(const vector_2d& dpt);
-    void rel_move_to(const vector_2d& dpt, error_code& ec) noexcept;
-    void transform_matrix(const matrix_2d& m);
-    void transform_matrix(const matrix_2d& m, error_code& ec) noexcept;
-    void origin(const vector_2d& pt);
-    void origin(const vector_2d& pt, error_code& ec) noexcept;
+      const vector_2d& dpt2) noexcept;
+    void rel_line_to(const vector_2d& dpt) noexcept;
+    void rel_move_to(const vector_2d& dpt) noexcept;
+    void transform_matrix(const matrix_2d& m) noexcept;
+    void origin(const vector_2d& pt) noexcept;
     void clear() noexcept;
 
     // \ref{pathfactory.iterators}, iterators:
     iterator begin() noexcept;
     const_iterator begin() const noexcept;
+    const_iterator cbegin() const noexcept;
+
     iterator end() noexcept;
     const_iterator end() const noexcept;
+    const_iterator cend() const noexcept;
+    
     
     reverse_iterator rbegin() noexcept;
     const_reverse_iterator rbegin() const noexcept;
+    const_reverse_iterator crbegin() const noexcept;
+
     reverse_iterator rend() noexcept;
     const_reverse_iterator rend() const noexcept;
-
-    const_iterator cbegin() const noexcept;
-    const_iterator cend() const noexcept;
-    const_reverse_iterator crbegin() const noexcept;
     const_reverse_iterator crend() const noexcept;
+
     
     // \ref{pathfactory.observers}, observers:
-    experimental::io2d::rectangle path_extents() const;
-    experimental::io2d::rectangle path_extents(error_code& ec) const noexcept;
+    experimental::io2d::rectangle path_extents() const noexcept;
     bool has_current_point() const noexcept;
     vector_2d current_point() const;
     vector_2d current_point(error_code& ec) const noexcept;
     matrix_2d transform_matrix() const noexcept;
     vector_2d origin() const noexcept;
-    vector<path_data_item> data() const;
-    vector<path_data_item> data(error_code& ec) const noexcept;
-    path_data_item data_item(unsigned int index) const;
-    path_data_item data_item(unsigned int index, error_code& ec) const noexcept;
-    const vector<path_data_item>& data_ref() const noexcept;
-
-  private:
-    vector<path_data_item> _Data;  // \expos
-    bool _Has_current_point;       // \expos
-    vector_2d _Current_point;      // \expos
-    vector_2d _Last_move_to_point; // \expos
-    matrix_2d _Transform_matrix;   // \expos
-    vector_2d _Origin;             // \expos
   };
 } } } }
 \end{codeblock}
 
-\rSec1 [pathfactory.cons] {\tcode{path_factory} constructors and 
-assignment operators}
-
-\indexlibrary{\idxcode{path_factory}!constructor}
-\begin{itemdecl}
-    path_factory();
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_factory}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Data.empty() == true}.
-	
-	\pnum
-	\tcode{_Has_current_point == false}.
-	
-	\pnum
-	\tcode{_Transform_matrix == matrix_2d::init_identity()}.
-	
-	\pnum
-	\tcode{_Origin == vector_2d{ }}.
-\end{itemdescr}
-
 \rSec1 [pathfactory.modifiers] {\tcode{path_factory} modifiers}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{new_sub_path}}
-\indexlibrary{\idxcode{new_sub_path}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_factory}!\idxcode{new_path}}
+\indexlibrary{\idxcode{new_path}!\idxcode{path_factory}}
 \begin{itemdecl}
-    void new_sub_path();
-    void new_sub_path(error_code& ec) noexcept;
+    void new_path() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_factory::path_new_sub_path())}.
-	
-	\pnum
-	\tcode{_Has_current_point = false}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\remarks
-	In the event of an error, the object shall not be modified.
-
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if the attempt to add the \tcode{path_data_item} failed.
+	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_new_path()} to the end of the path group and destroys the value, if any, of the current point.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{close_path}}
 \indexlibrary{\idxcode{close_path}!\idxcode{path_factory}}
 \begin{itemdecl}
-    void close_path();
-    void close_path(error_code& ec) noexcept;
+    void close_path() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
+	\requires
+	The current point contains a value.
+	
+	\pnum
 	\effects
-	If \tcode{_Has_current_point == true}:
-	\begin{itemize}
-	\item \tcode{_Data.emplace_back(path_factory::path_close_path())}.
-	
-	\item \tcode{_Current_point = _Last_move_to_point}.
-	\end{itemize}
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\remarks
-	In the event of an error, the object shall not be modified.
-
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if the attempt to add the \tcode{path_data_item} failed.
+	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_close_path()} to the end of the path group and sets the value of the current point to the value of the last-move-to point.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{arc}}
-\indexlibrary{\idxcode{arc}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_factory}!\idxcode{arc_clockwise}}
+\indexlibrary{\idxcode{arc_clockwise}!\idxcode{path_factory}}
 \begin{itemdecl}
-    void arc(const vector_2d& center, double radius, double angle1,
-      double angle2);
-    void arc(const vector_2d& center, double radius, double angle1,
-      double angle2, error_code& ec) noexcept;
+    void arc_clockwise(const vector_2d& center, double radius, double angle1,
+      double angle2) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_factory::path_arc_clockwise(center, radius, angle1, angle2))}.
+	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_arc_clockwise(center, radius, angle1, angle2)} to the end of the path group.
 	
 	\pnum
-	\tcode{_Current_point == vector_2\{ radius * cos(angle2), -(radius * -sin(angle2)) \} + center}.
+	If the current point does not contain a value, the last-move-to point shall be set to \tcode{vector_2\{ radius * cos(angle1), -(radius * -sin(angle1)) \} + center}.
 	
 	\pnum
-	If \tcode{_Has_current_point == false}:
-	\begin{itemize}
-	\item \tcode{_Last_move_to_point == vector_2\{ radius * cos(angle1), -(radius * -sin(angle1)) \} + center}.
-	
-	\item \tcode{_Has_current_point == true}.
-	\end{itemize}
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\remarks
-	In the event of an error, the object shall not be modified.
-
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if the attempt to add the \tcode{path_data_item} failed.
+	The current point shall be set to \tcode{vector_2\{ radius * cos(angle2), -(radius * -sin(angle2)) \} + center}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{arc_negative}}
-\indexlibrary{\idxcode{arc_negative}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_factory}!\idxcode{arc_counterclockwise}}
+\indexlibrary{\idxcode{arc_counterclockwise}!\idxcode{path_factory}}
 \begin{itemdecl}
-    void arc_negative(const vector_2d& center, double radius, double angle1,
-      double angle2);
-    void arc_negative(const vector_2d& center, double radius, double angle1,
-      double angle2, error_code& ec) noexcept;
+    void arc_counterclockwise(const vector_2d& center, double radius,
+      double angle1, double angle2) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_factory::path_arc_counterclockwise(center, radius, angle1, angle2))}.
+	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_arc_counterclockwise(center, radius, angle1, angle2)} to the end of the path group.
 	
 	\pnum
-	\tcode{_Current_point = vector_2\{ radius * cos(angle1), radius * -sin(angle1) \} + center}.
+	If the current point does not contain a value, the last-move-to point shall be set to \tcode{vector_2\{ radius * cos(angle2), radius * -sin(angle2) \} + center}.
 	
 	\pnum
-	If \tcode{_Has_current_point == false}:
-	\begin{itemize}
-	\item \tcode{_Last_move_to_point = vector_2\{ radius * cos(angle2), radius * -sin(angle2) \} + center}.
-	
-	\item \tcode{_Has_current_point = true}.
-	\end{itemize}
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\remarks
-	In the event of an error, the object shall not be modified.
-
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if the attempt to add the \tcode{path_data_item} failed.
+	The current point shall be set to \tcode{vector_2\{ radius * cos(angle1), radius * -sin(angle1) \} + center}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{curve_to}}
 \indexlibrary{\idxcode{curve_to}!\idxcode{path_factory}}
 \begin{itemdecl}
     void curve_to(const vector_2d& pt0, const vector_2d& pt1,
-      const vector_2d& pt2);
-    void curve_to(const vector_2d& pt0, const vector_2d& pt1,
-      const vector_2d& pt2, error_code& ec) noexcept;
+      const vector_2d& pt2) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	If \tcode{_Has_current_point == false}:
-	\begin{itemize}
-	\item \tcode{_Data.reserve(_Data.size() + 2U)}.
-	
-	\item \tcode{*this.move_to(pt0)}.
-	\end{itemize}
+	If the current point does not contain a value, adds a \tcode{path_data} object constructed from \tcode{path_factory::path_abs_move_to(pt0)} to the end of the path group.
 	
 	\pnum
-	\tcode{_Data.emplace_back(path_factory::path_curve_to(pt0, pt1, pt2))}.
+	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_abs_curve_to(pt0, pt1, pt2)} to the end of the path group.
 	
 	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\remarks
-	In the event of an error, the object shall not be modified.
-
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if the attempt to add the \tcode{path_data_item} failed.
+	The current point shall be set to the value of \tcode{pt2}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{line_to}}
 \indexlibrary{\idxcode{line_to}!\idxcode{path_factory}}
 \begin{itemdecl}
-    void line_to(const vector_2d& pt);
-    void line_to(const vector_2d& pt, error_code& ec) noexcept;
+    void line_to(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_factory::path_line_to(pt))}.
+	If the current point does not contain a value, the last-move-to point shall be set to the value of \tcode{pt}.
 	
 	\pnum
-	If \tcode{_Has_current_point == false}:
-	\begin{itemize}
-	\item \tcode{_Last_move_to_point = pt}.
-	
-	\item \tcode{_Has_current_point = true}.
-	\end{itemize}
+	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_abs_line_to(pt)} to the end of the path group.
 	
 	\pnum
-	\tcode{_Current_point = pt}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\remarks
-	In the event of an error, the object shall not be modified.
-
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if the attempt to add the \tcode{path_data_item} failed.
+	The current point shall be set to the value of \tcode{pt}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{move_to}}
 \indexlibrary{\idxcode{move_to}!\idxcode{path_factory}}
 \begin{itemdecl}
-    void move_to(const vector_2d& pt);
-    void move_to(const vector_2d& pt, error_code& ec) noexcept;
+    void move_to(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_factory::path_move_to(pt))}.
+	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_abs_move_to(pt)} to the end of the path group.
 	
 	\pnum
-	\tcode{_Has_current_point = true}.
-	
-	\pnum
-	\tcode{_Current_point = pt}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\remarks
-	In the event of an error, the object shall not be modified.
-
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if the attempt to add the \tcode{path_data_item} failed.
+	The current point shall be set to the value of \tcode{pt}. The last-move-to point shall then be set to the value of the current point.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{rectangle}}
 \indexlibrary{\idxcode{rectangle}!\idxcode{path_factory}}
 \begin{itemdecl}
-    void rectangle(const experimental::io2d::rectangle& r);
-    void rectangle(const experimental::io2d::rectangle& r, 
-      error_code& ec) noexcept;
+    void rectangle(const experimental::io2d::rectangle& r) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
 	\begin{enumerate}
-	\item \tcode{_Data.reserve(_Data.size() + 5U)}.
-
-	\item \tcode{*this.move_to(\{ r.x(), r.y() \})}.
+	\item Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_abs_move_to(\{ r.x(), r.y() \})} to the end of the path group.
 	
-	\item \tcode{*this.rel_line_to(\{ r.width(), 0.0 \})}.
+	\item Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_rel_line_to(\{ r.width(), 0.0 \})} to the end of the path group.
 	
-	\item \tcode{*this.rel_line_to(\{ 0.0, r.height() \})}.
+	\item Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_rel_line_to(\{ 0.0, r.height() \})} to the end of the path group.
 	
-	\item \tcode{*this.rel_line_to(\{ -r.width(), 0.0 \})}.
+	\item Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_rel_line_to(\{ -r.width(), 0.0 \})} to the end of the path group.
 	
-	\item \tcode{*this.close_path()}.
+	\item Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_close_path()} to the end of the path group.
+	
+	\item The current point shall be set to \tcode{vector_2d\{ r.x() r.y() \}}.
+	
+	\item The last-move-to point shall be set to \tcode{vector_2d\{ r.x() r.y() \}}.
 	\end{enumerate}
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\remarks
-	In the event of an error, the object shall not be modified.
-
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if the attempt to add the \tcode{path_data_item} failed.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{rel_curve_to}}
 \indexlibrary{\idxcode{rel_curve_to}!\idxcode{path_factory}}
 \begin{itemdecl}
     void rel_curve_to(const vector_2d& dpt0, const vector_2d& dpt1,
-      const vector_2d& dpt2);
-    void rel_curve_to(const vector_2d& dpt0, const vector_2d& dpt1,
-      const vector_2d& dpt2, error_code& ec) noexcept;
+      const vector_2d& dpt2) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
+	\requires
+	The current point contains a value.
+	
+	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_factory::path_rel_curve_to(dpt0, dpt1, dpt2))}.
+	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_rel_curve_to(dpt0, dpt1, dpt2)} to the end of the path group.
 	
 	\pnum
-	\tcode{_Current_point = dpt2 + _Current_point}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\remarks
-	In the event of an error, the object shall not be modified.
-
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if the attempt to add the \tcode{path_data_item} failed.
-	
-	\pnum
-	\tcode{io2d_error::no_current_point} if \tcode{_Has_current_point == false}.
+	The current point shall be set to the value of the current point added to \tcode{dpt2}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{rel_line_to}}
 \indexlibrary{\idxcode{rel_line_to}!\idxcode{path_factory}}
 \begin{itemdecl}
-    void rel_line_to(const vector_2d& dpt);
-    void rel_line_to(const vector_2d& dpt, error_code& ec) noexcept;
+    void rel_line_to(const vector_2d& dpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
+	\requires
+	The current point contains a value.
+	
+	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_factory::path_rel_line_to(pt))}.
+	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_rel_line_to(pt)} to the end of the path group.
 	
 	\pnum
-	\tcode{_Current_point = dpt + _Current_point}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\remarks
-	In the event of an error, the object shall not be modified.
-
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if the attempt to add the \tcode{path_data_item} failed.
-	
-	\pnum
-	\tcode{io2d_error::no_current_point} if \tcode{_Has_current_point == false}.
+	The current point shall be set to the value of the current point added to \tcode{dpt}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{rel_move_to}}
 \indexlibrary{\idxcode{rel_move_to}!\idxcode{path_factory}}
 \begin{itemdecl}
-    void rel_move_to(const vector_2d& dpt);
-    void rel_move_to(const vector_2d& dpt, error_code& ec) noexcept;
+    void rel_move_to(const vector_2d& dpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
+	\requires
+	The current point contains a value.
+	
+	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_factory::path_rel_move_to(dpt))}.
+	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_rel_move_to(dpt)} to the end of the path group.
 	
 	\pnum
-	\tcode{_Current_point = dpt + _Current_point}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\remarks
-	In the event of an error, the object shall not be modified.
-
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if the attempt to add the \tcode{path_data_item} failed.
-	
-	\pnum
-	\tcode{io2d_error::no_current_point} if \tcode{_Has_current_point == false}.
+	The current point shall be set to the value of the current point added to \tcode{dpt}.The last-move-to point shall then be set to the value of the current point.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{transform_matrix}}
 \indexlibrary{\idxcode{transform_matrix}!\idxcode{path_factory}}
 \begin{itemdecl}
-    void transform_matrix(const matrix_2d& m);
-    void transform_matrix(const matrix_2d& m, error_code& ec) noexcept;
+    void transform_matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
+	\requires
+	The matrix \tcode{m} shall be invertible.
+	
+	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_factory::path_change_matrix(m))}.
+	Adds a \tcode{path_data} object constructed from \tcode{(path_factory::path_change_matrix(m)} to the end of the path group.
 	
 	\pnum
+	The transformation matrix shall be set to the value of \tcode{m}.
 	\tcode{_Transform_matrix = m}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\remarks
-	In the event of an error, the object shall not be modified.
-
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if the attempt to add the \tcode{path_data_item} failed.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{origin}}
 \indexlibrary{\idxcode{origin}!\idxcode{path_factory}}
 \begin{itemdecl}
-    void origin(const vector_2d& pt);
-    void origin(const vector_2d& pt, error_code& ec) noexcept;
+    void origin(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	\tcode{_Data.emplace_back(path_factory::path_change_origin(pt)))}.
+	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_change_origin(pt)} to the end of the path group.
 	
 	\pnum
-	\tcode{_Origin = pt}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Origin == pt}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\remarks
-	In the event of an error, the object shall not be modified.
-
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if the attempt to add the \tcode{path_data_item} failed.
+	The origin shall be set to the value of \tcode{pt}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{clear}}
@@ -683,16 +434,95 @@ assignment operators}
 \begin{itemdescr}
 	\pnum
 	\postconditions
-	\tcode{_Data.empty() == true}.
+	\pnum
+	The path group shall be empty.
 	
 	\pnum
-	\tcode{_Has_current_point == false}.
+	The current point shall not contain a value.
 	
 	\pnum
-	\tcode{_Transform_matrix == matrix_2d::init_identity\{ \}}.
+	The transformation matrix shall have a value of \tcode{matrix_2d::init_identity\{ \}}.
 	
 	\pnum
-	\tcode{_Origin == vector_2d\{ \}}.
+	The origin shall have a value of \tcode{vector_2d\{ \}}.
+\end{itemdescr}
+
+\rSec1 [pathfactory.iterators] {\tcode{path_factory} iterators}
+    
+\indexlibrary{\idxcode{path_factory}!\idxcode{begin}}
+\indexlibrary{\idxcode{begin}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_factory}!\idxcode{cbegin}}
+\indexlibrary{\idxcode{cbegin}!\idxcode{path_factory}}
+\begin{itemdecl}
+	iterator begin() noexcept;
+	const_iterator begin() const noexcept;
+	const_iterator cbegin() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	An iterator referring to the first \tcode{path_data} item in the path group.
+	
+	\pnum
+	\remarks
+	Changing a \tcode{path_data} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data} object or of any subsequent \tcode{path_data} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} unless all of the violations are fixed prior to such processing.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{end}}
+\indexlibrary{\idxcode{end}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_factory}!\idxcode{cend}}
+\indexlibrary{\idxcode{cend}!\idxcode{path_factory}}
+\begin{itemdecl}
+	iterator end() noexcept;
+	const_iterator end() const noexcept;
+	const_iterator cend() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	An iterator which is the past-the-end value.
+	
+	\pnum
+	\remarks
+	Changing a \tcode{path_data} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data} object or of any subsequent \tcode{path_data} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} unless all of the violations are fixed prior to such processing.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{rbegin}}
+\indexlibrary{\idxcode{rbegin}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_factory}!\idxcode{crbegin}}
+\indexlibrary{\idxcode{crbegin}!\idxcode{path_factory}}
+\begin{itemdecl}
+	reverse_iterator rbegin() noexcept;
+	const_reverse_iterator rbegin() const noexcept;
+	const_reverse_iterator crbegin() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	An iterator which is semantically equivalent to \tcode{reverse_iterator(end)}.
+	
+	\pnum
+	\remarks
+	Changing a \tcode{path_data} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data} object or of any subsequent \tcode{path_data} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} all of the violations are fixed prior to such processing.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{rend}}
+\indexlibrary{\idxcode{rend}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_factory}!\idxcode{crend}}
+\indexlibrary{\idxcode{crend}!\idxcode{path_factory}}
+\begin{itemdecl}
+	reverse_iterator rend() noexcept;
+	const_reverse_iterator rend() const noexcept;
+	const_reverse_iterator crend() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	An iterator which is semantically equivalent to \tcode{reverse_iterator(begin)}.
+	
+	\pnum
+	\remarks
+	Changing a \tcode{path_data} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data} object or of any subsequent \tcode{path_data} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} unless all of the violations are fixed prior to such processing.
 \end{itemdescr}
 
 \rSec1 [pathfactory.observers] {\tcode{path_factory} observers}
@@ -700,24 +530,15 @@ assignment operators}
 \indexlibrary{\idxcode{path_factory}!\idxcode{path_extents}}
 \indexlibrary{\idxcode{path_extents}!\idxcode{path_factory}}
 \begin{itemdecl}
-    experimental::io2d::rectangle path_extents() const;
-    experimental::io2d::rectangle path_extents(error_code& ec) const noexcept;
+    experimental::io2d::rectangle path_extents() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
-	A \tcode{rectangle} object which contains the extents of the path segments, including degenerate path segments, in \tcode{_Data} when it is processed as described in \ref{pathgeometries.processing}.
+	A \tcode{rectangle} object which contains the extents of the path segments, including degenerate path segments, in the path group when it is processed as described in \ref{pathgeometries.processing}.
 	\enternote
 	By using path segments, this description intentionally excludes points established by \tcode{move_to} and \tcode{rel_move_to} operations from the extents value except where those points are subsequently used in defining a path segment.
 	\exitnote
-
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\errors
-	\tcode{io2d_error::invalid_matrix} if \tcode{_Data} includes a \tcode{change_matrix} operation which establishes a non-invertible \tcode{matrix_2d} as the transformation matrix and that matrix must subsequently be inverted in order to process the path geometries.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{has_current_point}}
@@ -728,27 +549,22 @@ assignment operators}
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Has_current_point}.
+	If the current point contains a value, \tcode{true}, otherwise \tcode{false}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{current_point}}
 \indexlibrary{\idxcode{current_point}!\idxcode{path_factory}}
 \begin{itemdecl}
-    vector_2d current_point() const;
-    vector_2d current_point(error_code& ec) const noexcept;
+    vector_2d current_point() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
+	\requires
+	The current point contains a value.
+	
+	\pnum
 	\returns
-	\tcode{_Current_point}.
-
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\errors
-	\tcode{io2d_error::no_current_point} if \tcode{_Has_current_point == false}.
+	The value of the current point.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{transform_matrix}}
@@ -759,7 +575,7 @@ assignment operators}
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Transform_matrix}.
+	The value of the transformation matrix.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{origin}}
@@ -770,56 +586,5 @@ assignment operators}
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Origin}.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_factory}!\idxcode{data}}
-\indexlibrary{\idxcode{data}!\idxcode{path_factory}}
-\begin{itemdecl}
-    vector<path_data_item> data() const;
-    vector<path_data_item> data(error_code& ec) const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	A copy of \tcode{_Data}.
-
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_factory}!\idxcode{data_item}}
-\indexlibrary{\idxcode{data_item}!\idxcode{path_factory}}
-\begin{itemdecl}
-    path_data_item data_item(unsigned int index) const;
-    path_data_item data_item(unsigned int index, error_code& ec) const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{_Data.at(index)}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\errors
-	\tcode{io2d_error::invalid_index} if \tcode{_Data.size() <= index}.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_factory}!\idxcode{data_ref}}
-\indexlibrary{\idxcode{data_ref}!\idxcode{path_factory}}
-\begin{itemdecl}
-    const vector<path_data_item>& data_ref() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{_Data}.
+	The value of the origin.
 \end{itemdescr}

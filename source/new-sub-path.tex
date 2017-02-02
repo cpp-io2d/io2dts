@@ -1,42 +1,42 @@
 %!TEX root = io2d.tex
-\rSec0 [pathdataitem.newsubpath] {Class \tcode{path_factory::path_new_sub_path}}
+\rSec0 [pathdataitem.newpath] {Class \tcode{path_factory::path_new_path}}
 
 \pnum
-\indexlibrary{\idxcode{path_factory::path_new_sub_path}}
-The class \tcode{path_factory::path_new_sub_path} describes an operation on a path group.
+\indexlibrary{\idxcode{path_factory::path_new_path}}
+The class \tcode{path_factory::path_new_path} describes an operation on a path group.
 
 \pnum
 This operation starts a new path geometry. The new path geometry has no current point.
 
-\rSec1 [pathdataitem.newsubpath.synopsis] {\tcode{path_factory::path_new_sub_path} synopsis}
+\rSec1 [pathdataitem.newpath.synopsis] {\tcode{path_factory::path_new_path} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class path_factory::path_new_sub_path {
+  class path_factory::path_new_path {
   public:
     // construct/copy/move/destroy:
-    new_sub_path() noexcept;
-    new_sub_path(const new_sub_path&) noexcept;
-    path_factory::path_new_sub_path& operator=(const new_sub_path&) noexcept;
-    new_sub_path(new_sub_path&&) noexcept;
-    path_factory::path_new_sub_path& operator=(new_sub_path&&) noexcept;
+    new_path() noexcept;
+    new_path(const new_path&) noexcept;
+    path_factory::path_new_path& operator=(const new_path&) noexcept;
+    new_path(new_path&&) noexcept;
+    path_factory::path_new_path& operator=(new_path&&) noexcept;
 
-    // \ref{pathdataitem.newsubpath.observers}, observers:
+    // \ref{pathdataitem.newpath.observers}, observers:
     virtual path_data_type type() const noexcept override;
   };
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdataitem.newsubpath.observers]{\tcode{path_factory::path_new_sub_path} observers}
+\rSec1 [pathdataitem.newpath.observers]{\tcode{path_factory::path_new_path} observers}
 
-\indexlibrary{\idxcode{path_factory::path_new_sub_path}!\idxcode{type}}
-\indexlibrary{\idxcode{type}!\idxcode{path_factory::path_new_sub_path}}
+\indexlibrary{\idxcode{path_factory::path_new_path}!\idxcode{type}}
+\indexlibrary{\idxcode{type}!\idxcode{path_factory::path_new_path}}
 \begin{itemdecl}
     virtual path_data_type type() const noexcept override;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{path_data_type::new_sub_path}.
+	\tcode{path_data_type::new_path}.
 
 \end{itemdescr}

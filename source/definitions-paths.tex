@@ -1,0 +1,68 @@
+%!TEX root = io2d.tex
+
+\indexdefn{path segment}
+\definition{path segment}{\iotwod.general.defns.pathsegment}
+a line, curve, or arc, each of which has a start point and an end point
+
+\indexdefn{control point}
+\definition{constrol point}{\iotwod.general.defns.controlpoint}
+a point other than the start point and end point that is used in defining a curve
+
+\indexdefn{degenerate path segment}
+\definition{degenerate path segment}{\iotwod.general.defns.degeneratepathsegment}
+a path segment that has the same start point, end point, and, if any, control points
+
+\indexdefn{initial path segment}
+\definition{initial path segment}{\iotwod.general.defns.initialpathsegment}
+a path segment whose start point is not defined as being the end point of another path segment
+\enternote
+It is possible for the initial path segment and final path segment to be the same path segment.
+\exitnote
+
+\indexdefn{final path segment}
+\definition{final path segment}{\iotwod.general.defns.finalpathsegment}
+a path segment whose end point shall not be used to define the start point of any other path segment
+\enternote
+It is possible for the initial path segment and final path segment to be the same path segment.
+\exitnote
+
+\indexdefn{path instruction}
+\definition{path instruction}{\iotwod.general.defns.pathinstruction}
+an instruction that creates a new path, closes an existing path, or modifies the interpretation of path segments that follow it
+
+\indexdefn{path}
+\definition{path}{\iotwod.general.defns.path}
+a collection of path instructions and path segments where the end point of each path segment, except the final path segment, defines the start point of exactly one other path segment in the collection
+
+\indexdefn{current point}
+\definition{current point}{\iotwod.general.defns.currentpoint}
+a point established by various operations used in creating a path
+\enternote
+A new path has no current point except as otherwise specified.
+\exitnote
+
+\indexdefn{last-move-to point}
+\definition{last-move-to point}{\iotwod.general.defns.lastmovetopoint}
+the point in a path that is the start point of the initial path segment
+
+\indexdefn{path group}
+\definition{path group}{\iotwod.general.defns.pathgroup}
+a collection of paths
+
+\indexdefn{closed path}
+\definition{closed path}{\iotwod.general.defns.closedpath}
+a path with one or more path segments where the initial path segment's start point is used to define the end point of the final path segment
+
+\indexdefn{open path}
+\definition{open path}{\iotwod.general.defns.openpath}
+a path with one or more path segments where the initial path segment's start point is not used to define the end point of the path's the final path segment
+\enternote
+Even if the start point of the initial path segment and the end point of the final path segment are assigned the same coordinates, the path is still an open path since the final path segment's end point is not defined as being the start point of the initial segment but instead merely happens to have the same value as that point.
+\exitnote
+
+\indexdefn{degenerate path}
+\definition{degenerate path}{\iotwod.general.defns.degeneratepath}
+a path with only one path segment
+\enternote
+The path segment is not required to be a degenerate path segment.
+\exitnote

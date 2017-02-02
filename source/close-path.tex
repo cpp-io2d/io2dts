@@ -1,47 +1,28 @@
 %!TEX root = io2d.tex
 \rSec0 [pathdataitem.closepath] {Class \tcode{path_factory::path_close_path}}
 
-\pnum
-\indexlibrary{\idxcode{path_factory::path_close_path}}
-The class \tcode{path_factory::path_close_path} describes an operation on a path group.
-
-\pnum
-If the current path geometry has a current point, this operation creates a line from the current point to the last-move-to point. It then starts a new path geometry and sets its current point and last-move-to point to the value of the previous path geometry's last-move-to point.
-
-\pnum
-If there is no current point, then this operation does nothing.
-\enternote
-Because this operation does nothing if there is no current point, there is no need to track whether or not a path geometry has a valid last-move-to point. This operation is the only operation that uses the last-move-to point and all operations that establish a current point for a path geometry also establish a valid last-move-to point for that path geometry.
-\exitnote
-
+%\pnum
+%\indexlibrary{\idxcode{path_factory::path_close_path}}
+%The class \tcode{path_factory::path_close_path} describes a path instruction that affects the interpretation of a path factory's path group. It is described in terms of its effect on the evaluation of the path group. 
+%
+%\pnum
+%If the current point in the path group contains a value. If it does, this instruction creates a line from the current point to the path group's last-move-to point. It then sets the path group's current point and last-move-to point to the value of the previous path geometry's last-move-to point.
+%
+%\pnum
+%If there is no current point, then this operation does nothing.
+%\enternote
+%Because this operation does nothing if there is no current point, there is no need to track whether or not a path geometry has a valid last-move-to point. This operation is the only operation that uses the last-move-to point and all operations that establish a current point for a path geometry also establish a valid last-move-to point for that path geometry.
+%\exitnote
+%
 \rSec1 [pathdataitem.closepath.synopsis] {\tcode{path_factory::path_close_path} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path_factory::path_close_path {
-  public:
-    // construct/copy/move/destroy:
-    close_path() noexcept;
-    close_path(const close_path&) noexcept;
-    path_factory::path_close_path& operator=(const close_path&) noexcept;
-    close_path(close_path&&) noexcept;
-    path_factory::path_close_path& operator=(close_path&&) noexcept;
-
-    // \ref{pathdataitem.closepath.observers}, observers:
-    virtual path_data_type type() const noexcept override;
   };
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdataitem.closepath.observers]{\tcode{path_factory::path_close_path} observers}
-
-\indexlibrary{\idxcode{close_path}!\idxcode{type}}
-\indexlibrary{\idxcode{type}!\idxcode{close_path}}
-\begin{itemdecl}
-    virtual path_data_type type() const noexcept override;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{path_data_type::close_path}.
-\end{itemdescr}
+\enternote
+This class is a path instruction that contains no data. It exists to enable certain operations within a path group.
+\exitnote
