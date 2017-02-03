@@ -538,7 +538,7 @@ Certain rendering and composing operations require a \term{Source Path}, which i
 The rendering and composing operations invoked by the \tcode{surface::fill}, \tcode{surface::stroke}, and \tcode{surface::mask} functions shall use the \tcode{surface} object's Current Path as their Source Path.
 
 \pnum
-The rendering and composing operations invoked by the \tcode{surface::fill_immediate}, \tcode{surface::stroke_immediate}, and \tcode{surface::mask_immediate} functions shall use as their Source Path a path geometry graphics resource formed in the manner specified by \ref{pathgeometries.processing} from the (\textit{const} reference to) \tcode{vector<path_data_item>} returned by calling the \tcode{path_factory::data_ref} member function on the surface's Immediate Path.
+The rendering and composing operations invoked by the \tcode{surface::fill_immediate}, \tcode{surface::stroke_immediate}, and \tcode{surface::mask_immediate} functions shall use as their Source Path a path geometry graphics resource formed in the manner specified by \ref{paths.processing} from the (\textit{const} reference to) \tcode{vector<path_data_item>} returned by calling the \tcode{path_factory::data_ref} member function on the surface's Immediate Path.
 
 \pnum
 Provided that none of the function calls results in an error, given a \tcode{surface} object \tcode{s}, there shall be no observable difference in the results of:
@@ -1216,7 +1216,7 @@ Set's Current Path (Table~\ref{tab:surface.state.listing}) to \tcode{p}.
 
 \pnum
 \remarks
-Processing the path data so that it is properly transformed can be done at the time it is first set as a path on a \tcode{surface} object or any time before that. The untransformed \tcode{vector<path_data_item>} shall be retained to ensure that a path can be properly recreated at any time. The steps for converting an untransformed \tcode{vector<path_data_item>} to transformed path data are found at \ref{pathgeometries.processing}.
+Processing the path data so that it is properly transformed can be done at the time it is first set as a path on a \tcode{surface} object or any time before that. The untransformed \tcode{vector<path_data_item>} shall be retained to ensure that a path can be properly recreated at any time. The steps for converting an untransformed \tcode{vector<path_data_item>} to transformed path data are found at \ref{paths.processing}.
 \end{itemdescr}
 
 \rSec1 [surface.modifiers.immediatepath] {\tcode{surface} immediate path modifiers}
@@ -1932,7 +1932,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \pnum
 \remarks
-This function requires that the Immediate Path be processed into a usable form as if in the manner specified in \ref{pathgeometries.processing}.
+This function requires that the Immediate Path be processed into a usable form as if in the manner specified in \ref{paths.processing}.
 
 \pnum
 \errors
@@ -1987,7 +1987,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \pnum
 \remarks
-This function requires that the Immediate Path be processed into a usable form as if in the manner specified in \ref{pathgeometries.processing}.
+This function requires that the Immediate Path be processed into a usable form as if in the manner specified in \ref{paths.processing}.
 
 \pnum
 \errors
@@ -2042,7 +2042,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \pnum
 \remarks
-This function requires that the Immediate Path be processed into a usable form as if in the manner specified in \ref{pathgeometries.processing}.
+This function requires that the Immediate Path be processed into a usable form as if in the manner specified in \ref{paths.processing}.
 
 \pnum
 \errors
@@ -2097,7 +2097,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \pnum
 \remarks
-This function requires that the Immediate Path be processed into a usable form as if in the manner specified in \ref{pathgeometries.processing}.
+This function requires that the Immediate Path be processed into a usable form as if in the manner specified in \ref{paths.processing}.
 
 \pnum
 \errors

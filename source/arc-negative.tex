@@ -38,7 +38,7 @@ For purposes of determining whether a point is on the arc, if the value returned
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path_factory::path_arc_counterclockwise {
   public:
-    // \ref{pathfactory.patharcnegative.cons}, construct/copy/move/destroy:
+    // \ref{pathfactory.patharccounterclockwise.cons}, construct/copy/move/destroy:
     arc_negative() noexcept;
     arc_negative(const arc_negative&) noexcept;
     path_factory::path_arc_counterclockwise& operator=(const arc_negative&) noexcept;
@@ -47,13 +47,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     arc_negative(const vector_2d& ctr, double rad, double angle1,
       double angle2) noexcept;
 
-    // \ref{pathfactory.patharcnegative.modifiers}, modifiers:
+    // \ref{pathfactory.patharccounterclockwise.modifiers}, modifiers:
     void center(const vector_2d& value) noexcept;
     void radius(double value) noexcept;
     void angle_1(double radians) noexcept;
     void angle_2(double radians) noexcept;
 
-    // \ref{pathfactory.patharcnegative.observers}, observers:
+    // \ref{pathfactory.patharccounterclockwise.observers}, observers:
     vector_2d center() const noexcept;
     double radius() const noexcept;
     double angle_1() const noexcept;
