@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [pathdataitem.moveto] {Class \tcode{path_factory::path_move_to}}
+\rSec0 [pathfactory.pathabsmoveto] {Class \tcode{path_factory::path_move_to}}
 
 \pnum
 \indexlibrary{\idxcode{path_factory::path_move_to}}
@@ -8,13 +8,13 @@ The class \tcode{path_factory::path_move_to} describes an operation on a path gr
 \pnum
 This operation starts a new path geometry and sets its current point and last-move-to point to the value of \tcode{*this.to()}.
 
-\rSec1 [pathdataitem.moveto.synopsis] {\tcode{path_factory::path_move_to} synopsis}
+\rSec1 [pathfactory.pathabsmoveto.synopsis] {\tcode{path_factory::path_move_to} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path_factory::path_move_to {
   public:
-    // \ref{pathdataitem.moveto.cons}, construct/copy/move/destroy:
+    // \ref{pathfactory.pathabsmoveto.cons}, construct/copy/move/destroy:
     move_to() noexcept;
     move_to(const move_to&) noexcept;
     path_factory::path_move_to& operator=(const move_to&) noexcept;
@@ -22,10 +22,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     path_factory::path_move_to& operator=(move_to&&) noexcept;
     explicit move_to(const vector_2d& pt) noexcept;
 
-    // \ref{pathdataitem.moveto.modifiers}, modifiers:
+    // \ref{pathfactory.pathabsmoveto.modifiers}, modifiers:
     void to(const vector_2d& pt) noexcept;
 
-    // \ref{pathdataitem.moveto.observers}, observers:
+    // \ref{pathfactory.pathabsmoveto.observers}, observers:
     vector_2d to() const noexcept;
     virtual path_data_type type() const noexcept override;
     
@@ -35,7 +35,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdataitem.moveto.cons] {\tcode{path_factory::path_move_to} constructors and assignment operators}
+\rSec1 [pathfactory.pathabsmoveto.cons] {\tcode{path_factory::path_move_to} constructors and assignment operators}
 
 \indexlibrary{\idxcode{path_factory::path_move_to}!constructor}
 \begin{itemdecl}
@@ -65,7 +65,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Data == pt}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.moveto.modifiers]{\tcode{path_factory::path_move_to} modifiers}
+\rSec1 [pathfactory.pathabsmoveto.modifiers]{\tcode{path_factory::path_move_to} modifiers}
 
 \indexlibrary{\idxcode{path_factory::path_move_to}!\idxcode{to}}
 \indexlibrary{\idxcode{to}!\idxcode{path_factory::path_move_to}}
@@ -78,7 +78,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Data == pt}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.moveto.observers]{\tcode{path_factory::path_move_to} observers}
+\rSec1 [pathfactory.pathabsmoveto.observers]{\tcode{path_factory::path_move_to} observers}
 
 \indexlibrary{\idxcode{path_factory::path_move_to}!\idxcode{to}}
 \indexlibrary{\idxcode{to}!\idxcode{path_factory::path_move_to}}

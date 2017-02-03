@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [pathdataitem.arcnegative] {Class \tcode{path_factory::path_arc_counterclockwise}}
+\rSec0 [pathfactory.patharccounterclockwise] {Class \tcode{path_factory::path_arc_counterclockwise}}
 
 \pnum
 \indexlibrary{\idxcode{path_factory::path_arc_counterclockwise}}
@@ -32,13 +32,13 @@ The current point is set be to the arc's end point at the end of this operation.
 \pnum
 For purposes of determining whether a point is on the arc, if the value returned by \tcode{*this.angle_2()} is greater than the value returned by \tcode{*this.angle_1()} then the value returned by \tcode{*this.angle_2()} shall be continuously decremented by $2\pi$ until it is less than the value returned by \tcode{*this.angle_1()}.
 
-\rSec1 [pathdataitem.arcnegative.synopsis] {\tcode{path_factory::path_arc_counterclockwise} synopsis}
+\rSec1 [pathfactory.patharccounterclockwise.synopsis] {\tcode{path_factory::path_arc_counterclockwise} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path_factory::path_arc_counterclockwise {
   public:
-    // \ref{pathdataitem.arcnegative.cons}, construct/copy/move/destroy:
+    // \ref{pathfactory.patharcnegative.cons}, construct/copy/move/destroy:
     arc_negative() noexcept;
     arc_negative(const arc_negative&) noexcept;
     path_factory::path_arc_counterclockwise& operator=(const arc_negative&) noexcept;
@@ -47,13 +47,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     arc_negative(const vector_2d& ctr, double rad, double angle1,
       double angle2) noexcept;
 
-    // \ref{pathdataitem.arcnegative.modifiers}, modifiers:
+    // \ref{pathfactory.patharcnegative.modifiers}, modifiers:
     void center(const vector_2d& value) noexcept;
     void radius(double value) noexcept;
     void angle_1(double radians) noexcept;
     void angle_2(double radians) noexcept;
 
-    // \ref{pathdataitem.arcnegative.observers}, observers:
+    // \ref{pathfactory.patharcnegative.observers}, observers:
     vector_2d center() const noexcept;
     double radius() const noexcept;
     double angle_1() const noexcept;
@@ -69,7 +69,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdataitem.arcnegative.cons] {\tcode{path_factory::path_arc_counterclockwise} constructors and assignment operators}
+\rSec1 [pathfactory.patharccounterclockwise.cons] {\tcode{path_factory::path_arc_counterclockwise} constructors and assignment operators}
 
 \indexlibrary{\idxcode{path_factory::path_arc_counterclockwise}!constructor}
 \begin{itemdecl}
@@ -112,7 +112,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Angle_2 == angle2}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.arcnegative.modifiers]{\tcode{path_factory::path_arc_counterclockwise} modifiers}
+\rSec1 [pathfactory.patharccounterclockwise.modifiers]{\tcode{path_factory::path_arc_counterclockwise} modifiers}
 
 \indexlibrary{\idxcode{path_factory::path_arc_counterclockwise}!\idxcode{center}}
 \indexlibrary{\idxcode{center}!\idxcode{path_factory::path_arc_counterclockwise}}
@@ -158,7 +158,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Angle_2 == value}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.arcnegative.observers]{\tcode{path_factory::path_arc_counterclockwise} observers}
+\rSec1 [pathfactory.patharccounterclockwise.observers]{\tcode{path_factory::path_arc_counterclockwise} observers}
 
 \indexlibrary{\idxcode{path_factory::path_arc_counterclockwise}!\idxcode{center}}
 \indexlibrary{\idxcode{center}!\idxcode{path_factory::path_arc_counterclockwise}}

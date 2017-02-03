@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [pathdataitem.changeorigin] {Class \tcode{path_factory::path_change_origin}}
+\rSec0 [pathfactory.pathchangeorigin] {Class \tcode{path_factory::path_change_origin}}
 
 \pnum
 \indexlibrary{\idxcode{path_factory::path_change_origin}}
@@ -8,13 +8,13 @@ The class \tcode{path_factory::path_change_origin} describes an operation on a p
 \pnum
 This operation changes the origin point for a path group to be the value returned by \tcode{*this.origin()}. As shown in \ref{pathgeometries.processing}, the new origin point does not affect any operations that came before this operation. It is only used in processing operations that come after it. It continues to be used until another \tcode{path_factory::path_change_origin} object is encountered or the end of the path group is reached.
 
-\rSec1 [pathdataitem.changeorigin.synopsis] {\tcode{path_factory::path_change_origin} synopsis}
+\rSec1 [pathfactory.pathchangeorigin.synopsis] {\tcode{path_factory::path_change_origin} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path_factory::path_change_origin {
   public:
-    // \ref{pathdataitem.changeorigin.cons}, construct/copy/move/destroy:
+    // \ref{pathfactory.pathchangeorigin.cons}, construct/copy/move/destroy:
     change_origin() noexcept;
     change_origin(const change_origin&) noexcept;
     path_factory::path_change_origin& operator=(const change_origin&) noexcept;
@@ -22,10 +22,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     path_factory::path_change_origin& operator=(change_origin&&) noexcept;
     explicit change_origin(const vector_2d& pt) noexcept;
 
-    // \ref{pathdataitem.changeorigin.modifiers}, modifiers:
+    // \ref{pathfactory.pathchangeorigin.modifiers}, modifiers:
     void origin(const vector_2d& value) noexcept;
 
-    // \ref{pathdataitem.changeorigin.observers}, observers:
+    // \ref{pathfactory.pathchangeorigin.observers}, observers:
     vector_2d origin() const noexcept;
     virtual path_data_type type() const noexcept override;
     
@@ -35,7 +35,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdataitem.changeorigin.cons] {\tcode{path_factory::path_change_origin} constructors and assignment operators}
+\rSec1 [pathfactory.pathchangeorigin.cons] {\tcode{path_factory::path_change_origin} constructors and assignment operators}
 
 \indexlibrary{\idxcode{path_factory::path_change_origin}!constructor}
 \begin{itemdecl}
@@ -65,7 +65,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Data == pt}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.changeorigin.modifiers]{\tcode{path_factory::path_change_origin} modifiers}
+\rSec1 [pathfactory.pathchangeorigin.modifiers]{\tcode{path_factory::path_change_origin} modifiers}
 
 \indexlibrary{\idxcode{path_factory::path_change_origin}!\idxcode{origin}}
 \indexlibrary{\idxcode{origin}!\idxcode{path_factory::path_change_origin}}
@@ -78,7 +78,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Data == value}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.changeorigin.observers]{\tcode{change_origin} observers}
+\rSec1 [pathfactory.pathchangeorigin.observers]{\tcode{change_origin} observers}
 
 \indexlibrary{\idxcode{path_factory::path_change_origin}!\idxcode{origin}}
 \indexlibrary{\idxcode{origin}!\idxcode{path_factory::path_change_origin}}

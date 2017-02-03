@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [pathdataitem.newpath] {Class \tcode{path_factory::path_new_path}}
+\rSec0 [pathfactory.pathnewpath] {Class \tcode{path_factory::path_new_path}}
 
 \pnum
 \indexlibrary{\idxcode{path_factory::path_new_path}}
@@ -8,7 +8,7 @@ The class \tcode{path_factory::path_new_path} describes an operation on a path g
 \pnum
 This operation starts a new path geometry. The new path geometry has no current point.
 
-\rSec1 [pathdataitem.newpath.synopsis] {\tcode{path_factory::path_new_path} synopsis}
+\rSec1 [pathfactory.pathnewpath.synopsis] {\tcode{path_factory::path_new_path} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
@@ -21,13 +21,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     new_path(new_path&&) noexcept;
     path_factory::path_new_path& operator=(new_path&&) noexcept;
 
-    // \ref{pathdataitem.newpath.observers}, observers:
+    // \ref{pathfactory.pathnewpath.observers}, observers:
     virtual path_data_type type() const noexcept override;
   };
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdataitem.newpath.observers]{\tcode{path_factory::path_new_path} observers}
+\rSec1 [pathfactory.pathnewpath.observers]{\tcode{path_factory::path_new_path} observers}
 
 \indexlibrary{\idxcode{path_factory::path_new_path}!\idxcode{type}}
 \indexlibrary{\idxcode{type}!\idxcode{path_factory::path_new_path}}

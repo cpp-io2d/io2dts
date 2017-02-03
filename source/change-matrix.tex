@@ -1,7 +1,7 @@
 %!TEX root = io2d.tex
-\rSec0 [pathdataitem.changematrix] {Class \tcode{path_factory::path_change_matrix}}
+\rSec0 [pathfactory.pathchangematrix] {Class \tcode{path_factory::path_change_matrix}}
 
-\rSec1 [pathdataitem.changematrix.synopsis] {\tcode{path_factory::path_change_matrix} synopsis}
+\rSec1 [pathfactory.pathchangematrix.synopsis] {\tcode{path_factory::path_change_matrix} synopsis}
 
 \pnum
 \indexlibrary{\idxcode{path_factory::path_change_matrix}}
@@ -14,7 +14,7 @@ This operation changes the transformation matrix for a path group to be the valu
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path_factory::path_change_matrix {
   public:
-    // \ref{pathdataitem.changematrix.cons}, construct/copy/move/destroy:
+    // \ref{pathfactory.pathchangematrix.cons}, construct/copy/move/destroy:
     change_matrix() noexcept;
     change_matrix(const change_matrix&) noexcept;
     path_factory::path_change_matrix& operator=(const change_matrix&) noexcept;
@@ -22,10 +22,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     path_factory::path_change_matrix& operator=(change_matrix&&) noexcept;
     explicit change_matrix(const matrix_2d& m) noexcept;
 
-    // \ref{pathdataitem.changematrix.modifiers}, modifiers:
+    // \ref{pathfactory.pathchangematrix.modifiers}, modifiers:
     void matrix(const matrix_2d& value) noexcept;
 
-    // \ref{pathdataitem.changematrix.observers}, observers:
+    // \ref{pathfactory.pathchangematrix.observers}, observers:
     matrix_2d matrix() const noexcept;
     virtual path_data_type type() const noexcept override;
     
@@ -35,7 +35,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdataitem.changematrix.cons] {\tcode{path_factory::path_change_matrix} constructors and assignment operators}
+\rSec1 [pathfactory.pathchangematrix.cons] {\tcode{path_factory::path_change_matrix} constructors and assignment operators}
 
 \indexlibrary{\idxcode{path_factory::path_change_matrix}!constructor}
 \begin{itemdecl}
@@ -65,7 +65,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Matrix == m}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.changematrix.modifiers]{\tcode{path_factory::path_change_matrix} modifiers}
+\rSec1 [pathfactory.pathchangematrix.modifiers]{\tcode{path_factory::path_change_matrix} modifiers}
 
 \indexlibrary{\idxcode{path_factory::path_change_matrix}!\idxcode{matrix}}
 \indexlibrary{\idxcode{matrix}!\idxcode{path_factory::path_change_matrix}}
@@ -78,7 +78,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Matrix == value}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.changematrix.observers]{\tcode{path_factory::path_change_matrix} observers}
+\rSec1 [pathfactory.pathchangematrix.observers]{\tcode{path_factory::path_change_matrix} observers}
 
 \indexlibrary{\idxcode{path_factory::path_change_matrix}!\idxcode{matrix}}
 \indexlibrary{\idxcode{matrix}!\idxcode{path_factory::path_change_matrix}}

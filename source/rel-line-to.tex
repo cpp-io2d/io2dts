@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [pathdataitem.rellineto] {Class \tcode{path_factory::path_rel_line_to}}
+\rSec0 [pathfactory.pathrellineto] {Class \tcode{path_factory::path_rel_line_to}}
 
 \pnum
 \indexlibrary{\idxcode{path_factory::path_rel_line_to}}
@@ -11,13 +11,13 @@ This operation creates a line from the current point to the point that is the su
 \pnum
 If the current path geometry does not have a current point when this operation is requested the path group is malformed.
 
-\rSec1 [pathdataitem.rellineto.synopsis] {\tcode{path_factory::path_rel_line_to} synopsis}
+\rSec1 [pathfactory.pathrellineto.synopsis] {\tcode{path_factory::path_rel_line_to} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path_factory::path_rel_line_to {
   public:
-    // \ref{pathdataitem.rellineto.cons}, construct/copy/move/destroy:
+    // \ref{pathfactory.pathrellineto.cons}, construct/copy/move/destroy:
     rel_line_to() noexcept;
     rel_line_to(const line_to&) noexcept;
     path_factory::path_rel_line_to& operator=(const line_to&) noexcept;
@@ -25,10 +25,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     path_factory::path_rel_line_to& operator=(line_to&&) noexcept;
     explicit rel_line_to(const vector_2d& pt) noexcept;
 
-    // \ref{pathdataitem.rellineto.modifiers}, modifiers:
+    // \ref{pathfactory.pathrellineto.modifiers}, modifiers:
     void to(const vector_2d& pt) noexcept;
 
-    // \ref{pathdataitem.rellineto.observers}, observers:
+    // \ref{pathfactory.pathrellineto.observers}, observers:
     vector_2d to() const noexcept;
     virtual path_data_type type() const noexcept override;
     
@@ -38,7 +38,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdataitem.rellineto.cons] {\tcode{path_factory::path_rel_line_to} constructors and assignment operators}
+\rSec1 [pathfactory.pathrellineto.cons] {\tcode{path_factory::path_rel_line_to} constructors and assignment operators}
 
 \indexlibrary{\idxcode{path_factory::path_rel_line_to}!constructor}
 \begin{itemdecl}
@@ -68,7 +68,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Data == pt}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.rellineto.modifiers]{\tcode{path_factory::path_rel_line_to} modifiers}
+\rSec1 [pathfactory.pathrellineto.modifiers]{\tcode{path_factory::path_rel_line_to} modifiers}
 
 \indexlibrary{\idxcode{path_factory::path_rel_line_to}!\idxcode{to}}
 \indexlibrary{\idxcode{to}!\idxcode{path_factory::path_rel_line_to}}
@@ -81,7 +81,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Data == pt}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.rellineto.observers]{\tcode{path_factory::path_rel_line_to} observers}
+\rSec1 [pathfactory.pathrellineto.observers]{\tcode{path_factory::path_rel_line_to} observers}
 
 \indexlibrary{\idxcode{path_factory::path_rel_line_to}!\idxcode{to}}
 \indexlibrary{\idxcode{to}!\idxcode{path_factory::path_rel_line_to}}

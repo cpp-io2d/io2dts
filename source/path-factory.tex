@@ -240,10 +240,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_arc_clockwise(center, radius, angle1, angle2)} to the end of the path group.
 	
 	\pnum
-	If the current point does not contain a value, the last-move-to point shall be set to \tcode{vector_2\{ radius * cos(angle1), -(radius * -sin(angle1)) \} + center}.
+	If the current point does not contain a value, the last-move-to point shall be set to \tcode{vector_2d\{ radius * cos(angle1), -(radius * -sin(angle1)) \} + center}.
 	
 	\pnum
-	The current point shall be set to \tcode{vector_2\{ radius * cos(angle2), -(radius * -sin(angle2)) \} + center}.
+	The current point shall be set to \tcode{vector_2d\{ radius * cos(angle2), -(radius * -sin(angle2)) \} + center}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{arc_counterclockwise}}
@@ -258,10 +258,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_arc_counterclockwise(center, radius, angle1, angle2)} to the end of the path group.
 	
 	\pnum
-	If the current point does not contain a value, the last-move-to point shall be set to \tcode{vector_2\{ radius * cos(angle2), radius * -sin(angle2) \} + center}.
+	If the current point does not contain a value, the last-move-to point shall be set to \tcode{vector_2d\{ radius * cos(angle2), radius * -sin(angle2) \} + center}.
 	
 	\pnum
-	The current point shall be set to \tcode{vector_2\{ radius * cos(angle1), radius * -sin(angle1) \} + center}.
+	The current point shall be set to \tcode{vector_2d\{ radius * cos(angle1), radius * -sin(angle1) \} + center}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{curve_to}}

@@ -2,7 +2,7 @@
 
 \indexdefn{path segment}
 \definition{path segment}{\iotwod.general.defns.pathsegment}
-a line, curve, or arc, each of which has a start point and an end point
+a line or Bezier curve, or arc, each of which has a start point and an end point
 
 \indexdefn{control point}
 \definition{constrol point}{\iotwod.general.defns.controlpoint}
@@ -10,7 +10,7 @@ a point other than the start point and end point that is used in defining a curv
 
 \indexdefn{degenerate path segment}
 \definition{degenerate path segment}{\iotwod.general.defns.degeneratepathsegment}
-a path segment that has the same start point, end point, and, if any, control points
+a path segment that has the same values for its start point, end point, and, if any, control points
 
 \indexdefn{initial path segment}
 \definition{initial path segment}{\iotwod.general.defns.initialpathsegment}
@@ -51,11 +51,11 @@ a collection of paths
 
 \indexdefn{closed path}
 \definition{closed path}{\iotwod.general.defns.closedpath}
-a path with one or more path segments where the initial path segment's start point is used to define the end point of the final path segment
+a path with one or more path segments where the last-move-to point is used to define the end point of the path's final path segment
 
 \indexdefn{open path}
 \definition{open path}{\iotwod.general.defns.openpath}
-a path with one or more path segments where the initial path segment's start point is not used to define the end point of the path's the final path segment
+a path with one or more path segments where the last-move-to point is not used to define the end point of the path's final path segment
 \enternote
 Even if the start point of the initial path segment and the end point of the final path segment are assigned the same coordinates, the path is still an open path since the final path segment's end point is not defined as being the start point of the initial segment but instead merely happens to have the same value as that point.
 \exitnote

@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [pathdataitem.closepath] {Class \tcode{path_factory::path_close_path}}
+\rSec0 [pathfactory.pathclosepath] {Class \tcode{path_factory::path_close_path}}
 
 %\pnum
 %\indexlibrary{\idxcode{path_factory::path_close_path}}
@@ -14,7 +14,7 @@
 %Because this operation does nothing if there is no current point, there is no need to track whether or not a path geometry has a valid last-move-to point. This operation is the only operation that uses the last-move-to point and all operations that establish a current point for a path geometry also establish a valid last-move-to point for that path geometry.
 %\exitnote
 %
-\rSec1 [pathdataitem.closepath.synopsis] {\tcode{path_factory::path_close_path} synopsis}
+\rSec1 [pathfactory.pathclosepath.synopsis] {\tcode{path_factory::path_close_path} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {

@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [pathdataitem.lineto] {Class \tcode{path_factory::path_line_to}}
+\rSec0 [pathfactory.pathabslineto] {Class \tcode{path_factory::path_line_to}}
 
 \pnum
 \indexlibrary{\idxcode{path_factory::path_line_to}}
@@ -8,13 +8,13 @@ The class \tcode{path_factory::path_line_to} describes an operation on a path gr
 \pnum
 If the current path geometry has a current point then this operation creates a line from the current point to the point returned by \tcode{*this.to()} and then sets current point to be the point returned by \tcode{*this.to()}. Otherwise, this operation behaves exactly as if this object was a \tcode{path_factory::path_move_to} object constructed which was constructed with the value returned by \tcode{*this.to()} as its argument.
 
-\rSec1 [pathdataitem.lineto.synopsis] {\tcode{path_factory::path_line_to} synopsis}
+\rSec1 [pathfactory.pathabslineto.synopsis] {\tcode{path_factory::path_line_to} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path_factory::path_line_to {
   public:
-    // \ref{pathdataitem.lineto.cons}, construct/copy/move/destroy:
+    // \ref{pathfactory.pathabslineto.cons}, construct/copy/move/destroy:
     line_to() noexcept;
     line_to(const line_to&) noexcept;
     path_factory::path_line_to& operator=(const line_to&) noexcept;
@@ -22,10 +22,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     path_factory::path_line_to& operator=(line_to&&) noexcept;
     explicit line_to(const vector_2d& pt) noexcept;
 
-    // \ref{pathdataitem.lineto.modifiers}, modifiers:
+    // \ref{pathfactory.pathabslineto.modifiers}, modifiers:
     void to(const vector_2d& pt) noexcept;
 
-    // \ref{pathdataitem.lineto.observers}, observers:
+    // \ref{pathfactory.pathabslineto.observers}, observers:
     vector_2d to() const noexcept;
     virtual path_data_type type() const noexcept override;
     
@@ -35,7 +35,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdataitem.lineto.cons] {\tcode{path_factory::path_line_to} constructors and assignment operators}
+\rSec1 [pathfactory.pathabslineto.cons] {\tcode{path_factory::path_line_to} constructors and assignment operators}
 
 \indexlibrary{\idxcode{path_factory::path_line_to}!constructor}
 \begin{itemdecl}
@@ -65,7 +65,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Data == pt}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.lineto.modifiers]{\tcode{path_factory::path_line_to} modifiers}
+\rSec1 [pathfactory.pathabslineto.modifiers]{\tcode{path_factory::path_line_to} modifiers}
 
 \indexlibrary{\idxcode{path_factory::path_line_to}!\idxcode{to}}
 \indexlibrary{\idxcode{to}!\idxcode{path_factory::path_line_to}}
@@ -78,7 +78,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\tcode{_Data == pt}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.lineto.observers]{\tcode{path_factory::path_line_to} observers}
+\rSec1 [pathfactory.pathabslineto.observers]{\tcode{path_factory::path_line_to} observers}
 
 \indexlibrary{\idxcode{path_factory::path_line_to}!\idxcode{to}}
 \indexlibrary{\idxcode{to}!\idxcode{path_factory::path_line_to}}

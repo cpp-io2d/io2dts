@@ -1,91 +1,81 @@
 %!TEX root = io2d.tex
-\rSec0 [pathdataitem.arc] {Class \tcode{path_factory::path_arc_clockwise}}
+\rSec0 [pathfactory.patharcclockwise] {Class \tcode{path_factory::path_arc_clockwise}}
 
 \pnum
 \indexlibrary{\idxcode{path_factory::path_arc_clockwise}}
-The class \tcode{path_factory::path_arc_clockwise} describes a circular arc with clockwise rotation.
+The class \tcode{path_factory::path_arc_clockwise} describes a path segment that is a circular arc with clockwise rotation.
 
 \pnum
-The values passed to and returned by \tcode{path_factory::path_arc_clockwise::angle_1} and \tcode{path_factory::path_arc_clockwise::angle_2} are in radians.
+It has a center of type \tcode{vector_2d}, a radius of type \tcode{double}, a first angle of type \tcode{double}, and a second angle of type \tcode{double}.
 
 \pnum
-The arc's \term{start point} is \tcode{vector_2d\{ *this.radius() * cos(*this.angle_1(), -(*this.radius() * -sin(*this.angle_1())) \} + *this.center()}.
+The values for the first angle and second angle are in radians.
 
-\pnum
-Its \term{end point} is \tcode{vector_2d\{ *this.radius() * cos(*this.angle_2(), -(*this.radius() * -sin(*this.angle_2())) \} + *this.center()}.
-
-\pnum
-When a \tcode{path_arc_clockwise} object is added to a path geometry that has a current point, a line is created from that current point to the arc's start point before the arc is. Otherwise the start point is set as the current point and last-move-to point of the current path geometry.
-
-\pnum
-The arc rotates around the point returned by \tcode{*this.center()}.
-
-\pnum
-The arc begins at its start point and proceeds clockwise until it reaches its end point.
-
-\pnum
-The current point is set be to the arc's end point at the end of this operation.
-
-\pnum
-For purposes of determining whether a point is on the arc, if the value returned by \tcode{*this.angle_2()} is less than the value returned by \tcode{*this.angle_1()} then the value returned by \tcode{*this.angle_2()} shall be continuously incremented by $2\pi$ until it is greater than the value returned by \tcode{*this.angle_1()}.
-
-\rSec1 [pathdataitem.arc.synopsis] {\tcode{path_factory::path_arc_clockwise} synopsis}
+%\rSec1 [pathfactory.patharccounterclockwise.processing] {\tcode{path_factory::path_arc_counterclockwise} processing}
+%
+%\pnum
+%When sequentially processing the path group of a path factory, the effect of this class is as follows:
+%
+%\begin{enumerate}
+%	\item Assign the value of the center to \tcode{ctr}.
+%	\item Assign the value of the radius to \tcode{rad}.
+%	\item Assign the value of the first angle to \tcode{ang1}.
+%	\item Assign the value of the second angle to \tcode{ang2}.
+%	%\item While \tcode{ang2} is less than \tcode{ang1} add \tcode{two_pi<double>} to \tcode{ang2}.
+%\end{enumerate}
+%\begin{codeblock}
+%#include <cmath>
+%#include <experimental/io2d>
+%using namespace std
+%\end{codeblock}
+%
+%
+%\pnum
+%The arc's start point is \tcode{vector_2d\{ *this.radius() * cos(*this.angle_1(), -(*this.radius() * -sin(*this.angle_1())) \} + *this.center()}.
+%
+%\pnum
+%Its \term{end point} is \tcode{vector_2d\{ *this.radius() * cos(*this.angle_2(), -(*this.radius() * -sin(*this.angle_2())) \} + *this.center()}.
+%
+%\pnum
+%When a \tcode{path_arc_clockwise} object is added to a path geometry that has a current point, a line is created from that current point to the arc's start point before the arc is. Otherwise the start point is set as the current point and last-move-to point of the current path geometry.
+%
+%\pnum
+%The arc rotates around its center.
+%
+%\pnum
+%The arc begins at its start point and proceeds clockwise until it reaches its end point.
+%
+%\pnum
+%The current point is set be to the arc's end point at the end of this operation.
+%
+%\pnum
+%For purposes of determining whether a point is on the arc, if the value returned by \tcode{*this.angle_2()} is less than the value returned by \tcode{*this.angle_1()} then the value returned by \tcode{*this.angle_2()} shall be continuously incremented by $2\pi$ until it is greater than the value returned by \tcode{*this.angle_1()}.
+%
+\rSec1 [pathfactory.patharcclockwise.synopsis] {\tcode{path_factory::path_arc_clockwise} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path_factory::path_arc_clockwise {
   public:
-    // \ref{pathdataitem.arc.cons}, construct/copy/move/destroy:
-    arc() noexcept;
-    arc(const arc&) noexcept;
-    path_factory::path_arc_clockwise& operator=(const arc&) noexcept;
-    arc(arc&&) noexcept;
-    path_factory::path_arc_clockwise& operator=(arc&&) noexcept;
-    arc(const vector_2d& ctr, double rad, double angle1, double angle2) noexcept;
+    // \ref{pathfactory.patharcclockwise.cons}, construct/copy/move/destroy:
+    path_arc_clockwise(const vector_2d& ctr, double rad, double angle1, double angle2) noexcept;
 
-    // \ref{pathdataitem.arc.modifiers}, modifiers:
-    void center(const vector_2d& value) noexcept;
-    void radius(double value) noexcept;
+    // \ref{pathfactory.patharcclockwise.modifiers}, modifiers:
+    void center(const vector_2d& ctr) noexcept;
+    void radius(double r) noexcept;
     void angle_1(double radians) noexcept;
     void angle_2(double radians) noexcept;
 
-    // \ref{pathdataitem.arc.observers}, observers:
+    // \ref{pathfactory.patharcclockwise.observers}, observers:
     vector_2d center() const noexcept;
     double radius() const noexcept;
     double angle_1() const noexcept;
     double angle_2() const noexcept;
-    virtual path_data_type type() const noexcept override;
-
-  private:
-    vector_2d _Center; // \expos
-    double _Radius;    // \expos
-    double _Angle_1;   // \expos
-    double _Angle_2;   // \expos
   };
 } } } }
 \end{codeblock}
 
-\rSec1 [pathdataitem.arc.cons] {\tcode{path_factory::path_arc_clockwise} constructors and assignment operators}
-
-\indexlibrary{\idxcode{path_factory::path_arc_clockwise}!constructor}
-\begin{itemdecl}
-    arc() noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_factory::path_arc_clockwise}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Center == vector_2d(0.0, 0.0)}.
-
-	\tcode{_Radius == 0.0}.
-
-	\tcode{_Angle_1 == 0.0}.
-
-	\tcode{_Angle_2 == 0.0}.
-\end{itemdescr}
+\rSec1 [pathfactory.patharc.cons] {\tcode{path_factory::path_arc_clockwise} constructors and assignment operators}
 
 \indexlibrary{\idxcode{path_factory::path_arc_clockwise}!constructor}
 \begin{itemdecl}
@@ -97,63 +87,65 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	Constructs an object of type \tcode{path_factory::path_arc_clockwise}.
 	
 	\pnum
-	\postconditions
-	\tcode{_Center == ctr}.
-
-	\tcode{_Radius == rad}.
-
-	\tcode{_Angle_1 == angle1}.
-
-	\tcode{_Angle_2 == angle2}.
+	The center shall be set to the value of \tcode{ctr}.
+	
+	\pnum
+	The radius shall be set to the value of \tcode{rad}.
+	
+	\pnum
+	The first angle shall be set to the value of \tcode{angle1}.
+	
+	\pnum
+	The second angle shall be set to the value of \tcode{angle2}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.arc.modifiers]{\tcode{path_factory::path_arc_clockwise} modifiers}
+\rSec1 [pathfactory.patharcclockwise.modifiers]{\tcode{path_factory::path_arc_clockwise} modifiers}
 
 \indexlibrary{\idxcode{path_factory::path_arc_clockwise}!\idxcode{center}}
 \indexlibrary{\idxcode{center}!\idxcode{path_factory::path_arc_clockwise}}
 \begin{itemdecl}
-    void center(const vector_2d& value) noexcept;
+    void center(const vector_2d& ctr) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_Center == value}.
+	\effects
+	The center shall be set to the value of \tcode{ctr}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory::path_arc_clockwise}!\idxcode{radius}}
 \indexlibrary{\idxcode{radius}!\idxcode{path_factory::path_arc_clockwise}}
 \begin{itemdecl}
-    void radius(double value) noexcept;
+    void radius(double r) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_Radius == value}.
+	\effects
+	The radius shall be set to the value of \tcode{r}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory::path_arc_clockwise}!\idxcode{angle_1}}
 \indexlibrary{\idxcode{angle_1}!\idxcode{path_factory::path_arc_clockwise}}
 \begin{itemdecl}
-    void angle_1(double value) noexcept;
+    void angle_1(double radians) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_Angle_1 == value}.
+	\effects
+	The first angle shall be set to the value of \tcode{radians}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory::path_arc_clockwise}!\idxcode{angle_2}}
 \indexlibrary{\idxcode{angle_2}!\idxcode{path_factory::path_arc_clockwise}}
 \begin{itemdecl}
-    void angle_2(double value) noexcept;
+    void angle_2(double radians) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_Angle_2 == value}.
+	\effects
+	The second angle shall be set to the value of \tcode{radians}.
 \end{itemdescr}
 
-\rSec1 [pathdataitem.arc.observers]{\tcode{path_factory::path_arc_clockwise} observers}
+\rSec1 [pathfactory.patharcclockwise.observers]{\tcode{path_factory::path_arc_clockwise} observers}
 
 \indexlibrary{\idxcode{path_factory::path_arc_clockwise}!\idxcode{center}}
 \indexlibrary{\idxcode{center}!\idxcode{path_factory::path_arc_clockwise}}
@@ -163,7 +155,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Center}.
+	The value of the center.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory::path_arc_clockwise}!\idxcode{radius}}
@@ -174,7 +166,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Radius}.
+	The value of the radius.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory::path_arc_clockwise}!\idxcode{angle_1}}
@@ -185,7 +177,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Angle_1}.
+	The value of the first angle.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory::path_arc_clockwise}!\idxcode{angle_2}}
@@ -196,16 +188,5 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Angle_2}.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_factory::path_arc_clockwise}!\idxcode{type}}
-\indexlibrary{\idxcode{type}!\idxcode{path_factory::path_arc_clockwise}}
-\begin{itemdecl}
-    virtual path_data_type type() const noexcept override;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{path_data_type::arc}.
+	The value of the second angle.
 \end{itemdescr}
