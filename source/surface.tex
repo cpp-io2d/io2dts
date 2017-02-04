@@ -1,6 +1,40 @@
 %!TEX root = io2d.tex
 \rSec0 [surface] {Class \tcode{surface}}
 
+\rSec1 [surface.intro] {\tcode{surface} description}
+
+\pnum
+\indexlibrary{\idxcode{surface}}
+The \tcode{surface} class provides an interface for managing a graphics
+data graphics resource and its observable state data
+(\ref{surface.state}).
+
+\pnum
+A \tcode{surface} object is a move-only object.
+
+\pnum
+The \tcode{surface} class provides two ways to modify its graphics resource:
+\begin{itemize}
+	\item Rendering and composing operations.
+	\item Mapping.
+\end{itemize}
+
+\pnum
+\enternote
+While a \tcode{surface} object manages a graphics data graphics resource, the \tcode{surface} class does not provide well-defined semantics for the graphics resource. The \tcode{surface} class is intended to serve only as a base class and as such is not directly instantiable.
+\exitnote
+
+\pnum
+Directly instantiable types which derive, directly or indirectly, from the \tcode{surface} class shall either provide well-defined semantics for the graphics data graphics resource or inherit well-defined semantics for the graphics data graphics resource from a base class.
+
+\pnum
+\enterexample
+The \tcode{image_surface} class and the \tcode{display_surface} class each specify that they manage a raster graphics data graphics resource and that the members they inherit from the \tcode{surface} class shall use that raster graphics data graphics resource as their graphics data graphics resource. Since, unlike graphics data, raster graphics data provides well-defined semantics, these classes meet the requirements for being directly instantiable.
+\exitexample
+
+\pnum
+The definitions of the rendering and composing operations in \ref{surface.rendering} shall only be applicable when the graphics data graphics resource on which the \tcode{surface} members operate is a raster graphics data graphics resource. In all other cases, any attempt to invoke the rendering and composing operations shall result in undefined behavior.
+
 \rSec1 [surface.synopsis] {\tcode{surface} synopsis}
 
 \begin{codeblock}
@@ -329,40 +363,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [surface.intro] {\tcode{surface} description}
-
-\pnum
-\indexlibrary{\idxcode{surface}}
-The \tcode{surface} class provides an interface for managing a graphics
-data graphics resource and its observable state data
-(\ref{surface.state}).
-
-\pnum
-A \tcode{surface} object is a move-only object.
-
-\pnum
-The \tcode{surface} class provides two ways to modify its graphics resource:
-\begin{itemize}
-\item Rendering and composing operations.
-\item Mapping.
-\end{itemize}
-
-\pnum
-\enternote
-While a \tcode{surface} object manages a graphics data graphics resource, the \tcode{surface} class does not provide well-defined semantics for the graphics resource. The \tcode{surface} class is intended to serve only as a base class and as such is not directly instantiable.
-\exitnote
-
-\pnum
-Directly instantiable types which derive, directly or indirectly, from the \tcode{surface} class shall either provide well-defined semantics for the graphics data graphics resource or inherit well-defined semantics for the graphics data graphics resource from a base class.
-
-\pnum
-\enterexample
-The \tcode{image_surface} class and the \tcode{display_surface} class each specify that they manage a raster graphics data graphics resource and that the members they inherit from the \tcode{surface} class shall use that raster graphics data graphics resource as their graphics data graphics resource. Since, unlike graphics data, raster graphics data provides well-defined semantics, these classes meet the requirements for being directly instantiable.
-\exitexample
-
-\pnum
-The definitions of the rendering and composing operations in \ref{surface.rendering} shall only be applicable when the graphics data graphics resource on which the \tcode{surface} members operate is a raster graphics data graphics resource. In all other cases, any attempt to invoke the rendering and composing operations shall result in undefined behavior.
-
 \rSec1 [surface.state] {\tcode{surface} state}
 
 \pnum
@@ -432,8 +432,8 @@ Table~\ref{tab:surface.state.listing} specifies the name, type, function, and de
 	An unbounded area \\ \rowsep
 	
 	\term{Current Path} &
-	\tcode{path} &
-	This is the \tcode{path} object that shall be used when performing non-immediate rendering operations. It is in the User Coordinate Space (\ref{surface.coordinatespaces}) &
+	\tcode{path_group} &
+	This is the \tcode{path_group} object that shall be used when performing non-immediate rendering operations. It is in the User Coordinate Space (\ref{surface.coordinatespaces}) &
 	\tcode{path\{ path_factory\{ \} \}} \\ \rowsep
 	
 	\term{Immediate Path} &
@@ -455,7 +455,7 @@ Table~\ref{tab:surface.state.listing} specifies the name, type, function, and de
 
 \pnum
 \enternote
-The Clip Area may be modified by intersecting the current Clip Area with the areas of a \tcode{path} object that would be filled according to the current Fill Rule. The resulting Clip Area will only contain areas that were already in the Clip Area and does not need to be a valid \tcode{path} object since the Clip Area is only guaranteed to be observable by the effects it has on composing operations. For this reason, the Clip Area's type is unspecified. The Clip Area may also be modified by resetting it to its default value, which is the only way of enlarging the current Clip Area.
+The Clip Area may be modified by intersecting the current Clip Area with the areas of a \tcode{path_group} object that would be filled according to the current Fill Rule. The resulting Clip Area will only contain areas that were already in the Clip Area and does not need to be a valid \tcode{path_group} object since the Clip Area is only guaranteed to be observable by the effects it has on composing operations. For this reason, the Clip Area's type is unspecified. The Clip Area may also be modified by resetting it to its default value, which is the only way of enlarging the current Clip Area.
 \exitnote
 
 \rSec2 [surface.state.save] {\tcode{surface} saved state}
@@ -543,11 +543,11 @@ The rendering and composing operations invoked by the \tcode{surface::fill_immed
 \pnum
 Provided that none of the function calls results in an error, given a \tcode{surface} object \tcode{s}, there shall be no observable difference in the results of:
 \begin{itemize}
-	\item calling \tcode{surface::fill_immediate} on \tcode{s} versus calling \tcode{surface::fill} on \tcode{s} with the same arguments immediately after creating a \tcode{path} object from the result of calling \tcode{surface::immediate} on \tcode{s} and then immediately setting that \tcode{path} object as the Current Path by calling \tcode{surface::path} on \tcode{s} using that \tcode{path} object as the argument to that function;
+	\item calling \tcode{surface::fill_immediate} on \tcode{s} versus calling \tcode{surface::fill} on \tcode{s} with the same arguments immediately after creating a \tcode{path_group} object from the result of calling \tcode{surface::immediate} on \tcode{s} and then immediately setting that \tcode{path_group} object as the Current Path by calling \tcode{surface::path} on \tcode{s} using that \tcode{path_group} object as the argument to that function;
 	
-	\item calling \tcode{surface::stroke_immediate} on \tcode{s} versus calling \tcode{surface::stroke} on \tcode{s} with the same arguments immediately after creating a \tcode{path} object from the result of calling \tcode{surface::immediate} on \tcode{s} and then immediately setting that \tcode{path} object as the Current Path by calling \tcode{surface::path} on \tcode{s} using that \tcode{path} object as the argument to that function;
+	\item calling \tcode{surface::stroke_immediate} on \tcode{s} versus calling \tcode{surface::stroke} on \tcode{s} with the same arguments immediately after creating a \tcode{path_group} object from the result of calling \tcode{surface::immediate} on \tcode{s} and then immediately setting that \tcode{path_group} object as the Current Path by calling \tcode{surface::path} on \tcode{s} using that \tcode{path_group} object as the argument to that function;
 	
-	\item calling \tcode{surface::mask_immediate} on \tcode{s} versus calling \tcode{surface::mask} on \tcode{s} with the same arguments immediately after creating a \tcode{path} object from the result of calling \tcode{surface::immediate} on \tcode{s} and then immediately setting that \tcode{path} object as the Current Path by calling \tcode{surface::path} on \tcode{s} using that \tcode{path} object as the argument to that function.
+	\item calling \tcode{surface::mask_immediate} on \tcode{s} versus calling \tcode{surface::mask} on \tcode{s} with the same arguments immediately after creating a \tcode{path_group} object from the result of calling \tcode{surface::immediate} on \tcode{s} and then immediately setting that \tcode{path_group} object as the Current Path by calling \tcode{surface::path} on \tcode{s} using that \tcode{path_group} object as the argument to that function.
 \end{itemize}
 
 \pnum
@@ -1202,7 +1202,7 @@ Set's the Current Path (Table~\ref{tab:surface.state.listing}).
 
 	\pnum
 	\realnotes
-	The empty \tcode{path} object is not supplied by the user. The implementation is expected to provide an empty \tcode{path} object. Since a \tcode{path} object is immutable, an implementation should create an empty path object in advance for maximum efficiency.
+	The empty \tcode{path_group} object is not supplied by the user. The implementation is expected to provide an empty \tcode{path_group} object. Since a \tcode{path_group} object is immutable, an implementation should create an empty path object in advance for maximum efficiency.
 \end{itemdescr}
 
 \begin{itemdecl}
