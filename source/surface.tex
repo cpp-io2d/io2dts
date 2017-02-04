@@ -104,10 +104,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void fill(const experimental::io2d::brush& b);
     void fill(const experimental::io2d::brush& b, error_code& ec) noexcept;
     void fill(const surface& s,
-      const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none,
+      const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none,
       filter f = filter::good);
     void fill(const surface& s, error_code& ec,
-      const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+      const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none, 
       filter f = filter::good) noexcept;
     void fill_immediate();
     void fill_immediate(error_code& ec) noexcept;
@@ -117,10 +117,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void fill_immediate(const experimental::io2d::brush& b, error_code& ec)
       noexcept;
     void fill_immediate(const surface& s,
-      const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+      const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none, 
       filter f = filter::good);
     void fill_immediate(const surface& s, error_code& ec,
-      const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+      const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none, 
       filter f = filter::good) noexcept;
     void paint();
     void paint(error_code& ec) noexcept;
@@ -129,10 +129,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void paint(const experimental::io2d::brush& b);
     void paint(const experimental::io2d::brush& b, error_code& ec) noexcept;
     void paint(const surface& s,
-      const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none,
+      const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none,
       filter f = filter::good);
     void paint(const surface& s, error_code& ec,
-      const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+      const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none, 
       filter f = filter::good) noexcept;
     void paint(double alpha);
     void paint(double alpha, error_code& ec) noexcept;
@@ -142,10 +142,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void paint(const experimental::io2d::brush& b, double alpha,
       error_code& ec) noexcept;
     void paint(const surface& s, double alpha,
-      const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+      const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none, 
       filter f = filter::good);
     void paint(const surface& s, double alpha, error_code& ec,
-      const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+      const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none, 
       filter f = filter::good)
       noexcept;
     void stroke();
@@ -155,10 +155,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void stroke(const experimental::io2d::brush& b);
     void stroke(const experimental::io2d::brush& b, error_code& ec) noexcept;
     void stroke(const surface& s,
-      const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none,
+      const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none,
       filter f = filter::good);
     void stroke(const surface& s, error_code& ec,
-      const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+      const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none, 
       filter f = filter::good) noexcept;
     void stroke_immediate();
     void stroke_immediate(error_code& ec) noexcept;
@@ -168,10 +168,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void stroke_immediate(const experimental::io2d::brush& b, error_code& ec)
       noexcept;
     void stroke_immediate(const surface& s,
-      const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+      const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none, 
       filter f = filter::good);
     void stroke_immediate(const surface& s, error_code& ec,
-      const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+      const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none, 
       filter f = filter::good) noexcept;
     
     // \ref{surface.modifiers.maskrender}, mask render modifiers:
@@ -186,38 +186,38 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void mask(const experimental::io2d::brush& mb,
       const experimental::io2d::brush& b, error_code& ec) noexcept;
     void mask(const experimental::io2d::brush& mb, const surface& s,
-      const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+      const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none, 
       filter f = filter::good);
     void mask(const experimental::io2d::brush& mb, const surface& s,
       error_code& ec, matrix m = matrix_2d::init_identity(),
-      extend e = extend::none, filter f = filter::good) noexcept;
+      tiling e = tiling::none, filter f = filter::good) noexcept;
     void mask(surface& ms,
       const matrix_2d& msMatrix = matrix_2d::init_identity(),
-      extend msExtend = extend::none, filter msFilter = filter::good);
+      tiling msTiling = tiling::none, filter msFilter = filter::good);
     void mask(surface& ms, error_code& ec, 
       const matrix_2d& msMatrix = matrix_2d::init_identity(),
-      extend msExtend = extend::none, filter msFilter = filter::good) noexcept;
+      tiling msTiling = tiling::none, filter msFilter = filter::good) noexcept;
     void mask(surface& ms, const rgba_color& c,
       const matrix_2d& msMatrix = matrix_2d::init_identity(),
-      extend msExtend = extend::none, filter msFilter = filter::good);
+      tiling msTiling = tiling::none, filter msFilter = filter::good);
     void mask(surface& ms, const rgba_color& c, error_code& ec, 
       const matrix_2d& msMatrix = matrix_2d::init_identity(),
-      extend msExtend = extend::none, filter msFilter = filter::good) noexcept;
+      tiling msTiling = tiling::none, filter msFilter = filter::good) noexcept;
     void mask(surface& ms, const experimental::io2d::brush& b, 
       const matrix_2d& msMatrix = matrix_2d::init_identity(),
-      extend msExtend = extend::none, filter msFilter = filter::good);
+      tiling msTiling = tiling::none, filter msFilter = filter::good);
     void mask(surface& ms, const experimental::io2d::brush& b, error_code& ec,
       const matrix_2d& msMatrix = matrix_2d::init_identity(),
-      extend msExtend = extend::none, filter msFilter = filter::good) noexcept;
+      tiling msTiling = tiling::none, filter msFilter = filter::good) noexcept;
     void mask(surface& ms, const surface& s,
       const matrix_2d& msMatrix = matrix_2d::init_identity(),
       const matrix_2d& m = matrix_2d::init_identity(),
-      extend msExtend = extend::none, extend e = extend::none,
+      tiling msTiling = tiling::none, tiling e = tiling::none,
       filter msFilter = filter::good, filter f = filter::good);
     void mask(surface& ms, const surface& s, error_code& ec,
       const matrix_2d& msMatrix = matrix_2d::init_identity(),
       const matrix_2d& m = matrix_2d::init_identity(),
-      extend msExtend = extend::none, extend e = extend::none,
+      tiling msTiling = tiling::none, tiling e = tiling::none,
       filter msFilter = filter::good, filter f = filter::good) noexcept;
     void mask_immediate(const experimental::io2d::brush& mb);
     void mask_immediate(const experimental::io2d::brush& mb, error_code& ec)
@@ -231,38 +231,38 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void mask_immediate(const experimental::io2d::brush& mb,
       const experimental::io2d::brush& b, error_code& ec) noexcept;
     void mask_immediate(const experimental::io2d::brush& mb, const surface& s, 
-      const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+      const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none, 
       filter f = filter::good);
     void mask_immediate(const experimental::io2d::brush& mb, const surface& s,
       const matrix_2d& m = matrix_2d::init_identity(), error_code& ec,
-      extend e = extend::none, filter f = filter::good) noexcept;
+      tiling e = tiling::none, filter f = filter::good) noexcept;
     void mask_immediate(surface& ms,
       const matrix_2d& msMatrix = matrix_2d::init_identity(),
-      extend msExtend = extend::none, filter msFilter = filter::good);
+      tiling msTiling = tiling::none, filter msFilter = filter::good);
     void mask_immediate(surface& ms, error_code& ec, 
       const matrix_2d& msMatrix = matrix_2d::init_identity(),
-      extend msExtend = extend::none, filter msFilter = filter::good) noexcept;
+      tiling msTiling = tiling::none, filter msFilter = filter::good) noexcept;
     void mask_immediate(surface& ms, const rgba_color& c, 
       const matrix_2d& msMatrix = matrix_2d::init_identity(),
-      extend msExtend = extend::none, filter msFilter = filter::good);
+      tiling msTiling = tiling::none, filter msFilter = filter::good);
     void mask_immediate(surface& ms, const rgba_color& c, error_code& ec, 
       const matrix_2d& msMatrix = matrix_2d::init_identity(),
-      extend msExtend = extend::none, filter msFilter = filter::good) noexcept;
+      tiling msTiling = tiling::none, filter msFilter = filter::good) noexcept;
     void mask_immediate(surface& ms, const experimental::io2d::brush& b, 
       const matrix_2d& msMatrix = matrix_2d::init_identity(),
-      extend msExtend = extend::none, filter msFilter = filter::good);
+      tiling msTiling = tiling::none, filter msFilter = filter::good);
     void mask_immediate(surface& ms, const experimental::io2d::brush& b,
       error_code& ec, const matrix_2d& msMatrix = matrix_2d::init_identity(),
-      extend msExtend = extend::none, filter msFilter = filter::good) noexcept;
+      tiling msTiling = tiling::none, filter msFilter = filter::good) noexcept;
     void mask_immediate(surface& ms, const surface& s, 
       const matrix_2d& msMatrix = matrix_2d::init_identity(),
       const matrix_2d& m = matrix_2d::init_identity(),
-      extend msExtend = extend::none, extend e = extend::none,
+      tiling msTiling = tiling::none, tiling e = tiling::none,
       filter msFilter = filter::good, filter f = filter::good);
     void mask_immediate(surface& ms, const surface& s, error_code& ec,
       const matrix_2d& msMatrix = matrix_2d::init_identity(),
       const matrix_2d& m = matrix_2d::init_identity(),
-      extend msExtend = extend::none, extend e = extend::none,
+      tiling msTiling = tiling::none, tiling e = tiling::none,
       filter msFilter = filter::good, filter f = filter::good) noexcept;
     
     // \ref{surface.modifiers.textrender}, text render modifiers:
@@ -279,10 +279,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       const experimental::io2d::brush& b, error_code& ec) noexcept;
     vector_2d render_text(const string& utf8, const vector_2d& pos,
       const surface& s, const matrix_2d& m = matrix_2d::init_identity(),
-      extend e = extend::none, filter f = filter::good);
+      tiling e = tiling::none, filter f = filter::good);
     vector_2d render_text(const string& utf8, const vector_2d& pos,
       const surface& s, const matrix_2d& m = matrix_2d::init_identity(),
-      error_code& ec, extend e = extend::none,
+      error_code& ec, tiling e = tiling::none,
       filter f = filter::good) noexcept;
     void render_glyph_run(const glyph_run& gr);
     void render_glyph_run(const glyph_run& gr, error_code& ec) noexcept;
@@ -294,11 +294,11 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void render_glyph_run(const glyph_run& gr,
       const experimental::io2d::brush& b, error_code& ec) noexcept;
     void render_glyph_run(const glyph_run& gr, const surface& s,
-      const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none,
+      const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none,
       filter f = filter::good);
     void render_glyph_run(const glyph_run& gr, const surface& s,
       error_code& ec, const matrix_2d& m = matrix_2d::init_identity(),
-      extend e = extend::none, filter f = filter::good) noexcept;
+      tiling e = tiling::none, filter f = filter::good) noexcept;
     
     // \ref{surface.modifiers.transform}, transformation modifiers:
     void matrix(const matrix_2d& matrix);
@@ -565,7 +565,7 @@ Each of the five fundamental rendering and composing operations has its own set 
 	\item The Painting operation has no minimum arguments.
 	\item The Filling operation has no minimum arguments.
 	\item The Stroking operation has no minimum arguments.
-	\item The Masking operation has a Mask Brush (\ref{surface.masking}) which can be composed of one or four minimum arguments: if the first argument to the Masking operation is of type \tcode{brush}, it has one minimum argument (that \tcode{brush} object); otherwise the first argument is of type \tcode{surface} and other three arguments are the first \tcode{matrix_2d} argument, the first \tcode{extend} argument, and the first \tcode{filter} argument, resulting in four minimum arguments.
+	\item The Masking operation has a Mask Brush (\ref{surface.masking}) which can be composed of one or four minimum arguments: if the first argument to the Masking operation is of type \tcode{brush}, it has one minimum argument (that \tcode{brush} object); otherwise the first argument is of type \tcode{surface} and other three arguments are the first \tcode{matrix_2d} argument, the first \tcode{tiling} argument, and the first \tcode{filter} argument, resulting in four minimum arguments.
 	\item The Typesetting operation has one or two minimum arguments: if the Typesetting operation is invoked using \tcode{surface::render_text}, it has two minimum arguments, an object of type \tcode{string} that is used as the text that is rendered and composed to the surface and an object of type \tcode{vector_2d} that is used to specify the coordinates at which the origin of the first character of the text is positioned (see \ref{surface.typesetting}); if the Typesetting operation is invoked using \tcode{surface::render_glyph_run}, it has one minimum argument, an object of type \tcode{glyph_run} that specifies the glyphs that shall be rendered, the coordinates at which each of those glyphs shall be rendered, and the \tcode{font_resource} object that shall be used to render those glyphs.
 \end{enumerate}
 
@@ -578,7 +578,7 @@ For the Masking operation, where a \tcode{surface} object is used as the Mask Br
 \rSec1 [surface.sourcebrush]{Source Brush for rendering and composing operations}
 
 \pnum
-A \term{Source Brush} is composed of a graphics data graphics resource, an \tcode{extend} value, a \tcode{filter} value, and a \tcode{matrix_2d} object.
+A \term{Source Brush} is composed of a graphics data graphics resource, an \tcode{tiling} value, a \tcode{filter} value, and a \tcode{matrix_2d} object.
 
 \pnum
 A \tcode{brush} object provides all of the components of a Source Brush. As such, \tcode{brush} objects will commonly be used as Source Brushes.
@@ -600,7 +600,7 @@ When a rendering and composing operation is invoked with \term{extra arguments},
 	\item Where there is more than one extra argument, including default arguments, and the first extra argument is a \tcode{surface} object, the Source Brush shall be the same as if it were a \tcode{brush} object \tcode{b} constructed from a \tcode{surface_brush_factory} constructed from the \tcode{surface} object extra argument and sampling from it shall be as specified by \ref{brush.sampling} and \ref{brush.sampling.surface}, subject to the following adjustments:
 	\begin{enumerate}
 		\item The \tcode{surface} object extra argument should be used directly; no copy of it should be made. This differs from the \tcode{surface_brush_factory} class, which requires that a copy of the surface be made and that only the copy be used.
-		\item The Source Brush shall produce the same observable results that \tcode{b} would produce after \tcode{brush::extend} was called on \tcode{b} with the \tcode{extend} object extra argument passed to \tcode{brush::extend} as an argument.
+		\item The Source Brush shall produce the same observable results that \tcode{b} would produce after \tcode{brush::tiling} was called on \tcode{b} with the \tcode{tiling} object extra argument passed to \tcode{brush::tiling} as an argument.
 		\item The Source Brush shall produce the same observable results that \tcode{b} would produce after \tcode{brush::filter} was called on \tcode{b} with the \tcode{filter} object extra argument passed to \tcode{brush::filter} as an argument.
 		\item The Source Brush shall produce the same observable results that \tcode{b} would produce after \tcode{brush::matrix} was called on \tcode{b} with the \tcode{matrix} object extra argument passed to \tcode{brush::matrix} as an argument.
 	\end{enumerate}
@@ -1244,9 +1244,9 @@ void fill(const rgba_color& c, error_code& ec) noexcept;
 void fill(const experimental::io2d::brush& b);
 void fill(const experimental::io2d::brush& b, error_code& ec) noexcept;
 void fill(const surface& s, const matrix_2d& m = matrix_2d::init_identity(), 
-  extend e = extend::none, filter f = filter::good);
+  tiling e = tiling::none, filter f = filter::good);
 void fill(const surface& s, error_code& ec,
-  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+  const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none, 
   filter f = filter::good) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -1278,10 +1278,10 @@ void fill_immediate(const experimental::io2d::brush& b, error_code& ec)
   noexcept;
 void fill_immediate(const surface& s, 
   const matrix_2d& m = matrix_2d::init_identity(),
-  extend e = extend::none, filter f = filter::good);
+  tiling e = tiling::none, filter f = filter::good);
 void fill_immediate(const surface& s, error_code& ec, 
   const matrix_2d& m = matrix_2d::init_identity(),
-  extend e = extend::none, filter f = filter::good) noexcept;
+  tiling e = tiling::none, filter f = filter::good) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -1310,10 +1310,10 @@ void paint(const rgba_color& c, error_code& ec) noexcept;
 void paint(const experimental::io2d::brush& b);
 void paint(const experimental::io2d::brush& b, error_code& ec) noexcept;
 void paint(const surface& s,
-  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none,
+  const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none,
   filter f = filter::good);
 void paint(const surface& s, error_code& ec,
-  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none,
+  const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none,
   filter f = filter::good) noexcept;
 void paint(double alpha);
 void paint(double alpha, error_code& ec) noexcept;
@@ -1323,10 +1323,10 @@ void paint(const experimental::io2d::brush& b, double alpha);
 void paint(const experimental::io2d::brush& b, double alpha,
   error_code& ec) noexcept;
 void paint(const surface& s, double alpha,
-  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+  const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none, 
   filter f = filter::good);
 void paint(const surface& s, double alpha, error_code& ec, 
-  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none,
+  const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none,
   filter f = filter::good) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -1356,10 +1356,10 @@ void stroke(const rgba_color& c, error_code& ec) noexcept;
 void stroke(const experimental::io2d::brush& b);
 void stroke(const experimental::io2d::brush& b, error_code& ec) noexcept;
 void stroke(const surface& s,
-  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none,
+  const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none,
   filter f = filter::good);
 void stroke(const surface& s, error_code& ec, 
-  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none,
+  const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none,
   filter f = filter::good) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -1390,10 +1390,10 @@ void stroke_immediate(const experimental::io2d::brush& b);
 void stroke_immediate(const experimental::io2d::brush& b, error_code& ec)
   noexcept;
 void stroke_immediate(const surface& s,
-  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+  const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none, 
   filter f = filter::good);
 void stroke_immediate(const surface& s, error_code& ec, 
-  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none,
+  const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none,
   filter f = filter::good) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -1429,38 +1429,38 @@ void mask(const experimental::io2d::brush& mb,
 void mask(const experimental::io2d::brush& mb,
   const experimental::io2d::brush& b, error_code& ec) noexcept;
 void mask(const experimental::io2d::brush& mb, const surface& s,
-  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+  const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none, 
   filter f = filter::good);
 void mask(const experimental::io2d::brush& mb, const surface& s, error_code& ec,
-  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none,
+  const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none,
   filter f = filter::good) noexcept;
 void mask(surface& ms,
   const matrix_2d& msMatrix = matrix_2d::init_identity(),
-  extend msExtend = extend::none, filter msFilter = filter::good);
+  tiling msTiling = tiling::none, filter msFilter = filter::good);
 void mask(surface& ms, error_code& ec, 
   const matrix_2d& msMatrix = matrix_2d::init_identity(),
-  extend msExtend = extend::none, filter msFilter = filter::good) noexcept;
+  tiling msTiling = tiling::none, filter msFilter = filter::good) noexcept;
 void mask(surface& ms, const rgba_color& c,
   const matrix_2d& msMatrix = matrix_2d::init_identity(),
-  extend msExtend = extend::none, filter msFilter = filter::good);
+  tiling msTiling = tiling::none, filter msFilter = filter::good);
 void mask(surface& ms, const rgba_color& c, error_code& ec, 
   const matrix_2d& msMatrix = matrix_2d::init_identity(),
-  extend msExtend = extend::none, filter msFilter = filter::good) noexcept;
+  tiling msTiling = tiling::none, filter msFilter = filter::good) noexcept;
 void mask(surface& ms, const experimental::io2d::brush& b, 
   const matrix_2d& msMatrix = matrix_2d::init_identity(),
-  extend msExtend = extend::none, filter msFilter = filter::good);
+  tiling msTiling = tiling::none, filter msFilter = filter::good);
 void mask(surface& ms, const experimental::io2d::brush& b, error_code& ec,
   const matrix_2d& msMatrix = matrix_2d::init_identity(),
-  extend msExtend = extend::none, filter msFilter = filter::good) noexcept;
+  tiling msTiling = tiling::none, filter msFilter = filter::good) noexcept;
 void mask(surface& ms, const surface& s,
   const matrix_2d& msMatrix = matrix_2d::init_identity(),
   const matrix_2d& m = matrix_2d::init_identity(),
-  extend msExtend = extend::none, extend e = extend::none,
+  tiling msTiling = tiling::none, tiling e = tiling::none,
   filter msFilter = filter::good, filter f = filter::good);
 void mask(surface& ms, const surface& s, error_code& ec,
   const matrix_2d& msMatrix = matrix_2d::init_identity(),
   const matrix_2d& m = matrix_2d::init_identity(),
-  extend msExtend = extend::none, extend e = extend::none,
+  tiling msTiling = tiling::none, tiling e = tiling::none,
   filter msFilter = filter::good, filter f = filter::good) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -1495,38 +1495,38 @@ void mask_immediate(const experimental::io2d::brush& mb,
 void mask_immediate(const experimental::io2d::brush& mb,
   const experimental::io2d::brush& b, error_code& ec) noexcept;
 void mask_immediate(const experimental::io2d::brush& mb, const surface& s, 
-  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+  const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none, 
   filter f = filter::good);
 void mask_immediate(const experimental::io2d::brush& mb, const surface& s,
   const matrix_2d& m = matrix_2d::init_identity(), error_code& ec,
-  extend e = extend::none, filter f = filter::good) noexcept;
+  tiling e = tiling::none, filter f = filter::good) noexcept;
 void mask_immediate(surface& ms,
   const matrix_2d& msMatrix = matrix_2d::init_identity(),
-  extend msExtend = extend::none, filter msFilter = filter::good);
+  tiling msTiling = tiling::none, filter msFilter = filter::good);
 void mask_immediate(surface& ms, error_code& ec, 
   const matrix_2d& msMatrix = matrix_2d::init_identity(),
-  extend msExtend = extend::none, filter msFilter = filter::good) noexcept;
+  tiling msTiling = tiling::none, filter msFilter = filter::good) noexcept;
 void mask_immediate(surface& ms, const rgba_color& c, 
   const matrix_2d& msMatrix = matrix_2d::init_identity(),
-  extend msExtend = extend::none, filter msFilter = filter::good);
+  tiling msTiling = tiling::none, filter msFilter = filter::good);
 void mask_immediate(surface& ms, const rgba_color& c, error_code& ec, 
   const matrix_2d& msMatrix = matrix_2d::init_identity(),
-  extend msExtend = extend::none, filter msFilter = filter::good) noexcept;
+  tiling msTiling = tiling::none, filter msFilter = filter::good) noexcept;
 void mask_immediate(surface& ms, const experimental::io2d::brush& b, 
   const matrix_2d& msMatrix = matrix_2d::init_identity(),
-  extend msExtend = extend::none, filter msFilter = filter::good);
+  tiling msTiling = tiling::none, filter msFilter = filter::good);
 void mask_immediate(surface& ms, const experimental::io2d::brush& b,
   error_code& ec, const matrix_2d& msMatrix = matrix_2d::init_identity(),
-  extend msExtend = extend::none, filter msFilter = filter::good) noexcept;
+  tiling msTiling = tiling::none, filter msFilter = filter::good) noexcept;
 void mask_immediate(surface& ms, const surface& s, 
   const matrix_2d& msMatrix = matrix_2d::init_identity(),
   const matrix_2d& m = matrix_2d::init_identity(),
-  extend msExtend = extend::none, extend e = extend::none,
+  tiling msTiling = tiling::none, tiling e = tiling::none,
   filter msFilter = filter::good, filter f = filter::good);
 void mask_immediate(surface& ms, const surface& s, error_code& ec,
   const matrix_2d& msMatrix = matrix_2d::init_identity(),
   const matrix_2d& m = matrix_2d::init_identity(),
-  extend msExtend = extend::none, extend e = extend::none,
+  tiling msTiling = tiling::none, tiling e = tiling::none,
   filter msFilter = filter::good, filter f = filter::good) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -1564,10 +1564,10 @@ vector_2d render_text(const string& utf8, const vector_2d& pos,
   const experimental::io2d::brush& b, error_code& ec) noexcept;
 vector_2d render_text(const string& utf8, const vector_2d& pos,
   const surface& s, const matrix_2d& m = matrix_2d::init_identity(), 
-  extend e = extend::none, filter f = filter::good);
+  tiling e = tiling::none, filter f = filter::good);
 vector_2d render_text(const string& utf8, const vector_2d& pos,
   const surface& s, error_code& ec,
-  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+  const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none, 
   filter f = filter::good) noexcept;
 void render_glyph_run(const glyph_run& gr);
 void render_glyph_run(const glyph_run& gr, error_code& ec) noexcept;
@@ -1579,10 +1579,10 @@ void render_glyph_run(const glyph_run& gr,
 void render_glyph_run(const glyph_run& gr,
   const experimental::io2d::brush& b, error_code& ec) noexcept;
 void render_glyph_run(const glyph_run& gr, const surface& s,
-  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none,
+  const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none,
   filter f = filter::good);
 void render_glyph_run(const glyph_run& gr, const surface& s, error_code& ec, 
-  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+  const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none, 
   filter f = filter::good) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -1619,10 +1619,10 @@ void render_glyph_run(const glyph_run& gr,
 void render_glyph_run(const glyph_run& gr,
   const experimental::io2d::brush& b, error_code& ec) noexcept;
 void render_glyph_run(const glyph_run& gr, const surface& s,
-  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none,
+  const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none,
   filter f = filter::good);
 void render_glyph_run(const glyph_run& gr, const surface& s, error_code& ec, 
-  const matrix_2d& m = matrix_2d::init_identity(), extend e = extend::none, 
+  const matrix_2d& m = matrix_2d::init_identity(), tiling e = tiling::none, 
   filter f = filter::good) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
