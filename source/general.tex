@@ -206,11 +206,6 @@ By its definition a graphics resource is an implementation detail. Often it will
 \definition{graphics resource}{\iotwod.general.defns.graphicsresource.graphicsdata}
 <graphics data graphics resource> an object of unspecified type used by an implementation to provide access to and allow manipulation of visual data
 
-%\indexdefn{graphics resource}
-%\indexdefn{graphics resource!path geometry graphics resource}
-%\definition{graphics resource}{\iotwod.general.defns.graphicsresource.pathgeometry}
-%<path geometry graphics resource> an object of unspecified type used by an implementation to store a collection of zero or more path geometries in an unspecified format
-%
 \indexdefn{\pixmap}
 \definition{\pixmap}{\iotwod.general.defns.pixmap}
 a raster graphics data graphics resource
@@ -252,7 +247,7 @@ The definition of normalize given is the definition for normalizing unsigned inp
 
 \indexdefn{render}
 \definition{render}{\iotwod.general.defns.render}
-to transform path geometries or text into graphics data in the manner specified by a set of graphics state data
+to transform a path group into graphics data in the manner specified by a set of graphics state data
 
 \indexdefn{rendering operation}
 \definition{rendering operation}{\iotwod.general.defns.renderingoperation}
@@ -290,21 +285,21 @@ a tuple composed of a floating point offset value in the range $[0, 1]$ and a co
 % end definitions
 \indextext{definitions|)}
 
-\rSec1 [\iotwod.general.helloworld] {Hello world example}
-
-\pnum
-The following is an example of a complete "hello world" program written using this library:
-
-\begin{codeblock}
-#include <experimental/io2d>
-using namespace std::experimental::io2d;
-
-int main() {
-  auto ds = make_display_surface(640, 480, format::argb32);
-  ds.draw_callback([](display_surface& ds) {
-    ds.paint(rgba_color::firebrick());
-    ds.render_text("Hello world!", { 50.0, 50.0 }, rgba_color::aqua());
-  });
-  return ds.show();
-}
-\end{codeblock}
+%\rSec1 [\iotwod.general.helloworld] {Hello world example}
+%
+%\pnum
+%The following is an example of a complete "hello world" program written using this library:
+%
+%\begin{codeblock}
+%#include <experimental/io2d>
+%using namespace std::experimental::io2d;
+%
+%int main() {
+%  auto ds = make_display_surface(640, 480, format::argb32);
+%  ds.draw_callback([](display_surface& ds) {
+%    ds.paint(rgba_color::firebrick());
+%    ds.render_text("Hello world!", { 50.0, 50.0 }, rgba_color::aqua());
+%  });
+%  return ds.show();
+%}
+%\end{codeblock}
