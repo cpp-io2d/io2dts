@@ -25,136 +25,6 @@ A \tcode{path_group} object is an immutable resource wrapper containing a path g
 \pnum
 This section is normative. It describes how to convert the path group of a properly formed \tcode{path_factory} object from a collection of \tcode{path_factory::path_data} objects to a collection of \tcode{path_factory::path_data} objects which have had their points transformed in accordance with the origin and transformation matrix of the \tcode{path_factory} object and any \tcode{path_factory::path_change_origin} and \tcode{path_factory::path_change_matrix} objects in the path group of the \tcode{path_factory} object.
 
-%that consists entirely of lines and cubic \bezierlocal curves. The coordinates contained in these lines and cubic \bezierlocal curves are transformed using a default constructed origin of type \tcode{vector_2d} and a default constructed transformation matrix of type \tcode{matrix_2d}. These are modified when a path instruction that changes the origin or the transformation matrix is encountered.
-%todo Eliminate native_path_group and replace it with a vector<path_factory::path_data>. Need to make sure that closed path and open path are denoted properly.
-
-%\pnum
-%The \tcode{native_path_group} class, described below, is informative. It is used to demonstrate how to perform this process. 
-%
-%\pnum
-%The \tcode{native_path_group} class has the following state data, the types of which are unspecified:
-%
-%\begin{libreqtab2}
-%	{\tcode{native_path_group} state data}
-%	{tab:paths.processing.natpathgroup}
-%	\\ \topline
-%	\lhdr{Name}
-%	& \rhdr{Use}
-%	\\ \capsep
-%	\endfirsthead
-%	\continuedcaption\\
-%	\hline
-%	\lhdr{Name}
-%	& \rhdr{Use}
-%	\\ \capsep
-%	\endhead
-%	Current Point
-%	& The start point for a path segment that is added to the Current Path.
-%	\\
-%	Close Point
-%	& The start point for the initial path segment in the Current Path.
-%	\\
-%	Current Path
-%	& The path to which path segments are added.
-%	\\
-%	Collection
-%	& The collection of all paths added to the \tcode{native_path_group} object. A new path that is added to the collection is added to the end of the collection.
-%	\\
-%\end{libreqtab2}
-%
-%\begin{codeblock}
-%	// \textit{This class is }\expos
-%	class native_path_group {
-%		public:
-%		void current_point(const vector_2d& pt) noexcept;
-%		void close_point(const vector_2d& pt) noexcept;
-%		void line_to(const vector_2d& pt) noexcept;
-%		void curve_to(const vector_2d& control1, const vector_2d& control2,
-%		const vector_2d& endPt) noexcept;
-%		void close_path() noexcept;
-%	};
-%\end{codeblock}
-%
-%\begin{itemdecl}
-%	void current_point(const vector_2d& pt) noexcept;
-%\end{itemdecl}
-%\begin{itemdescr}
-%	\pnum
-%	\effects
-%	If the Collection contains no paths, a new path is created, added to the Collection, and set as the Current Path.  The Current Point is set to the value of \tcode{pt}.
-%	
-%	\pnum
-%	Otherwise, if the last member function called was \tcode{current_point}, sets \tcode{pt} as the Current Point.
-%	
-%	\pnum
-%	Otherwise, unless the last member function called was \tcode{close_path}, the Current Path becomes an open path. Then a new path is created, added to the Collection, and set as the Current Path. The Current Point is set to the value of \tcode{pt}.
-%	
-%	\pnum
-%	Otherwise, a new path is created, added to the Collection, and set as the Current Path. The Current Point is set to the value of \tcode{pt}.
-%\end{itemdescr}
-%
-%\begin{itemdecl}
-%	void close_point(const vector_2d& pt) noexcept;
-%\end{itemdecl}
-%\begin{itemdescr}
-%	\pnum
-%	\preconditions
-%	There is a Current Path.
-%	
-%	\pnum
-%	\effects
-%	Sets \tcode{pt} as the Close Point.
-%\end{itemdescr}
-%
-%\begin{itemdecl}
-%	void line_to(const vector_2d& pt) noexcept;
-%\end{itemdecl}
-%\begin{itemdescr}
-%	\pnum
-%	\preconditions
-%	There is a Current Path.
-%	
-%	\pnum
-%	\effects
-%	Creates a line segment from the Current Point to \tcode{pt} and adds it to the Current Path.
-%\end{itemdescr}
-%
-%\begin{itemdecl}
-%	void curve_to(const vector_2d& cpt1, const vector_2d& cpt2,
-%	const vector_2d& endPt) noexcept;
-%\end{itemdecl}
-%\begin{itemdescr}
-%	\pnum
-%	\preconditions
-%	There is a Current Path.
-%	
-%	\pnum
-%	\effects
-%	Creates a cubic \bezierlocal curve from the Current Point to \tcode{endPt} using \tcode{cpt1} as the first control point and \tcode{cpt2} as the second control point and adds it to the Current Path.
-%\end{itemdescr}
-%
-%\begin{itemdecl}
-%	void close_path() noexcept;
-%\end{itemdecl}
-%\begin{itemdescr}
-%	\pnum
-%	\preconditions
-%	There is a Current Path.
-%	
-%	\pnum
-%	\effects
-%	Creates a line segment from the Current Point to the Close Point.
-%	
-%	\pnum
-%	The Current Path becomes a closed path.
-%	
-%\end{itemdescr}
-%
-%\pnum
-%\enternote
-%A path geometry graphics resource that only supports rendering triangles is possible. The triangles would be used to form lines and to approximate curves. This description assumes the existence of a path geometry graphics resource that performs those actions where needed.
-%\exitnote
-%
 \pnum
 The following code shows how to properly process a \tcode{path_factory} object \tcode{p} and store the results into a \tcode{vector<path_factory::path_data>}:
 
@@ -180,27 +50,21 @@ The following code shows how to properly process a \tcode{path_factory} object \
       if constexpr(std::is_same_v<T, path_factory::path_abs_move>) {
         currentPoint = item.to();
         auto pt = m.transform_point(currentPoint - origin) + origin;
-%        n.current_point(pt);
         hasCurrentPoint = true;
         v.emplace_back(in_place_type_t<path_factory::path_abs_move>, pt);
         closePoint = pt
-%        n.close_point(pt);
       }
       else if constexpr(std::is_same_v<T, path_factory::path_abs_line>) {
         currentPoint = item.to();
         auto pt = m.transform_point(currentPoint - origin) + origin;
         if (hasCurrentPoint) {
-%          n.line_to(pt);
           v.emplace_back(in_place_type_t<path_factory::path_abs_line>, pt);
         }
         else {
-%          n.current_point(pt);
           v.emplace_back(in_place_type_t<path_factory::path_abs_move>, pt);
           v.emplace_back(in_place_type_t<path_factory::path_abs_line>, pt);
           hasCurrentPoint = true;
-%          currentPoint = pt;
           closePoint = pt;
-%          n.close_point(pt);
         }
       }
       else if constexpr(std::is_same_v<T, path_factory::path_abs_curve>) {
@@ -209,15 +73,11 @@ The following code shows how to properly process a \tcode{path_factory} object \
         auto pt3 = m.transform_point(item.end_point() - origin) + origin;
         if (!hasCurrentPoint) {
           currentPoint = item.control_point_1();
-%          n.current_point(pt1);
           v.emplace_back(in_place_type_t<path_factory::path_abs_move>, pt1);
           hasCurrentPoint = true;
-%          currentPoint = pt1;
           closePoint = pt1;
-%          n.close_point(pt1);
         }
-%       n.curve_to(pt1, pt2, pt3);
-        v.emplace_back(in_place_type_t<path_factory::path_abs_curve_to>, pt1,
+        v.emplace_back(in_place_type_t<path_factory::path_abs_curve>, pt1,
           pt2, pt3);
  
         currentPoint = item.end_point();
@@ -228,20 +88,17 @@ The following code shows how to properly process a \tcode{path_factory} object \
       }
       else if constexpr(std::is_same_v<T, path_factory::path_close_path>) {
         if (hasCurrentPoint) {
-%          n.close_path();
-%          n.current_point(closePoint);
           v.emplace_back(in_place_type_t<path_factory::path_close_path>);
           v.emplace_back(in_place_type_t<path_factory::path_abs_move>,
             closePoint);
           auto invM = matrix_2d{m}.invert();
-          // Need the untransformed value for currentPoint.
+          // Need to assign the untransformed closePoint value to currentPoint.
           currentPoint = invM.transform_point(closePoint - origin) + origin;
         }
       }
       else if constexpr(std::is_same_v<T, path_factory::path_rel_move>) {
         currentPoint = item.to() + currentPoint;
         auto pt = m.transform_point(currentPoint - origin) + origin;
-%        n.current_point(pt);
         v.emplace_back(in_place_type_t<path_factory::path_abs_move>, pt);
         hasCurrentPoint = true;
         closePoint = pt    
@@ -250,7 +107,6 @@ The following code shows how to properly process a \tcode{path_factory} object \
       else if constexpr(std::is_same_v<T, path_factory::path_rel_line>) {
         currentPoint = item.to() + currentPoint;
         auto pt = m.transform_point(currentPoint - origin) + origin;
-%        n.line_to(pt);
         v.emplace_back(in_place_type_t<path_factory::path_abs_line>, pt);
       }
       else if constexpr(std::is_same_v<T, path_factory::path_rel_curve>) {
@@ -259,9 +115,9 @@ The following code shows how to properly process a \tcode{path_factory} object \
         auto pt2 = m.transform_point(item.control_point_2() + currentPoint -
         origin) + origin;
         auto pt3 = m.transform_point(item.end_point() + currentPoint - origin) +
-        origin;
-%        n.curve_to(pt1, pt2, pt3);
-        v.emplace_back(in_place_type_t<path_factory::path_abs_curve>, pt1, pt2, pt3);
+          origin;
+        v.emplace_back(in_place_type_t<path_factory::path_abs_curve>, pt1, pt2,
+          pt3);
         currentPoint = item.end_point() + currentPoint;
       }
       else if constexpr(std::is_same_v<T, path_factory::path_arc_clockwise>) {
@@ -270,7 +126,7 @@ The following code shows how to properly process a \tcode{path_factory} object \
         auto ang1 = item.angle_1();
         auto ang2 = item.angle_2();
         while(ang2 < ang1) {
-          ang2 += twopi;
+          ang2 += two_pi<double>;
         }
         vector_2d pt0, pt1, pt2, pt3;
         int bezCount = 1;
@@ -307,17 +163,14 @@ The following code shows how to properly process a \tcode{path_factory} object \
         if (hasCurrentPoint) {
           currentPoint = startPt;
           auto pt = m.transform_point(currentPoint - origin) + origin;
-%          n.line_to(pt);
           v.emplace_back(in_place_type_t<path_factory::path_abs_line>, pt);
         }
         else {
           currentPoint = startPt;
           auto pt = m.transform_point(currentPoint - origin) + origin;
-%          n.current_point(pt);
           v.emplace_back(in_place_type_t<path_factory::path_abs_move>, pt);
           hasCurrentPoint = true;
           closePt = pt;
-%          n.close_point(pt);
         }
         for (; bezCount > 0; bezCount--) {
           auto cpt1 = ctr + rotCwFn({ pt1.x() * rad, pt1.y() * rad }, currTheta);
@@ -329,7 +182,6 @@ The following code shows how to properly process a \tcode{path_factory} object \
           cpt1 = m.transform_point(cpt1 - origin) + origin;
           cpt2 = m.transform_point(cpt2 - origin) + origin;
           cpt3 = m.transform_point(cpt3 - origin) + origin;
-%          n.curve_to(cpt1, cpt2, cpt3);
           v.emplace_back(in_place_type_t<path_factory::path_abs_curve>, cpt1,
             cpt2, cpt3);
           currTheta += theta;
@@ -342,7 +194,7 @@ The following code shows how to properly process a \tcode{path_factory} object \
         auto ang1 = item.angle_1();
         auto ang2 = item.angle_2();
         while(ang2 > ang1) {
-          ang2 -= twopi;
+          ang2 -= two_pi<double>;
         }
         vector_2d pt0, pt1, pt2, pt3;
         int bezCount = 1;
@@ -379,21 +231,18 @@ The following code shows how to properly process a \tcode{path_factory} object \
         pt1 = shflPt;
         auto currTheta = ang1;
         const auto startPt =
-        ctr + rotCwFn({ pt0.x() * rad, pt0.y() * rad }, currTheta);
+          ctr + rotCwFn({ pt0.x() * rad, pt0.y() * rad }, currTheta);
         if (hasCurrentPoint) {
           currentPoint = startPt;
           auto pt = m.transform_point(currentPoint - origin) + origin;
-%          n.line_to(pt);
           v.emplace_back(in_place_type_t<path_factory::path_abs_line>, pt);
         }
         else {
           currentPoint = startPt;
           auto pt = m.transform_point(currentPoint - origin) + origin;
-%          n.current_point(pt);
           v.emplace_back(in_place_type_t<path_factory::path_abs_move>, pt);
           hasCurrentPoint = true;
           closePt = pt;
-%          n.close_point(pt);
         }
         for (; bezCount > 0; bezCount--) {
           auto cpt1 = ctr + rotCwFn({ pt1.x() * rad, pt1.y() * rad },
@@ -406,7 +255,6 @@ The following code shows how to properly process a \tcode{path_factory} object \
           cpt1 = m.transform_point(cpt1 - origin) + origin;
           cpt2 = m.transform_point(cpt2 - origin) + origin;
           cpt3 = m.transform_point(cpt3 - origin) + origin;
-%          n.curve_to(cpt1, cpt2, cpt3);
           v.emplace_back(in_place_type_t<path_factory::path_curve_to>, cpt1,
             cpt2, cpt3);
           currTheta -= theta;

@@ -5,25 +5,20 @@
 
 \pnum
 \indexlibrary{\idxcode{path_factory::path_change_matrix}}
-The class \tcode{path_factory::path_change_matrix} describes an operation on a path group.
+The class \tcode{path_factory::path_change_matrix} describes path instruction that changes the transformation matrix used in processing a path group as described by \ref{paths.processing}.
 
 \pnum
-This operation changes the transformation matrix for a path group to be the value returned by \tcode{*this.matrix()}. As shown in \ref{paths.processing}, the new transformation matrix does not affect any operations that came before this operation. It is only used in processing operations that come after it. It continues to be used until another \tcode{path_factory::path_change_matrix} object is encountered or the end of the path group is reached.
+It has a matrix of type \tcode{matrix_2d}.
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path_factory::path_change_matrix {
   public:
-    // \ref{pathfactory.pathchangematrix.cons}, construct/copy/move/destroy:
-    change_matrix() noexcept;
-    change_matrix(const change_matrix&) noexcept;
-    path_factory::path_change_matrix& operator=(const change_matrix&) noexcept;
-    change_matrix(change_matrix&&) noexcept;
-    path_factory::path_change_matrix& operator=(change_matrix&&) noexcept;
-    explicit change_matrix(const matrix_2d& m) noexcept;
+    // \ref{pathfactory.pathchangematrix.cons}, construct:
+    explicit path_change_matrix(const matrix_2d& m) noexcept;
 
     // \ref{pathfactory.pathchangematrix.modifiers}, modifiers:
-    void matrix(const matrix_2d& value) noexcept;
+    void matrix(const matrix_2d& m) noexcept;
 
     // \ref{pathfactory.pathchangematrix.observers}, observers:
     matrix_2d matrix() const noexcept;
@@ -39,7 +34,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \indexlibrary{\idxcode{path_factory::path_change_matrix}!constructor}
 \begin{itemdecl}
-    change_matrix() noexcept;
+    explicit path_change_matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -47,22 +42,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	Constructs an object of type \tcode{path_factory::path_change_matrix}.
 	
 	\pnum
-	\postconditions
-	\tcode{_Matrix == matrix_2d\{\}}.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_factory::path_change_matrix}!constructor}
-\begin{itemdecl}
-    explicit change_matrix(const matrix_2d& m) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_factory::path_change_matrix}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Matrix == m}.
+	The matrix shall be set to the value of \tcode{m}.
 \end{itemdescr}
 
 \rSec1 [pathfactory.pathchangematrix.modifiers]{\tcode{path_factory::path_change_matrix} modifiers}
@@ -70,12 +50,12 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \indexlibrary{\idxcode{path_factory::path_change_matrix}!\idxcode{matrix}}
 \indexlibrary{\idxcode{matrix}!\idxcode{path_factory::path_change_matrix}}
 \begin{itemdecl}
-    void matrix(const matrix_2d& value) noexcept;
+    void matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_Matrix == value}.
+	\effects
+	The matrix shall be set to the value of \tcode{m}.
 \end{itemdescr}
 
 \rSec1 [pathfactory.pathchangematrix.observers]{\tcode{path_factory::path_change_matrix} observers}
@@ -88,16 +68,5 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Matrix}.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_factory::path_change_matrix}!\idxcode{type}}
-\indexlibrary{\idxcode{type}!\idxcode{path_factory::path_change_matrix}}
-\begin{itemdecl}
-    virtual path_data_type type() const noexcept override;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{path_data_type::change_matrix}.
+	The value of the matrix.
 \end{itemdescr}

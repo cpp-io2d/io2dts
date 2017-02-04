@@ -1,103 +1,68 @@
 %!TEX root = io2d.tex
-\rSec0 [pathfactory.pathabslineto] {Class \tcode{path_factory::path_line_to}}
+\rSec0 [pathfactory.pathabsline] {Class \tcode{path_factory::path_abs_line}}
 
 \pnum
-\indexlibrary{\idxcode{path_factory::path_line_to}}
-The class \tcode{path_factory::path_line_to} describes an operation on a path group.
+\indexlibrary{\idxcode{path_factory::path_abs_line}}
+The class \tcode{path_factory::path_abs_line} describes a path segment that is a line.
 
 \pnum
-If the current path geometry has a current point then this operation creates a line from the current point to the point returned by \tcode{*this.to()} and then sets current point to be the point returned by \tcode{*this.to()}. Otherwise, this operation behaves exactly as if this object was a \tcode{path_factory::path_move_to} object constructed which was constructed with the value returned by \tcode{*this.to()} as its argument.
+It has an end point of type \tcode{vector_2d}.
 
-\rSec1 [pathfactory.pathabslineto.synopsis] {\tcode{path_factory::path_line_to} synopsis}
+\rSec1 [pathfactory.pathabsline.synopsis] {\tcode{path_factory::path_abs_line} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class path_factory::path_line_to {
+  class path_factory::path_abs_line {
   public:
-    // \ref{pathfactory.pathabslineto.cons}, construct/copy/move/destroy:
-    line_to() noexcept;
-    line_to(const line_to&) noexcept;
-    path_factory::path_line_to& operator=(const line_to&) noexcept;
-    line_to(line_to&&) noexcept;
-    path_factory::path_line_to& operator=(line_to&&) noexcept;
-    explicit line_to(const vector_2d& pt) noexcept;
+    // \ref{pathfactory.pathabsline.cons}, construct:
+    explicit path_abs_line(const vector_2d& pt) noexcept;
 
-    // \ref{pathfactory.pathabslineto.modifiers}, modifiers:
+    // \ref{pathfactory.pathabsline.modifiers}, modifiers:
     void to(const vector_2d& pt) noexcept;
 
-    // \ref{pathfactory.pathabslineto.observers}, observers:
+    // \ref{pathfactory.pathabsline.observers}, observers:
     vector_2d to() const noexcept;
-    virtual path_data_type type() const noexcept override;
-    
-  private:
-    vector_2d _Data; // \expos
   };
 } } } }
 \end{codeblock}
 
-\rSec1 [pathfactory.pathabslineto.cons] {\tcode{path_factory::path_line_to} constructors and assignment operators}
+\rSec1 [pathfactory.pathabsline.cons] {\tcode{path_factory::path_abs_line} constructors and assignment operators}
 
-\indexlibrary{\idxcode{path_factory::path_line_to}!constructor}
+\indexlibrary{\idxcode{path_factory::path_abs_line}!constructor}
 \begin{itemdecl}
-    line_to() noexcept;
+    explicit path_abs_line(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{path_factory::path_line_to}.
+	Constructs an object of type \tcode{path_factory::path_abs_line}.
 	
 	\pnum
-	\postconditions
-	\tcode{_Data == vector_2d(0.0, 0.0)}.
+	The end point shall be set to the value of \tcode{pt}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory::path_line_to}!constructor}
-\begin{itemdecl}
-    explicit line_to(const vector_2d& pt) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_factory::path_line_to}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Data == pt}.
-\end{itemdescr}
+\rSec1 [pathfactory.pathabsline.modifiers]{\tcode{path_factory::path_abs_line} modifiers}
 
-\rSec1 [pathfactory.pathabslineto.modifiers]{\tcode{path_factory::path_line_to} modifiers}
-
-\indexlibrary{\idxcode{path_factory::path_line_to}!\idxcode{to}}
-\indexlibrary{\idxcode{to}!\idxcode{path_factory::path_line_to}}
+\indexlibrary{\idxcode{path_factory::path_abs_line}!\idxcode{to}}
+\indexlibrary{\idxcode{to}!\idxcode{path_factory::path_abs_line}}
 \begin{itemdecl}
     void to(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_Data == pt}.
+	\effects
+	The end point shall be set to the value of \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [pathfactory.pathabslineto.observers]{\tcode{path_factory::path_line_to} observers}
+\rSec1 [pathfactory.pathabsline.observers]{\tcode{path_factory::path_abs_line} observers}
 
-\indexlibrary{\idxcode{path_factory::path_line_to}!\idxcode{to}}
-\indexlibrary{\idxcode{to}!\idxcode{path_factory::path_line_to}}
+\indexlibrary{\idxcode{path_factory::path_abs_line}!\idxcode{to}}
+\indexlibrary{\idxcode{to}!\idxcode{path_factory::path_abs_line}}
 \begin{itemdecl}
     vector_2d to() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Data}.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_factory::path_line_to}!\idxcode{type}}
-\indexlibrary{\idxcode{type}!\idxcode{path_factory::path_line_to}}
-\begin{itemdecl}
-    virtual path_data_type type() const noexcept override;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{path_data_type::line_to}.
+	The value of the end point.
 \end{itemdescr}

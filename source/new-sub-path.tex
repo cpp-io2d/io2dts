@@ -3,40 +3,16 @@
 
 \pnum
 \indexlibrary{\idxcode{path_factory::path_new_path}}
-The class \tcode{path_factory::path_new_path} describes an operation on a path group.
+The class \tcode{path_factory::path_new_path} describes a path operation that creates a new path and makes the previous path, if any, an open path unless it was closed by \tcode{path_factory::path_close_path}.
 
 \pnum
-This operation starts a new path geometry. The new path geometry has no current point.
+The new path has no current point.
 
 \rSec1 [pathfactory.pathnewpath.synopsis] {\tcode{path_factory::path_new_path} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path_factory::path_new_path {
-  public:
-    // construct/copy/move/destroy:
-    new_path() noexcept;
-    new_path(const new_path&) noexcept;
-    path_factory::path_new_path& operator=(const new_path&) noexcept;
-    new_path(new_path&&) noexcept;
-    path_factory::path_new_path& operator=(new_path&&) noexcept;
-
-    // \ref{pathfactory.pathnewpath.observers}, observers:
-    virtual path_data_type type() const noexcept override;
   };
 } } } }
 \end{codeblock}
-
-\rSec1 [pathfactory.pathnewpath.observers]{\tcode{path_factory::path_new_path} observers}
-
-\indexlibrary{\idxcode{path_factory::path_new_path}!\idxcode{type}}
-\indexlibrary{\idxcode{type}!\idxcode{path_factory::path_new_path}}
-\begin{itemdecl}
-    virtual path_data_type type() const noexcept override;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{path_data_type::new_path}.
-
-\end{itemdescr}

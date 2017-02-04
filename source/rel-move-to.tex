@@ -1,106 +1,74 @@
 %!TEX root = io2d.tex
-\rSec0 [pathfactory.pathrelmoveto] {Class \tcode{path_factory::path_rel_move_to}}
+\rSec0 [pathfactory.pathrelmove] {Class \tcode{path_factory::path_rel_move}}
 
 \pnum
-\indexlibrary{\idxcode{path_factory::path_rel_move_to}}
-The class \tcode{path_factory::path_rel_move_to} describes an operation on a path group.
+\indexlibrary{\idxcode{path_factory::path_rel_move}}
+The class \tcode{path_factory::path_rel_move} describes a path operation that creates a new path and makes the previous path, if any, an open path unless it was closed by \tcode{path_factory::path_close_path}.
 
 \pnum
-This operation starts a new path geometry and sets its current point and last-move-to point to the point that is the sum of the previous path geometry's current point and the point returned by \tcode{*this.to()}.
+It has an end point of type \tcode{vector_2d}.
 
 \pnum
-If the existing path geometry does not have a current point when this operation is requested the path group is malformed.
+Its end point is relative to the most recently established current point.
 
-\rSec1 [pathfactory.pathrelmoveto.synopsis] {\tcode{path_factory::path_rel_move_to} synopsis}
+\pnum
+The relative end point is also the start point of the new path and its last-move-to point.
+
+\rSec1 [pathfactory.pathrelmove.synopsis] {\tcode{path_factory::path_rel_move} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class path_factory::path_rel_move_to {
+  class path_factory::path_rel_move {
   public:
-    // \ref{pathfactory.pathrelmoveto.cons}, construct/copy/move/destroy:
-    rel_move_to() noexcept;
-    rel_move_to(const rel_move_to&) noexcept;
-    path_factory::path_rel_move_to& operator=(const rel_move_to&) noexcept;
-    rel_move_to(rel_move_to&&) noexcept;
-    path_factory::path_rel_move_to& operator=(rel_move_to&&) noexcept;
-    explicit rel_move_to(const vector_2d& pt) noexcept;
+    // \ref{pathfactory.pathrelmove.cons}, construct:
+    explicit path_rel_move(const vector_2d& pt) noexcept;
 
-    // \ref{pathfactory.pathrelmoveto.modifiers}, modifiers:
+    // \ref{pathfactory.pathrelmove.modifiers}, modifiers:
     void to(const vector_2d& pt) noexcept;
 
-    // \ref{pathfactory.pathrelmoveto.observers}, observers:
+    // \ref{pathfactory.pathrelmove.observers}, observers:
     vector_2d to() const noexcept;
-    virtual path_data_type type() const noexcept override;
-    
-  private:
-    vector_2d _Data; // \expos
   };
 } } } }
 \end{codeblock}
 
-\rSec1 [pathfactory.pathrelmoveto.cons] {\tcode{path_factory::path_rel_move_to} constructors and assignment operators}
+\rSec1 [pathfactory.pathrelmove.cons] {\tcode{path_factory::path_rel_move} constructors}
 
-\indexlibrary{\idxcode{path_factory::path_rel_move_to}!constructor}
+\indexlibrary{\idxcode{path_factory::path_rel_move}!constructor}
 \begin{itemdecl}
-    rel_move_to() noexcept;
+    explicit path_rel_move(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{path_factory::path_rel_move_to}.
+	Constructs an object of type \tcode{path_factory::path_rel_move}.
 	
 	\pnum
-	\postconditions
-	\tcode{_Data == vector_2d(0.0, 0.0)}.
+	The end point shall be set to the value of \tcode{pt}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory::path_rel_move_to}!constructor}
-\begin{itemdecl}
-    explicit rel_move_to(const vector_2d& pt) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_factory::path_rel_move_to}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Data == pt}.
-\end{itemdescr}
+\rSec1 [pathfactory.pathrelmove.modifiers]{\tcode{path_factory::path_rel_move} modifiers}
 
-\rSec1 [pathfactory.pathrelmoveto.modifiers]{\tcode{path_factory::path_rel_move_to} modifiers}
-
-\indexlibrary{\idxcode{path_factory::path_rel_move_to}!\idxcode{to}}
-\indexlibrary{\idxcode{to}!\idxcode{path_factory::path_rel_move_to}}
+\indexlibrary{\idxcode{path_factory::path_rel_move}!\idxcode{to}}
+\indexlibrary{\idxcode{to}!\idxcode{path_factory::path_rel_move}}
 \begin{itemdecl}
     void to(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_Data == pt}.
+	\effects
+	The end point shall be set to the value of \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [pathfactory.pathrelmoveto.observers]{\tcode{path_factory::path_rel_move_to} observers}
+\rSec1 [pathfactory.pathrelmove.observers]{\tcode{path_factory::path_rel_move} observers}
 
-\indexlibrary{\idxcode{path_factory::path_rel_move_to}!\idxcode{to}}
-\indexlibrary{\idxcode{to}!\idxcode{path_factory::path_rel_move_to}}
+\indexlibrary{\idxcode{path_factory::path_rel_move}!\idxcode{to}}
+\indexlibrary{\idxcode{to}!\idxcode{path_factory::path_rel_move}}
 \begin{itemdecl}
     vector_2d to() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Data}.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_factory::path_rel_move_to}!\idxcode{type}}
-\indexlibrary{\idxcode{type}!\idxcode{path_factory::path_rel_move_to}}
-\begin{itemdecl}
-    virtual path_data_type type() const noexcept override;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{path_data_type::rel_move_to}.
+	The value of the end point.
 \end{itemdescr}

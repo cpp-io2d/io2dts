@@ -11,46 +11,11 @@ It has a center of type \tcode{vector_2d}, a radius of type \tcode{double}, a fi
 \pnum
 The values for the first angle and second angle are in radians.
 
-%\rSec1 [pathfactory.patharccounterclockwise.processing] {\tcode{path_factory::path_arc_counterclockwise} processing}
-%
-%\pnum
-%When sequentially processing the path group of a path factory, the effect of this class is as follows:
-%
-%\begin{enumerate}
-%	\item Assign the value of the center to \tcode{ctr}.
-%	\item Assign the value of the radius to \tcode{rad}.
-%	\item Assign the value of the first angle to \tcode{ang1}.
-%	\item Assign the value of the second angle to \tcode{ang2}.
-%	%\item While \tcode{ang2} is less than \tcode{ang1} add \tcode{two_pi<double>} to \tcode{ang2}.
-%\end{enumerate}
-%\begin{codeblock}
-%#include <cmath>
-%#include <experimental/io2d>
-%using namespace std
-%\end{codeblock}
-%
-%
-%\pnum
-%The arc's start point is \tcode{vector_2d\{ *this.radius() * cos(*this.angle_1(), -(*this.radius() * -sin(*this.angle_1())) \} + *this.center()}.
-%
-%\pnum
-%Its \term{end point} is \tcode{vector_2d\{ *this.radius() * cos(*this.angle_2(), -(*this.radius() * -sin(*this.angle_2())) \} + *this.center()}.
-%
-%\pnum
-%When a \tcode{path_arc_clockwise} object is added to a path geometry that has a current point, a line is created from that current point to the arc's start point before the arc is. Otherwise the start point is set as the current point and last-move-to point of the current path geometry.
-%
-%\pnum
-%The arc rotates around its center.
-%
-%\pnum
-%The arc begins at its start point and proceeds clockwise until it reaches its end point.
-%
-%\pnum
-%The current point is set be to the arc's end point at the end of this operation.
-%
-%\pnum
-%For purposes of determining whether a point is on the arc, if the value returned by \tcode{*this.angle_2()} is less than the value returned by \tcode{*this.angle_1()} then the value returned by \tcode{*this.angle_2()} shall be continuously incremented by $2\pi$ until it is greater than the value returned by \tcode{*this.angle_1()}.
-%
+\pnum
+\enternote
+Although the value of the first angle may be greater than the value of the second angle, when processed as described in \ref{paths.processing}, \tcode{two_pi<double>} is added to the second angle until the value of the second angle is greater than or equal to the value of the first angle.
+\exitnote
+
 \rSec1 [pathfactory.patharcclockwise.synopsis] {\tcode{path_factory::path_arc_clockwise} synopsis}
 
 \begin{codeblock}
@@ -58,7 +23,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path_factory::path_arc_clockwise {
   public:
     // \ref{pathfactory.patharcclockwise.cons}, construct/copy/move/destroy:
-    path_arc_clockwise(const vector_2d& ctr, double rad, double angle1, double angle2) noexcept;
+    path_arc_clockwise(const vector_2d& ctr, double rad, double angle1,
+      double angle2) noexcept;
 
     // \ref{pathfactory.patharcclockwise.modifiers}, modifiers:
     void center(const vector_2d& ctr) noexcept;
@@ -79,7 +45,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \indexlibrary{\idxcode{path_factory::path_arc_clockwise}!constructor}
 \begin{itemdecl}
-    arc(const vector_2d& ctr, double rad, double angle1, double angle2) noexcept;
+    arc(const vector_2d& ctr, double rad, double angle1, double angle2)
+      noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum

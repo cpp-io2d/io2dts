@@ -1,84 +1,63 @@
 %!TEX root = io2d.tex
-\rSec0 [pathfactory.pathabsmoveto] {Class \tcode{path_factory::path_move_to}}
+\rSec0 [pathfactory.pathabsmove] {Class \tcode{path_factory::path_abs_move}}
 
 \pnum
-\indexlibrary{\idxcode{path_factory::path_move_to}}
-The class \tcode{path_factory::path_move_to} describes an operation on a path group.
+\indexlibrary{\idxcode{path_factory::path_abs_move}}
+The class \tcode{path_factory::path_abs_move} describes a path operation that creates a new path and makes the previous path, if any, an open path unless it was closed by \tcode{path_factory::path_close_path}.
 
 \pnum
-This operation starts a new path geometry and sets its current point and last-move-to point to the value of \tcode{*this.to()}.
+It has an end point of type \tcode{vector_2d}.
 
-\rSec1 [pathfactory.pathabsmoveto.synopsis] {\tcode{path_factory::path_move_to} synopsis}
+\pnum
+The end point is also the start point of the new path and its last-move-to point.
+
+\rSec1 [pathfactory.pathabsmove.synopsis] {\tcode{path_factory::path_abs_move} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class path_factory::path_move_to {
+  class path_factory::path_abs_move {
   public:
-    // \ref{pathfactory.pathabsmoveto.cons}, construct/copy/move/destroy:
-    move_to() noexcept;
-    move_to(const move_to&) noexcept;
-    path_factory::path_move_to& operator=(const move_to&) noexcept;
-    move_to(move_to&&) noexcept;
-    path_factory::path_move_to& operator=(move_to&&) noexcept;
+    // \ref{pathfactory.pathabsmove.cons}, construct:
     explicit move_to(const vector_2d& pt) noexcept;
 
-    // \ref{pathfactory.pathabsmoveto.modifiers}, modifiers:
+    // \ref{pathfactory.pathabsmove.modifiers}, modifiers:
     void to(const vector_2d& pt) noexcept;
 
-    // \ref{pathfactory.pathabsmoveto.observers}, observers:
+    // \ref{pathfactory.pathabsmove.observers}, observers:
     vector_2d to() const noexcept;
-    virtual path_data_type type() const noexcept override;
-    
-  private:
-    vector_2d _Data; // \expos
   };
 } } } }
 \end{codeblock}
 
-\rSec1 [pathfactory.pathabsmoveto.cons] {\tcode{path_factory::path_move_to} constructors and assignment operators}
+\rSec1 [pathfactory.pathabsmove.cons] {\tcode{path_factory::path_abs_move} constructors}
 
-\indexlibrary{\idxcode{path_factory::path_move_to}!constructor}
+\indexlibrary{\idxcode{path_factory::path_abs_move}!constructor}
 \begin{itemdecl}
-    move_to() noexcept;
+    explicit path_abs_move(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{path_factory::path_move_to}.
+	Constructs an object of type \tcode{path_factory::path_abs_move}.
 	
 	\pnum
-	\postconditions
-	\tcode{_Data == vector_2d(0.0, 0.0)}.
+	The end point shall be set to the value of \tcode{pt}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory::path_move_to}!constructor}
-\begin{itemdecl}
-    explicit move_to(const vector_2d& pt) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_factory::path_move_to}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Data == pt}.
-\end{itemdescr}
+\rSec1 [pathfactory.pathabsmove.modifiers]{\tcode{path_factory::path_abs_move} modifiers}
 
-\rSec1 [pathfactory.pathabsmoveto.modifiers]{\tcode{path_factory::path_move_to} modifiers}
-
-\indexlibrary{\idxcode{path_factory::path_move_to}!\idxcode{to}}
-\indexlibrary{\idxcode{to}!\idxcode{path_factory::path_move_to}}
+\indexlibrary{\idxcode{path_factory::path_abs_move}!\idxcode{to}}
+\indexlibrary{\idxcode{to}!\idxcode{path_factory::path_abs_move}}
 \begin{itemdecl}
     void to(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_Data == pt}.
+	\effects
+	The end point shall be set to the value of \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [pathfactory.pathabsmoveto.observers]{\tcode{path_factory::path_move_to} observers}
+\rSec1 [pathfactory.pathabsmove.observers]{\tcode{path_factory::path_abs_move} observers}
 
 \indexlibrary{\idxcode{path_factory::path_move_to}!\idxcode{to}}
 \indexlibrary{\idxcode{to}!\idxcode{path_factory::path_move_to}}
@@ -88,16 +67,5 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Data}.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_factory::path_move_to}!\idxcode{type}}
-\indexlibrary{\idxcode{type}!\idxcode{path_factory::path_move_to}}
-\begin{itemdecl}
-    virtual path_data_type type() const noexcept override;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\returns
-	\tcode{path_data_type::move_to}.
+	The value of the end point.
 \end{itemdescr}
