@@ -62,29 +62,57 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       void to(const vector_2d& value) noexcept;
     };
     
-    class path_abs_curve {
+    class path_abs_cubic_curve {
     public:
-      path_abs_curve(const vector_2d& controlPoint1, const vector_2d& controlPoint2, const vector_2d& endPoint) noexcept;
+      path_abs_cubic_curve(const vector_2d& cp1, const vector_2d& cp2,
+        const vector_2d& ep) noexcept;
       
-      void control_point_1(const vector_2d& value) noexcept;
-      void control_point_2(const vector_2d& value) noexcept;
-      void end_point(const vector_2d& value) noexcept;
+      void control_point_1(const vector_2d& cp) noexcept;
+      void control_point_2(const vector_2d& cp) noexcept;
+      void end_point(const vector_2d& ep) noexcept;
       
       vector_2d control_point_1() const noexcept;
       vector_2d control_point_2() const noexcept;
       vector_2d end_point() const noexcept;
     };
     
-    class path_rel_curve {
+    class path_rel_cubic_curve {
     public:
-      path_rel_curve(const vector_2d& controlPoint1, const vector_2d& controlPoint2, const vector_2d& endPoint) noexcept;
+      path_rel_cubic_curve(const vector_2d& cp1, const vector_2d& cp2,
+        const vector_2d& ep) noexcept;
       
-      void control_point_1(const vector_2d& value) noexcept;
-      void control_point_2(const vector_2d& value) noexcept;
-      void end_point(const vector_2d& value) noexcept;
+      void control_point_1(const vector_2d& cp) noexcept;
+      void control_point_2(const vector_2d& cp) noexcept;
+      void end_point(const vector_2d& ep) noexcept;
       
       vector_2d control_point_1() const noexcept;
       vector_2d control_point_2() const noexcept;
+      vector_2d end_point() const noexcept;
+    };
+    
+    class path_abs_quadratic_curve {
+    public:
+      path_abs_quadratic_curve(const vector_2d& cp1, const vector_2d& cp2,
+        const vector_2d& ep) noexcept;
+    
+      void control_point_1(const vector_2d& cp) noexcept;
+      void control_point_2(const vector_2d& cp) noexcept;
+      void end_point(const vector_2d& ep) noexcept;
+    
+      vector_2d control_point_1() const noexcept;
+      vector_2d control_point_2() const noexcept;
+      vector_2d end_point() const noexcept;
+    };
+    
+    class path_rel_quadratic_curve {
+    public:
+      path_rel_quadratic_curve(const vector_2d& cp, const vector_2d& ep)
+        noexcept;
+    
+      void control_point(const vector_2d& cp) noexcept;
+      void end_point(const vector_2d& ep) noexcept;
+    
+      vector_2d control_point() const noexcept;
       vector_2d end_point() const noexcept;
     };
     
@@ -140,8 +168,9 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       vector_2d origin() const noexcept;
     };
     
-    using path_data      = typename variant<path_abs_move, path_abs_line, 
-      path_rel_move, path_abs_curve, path_rel_curve, path_arc_clockwise, 
+    using path_data      = typename variant<path_abs_move, path_rel_move,
+      path_abs_line, path_rel_line, path_abs_cubic_curve, path_rel_cubic_curve, 
+      path_abs_quadratic_curve, path_rel_quadratic_curve, path_arc_clockwise, 
       path_arc_counterclockwise, path_new_path, path_close_path, 
       path_change_matrix, path_change_origin>;
     
@@ -157,15 +186,19 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       double angle2) noexcept;
     void arc_counterclockwise(const vector_2d& center, double radius,
       double angle1, double angle2) noexcept;
-    void curve_to(const vector_2d& pt0, const vector_2d& pt1,
+    void cubic_curve_to(const vector_2d& pt0, const vector_2d& pt1,
       const vector_2d& pt2) noexcept;
     void line_to(const vector_2d& pt) noexcept;
     void move_to(const vector_2d& pt) noexcept;
+    void quadratic_curve_to(const vector_2d& pt0, const vector_2d& pt2)
+      noexcept;
     void rectangle(const experimental::io2d::rectangle& r) noexcept;
-    void rel_curve_to(const vector_2d& dpt0, const vector_2d& dpt1,
+    void rel_cubic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1,
       const vector_2d& dpt2) noexcept;
     void rel_line_to(const vector_2d& dpt) noexcept;
     void rel_move_to(const vector_2d& dpt) noexcept;
+    void rel_quadratic_curve_to(const vector_2d& pt0, const vector_2d& pt2)
+      noexcept;
     void transform_matrix(const matrix_2d& m) noexcept;
     void origin(const vector_2d& pt) noexcept;
     void clear() noexcept;
@@ -264,19 +297,19 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The current point shall be set to \tcode{vector_2d\{ radius * cos(angle1), radius * -sin(angle1) \} + center}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{curve_to}}
-\indexlibrary{\idxcode{curve_to}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_factory}!\idxcode{cubic_curve_to}}
+\indexlibrary{\idxcode{cubic_curve_to}!\idxcode{path_factory}}
 \begin{itemdecl}
-    void curve_to(const vector_2d& pt0, const vector_2d& pt1,
+    void cubic_curve_to(const vector_2d& pt0, const vector_2d& pt1,
       const vector_2d& pt2) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	If the current point does not contain a value, adds a \tcode{path_data} object constructed from \tcode{path_factory::path_abs_move_to(pt0)} to the end of the path group.
+	If the current point does not contain a value, adds a \tcode{path_data} object constructed from \tcode{path_factory::path_abs_move(pt0)} to the end of the path group.
 	
 	\pnum
-	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_abs_curve_to(pt0, pt1, pt2)} to the end of the path group.
+	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_abs_cubic_curve(pt0, pt1, pt2)} to the end of the path group.
 	
 	\pnum
 	The current point shall be set to the value of \tcode{pt2}.
@@ -293,7 +326,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	If the current point does not contain a value, the last-move-to point shall be set to the value of \tcode{pt}.
 	
 	\pnum
-	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_abs_line_to(pt)} to the end of the path group.
+	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_abs_line(pt)} to the end of the path group.
 	
 	\pnum
 	The current point shall be set to the value of \tcode{pt}.
@@ -307,10 +340,28 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \begin{itemdescr}
 	\pnum
 	\effects
-	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_abs_move_to(pt)} to the end of the path group.
+	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_abs_move(pt)} to the end of the path group.
 	
 	\pnum
 	The current point shall be set to the value of \tcode{pt}. The last-move-to point shall then be set to the value of the current point.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{quadratic_curve_to}}
+\indexlibrary{\idxcode{quadratic_curve_to}!\idxcode{path_factory}}
+\begin{itemdecl}
+	void quadratic_curve_to(const vector_2d& pt0, const vector_2d& pt1)
+	  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	If the current point does not contain a value, adds a \tcode{path_data} object constructed from \tcode{path_factory::path_abs_move(pt0)} to the end of the path group.
+	
+	\pnum
+	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_abs_quadratic_curve(pt0, pt1)} to the end of the path group.
+	
+	\pnum
+	The current point shall be set to the value of \tcode{pt1}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{rectangle}}
@@ -322,13 +373,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\pnum
 	\effects
 	\begin{enumerate}
-	\item Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_abs_move_to(\{ r.x(), r.y() \})} to the end of the path group.
+	\item Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_abs_move(\{ r.x(), r.y() \})} to the end of the path group.
 	
-	\item Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_rel_line_to(\{ r.width(), 0.0 \})} to the end of the path group.
+	\item Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_rel_line(\{ r.width(), 0.0 \})} to the end of the path group.
 	
-	\item Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_rel_line_to(\{ 0.0, r.height() \})} to the end of the path group.
+	\item Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_rel_line(\{ 0.0, r.height() \})} to the end of the path group.
 	
-	\item Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_rel_line_to(\{ -r.width(), 0.0 \})} to the end of the path group.
+	\item Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_rel_line(\{ -r.width(), 0.0 \})} to the end of the path group.
 	
 	\item Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_close_path()} to the end of the path group.
 	
@@ -338,10 +389,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	\end{enumerate}
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{rel_curve_to}}
-\indexlibrary{\idxcode{rel_curve_to}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_factory}!\idxcode{rel_cubic_curve_to}}
+\indexlibrary{\idxcode{rel_cubic_curve_to}!\idxcode{path_factory}}
 \begin{itemdecl}
-    void rel_curve_to(const vector_2d& dpt0, const vector_2d& dpt1,
+    void rel_cubic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1,
       const vector_2d& dpt2) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -351,7 +402,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	
 	\pnum
 	\effects
-	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_rel_curve_to(dpt0, dpt1, dpt2)} to the end of the path group.
+	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_rel_cubic_curve(dpt0, dpt1, dpt2)} to the end of the path group.
 	
 	\pnum
 	The current point shall be set to the value of the current point added to \tcode{dpt2}.
@@ -369,7 +420,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	
 	\pnum
 	\effects
-	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_rel_line_to(pt)} to the end of the path group.
+	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_rel_line(pt)} to the end of the path group.
 	
 	\pnum
 	The current point shall be set to the value of the current point added to \tcode{dpt}.
@@ -387,10 +438,29 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	
 	\pnum
 	\effects
-	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_rel_move_to(dpt)} to the end of the path group.
+	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_rel_move(dpt)} to the end of the path group.
 	
 	\pnum
 	The current point shall be set to the value of the current point added to \tcode{dpt}.The last-move-to point shall then be set to the value of the current point.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_factory}!\idxcode{rel_quadratic_curve_to}}
+\indexlibrary{\idxcode{rel_quadratic_curve_to}!\idxcode{path_factory}}
+\begin{itemdecl}
+	void rel_quadratic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1)
+	  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\requires
+	The current point contains a value.
+	
+	\pnum
+	\effects
+	Adds a \tcode{path_data} object constructed from \tcode{path_factory::path_rel_quadratic_curve(dpt0, dpt1)} to the end of the path group.
+	
+	\pnum
+	The current point shall be set to the value of the current point added to \tcode{dpt1}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_factory}!\idxcode{transform_matrix}}

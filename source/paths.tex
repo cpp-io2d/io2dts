@@ -67,7 +67,7 @@ The following code shows how to properly process a \tcode{path_factory} object \
           closePoint = pt;
         }
       }
-      else if constexpr(std::is_same_v<T, path_factory::path_abs_curve>) {
+      else if constexpr(std::is_same_v<T, path_factory::path_abs_cubic_curve>) {
         auto pt1 = m.transform_point(item.control_point_1() - origin) + origin;
         auto pt2 = m.transform_point(item.control_point_2() - origin) + origin;
         auto pt3 = m.transform_point(item.end_point() - origin) + origin;
@@ -77,10 +77,23 @@ The following code shows how to properly process a \tcode{path_factory} object \
           hasCurrentPoint = true;
           closePoint = pt1;
         }
-        v.emplace_back(in_place_type_t<path_factory::path_abs_curve>, pt1,
+        v.emplace_back(in_place_type_t<path_factory::path_abs_cubic_curve>, pt1,
           pt2, pt3);
- 
         currentPoint = item.end_point();
+      }
+      else if constexpr(std::is_same_v<T,
+        path_factory::path_abs_quadratic_curve>) {
+      	auto pt1 = m.transform_point(item.control_point() - origin) + origin;
+      	auto pt2 = m.transform_point(item.end_point() - origin) + origin;
+      	if (!hasCurrentPoint) {
+      		currentPoint = item.control_point();
+      		v.emplace_back(in_place_type_t<path_factory::path_abs_move>, pt1);
+      		hasCurrentPoint = true;
+      		closePoint = pt1;
+      	}
+      	v.emplace_back(in_place_type_t<path_factory::path_abs_quadratic_curve>,
+      	  pt1, pt2);
+      	currentPoint = item.end_point();
       }
       else if constexpr(std::is_same_v<T, path_factory::path_new_path>) {
         hasCurrentPoint = false;
@@ -109,16 +122,26 @@ The following code shows how to properly process a \tcode{path_factory} object \
         auto pt = m.transform_point(currentPoint - origin) + origin;
         v.emplace_back(in_place_type_t<path_factory::path_abs_line>, pt);
       }
-      else if constexpr(std::is_same_v<T, path_factory::path_rel_curve>) {
+      else if constexpr(std::is_same_v<T, path_factory::path_rel_cubic_curve>) {
         auto pt1 = m.transform_point(item.control_point_1() + currentPoint -
         origin) + origin;
         auto pt2 = m.transform_point(item.control_point_2() + currentPoint -
         origin) + origin;
         auto pt3 = m.transform_point(item.end_point() + currentPoint - origin) +
           origin;
-        v.emplace_back(in_place_type_t<path_factory::path_abs_curve>, pt1, pt2,
-          pt3);
+        v.emplace_back(in_place_type_t<path_factory::path_abs_cubic_curve>,
+          pt1, pt2, pt3);
         currentPoint = item.end_point() + currentPoint;
+      }
+      else if constexpr(std::is_same_v<T,
+      path_factory::path_rel_quadratic_curve>) {
+      	auto pt1 = m.transform_point(item.control_point() + currentPoint -
+      	  origin) + origin;
+      	auto pt2 = m.transform_point(item.end_point() + currentPoint -
+      	  origin) + origin;
+      	v.emplace_back(in_place_type_t<path_factory::path_rel_quadratic_curve>,
+      	pt1, pt2);
+      	currentPoint = item.end_point() + currentPoint;
       }
       else if constexpr(std::is_same_v<T, path_factory::path_arc_clockwise>) {
         auto ctr = item.center();
@@ -182,7 +205,7 @@ The following code shows how to properly process a \tcode{path_factory} object \
           cpt1 = m.transform_point(cpt1 - origin) + origin;
           cpt2 = m.transform_point(cpt2 - origin) + origin;
           cpt3 = m.transform_point(cpt3 - origin) + origin;
-          v.emplace_back(in_place_type_t<path_factory::path_abs_curve>, cpt1,
+          v.emplace_back(in_place_type_t<path_factory::path_abs_cubic_curve>, cpt1,
             cpt2, cpt3);
           currTheta += theta;
         }
@@ -255,7 +278,7 @@ The following code shows how to properly process a \tcode{path_factory} object \
           cpt1 = m.transform_point(cpt1 - origin) + origin;
           cpt2 = m.transform_point(cpt2 - origin) + origin;
           cpt3 = m.transform_point(cpt3 - origin) + origin;
-          v.emplace_back(in_place_type_t<path_factory::path_curve_to>, cpt1,
+          v.emplace_back(in_place_type_t<path_factory::path_cubic_curve_to>, cpt1,
             cpt2, cpt3);
           currTheta -= theta;
         }
@@ -293,25 +316,22 @@ The following code shows how to properly process a \tcode{path_factory} object \
 %***FIXME***
 
 \addtocounter{SectionDepthBase}{1}
-%\input{path-processing}
-%\input{path-data-type}
-%\input{path-data-item}
 \input{path}
 \input{path-factory}
 \addtocounter{SectionDepthBase}{1}
-%\input{path-data}
+\input{new-path}
+\input{close-path}
+\input{abs-move}
+\input{rel-move}
+\input{abs-line}
+\input{rel-line}
+\input{abs-cubic-curve}
+\input{rel-cubic-curve}
+\input{abs-quadratic-curve}
+\input{rel-quadratic-curve}
 \input{arc-clockwise}
 \input{arc-counterclockwise}
 \input{change-matrix}
 \input{change-origin}
-\input{close-path}
-\input{cubic-curve}
-\input{abs-line}
-\input{abs-move}
-\input{new-path}
-\input{rel-curve}
-\input{rel-line}
-\input{rel-move}
-%\input{path-data-item-get}
 \addtocounter{SectionDepthBase}{-1}
 \addtocounter{SectionDepthBase}{-1}

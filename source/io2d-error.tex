@@ -66,9 +66,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \tcode{surface::save} was made.
  \\
  \tcode{no_current_point}
- & The operation requires a current point but no current point was set.
- This is the result of an improper call to \tcode{path_factory::rel_curve_to},
- \tcode{path_factory::rel_line_to}, or \tcode{path_factory::rel_move_to} or is the result of a call to \tcode{path_factory::append} with malformed data. See 
+ & A path segment or path instruction encountered during path processing requires a value for current point but current point has no value.
  \\
  \tcode{invalid_matrix}
  & A \tcode{matrix_2d} value that the operation depends on is invalid. Except as otherwise specified, this means that the \tcode{matrix_2d} value is not invertible.

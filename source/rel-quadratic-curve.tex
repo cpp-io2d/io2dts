@@ -1,0 +1,99 @@
+%!TEX root = io2d.tex
+\rSec0 [pathfactory.pathrelquadraticcurve] {Class \tcode{path_factory::path_rel_quadratic_curve}}
+
+\pnum
+\indexlibrary{\idxcode{path_factory::path_rel_quadratic_curve}}
+The class \tcode{path_factory::path_rel_quadratic_curve} describes a path segment that is a quadratic \bezierlocal curve.
+
+\pnum
+It has a control point of type \tcode{vector_2d} and an end point of type \tcode{vector_2d}.
+
+\pnum
+All of its points are relative to the most recently established current point.
+
+\rSec1 [pathfactory.pathrelquadraticcurve.synopsis] {\tcode{path_factory::path_rel_quadratic_curve} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class path_factory::path_rel_cubic_curve {
+  public:
+    // \ref{pathfactory.pathrelquadraticcurve.cons}, construct:
+    path_rel_quadratic_curve(const vector_2d& cp, const vector_2d& ep) noexcept;
+
+    // \ref{pathfactory.pathrelquadraticcurve.modifiers}, modifiers:
+    void control_point(const vector_2d& cp) noexcept;
+    void end_point(const vector_2d& ep) noexcept;
+
+
+    // \ref{pathfactory.pathrelquadraticcurve.observers}, observers:
+    vector_2d control_point() const noexcept;
+    vector_2d end_point() const noexcept;
+  };
+} } } }
+\end{codeblock}
+
+\rSec1 [pathfactory.pathrelquadraticcurve.cons] {\tcode{path_factory::path_rel_quadratic_curve} constructors}
+
+\indexlibrary{\idxcode{path_factory::path_rel_quadratic_curve}!constructor}
+\begin{itemdecl}
+    path_rel_quadratic_curve(const vector_2d& cp, const vector_2d& ep) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{path_factory::path_rel_cubic_curve}.
+	
+	\pnum
+	The control point shall be set to the value of \tcode{cp}.
+	
+	\pnum
+	The end point shall be set to the value of \tcode{ep}.
+\end{itemdescr}
+
+\rSec1 [pathfactory.pathrelquadraticcurve.modifiers]{\tcode{path_factory::path_rel_cubic_curve} modifiers}
+
+\indexlibrary{\idxcode{path_factory::path_rel_quadratic_curve}!\idxcode{control_point}}
+\indexlibrary{\idxcode{control_point}!\idxcode{path_factory::path_rel_quadratic_curve}}
+\begin{itemdecl}
+    void control_point(const vector_2d& cp) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	The control point shall be set to the value of \tcode{cp}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_factory::path_rel_quadratic_curve}!\idxcode{end_point}}
+\indexlibrary{\idxcode{end_point}!\idxcode{path_factory::path_rel_quadratic_curve}}
+\begin{itemdecl}
+    void end_point(const vector_2d& ep) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	The end point shall be set to the value of \tcode{ep}.
+\end{itemdescr}
+
+\rSec1 [pathfactory.pathrelquadraticcurve.observers]{\tcode{path_factory::path_rel_quadratic_curve} observers}
+
+\indexlibrary{\idxcode{path_factory::path_rel_quadratic_curve}!\idxcode{control_point}}
+\indexlibrary{\idxcode{control_point}!\idxcode{path_factory::path_rel_quadratic_curve}}
+\begin{itemdecl}
+    vector_2d control_point() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	The value of the control point.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_factory::path_rel_quadratic_curve}!\idxcode{end_point}}
+\indexlibrary{\idxcode{end_point}!\idxcode{path_factory::path_rel_quadratic_curve}}
+\begin{itemdecl}
+    vector_2d end_point() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	The value of the end point.
+\end{itemdescr}
