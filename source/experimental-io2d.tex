@@ -25,10 +25,7 @@ namespace std { namespace experimental {
   enum class extend;
   enum class filter;
   enum class brush_type;
-  enum class font_slant;
-  enum class font_weight;
   enum class subpixel_order;
-  enum class path_data_type;
   enum class scaling;
   enum class refresh_rate;
 
@@ -67,28 +64,19 @@ namespace std { namespace experimental {
   class path_factory::path_change_matrix;
   class path_factory::path_change_origin;
   class path_factory::path_close_path;
-  class path_factory::path_curve_to;
-  class path_factory::path_line_to;
-  class path_factory::path_move_to;
+  class path_factory::path_abs_curve;
+  class path_factory::path_abs_line;
+  class path_factory::path_abs_move;
   class path_factory::path_new_path;
   class path_data_item::path_data;
-  class path_factory::path_rel_curve_to;
-  class path_factory::path_rel_line_to;
-  class path_factory::path_rel_move_to;
+  class path_factory::path_rel_curve;
+  class path_factory::path_rel_line;
+  class path_factory::path_rel_move;
 
   class path;
   class path_factory;
   
   class device;
-
-  class font_extents;
-  class text_extents;
-  class font_options;
-  class font_resource_factory;
-  class font_resource;
-  class glyph_run;
-  class glyph_run::glyph;
-  class glyph_run::cluster;
 
   class brush;
   class solid_color_brush_factory;
