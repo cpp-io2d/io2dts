@@ -1,48 +1,50 @@
 %!TEX root = io2d.tex
-\rSec0 [pathfactory.pathabscubiccurve] {Class \tcode{path_factory::path_abs_cubic_curve}}
+\rSec0 [abscubiccurve] {Class \tcode{abs_cubic_curve}}
 
 \pnum
-\indexlibrary{\idxcode{path_factory::path_abs_cubic_curve}}
-The class \tcode{path_factory::path_abs_cubic_curve} describes a path segment that is a cubic \bezierlocal curve.
+\indexlibrary{\idxcode{abs_cubic_curve}}
+The class \tcode{abs_cubic_curve} describes a path segment that is a cubic \bezierlocal curve.
 
 \pnum
 It has a first control point of type \tcode{vector_2d}, a second control point of type \tcode{vector_2d}, and an end point of type \tcode{vector_2d}.
 
-\rSec1 [pathfactory.pathabscubiccurve.synopsis] {\tcode{path_factory::path_abs_cubic_curve} synopsis}
+\rSec1 [abscubiccurve.synopsis] {\tcode{abs_cubic_curve} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class path_factory::path_abs_cubic_curve {
-  public:
-    // \ref{pathfactory.pathabscubiccurve.cons}, construct/copy/move/destroy:
-    path_abs_cubic_curve(const vector_2d& cp1, const vector_2d& cp2,
-      const vector_2d& ep) noexcept;
+  namespace path_data {
+    class abs_cubic_curve {
+    public:
+      // \ref{abscubiccurve.cons}, construct:
+      abs_cubic_curve(const vector_2d& cp1, const vector_2d& cp2,
+        const vector_2d& ep) noexcept;
 
-    // \ref{pathfactory.pathabscubiccurve.modifiers}, modifiers:
-    void control_point_1(const vector_2d& cp) noexcept;
-    void control_point_2(const vector_2d& cp) noexcept;
-    void end_point(const vector_2d& ep) noexcept;
+      // \ref{abscubiccurve.modifiers}, modifiers:
+      void control_point_1(const vector_2d& cp) noexcept;
+      void control_point_2(const vector_2d& cp) noexcept;
+      void end_point(const vector_2d& ep) noexcept;
 
 
-    // \ref{pathfactory.pathabscubiccurve.observers}, observers:
-    vector_2d control_point_1() const noexcept;
-    vector_2d control_point_2() const noexcept;
-    vector_2d end_point() const noexcept;
+      // \ref{abscubiccurve.observers}, observers:
+      vector_2d control_point_1() const noexcept;
+      vector_2d control_point_2() const noexcept;
+      vector_2d end_point() const noexcept;
+    };
   };
 } } } }
 \end{codeblock}
 
-\rSec1 [pathfactory.pathabscubiccurve.cons] {\tcode{path_factory::path_abs_cubic_curve} constructors}
+\rSec1 [abscubiccurve.cons] {\tcode{abs_cubic_curve} constructors}
 
-\indexlibrary{\idxcode{path_factory::path_abs_cubic_curve}!constructor}
+\indexlibrary{\idxcode{abs_cubic_curve}!constructor}
 \begin{itemdecl}
-    path_abs_cubic_curve(const vector_2d& cp1, const vector_2d& cp2,
+    abs_cubic_curve(const vector_2d& cp1, const vector_2d& cp2,
       const vector_2d& ep) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{path_factory::path_abs_cubic_curve}.
+	Constructs an object of type \tcode{abs_cubic_curve}.
 	
 	\pnum
 	The first control point shall be set to the value of \tcode{cp1}.
@@ -54,10 +56,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The end point shall be set to the value of \tcode{ep}.
 \end{itemdescr}
 
-\rSec1 [pathfactory.pathabscubiccurve.modifiers]{\tcode{path_factory::path_abs_cubic_curve} modifiers}
+\rSec1 [abscubiccurve.modifiers]{\tcode{abs_cubic_curve} modifiers}
 
-\indexlibrary{\idxcode{path_factory::path_abs_cubic_curve}!\idxcode{control_point_1}}
-\indexlibrary{\idxcode{control_point_1}!\idxcode{path_factory::path_abs_cubic_curve}}
+\indexlibrary{\idxcode{abs_cubic_curve}!\idxcode{control_point_1}}
+\indexlibrary{\idxcode{control_point_1}!\idxcode{abs_cubic_curve}}
 \begin{itemdecl}
     void control_point_1(const vector_2d& cp) noexcept;
 \end{itemdecl}
@@ -67,8 +69,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The first control point shall be set to the value of \tcode{cp}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory::path_abs_cubic_curve}!\idxcode{control_point_2}}
-\indexlibrary{\idxcode{control_point_2}!\idxcode{path_factory::path_abs_cubic_curve}}
+\indexlibrary{\idxcode{abs_cubic_curve}!\idxcode{control_point_2}}
+\indexlibrary{\idxcode{control_point_2}!\idxcode{abs_cubic_curve}}
 \begin{itemdecl}
     void control_point_2(const vector_2d& cp) noexcept;
 \end{itemdecl}
@@ -78,8 +80,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The second control point shall be set to the value of \tcode{cp}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory::path_abs_cubic_curve}!\idxcode{end_point}}
-\indexlibrary{\idxcode{end_point}!\idxcode{path_factory::path_abs_cubic_curve}}
+\indexlibrary{\idxcode{abs_cubic_curve}!\idxcode{end_point}}
+\indexlibrary{\idxcode{end_point}!\idxcode{abs_cubic_curve}}
 \begin{itemdecl}
     void end_point(const vector_2d& ep) noexcept;
 \end{itemdecl}
@@ -89,10 +91,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The end point shall be set to the value of \tcode{ep}.
 \end{itemdescr}
 
-\rSec1 [pathfactory.pathabscubiccurve.observers]{\tcode{path_factory::path_abs_cubic_curve} observers}
+\rSec1 [abscubiccurve.observers]{\tcode{abs_cubic_curve} observers}
 
-\indexlibrary{\idxcode{path_factory::path_abs_cubic_curve}!\idxcode{control_point_1}}
-\indexlibrary{\idxcode{control_point_1}!\idxcode{path_factory::path_abs_cubic_curve}}
+\indexlibrary{\idxcode{abs_cubic_curve}!\idxcode{control_point_1}}
+\indexlibrary{\idxcode{control_point_1}!\idxcode{abs_cubic_curve}}
 \begin{itemdecl}
     vector_2d control_point_1() const noexcept;
 \end{itemdecl}
@@ -102,8 +104,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The value of the first control point.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory::path_abs_cubic_curve}!\idxcode{control_point_2}}
-\indexlibrary{\idxcode{control_point_2}!\idxcode{path_factory::path_abs_cubic_curve}}
+\indexlibrary{\idxcode{abs_cubic_curve}!\idxcode{control_point_2}}
+\indexlibrary{\idxcode{control_point_2}!\idxcode{abs_cubic_curve}}
 \begin{itemdecl}
     vector_2d control_point_2() const noexcept;
 \end{itemdecl}
@@ -113,8 +115,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The value of the second control point.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory::path_abs_cubic_curve}!\idxcode{end_point}}
-\indexlibrary{\idxcode{end_point}!\idxcode{path_factory::path_abs_cubic_curve}}
+\indexlibrary{\idxcode{abs_cubic_curve}!\idxcode{end_point}}
+\indexlibrary{\idxcode{end_point}!\idxcode{abs_cubic_curve}}
 \begin{itemdecl}
     vector_2d end_point() const noexcept;
 \end{itemdecl}

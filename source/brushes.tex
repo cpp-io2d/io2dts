@@ -6,7 +6,16 @@
 Brushes serve as sources of visual data for composing operations.
 
 \pnum
-A brush has its own mutable coordinate space (by default the standard coordinate space). It also posses a mutable \tcode{tiling} value and a mutable \tcode{filter} value.
+A brush has its own coordinate space (by default the standard coordinate space).
+
+\pnum
+It possesses a \tcode{filter} value and a \tcode{tiling} value, which combine to determine the visual data value returned when a composing operation samples a brush.
+
+\pnum
+The \tcode{filter} value determines the value returned by a brush when a composing operation samples a brush. When the visual data of the brush is a pixmap and the point the composing operation requests does not directly correspond to the exact coordinate of a pixel within the pixmap, the \tcode{filter} value is used to determine the value of the visual data that is returned. If the visual data of the brush is not a pixmap, the \tcode{filter} value is irrelevant.
+
+\pnum
+The \tcode{tiling} value controls what happens when a composing operation needs to sample from a point that is outside of the bounds of the brush.
 
 \pnum
 A brush is created using one of four factory classes:
@@ -28,6 +37,7 @@ Brushes created using either a \tcode{linear_brush_factory} object or a \tcode{r
 \input{tiling}
 \input{filter}
 \input{brush-type}
+\input{color-stop}
 \input{brush}
 \input{solid-color-brush-factory}
 \input{linear-brush-factory}

@@ -1,6 +1,15 @@
 %!TEX root = io2d.tex
 \rSec0 [rectangle] {Class \tcode{rectangle}}
 
+\rSec1 [rectangle.intro] {\tcode{rectangle} Description}
+
+\pnum
+\indexlibrary{\idxcode{rectangle}}
+The class \tcode{rectangle} describes a rectangle.
+
+\pnum
+It has an X coordinate of type \tcode{double}, a Y coordinate of type \tcode{double}, a width of type \tcode{double}, and a height of type \tcode{double}.
+
 \rSec1 [rectangle.synopsis] {\tcode{rectangle} synopsis}
 
 \begin{codeblock}
@@ -8,21 +17,16 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class rectangle {
   public:
     // \ref{rectangle.cons}, construct/copy/move/destroy:
-    rectangle() noexcept;
     rectangle(double x, double y, double width, double height) noexcept;
     rectangle(const vector_2d& tl, const vector_2d& br) noexcept;
-    rectangle(const rectangle& r) noexcept;
-    rectangle& operator=(const rectangle& r) noexcept;
-    rectangle(rectangle&& r) noexcept;
-    rectangle& operator=(rectangle&& r) noexcept;
 
     // \ref{rectangle.modifiers}, modifiers:
-    void x(double value) noexcept;
-    void y(double value) noexcept;
-    void width(double value) noexcept;
-    void height(double value) noexcept;
-    void top_left(const vector_2d& value) noexcept;
-    void bottom_right(const vector_2d& value) noexcept;
+    void x(double val) noexcept;
+    void y(double val) noexcept;
+    void width(double val) noexcept;
+    void height(double val) noexcept;
+    void top_left(const vector_2d& val) noexcept;
+    void bottom_right(const vector_2d& val) noexcept;
     
     // \ref{rectangle.observers}, observers:
     double x() const noexcept;
@@ -31,47 +35,11 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     double height() const noexcept;
     vector_2d top_left() const noexcept;
     vector_2d bottom_right() const noexcept;
-    
-  private:
-    double _X;      // \expos
-    double _Y;      // \expos
-    double _Width;  // \expos
-    double _Height; // \expos
   };
 } } } }
 \end{codeblock}
 
-\rSec1 [rectangle.intro] {\tcode{rectangle} Description}
-
-\pnum
-\indexlibrary{\idxcode{rectangle}}
-The class \tcode{rectangle} describes an object that represents a rectangle.
-
-\rSec1 [rectangle.cons] {\tcode{rectangle} constructors and assignment operators}
-
-\indexlibrary{\idxcode{rectangle}!constructor}
-\begin{itemdecl}
-rectangle() noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{rectangle}.
-	
-	\pnum
-	\postconditions
-	\tcode{_X == 0.0}.
-	
-	\pnum
-	\tcode{_Y == 0.0}.
-	
-	\pnum
-	\tcode{_Width == 0.0}.
-	
-	\pnum
-	\tcode{_Height == 0.0}.
-
-\end{itemdescr}
+\rSec1 [rectangle.cons] {\tcode{rectangle} constructors}
 
 \indexlibrary{\idxcode{rectangle}!constructor}
 \begin{itemdecl}
@@ -83,18 +51,16 @@ rectangle(double x, double y, double w, double h) noexcept;
 	Constructs an object of type \tcode{rectangle}.
 	
 	\pnum
-	\postconditions
-	\tcode{_X == x}.
+	The X coordinate shall be set to the value of \tcode{x}.
 	
 	\pnum
-	\tcode{_Y == y}.
+	The Y coordinate shall be set to the value of \tcode{y}.
 	
 	\pnum
-	\tcode{_Width == w}.
+	The width shall be set to the value of \tcode{w}.
 	
 	\pnum
-	\tcode{_Height == h}.
-	
+	The height shall be set to the value of \tcode{h}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rectangle}!constructor}
@@ -104,21 +70,19 @@ rectangle(const vector_2d& tl, const vector_2d& br) noexcept;
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{rectangle} from a top-left coordinate and a bottom-right coordinate.
+	Constructs an object of type \tcode{rectangle}.
 	
 	\pnum
-	\postconditions
-	\tcode{_X == tl.x()}.
+	The X coordinate shall be set to the value of \tcode{tl.x()}.
 	
 	\pnum
-	\tcode{_Y == tl.y()}.
+	The Y coordinate shall be set to the value of \tcode{tl.y()}.
 	
 	\pnum
-	\tcode{_Width == max(0.0, br.x() - tl.x())}.
+	The width shall be set to the value of \tcode{max(0.0, br.x() - tl.x())}.
 	
 	\pnum
-	\tcode{_Height == max(0.0, br.y() - tl.y())}.
-	
+	The height shall be set to the value of \tcode{max(0.0, br.y() - tl.y())}.
 \end{itemdescr}
 
 \rSec1 [rectangle.modifiers]{\tcode{rectangle} modifiers}
@@ -126,14 +90,13 @@ rectangle(const vector_2d& tl, const vector_2d& br) noexcept;
 \indexlibrary{\idxcode{rectangle}!\idxcode{x}}
 \indexlibrary{\idxcode{x}!\idxcode{rectangle}}
 \begin{itemdecl}
-void x(double value) noexcept;
+void x(double val) noexcept;
 \end{itemdecl}
 
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_X == value}.
-
+	\effects
+	The X coordinate shall be set to the value of \tcode{val}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rectangle}!\idxcode{y}}
@@ -143,9 +106,8 @@ void y(double value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_Y == value}.
-
+	\effects
+	The Y coordinate shall be set to the value of \tcode{val}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rectangle}!\idxcode{width}}
@@ -155,9 +117,8 @@ void width(double value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_Width == value}.
-
+	\effects
+	The width shall be set to the value of \tcode{val}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rectangle}!\idxcode{height}}
@@ -167,39 +128,36 @@ void height(double value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_Height == value}.
-
+	\effects
+	The height shall be set to the value of \tcode{val}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rectangle}!\idxcode{top_left}}
 \indexlibrary{\idxcode{top_left}!\idxcode{rectangle}}
 \begin{itemdecl}
-void top_left(const vector_2d& value) noexcept;
+void top_left(const vector_2d& val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_X == value.x()}.
+	\effects
+	The X coordinate shall be set to the value of \tcode{val.x()}.
 	
-	\pnum
-	\tcode{_Y == value.y()}.
-	
+	\effects
+	The Y coordinate shall be set to the value of \tcode{val.y()}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rectangle}!\idxcode{bottom_right}}
 \indexlibrary{\idxcode{bottom_right}!\idxcode{rectangle}}
 \begin{itemdecl}
-void bottom_right(const vector_2d& value) noexcept;
+void bottom_right(const vector_2d& val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_Width == max(0.0, value.x() - _X)}.
+	\effects
+	The width shall be set to the value of \tcode{max(0.0, val.x() - *this.x())}.
 	
 	\pnum
-	\tcode{_Height == max(0.0, value.y() - _Y)}.
-	
+	The height shall be set to the value of \tcode{max(0.0, value.y() - *this.y())}.
 \end{itemdescr}
 
 \rSec1 [rectangle.observers]{\tcode{rectangle} observers}
@@ -212,8 +170,7 @@ double x() const noexcept;
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_X}.
-
+	The value of the X coordinate.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rectangle}!\idxcode{y}}
@@ -224,8 +181,7 @@ double y() const noexcept;
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Y}.
-
+	The value of the Y coordinate.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rectangle}!\idxcode{width}}
@@ -236,8 +192,7 @@ double width() const noexcept;
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Width}.
-
+	The value of the width.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rectangle}!\idxcode{height}}
@@ -248,8 +203,7 @@ double height() const noexcept;
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Height}.
-
+	The value of the height.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rectangle}!\idxcode{top_left}}
@@ -260,8 +214,7 @@ vector_2d top_left() const noexcept;
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{vector_2d\{ _X, _Y \}}.
-	
+	A \tcode{vector_2d} object constructed from the value of the X coordinate as its first argument and the value of the Y coordinate as its second argument.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rectangle}!\idxcode{bottom_right}}
@@ -272,6 +225,5 @@ vector_2d bottom_right() const noexcept;
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{vector_2d\{ _X + _Width, _Y + _Height \}}.
-
+	A \tcode{vector_2d} object constructed from the value of the width added to the value of the X coordinate as its first argument and the value of the height added to the value of the Y coordinate as its second argument.
 \end{itemdescr}

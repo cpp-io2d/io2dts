@@ -1,6 +1,32 @@
 %!TEX root = io2d.tex
 \rSec0 [brush] {Class \tcode{brush}}
 
+\rSec1 [brush.intro] {\tcode{brush} Description}
+
+\pnum
+\indexlibrary{\idxcode{brush}}
+The class \tcode{brush} describes an opaque wrapper for a graphics data graphics resource.
+
+\pnum
+A \tcode{brush} object shall be usable with any \tcode{surface} or \tcode{surface}-derived object.
+
+\pnum
+A \tcode{brush} object's graphics data is immutable. It is observable only by the effect that it produces when the brush is used as a Source Brush (\ref{surface.sourcebrush}) or as a Mask Brush (\ref{surface.rendering} and \ref{surface.masking}).
+
+\pnum
+A \tcode{brush} object also has mutable \tcode{tiling}, \tcode{filter}, and \tcode{matrix_2d} observable state data values.
+
+\pnum
+A \tcode{brush} object has an immutable \tcode{brush_type} observable state data value which indicates the type of brush factory that was used in creating the \tcode{brush} object (Table~\ref{tab:brushtype.meanings}).
+
+\pnum
+The \tcode{brush} object's graphics data may have less precision than the graphics data of the brush factory object from which it was created.
+
+\pnum
+\enterexample
+Several graphics and rendering technologies that are currently widely used store individual color and alpha channel data as 8-bit unsigned normalized integer values while the \tcode{double} type that is used by the \tcode{rgba_color} class for individual color and alpha is often a 64-bit value. It is precisely these situations which the preceding paragraph is intended to address.
+\exitexample
+
 \rSec1 [brush.synopsis] {\tcode{brush} synopsis}
 
 \begin{codeblock}
@@ -13,6 +39,9 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     brush& operator=(const brush&) noexcept;
     brush(brush&& other) noexcept;
     brush& operator=(brush&& other) noexcept;
+    brush(const rbga_color& c);
+	brush(const vector_2d& begin, const vector_2d& end,
+	  const color_stop_group& csg);
     brush(const solid_color_brush_factory& f);
     brush(const solid_color_brush_factory& f, error_code& ec) noexcept;
     brush(const linear_brush_factory& f);
@@ -41,32 +70,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   };
 } } } }
 \end{codeblock}
-
-\rSec1 [brush.intro] {\tcode{brush} Description}
-
-\pnum
-\indexlibrary{\idxcode{brush}}
-The class \tcode{brush} describes an opaque wrapper for a graphics data graphics resource.
-
-\pnum
-A \tcode{brush} object shall be usable with any \tcode{surface} or \tcode{surface}-derived object.
-
-\pnum
-A \tcode{brush} object's graphics data is immutable. It is observable only by the effect that it produces when the brush is used as a Source Brush (\ref{surface.sourcebrush}) or as a Mask Brush (\ref{surface.rendering} and \ref{surface.masking}).
-
-\pnum
-A \tcode{brush} object also has mutable \tcode{tiling}, \tcode{filter}, and \tcode{matrix_2d} observable state data values.
-
-\pnum
-A \tcode{brush} object has an immutable \tcode{brush_type} observable state data value which indicates the type of brush factory that was used in creating the \tcode{brush} object (Table~\ref{tab:brushtype.meanings}).
-
-\pnum
-The \tcode{brush} object's graphics data may have less precision than the graphics data of the brush factory object from which it was created.
-
-\pnum
-\enterexample
-Several graphics and rendering technologies that are currently widely used store individual color and alpha channel data as 8-bit unsigned normalized integer values while the \tcode{double} type that is used by the \tcode{rgba_color} class for individual color and alpha is often a 64-bit value. It is precisely these situations which the preceding paragraph is intended to address.
-\exitexample
 
 \rSec1 [brush.sampling] {Sampling from a \tcode{brush} object}
 

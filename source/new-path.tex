@@ -1,18 +1,20 @@
 %!TEX root = io2d.tex
-\rSec0 [pathfactory.pathnewpath] {Class \tcode{path_factory::path_new_path}}
+\rSec0 [newpath] {Class \tcode{new_path}}
 
 \pnum
-\indexlibrary{\idxcode{path_factory::path_new_path}}
-The class \tcode{path_factory::path_new_path} describes a path operation that creates a new path and makes the previous path, if any, an open path unless it was closed by \tcode{path_factory::path_close_path}.
+\indexlibrary{\idxcode{new_path}}
+The class \tcode{new_path} describes a path operation that creates a new path and makes the previous path, if any, an open path unless it was closed by \tcode{close_path}.
 
 \pnum
 The new path has no current point.
 
-\rSec1 [pathfactory.pathnewpath.synopsis] {\tcode{path_factory::path_new_path} synopsis}
+\rSec1 [newpath.synopsis] {\tcode{new_path} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class path_factory::path_new_path {
+  namespace path_data {
+    class new_path {
+    };
   };
 } } } }
 \end{codeblock}

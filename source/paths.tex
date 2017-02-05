@@ -23,10 +23,10 @@ A \tcode{path_group} object is an immutable resource wrapper containing a path g
 \rSec1 [paths.processing] {Processing paths}
 
 \pnum
-This section is normative. It describes how to convert the path group of a properly formed \tcode{path_factory} object from a collection of \tcode{path_factory::path_data} objects to a collection of \tcode{path_factory::path_data} objects which have had their points transformed in accordance with the origin and transformation matrix of the \tcode{path_factory} object and any \tcode{path_factory::path_change_origin} and \tcode{path_factory::path_change_matrix} objects in the path group of the \tcode{path_factory} object.
+This section is normative. It describes how to convert the path group of a properly formed \tcode{path_factory} object from a collection of \tcode{path_data::data} objects to a collection of \tcode{path_data::data} objects which have had their points transformed in accordance with the origin and transformation matrix of the \tcode{path_factory} object and any \tcode{path_data::change_origin} and \tcode{path_data::change_matrix} objects in the path group of the \tcode{path_factory} object.
 
 \pnum
-The following code shows how to properly process a \tcode{path_factory} object \tcode{p} and store the results into a \tcode{vector<path_factory::path_data>}:
+The following code shows how to properly process a \tcode{path_factory} object \tcode{p} and store the results into a \tcode{vector<path_data::data>}:
 
 \begin{codeblock}
   #include <cmath>
@@ -41,109 +41,109 @@ The following code shows how to properly process a \tcode{path_factory} object \
   vector_2d currentPoint; // Tracks the untransformed current point.
   bool hasCurrentPoint = false;
   vector_2d closePoint;   // Tracks the transformed close point.
-  vector<path_factory::path_data> v;
+  vector<path_data::path_data_types> v;
   
   for (auto val : p) {
     std::visit([&](auto&& item) {
       using T = std::remove_cv_t<std::remove_reference_t<decltype item>>;
 
-      if constexpr(std::is_same_v<T, path_factory::path_abs_move>) {
+      if constexpr(std::is_same_v<T, path_data::abs_move>) {
         currentPoint = item.to();
         auto pt = m.transform_point(currentPoint - origin) + origin;
         hasCurrentPoint = true;
-        v.emplace_back(in_place_type_t<path_factory::path_abs_move>, pt);
+        v.emplace_back(in_place_type_t<path_data::abs_move>, pt);
         closePoint = pt
       }
-      else if constexpr(std::is_same_v<T, path_factory::path_abs_line>) {
+      else if constexpr(std::is_same_v<T, path_data::abs_line>) {
         currentPoint = item.to();
         auto pt = m.transform_point(currentPoint - origin) + origin;
         if (hasCurrentPoint) {
-          v.emplace_back(in_place_type_t<path_factory::path_abs_line>, pt);
+          v.emplace_back(in_place_type_t<path_data::abs_line>, pt);
         }
         else {
-          v.emplace_back(in_place_type_t<path_factory::path_abs_move>, pt);
-          v.emplace_back(in_place_type_t<path_factory::path_abs_line>, pt);
+          v.emplace_back(in_place_type_t<path_data::abs_move>, pt);
+          v.emplace_back(in_place_type_t<path_data::abs_line>, pt);
           hasCurrentPoint = true;
           closePoint = pt;
         }
       }
-      else if constexpr(std::is_same_v<T, path_factory::path_abs_cubic_curve>) {
+      else if constexpr(std::is_same_v<T, path_data::abs_cubic_curve>) {
         auto pt1 = m.transform_point(item.control_point_1() - origin) + origin;
         auto pt2 = m.transform_point(item.control_point_2() - origin) + origin;
         auto pt3 = m.transform_point(item.end_point() - origin) + origin;
         if (!hasCurrentPoint) {
           currentPoint = item.control_point_1();
-          v.emplace_back(in_place_type_t<path_factory::path_abs_move>, pt1);
+          v.emplace_back(in_place_type_t<path_data::abs_move>, pt1);
           hasCurrentPoint = true;
           closePoint = pt1;
         }
-        v.emplace_back(in_place_type_t<path_factory::path_abs_cubic_curve>, pt1,
+        v.emplace_back(in_place_type_t<path_data::abs_cubic_curve>, pt1,
           pt2, pt3);
         currentPoint = item.end_point();
       }
       else if constexpr(std::is_same_v<T,
-        path_factory::path_abs_quadratic_curve>) {
+        path_data::abs_quadratic_curve>) {
       	auto pt1 = m.transform_point(item.control_point() - origin) + origin;
       	auto pt2 = m.transform_point(item.end_point() - origin) + origin;
       	if (!hasCurrentPoint) {
       		currentPoint = item.control_point();
-      		v.emplace_back(in_place_type_t<path_factory::path_abs_move>, pt1);
+      		v.emplace_back(in_place_type_t<path_data::abs_move>, pt1);
       		hasCurrentPoint = true;
       		closePoint = pt1;
       	}
-      	v.emplace_back(in_place_type_t<path_factory::path_abs_quadratic_curve>,
+      	v.emplace_back(in_place_type_t<path_data::abs_quadratic_curve>,
       	  pt1, pt2);
       	currentPoint = item.end_point();
       }
-      else if constexpr(std::is_same_v<T, path_factory::path_new_path>) {
+      else if constexpr(std::is_same_v<T, path_data::new_path>) {
         hasCurrentPoint = false;
-        v.emplace_back(in_place_type_t<path_factory::path_new_path>);
+        v.emplace_back(in_place_type_t<path_data::new_path>);
       }
-      else if constexpr(std::is_same_v<T, path_factory::path_close_path>) {
+      else if constexpr(std::is_same_v<T, path_data::close_path>) {
         if (hasCurrentPoint) {
-          v.emplace_back(in_place_type_t<path_factory::path_close_path>);
-          v.emplace_back(in_place_type_t<path_factory::path_abs_move>,
+          v.emplace_back(in_place_type_t<path_data::close_path>);
+          v.emplace_back(in_place_type_t<path_data::abs_move>,
             closePoint);
           auto invM = matrix_2d{m}.invert();
           // Need to assign the untransformed closePoint value to currentPoint.
           currentPoint = invM.transform_point(closePoint - origin) + origin;
         }
       }
-      else if constexpr(std::is_same_v<T, path_factory::path_rel_move>) {
+      else if constexpr(std::is_same_v<T, path_data::rel_move>) {
         currentPoint = item.to() + currentPoint;
         auto pt = m.transform_point(currentPoint - origin) + origin;
-        v.emplace_back(in_place_type_t<path_factory::path_abs_move>, pt);
+        v.emplace_back(in_place_type_t<path_data::abs_move>, pt);
         hasCurrentPoint = true;
         closePoint = pt    
         n.close_point(pt);
       }
-      else if constexpr(std::is_same_v<T, path_factory::path_rel_line>) {
+      else if constexpr(std::is_same_v<T, path_data::rel_line>) {
         currentPoint = item.to() + currentPoint;
         auto pt = m.transform_point(currentPoint - origin) + origin;
-        v.emplace_back(in_place_type_t<path_factory::path_abs_line>, pt);
+        v.emplace_back(in_place_type_t<path_data::abs_line>, pt);
       }
-      else if constexpr(std::is_same_v<T, path_factory::path_rel_cubic_curve>) {
+      else if constexpr(std::is_same_v<T, path_data::rel_cubic_curve>) {
         auto pt1 = m.transform_point(item.control_point_1() + currentPoint -
         origin) + origin;
         auto pt2 = m.transform_point(item.control_point_2() + currentPoint -
         origin) + origin;
         auto pt3 = m.transform_point(item.end_point() + currentPoint - origin) +
           origin;
-        v.emplace_back(in_place_type_t<path_factory::path_abs_cubic_curve>,
+        v.emplace_back(in_place_type_t<path_data::abs_cubic_curve>,
           pt1, pt2, pt3);
         currentPoint = item.end_point() + currentPoint;
       }
       else if constexpr(std::is_same_v<T,
-      path_factory::path_rel_quadratic_curve>) {
+      path_data::rel_quadratic_curve>) {
       	auto pt1 = m.transform_point(item.control_point() + currentPoint -
       	  origin) + origin;
       	auto pt2 = m.transform_point(item.end_point() + currentPoint -
       	  origin) + origin;
-      	v.emplace_back(in_place_type_t<path_factory::path_rel_quadratic_curve>,
+      	v.emplace_back(in_place_type_t<path_data::rel_quadratic_curve>,
       	pt1, pt2);
       	currentPoint = item.end_point() + currentPoint;
       }
-      else if constexpr(std::is_same_v<T, path_factory::path_arc_clockwise>) {
+      else if constexpr(std::is_same_v<T, path_data::arc_clockwise>) {
         auto ctr = item.center();
         auto rad = item.radius();
         auto ang1 = item.angle_1();
@@ -186,12 +186,12 @@ The following code shows how to properly process a \tcode{path_factory} object \
         if (hasCurrentPoint) {
           currentPoint = startPt;
           auto pt = m.transform_point(currentPoint - origin) + origin;
-          v.emplace_back(in_place_type_t<path_factory::path_abs_line>, pt);
+          v.emplace_back(in_place_type_t<path_data::abs_line>, pt);
         }
         else {
           currentPoint = startPt;
           auto pt = m.transform_point(currentPoint - origin) + origin;
-          v.emplace_back(in_place_type_t<path_factory::path_abs_move>, pt);
+          v.emplace_back(in_place_type_t<path_data::abs_move>, pt);
           hasCurrentPoint = true;
           closePt = pt;
         }
@@ -205,12 +205,12 @@ The following code shows how to properly process a \tcode{path_factory} object \
           cpt1 = m.transform_point(cpt1 - origin) + origin;
           cpt2 = m.transform_point(cpt2 - origin) + origin;
           cpt3 = m.transform_point(cpt3 - origin) + origin;
-          v.emplace_back(in_place_type_t<path_factory::path_abs_cubic_curve>, cpt1,
+          v.emplace_back(in_place_type_t<path_data::abs_cubic_curve>, cpt1,
             cpt2, cpt3);
           currTheta += theta;
         }
       }
-      else if constexpr(std::is_same_v<T, path_factory::path_arc_counterclockwise>) {
+      else if constexpr(std::is_same_v<T, path_data::arc_counterclockwise>) {
       {
         auto ctr = item.center();
         auto rad = item.radius();
@@ -258,12 +258,12 @@ The following code shows how to properly process a \tcode{path_factory} object \
         if (hasCurrentPoint) {
           currentPoint = startPt;
           auto pt = m.transform_point(currentPoint - origin) + origin;
-          v.emplace_back(in_place_type_t<path_factory::path_abs_line>, pt);
+          v.emplace_back(in_place_type_t<path_data::abs_line>, pt);
         }
         else {
           currentPoint = startPt;
           auto pt = m.transform_point(currentPoint - origin) + origin;
-          v.emplace_back(in_place_type_t<path_factory::path_abs_move>, pt);
+          v.emplace_back(in_place_type_t<path_data::abs_move>, pt);
           hasCurrentPoint = true;
           closePt = pt;
         }
@@ -278,15 +278,15 @@ The following code shows how to properly process a \tcode{path_factory} object \
           cpt1 = m.transform_point(cpt1 - origin) + origin;
           cpt2 = m.transform_point(cpt2 - origin) + origin;
           cpt3 = m.transform_point(cpt3 - origin) + origin;
-          v.emplace_back(in_place_type_t<path_factory::path_cubic_curve_to>, cpt1,
+          v.emplace_back(in_place_type_t<path_data::cubic_curve_to>, cpt1,
             cpt2, cpt3);
           currTheta -= theta;
         }
       }
-      else if constexpr(std::is_same_v<T, path_factory::path_change_matrix>) {
+      else if constexpr(std::is_same_v<T, path_data::change_matrix>) {
         m = item.matrix();
       }
-      else if constexpr(std::is_same_v<T, path_factory::path_change_origin>) {
+      else if constexpr(std::is_same_v<T, path_data::change_origin>) {
         origin = item.origin();
       }
     }, val);
@@ -315,9 +315,6 @@ The following code shows how to properly process a \tcode{path_factory} object \
 %\pnum
 
 \addtocounter{SectionDepthBase}{1}
-\input{path}
-\input{path-factory}
-\addtocounter{SectionDepthBase}{1}
 \input{new-path}
 \input{close-path}
 \input{abs-move}
@@ -332,5 +329,6 @@ The following code shows how to properly process a \tcode{path_factory} object \
 \input{arc-counterclockwise}
 \input{change-matrix}
 \input{change-origin}
-\addtocounter{SectionDepthBase}{-1}
+\input{path}
+\input{path-factory}
 \addtocounter{SectionDepthBase}{-1}

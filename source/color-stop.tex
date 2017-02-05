@@ -1,0 +1,612 @@
+%!TEX root = io2d.tex
+\rSec0 [colorstops] {Color stops}
+
+\pnum
+A \tcode{color_stop_group} is a collection of zero or more \tcode{color_stop} objects which determine the values obtained by sampling a gradient (\ref{gradients}) \tcode{brush}.
+
+\rSec1 [colorstops.colorstop]{Class \tcode{color_stop}}
+
+\pnum
+\indexlibrary{\idxcode{color_stop}}
+The class \tcode{color_stop} describes a color stop that is used by gradient brushes.
+
+\pnum
+It has an offset of type \tcode{double} and a color of type \tcode{rgba_color}.
+
+\rSec2 [colorstops.colorstop.synopsis] {\tcode{color_stop} Synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class color_stop {
+  public:
+  	// \ref{colorstops.colorstop.cons}, construct:
+    constexpr color_stop(double o, const rgba_color& c);
+    
+    // \ref{colorstops.colorstop.modifiers}, modifiers:
+    void offset(double val) noexcept;
+	void color(const rgba_color& val) noexcept;
+	
+    // \ref{colorstops.colorstop.observers}, observers:
+	double offset() const noexcept;
+	rgba_color color() const noexcept;
+  };
+} } } }
+\end{codeblock}
+
+\rSec2 [colorstops.colorstop.cons]{\tcode{color_stop} constructors}
+
+\indexlibrary{\idxcode{color_stop}!constructor}
+\begin{itemdecl}
+	constexpr color_stop(double o, const rgba_color& c) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs a \tcode{color_stop} object.
+	
+	\pnum
+	The offset shall be set to the value of \tcode{o}.
+	
+	\pnum
+	The color shall be set to the value of \tcode{c}.
+\end{itemdescr}
+
+\rSec2 [colorstops.colorstop.modifiers]{\tcode{color_stop} modifiers}
+
+\indexlibrary{\idxcode{color_stop}!\idxcode{offset}}
+\indexlibrary{\idxcode{offset}!\idxcode{color_stop}}
+\begin{itemdecl}
+	void offset(double val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	The offset shall be set to the value of \tcode{val}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{color_stop}!\idxcode{color}}
+\indexlibrary{\idxcode{color}!\idxcode{color_stop}}
+\begin{itemdecl}
+	void color(double val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	The color shall be set to the value of \tcode{val}.
+\end{itemdescr}
+
+\rSec2 [colorstops.colorstop.observers]{\tcode{color_stop} observers}
+
+\indexlibrary{\idxcode{color_stop}!\idxcode{offset}}
+\indexlibrary{\idxcode{offset}!\idxcode{color_stop}}
+\begin{itemdecl}
+	double offset() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	The value of the offset.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{color_stop}!\idxcode{color}}
+\indexlibrary{\idxcode{color}!\idxcode{color_stop}}
+\begin{itemdecl}
+	rgba_color color() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	The value of the color.
+\end{itemdescr}
+
+\rSec1 [colorstops.colorstopgroup]{Class \tcode{color_stop_group}}
+
+\rSec2 [colorstops.colorstopgroup.synopsis] {\tcode{color_stop_group} Synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  template <Allocator = allocator<color_stop>>
+  class color_stop_group {
+  public:
+    using value_type      = color_stop;
+    using allocator_type  = Allocator;
+    using pointer = typename allocator_traits<Allocator>::pointer;
+    using const_pointer = typename allocator_traits<Allocator>::const_pointer;
+    using reference = value_type&;
+    using const_reference = const value_type&;
+    using size_type       = @\impdefx{type of \tcode{color_stop_group::size_type}}@. // See [container.requirements] in \cppseventeen.
+    using difference_type = @\impdefx{type of \tcode{color_stop_group::size_type}}@. // See [container.requirements] in \cppseventeen.
+    using iterator        = @\impdefx{type of \tcode{color_stop_group::iterator}}@. // See [container.requirements] in \cppseventeen.
+    using const_iterator  = @\impdefx{type of \tcode{color_stop_group::const_iterator}}@. // See [container.requirements] in \cppseventeen.
+    using reverse_iterator       = std::reverse_iterator<iterator>;
+    using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+
+    // \ref{colorstops.colorstopgroup.cons}, constructors:    
+    color_stop_group() noexcept(noexcept(Allocator())) :
+    color_stop_group(Allocator()) { }
+    explicit color_stop_group(const Allocator&) noexcept;
+    explicit color_stop_group(size_type n, const Allocator& = Allocator());
+    color_stop_group(size_type n, const value_type& value,
+      const Allocator& = Allocator());
+    template <class InputIterator>
+    color_stop_group(InputIterator first, InputIterator last,
+    const Allocator& = Allocator());
+    color_stop_group(const color_stop_group& x);
+    color_stop_group(color_stop_group&&) noexcept;
+    color_stop_group(const color_stop_group&, const Allocator&);
+    color_stop_group(color_stop_group&&, const Allocator&);
+    color_stop_group(initializer_list<value_type>,
+      const Allocator& = Allocator());
+    ~color_stop_group();
+    color_stop_group& operator=(const color_stop_group& x);
+    color_stop_group& operator=(color_stop_group&& x)
+      noexcept(
+      allocator_traits<Allocator>::propagate_on_container_move_assignment::value
+      || allocator_traits<Allocator>::is_always_equal::value);
+    color_stop_group& operator=(initializer_list<value_type>);
+    template <class InputIterator>
+    void assign(InputIterator first, InputIterator last);
+    void assign(size_type n, const value_type& u);
+    void assign(initializer_list<value_type>);
+    allocator_type get_allocator() const noexcept;
+    
+    // \ref{colorstops.colorstopgroup.iterators}, iterators:
+    iterator begin() noexcept;
+    const_iterator begin() const noexcept;
+    const_iterator cbegin() const noexcept;
+    
+    iterator end() noexcept;
+    const_iterator end() const noexcept;
+    const_iterator cend() const noexcept;
+    
+    reverse_iterator rbegin() noexcept;
+    const_reverse_iterator rbegin() const noexcept;
+    const_reverse_iterator crbegin() const noexcept;
+    
+    reverse_iterator rend() noexcept;
+    const_reverse_iterator rend() const noexcept;
+    const_reverse_iterator crend() const noexcept;
+    
+    // \ref{colorstops.colorstopgroup.capacity}, capacity
+    bool empty() const noexcept;
+    size_type size() const noexcept;
+    size_type max_size() const noexcept;
+    size_type capacity() const noexcept;
+    void resize(size_type sz);
+    void resize(size_type sz, const value_type& c);
+    void reserve(size_type n);
+    void shrink_to_fit();
+    
+    // element access:
+    reference operator[](size_type n);
+    const_reference operator[](size_type n) const;
+    const_reference at(size_type n) const;
+    reference at(size_type n);
+    reference front();
+    const_reference front() const;
+    reference back();
+    const_reference back() const;
+    
+    // \ref{colorstops.colorstopgroup.modifiers}, modifiers:
+    template <class... Args>
+    reference emplace_back(Args&&... args);
+    void push_back(const value_type& x);
+    void push_back(value_type&& x);
+    void pop_back();
+    template <class... Args>
+    iterator emplace(const_iterator position, Args&&... args);
+    iterator insert(const_iterator position, const value_type& x);
+    iterator insert(const_iterator position, value_type&& x);
+    iterator insert(const_iterator position, size_type n, const value_type& x);
+    template <class InputIterator>
+    iterator insert(const_iterator position, InputIterator first,
+      InputIterator last);
+    iterator insert(const_iterator position,
+    initializer_list<value_type> il);
+    iterator erase(const_iterator position);
+    iterator erase(const_iterator first, const_iterator last);
+    void swap(color_stop_group&)
+      noexcept(allocator_traits<Allocator>::propagate_on_container_swap::value 
+      || allocator_traits<Allocator>::is_always_equal::value);
+    void clear() noexcept;
+  };
+
+  // \ref{colorstops.colorstopgroup.special}, specialized algorithms:
+  template <Allocator>
+  void swap(color_stop_group<Allocator>& lhs, color_stop_group<Allocator>& rhs)
+    noexcept(noexcept(lhs.swap(rhs)));
+} } } }
+\end{codeblock}
+
+\rSec1 [colorstops.colorstopgroup.containerrequirements] {\tcode{color_stop_group} container requirements}
+
+\pnum
+This class shall be considered a sequence container, as defined in [containers] in \cppseventeen, and all sequence container requirements that apply specifically to \tcode{vector} shall also apply to this class.
+
+\rSec1 [colorstops.colorstopgroup.cons] {\tcode{color_stop_group} constructors, copy, and assignment}
+
+\indexlibrary{\idxcode{color_stop_group}!constructor}
+\begin{itemdecl}
+	explicit color_stop_group(const Allocator&);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an empty \tcode{color_stop_group}, using the specified allocator.
+	
+	\pnum
+	\complexity
+	Constant.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{color_stop_group}!constructor}
+\begin{itemdecl}
+	explicit color_stop_group(size_type n, const Allocator& = Allocator());
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs a \tcode{color_stop_group} with \tcode{n} default-inserted elements using the specified allocator.
+	
+	\pnum
+	\complexity
+	Linear in \tcode{n}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{color_stop_group}!constructor}
+\begin{itemdecl}
+	color_stop_group(size_type n, const value_type& value,
+	  const Allocator& = Allocator());
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\requires
+	\tcode{value_type} shall be \tcode{CopyInsertable} into \tcode{*this}.
+	
+	\pnum
+	\effects
+	Constructs a \tcode{color_stop_group} with n copies of \tcode{value}, using the specified allocator.
+	
+	\pnum
+	\complexity
+	Linear in \tcode{n}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{color_stop_group}!constructor}
+\begin{itemdecl}
+	template <class InputIterator>
+	color_stop_group(InputIterator first, InputIterator last,
+	  const Allocator& = Allocator());
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs a \tcode{color_stop_group} equal to the range \range{first}{last}, using the specified allocator.
+	
+	\pnum
+	\complexity
+	Makes only $N$ calls to the copy constructor of \tcode{value_type} (where $N$
+	is the distance between
+	\tcode{first}
+	and
+	\tcode{last})
+	and no reallocations if iterators \tcode{first} and \tcode{last} are of forward, bidirectional, or random access categories.
+	It makes order
+	\tcode{N}
+	calls to the copy constructor of
+	\tcode{value_type}
+	and order
+	$\log(N)$
+	reallocations if they are just input iterators.
+	
+\end{itemdescr}
+
+\rSec1 [colorstops.colorstopgroup.capacity] {\tcode{color_stop_group} capacity}
+
+\indexlibrary{\idxcode{color_stop_group}!\idxcode{capacity}}
+\indexlibrary{\idxcode{capacity}!\idxcode{color_stop_group}}
+\begin{itemdecl}
+	size_type capacity() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	The total number of elements that the color stop group can hold without requiring reallocation.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{color_stop_group}!\idxcode{reserve}}
+\indexlibrary{\idxcode{reserve}!\idxcode{color_stop_group}}
+\begin{itemdecl}
+	void reserve(size_type n);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\requires
+	\tcode{value_type} shall be \tcode{MoveInsertable} into \tcode{*this}.
+	
+	\pnum
+	\effects
+	A directive that informs a color stop group of a planned change in size, so that it can manage the storage
+	allocation accordingly. After \tcode{reserve()}, \tcode{capacity()} is greater or equal to the argument of \tcode{reserve} if
+	reallocation happens; and equal to the previous value of \tcode{capacity()} otherwise. Reallocation happens
+	at this point if and only if the current capacity is less than the argument of \tcode{reserve()}. If an exception
+	is thrown other than by the move constructor of a non-\tcode{CopyInsertable} type, there are no effects.
+	
+	\pnum
+	\complexity
+	It does not change the size of the sequence and takes at most linear time in the size of the
+	sequence.
+	
+	\pnum
+	\throws
+	\tcode{length_error} if \tcode{n >
+		max_size()}.\footnote{\tcode{reserve()} uses \tcode{Allocator::allocate()} which
+		may throw an appropriate exception.}
+	
+	\pnum
+	\remarks
+	Reallocation invalidates all the references, pointers, and iterators
+	referring to the elements in the sequence.
+	No reallocation shall take place during insertions that happen
+	after a call to
+	\tcode{reserve()}
+	until the time when an insertion would make the size of the vector
+	greater than the value of
+	\tcode{capacity()}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{color_stop_group}!\idxcode{shrink_to_fit}}
+\indexlibrary{\idxcode{shrink_to_fit}!\idxcode{color_stop_group}}
+\begin{itemdecl}
+	void shrink_to_fit();
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\requires
+	\tcode{value_type} shall be \tcode{MoveInsertable} into \tcode{*this}.
+	
+	\pnum
+	\effects
+	\tcode{shrink_to_fit} is a non-binding request to reduce
+	\tcode{capacity()} to \tcode{size()}.
+	\enternote
+	The request is non-binding to allow latitude for
+	implementation-specific optimizations.
+	\exitnote
+	It does not increase \tcode{capacity()}, but may reduce \tcode{capacity()}
+	by causing reallocation. 
+	If an exception is thrown other than by the move constructor
+	of a non-\tcode{CopyInsertable} \tcode{value_type} there are no effects.
+	
+	\pnum
+	\complexity Linear in the size of the sequence.
+	
+	\pnum
+	\remarks Reallocation invalidates all the references, pointers, and 
+	iterators referring to the elements in the sequence. If no reallocation 
+	happens, they remain valid.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{color_stop_group}!\idxcode{swap}}
+\indexlibrary{\idxcode{swap}!\idxcode{color_stop_group}}
+\begin{itemdecl}
+	void swap(color_stop_group&)
+	noexcept(allocator_traits<Allocator>::propagate_on_container_swap::value ||
+	allocator_traits<Allocator>::is_always_equal::value);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Exchanges the contents and
+	\tcode{capacity()}
+	of
+	\tcode{*this}
+	with that of \tcode{x}.
+	
+	\pnum
+	\complexity
+	Constant time.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{color_stop_group}!\idxcode{resize}}
+\indexlibrary{\idxcode{resize}!\idxcode{color_stop_group}}
+\begin{itemdecl}
+	void resize(size_type sz);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	If \tcode{sz < size()}, erases the last \tcode{size() - sz} elements
+	from the sequence. Otherwise, appends \tcode{sz - size()} default-inserted 
+	elements to the sequence.
+	
+	\pnum
+	\requires
+	\tcode{value_type} shall be
+	\tcode{MoveInsertable} and \tcode{DefaultInsertable} into \tcode{*this}.
+	
+	\pnum
+	\remarks
+	If an exception is thrown other than by the move constructor of a 
+	non-\tcode{CopyInsertable}
+	\tcode{value_type} there are no effects.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{color_stop_group}!\idxcode{resize}}
+\indexlibrary{\idxcode{resize}!\idxcode{color_stop_group}}
+\begin{itemdecl}
+	void resize(size_type sz, const value_type& c);
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	If \tcode{sz < size()}, erases the last \tcode{size() - sz} elements
+	from the sequence. Otherwise,
+	appends \tcode{sz - size()} copies of \tcode{c} to the sequence.
+	
+	\pnum
+	\requires
+	\tcode{value_type} shall be \tcode{CopyInsertable} into \tcode{*this}.
+	
+	\pnum
+	\remarks
+	If an exception is thrown there are no effects.
+\end{itemdescr}
+
+\rSec1 [colorstops.colorstopgroup.modifiers] {\tcode{color_stop_group} modifiers}
+
+\indexlibrary{\idxcode{color_stop_group}!\idxcode{insert}}
+\indexlibrary{\idxcode{insert}!\idxcode{color_stop_group}}
+\indexlibrary{\idxcode{color_stop_group}!\idxcode{emplace_back}}
+\indexlibrary{\idxcode{emplace_back}!\idxcode{color_stop_group}}
+\indexlibrary{\idxcode{color_stop_group}!\idxcode{push_back}}
+\indexlibrary{\idxcode{push_back}!\idxcode{color_stop_group}}
+\begin{itemdecl}
+	iterator insert(const_iterator position, const value_type& x);
+	iterator insert(const_iterator position, value_type&& x);
+	iterator insert(const_iterator position, size_type n, const value_type& x);
+	template <class InputIterator>
+	iterator insert(const_iterator position, InputIterator first,
+	InputIterator last);
+	iterator insert(const_iterator position, initializer_list<value_type>);
+	template <class... Args>
+	reference emplace_back(Args&&... args);
+	template <class... Args>
+	iterator emplace(const_iterator position, Args&&... args);
+	void push_back(const value_type& x);
+	void push_back(value_type&& x);
+\end{itemdecl}
+
+\begin{itemdescr}
+	\pnum
+	\remarks
+	Causes reallocation if the new size is greater than the old capacity.
+	Reallocation invalidates all the references, pointers, and iterators
+	referring to the elements in the sequence.
+	If no reallocation happens, all the iterators and references before the insertion point remain valid.
+	If an exception is thrown other than by
+	the copy constructor, move constructor,
+	assignment operator, or move assignment operator of
+	\tcode{value_type} or by any \tcode{InputIterator} operation
+	there are no effects.
+	If an exception is thrown while inserting a single element at the end and
+	\tcode{value_type} is \tcode{CopyInsertable} or \tcode{is_nothrow_move_constructible_v<value_type>}
+	is \tcode{true}, there are no effects.
+	Otherwise, if an exception is thrown by the move constructor of a non-\tcode{CopyInsertable}
+	\tcode{value_type}, the effects are unspecified.
+	
+	\pnum
+	\complexity
+	The complexity is linear in the number of elements inserted plus the 
+	distance to the end of the color stop group.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{color_stop_group}!\idxcode{erase}}
+\indexlibrary{\idxcode{erase}!\idxcode{color_stop_group}}
+\indexlibrary{\idxcode{color_stop_group}!\idxcode{pop_back}}
+\indexlibrary{\idxcode{pop_back}!\idxcode{color_stop_group}}
+\begin{itemdecl}
+	iterator erase(const_iterator position);
+	iterator erase(const_iterator first, const_iterator last);
+	void pop_back();
+\end{itemdecl}
+
+\begin{itemdescr}
+	\pnum
+	\effects
+	Invalidates iterators and references at or after the point of the erase.
+	
+	\pnum
+	\complexity
+	The destructor of \tcode{value_type} is called the number of times equal to 
+	the number of the elements erased, but the assignment operator
+	of \tcode{value_type} is called the number of times equal to the number of
+	elements in the vector after the erased elements.
+	
+	\pnum
+	\throws
+	Nothing unless an exception is thrown by the copy constructor, move 
+	constructor, assignment operator, or move assignment operator of
+	\tcode{value_type}.
+\end{itemdescr}
+
+\rSec1 [colorstops.colorstopgroup.iterators] {\tcode{color_stop_group} iterators}
+
+\indexlibrary{\idxcode{color_stop_group}!\idxcode{begin}}
+\indexlibrary{\idxcode{begin}!\idxcode{color_stop_group}}
+\indexlibrary{\idxcode{color_stop_group}!\idxcode{cbegin}}
+\indexlibrary{\idxcode{cbegin}!\idxcode{color_stop_group}}
+\begin{itemdecl}
+	iterator begin() noexcept;
+	const_iterator begin() const noexcept;
+	const_iterator cbegin() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	An iterator referring to the first \tcode{path_data::path_data_types} item in the path group.
+	
+	\pnum
+	\remarks
+	Changing a \tcode{path_data::path_data_types} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_data_types} object or of any subsequent \tcode{path_data::path_data_types} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} unless all of the violations are fixed prior to such processing.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{color_stop_group}!\idxcode{end}}
+\indexlibrary{\idxcode{end}!\idxcode{color_stop_group}}
+\indexlibrary{\idxcode{color_stop_group}!\idxcode{cend}}
+\indexlibrary{\idxcode{cend}!\idxcode{color_stop_group}}
+\begin{itemdecl}
+	iterator end() noexcept;
+	const_iterator end() const noexcept;
+	const_iterator cend() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	An iterator which is the past-the-end value.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{color_stop_group}!\idxcode{rbegin}}
+\indexlibrary{\idxcode{rbegin}!\idxcode{color_stop_group}}
+\indexlibrary{\idxcode{color_stop_group}!\idxcode{crbegin}}
+\indexlibrary{\idxcode{crbegin}!\idxcode{color_stop_group}}
+\begin{itemdecl}
+	reverse_iterator rbegin() noexcept;
+	const_reverse_iterator rbegin() const noexcept;
+	const_reverse_iterator crbegin() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	An iterator which is semantically equivalent to \tcode{reverse_iterator(end)}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{color_stop_group}!\idxcode{rend}}
+\indexlibrary{\idxcode{rend}!\idxcode{color_stop_group}}
+\indexlibrary{\idxcode{color_stop_group}!\idxcode{crend}}
+\indexlibrary{\idxcode{crend}!\idxcode{color_stop_group}}
+\begin{itemdecl}
+	reverse_iterator rend() noexcept;
+	const_reverse_iterator rend() const noexcept;
+	const_reverse_iterator crend() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	An iterator which is semantically equivalent to \tcode{reverse_iterator(begin)}.
+\end{itemdescr}
+
+\rSec1[colorstops.colorstopgroup.special] {\tcode{color_stop_group} specialized algorithms}
+
+\indexlibrary{color_stop_group}{swap}
+\indexlibrary{swap}{color_stop_group}
+\begin{itemdecl}
+	template <class Allocator>
+	void swap(color_stop_group<Allocator>& lhs, 
+	  color_stop_group<Allocator>& rhs) noexcept(noexcept(lhs.swap(rhs)));
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	As if by \tcode{lhs.swap(rhs)}.
+\end{itemdescr}

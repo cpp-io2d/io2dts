@@ -1,9 +1,9 @@
 %!TEX root = io2d.tex
-\rSec0 [pathfactory.pathrelline] {Class \tcode{path_factory::path_rel_line}}
+\rSec0 [relline] {Class \tcode{rel_line}}
 
 \pnum
-\indexlibrary{\idxcode{path_factory::path_rel_line}}
-The class \tcode{path_factory::path_rel_line} describes a path segment that is a line.
+\indexlibrary{\idxcode{rel_line}}
+The class \tcode{rel_line} describes a path segment that is a line.
 
 \pnum
 It has an end point of type \tcode{vector_2d}.
@@ -11,43 +11,45 @@ It has an end point of type \tcode{vector_2d}.
 \pnum
 Its end point is relative to the most recently established current point.
 
-\rSec1 [pathfactory.pathrelline.synopsis] {\tcode{path_factory::path_rel_line} synopsis}
+\rSec1 [relline.synopsis] {\tcode{rel_line} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class path_factory::path_rel_line {
-  public:
-    // \ref{pathfactory.pathrelline.cons}, construct:
-    explicit path_rel_line(const vector_2d& pt) noexcept;
+  namespace path_data {
+    class rel_line {
+    public:
+      // \ref{relline.cons}, construct:
+      explicit rel_line(const vector_2d& pt) noexcept;
 
-    // \ref{pathfactory.pathrelline.modifiers}, modifiers:
-    void to(const vector_2d& pt) noexcept;
+      // \ref{relline.modifiers}, modifiers:
+      void to(const vector_2d& pt) noexcept;
 
-    // \ref{pathfactory.pathrelline.observers}, observers:
-    vector_2d to() const noexcept;
+      // \ref{relline.observers}, observers:
+      vector_2d to() const noexcept;
+    };
   };
 } } } }
 \end{codeblock}
 
-\rSec1 [pathfactory.pathrelline.cons] {\tcode{path_factory::path_rel_line} constructors}
+\rSec1 [relline.cons] {\tcode{rel_line} constructors}
 
-\indexlibrary{\idxcode{path_factory::path_rel_line}!constructor}
+\indexlibrary{\idxcode{rel_line}!constructor}
 \begin{itemdecl}
-    explicit path_rel_line(const vector_2d& pt) noexcept;
+    explicit rel_line(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{path_factory::path_rel_line}.
+	Constructs an object of type \tcode{rel_line}.
 	
 	\pnum
 	The end point shall be set to the value of \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [pathfactory.pathrelline.modifiers]{\tcode{path_factory::path_rel_line} modifiers}
+\rSec1 [relline.modifiers]{\tcode{rel_line} modifiers}
 
-\indexlibrary{\idxcode{path_factory::path_rel_line}!\idxcode{to}}
-\indexlibrary{\idxcode{to}!\idxcode{path_factory::path_rel_line}}
+\indexlibrary{\idxcode{rel_line}!\idxcode{to}}
+\indexlibrary{\idxcode{to}!\idxcode{rel_line}}
 \begin{itemdecl}
     void to(const vector_2d& pt) noexcept;
 \end{itemdecl}
@@ -57,10 +59,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The end point shall be set to the value of \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [pathfactory.pathrelline.observers]{\tcode{path_factory::path_rel_line} observers}
+\rSec1 [relline.observers]{\tcode{rel_line} observers}
 
-\indexlibrary{\idxcode{path_factory::path_rel_line}!\idxcode{to}}
-\indexlibrary{\idxcode{to}!\idxcode{path_factory::path_rel_line}}
+\indexlibrary{\idxcode{rel_line}!\idxcode{to}}
+\indexlibrary{\idxcode{to}!\idxcode{rel_line}}
 \begin{itemdecl}
     vector_2d to() const noexcept;
 \end{itemdecl}

@@ -1,0 +1,98 @@
+%!TEX root = io2d.tex
+\rSec0 [circle] {Class \tcode{circle}}
+
+\rSec1 [circle.intro] {\tcode{circle} Description}
+
+\pnum
+\indexlibrary{\idxcode{circle}}
+The class \tcode{circle} describes a circle.
+
+\pnum
+It has a center of type \tcode{vector_2d} and a radius of type \tcode{double}.
+
+\rSec1 [circle.synopsis] {\tcode{circle} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class circle {
+  public:
+    // \ref{circle.cons}, construct/copy/move/destroy:
+    rectangle(const vector_2d& ctr, double rad) noexcept;
+
+    // \ref{circle.modifiers}, modifiers:
+    void center(const vector_2d& ctr) noexcept;
+    void radius(double rad) noexcept;
+    
+    // \ref{circle.observers}, observers:
+    vector_2d center() const noexcept;
+    double radius() const noexcept;
+  };
+} } } }
+\end{codeblock}
+
+\rSec1 [circle.cons] {\tcode{circle} constructors and assignment operators}
+
+\indexlibrary{\idxcode{circle}!constructor}
+\begin{itemdecl}
+circle(const vector_2d& ctr, double rad) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	Constructs an object of type \tcode{rectangle}.
+	
+	\pnum
+	The center shall have the value of \tcode{ctr}.
+	
+	\pnum
+	The radius shall have the value of \tcode{rad}.
+\end{itemdescr}
+
+\rSec1 [circle.modifiers]{\tcode{circle} modifiers}
+
+\indexlibrary{\idxcode{circle}!\idxcode{center}}
+\indexlibrary{\idxcode{center}!\idxcode{circle}}
+\begin{itemdecl}
+void center(const vector_2d& ctr) noexcept;
+\end{itemdecl}
+
+\begin{itemdescr}
+	\pnum
+	\effects
+	The center shall have the value of \tcode{ctr}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{circle}!\idxcode{radius}}
+\indexlibrary{\idxcode{radius}!\idxcode{circle}}
+\begin{itemdecl}
+void radius(double rad) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\effects
+	The radius shall have the value of \tcode{rad}.
+\end{itemdescr}
+
+\rSec1 [circle.observers]{\tcode{circle} observers}
+
+\indexlibrary{\idxcode{circle}!\idxcode{center}}
+\indexlibrary{\idxcode{center}!\idxcode{circle}}
+\begin{itemdecl}
+double center() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	The value of the center.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{circle}!\idxcode{radius}}
+\indexlibrary{\idxcode{radius}!\idxcode{circle}}
+\begin{itemdecl}
+double radius() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+	\pnum
+	\returns
+	THe value of the radius.
+\end{itemdescr}

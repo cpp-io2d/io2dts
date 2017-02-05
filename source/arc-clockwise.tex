@@ -1,9 +1,9 @@
 %!TEX root = io2d.tex
-\rSec0 [pathfactory.patharcclockwise] {Class \tcode{path_factory::path_arc_clockwise}}
+\rSec0 [arcclockwise] {Class \tcode{arc_clockwise}}
 
 \pnum
-\indexlibrary{\idxcode{path_factory::path_arc_clockwise}}
-The class \tcode{path_factory::path_arc_clockwise} describes a path segment that is a circular arc with clockwise rotation.
+\indexlibrary{\idxcode{arc_clockwise}}
+The class \tcode{arc_clockwise} describes a path segment that is a circular arc with clockwise rotation.
 
 \pnum
 It has a center of type \tcode{vector_2d}, a radius of type \tcode{double}, a first angle of type \tcode{double}, and a second angle of type \tcode{double}.
@@ -16,42 +16,44 @@ The values for the first angle and second angle are in radians.
 Although the value of the first angle may be greater than the value of the second angle, when processed as described in \ref{paths.processing}, \tcode{two_pi<double>} is added to the second angle until the value of the second angle is greater than or equal to the value of the first angle.
 \exitnote
 
-\rSec1 [pathfactory.patharcclockwise.synopsis] {\tcode{path_factory::path_arc_clockwise} synopsis}
+\rSec1 [arcclockwise.synopsis] {\tcode{arc_clockwise} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class path_factory::path_arc_clockwise {
-  public:
-    // \ref{pathfactory.patharcclockwise.cons}, construct/copy/move/destroy:
-    path_arc_clockwise(const vector_2d& ctr, double rad, double angle1,
-      double angle2) noexcept;
+  namespace path_data {
+    class arc_clockwise {
+    public:
+      // \ref{arcclockwise.cons}, construct/copy/move/destroy:
+      arc_clockwise(const vector_2d& ctr, double rad, double angle1,
+        double angle2) noexcept;
 
-    // \ref{pathfactory.patharcclockwise.modifiers}, modifiers:
-    void center(const vector_2d& ctr) noexcept;
-    void radius(double r) noexcept;
-    void angle_1(double radians) noexcept;
-    void angle_2(double radians) noexcept;
+      // \ref{arcclockwise.modifiers}, modifiers:
+      void center(const vector_2d& ctr) noexcept;
+      void radius(double r) noexcept;
+      void angle_1(double radians) noexcept;
+      void angle_2(double radians) noexcept;
 
-    // \ref{pathfactory.patharcclockwise.observers}, observers:
-    vector_2d center() const noexcept;
-    double radius() const noexcept;
-    double angle_1() const noexcept;
-    double angle_2() const noexcept;
+      // \ref{arcclockwise.observers}, observers:
+      vector_2d center() const noexcept;
+      double radius() const noexcept;
+      double angle_1() const noexcept;
+      double angle_2() const noexcept;
+    };
   };
 } } } }
 \end{codeblock}
 
-\rSec1 [pathfactory.patharcclockwise.cons] {\tcode{path_factory::path_arc_clockwise} constructors and assignment operators}
+\rSec1 [arcclockwise.cons] {\tcode{arc_clockwise} constructors and assignment operators}
 
-\indexlibrary{\idxcode{path_factory::path_arc_clockwise}!constructor}
+\indexlibrary{\idxcode{arc_clockwise}!constructor}
 \begin{itemdecl}
-    arc(const vector_2d& ctr, double rad, double angle1, double angle2)
-      noexcept;
+    arc_clockwise(const vector_2d& ctr, double rad, double angle1,
+      double angle2) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{path_factory::path_arc_clockwise}.
+	Constructs an object of type \tcode{arc_clockwise}.
 	
 	\pnum
 	The center shall be set to the value of \tcode{ctr}.
@@ -66,10 +68,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The second angle shall be set to the value of \tcode{angle2}.
 \end{itemdescr}
 
-\rSec1 [pathfactory.patharcclockwise.modifiers]{\tcode{path_factory::path_arc_clockwise} modifiers}
+\rSec1 [arcclockwise.modifiers]{\tcode{arc_clockwise} modifiers}
 
-\indexlibrary{\idxcode{path_factory::path_arc_clockwise}!\idxcode{center}}
-\indexlibrary{\idxcode{center}!\idxcode{path_factory::path_arc_clockwise}}
+\indexlibrary{\idxcode{arc_clockwise}!\idxcode{center}}
+\indexlibrary{\idxcode{center}!\idxcode{arc_clockwise}}
 \begin{itemdecl}
     void center(const vector_2d& ctr) noexcept;
 \end{itemdecl}
@@ -79,8 +81,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The center shall be set to the value of \tcode{ctr}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory::path_arc_clockwise}!\idxcode{radius}}
-\indexlibrary{\idxcode{radius}!\idxcode{path_factory::path_arc_clockwise}}
+\indexlibrary{\idxcode{arc_clockwise}!\idxcode{radius}}
+\indexlibrary{\idxcode{radius}!\idxcode{arc_clockwise}}
 \begin{itemdecl}
     void radius(double r) noexcept;
 \end{itemdecl}
@@ -90,8 +92,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The radius shall be set to the value of \tcode{r}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory::path_arc_clockwise}!\idxcode{angle_1}}
-\indexlibrary{\idxcode{angle_1}!\idxcode{path_factory::path_arc_clockwise}}
+\indexlibrary{\idxcode{arc_clockwise}!\idxcode{angle_1}}
+\indexlibrary{\idxcode{angle_1}!\idxcode{arc_clockwise}}
 \begin{itemdecl}
     void angle_1(double radians) noexcept;
 \end{itemdecl}
@@ -101,8 +103,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The first angle shall be set to the value of \tcode{radians}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory::path_arc_clockwise}!\idxcode{angle_2}}
-\indexlibrary{\idxcode{angle_2}!\idxcode{path_factory::path_arc_clockwise}}
+\indexlibrary{\idxcode{arc_clockwise}!\idxcode{angle_2}}
+\indexlibrary{\idxcode{angle_2}!\idxcode{arc_clockwise}}
 \begin{itemdecl}
     void angle_2(double radians) noexcept;
 \end{itemdecl}
@@ -112,10 +114,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The second angle shall be set to the value of \tcode{radians}.
 \end{itemdescr}
 
-\rSec1 [pathfactory.patharcclockwise.observers]{\tcode{path_factory::path_arc_clockwise} observers}
+\rSec1 [arcclockwise.observers]{\tcode{arc_clockwise} observers}
 
-\indexlibrary{\idxcode{path_factory::path_arc_clockwise}!\idxcode{center}}
-\indexlibrary{\idxcode{center}!\idxcode{path_factory::path_arc_clockwise}}
+\indexlibrary{\idxcode{arc_clockwise}!\idxcode{center}}
+\indexlibrary{\idxcode{center}!\idxcode{arc_clockwise}}
 \begin{itemdecl}
     vector_2d center() const noexcept;
 \end{itemdecl}
@@ -125,8 +127,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The value of the center.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory::path_arc_clockwise}!\idxcode{radius}}
-\indexlibrary{\idxcode{radius}!\idxcode{path_factory::path_arc_clockwise}}
+\indexlibrary{\idxcode{arc_clockwise}!\idxcode{radius}}
+\indexlibrary{\idxcode{radius}!\idxcode{arc_clockwise}}
 \begin{itemdecl}
     double radius() const noexcept;
 \end{itemdecl}
@@ -136,8 +138,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The value of the radius.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory::path_arc_clockwise}!\idxcode{angle_1}}
-\indexlibrary{\idxcode{angle_1}!\idxcode{path_factory::path_arc_clockwise}}
+\indexlibrary{\idxcode{arc_clockwise}!\idxcode{angle_1}}
+\indexlibrary{\idxcode{angle_1}!\idxcode{arc_clockwise}}
 \begin{itemdecl}
     double angle_1() const noexcept;
 \end{itemdecl}
@@ -147,8 +149,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The value of the first angle.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory::path_arc_clockwise}!\idxcode{angle_2}}
-\indexlibrary{\idxcode{angle_2}!\idxcode{path_factory::path_arc_clockwise}}
+\indexlibrary{\idxcode{arc_clockwise}!\idxcode{angle_2}}
+\indexlibrary{\idxcode{angle_2}!\idxcode{arc_clockwise}}
 \begin{itemdecl}
     double angle_2() const noexcept;
 \end{itemdecl}

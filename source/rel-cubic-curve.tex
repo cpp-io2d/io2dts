@@ -1,9 +1,9 @@
 %!TEX root = io2d.tex
-\rSec0 [pathfactory.pathrelcubiccurve] {Class \tcode{path_factory::path_rel_cubic_curve}}
+\rSec0 [relcubiccurve] {Class \tcode{rel_cubic_curve}}
 
 \pnum
-\indexlibrary{\idxcode{path_factory::path_rel_cubic_curve}}
-The class \tcode{path_factory::path_rel_cubic_curve} describes a path segment that is a cubic \bezierlocal curve.
+\indexlibrary{\idxcode{rel_cubic_curve}}
+The class \tcode{rel_cubic_curve} describes a path segment that is a cubic \bezierlocal curve.
 
 \pnum
 It has a first control point of type \tcode{vector_2d}, a second control point of type \tcode{vector_2d}, and an end point of type \tcode{vector_2d}.
@@ -11,39 +11,41 @@ It has a first control point of type \tcode{vector_2d}, a second control point o
 \pnum
 All of its points are relative to the most recently established current point.
 
-\rSec1 [pathfactory.pathrelcubiccurve.synopsis] {\tcode{path_factory::path_rel_cubic_curve} synopsis}
+\rSec1 [relcubiccurve.synopsis] {\tcode{rel_cubic_curve} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class path_factory::path_rel_cubic_curve {
-  public:
-    // \ref{pathfactory.pathrelcubiccurve.cons}, construct
-    path_rel_cubic_curve(const vector_2d& cp1, const vector_2d& cp2,
-      const vector_2d& ep) noexcept;
+  namespace path_data {
+    class rel_cubic_curve {
+    public:
+      // \ref{relcubiccurve.cons}, construct
+      rel_cubic_curve(const vector_2d& cp1, const vector_2d& cp2,
+        const vector_2d& ep) noexcept;
 
-    // \ref{pathfactory.pathrelcubiccurve.modifiers}, modifiers:
-    void control_point_1(const vector_2d& cp) noexcept;
-    void control_point_2(const vector_2d& cp) noexcept;
-    void end_point(const vector_2d& ep) noexcept;
+      // \ref{relcubiccurve.modifiers}, modifiers:
+      void control_point_1(const vector_2d& cp) noexcept;
+      void control_point_2(const vector_2d& cp) noexcept;
+      void end_point(const vector_2d& ep) noexcept;
 
-    // \ref{pathfactory.pathrelcubiccurve.observers}, observers:
-    vector_2d control_point_1() const noexcept;
-    vector_2d control_point_2() const noexcept;
-    vector_2d end_point() const noexcept;
+      // \ref{relcubiccurve.observers}, observers:
+      vector_2d control_point_1() const noexcept;
+      vector_2d control_point_2() const noexcept;
+      vector_2d end_point() const noexcept;
+    };
   };
 } } } }
 \end{codeblock}
 
-\rSec1 [pathfactory.pathrelcubiccurve.cons] {\tcode{path_factory::path_rel_cubic_curve} constructors}
-\indexlibrary{\idxcode{path_factory::path_rel_cubic_curve_to}!constructor}
+\rSec1 [relcubiccurve.cons] {\tcode{rel_cubic_curve} constructors}
+\indexlibrary{\idxcode{rel_cubic_curve_to}!constructor}
 \begin{itemdecl}
-    path_rel_cubic_curve(const vector_2d& cp1, const vector_2d& cp2,
+    rel_cubic_curve(const vector_2d& cp1, const vector_2d& cp2,
       const vector_2d& ep) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{path_factory::path_rel_cubic_curve}.
+	Constructs an object of type \tcode{rel_cubic_curve}.
 	
 	\pnum
 	The first control point shall be set to the value of \tcode{cp1}.
@@ -55,10 +57,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The end point shall be set to the value of \tcode{ep}.
 \end{itemdescr}
 
-\rSec1 [pathfactory.pathrelcubiccurve.modifiers]{\tcode{path_factory::path_rel_cubic_curve} modifiers}
+\rSec1 [relcubiccurve.modifiers]{\tcode{rel_cubic_curve} modifiers}
 
-\indexlibrary{\idxcode{path_factory::path_rel_cubic_curve}!\idxcode{control_point_1}}
-\indexlibrary{\idxcode{control_point_1}!\idxcode{path_factory::path_rel_cubic_curve}}
+\indexlibrary{\idxcode{rel_cubic_curve}!\idxcode{control_point_1}}
+\indexlibrary{\idxcode{control_point_1}!\idxcode{rel_cubic_curve}}
 \begin{itemdecl}
     void control_point_1(const vector_2d& cp) noexcept;
 \end{itemdecl}
@@ -68,8 +70,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The first control point shall be set to the value of \tcode{cp}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory::path_rel_cubic_curve}!\idxcode{control_point_2}}
-\indexlibrary{\idxcode{control_point_2}!\idxcode{path_factory::path_rel_cubic_curve}}
+\indexlibrary{\idxcode{rel_cubic_curve}!\idxcode{control_point_2}}
+\indexlibrary{\idxcode{control_point_2}!\idxcode{rel_cubic_curve}}
 \begin{itemdecl}
     void control_point_2(const vector_2d& value) noexcept;
 \end{itemdecl}
@@ -79,8 +81,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The second control point shall be set to the value of \tcode{cp}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory::path_rel_cubic_curve}!\idxcode{end_point}}
-\indexlibrary{\idxcode{end_point}!\idxcode{path_factory::path_rel_cubic_curve}}
+\indexlibrary{\idxcode{rel_cubic_curve}!\idxcode{end_point}}
+\indexlibrary{\idxcode{end_point}!\idxcode{rel_cubic_curve}}
 \begin{itemdecl}
     void end_point(const vector_2d& value) noexcept;
 \end{itemdecl}
@@ -90,10 +92,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The end point shall be set to the value of \tcode{ep}.
 \end{itemdescr}
 
-\rSec1 [pathfactory.pathrelcubiccurve.observers]{\tcode{path_factory::path_rel_cubic_curve} observers}
+\rSec1 [relcubiccurve.observers]{\tcode{rel_cubic_curve} observers}
 
-\indexlibrary{\idxcode{path_factory::path_rel_cubic_curve}!\idxcode{control_point_1}}
-\indexlibrary{\idxcode{control_point_1}!\idxcode{path_factory::path_rel_cubic_curve}}
+\indexlibrary{\idxcode{rel_cubic_curve}!\idxcode{control_point_1}}
+\indexlibrary{\idxcode{control_point_1}!\idxcode{rel_cubic_curve}}
 \begin{itemdecl}
     vector_2d control_point_1() const noexcept;
 \end{itemdecl}
@@ -103,8 +105,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The value of the first control point.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory::path_rel_cubic_curve}!\idxcode{control_point_2}}
-\indexlibrary{\idxcode{control_point_2}!\idxcode{path_factory::path_rel_cubic_curve}}
+\indexlibrary{\idxcode{rel_cubic_curve}!\idxcode{control_point_2}}
+\indexlibrary{\idxcode{control_point_2}!\idxcode{rel_cubic_curve}}
 \begin{itemdecl}
     vector_2d control_point_2() const noexcept;
 \end{itemdecl}
@@ -114,8 +116,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The value of the second control point.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory::path_rel_cubic_curve}!\idxcode{end_point}}
-\indexlibrary{\idxcode{end_point}!\idxcode{path_factory::path_rel_cubic_curve}}
+\indexlibrary{\idxcode{rel_cubic_curve}!\idxcode{end_point}}
+\indexlibrary{\idxcode{end_point}!\idxcode{rel_cubic_curve}}
 \begin{itemdecl}
     vector_2d end_point() const noexcept;
 \end{itemdecl}

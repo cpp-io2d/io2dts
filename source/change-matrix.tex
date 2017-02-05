@@ -1,54 +1,52 @@
 %!TEX root = io2d.tex
-\rSec0 [pathfactory.pathchangematrix] {Class \tcode{path_factory::path_change_matrix}}
+\rSec0 [changematrix] {Class \tcode{change_matrix}}
 
-\rSec1 [pathfactory.pathchangematrix.synopsis] {\tcode{path_factory::path_change_matrix} synopsis}
+\rSec1 [changematrix.synopsis] {\tcode{change_matrix} synopsis}
 
 \pnum
-\indexlibrary{\idxcode{path_factory::path_change_matrix}}
-The class \tcode{path_factory::path_change_matrix} describes path instruction that changes the transformation matrix used in processing a path group as described by \ref{paths.processing}.
+\indexlibrary{\idxcode{change_matrix}}
+The class \tcode{change_matrix} describes path instruction that changes the transformation matrix used in processing a path group as described by \ref{paths.processing}.
 
 \pnum
 It has a matrix of type \tcode{matrix_2d}.
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class path_factory::path_change_matrix {
-  public:
-    // \ref{pathfactory.pathchangematrix.cons}, construct:
-    explicit path_change_matrix(const matrix_2d& m) noexcept;
+  namespace path_data {
+    class change_matrix {
+    public:
+      // \ref{changematrix.cons}, construct:
+      explicit change_matrix(const matrix_2d& m) noexcept;
 
-    // \ref{pathfactory.pathchangematrix.modifiers}, modifiers:
-    void matrix(const matrix_2d& m) noexcept;
+      // \ref{changematrix.modifiers}, modifiers:
+      void matrix(const matrix_2d& m) noexcept;
 
-    // \ref{pathfactory.pathchangematrix.observers}, observers:
-    matrix_2d matrix() const noexcept;
-    virtual path_data_type type() const noexcept override;
-    
-  private:
-    matrix_2d _Matrix; // \expos
+      // \ref{changematrix.observers}, observers:
+      matrix_2d matrix() const noexcept;
+    };
   };
 } } } }
 \end{codeblock}
 
-\rSec1 [pathfactory.pathchangematrix.cons] {\tcode{path_factory::path_change_matrix} constructors and assignment operators}
+\rSec1 [changematrix.cons] {\tcode{change_matrix} constructors and assignment operators}
 
-\indexlibrary{\idxcode{path_factory::path_change_matrix}!constructor}
+\indexlibrary{\idxcode{change_matrix}!constructor}
 \begin{itemdecl}
-    explicit path_change_matrix(const matrix_2d& m) noexcept;
+    explicit change_matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{path_factory::path_change_matrix}.
+	Constructs an object of type \tcode{change_matrix}.
 	
 	\pnum
 	The matrix shall be set to the value of \tcode{m}.
 \end{itemdescr}
 
-\rSec1 [pathfactory.pathchangematrix.modifiers]{\tcode{path_factory::path_change_matrix} modifiers}
+\rSec1 [changematrix.modifiers]{\tcode{change_matrix} modifiers}
 
-\indexlibrary{\idxcode{path_factory::path_change_matrix}!\idxcode{matrix}}
-\indexlibrary{\idxcode{matrix}!\idxcode{path_factory::path_change_matrix}}
+\indexlibrary{\idxcode{change_matrix}!\idxcode{matrix}}
+\indexlibrary{\idxcode{matrix}!\idxcode{change_matrix}}
 \begin{itemdecl}
     void matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
@@ -58,10 +56,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The matrix shall be set to the value of \tcode{m}.
 \end{itemdescr}
 
-\rSec1 [pathfactory.pathchangematrix.observers]{\tcode{path_factory::path_change_matrix} observers}
+\rSec1 [changematrix.observers]{\tcode{change_matrix} observers}
 
-\indexlibrary{\idxcode{path_factory::path_change_matrix}!\idxcode{matrix}}
-\indexlibrary{\idxcode{matrix}!\idxcode{path_factory::path_change_matrix}}
+\indexlibrary{\idxcode{change_matrix}!\idxcode{matrix}}
+\indexlibrary{\idxcode{matrix}!\idxcode{change_matrix}}
 \begin{itemdecl}
     matrix_2d matrix() const noexcept;
 \end{itemdecl}

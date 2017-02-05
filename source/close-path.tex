@@ -1,15 +1,17 @@
 %!TEX root = io2d.tex
-\rSec0 [pathfactory.pathclosepath] {Class \tcode{path_factory::path_close_path}}
+\rSec0 [closepath] {Class \tcode{close_path}}
 
 \pnum
-\indexlibrary{\idxcode{path_factory::path_close_path}}
+\indexlibrary{\idxcode{close_path}}
 This class is a path instruction that contains no data. It creates a closed path within a path group.
 
-\rSec1 [pathfactory.pathclosepath.synopsis] {\tcode{path_factory::path_close_path} synopsis}
+\rSec1 [closepath.synopsis] {\tcode{close_path} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class path_factory::path_close_path {
-  };
+  namespace path_data {
+    class close_path {
+    };
+};
 } } } }
 \end{codeblock}

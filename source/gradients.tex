@@ -1,43 +1,11 @@
 %!TEX root = io2d.tex
 \rSec0 [gradients] {Gradient brushes}
 
-\rSec1 [gradients.colorstops] {Color stops}
+\pnum
+Gradients have a \tcode{color_stop_group} as part of their observable state.
 
 \pnum
-A gradient has as part of its observable state a collection of color stops.
-
-\pnum
-The collection of color stops has an \impldef{color stop!maximum size} maximum size.
-
-\pnum
-Associated with the collection of color stops is a type called the \term{size_type}, which is an \impldef{color stop!size_type} unsigned integer type that is large enough that it can serve as an index to address each color stop in any collection of color stops as if the collection of color stops was accessed as an array of color stops.
-
-\pnum
-The \term{size} of a collection of color stops is the number of color stops it currently contains; its type is size_type.
-
-\pnum
-When a color stop is added to a collection of color stops it is assigned an \term{index value} that is equal to the size of the collection of color stops before the color stop is added.
-
-\pnum
-A \term{valid index value} for a collection of color stops is an unsigned integer value in the range $(0,size]$.
-
-\pnum
-Color stops in a collection of color stops can be replaced.
-
-\pnum
-A color stop which replaces another color stop in a collection of color stops is assigned the index value of the color stop it replaced.
-\enterexample
-If 3 color stops are added to a collection of color stops and then the color stop at index 1 is replaced, the next color stop which is added will be assigned the index value 3.
-\exitexample
-
-\pnum
-Color stops in a collection of color stops can be removed.
-
-\pnum
-When a color stop with the valid index value $i$ is removed from a collection of color stops, the index value of every color stop in the collection of color stops which had an index value greater than $i$ has its index value decremented by 1.
-\enternote
-The size of the collection of color stops is reduced by 1 as the result of the removal of one of its color stops.
-\exitnote
+The \tcode{color_stop} objects within them contribute to defining a brush which, when sampled from, returns a value that is interpolated based on those color stops.
 
 \rSec1 [gradients.linear] {Linear gradients}
 

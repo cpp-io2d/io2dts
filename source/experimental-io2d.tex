@@ -58,23 +58,26 @@ namespace std { namespace experimental {
   bool operator==(const matrix_2d& lhs, const matrix_2d& rhs);
   bool operator!=(const matrix_2d& lhs, const matrix_2d& rhs);
 
-  class path_data_item;
-  class path_factory::path_arc_clockwise;
-  class path_factory::path_arc_counterclockwise;
-  class path_factory::path_change_matrix;
-  class path_factory::path_change_origin;
-  class path_factory::path_close_path;
-  class path_factory::path_abs_cubic_curve;
-  class path_factory::path_abs_quadratic_curve;
-  class path_factory::path_abs_line;
-  class path_factory::path_abs_move;
-  class path_factory::path_new_path;
-  class path_data_item::path_data;
-  class path_factory::path_rel_cubic_curve;
-  class path_factory::path_rel_quadratic_curve;
-  class path_factory::path_rel_line;
-  class path_factory::path_rel_move;
-
+  namespace path_data {
+    class arc_clockwise;
+    class arc_counterclockwise;
+    class change_matrix;
+    class change_origin;
+    class close_path;
+    class abs_cubic_curve;
+    class abs_quadratic_curve;
+    class abs_line;
+    class abs_move;
+    class new_path;
+    class rel_cubic_curve;
+    class quadratic_curve;
+    class rel_line;
+    class rel_move;
+    using path_data_types = typename variant<abs_move, rel_move,
+      abs_line, rel_line, abs_cubic_curve, rel_cubic_curve, 
+      abs_quadratic_curve, rel_quadratic_curve, arc_clockwise, 
+      arc_counterclockwise, new_path, close_path, change_matrix, change_origin>;
+  };
   class path;
   class path_factory;
   
