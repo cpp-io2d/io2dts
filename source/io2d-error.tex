@@ -14,7 +14,7 @@ error condition value.
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   enum class io2d_error {
     success,
-    invalid_restore,
+    invalid_pop_state,
     no_current_point,
     invalid_matrix,
     invalid_status,
@@ -58,9 +58,9 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \tcode{success}
  & The operation completed successfully.
  \\
- \tcode{invalid_restore}
- & A call was made to \tcode{surface::restore} for which no prior call to
- \tcode{surface::save} was made.
+ \tcode{invalid_pop_state}
+ & A call was made to \tcode{surface::pop_state} for which no prior call to
+ \tcode{surface::push_state} was made.
  \\
  \tcode{no_current_point}
  & A path segment or path instruction encountered during path processing requires a value for current point but current point has no value.

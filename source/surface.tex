@@ -50,7 +50,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     virtual ~surface();
 
     // \ref{surface.modifiers.state}, state modifiers:
-    virtual void finish() noexcept;
+    void finish() noexcept;
     void flush();
     void flush(error_code& ec) noexcept;
     shared_ptr<experimental::io2d::device> device();
@@ -66,16 +66,16 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       const rectangle& extents);
     void map(const function<void(mapped_surface&, error_code&)>& action,
       const rectangle& extents, error_code& ec);
-    virtual void save();
-    virtual void save(error_code& ec) noexcept;
-    virtual void restore();
-    virtual void restore(error_code& ec) noexcept;
-    void brush(experimental::nullopt_t) noexcept;
+    void push_state();
+    void push_state(error_code& ec) noexcept;
+    void pop_state();
+    void pop_state(error_code& ec) noexcept;
+    void brush(nullvalue_t) noexcept;
     void brush(const experimental::io2d::brush& source);
     void brush(const experimental::io2d::brush& source, error_code& ec)
       noexcept;
     void antialias(experimental::io2d::antialias a) noexcept;
-    void dashes(experimental::nullopt_t) noexcept;
+    void dashes(experimental::nullvalue_t) noexcept;
     void dashes(const experimental::io2d::dashes& d);
     void dashes(const experimental::io2d::dashes& d, error_code& ec) noexcept;
     void fill_rule(experimental::io2d::fill_rule fr) noexcept;
@@ -89,7 +89,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void clip(const experimental::io2d::path& p, error_code& ec) noexcept;
     void clip_immediate();
     void clip_immediate(error_code& ec) noexcept;
-    void path(experimental::nullopt_t) noexcept;
+    void path(experimental::nullvalue_t) noexcept;
     void path(const experimental::io2d::path& p);
     void path(const experimental::io2d::path& p, error_code& ec) noexcept;
 
@@ -406,19 +406,13 @@ The Clip Area may be modified by intersecting the current Clip Area with the are
 \rSec2 [surface.state.save] {\tcode{surface} saved state}
 
 \pnum
-A surface object provides an interface to save its current state and subsequently restore it.
+A surface object provides an interface to save its current state and subsequently restore it using \tcode{surface::push_state} and \tcode{pop_state}, respectively.
 
 \pnum
-Save and restore operations are performed using \tcode{surface::save} and \tcode{surface::restore}, respectively.
+Each call to \tcode{surface::pop_state} restores a surface object's state to its values at the time of the most recent call to \tcode{surface::push_state}.
 
 \pnum
-Save and restore operations may be nested.
-
-\pnum
-Each call to \tcode{surface::restore} restores a surface object's state to its values at the time of the most recent call to \tcode{surface::save}.
-
-\pnum
-The following list denotes each item of observable state that shall be saved by \tcode{surface::save} and restored by \tcode{surface::restore}, using the state item names listed in Table~\ref{tab:surface.state.listing}:
+The following list denotes each item of observable state that shall be saved by \tcode{surface::push_state} and restored by \tcode{surface::pop_state}, using the state item names listed in Table~\ref{tab:surface.state.listing}:
 
 \begin{itemize}
 	\item Current Brush
@@ -473,13 +467,13 @@ The \tcode{surface} class provides four fundamental rendering and composing oper
 The filling, stroking, and masking operations each provide two functions, not including overloads, for invoking their functionality.
 
 \pnum
-Certain rendering and composing operations require a \term{Source Path}, which is a path geometry graphics resource.
+Certain rendering and composing operations require a \term{Source Path}, which is a path group.
 
 \pnum
 The rendering and composing operations invoked by the \tcode{surface::fill}, \tcode{surface::stroke}, and \tcode{surface::mask} functions shall use the \tcode{surface} object's Current Path as their Source Path.
 
 \pnum
-The rendering and composing operations invoked by the \tcode{surface::fill_immediate}, \tcode{surface::stroke_immediate}, and \tcode{surface::mask_immediate} functions shall use as their Source Path a path geometry graphics resource formed in the manner specified by \ref{paths.processing} from the (\textit{const} reference to) \tcode{vector<path_data_item>} returned by calling the \tcode{path_factory::data_ref} member function on the surface's Immediate Path.
+The rendering and composing operations invoked by the \tcode{surface::fill_immediate}, \tcode{surface::stroke_immediate}, and \tcode{surface::mask_immediate} functions shall use as their Source Path a \tcode{path_group} formed in the manner specified by \ref{paths.processing} from the surface's Immediate Path.
 
 \pnum
 Provided that none of the function calls results in an error, given a \tcode{surface} object \tcode{s}, there shall be no observable difference in the results of:
@@ -664,16 +658,16 @@ When a Filling operation is initiated on a surface, the implementation shall pro
 \rSec1 [surface.stroking] {\tcode{surface} stroking}
 
 \pnum
-When a Stroking operation is initiated on a surface, the implementation shall carry out the Stroking operation for each path geometry in the Source Path (\ref{surface.rendering}).
+When a Stroking operation is initiated on a surface, the implementation shall carry out the Stroking operation for each path in the Source Path (\ref{surface.rendering}).
 
 \pnum
-The following rules shall apply when a Stroking operation is carried out on a path geometry:
+The following rules shall apply when a Stroking operation is carried out on a pathy:
 \begin{enumerate}
 \item No part of the \underlyingsurface that is outside of the Clip Area shall be modified.
 
-\item If the path geometry only contains a degenerate path segment, then if the Line Cap value is either \tcode{line_cap::round} or \tcode{line_cap::square}, the line caps shall be rendered, resulting in a circle or a square, respectively. The remaining rules shall not apply.
+\item If the path only contains a degenerate path segment, then if the Line Cap value is either \tcode{line_cap::round} or \tcode{line_cap::square}, the line caps shall be rendered, resulting in a circle or a square, respectively. The remaining rules shall not apply.
 
-\item If the path geometry is a closed path geometry, then the point where the end point of its final path segment meets the start point of the initial path segment shall be rendered as specified by the Line Join value; otherwise the start point of the initial path segment and end point of the final path segment shall each by rendered as specified by the Line Cap value. The remaining meetings between successive end points and start points shall be rendered as specified by the Line Join value.
+\item If the path is a closed path, then the point where the end point of its final path segment meets the start point of the initial path segment shall be rendered as specified by the Line Join value; otherwise the start point of the initial path segment and end point of the final path segment shall each by rendered as specified by the Line Cap value. The remaining meetings between successive end points and start points shall be rendered as specified by the Line Join value.
 
 \item If the Dash Pattern has its default value or if its \tcode{vector<double>} member is empty, the path segments shall be rendered as a continuous path.
 
@@ -683,15 +677,15 @@ The following rules shall apply when a Stroking operation is carried out on a pa
 \end{enumerate}
 
 \pnum
-When a Stroking operation is carried out on a path geometry, the width of each rendered portion shall be the Line Width. Ideally this means that the diameter of the stroke at each rendered point should be equal to the Line Width. However, because there is an infinite number of points along each rendered portion, implementations may choose an \unspecnorm method of determining minimum distances between points along each rendered portion and the diameter of the stroke between those points shall be the same.
+When a Stroking operation is carried out on a path, the width of each rendered portion shall be the Line Width. Ideally this means that the diameter of the stroke at each rendered point should be equal to the Line Width. However, because there is an infinite number of points along each rendered portion, implementations may choose an \unspecnorm method of determining minimum distances between points along each rendered portion and the diameter of the stroke between those points shall be the same.
 \enternote
 This concept is sometimes referred to as a tolerance. It allows for a balance between precision and performance, especially in situations where the end result is in a non-exact format such as raster graphics data.
 \exitnote
 
 \pnum
-After all path geometries have been rendered but before the rendered result is composed to the \underlyingsurface, the rendered result shall be transformed from the User Coordinate Space (\ref{surface.coordinatespaces}) to the Surface Coordinate Space (\ref{surface.coordinatespaces}).
+After all paths in the path group have been rendered but before the rendered result is composed to the \underlyingsurface, the rendered result shall be transformed from the User Coordinate Space (\ref{surface.coordinatespaces}) to the Surface Coordinate Space (\ref{surface.coordinatespaces}).
 \enterexample
-If an open path geometry consisting solely of a vertical line from \tcode{vector_2d(20.0, 20.0)} to \tcode{vector_2d(20.0, 60.0)} is to be composed to the \underlyingsurface, the Line Cap is \tcode{line_cap::butt}, the Line Width is \tcode{12.0}, and the Transformation Matrix is \tcode{matrix_2d::init_scale(0.5, 1.0)}, then the line will end up being composed within the area \tcode{rectangle( \{ 7.0, 20.0 \}, \{ 13.0, 60.0 \} )} on the \underlyingsurface. The Transformation Matrix causes the center of the \xaxis of the line to move from \tcode{20.0} to \tcode{10.0} and then causes the horizontal width of the line to be reduced from \tcode{12.0} to \tcode{6.0}.
+If an open path consisting solely of a vertical line from \tcode{vector_2d(20.0, 20.0)} to \tcode{vector_2d(20.0, 60.0)} is to be composed to the \underlyingsurface, the Line Cap is \tcode{line_cap::butt}, the Line Width is \tcode{12.0}, and the Transformation Matrix is \tcode{matrix_2d::init_scale(0.5, 1.0)}, then the line will end up being composed within the area \tcode{rectangle( \{ 7.0, 20.0 \}, \{ 13.0, 60.0 \} )} on the \underlyingsurface. The Transformation Matrix causes the center of the \xaxis of the line to move from \tcode{20.0} to \tcode{10.0} and then causes the horizontal width of the line to be reduced from \tcode{12.0} to \tcode{6.0}.
 \exitexample
 
 \rSec1 [surface.masking] {\tcode{surface} masking}
@@ -732,7 +726,7 @@ Destroys an object of class \tcode{surface}.
 \indexlibrary{\idxcode{surface}!\idxcode{finish}}
 \indexlibrary{\idxcode{finish}!\idxcode{surface}}
 \begin{itemdecl}
-virtual void finish() noexcept;
+void finish() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -746,6 +740,9 @@ Releases all resources managed by the \tcode{surface} object \tcode{s} if \tcode
 \pnum
 \remarks
 Once this function has been called, the surface is \term{finished}. The only valid operations on a finished surface are destruction, calling \tcode{finish()}, and calling \tcode{is_finished()}. Except as otherwise noted, any other operation on a finished surface or any attempt to use a finished \tcode{surface} or \tcode{surface}-derived object as an argument to a function produces undefined behavior; no diagnostic is required.
+
+\pnum
+This function is intended to release the resources of both the \tcode{surface} class and of any class derived from it. As such, it should call a private or protected virtual member function in order to guarantee correct behavior.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{surface}!\idxcode{flush}}
@@ -790,7 +787,7 @@ If the implementation does not provide a native handle to the \tcode{surface} ob
 
 \pnum
 \realnotes
-Because the \tcode{surface} object's observable state can change as a result of calling this function, users will typically want to call \tcode{surface::save} before calling this function. When the user is done using the \tcode{surface} object's native handle, he or she must call \tcode{surface::mark_dirty} if changes were made to the \underlyingsurface using the native handle as per that function's semantics. Once that is done, or immediately after access using the native handle is finished if no changes were made, the user needs to then call \tcode{surface::restore} (assuming a previous, valid call to {surface::save}). Otherwise the user must set every item of observable state before using the \tcode{surface} object in any other way.
+Because the \tcode{surface} object's observable state can change as a result of calling this function, users will typically want to call \tcode{surface::push_state} before calling this function. When the user is done using the \tcode{surface} object's native handle, he or she must call \tcode{surface::mark_dirty} if changes were made to the \underlyingsurface using the native handle as per that function's semantics. Once that is done, or immediately after access using the native handle is finished if no changes were made, the user needs to then call \tcode{surface::pop_state} (assuming a previous, valid call to {surface::push_state}). Otherwise the user must set every item of observable state before using the \tcode{surface} object in any other way.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{surface}!\idxcode{device}}
@@ -891,16 +888,20 @@ Calling this function on a \tcode{surface} object and then calling any function 
 The errors, if any, produced by this function are \impldef{surface!map} or are produced by the user-provided function passed via the \tcode{action} argument.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{surface}!\idxcode{save}}
-\indexlibrary{\idxcode{save}!\idxcode{surface}}
+\indexlibrary{\idxcode{surface}!\idxcode{push_state}}
+\indexlibrary{\idxcode{push_state}!\idxcode{surface}}
 \begin{itemdecl}
-virtual void save();
-virtual void save(error_code& ec) noexcept;
+void push_state();
+void push_state(error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
 Saves the state specified in \ref{surface.state.save} as if to an internal stack of saved states.
+
+\pnum
+\remarks
+This function is intended to save the state of both the \tcode{surface} class and of any class derived from it. As such, it should call a private or protected virtual member function in order to guarantee correct behavior.
 
 \pnum
 \throws
@@ -911,37 +912,41 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 \tcode{errc::not_enough_memory} if the state cannot be saved.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{surface}!\idxcode{restore}}
-\indexlibrary{\idxcode{restore}!\idxcode{surface}}
+\indexlibrary{\idxcode{surface}!\idxcode{pop_state}}
+\indexlibrary{\idxcode{pop_state}!\idxcode{surface}}
 \begin{itemdecl}
-virtual void restore();
-virtual void restore(error_code& ec) noexcept;
+void pop_state();
+void pop_state(error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Restores the state of \tcode{*this} to the values saved by the most recent call to \tcode{surface::save}.
+Restores the state of \tcode{*this} to the values saved by the most recent call to \tcode{surface::push_state}.
 
 \pnum
 \throws
 As specified in Error reporting (\ref{\iotwod.err.report}).
 
-\remarks
+
 \pnum
-Because this function is only restoring previously saved state, except where the conditions for \tcode{io2d_error::invalid_restore} are met, implementations should not generate errors.
+\remarks
+This function is intended to restore the state of both the \tcode{surface} class and of any class derived from it. As such, it should call a private or protected virtual member function in order to guarantee correct behavior.
+
+\pnum
+Because this function is only restoring previously saved state, except where the conditions for \tcode{io2d_error::invalid_pop_state} are met, implementations should not generate errors.
 
 \pnum
 \errors
-\tcode{io2d_error::invalid_restore} if this function is called without a previous matching call to \tcode{surface::save}. Implementations shall not produce \tcode{io2d_error::invalid_restore} except under the conditions stated in this paragraph.
+\tcode{io2d_error::invalid_pop_state} if this function is called without a previous matching call to \tcode{surface::push_state}. Implementations shall not produce \tcode{io2d_error::invalid_pop_state} except under the conditions stated in this paragraph.
 
 \pnum
-Excluding the previously specified error, any errors produced by calling this function are \impldef{surface!restore}.
+Excluding the previously specified error, any errors produced by calling this function are \impldef{surface!pop_state}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{surface}!\idxcode{brush}}
 \indexlibrary{\idxcode{brush}!\idxcode{surface}}
 \begin{itemdecl}
-void brush(nullopt_t) noexcept;
+void brush(nullvalue_t) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -987,7 +992,7 @@ Sets General Antialiasing (Table~\ref{tab:surface.state.listing}) to the value o
 \indexlibrary{\idxcode{surface}!\idxcode{dashes}}
 \indexlibrary{\idxcode{dashes}!\idxcode{surface}}
 \begin{itemdecl}
-void dashes(nullopt_t) noexcept;
+void dashes(nullvalue_t) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -1133,7 +1138,7 @@ The Clip Area never increases as a result of this function.
 \indexlibrary{\idxcode{surface}!\idxcode{path}}
 \indexlibrary{\idxcode{path}!\idxcode{surface}}
 \begin{itemdecl}
-void path(nullopt_t) noexcept;
+void path(nullvalue_t) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -1740,10 +1745,10 @@ This function requires that the Immediate Path be processed into a usable form a
 
 \pnum
 \errors
-\tcode{io2d_error::no_current_point} if, when processing the Immediate Path's path geometries, an operation was encountered which required a current point and the current path geometry had no current point.
+\tcode{io2d_error::no_current_point} if, when processing the Immediate Path's path group, an operation was encountered which required a current point and the current path had no current point.
 
 \pnum
-\tcode{io2d_error::invalid_matrix} if, when processing the Immediate Path's path geometries, an operation was encountered which required the current transformation matrix to be invertible and the matrix was not invertible.
+\tcode{io2d_error::invalid_matrix} if, when processing the Immediate Path's path group, an operation was encountered which required the current transformation matrix to be invertible and the matrix was not invertible.
 
 \pnum
 Other errors, if any, produced by this function are \impldef{surface!fill_extents_immediate}.
@@ -1795,10 +1800,10 @@ This function requires that the Immediate Path be processed into a usable form a
 
 \pnum
 \errors
-\tcode{io2d_error::no_current_point} if, when processing the Immediate Path's path geometries, an operation was encountered which required a current point and the current path geometry had no current point.
+\tcode{io2d_error::no_current_point} if, when processing the Immediate Path's path group, an operation was encountered which required a current point and the current path had no current point.
 
 \pnum
-\tcode{io2d_error::invalid_matrix} if, when processing the Immediate Path's path geometries, an operation was encountered which required the current transformation matrix to be invertible and the matrix was not invertible.
+\tcode{io2d_error::invalid_matrix} if, when processing the Immediate Path's path group, an operation was encountered which required the current transformation matrix to be invertible and the matrix was not invertible.
 
 \pnum
 Other errors, if any, produced by this function are \impldef{surface!in_fill_immediate}.
@@ -1850,10 +1855,10 @@ This function requires that the Immediate Path be processed into a usable form a
 
 \pnum
 \errors
-\tcode{io2d_error::no_current_point} if, when processing the Immediate Path's path geometries, an operation was encountered which required a current point and the current path geometry had no current point.
+\tcode{io2d_error::no_current_point} if, when processing the Immediate Path's path group, an operation was encountered which required a current point and the current path had no current point.
 
 \pnum
-\tcode{io2d_error::invalid_matrix} if, when processing the Immediate Path's path geometries, an operation was encountered which required the current transformation matrix to be invertible and the matrix was not invertible.
+\tcode{io2d_error::invalid_matrix} if, when processing the Immediate Path's path group, an operation was encountered which required the current transformation matrix to be invertible and the matrix was not invertible.
 
 \pnum
 Other errors, if any, produced by this function are \impldef{surface!stroke_extents_immediate}.
@@ -1905,10 +1910,10 @@ This function requires that the Immediate Path be processed into a usable form a
 
 \pnum
 \errors
-\tcode{io2d_error::no_current_point} if, when processing the Immediate Path's path geometries, an operation was encountered which required a current point and the current path geometry had no current point.
+\tcode{io2d_error::no_current_point} if, when processing the Immediate Path's path group, an operation was encountered which required a current point and the current path had no current point.
 
 \pnum
-\tcode{io2d_error::invalid_matrix} if, when processing the Immediate Path's path geometries, an operation was encountered which required the current transformation matrix to be invertible and the matrix was not invertible.
+\tcode{io2d_error::invalid_matrix} if, when processing the Immediate Path's path group, an operation was encountered which required the current transformation matrix to be invertible and the matrix was not invertible.
 
 \pnum
 Other errors, if any, produced by this function are \impldef{surface!in_stroke_immediate}.

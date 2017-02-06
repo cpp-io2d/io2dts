@@ -6,13 +6,12 @@
 \begin{codeblock}
 
 namespace std { namespace experimental {
-  // From C++ Extensions for Library Fundamentals, N4335
-  struct nullopt_t;
-  constexpr nullopt_t nullopt{ @\impdef@ };
-
   namespace io2d { inline namespace v1 {
 
-  typedef tuple<vector<double>, double> dashes;
+  struct nullvalue_t;
+  constexpr nullvalue_t nullvalue{ @\impdef@ };
+
+  using dashes = tuple<vector<double>, double>;
 
   enum class io2d_error;
   enum class antialias;

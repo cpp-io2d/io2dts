@@ -1,6 +1,26 @@
 %!TEX root = io2d.tex
 \rSec0 [displaysurface] {Class \tcode{display_surface}}
 
+\rSec1 [displaysurface.intro] {\tcode{display_surface} Description}
+
+\pnum
+\indexlibrary{\idxcode{display_surface}}
+The class \tcode{display_surface} derives from the \tcode{surface} class and provides an interface to a raster graphics data graphics resource called the \tcode{Back Buffer} and to a second raster graphics data graphics resource called the \tcode{Display Buffer}.
+
+\pnum
+The pixel data of the Display Buffer can never be accessed by the user except through a native handle, if one is provided. As such, its pixel format need not equate to any of the pixel formats described by the \tcode{experimental::io2d::format} enumerators. This is meant to give implementors more flexibility in trying to display the pixels of the Back Buffer in a way that is visually as close as possible to the colors of those pixels.
+
+\pnum
+The Draw Callback (Table~\ref{tab:displaysurface.state.listing}) is called by \tcode{display_surface::show} as required by the Refresh Rate and when otherwise needed by the implementation in order to update the pixel content of the Back Buffer.
+
+\pnum
+After each execution of the Draw Callback, the contents of the Back Buffer are transferred using sampling with an \unspecnorm filter to the Display Buffer. The Display Buffer is then shown to the user via the \term{output device}.
+\enternote
+The filter is \unspecnorm to allow implementations to achieve the best possible result, including by changing filters at runtime depending on factors such as whether scaling is required and by using specialty hardware if available, while maintaining a balance between quality and performance that the implementer deems acceptable.
+
+In the absence of specialty hardware, implementers are encouraged to use a filter that is the equivalent of a nearest neighbor interpolation filter if no scaling is required and otherwise to use a filter that produces results that are at least as good as those that would be obtained by using a bilinear interpolation filter.
+\exitnote
+
 \rSec1 [displaysurface.synopsis] {\tcode{display_surface} synopsis}
 
 \begin{codeblock}
@@ -43,11 +63,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     virtual ~display_surface();
     
     // \ref{displaysurface.modifiers}, modifiers:
-    virtual void save() override;
-    virtual void save(error_code& ec) noexcept override;
-    virtual void restore() override;
-    virtual void restore(error_code& ec) noexcept override;
-    
     void draw_callback(const function<void(display_surface& sfc)>& fn) noexcept;
     void size_change_callback(const function<void(display_surface& sfc)>& fn)
       noexcept;
@@ -66,7 +81,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void scaling(experimental::io2d::scaling scl) noexcept;
     void user_scaling_callback(const function<experimental::io2d::rectangle(
       const display_surface&, bool&)>& fn) noexcept;
-    void letterbox_brush(experimental::nullopt_t) noexcept;
+    void letterbox_brush(experimental::nullvalue_t) noexcept;
     void letterbox_brush(const rgba_color& c);
     void letterbox_brush(const rgba_color& c, error_code& ec) noexcept;
     void letterbox_brush(const experimental::io2d::brush& b);
@@ -77,9 +92,11 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     bool desired_frame_rate(double fps) noexcept;
     void redraw_required() noexcept;
     int show();
-    int show(error_code& ec);
-    void exit_show(int milliseconds);
-    void exit_show(int milliseconds, error_code& ec);
+    int show(error_code& ec) noexcept;
+    void exit_show();
+    void exit_show(error_code& ec) noexcept;
+    void exit_show(std::chrono::duration d);
+    void exit_show(std::chrono::duration d, error_code& ec) noexcept;
     
     // \ref{displaysurface.observers}, observers:
     experimental::io2d::format format() const noexcept;
@@ -103,25 +120,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [displaysurface.intro] {\tcode{display_surface} Description}
-
-\pnum
-\indexlibrary{\idxcode{display_surface}}
-The class \tcode{display_surface} derives from the \tcode{surface} class and provides an interface to a raster graphics data graphics resource called the \tcode{Back Buffer} and to a second raster graphics data graphics resource called the \tcode{Display Buffer}.
-
-\pnum
-The pixel data of the Display Buffer can never be accessed by the user except through a native handle, if one is provided. As such, its pixel format need not equate to any of the pixel formats described by the \tcode{experimental::io2d::format} enumerators. This is meant to give implementors more flexibility in trying to display the pixels of the Back Buffer in a way that is visually as close as possible to the colors of those pixels.
-
-\pnum
-The Draw Callback (Table~\ref{tab:displaysurface.state.listing}) is called by \tcode{display_surface::show} as required by the Refresh Rate and when otherwise needed by the implementation in order to update the pixel content of the Back Buffer.
-
-\pnum
-After each execution of the Draw Callback, the contents of the Back Buffer are transferred using sampling with an \unspecnorm filter to the Display Buffer. The Display Buffer is then shown to the user via the \term{output device}.
-\enternote
-The filter is \unspecnorm to allow implementations to achieve the best possible result, including by changing filters at runtime depending on factors such as whether scaling is required and by using specialty hardware if available, while maintaining a balance between quality and performance that the implementer deems acceptable.
-
-In the absence of specialty hardware, implementers are encouraged to use a filter that is the equivalent of a nearest neighbor interpolation filter if no scaling is required and otherwise to use a filter that produces results that are at least as good as those that would be obtained by using a bilinear interpolation filter.
-\exitnote
+\rSec1 [displaysurface.misc] {\tcode{display_surface} miscellaneou behavior}
 
 \pnum
 What constitutes an output device is \impldef{output device}, with the sole constraint being that an output device shall allow the user to see the dynamically-updated contents of the Display Buffer.
@@ -354,59 +353,6 @@ Other errors, if any, produced by this function are \impldef{display_surface!con
 \end{itemdescr}
 
 \rSec1 [displaysurface.modifiers]{\tcode{display_surface} modifiers}
-
-\indexlibrary{\idxcode{display_surface}!\idxcode{save}}
-\indexlibrary{\idxcode{save}!\idxcode{display_surface}}
-\begin{itemdecl}
-virtual void save() override;
-virtual void save(error_code& ec) noexcept override;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Calls \tcode{surface::save}.
-
-\pnum
-Implementations may save additional data provided that it does not alter the observable state of the \tcode{display_surface} object.
-
-\pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-\pnum
-\errors
-\tcode{errc::not_enough_memory} if the state cannot be saved.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{display_surface}!\idxcode{restore}}
-\indexlibrary{\idxcode{restore}!\idxcode{display_surface}}
-\begin{itemdecl}
-virtual void restore() override;
-virtual void restore(error_code& ec) noexcept override;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Calls \tcode{surface::restore}.
-
-\pnum
-If the implementation saved additional data as per \tcode{display_surface::save}, it should restore that data. Otherwise it shall discard that data.
-
-\pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-\pnum
-\remarks
-Because this function is only restoring previously saved state, except where the conditions for \tcode{io2d_error::invalid_restore} are met, implementations should not generate errors.
-
-\pnum
-\errors
-\tcode{io2d_error::invalid_restore} if this function is called without a previous matching call to \tcode{surface::save}. Implementations shall not produce \tcode{io2d_error::invalid_restore} except under the conditions stated in this paragraph.
-
-\pnum
-Excluding the previously specified error, any errors produced by calling this function are \impldef{display_surface!restore}.
-\end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{draw_callback}}
 \indexlibrary{\idxcode{draw_callback}!\idxcode{display_surface}}
@@ -706,7 +652,7 @@ Sets the User Scaling Callback to \tcode{fn}.
 \indexlibrary{\idxcode{display_surface}!\idxcode{letterbox_brush}}
 \indexlibrary{\idxcode{letterbox_brush}!\idxcode{display_surface}}
 \begin{itemdecl}
-void letterbox_brush(experimental::nullopt_t) noexcept;
+void letterbox_brush(experimental::nullvalue_t) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -810,7 +756,7 @@ When \tcode{display_surface::show} is executing, informs the implementation that
 \indexlibrary{\idxcode{show}!\idxcode{display_surface}}
 \begin{itemdecl}
 int show();
-int show(error_code& ec);
+int show(error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -855,13 +801,16 @@ Since this function calls the Draw Callback and can call the Size Change Callbac
 \tcode{errc::operation_would_block} if the value of Draw Callback is equivalent to its default value or if it becomes equivalent to its default value before this function returns.
 
 \pnum
-Other errors, if any, produced by this function are \impldef{display_surface!letterbox_brush}.
+Other errors, if any, produced by this function are \impldef{display_surface!show}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{exit_show}}
 \indexlibrary{\idxcode{exit_show}!\idxcode{display_surface}}
 \begin{itemdecl}
-void exit_show(int ms) noexcept;
+void exit_show();
+void exit_show(error_code& ec) noexcept;
+void exit_show(std::chrono::duration d);
+void exit_show(std::chrono::duration d, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -881,8 +830,8 @@ Implementations should follow any procedures that the host environment requires 
 \pnum
 A \term{termination time duration} shall then be determined as follows:
 \begin{itemize}
-\item If the value \tcode{ms} is negative, the termination time duration shall be an \unspecnorm number of milliseconds.
-\item Otherwise the termination time duration shall be \tcode{ms} milliseconds.
+\item If no \tcode{std::chrono::duration} is provided, the termination time duration is \unspecnorm. Implementations should exit the \tcode{display_surface::show} function's continuous loop as soon as the host environment allows.
+\item Otherwise, implementations shall exit the \tcode{display_surface::show} function's continuous loop as soon as the host environment allows once the \tcode{std::chrono::duration} value has elapsed.
 \end{itemize}
 
 \pnum
