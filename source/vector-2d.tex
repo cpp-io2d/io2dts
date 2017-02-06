@@ -1,6 +1,15 @@
 %!TEX root = io2d.tex
 \rSec0 [\vectortwod] {Class \tcode{vector_2d}}
 
+\rSec1 [\vectortwod.intro] {\tcode{vector_2d} Description}
+
+\pnum
+\indexlibrary{\idxcode{vector_2d}}
+The class \tcode{vector_2d} describes an object that stores a two-dimensional Euclidean vector.
+
+\pnum
+It has an X coordinate of type \tcode{double} and a Y coordinate of type \tcode{double}.
+
 \rSec1 [\vectortwod.synopsis] {\tcode{vector_2d} synopsis}
 
 \begin{codeblock}
@@ -8,12 +17,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class vector_2d {
   public:
     // \ref{\vectortwod.cons}, construct/copy/move/destroy:
-    vector_2d() noexcept;
     vector_2d(double x, double y) noexcept;
-    vector_2d(const vector_2d&) noexcept;
-    vector_2d& operator=(const vector_2d&) noexcept;
-    vector_2d(vector_2d&&) noexcept;
-    vector_2d& operator=(vector_2d&&) noexcept;
 
     // \ref{\vectortwod.modifiers}, modifiers:
     void x(double value) noexcept;
@@ -30,10 +34,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     vector_2d& operator+=(const vector_2d& rhs) noexcept;
     vector_2d& operator-=(const vector_2d& rhs) noexcept;
     vector_2d& operator*=(double rhs) noexcept;
-    
-  private:
-    double _X; // \expos
-    double _Y; // \expos
   };
   
   // \ref{\vectortwod.ops}, non-member operators:
@@ -48,27 +48,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [\vectortwod.intro] {\tcode{vector_2d} Description}
-
-\pnum
-\indexlibrary{\idxcode{vector_2d}}
-The class \tcode{vector_2d} describes an object that stores a two-dimensional Euclidean vector.
-
 \rSec1 [\vectortwod.cons] {\tcode{vector_2d} constructors and assignment operators}
-
-\indexlibrary{\idxcode{vector_2d}!constructor}
-\begin{itemdecl}
-vector_2d() noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{vector_2d}.
-	
-	\pnum
-	\postconditions
-	\tcode{_X == 0.0 \&\& _Y == 0.0}.
-\end{itemdescr}
 
 \indexlibrary{\idxcode{vector_2d}!constructor}
 \begin{itemdecl}
@@ -78,12 +58,14 @@ vector_2d(double x, double y) noexcept;
 	\pnum
 	\effects
 	Constructs an object of type \tcode{vector_2d}.
-	
+
 	\pnum
-	\postconditions
-	\tcode{_X == x \&\& _Y == y}.
+	The X coordinate shall be set to the value of \tcode{x}.
+
+	\pnum
+	The Y coordinate shall be set to the value of \tcode{y}.
 \end{itemdescr}
-	
+
 \rSec1 [\vectortwod.modifiers]{\tcode{vector_2d} modifiers}
 
 \indexlibrary{\idxcode{vector_2d}!\idxcode{x}}
@@ -93,9 +75,8 @@ void x(double value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_X == value}.
-	
+	\effects
+	The X coordinate shall be set to the value of \tcode{x}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{vector_2d}!\idxcode{y}}
@@ -105,9 +86,8 @@ void x(double value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_Y == value}.
-	
+	\effects
+	The Y coordinate shall be set to the value of \tcode{y}.
 \end{itemdescr}
 
 \rSec1 [\vectortwod.observers]{\tcode{vector_2d} observers}
@@ -120,7 +100,7 @@ void x(double value) noexcept;
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_X}.
+	The value of the X coordinate.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{vector_2d}!\idxcode{y}}
@@ -131,7 +111,7 @@ void x(double value) noexcept;
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Y}.
+	The value of the Y coordinate.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{vector_2d}!\idxcode{length}}
@@ -142,7 +122,7 @@ void x(double value) noexcept;
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{sqrt(_X * _X + _Y * _Y)}.
+	\tcode{sqrt(*this.x() * *this.x() + *this.y() * *this.y())}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{vector_2d}!\idxcode{dot}}
@@ -153,7 +133,7 @@ void x(double value) noexcept;
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_X * other._X + _Y * other._Y}.
+	\tcode{*this.x() * other.x() + *this.y() * other.y()}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{vector_2d}!\idxcode{to_unit}}
@@ -164,7 +144,7 @@ void x(double value) noexcept;
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{vector_2d\{ _X / length(), _Y / length()\}}.
+	\tcode{vector_2d\{ *this.x() / length(), *this.y() / length()\}}.
 \end{itemdescr}
 
 \rSec1 [\vectortwod.member.ops] {\tcode{vector_2d} member operators}

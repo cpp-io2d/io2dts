@@ -33,6 +33,7 @@ namespace std { namespace experimental {
   const error_category& io2d_category() noexcept;
 
   class rectangle;
+  class circle;
 
   class rgba_color;
 
@@ -70,7 +71,7 @@ namespace std { namespace experimental {
     class abs_move;
     class new_path;
     class rel_cubic_curve;
-    class quadratic_curve;
+    class rel_quadratic_curve;
     class rel_line;
     class rel_move;
     using path_data_types = typename variant<abs_move, rel_move,
@@ -79,15 +80,16 @@ namespace std { namespace experimental {
       arc_counterclockwise, new_path, close_path, change_matrix, change_origin>;
   };
   class path;
+  template <Allocator = allocator<path_data::path_data_types>>
   class path_factory;
+  
+  class color_stop;
+  template <Allocator = allocator<color_stop>>
+  class color_stop_group;
   
   class device;
 
   class brush;
-  class solid_color_brush_factory;
-  class linear_brush_factory;
-  class radial_brush_factory;
-  class surface_brush_factory;
   
   class surface;
   class image_surface;

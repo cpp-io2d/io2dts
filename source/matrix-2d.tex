@@ -1,6 +1,38 @@
 %!TEX root = io2d.tex
 \rSec0 [\matrixtwod] {Class \tcode{matrix_2d}}
 
+\rSec1 [\matrixtwod.intro] {\tcode{matrix_2d} Description}
+
+\pnum
+\indexlibrary{\idxcode{matrix_2d}}
+The \tcode{matrix_2d} class represents a two-dimensional, three row by three column, row-major matrix. Its purpose is to perform affine transformations.
+
+\pnum
+Mathematically, regardless of the operations performed on a \tcode{matrix_2d}, the third column will always have the column vector value of $[0.0, 0.0, 1.0]$. As such, it is not included in the observable data of the matrix.
+
+\pnum
+The performance of any mathematical operation upon a \tcode{matrix_2d} shall be carried out as if the omitted third column data members were present with the values prescribed in the previous paragraph.
+
+\pnum
+\enternote
+If the third column's data members were included, they would be:
+
+\begin{itemize}
+	\item \tcode{m02}, a \tcode{double} which would follow \tcode{m01} in the same row and would be assigned a value of \tcode{0.0}.
+	
+	\item \tcode{m12}, a \tcode{double} which would follow \tcode{m11} in the same row and would be assigned a value of \tcode{0.0}.
+	
+	\item \tcode{m22}, a \tcode{double} which would follow \tcode{m21} in the same row and would be assigned a value of \tcode{1.0}.
+\end{itemize}
+
+\pnum
+The layout of the resulting matrix would be as such: \\
+$
+~[~[~m00~m01~m02~]~] \\
+~[~[~m10~m11~m12~]~] \\
+~[~[~m20~m21~m22~]~]$
+\exitnote
+
 \rSec1 [\matrixtwod.synopsis] {\tcode{matrix_2d} synopsis}
 
 \begin{codeblock}
@@ -9,10 +41,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   public:
     // \ref{\matrixtwod.cons}, construct/copy/move/destroy:
     matrix_2d() noexcept;
-    matrix_2d(const matrix_2d& other) noexcept;
-    matrix_2d& operator=(const matrix_2d& other) noexcept;
-    matrix_2d(matrix_2d&& other) noexcept;
-    matrix_2d& operator=(matrix_2d&& other) noexcept;
+    matrix_2d(const matrix_2d&) noexcept;
+    matrix_2d& operator=(const matrix_2d&) noexcept;
+    matrix_2d(matrix_2d&&) noexcept;
+    matrix_2d& operator=(matrix_2d&&) noexcept;
     matrix_2d(double v00, double v01, double v10, double v11,
       double v20, double v21) noexcept;
     
@@ -54,14 +86,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     
     // \ref{\matrixtwod.member.ops}, matrix_2d member operators:
     matrix_2d& operator*=(const matrix_2d& rhs) noexcept;
-    
-  private:
-    double _M00; // \expos
-    double _M01; // \expos
-    double _M10; // \expos
-    double _M11; // \expos
-    double _M20; // \expos
-    double _M21; // \expos
   };
     
   // \ref{\matrixtwod.ops}, matrix_2d non-member operators:
@@ -70,38 +94,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   bool operator!=(const matrix_2d& lhs, const matrix_2d& rhs) noexcept;
 } } } }
 \end{codeblock}
-
-\rSec1 [\matrixtwod.intro] {\tcode{matrix_2d} Description}
-
-\pnum
-\indexlibrary{\idxcode{matrix_2d}}
-The \tcode{matrix_2d} class represents a two-dimensional, three row by three column, row-major matrix. Its purpose is to perform affine transformations.
-
-\pnum
-Mathematically, regardless of the operations performed on a \tcode{matrix_2d}, the third column will always have the column vector value of $[0.0, 0.0, 1.0]$. As such, it is not included in the observable data of the matrix.
-
-\pnum
-The performance of any mathematical operation upon a \tcode{matrix_2d} shall be carried out as if the omitted third column data members were present with the values prescribed in the previous paragraph.
-
-\pnum
-\enternote
-If the third column's data members were included, they would be:
-
-\begin{itemize}
-	\item \tcode{m02}, a \tcode{double} which would follow \tcode{m01} in the same row and would be assigned a value of \tcode{0.0}.
-	
-	\item \tcode{m12}, a \tcode{double} which would follow \tcode{m11} in the same row and would be assigned a value of \tcode{0.0}.
-	
-	\item \tcode{m22}, a \tcode{double} which would follow \tcode{m21} in the same row and would be assigned a value of \tcode{1.0}.
-\end{itemize}
-
-\pnum
-The layout of the resulting matrix would be as such: \\
-$
-~[~[~m00~m01~m02~]~] \\
-~[~[~m10~m11~m12~]~] \\
-~[~[~m20~m21~m22~]~]$
-\exitnote
 
 \rSec1 [\matrixtwod.cons] {\tcode{matrix_2d} constructors and assignment operators}
 
@@ -115,23 +107,22 @@ $
 	Constructs an object of type \tcode{matrix_2d}.
 	
 	\pnum
-	\postconditions
-	\tcode{_M00 == 1.0}.
+	The m00 value shall be set to \tcode{1.0}.
 	
 	\pnum
-	\tcode{_M01 == 0.0}.
+	The m01 value shall be set to \tcode{0.0}.
 	
 	\pnum
-	\tcode{_M10 == 0.0}.
+	The m10 value shall be set to \tcode{0.0}.
 	
 	\pnum
-	\tcode{_M11 == 1.0}.
+	The m11 value shall be set to \tcode{1.0}.
 	
 	\pnum
-	\tcode{_M20 == 0.0}.
+	The m20 value shall be set to \tcode{0.0}.
 	
 	\pnum
-	\tcode{_M21 == 0.0}.
+	The m21 value shall be set to \tcode{0.0}.
 	
 	\pnum
 	\realnote
@@ -149,24 +140,22 @@ $
 	Constructs an object of type \tcode{matrix_2d}.
 	
 	\pnum
-	\postconditions
-	\tcode{_M00 == v00}.
+	The m00 value shall be set to the value of \tcode{v00}.
 	
 	\pnum
-	\tcode{_M01 == v01}.
+	The m01 value shall be set to the value of \tcode{v01}.
 	
 	\pnum
-	\tcode{_M10 == v10}.
+	The m10 value shall be set to the value of \tcode{v10}.
 	
 	\pnum
-	\tcode{_M11 == v11}.
+	The m11 value shall be set to the value of \tcode{v11}.
 	
 	\pnum
-	\tcode{_M20 == v20}.
+	The m20 value shall be set to the value of \tcode{v20}.
 	
 	\pnum
-	\tcode{_M21 == v21}.
-	
+	The m21 value shall be set to the value of \tcode{v21}.
 \end{itemdescr}
 
 \rSec1 [\matrixtwod.staticfactories] {\tcode{matrix_2d} static factory 
@@ -244,61 +233,56 @@ static matrix_2d init_shear_y(double factor) noexcept;
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{m00}}
 \indexlibrary{\idxcode{m00}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-	void m00(double value) noexcept;
+	void m00(double val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_M00 == value}.
-	
+	\effects
+	The m00 value shall be set to the value of \tcode{val}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{m01}}
 \indexlibrary{\idxcode{m01}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-	void m01(double value) noexcept;
+	void m01(double val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_M01 == value}.
-	
+	\effects
+	The m01 value shall be set to the value of \tcode{val}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{m10}}
 \indexlibrary{\idxcode{m10}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-	void m10(double value) noexcept;
+	void m10(double val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_M10 == value}.
-	
+	\effects
+	The m10 value shall be set to the value of \tcode{val}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{m11}}
 \indexlibrary{\idxcode{m11}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-	void m11(double value) noexcept;
+	void m11(double val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_M11 == value}.
-	
+	\effects
+	The m11 value shall be set to the value of \tcode{val}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{m20}}
 \indexlibrary{\idxcode{m20}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-	void m20(double value) noexcept;
+	void m20(double val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_M20 == value}.
-	
+	\effects
+	The m20 value shall be set to the value of \tcode{val}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{m21}}
@@ -308,15 +292,14 @@ static matrix_2d init_shear_y(double factor) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
-	\postconditions
-	\tcode{_M21 == value}.
-	
+	\effects
+	The m21 value shall be set to the value of \tcode{val}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{translate}}
 \indexlibrary{\idxcode{translate}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-matrix_2d& translate(const vector_2d& value) noexcept;
+matrix_2d& translate(const vector_2d& val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -331,7 +314,7 @@ matrix_2d& translate(const vector_2d& value) noexcept;
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{scale}}
 \indexlibrary{\idxcode{scale}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-matrix_2d& scale(const vector_2d& value) noexcept;
+matrix_2d& scale(const vector_2d& val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -398,26 +381,28 @@ matrix_2d& invert(error_code& ec) noexcept;
 	\pnum
 	\effects
 \begin{codeblock}
-const auto det = _M00 * _M11 - _M01 * _M10;
+const auto det = *this.m00() * *this.m11() - *this.m01() * *this.m10*();
 const auto inverseDet = 1.0 / det;
 
 const auto cM02 = 0.0;
 const auto cM12 = 0.0;
 const auto cM22 = 1.0;
 
-const auto adjugateM00 =   _M11 * cM22 - cM12 * _M21;
-const auto adjugateM01 = -(_M01 * cM22 - cM02 * _M21);
-const auto adjugateM10 = -(_M10 * cM22 - cM12 * _M20);
-const auto adjugateM11 =   _M00 * cM22 - cM02 * _M20;
-const auto adjugateM20 =   _M10 * _M21 - _M11 * _M20;
-const auto adjugateM21 = -(_M00 * _M21 - _M01 * _M20);
+const auto adjugateM00 =   *this.m11() * cM22 - cM12 * *this.m21();
+const auto adjugateM01 = -(*this.m01() * cM22 - cM02 * *this.m21());
+const auto adjugateM10 = -(*this.m10() * cM22 - cM12 * *this.m20());
+const auto adjugateM11 =   *this.m00() * cM22 - cM02 * *this.m20();
+const auto adjugateM20 =   *this.m10() * *this.m21() - *this.m11() * 
+  *this.m20();
+const auto adjugateM21 = -(*this.m00() * *this.m21() - *this.m01() * 
+  *this.m20());
 
-_M00 = inverseDet * adjugateM00;
-_M01 = inverseDet * adjugateM01;
-_M10 = inverseDet * adjugateM10;
-_M11 = inverseDet * adjugateM11;
-_M20 = inverseDet * adjugateM20;
-_M21 = inverseDet * adjugateM21;
+*this.m00(inverseDet * adjugateM00);
+*this.m01(inverseDet * adjugateM01);
+*this.m10(inverseDet * adjugateM10);
+*this.m11(inverseDet * adjugateM11);
+*this.m20(inverseDet * adjugateM20);
+*this.m21(inverseDet * adjugateM21);
 \end{codeblock}
 	
 	\pnum
@@ -448,7 +433,7 @@ _M21 = inverseDet * adjugateM21;
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_M00}.
+	The m00 value.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{m01}}
@@ -459,7 +444,7 @@ _M21 = inverseDet * adjugateM21;
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_M01}.
+	The m01 value.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{m10}}
@@ -470,7 +455,7 @@ _M21 = inverseDet * adjugateM21;
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_M10}.
+	The m10 value.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{m11}}
@@ -481,7 +466,7 @@ _M21 = inverseDet * adjugateM21;
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_M11}.
+	The m11 value.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{m20}}
@@ -492,7 +477,7 @@ _M21 = inverseDet * adjugateM21;
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_M20}.
+	The m20 value.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{m21}}
@@ -503,7 +488,7 @@ _M21 = inverseDet * adjugateM21;
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_M21}.
+	The m21 value.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{is_invertible}}
@@ -516,13 +501,13 @@ bool is_invertible const noexcept;
 \returns
 \tcode{true} if all of the following are true:
 \begin{itemize}
-	\item \tcode{isfinite(_M00)}
-	\item \tcode{isfinite(_M01)}
-	\item \tcode{isfinite(_M10)}
-	\item \tcode{isfinite(_M11)}
-	\item \tcode{isfinite(_M20)}
-	\item \tcode{isfinite(_M21)}
-	\item \tcode{(_M00 * _M11 - _M01 * M10) != 0.0}
+	\item \tcode{isfinite(*this.m00())}
+	\item \tcode{isfinite(*this.m01())}
+	\item \tcode{isfinite(*this.m10())}
+	\item \tcode{isfinite(*this.m11())}
+	\item \tcode{isfinite(*this.m20())}
+	\item \tcode{isfinite(*this.m21())}
+	\item \tcode{(*this.m00() * *this.m11() - *this.m01() * *this.m10()) != 0.0}
 \end{itemize}
 
 \pnum
@@ -539,7 +524,7 @@ double determinant(error_code& ec) const noexcept;
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_M00 * _M11 - _M01 * M10}.
+	\tcode{*this.m00() * *this.m11() - *this.m01() * *this.m10()}.
 	
 	\pnum
 	In the event of a non-throwing error, the function shall return \tcode{numeric_limits<double>::quiet_NaN()}.
@@ -550,7 +535,7 @@ double determinant(error_code& ec) const noexcept;
 
 	\pnum
 	\errors
-	\tcode{io2d_error::invalid_matrix} if \tcode{!isfinite(_M00) || !isfinite(_M01) || !isfinite(_M10) || !isfinite(_M11) || !isfinite(_M20) || !isfinite(_M21)}.
+	\tcode{io2d_error::invalid_matrix} if \tcode{!isfinite(*this.m00()) || !isfinite(*this.m01()) || !isfinite(*this.m10()) || !isfinite(*this.m11()) || !isfinite(*this.m20()) || !isfinite(*this.m21())}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{transform_distance}}

@@ -23,24 +23,13 @@ The type predefines a set of named colors, for which each channel is an unsigned
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class rgba_color {
     // \ref{rgbacolor.cons}, construct/copy/move/destroy:
-  	rgba_color() noexcept;
-  	rgba_color(double r, double g, double b, double a = 1.0);
-  	rgba_color(double r, double g, double b, error_code& ec) noexcept;
-  	rgba_color(double r, double g, double b, double a, error_code& ec) noexcept;
-  	rgba_color(const rgba_color& c) noexcept;
-  	rgba_color& operator=(const rgba_color& c) noexcept;
-  	rgba_color(rgba_color&& c) noexcept;
-  	rgba_color& operator=(rgba_color&& c) noexcept;
+  	rgba_color(double r, double g, double b, double a = 1.0) noexcept;
   	
     // \ref{rgbacolor.modifiers}, modifiers:
-    void r(double val);
-    void r(double val, error_code& ec) noexcept;
-    void g(double val);
-    void g(double val, error_code& ec) noexcept;
-    void b(double val);
-    void b(double val, error_code& ec) noexcept;
-    void a(double val);
-    void a(double val, error_code& ec) noexcept;
+    void r(double val) noexcept;
+    void g(double val) noexcept;
+    void b(double val) noexcept;
+    void a(double val) noexcept;
     
     // \ref{rgbacolor.observers}, observers:
     double r() const noexcept;
@@ -197,12 +186,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     static const rgba_color& white_smoke() noexcept;
     static const rgba_color& yellow() noexcept;
     static const rgba_color& yellow_green() noexcept;
-
-private:
-    double _Red;   // \expos
-    double _Green; // \expos
-    double _Blue;  // \expos
-    double _Alpha; // \expos
   };
 
   // \ref{rgbacolor.ops}, non-member operators:
@@ -215,36 +198,7 @@ private:
 
 \indexlibrary{\idxcode{rgba_color}!constructor}
 \begin{itemdecl}
-	rgba_color() noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{rgba_color}.
-	
-	\pnum
-	\postconditions
-	\tcode{_Red == 0.0}.
-	
-	\pnum
-	\tcode{_Green == 0.0}.
-	
-	\pnum
-	\tcode{_Blue == 0.0}.
-	
-	\pnum
-	\tcode{_Alpha == 1.0}.
-	
-	\pnum
-	\realnote
-	The resulting color is opaque black, which can also be obtained from \tcode{rgba_color::black()}.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{rgba_color}!constructor}
-\begin{itemdecl}
-	rgba_color(double r, double g, double b, double a = 1.0);
-  	rgba_color(double r, double g, double b, error_code& ec) noexcept;
-  	rgba_color(double r, double g, double b, double a, error_code& ec) noexcept;
+	rgba_color(double r, double g, double b, double a = 1.0) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -256,39 +210,16 @@ private:
 	Constructs an object of type \tcode{rgba_color}.
 
 	\pnum
-	\postconditions
-	Where there is an \tcode{a} parameter, \tcode{_Alpha = a}; otherwise \tcode{_Alpha = 1.0}.
+	The alpha channel shall be set to the value of \tcode{a}.
 	
 	\pnum
-	\tcode{_Red = r * a}.
+	The red channel shall be set to \tcode{r} multiplied by the value of  \tcode{a}.
 	
 	\pnum
-	\tcode{_Green = g * a}.
+	The green channel shall be set to \tcode{g} multiplied by the value of \tcode{a}.
 	
 	\pnum
-	\tcode{_Blue = b * a}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\remarks
-	In the event of a non-throwing error, the object shall be constructed to meet the following conditions:
-	
-	\pnum
-	\tcode{_Red == 1.0 \&\& _Green == 0.0 \&\& _Blue == 1.0 \&\& _Alpha == 1.0}.
-	
-	\pnum
-	\errors
-	\tcode{errc::argument_out_of_domain} if the value of \tcode{r}, \tcode{g}, \tcode{b}, or \tcode{a} fails to meet the preconditions.
-	
-	\pnum
-	\realnotes
-	When an object is constructed despite the presence of one or more erroneous arguments, the resulting color is opaque magenta, which can also be obtained from \tcode{rgba_color::magenta()}.
-	
-	\pnum
-	This color was picked because it is a legal color value, it does not have all channels set to the same value (which would hide, e.g., erroneous saturation calculations), and in the hope that it will help highlight error visibility (both visually and in an examination of the data) in the event that the developer neglects to check the \tcode{error_code\&} argument following construction of the object.
+	The blue channel shall be set to \tcode{b} multiplied by the value of \tcode{a}.
 \end{itemdescr}
 
 \rSec1 [rgbacolor.modifiers]{\tcode{rgba_color} modifiers}
@@ -296,8 +227,7 @@ private:
 \indexlibrary{\idxcode{rgba_color}!\idxcode{r}}
 \indexlibrary{\idxcode{r}!\idxcode{rgba_color}}
 \begin{itemdecl}
-	void r(double val);
-	void r(double val, error_code& ec) noexcept;
+	void r(double val) noexcept;
 \end{itemdecl}
 
 \begin{itemdescr}
@@ -306,28 +236,14 @@ private:
 	\tcode{val >= 0.0} and \tcode{val <= 1.0}.
 	
 	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\postconditions
-	\tcode{_Red == val}.
-
-	\pnum
-	\remarks
-	In the event of an error, the object shall not be modified.
-	
-	\pnum
-	\errors
-	\tcode{errc::argument_out_of_domain} if the value of \tcode{val} fails to meet the preconditions.
-	
+	\effects
+	The red channel shall be set to \tcode{val} multiplied by the value of  \tcode{*this.a()}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{g}}
 \indexlibrary{\idxcode{g}!\idxcode{rgba_color}}
 \begin{itemdecl}
-	void g(double val);
-	void g(double val, error_code& ec) noexcept;
+	void g(double val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -335,28 +251,14 @@ private:
 	\tcode{val >= 0.0} and \tcode{val <= 1.0}.
 		
 	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\postconditions
-	\tcode{_Green == val}.
-
-	\pnum
-	\remarks
-	In the event of an error, the object shall not be modified.
-	
-	\pnum
-	\errors
-	\tcode{errc::argument_out_of_domain} if the value of \tcode{val} fails to meet the preconditions.
-	
+	\effects
+	The green channel shall be set to \tcode{val} multiplied by the value of  \tcode{*this.a()}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{b}}
 \indexlibrary{\idxcode{b}!\idxcode{rgba_color}}
 \begin{itemdecl}
-	void b(double val);
-	void b(double val, error_code& ec) noexcept;
+	void b(double val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -364,56 +266,23 @@ private:
 	\tcode{val >= 0.0} and \tcode{val <= 1.0}.
 	
 	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\postconditions
-	\tcode{_Blue == val}.
-
-	\pnum
-	\remarks
-	In the event of an error, the object shall not be modified.
-	
-	\pnum
-	\errors
-	\tcode{errc::argument_out_of_domain} if the value of \tcode{val} fails to meet the preconditions.
-	
+	\effects
+	The blue channel shall be set to \tcode{val} multiplied by the value of  \tcode{*this.a()}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{a}}
 \indexlibrary{\idxcode{a}!\idxcode{rgba_color}}
 \begin{itemdecl}
-	void a(double val);
-	void a(double val, error_code& ec) noexcept;
+	void a(double val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\requires
 	\tcode{val >= 0.0} and \tcode{val <= 1.0}.
-	
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-	\pnum
-	\postconditions
-	\tcode{_Alpha == val}.
-	
-	\tcode{_Red = _Red * val}.
-	
-	\tcode{_Green = _Green * val}.
-	
-	\tcode{_Blue = _Blue * val}.
 
 	\pnum
-	\remarks
-	In the event of an error, the object shall not be modified.
-	
-	\pnum
-	\errors
-	\tcode{errc::argument_out_of_domain} if the value of \tcode{val} fails to meet the preconditions.
-	
+	\effects
+	The alpha channel shall be set to \tcode{val}.
 \end{itemdescr}
 
 \rSec1 [rgbacolor.observers]{\tcode{rgba_color} observers}
@@ -426,7 +295,7 @@ private:
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Red}.
+	The value of the red channel.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{g}}
@@ -437,7 +306,7 @@ private:
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Green}.
+	The value of the green channel.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{b}}
@@ -448,7 +317,7 @@ private:
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Blue}.
+	The value of the blue channel.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{a}}
@@ -459,7 +328,7 @@ private:
 \begin{itemdescr}
 	\pnum
 	\returns
-	\tcode{_Alpha}.
+	The value of the alpha channel.
 \end{itemdescr}
 
 \rSec1 [rgbacolor.statics] {\tcode{rgba_color} static member functions}
