@@ -5,8 +5,16 @@
 \pnum
 Brushes serve as sources of visual data for composing operations.
 
+There are four types of brushes:
+\begin{itemize}
+	\item color;
+	\item linear gradient;
+	\item radial gradient; and,
+	\item surface.
+\end{itemize}
+
 \pnum
-A brush has its own coordinate space (by default the standard coordinate space).
+A brush has its own coordinate space (by default the standard coordinate space). It is controlled by a \tcode{matrix_2d} value.
 
 \pnum
 It possesses a \tcode{filter} value and a \tcode{tiling} value, which combine to determine the visual data value returned when a composing operation samples a brush.
@@ -17,20 +25,18 @@ The \tcode{filter} value determines the value returned by a brush when a composi
 \pnum
 The \tcode{tiling} value controls what happens when a composing operation needs to sample from a point that is outside of the bounds of the brush.
 
-\pnum
-A brush is created using one of four factory classes:
-\begin{itemize}
-\item \tcode{solid_color_brush_factory},
-\item \tcode{linear_brush_factory},
-\item \tcode{radial_brush_factory}, and
-\item \tcode{surface_brush_factory}.
-\end{itemize}
+%\pnum
+%Excluding brushes created using a \tcode{solid_color_brush_factory} object, brushes produce very different composing operation results depending on the values of their mutable state.
+%
 
 \pnum
-Excluding brushes created using a \tcode{solid_color_brush_factory} object, brushes produce very different composing operation results depending on the values of their mutable state.
+Color brushes produce the same sampling result regardless of their coordinate space, \tcode{filter}, and \tcode{tiling}. They are unbounded and as such always produce the \tcode{rgba_color} value they were created with when sampled from, regardless of the requested point.
 
 \pnum
-Brushes created using either a \tcode{linear_brush_factory} object or a \tcode{radial_brush_factory} object are considered to be gradient brushes. They share similarities with each other that are not shared by brushes created using the other brush factories. This is discussed in more detail below (\ref{gradients}).
+Linear gradient and radial gradient brushes share similarities with each other that are not shared by the other types of brushes. This is discussed in more detail below (\ref{gradients}).
+
+\pnum
+Surface brushes take an \tcode{image_surface} object and use it as the source of the brush's visual data.
 
 \addtocounter{SectionDepthBase}{1}
 \input{gradients}
@@ -39,9 +45,9 @@ Brushes created using either a \tcode{linear_brush_factory} object or a \tcode{r
 \input{brush-type}
 \input{color-stop}
 \input{brush}
-\input{solid-color-brush-factory}
-\input{linear-brush-factory}
-\input{radial-brush-factory}
-%%\input{mesh-brush-factory}
-\input{surface-brush-factory}
+%\input{solid-color-brush-factory}
+%\input{linear-brush-factory}
+%\input{radial-brush-factory}
+%%%\input{mesh-brush-factory}
+%\input{surface-brush-factory}
 \addtocounter{SectionDepthBase}{-1}

@@ -28,9 +28,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     invalid_index,
     clip_not_representable,
     invalid_stride,
-    user_font_immutable,
-    user_font_error,
-    invalid_clusters,
     device_error,
     invalid_mesh_construction,
   };
@@ -129,24 +126,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  current graphics chipset, if any. Use \tcode{format_stride_for_width} to
  obtain the correct stride value.
  \\
- \tcode{user_font_immutable}
- & User font immutable.
- \enternote
- Reserved.
- \exitnote
- \\
- \tcode{user_font_error}
- & User font error.
- \enternote
- Reserved.
- \exitnote
- \\
- \tcode{invalid_clusters}
- & A call was made to \tcode{surface::show_text_glyphs} with a
- \tcode{std::vector<text_clusters>} argument that does not properly map
- the UTF-8 \tcode{std::string} code points to the \tcode{std::vector<glyph>}
- glyphs.
- \\
  \tcode{device_error}
  & The operation failed. The \tcode{device} encountered an error.
  \enternote
@@ -155,11 +134,4 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \impldef{\idxcode{io2d_error}!\idxcode{device_error}}.
  \exitnote
  \\
-% \tcode{invalid_mesh_construction}
-% & A mesh construction operation on a \tcode{mesh_brush_factory} object
-% failed. Mesh construction operations are only permitted in between a call to
-% either \tcode{mesh_brush_factory::begin_patch} or
-% \tcode{mesh_brush_factory::begin_replace_patch} and
-% \tcode{mesh_brush_factory::end_patch}.
-% \\
 \end{libreqtab2}
