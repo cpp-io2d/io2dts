@@ -15,7 +15,7 @@ Paths provide vector graphics functionality. As such they are particularly usefu
 %For output devices, the measurement size of a pixel is determined by the physical size of the output device. Many output devices represent pixels as having the same horizontal and vertical measurement sizes. As such, when they display a rendered image which does not have the same horizontal to vertical pixel ratio as the output device, it 
 
 \pnum
-A path may contain degenerate path segments because of special rules, which are set forth below.
+A path may contain degenerate path segments because of special rules, e.g. the \tcode{line_cap} state of a \tcode{surface} object when they are rendered, which are set forth below.
 
 \pnum
 A \tcode{path_group} object is an immutable resource wrapper containing a path group (\ref{pathgroup}). A \tcode{path_group} object is created from a \tcode{path_factory} object. It can also be default constructed, in which case the \tcode{path_group} object contains no paths.
