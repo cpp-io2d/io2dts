@@ -40,8 +40,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     brush(brush&& other) noexcept;
     brush& operator=(brush&& other) noexcept;
     
-    brush(const rbga_color& c);
-    brush(const rbga_color& c, error_code& ec) noexcept;
+    brush(const rgba_color& c);
+    brush(const rgba_color& c, error_code& ec) noexcept;
     template <Allocator = allocator<color_stop>>
     brush(const vector_2d& begin, const vector_2d& end,
       const color_stop_group<Allocator>& csg);
@@ -108,8 +108,8 @@ When \tcode{b} is a surface brush, then when sampling from \tcode{b}, the visual
 
 \indexlibrary{\idxcode{brush}!constructor}
 \begin{itemdecl}
-brush(const rbga_color& c);
-brush(const rbga_color& c, error_code& ec) noexcept;
+brush(const rgba_color& c);
+brush(const rgba_color& c, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

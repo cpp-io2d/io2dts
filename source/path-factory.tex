@@ -28,8 +28,9 @@ When a path factory is default constructed:
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  template <Allocator = allocator<path_data::path_data_types>>
+  template <class Allocator = allocator<path_data::path_data_types>>
   class path_factory {
+  public:
     using value_type = path_data::path_data_types;
     using allocator_type = Allocator;
     using reference = value_type&;
@@ -160,7 +161,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     matrix_2d transform_matrix() const noexcept;
     vector_2d origin() const noexcept;
   };
-
   
   template <class Allocator>
   bool operator==(const path_factory<Allocator>& lhs, 
@@ -170,7 +170,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     const path_factory<Allocator>& rhs);
   
   // \ref{pathfactory.special}, specialized algorithms:
-  template <Allocator>
+  template <class Allocator>
   void swap(path_factory<Allocator>& lhs, path_factory<Allocator>& rhs)
     noexcept(noexcept(lhs.swap(rhs)));
 } } } }

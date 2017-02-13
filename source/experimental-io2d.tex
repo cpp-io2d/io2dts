@@ -78,13 +78,274 @@ namespace std { namespace experimental {
       abs_quadratic_curve, rel_quadratic_curve, arc_clockwise, 
       arc_counterclockwise, new_path, close_path, change_matrix, change_origin>;
   };
+  
   class path;
-  template <Allocator = allocator<path_data::path_data_types>>
-  class path_factory;
+
+  template <class Allocator = allocator<path_data::path_data_types>>
+  class path_factory {
+  public:
+    using value_type = path_data::path_data_types;
+    using allocator_type = Allocator;
+    using reference = value_type&;
+    using const_reference = const value_type&;
+    using size_type       = @\impdefx{type of \tcode{path_factory::size_type}}@. // See [container.requirements] in \cppseventeen.
+    using difference_type = @\impdefx{type of \tcode{path_factory::size_type}}@. // See [container.requirements] in \cppseventeen.
+    using iterator       = @\impdefx{type of \tcode{path_factory::iterator}}@. // See [container.requirements] in \cppseventeen.
+    using const_iterator = @\impdefx{type of \tcode{path_factory::const_iterator}}@. // See [container.requirements] in \cppseventeen.
+    using reverse_iterator       = std::reverse_iterator<iterator>;
+    using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+    
+    // \ref{pathfactory.cons}, construct, copy, move, destroy:
+    path_factory() noexcept(noexcept(Allocator())) :
+      path_factory(Allocator()) { }
+    explicit path_factory(const Allocator&) noexcept;
+    explicit path_factory(size_type n, const Allocator& = Allocator());
+    path_factory(size_type n, const value_type& value,
+      const Allocator& = Allocator());
+    template <class InputIterator>
+    path_factory(InputIterator first, InputIterator last,
+      const Allocator& = Allocator());
+    path_factory(const path_factory& x);
+    path_factory(path_factory&&) noexcept;
+    path_factory(const path_factory&, const Allocator&);
+    path_factory(path_factory&&, const Allocator&);
+    path_factory(initializer_list<value_type>, const Allocator& = Allocator());
+    ~path_factory();
+    path_factory& operator=(const path_factory& x);
+    path_factory& operator=(path_factory&& x)
+      noexcept(
+      allocator_traits<Allocator>::propagate_on_container_move_assignment::value
+      ||
+      allocator_traits<Allocator>::is_always_equal::value);
+    path_factory& operator=(initializer_list<value_type>);
+    template <class InputIterator>
+    void assign(InputIterator first, InputIterator last);
+    void assign(size_type n, const value_type& u);
+    void assign(initializer_list<value_type>);
+    allocator_type get_allocator() const noexcept;
+    
+    // \ref{pathfactory.iterators}, iterators:
+    iterator begin() noexcept;
+    const_iterator begin() const noexcept;
+    const_iterator cbegin() const noexcept;
+
+    iterator end() noexcept;
+    const_iterator end() const noexcept;
+    const_iterator cend() const noexcept;
+    
+    reverse_iterator rbegin() noexcept;
+    const_reverse_iterator rbegin() const noexcept;
+    const_reverse_iterator crbegin() const noexcept;
+
+    reverse_iterator rend() noexcept;
+    const_reverse_iterator rend() const noexcept;
+    const_reverse_iterator crend() const noexcept;
+    
+    // \ref{pathfactory.capacity}, capacity
+    bool empty() const noexcept;
+    size_type size() const noexcept;
+    size_type max_size() const noexcept;
+    size_type capacity() const noexcept;
+    void resize(size_type sz);
+    void resize(size_type sz, const value_type& c);
+    void reserve(size_type n);
+    void shrink_to_fit();
+
+    // element access:
+    reference operator[](size_type n);
+    const_reference operator[](size_type n) const;
+    const_reference at(size_type n) const;
+    reference at(size_type n);
+    reference front();
+    const_reference front() const;
+    reference back();
+    const_reference back() const;
+
+    // \ref{pathfactory.modifiers}, modifiers:
+    void new_path() noexcept;
+    void close_path() noexcept;
+    void arc_clockwise(const vector_2d& center, double radius, double angle1,
+    double angle2) noexcept;
+    void arc_counterclockwise(const vector_2d& center, double radius,
+    double angle1, double angle2) noexcept;
+    void cubic_curve_to(const vector_2d& pt0, const vector_2d& pt1,
+    const vector_2d& pt2) noexcept;
+    void line_to(const vector_2d& pt) noexcept;
+    void move_to(const vector_2d& pt) noexcept;
+    void quadratic_curve_to(const vector_2d& pt0, const vector_2d& pt2)
+    noexcept;
+    void rectangle(const experimental::io2d::rectangle& r) noexcept;
+    void rel_cubic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1,
+    const vector_2d& dpt2) noexcept;
+    void rel_line_to(const vector_2d& dpt) noexcept;
+    void rel_move_to(const vector_2d& dpt) noexcept;
+    void rel_quadratic_curve_to(const vector_2d& pt0, const vector_2d& pt2)
+    noexcept;
+    void transform_matrix(const matrix_2d& m) noexcept;
+    void origin(const vector_2d& pt) noexcept;
+    
+    template <class... Args>
+    reference emplace_back(Args&&... args);
+    void push_back(const value_type& x);
+    void push_back(value_type&& x);
+    void pop_back();
+    template <class... Args>
+    iterator emplace(const_iterator position, Args&&... args);
+    iterator insert(const_iterator position, const value_type& x);
+    iterator insert(const_iterator position, value_type&& x);
+    iterator insert(const_iterator position, size_type n, const value_type& x);
+    template <class InputIterator>
+    iterator insert(const_iterator position, InputIterator first,
+      InputIterator last);
+    iterator insert(const_iterator position,
+      initializer_list<value_type> il);
+    iterator erase(const_iterator position);
+    iterator erase(const_iterator first, const_iterator last);
+    void swap(path_factory&)
+      noexcept(allocator_traits<Allocator>::propagate_on_container_swap::value 
+        || allocator_traits<Allocator>::is_always_equal::value);
+    void clear() noexcept;
+
+    // \ref{pathfactory.observers}, observers:
+    experimental::io2d::rectangle path_extents() const noexcept;
+    bool has_current_point() const noexcept;
+    vector_2d current_point() const;
+    vector_2d current_point(error_code& ec) const noexcept;
+    matrix_2d transform_matrix() const noexcept;
+    vector_2d origin() const noexcept;
+  }
+
+  template <class Allocator>
+  bool operator==(const path_factory<Allocator>& lhs, 
+    const path_factory<Allocator>& rhs);
+  template <class Allocator>
+  bool operator!=(const path_factory<Allocator>& lhs, 
+    const path_factory<Allocator>& rhs);
+  
+  // \ref{pathfactory.special}, specialized algorithms:
+  template <class Allocator>
+  void swap(path_factory<Allocator>& lhs, path_factory<Allocator>& rhs)
+    noexcept(noexcept(lhs.swap(rhs)));
   
   class color_stop;
-  template <Allocator = allocator<color_stop>>
-  class color_stop_group;
+
+  template <class Allocator = allocator<color_stop>>
+  class color_stop_group {
+  public:
+    using value_type      = color_stop;
+    using allocator_type  = Allocator;
+    using pointer = typename allocator_traits<Allocator>::pointer;
+    using const_pointer = typename allocator_traits<Allocator>::const_pointer;
+    using reference = value_type&;
+    using const_reference = const value_type&;
+    using size_type       = @\impdefx{type of \tcode{color_stop_group::size_type}}@. // See [container.requirements] in \cppseventeen.
+    using difference_type = @\impdefx{type of \tcode{color_stop_group::size_type}}@. // See [container.requirements] in \cppseventeen.
+    using iterator        = @\impdefx{type of \tcode{color_stop_group::iterator}}@. // See [container.requirements] in \cppseventeen.
+    using const_iterator  = @\impdefx{type of \tcode{color_stop_group::const_iterator}}@. // See [container.requirements] in \cppseventeen.
+    using reverse_iterator       = std::reverse_iterator<iterator>;
+    using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+
+    // \ref{colorstops.colorstopgroup.cons}, constructors:    
+    color_stop_group() noexcept(noexcept(Allocator())) :
+    color_stop_group(Allocator()) { }
+    explicit color_stop_group(const Allocator&) noexcept;
+    explicit color_stop_group(size_type n, const Allocator& = Allocator());
+    color_stop_group(size_type n, const value_type& value,
+      const Allocator& = Allocator());
+    template <class InputIterator>
+    color_stop_group(InputIterator first, InputIterator last,
+    const Allocator& = Allocator());
+    color_stop_group(const color_stop_group& x);
+    color_stop_group(color_stop_group&&) noexcept;
+    color_stop_group(const color_stop_group&, const Allocator&);
+    color_stop_group(color_stop_group&&, const Allocator&);
+    color_stop_group(initializer_list<value_type>,
+      const Allocator& = Allocator());
+    ~color_stop_group();
+    color_stop_group& operator=(const color_stop_group& x);
+    color_stop_group& operator=(color_stop_group&& x)
+      noexcept(
+      allocator_traits<Allocator>::propagate_on_container_move_assignment::value
+      || allocator_traits<Allocator>::is_always_equal::value);
+    color_stop_group& operator=(initializer_list<value_type>);
+    template <class InputIterator>
+    void assign(InputIterator first, InputIterator last);
+    void assign(size_type n, const value_type& u);
+    void assign(initializer_list<value_type>);
+    allocator_type get_allocator() const noexcept;
+    
+    // \ref{colorstops.colorstopgroup.iterators}, iterators:
+    iterator begin() noexcept;
+    const_iterator begin() const noexcept;
+    const_iterator cbegin() const noexcept;
+    
+    iterator end() noexcept;
+    const_iterator end() const noexcept;
+    const_iterator cend() const noexcept;
+    
+    reverse_iterator rbegin() noexcept;
+    const_reverse_iterator rbegin() const noexcept;
+    const_reverse_iterator crbegin() const noexcept;
+    
+    reverse_iterator rend() noexcept;
+    const_reverse_iterator rend() const noexcept;
+    const_reverse_iterator crend() const noexcept;
+    
+    // \ref{colorstops.colorstopgroup.capacity}, capacity
+    bool empty() const noexcept;
+    size_type size() const noexcept;
+    size_type max_size() const noexcept;
+    size_type capacity() const noexcept;
+    void resize(size_type sz);
+    void resize(size_type sz, const value_type& c);
+    void reserve(size_type n);
+    void shrink_to_fit();
+    
+    // element access:
+    reference operator[](size_type n);
+    const_reference operator[](size_type n) const;
+    const_reference at(size_type n) const;
+    reference at(size_type n);
+    reference front();
+    const_reference front() const;
+    reference back();
+    const_reference back() const;
+    
+    // \ref{colorstops.colorstopgroup.modifiers}, modifiers:
+    template <class... Args>
+    reference emplace_back(Args&&... args);
+    void push_back(const value_type& x);
+    void push_back(value_type&& x);
+    void pop_back();
+    template <class... Args>
+    iterator emplace(const_iterator position, Args&&... args);
+    iterator insert(const_iterator position, const value_type& x);
+    iterator insert(const_iterator position, value_type&& x);
+    iterator insert(const_iterator position, size_type n, const value_type& x);
+    template <class InputIterator>
+    iterator insert(const_iterator position, InputIterator first,
+      InputIterator last);
+    iterator insert(const_iterator position,
+    initializer_list<value_type> il);
+    iterator erase(const_iterator position);
+    iterator erase(const_iterator first, const_iterator last);
+    void swap(color_stop_group&)
+      noexcept(allocator_traits<Allocator>::propagate_on_container_swap::value 
+      || allocator_traits<Allocator>::is_always_equal::value);
+    void clear() noexcept;
+  };
+
+  template <class Allocator>
+  bool operator==(const color_stop_group<Allocator>& lhs, 
+    const color_stop_group<Allocator>& rhs);
+  template <class Allocator>
+  bool operator!=(const color_stop_group<Allocator>& lhs, 
+    const color_stop_group<Allocator>& rhs);
+
+  // \ref{colorstops.colorstopgroup.special}, specialized algorithms:
+  template <class Allocator>
+  void swap(color_stop_group<Allocator>& lhs, color_stop_group<Allocator>& rhs)
+    noexcept(noexcept(lhs.swap(rhs)));
   
   class device;
 

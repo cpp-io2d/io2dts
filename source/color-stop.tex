@@ -105,7 +105,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  template <Allocator = allocator<color_stop>>
+  template <class Allocator = allocator<color_stop>>
   class color_stop_group {
   public:
     using value_type      = color_stop;
@@ -211,8 +211,15 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void clear() noexcept;
   };
 
+  template <class Allocator>
+  bool operator==(const color_stop_group<Allocator>& lhs, 
+    const color_stop_group<Allocator>& rhs);
+  template <class Allocator>
+  bool operator!=(const color_stop_group<Allocator>& lhs, 
+    const color_stop_group<Allocator>& rhs);
+  
   // \ref{colorstops.colorstopgroup.special}, specialized algorithms:
-  template <Allocator>
+  template <const Allocator>
   void swap(color_stop_group<Allocator>& lhs, color_stop_group<Allocator>& rhs)
     noexcept(noexcept(lhs.swap(rhs)));
 } } } }
