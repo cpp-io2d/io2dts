@@ -8,7 +8,7 @@
 The class \tcode{circle} describes a circle.
 
 \pnum
-It has a center of type \tcode{vector_2d} and a radius of type \tcode{double}.
+It has a Center of type \tcode{vector_2d} and a Radius of type \tcode{double}.
 
 \rSec1 [circle.synopsis] {\tcode{circle} synopsis}
 
@@ -17,15 +17,20 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class circle {
   public:
     // \ref{circle.cons}, construct/copy/move/destroy:
-    center(const vector_2d& ctr, double rad) noexcept;
+    constexpr circle() noexcept;
+    contexpr circle(const vector_2d& ctr, double rad) noexcept;
+    constexpr circle(const circle&) noexcept = default;
+    constexpr circle& operator=(const circle&) noexcept = default;
+    circle(circle&&) noexcept = default;
+    circle& operator=(circle&&) noexcept = default;
 
     // \ref{circle.modifiers}, modifiers:
     void center(const vector_2d& ctr) noexcept;
     void radius(double rad) noexcept;
     
     // \ref{circle.observers}, observers:
-    vector_2d center() const noexcept;
-    double radius() const noexcept;
+    constexpr vector_2d center() const noexcept;
+    constexpr double radius() const noexcept;
   };
 } } } }
 \end{codeblock}
@@ -34,18 +39,34 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \indexlibrary{\idxcode{circle}!constructor}
 \begin{itemdecl}
-circle(const vector_2d& ctr, double rad) noexcept;
+constexpr circle() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{rectangle}.
-	
-	\pnum
-	The center shall have the value of \tcode{ctr}.
-	
-	\pnum
-	The radius shall have the value of \tcode{rad}.
+\pnum
+\effects
+Constructs an object of type \tcode{circle}.
+
+\pnum
+The Center shall have the value of \tcode{vector_2d\{0,0, 0.0\}}.
+
+\pnum
+The Radius shall have the value of \tcode{rad}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{circle}!constructor}
+\begin{itemdecl}
+constexpr circle(const vector_2d& ctr, double rad) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{circle}.
+
+\pnum
+The Center shall have the value of \tcode{ctr}.
+
+\pnum
+The Radius shall have the value of \tcode{rad}.
 \end{itemdescr}
 
 \rSec1 [circle.modifiers]{\tcode{circle} modifiers}
@@ -57,9 +78,9 @@ void center(const vector_2d& ctr) noexcept;
 \end{itemdecl}
 
 \begin{itemdescr}
-	\pnum
-	\effects
-	The center shall have the value of \tcode{ctr}.
+\pnum
+\effects
+The Center shall have the value of \tcode{ctr}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{circle}!\idxcode{radius}}
@@ -68,9 +89,9 @@ void center(const vector_2d& ctr) noexcept;
 void radius(double rad) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	The radius shall have the value of \tcode{rad}.
+\pnum
+\effects
+The Radius shall have the value of \tcode{rad}.
 \end{itemdescr}
 
 \rSec1 [circle.observers]{\tcode{circle} observers}
@@ -78,21 +99,21 @@ void radius(double rad) noexcept;
 \indexlibrary{\idxcode{circle}!\idxcode{center}}
 \indexlibrary{\idxcode{center}!\idxcode{circle}}
 \begin{itemdecl}
-double center() const noexcept;
+constexpr double center() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	The value of the center.
+\pnum
+\returns
+The value of the Center.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{circle}!\idxcode{radius}}
 \indexlibrary{\idxcode{radius}!\idxcode{circle}}
 \begin{itemdecl}
-double radius() const noexcept;
+constexpr double radius() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	THe value of the radius.
+\pnum
+\returns
+THe value of the Radius.
 \end{itemdescr}

@@ -19,15 +19,23 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     class rel_cubic_curve {
     public:
       // \ref{relquadraticcurve.cons}, construct:
-      rel_quadratic_curve(const vector_2d& cp, const vector_2d& ep) noexcept;
+      constexpr rel_quadratic_curve() noexcept;
+      constexpr rel_quadratic_curve(const vector_2d& cpt, const vector_2d& ept)
+        noexcept;
+      constexpr rel_quadratic_curve(const rel_quadratic_curve&)
+        noexcept = default;
+      constexpr rel_quadratic_curve& operator=(const rel_quadratic_curve&)
+        noexcept = default;
+      rel_quadratic_curve(rel_quadratic_curve&&) noexcept = default;
+      rel_quadratic_curve& operator=(rel_quadratic_curve&&) noexcept = default;
 
       // \ref{relquadraticcurve.modifiers}, modifiers:
-      void control_point(const vector_2d& cp) noexcept;
-      void end_point(const vector_2d& ep) noexcept;
+      void control_point(const vector_2d& cpt) noexcept;
+      void end_point(const vector_2d& ept) noexcept;
 
       // \ref{relquadraticcurve.observers}, observers:
-      vector_2d control_point() const noexcept;
-      vector_2d end_point() const noexcept;
+      constexpr vector_2d control_point() const noexcept;
+      constexpr vector_2d end_point() const noexcept;
     };
   };
 } } } }
@@ -37,26 +45,27 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \indexlibrary{\idxcode{rel_quadratic_curve}!constructor}
 \begin{itemdecl}
-    rel_quadratic_curve(const vector_2d& cp, const vector_2d& ep) noexcept;
+constexpr rel_quadratic_curve(const vector_2d& cpt, const vector_2d& ept)
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of type \tcode{rel_cubic_curve}.
+	Constructs an object of type \tcode{rel_quadratic_curve}.
 	
 	\pnum
-	The control point shall be set to the value of \tcode{cp}.
+	The control point shall be set to the value of \tcode{cpt}.
 	
 	\pnum
-	The end point shall be set to the value of \tcode{ep}.
+	The end point shall be set to the value of \tcode{ept}.
 \end{itemdescr}
 
-\rSec1 [relquadraticcurve.modifiers]{\tcode{rel_cubic_curve} modifiers}
+\rSec1 [relquadraticcurve.modifiers]{\tcode{rel_quadratic_curve} modifiers}
 
 \indexlibrary{\idxcode{rel_quadratic_curve}!\idxcode{control_point}}
 \indexlibrary{\idxcode{control_point}!\idxcode{rel_quadratic_curve}}
 \begin{itemdecl}
-    void control_point(const vector_2d& cp) noexcept;
+    void control_point(const vector_2d& cpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -67,12 +76,12 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \indexlibrary{\idxcode{rel_quadratic_curve}!\idxcode{end_point}}
 \indexlibrary{\idxcode{end_point}!\idxcode{rel_quadratic_curve}}
 \begin{itemdecl}
-    void end_point(const vector_2d& ep) noexcept;
+    void end_point(const vector_2d& ept) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	The end point shall be set to the value of \tcode{ep}.
+	The end point shall be set to the value of \tcode{ept}.
 \end{itemdescr}
 
 \rSec1 [relquadraticcurve.observers]{\tcode{rel_quadratic_curve} observers}
@@ -80,7 +89,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \indexlibrary{\idxcode{rel_quadratic_curve}!\idxcode{control_point}}
 \indexlibrary{\idxcode{control_point}!\idxcode{rel_quadratic_curve}}
 \begin{itemdecl}
-    vector_2d control_point() const noexcept;
+constexpr vector_2d control_point() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -91,7 +100,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \indexlibrary{\idxcode{rel_quadratic_curve}!\idxcode{end_point}}
 \indexlibrary{\idxcode{end_point}!\idxcode{rel_quadratic_curve}}
 \begin{itemdecl}
-    vector_2d end_point() const noexcept;
+constexpr vector_2d end_point() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum

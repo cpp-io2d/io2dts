@@ -14,6 +14,11 @@ The new path has no current point.
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   namespace path_data {
     class new_path {
+      constexpr new_path() noexcept = default;
+      constexpr new_path(const new_path&) noexcept = default;
+      constexpr operator=(const new_path&) noexcept = default;
+      new_path(new_path&&) noexcept = default;
+      new_path& operator=(new_path) noexcept = default;
     };
   };
 } } } }

@@ -3,7 +3,10 @@
 
 \pnum
 \indexlibrary{\idxcode{close_path}}
-This class is a path instruction that contains no data. It creates a closed path within a path group.
+This class is a path instruction that creates a closed path within a path group.
+
+\pnum
+It has an end point of type \tcode{vector_2d}.
 
 \rSec1 [closepath.synopsis] {\tcode{close_path} synopsis}
 
@@ -11,7 +14,74 @@ This class is a path instruction that contains no data. It creates a closed path
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   namespace path_data {
     class close_path {
+      // \ref{closepath.cons}, construct:
+      constexpr close_path() noexcept;
+      constexpr explicit close_path(const vector_2d& to) noexcept;
+      constexpr close_path(const close_path&) noexcept = default;
+      constexpr close_path& operator=(const close_path&) noexcept = default;
+      close_path(close_path&&) noexcept = default;
+      close_path& operator=(close_path&&) noexcept = default;
+
+      // \ref{closepath.modifiers}, modifiers:
+      void to(const vector_2d& value) noexcept;
+
+      // \ref{closepath.observers}, observers:
+      constexpr vector_2d to() const noexcept;
     };
-};
+  };
 } } } }
 \end{codeblock}
+
+\rSec1 [closepath.cons] {\tcode{close_path} constructors}
+
+\indexlibrary{\idxcode{close_path}!constructor}
+\begin{itemdecl}
+constexpr close_path() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{close_path}.
+
+\pnum
+The end point shall be set to the value of \tcode{vector_2d\{\}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{close_path}!constructor}
+\begin{itemdecl}
+explicit close_path(const vector_2d& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{close_path}.
+
+\pnum
+The end point shall be set to the value of \tcode{pt}.
+\end{itemdescr}
+
+\rSec1 [closepath.modifiers]{\tcode{abs_move} modifiers}
+
+\indexlibrary{\idxcode{close_path}!\idxcode{to}}
+\indexlibrary{\idxcode{to}!\idxcode{close_path}}
+\begin{itemdecl}
+void to(const vector_2d& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+The end point shall be set to the value of \tcode{pt}.
+\end{itemdescr}
+
+\rSec1 [closepath.observers]{\tcode{abs_move} observers}
+
+\indexlibrary{\idxcode{close_path}!\idxcode{to}}
+\indexlibrary{\idxcode{to}!\idxcode{close_path}}
+\begin{itemdecl}
+constexpr vector_2d to() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The value of the end point.
+\end{itemdescr}

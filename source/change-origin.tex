@@ -6,7 +6,7 @@
 The class \tcode{change_origin} describes path instruction that changes the origin used in processing a path group as described by \ref{paths.processing}.
 
 \pnum
-It has an origin of type \tcode{vector_2d}.
+It has an Origin of type \tcode{vector_2d}.
 
 \rSec1 [changeorigin.synopsis] {\tcode{change_origin} synopsis}
 
@@ -16,13 +16,18 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     class change_origin {
     public:
       // \ref{changeorigin.cons}, construct:
-      explicit change_origin(const vector_2d& pt) noexcept;
+      constexpr change_origin() noexcept;
+      constexpr explicit change_origin(const vector_2d& pt) noexcept;
+      constexpr change_origin(const change_origin&) noexcept;
+      constexpr change_origin& operator=(const change_origin&) noexcept;
+      change_origin(change_origin&&) noexcept;
+      change_origin& operator=(change_origin&&) noexcept;
 
       // \ref{changeorigin.modifiers}, modifiers:
       void origin(const vector_2d& pt) noexcept;
 
       // \ref{changeorigin.observers}, observers:
-      vector_2d origin() const noexcept;
+      constexpr vector_2d origin() const noexcept;
     };
   };
 } } } }
@@ -32,15 +37,28 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \indexlibrary{\idxcode{change_origin}!constructor}
 \begin{itemdecl}
-    explicit change_origin(const vector_2d& pt) noexcept;
+constexpr change_origin() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{change_origin}.
-	
-	\pnum
-	The origin shall be set to the value of \tcode{pt}.
+\pnum
+\effects
+Constructs an object of type \tcode{change_origin}.
+
+\pnum
+The Origin shall be set to the value of \tcode{vector_2d\{ \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{change_origin}!constructor}
+\begin{itemdecl}
+constexpr explicit change_origin(const vector_2d& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{change_origin}.
+
+\pnum
+The Origin shall be set to the value of \tcode{pt}.
 \end{itemdescr}
 
 \rSec1 [changeorigin.modifiers]{\tcode{change_origin} modifiers}
@@ -48,12 +66,12 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \indexlibrary{\idxcode{change_origin}!\idxcode{origin}}
 \indexlibrary{\idxcode{origin}!\idxcode{change_origin}}
 \begin{itemdecl}
-    void origin(const vector_2d& value) noexcept;
+void origin(const vector_2d& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	The origin shall be set to the value of \tcode{pt}.
+\pnum
+\effects
+The Origin shall be set to the value of \tcode{pt}.
 \end{itemdescr}
 
 \rSec1 [changeorigin.observers]{\tcode{change_origin} observers}
@@ -61,10 +79,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \indexlibrary{\idxcode{change_origin}!\idxcode{origin}}
 \indexlibrary{\idxcode{origin}!\idxcode{change_origin}}
 \begin{itemdecl}
-    vector_2d origin() const noexcept;
+constexpr vector_2d origin() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	The value of the origin.
+\pnum
+\returns
+The value of the Origin.
 \end{itemdescr}

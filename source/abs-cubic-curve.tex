@@ -16,19 +16,26 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     class abs_cubic_curve {
     public:
       // \ref{abscubiccurve.cons}, construct:
-      abs_cubic_curve(const vector_2d& cp1, const vector_2d& cp2,
-        const vector_2d& ep) noexcept;
+      constexpr abs_cubic_curve() noexcept;
+      constexpr abs_cubic_curve(const vector_2d& cpt1, const vector_2d& cpt2,
+        const vector_2d& ept) noexcept;
+      constexpr abs_cubic_curve(const abs_cubic_curve&) noexcept = default;
+      constexpr abs_cubic_curve& operator=(const abs_cubic_curve&)
+        noexcept = default;
+      abs_cubic_curve(abs_cubic_curve&&) noexcept = default;
+      abs_cubic_curve& operator=(abs_cubic_curve&&)
+        noexcept = default;
 
       // \ref{abscubiccurve.modifiers}, modifiers:
-      void control_point_1(const vector_2d& cp) noexcept;
-      void control_point_2(const vector_2d& cp) noexcept;
-      void end_point(const vector_2d& ep) noexcept;
+      void control_point_1(const vector_2d& cpt) noexcept;
+      void control_point_2(const vector_2d& cpt) noexcept;
+      void end_point(const vector_2d& ept) noexcept;
 
 
       // \ref{abscubiccurve.observers}, observers:
-      vector_2d control_point_1() const noexcept;
-      vector_2d control_point_2() const noexcept;
-      vector_2d end_point() const noexcept;
+      constexpr vector_2d control_point_1() const noexcept;
+      constexpr vector_2d control_point_2() const noexcept;
+      constexpr vector_2d end_point() const noexcept;
     };
   };
 } } } }
@@ -38,22 +45,41 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \indexlibrary{\idxcode{abs_cubic_curve}!constructor}
 \begin{itemdecl}
-    abs_cubic_curve(const vector_2d& cp1, const vector_2d& cp2,
-      const vector_2d& ep) noexcept;
+constexpr abs_cubic_curve() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{abs_cubic_curve}.
-	
-	\pnum
-	The first control point shall be set to the value of \tcode{cp1}.
-	
-	\pnum
-	The second control point shall be set to the value of \tcode{cp2}.
-	
-	\pnum
-	The end point shall be set to the value of \tcode{ep}.
+\pnum
+\effects
+Constructs an object of type \tcode{abs_cubic_curve}.
+
+\pnum
+The first control point shall be set to the value of \tcode{vector_2d\{0.0, 0.0\}}.
+
+\pnum
+The second control point shall be set to the value of \tcode{vector_2d\{0.0, 0.0\}}.
+
+\pnum
+The end point shall be set to the value of \tcode{vector_2d\{0.0, 0.0\}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{abs_cubic_curve}!constructor}
+\begin{itemdecl}
+constexpr abs_cubic_curve(const vector_2d& cpt1, const vector_2d& cpt2,
+  const vector_2d& ept) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{abs_cubic_curve}.
+
+\pnum
+The first control point shall be set to the value of \tcode{cpt1}.
+
+\pnum
+The second control point shall be set to the value of \tcode{cpt2}.
+
+\pnum
+The end point shall be set to the value of \tcode{ept}.
 \end{itemdescr}
 
 \rSec1 [abscubiccurve.modifiers]{\tcode{abs_cubic_curve} modifiers}
@@ -61,34 +87,34 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \indexlibrary{\idxcode{abs_cubic_curve}!\idxcode{control_point_1}}
 \indexlibrary{\idxcode{control_point_1}!\idxcode{abs_cubic_curve}}
 \begin{itemdecl}
-    void control_point_1(const vector_2d& cp) noexcept;
+void control_point_1(const vector_2d& cpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	The first control point shall be set to the value of \tcode{cp}.
+\pnum
+\effects
+The first control point shall be set to the value of \tcode{cpt}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{abs_cubic_curve}!\idxcode{control_point_2}}
 \indexlibrary{\idxcode{control_point_2}!\idxcode{abs_cubic_curve}}
 \begin{itemdecl}
-    void control_point_2(const vector_2d& cp) noexcept;
+void control_point_2(const vector_2d& cpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	The second control point shall be set to the value of \tcode{cp}.
+\pnum
+\effects
+The second control point shall be set to the value of \tcode{cpt}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{abs_cubic_curve}!\idxcode{end_point}}
 \indexlibrary{\idxcode{end_point}!\idxcode{abs_cubic_curve}}
 \begin{itemdecl}
-    void end_point(const vector_2d& ep) noexcept;
+void end_point(const vector_2d& ept) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	The end point shall be set to the value of \tcode{ep}.
+\pnum
+\effects
+The end point shall be set to the value of \tcode{ept}.
 \end{itemdescr}
 
 \rSec1 [abscubiccurve.observers]{\tcode{abs_cubic_curve} observers}
@@ -96,32 +122,32 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \indexlibrary{\idxcode{abs_cubic_curve}!\idxcode{control_point_1}}
 \indexlibrary{\idxcode{control_point_1}!\idxcode{abs_cubic_curve}}
 \begin{itemdecl}
-    vector_2d control_point_1() const noexcept;
+constexpr vector_2d control_point_1() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	The value of the first control point.
+\pnum
+\returns
+The value of the first control point.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{abs_cubic_curve}!\idxcode{control_point_2}}
 \indexlibrary{\idxcode{control_point_2}!\idxcode{abs_cubic_curve}}
 \begin{itemdecl}
-    vector_2d control_point_2() const noexcept;
+constexpr vector_2d control_point_2() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	The value of the second control point.
+\pnum
+\returns
+The value of the second control point.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{abs_cubic_curve}!\idxcode{end_point}}
 \indexlibrary{\idxcode{end_point}!\idxcode{abs_cubic_curve}}
 \begin{itemdecl}
-    vector_2d end_point() const noexcept;
+constexpr vector_2d end_point() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	The value of the end point.
+\pnum
+\returns
+The value of the end point.
 \end{itemdescr}

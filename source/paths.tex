@@ -23,10 +23,48 @@ A \tcode{path_group} object is an immutable resource wrapper containing a path g
 \rSec1 [paths.processing] {Processing paths}
 
 \pnum
-This section is normative. It describes how to convert the path group of a properly formed \tcode{path_factory} object from a collection of \tcode{path_data::data} objects to a collection of \tcode{path_data::data} objects which have had their points transformed in accordance with the origin and transformation matrix of the \tcode{path_factory} object and any \tcode{path_data::change_origin} and \tcode{path_data::change_matrix} objects in the path group of the \tcode{path_factory} object.
+This section is normative.
 
 \pnum
-The following code shows how to properly process a \tcode{path_factory} object \tcode{p} and store the results into a \tcode{vector<path_data::data>}:
+It describes how to convert a properly formed path group into a \term{processed path group}. The steps required to create a processed path group require the existence of certain state data:
+
+\begin{libiotwodreqtab3}
+{path group processing state data}
+{tab:paths.processing.statedata}
+ \\ \topline
+ \lhdr{Data}
+ & \chdr{Type}
+ & \rhdr{Initial Value}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Data}
+ & \chdr{Type}
+ & \rhdr{Initial Value}
+ \\ \capsep
+ \endhead
+ Transformation Matrix
+ & \tcode{matrix_2d}
+ & \tcode{matrix_2d::init_identity()}.
+ \\
+ Origin
+ & \tcode{vector_2d}
+ & \tcode{vector_2d\{ \}}.
+ \\
+ Current Point
+ & \tcode{optional<vector_2d>}
+ & \tcode{optional<vector_2d>\{ \}}.
+ \\
+\end{libiotwodreqtab3}
+
+\pnum
+Certain path instructions and path segments will modify this state data. The state data is used to ensure that the coordinates of all points in the path group's paths are properly transformed to their intended coordinates based on the effects of those path instructions and path segments.
+
+\pnum
+\enternote
+The coordinates of a path group are in whatever units the user desires. Path instructions such as \tcode{path_data::change_matrix} and \tcode{path_data::change_origin} affect the interpretation of instructions and segments that follow them within the path group. The coordinates of points within the processed path group are further transformed by the a \tcode{surface}-derived object's Transformation Matrix (\ref{surface.state}) when the processed path group is used by any of the object's member functions.
+\exitnote
 
 \begin{codeblock}
   #include <cmath>

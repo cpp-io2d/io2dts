@@ -42,16 +42,16 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     
     brush(const rgba_color& c);
     brush(const rgba_color& c, error_code& ec) noexcept;
-    template <Allocator = allocator<color_stop>>
+    template <class Allocator>
     brush(const vector_2d& begin, const vector_2d& end,
       const color_stop_group<Allocator>& csg);
-    template <Allocator = allocator<color_stop>>
+    template <class Allocator>
     brush(const vector_2d& begin, const vector_2d& end,
       const color_stop_group<Allocator>& csg, error_code& ec) noexcept;
-    template <Allocator = allocator<color_stop>>
+    template <class Allocator>
     brush(const circle& start, const circle& end,
       const color_stop_group<Allocator>& csg);
-    template <Allocator = allocator<color_stop>>
+    template <class Allocator>
     brush(const circle& start, const circle& end,
       const color_stop_group<Allocator>& csg, error_code& ec) noexcept;
     brush(image_surface&& img);
@@ -67,8 +67,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     experimental::io2d::filter filter() const noexcept;
     matrix_2d matrix() const noexcept;
     brush_type type() const noexcept;
-    const image_surface& surface() const;
-    const image_surface& surface(error_code) const noexcept;
   };
 } } } }
 \end{codeblock}
@@ -151,10 +149,10 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \indexlibrary{\idxcode{brush}!constructor}
 \begin{itemdecl}
-template <Allocator = allocator<color_stop>>
+template <class Allocator>
 brush(const vector_2d& begin, const vector_2d& end,
   const color_stop_group<Allocator>& csg);
-template <Allocator = allocator<color_stop>>
+template <class Allocator>
 brush(const vector_2d& begin, const vector_2d& end,
   const color_stop_group<Allocator>& csg, error_code& ec) noexcept;
 \end{itemdecl}
@@ -198,10 +196,10 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \indexlibrary{\idxcode{brush}!constructor}
 \begin{itemdecl}
-template <Allocator = allocator<color_stop>>
+template <class Allocator>
 brush(const circle& start, const circle& end,
   const color_stop_group<Allocator>& csg);
-template <Allocator = allocator<color_stop>>
+template <class Allocator>
 brush(const circle& start, const circle& end,
   const color_stop_group<Allocator>& csg, error_code& ec) noexcept;
 \end{itemdecl}
@@ -366,19 +364,4 @@ brush_type type() const noexcept;
 \pnum
 \returns
 The brush's brush type.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{brush}!\idxcode{surface}}
-\indexlibrary{\idxcode{surface}!\idxcode{brush}}
-\begin{itemdecl}
-	const image_surface& surface() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-	\pnum
-	\requires
-	\tcode{*this.type() == brush_type::surface}.
-	
-	\pnum
-	\returns
-	A constant reference to the surface brush's \tcode{image_surface}.
 \end{itemdescr}

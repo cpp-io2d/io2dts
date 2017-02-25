@@ -250,9 +250,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     // \ref{surface.observers.transform}, transformation observers:
     matrix_2d matrix() const noexcept;
     vector_2d user_to_surface(const vector_2d& pt) const noexcept;
-    vector_2d user_to_surface_distance(const vector_2d& dpt) const noexcept;
     vector_2d surface_to_user(const vector_2d& pt) const noexcept;
-    vector_2d surface_to_user_distance(const vector_2d& dpt) const noexcept;
   };
 } } } }
 \end{codeblock}
@@ -1832,17 +1830,6 @@ vector_2d user_to_surface(const vector_2d& pt) const noexcept;
 The result of calling \tcode{matrix_2d::transform_point} on Transformation Matrix (Table~\ref{tab:surface.state.listing}) with \tcode{pt} as the argument to that function.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{surface}!\idxcode{user_to_surface_distance}}
-\indexlibrary{\idxcode{user_to_surface_distance}!\idxcode{surface}}
-\begin{itemdecl}
-vector_2d user_to_surface_distance(const vector_2d& dpt) const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-The result of calling \tcode{matrix_2d::transform_distance} on Transformation Matrix (Table~\ref{tab:surface.state.listing}) with \tcode{dpt} as the argument to that function.
-\end{itemdescr}
-
 \indexlibrary{\idxcode{surface}!\idxcode{surface_to_user}}
 \indexlibrary{\idxcode{surface_to_user}!\idxcode{surface}}
 \begin{itemdecl}
@@ -1850,17 +1837,10 @@ vector_2d surface_to_user(const vector_2d& pt) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-The result of creating a copy of Transformation Matrix (Table~\ref{tab:surface.state.listing}), calling \tcode{matrix_2d::invert} on that copy, and then calling \tcode{matrix_2d::transform_point} on the copy with \tcode{pt} as the argument to that function.
-\end{itemdescr}
+\preconditions
+The result of calling \tcode{matrix_2d::is_invertible} on Transformation Matrix (Table~\ref{tab:surface.state.listing}) is \tcode{true}.
 
-\indexlibrary{\idxcode{surface}!\idxcode{surface_to_user_distance}}
-\indexlibrary{\idxcode{surface_to_user_distance}!\idxcode{surface}}
-\begin{itemdecl}
-vector_2d surface_to_user_distance(const vector_2d& dpt) const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
 \pnum
 \returns
-The result of creating a copy of Transformation Matrix (Table~\ref{tab:surface.state.listing}), calling \tcode{matrix_2d::invert} on that copy, and then calling \tcode{matrix_2d::transform_distance} on the copy with \tcode{dpt} as the argument to that function.
+The result of creating a copy of Transformation Matrix (Table~\ref{tab:surface.state.listing}), calling \tcode{matrix_2d::invert} on that copy, and then calling \tcode{matrix_2d::transform_point} on the copy with \tcode{pt} as the argument to that function.
 \end{itemdescr}
