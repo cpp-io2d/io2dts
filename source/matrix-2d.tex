@@ -78,7 +78,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     constexpr double m11() const noexcept;
     constexpr double m20() const noexcept;
     constexpr double m21() const noexcept;
-    bool is_finite() const noexcept;
+    constexpr bool is_finite() const noexcept;
     constexpr bool is_invertible() const noexcept;
     constexpr double determinant() const;
     constexpr vector_2d transform_point(const vector_2d& pt) const noexcept;
@@ -486,7 +486,7 @@ The M21 value.
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{is_finite}}
 \indexlibrary{\idxcode{is_finite}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-bool is_finite const noexcept;
+constexpr bool is_finite const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -517,7 +517,7 @@ constexpr bool is_invertible() const noexcept;
 
 \pnum
 \returns
-\tcode{()*this.m00() * *this.m11() - *this.m01() * *this.m10()) != 0.0}.
+\tcode{*this.m00() * *this.m11() - *this.m01() * *this.m10()) != 0.0}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{determinant}}
