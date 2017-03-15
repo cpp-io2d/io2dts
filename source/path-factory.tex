@@ -1,12 +1,12 @@
 %!TEX root = io2d.tex
-\rSec0 [pathfactory] {Class \tcode{path_factory}}
+\rSec0 [pathbuilder] {Class \tcode{path_builder}}
 
 \pnum
-\indexlibrary{\idxcode{path_factory}}
-The class \tcode{path_factory} is a container that stores and manipulates objects of type \tcode{path_data::data} from which \tcode{path_group} objects are created.
+\indexlibrary{\idxcode{path_builder}}
+The class \tcode{path_builder} is a container that stores and manipulates objects of type \tcode{path_data::data} from which \tcode{path_group} objects are created.
 
 \pnum
-A \tcode{path_factory} is a contiguous container. (See [container.requirements.general] in \cppseventeen.)
+A \tcode{path_builder} is a contiguous container. (See [container.requirements.general] in \cppseventeen.)
 
 \pnum
 The collection of \tcode{path_data::data} objects in a path factory is referred to as its path group.
@@ -24,54 +24,54 @@ When a path factory is default constructed:
 	\item The origin shall have a value of \tcode{vector_2d\{ \}}.
 \end{itemize}
 
-\rSec1 [pathfactory.synopsis] {\tcode{path_factory} synopsis}
+\rSec1 [pathbuilder.synopsis] {\tcode{path_builder} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   template <class Allocator = allocator<path_data::path_data_types>>
-  class path_factory {
+  class path_builder {
   public:
     using value_type = path_data::path_data_types;
     using allocator_type = Allocator;
     using reference = value_type&;
     using const_reference = const value_type&;
-    using size_type       = @\impdefx{type of \tcode{path_factory::size_type}}@. // See [container.requirements] in \cppseventeen.
-    using difference_type = @\impdefx{type of \tcode{path_factory::size_type}}@. // See [container.requirements] in \cppseventeen.
-    using iterator       = @\impdefx{type of \tcode{path_factory::iterator}}@. // See [container.requirements] in \cppseventeen.
-    using const_iterator = @\impdefx{type of \tcode{path_factory::const_iterator}}@. // See [container.requirements] in \cppseventeen.
+    using size_type       = @\impdefx{type of \tcode{path_builder::size_type}}@. // See [container.requirements] in \cppseventeen.
+    using difference_type = @\impdefx{type of \tcode{path_builder::size_type}}@. // See [container.requirements] in \cppseventeen.
+    using iterator       = @\impdefx{type of \tcode{path_builder::iterator}}@. // See [container.requirements] in \cppseventeen.
+    using const_iterator = @\impdefx{type of \tcode{path_builder::const_iterator}}@. // See [container.requirements] in \cppseventeen.
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
     
-    // \ref{pathfactory.cons}, construct, copy, move, destroy:
-    path_factory() noexcept(noexcept(Allocator())) :
-      path_factory(Allocator()) { }
-    explicit path_factory(const Allocator&) noexcept;
-    explicit path_factory(size_type n, const Allocator& = Allocator());
-    path_factory(size_type n, const value_type& value,
+    // \ref{pathbuilder.cons}, construct, copy, move, destroy:
+    path_builder() noexcept(noexcept(Allocator())) :
+      path_builder(Allocator()) { }
+    explicit path_builder(const Allocator&) noexcept;
+    explicit path_builder(size_type n, const Allocator& = Allocator());
+    path_builder(size_type n, const value_type& value,
       const Allocator& = Allocator());
     template <class InputIterator>
-    path_factory(InputIterator first, InputIterator last,
+    path_builder(InputIterator first, InputIterator last,
       const Allocator& = Allocator());
-    path_factory(const path_factory& x);
-    path_factory(path_factory&&) noexcept;
-    path_factory(const path_factory&, const Allocator&);
-    path_factory(path_factory&&, const Allocator&);
-    path_factory(initializer_list<value_type>, const Allocator& = Allocator());
-    ~path_factory();
-    path_factory& operator=(const path_factory& x);
-    path_factory& operator=(path_factory&& x)
+    path_builder(const path_builder& x);
+    path_builder(path_builder&&) noexcept;
+    path_builder(const path_builder&, const Allocator&);
+    path_builder(path_builder&&, const Allocator&);
+    path_builder(initializer_list<value_type>, const Allocator& = Allocator());
+    ~path_builder();
+    path_builder& operator=(const path_builder& x);
+    path_builder& operator=(path_builder&& x)
       noexcept(
       allocator_traits<Allocator>::propagate_on_container_move_assignment::value
       ||
       allocator_traits<Allocator>::is_always_equal::value);
-    path_factory& operator=(initializer_list<value_type>);
+    path_builder& operator=(initializer_list<value_type>);
     template <class InputIterator>
     void assign(InputIterator first, InputIterator last);
     void assign(size_type n, const value_type& u);
     void assign(initializer_list<value_type>);
     allocator_type get_allocator() const noexcept;
     
-    // \ref{pathfactory.iterators}, iterators:
+    // \ref{pathbuilder.iterators}, iterators:
     iterator begin() noexcept;
     const_iterator begin() const noexcept;
     const_iterator cbegin() const noexcept;
@@ -88,7 +88,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     const_reverse_iterator rend() const noexcept;
     const_reverse_iterator crend() const noexcept;
     
-    // \ref{pathfactory.capacity}, capacity
+    // \ref{pathbuilder.capacity}, capacity
     bool empty() const noexcept;
     size_type size() const noexcept;
     size_type max_size() const noexcept;
@@ -108,7 +108,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     reference back();
     const_reference back() const;
 
-    // \ref{pathfactory.modifiers}, modifiers:
+    // \ref{pathbuilder.modifiers}, modifiers:
     void new_path() noexcept;
     void close_path() noexcept;
     void arc_clockwise(const vector_2d& center, double radius, double angle1,
@@ -148,12 +148,12 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       initializer_list<value_type> il);
     iterator erase(const_iterator position);
     iterator erase(const_iterator first, const_iterator last);
-    void swap(path_factory&)
+    void swap(path_builder&)
       noexcept(allocator_traits<Allocator>::propagate_on_container_swap::value 
         || allocator_traits<Allocator>::is_always_equal::value);
     void clear() noexcept;
 
-    // \ref{pathfactory.observers}, observers:
+    // \ref{pathbuilder.observers}, observers:
     experimental::io2d::rectangle path_extents() const noexcept;
     bool has_current_point() const noexcept;
     vector_2d current_point() const;
@@ -163,57 +163,57 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   };
   
   template <class Allocator>
-  bool operator==(const path_factory<Allocator>& lhs, 
-    const path_factory<Allocator>& rhs);
+  bool operator==(const path_builder<Allocator>& lhs, 
+    const path_builder<Allocator>& rhs);
   template <class Allocator>
-  bool operator!=(const path_factory<Allocator>& lhs, 
-    const path_factory<Allocator>& rhs);
+  bool operator!=(const path_builder<Allocator>& lhs, 
+    const path_builder<Allocator>& rhs);
   
-  // \ref{pathfactory.special}, specialized algorithms:
+  // \ref{pathbuilder.special}, specialized algorithms:
   template <class Allocator>
-  void swap(path_factory<Allocator>& lhs, path_factory<Allocator>& rhs)
+  void swap(path_builder<Allocator>& lhs, path_builder<Allocator>& rhs)
     noexcept(noexcept(lhs.swap(rhs)));
 } } } }
 \end{codeblock}
 
-\rSec1 [pathfactory.containerrequirements] {\tcode{path_factory} container requirements}
+\rSec1 [pathbuilder.containerrequirements] {\tcode{path_builder} container requirements}
 
 \pnum
 This class shall be considered a sequence container, as defined in [containers] in \cppseventeen, and all sequence container requirements that apply specifically to \tcode{vector} shall also apply to this class.
 
-\rSec1 [pathfactory.cons] {\tcode{path_factory} constructors, copy, and assignment}
+\rSec1 [pathbuilder.cons] {\tcode{path_builder} constructors, copy, and assignment}
 
-\indexlibrary{\idxcode{path_factory}!constructor}
+\indexlibrary{\idxcode{path_builder}!constructor}
 \begin{itemdecl}
-	explicit path_factory(const Allocator&);
+	explicit path_builder(const Allocator&);
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an empty \tcode{path_factory}, using the specified allocator.
+	Constructs an empty \tcode{path_builder}, using the specified allocator.
 	
 	\pnum
 	\complexity
 	Constant.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!constructor}
+\indexlibrary{\idxcode{path_builder}!constructor}
 \begin{itemdecl}
-	explicit path_factory(size_type n, const Allocator& = Allocator());
+	explicit path_builder(size_type n, const Allocator& = Allocator());
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs a \tcode{path_factory} with \tcode{n} default-inserted elements using the specified allocator.
+	Constructs a \tcode{path_builder} with \tcode{n} default-inserted elements using the specified allocator.
 	
 	\pnum
 	\complexity
 	Linear in \tcode{n}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!constructor}
+\indexlibrary{\idxcode{path_builder}!constructor}
 \begin{itemdecl}
-	path_factory(size_type n, const value_type& value,
+	path_builder(size_type n, const value_type& value,
 	  const Allocator& = Allocator());
 \end{itemdecl}
 \begin{itemdescr}
@@ -223,23 +223,23 @@ This class shall be considered a sequence container, as defined in [containers] 
 	
 	\pnum
 	\effects
-	Constructs a \tcode{path_factory} with n copies of \tcode{value}, using the specified allocator.
+	Constructs a \tcode{path_builder} with n copies of \tcode{value}, using the specified allocator.
 	
 	\pnum
 	\complexity
 	Linear in \tcode{n}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!constructor}
+\indexlibrary{\idxcode{path_builder}!constructor}
 \begin{itemdecl}
 	template <class InputIterator>
-	path_factory(InputIterator first, InputIterator last,
+	path_builder(InputIterator first, InputIterator last,
 	  const Allocator& = Allocator());
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs a \tcode{path_factory} equal to the range \range{first}{last}, using the specified allocator.
+	Constructs a \tcode{path_builder} equal to the range \range{first}{last}, using the specified allocator.
 	
 	\pnum
 	\complexity
@@ -259,10 +259,10 @@ This class shall be considered a sequence container, as defined in [containers] 
 	
 \end{itemdescr}
 
-\rSec1 [pathfactory.capacity] {\tcode{path_factory} capacity}
+\rSec1 [pathbuilder.capacity] {\tcode{path_builder} capacity}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{capacity}}
-\indexlibrary{\idxcode{capacity}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{capacity}}
+\indexlibrary{\idxcode{capacity}!\idxcode{path_builder}}
 \begin{itemdecl}
 	size_type capacity() const noexcept;
 \end{itemdecl}
@@ -272,8 +272,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	The total number of elements that the path factory can hold without requiring reallocation.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{reserve}}
-\indexlibrary{\idxcode{reserve}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{reserve}}
+\indexlibrary{\idxcode{reserve}!\idxcode{path_builder}}
 \begin{itemdecl}
 	void reserve(size_type n);
 \end{itemdecl}
@@ -313,8 +313,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	\tcode{capacity()}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{shrink_to_fit}}
-\indexlibrary{\idxcode{shrink_to_fit}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{shrink_to_fit}}
+\indexlibrary{\idxcode{shrink_to_fit}!\idxcode{path_builder}}
 \begin{itemdecl}
 	void shrink_to_fit();
 \end{itemdecl}
@@ -345,10 +345,10 @@ This class shall be considered a sequence container, as defined in [containers] 
 	happens, they remain valid.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{swap}}
-\indexlibrary{\idxcode{swap}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{swap}}
+\indexlibrary{\idxcode{swap}!\idxcode{path_builder}}
 \begin{itemdecl}
-	void swap(path_factory&)
+	void swap(path_builder&)
 	noexcept(allocator_traits<Allocator>::propagate_on_container_swap::value ||
 	allocator_traits<Allocator>::is_always_equal::value);
 \end{itemdecl}
@@ -366,8 +366,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	Constant time.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{resize}}
-\indexlibrary{\idxcode{resize}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{resize}}
+\indexlibrary{\idxcode{resize}!\idxcode{path_builder}}
 \begin{itemdecl}
 	void resize(size_type sz);
 \end{itemdecl}
@@ -390,8 +390,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	\tcode{value_type} there are no effects.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{resize}}
-\indexlibrary{\idxcode{resize}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{resize}}
+\indexlibrary{\idxcode{resize}!\idxcode{path_builder}}
 \begin{itemdecl}
 	void resize(size_type sz, const value_type& c);
 \end{itemdecl}
@@ -411,10 +411,10 @@ This class shall be considered a sequence container, as defined in [containers] 
 	If an exception is thrown there are no effects.
 \end{itemdescr}
 
-\rSec1 [pathfactory.modifiers] {\tcode{path_factory} modifiers}
+\rSec1 [pathbuilder.modifiers] {\tcode{path_builder} modifiers}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{new_path}}
-\indexlibrary{\idxcode{new_path}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{new_path}}
+\indexlibrary{\idxcode{new_path}!\idxcode{path_builder}}
 \begin{itemdecl}
     void new_path() noexcept;
 \end{itemdecl}
@@ -424,8 +424,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::new_path()} to the end of the path group and destroys the value, if any, of the current point.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{close_path}}
-\indexlibrary{\idxcode{close_path}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{close_path}}
+\indexlibrary{\idxcode{close_path}!\idxcode{path_builder}}
 \begin{itemdecl}
     void close_path() noexcept;
 \end{itemdecl}
@@ -439,8 +439,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::close_path()} to the end of the path group and sets the value of the current point to the value of the last-move-to point.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{arc_clockwise}}
-\indexlibrary{\idxcode{arc_clockwise}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{arc_clockwise}}
+\indexlibrary{\idxcode{arc_clockwise}!\idxcode{path_builder}}
 \begin{itemdecl}
     void arc_clockwise(const vector_2d& center, double radius, double angle1,
       double angle2) noexcept;
@@ -457,8 +457,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	The current point shall be set to \tcode{vector_2d\{ radius * cos(angle2), -(radius * -sin(angle2)) \} + center}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{arc_counterclockwise}}
-\indexlibrary{\idxcode{arc_counterclockwise}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{arc_counterclockwise}}
+\indexlibrary{\idxcode{arc_counterclockwise}!\idxcode{path_builder}}
 \begin{itemdecl}
     void arc_counterclockwise(const vector_2d& center, double radius,
       double angle1, double angle2) noexcept;
@@ -475,8 +475,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	The current point shall be set to \tcode{vector_2d\{ radius * cos(angle1), radius * -sin(angle1) \} + center}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{cubic_curve_to}}
-\indexlibrary{\idxcode{cubic_curve_to}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{cubic_curve_to}}
+\indexlibrary{\idxcode{cubic_curve_to}!\idxcode{path_builder}}
 \begin{itemdecl}
     void cubic_curve_to(const vector_2d& pt0, const vector_2d& pt1,
       const vector_2d& pt2) noexcept;
@@ -493,8 +493,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	The current point shall be set to the value of \tcode{pt2}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{line_to}}
-\indexlibrary{\idxcode{line_to}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{line_to}}
+\indexlibrary{\idxcode{line_to}!\idxcode{path_builder}}
 \begin{itemdecl}
     void line_to(const vector_2d& pt) noexcept;
 \end{itemdecl}
@@ -510,8 +510,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	The current point shall be set to the value of \tcode{pt}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{move_to}}
-\indexlibrary{\idxcode{move_to}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{move_to}}
+\indexlibrary{\idxcode{move_to}!\idxcode{path_builder}}
 \begin{itemdecl}
     void move_to(const vector_2d& pt) noexcept;
 \end{itemdecl}
@@ -524,8 +524,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	The current point shall be set to the value of \tcode{pt}. The last-move-to point shall then be set to the value of the current point.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{quadratic_curve_to}}
-\indexlibrary{\idxcode{quadratic_curve_to}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{quadratic_curve_to}}
+\indexlibrary{\idxcode{quadratic_curve_to}!\idxcode{path_builder}}
 \begin{itemdecl}
 	void quadratic_curve_to(const vector_2d& pt0, const vector_2d& pt1)
 	  noexcept;
@@ -542,8 +542,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	The current point shall be set to the value of \tcode{pt1}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{rectangle}}
-\indexlibrary{\idxcode{rectangle}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{rectangle}}
+\indexlibrary{\idxcode{rectangle}!\idxcode{path_builder}}
 \begin{itemdecl}
     void rectangle(const experimental::io2d::rectangle& r) noexcept;
 \end{itemdecl}
@@ -567,8 +567,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	\end{enumerate}
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{rel_cubic_curve_to}}
-\indexlibrary{\idxcode{rel_cubic_curve_to}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{rel_cubic_curve_to}}
+\indexlibrary{\idxcode{rel_cubic_curve_to}!\idxcode{path_builder}}
 \begin{itemdecl}
     void rel_cubic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1,
       const vector_2d& dpt2) noexcept;
@@ -586,8 +586,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	The current point shall be set to the value of the current point added to \tcode{dpt2}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{rel_line_to}}
-\indexlibrary{\idxcode{rel_line_to}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{rel_line_to}}
+\indexlibrary{\idxcode{rel_line_to}!\idxcode{path_builder}}
 \begin{itemdecl}
     void rel_line_to(const vector_2d& dpt) noexcept;
 \end{itemdecl}
@@ -604,8 +604,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	The current point shall be set to the value of the current point added to \tcode{dpt}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{rel_move_to}}
-\indexlibrary{\idxcode{rel_move_to}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{rel_move_to}}
+\indexlibrary{\idxcode{rel_move_to}!\idxcode{path_builder}}
 \begin{itemdecl}
     void rel_move_to(const vector_2d& dpt) noexcept;
 \end{itemdecl}
@@ -622,8 +622,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	The current point shall be set to the value of the current point added to \tcode{dpt}.The last-move-to point shall then be set to the value of the current point.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{rel_quadratic_curve_to}}
-\indexlibrary{\idxcode{rel_quadratic_curve_to}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{rel_quadratic_curve_to}}
+\indexlibrary{\idxcode{rel_quadratic_curve_to}!\idxcode{path_builder}}
 \begin{itemdecl}
 	void rel_quadratic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1)
 	  noexcept;
@@ -641,8 +641,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	The current point shall be set to the value of the current point added to \tcode{dpt1}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{transform_matrix}}
-\indexlibrary{\idxcode{transform_matrix}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{transform_matrix}}
+\indexlibrary{\idxcode{transform_matrix}!\idxcode{path_builder}}
 \begin{itemdecl}
     void transform_matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
@@ -659,8 +659,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	The transformation matrix shall be set to the value of \tcode{m}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{origin}}
-\indexlibrary{\idxcode{origin}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{origin}}
+\indexlibrary{\idxcode{origin}!\idxcode{path_builder}}
 \begin{itemdecl}
     void origin(const vector_2d& pt) noexcept;
 \end{itemdecl}
@@ -673,12 +673,12 @@ This class shall be considered a sequence container, as defined in [containers] 
 	The origin shall be set to the value of \tcode{pt}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{insert}}
-\indexlibrary{\idxcode{insert}!\idxcode{path_factory}}
-\indexlibrary{\idxcode{path_factory}!\idxcode{emplace_back}}
-\indexlibrary{\idxcode{emplace_back}!\idxcode{path_factory}}
-\indexlibrary{\idxcode{path_factory}!\idxcode{push_back}}
-\indexlibrary{\idxcode{push_back}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{insert}}
+\indexlibrary{\idxcode{insert}!\idxcode{path_builder}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{emplace_back}}
+\indexlibrary{\idxcode{emplace_back}!\idxcode{path_builder}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{push_back}}
+\indexlibrary{\idxcode{push_back}!\idxcode{path_builder}}
 \begin{itemdecl}
 	iterator insert(const_iterator position, const value_type& x);
 	iterator insert(const_iterator position, value_type&& x);
@@ -719,10 +719,10 @@ This class shall be considered a sequence container, as defined in [containers] 
 	distance to the end of the path factory.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{erase}}
-\indexlibrary{\idxcode{erase}!\idxcode{path_factory}}
-\indexlibrary{\idxcode{path_factory}!\idxcode{pop_back}}
-\indexlibrary{\idxcode{pop_back}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{erase}}
+\indexlibrary{\idxcode{erase}!\idxcode{path_builder}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{pop_back}}
+\indexlibrary{\idxcode{pop_back}!\idxcode{path_builder}}
 \begin{itemdecl}
 	iterator erase(const_iterator position);
 	iterator erase(const_iterator first, const_iterator last);
@@ -748,8 +748,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	\tcode{value_type}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{clear}}
-\indexlibrary{\idxcode{clear}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{clear}}
+\indexlibrary{\idxcode{clear}!\idxcode{path_builder}}
 \begin{itemdecl}
 	void clear() noexcept;
 \end{itemdecl}
@@ -770,12 +770,12 @@ This class shall be considered a sequence container, as defined in [containers] 
 	The postconditions listed above are in addition to sequence container requirements for this function.
 \end{itemdescr}
 
-\rSec1 [pathfactory.iterators] {\tcode{path_factory} iterators}
+\rSec1 [pathbuilder.iterators] {\tcode{path_builder} iterators}
     
-\indexlibrary{\idxcode{path_factory}!\idxcode{begin}}
-\indexlibrary{\idxcode{begin}!\idxcode{path_factory}}
-\indexlibrary{\idxcode{path_factory}!\idxcode{cbegin}}
-\indexlibrary{\idxcode{cbegin}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{begin}}
+\indexlibrary{\idxcode{begin}!\idxcode{path_builder}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{cbegin}}
+\indexlibrary{\idxcode{cbegin}!\idxcode{path_builder}}
 \begin{itemdecl}
 	iterator begin() noexcept;
 	const_iterator begin() const noexcept;
@@ -791,10 +791,10 @@ This class shall be considered a sequence container, as defined in [containers] 
 	Changing a \tcode{path_data::path_data_types} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_data_types} object or of any subsequent \tcode{path_data::path_data_types} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} unless all of the violations are fixed prior to such processing.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{end}}
-\indexlibrary{\idxcode{end}!\idxcode{path_factory}}
-\indexlibrary{\idxcode{path_factory}!\idxcode{cend}}
-\indexlibrary{\idxcode{cend}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{end}}
+\indexlibrary{\idxcode{end}!\idxcode{path_builder}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{cend}}
+\indexlibrary{\idxcode{cend}!\idxcode{path_builder}}
 \begin{itemdecl}
 	iterator end() noexcept;
 	const_iterator end() const noexcept;
@@ -810,10 +810,10 @@ This class shall be considered a sequence container, as defined in [containers] 
 	Changing a \tcode{path_data::path_data_types} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_data_types} object or of any subsequent \tcode{path_data::path_data_types} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} unless all of the violations are fixed prior to such processing.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{rbegin}}
-\indexlibrary{\idxcode{rbegin}!\idxcode{path_factory}}
-\indexlibrary{\idxcode{path_factory}!\idxcode{crbegin}}
-\indexlibrary{\idxcode{crbegin}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{rbegin}}
+\indexlibrary{\idxcode{rbegin}!\idxcode{path_builder}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{crbegin}}
+\indexlibrary{\idxcode{crbegin}!\idxcode{path_builder}}
 \begin{itemdecl}
 	reverse_iterator rbegin() noexcept;
 	const_reverse_iterator rbegin() const noexcept;
@@ -829,10 +829,10 @@ This class shall be considered a sequence container, as defined in [containers] 
 	Changing a \tcode{path_data::path_data_types} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_data_types} object or of any subsequent \tcode{path_data::path_data_types} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} all of the violations are fixed prior to such processing.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{rend}}
-\indexlibrary{\idxcode{rend}!\idxcode{path_factory}}
-\indexlibrary{\idxcode{path_factory}!\idxcode{crend}}
-\indexlibrary{\idxcode{crend}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{rend}}
+\indexlibrary{\idxcode{rend}!\idxcode{path_builder}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{crend}}
+\indexlibrary{\idxcode{crend}!\idxcode{path_builder}}
 \begin{itemdecl}
 	reverse_iterator rend() noexcept;
 	const_reverse_iterator rend() const noexcept;
@@ -848,10 +848,10 @@ This class shall be considered a sequence container, as defined in [containers] 
 	Changing a \tcode{path_data::path_data_types} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_data_types} object or of any subsequent \tcode{path_data::path_data_types} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} unless all of the violations are fixed prior to such processing.
 \end{itemdescr}
 
-\rSec1 [pathfactory.observers] {\tcode{path_factory} observers}
+\rSec1 [pathbuilder.observers] {\tcode{path_builder} observers}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{path_extents}}
-\indexlibrary{\idxcode{path_extents}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{path_extents}}
+\indexlibrary{\idxcode{path_extents}!\idxcode{path_builder}}
 \begin{itemdecl}
     experimental::io2d::rectangle path_extents() const noexcept;
 \end{itemdecl}
@@ -864,8 +864,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	\exitnote
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{has_current_point}}
-\indexlibrary{\idxcode{has_current_point}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{has_current_point}}
+\indexlibrary{\idxcode{has_current_point}!\idxcode{path_builder}}
 \begin{itemdecl}
     bool has_current_point() const noexcept;
 \end{itemdecl}
@@ -875,8 +875,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	If the current point contains a value, \tcode{true}, otherwise \tcode{false}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{current_point}}
-\indexlibrary{\idxcode{current_point}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{current_point}}
+\indexlibrary{\idxcode{current_point}!\idxcode{path_builder}}
 \begin{itemdecl}
     vector_2d current_point() const noexcept;
 \end{itemdecl}
@@ -890,8 +890,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	The value of the current point.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{transform_matrix}}
-\indexlibrary{\idxcode{transform_matrix}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{transform_matrix}}
+\indexlibrary{\idxcode{transform_matrix}!\idxcode{path_builder}}
 \begin{itemdecl}
     matrix_2d transform_matrix() const noexcept;
 \end{itemdecl}
@@ -901,8 +901,8 @@ This class shall be considered a sequence container, as defined in [containers] 
 	The value of the transformation matrix.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_factory}!\idxcode{origin}}
-\indexlibrary{\idxcode{origin}!\idxcode{path_factory}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{origin}}
+\indexlibrary{\idxcode{origin}!\idxcode{path_builder}}
 \begin{itemdecl}
     vector_2d origin() const noexcept;
 \end{itemdecl}
@@ -912,13 +912,13 @@ This class shall be considered a sequence container, as defined in [containers] 
 	The value of the origin.
 \end{itemdescr}
 
-\rSec1[pathfactory.special] {\tcode{path_factory} specialized algorithms}
+\rSec1[pathbuilder.special] {\tcode{path_builder} specialized algorithms}
 
-\indexlibrary{path_factory}{swap}
-\indexlibrary{swap}{path_factory}
+\indexlibrary{path_builder}{swap}
+\indexlibrary{swap}{path_builder}
 \begin{itemdecl}
 	template <class Allocator>
-	void swap(path_factory<Allocator>& lhs, path_factory<Allocator>& rhs)
+	void swap(path_builder<Allocator>& lhs, path_builder<Allocator>& rhs)
 	  noexcept(noexcept(lhs.swap(rhs)));
 \end{itemdecl}
 \begin{itemdescr}

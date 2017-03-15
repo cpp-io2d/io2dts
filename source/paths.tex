@@ -6,7 +6,7 @@
 Paths define geometric objects which can be stroked (Table~\ref{tab:surface.rendering.operations}), filled, masked, and used to define or modify a Clip Area (Table~\ref{tab:surface.state.listing}).
 
 \pnum
-Paths are created using a \tcode{path_factory} object, which stores a path group. 
+Paths are created using a \tcode{path_builder} object, which stores a path group. 
 
 \pnum
 Paths provide vector graphics functionality. As such they are particularly useful in situations where an application is intended to run on a variety of platforms whose output devices (\ref{displaysurface.intro}) span a large gamut of sizes, both in terms of measurement units and in terms of a horizontal and vertical pixel count, in that order. For example, a pixel count expressed as 1280x720 means that there are 1280 horizontal pixels per row of pixels and 720 vertical pixels per column of pixels for a total of 921600 pixels.
@@ -18,7 +18,7 @@ Paths provide vector graphics functionality. As such they are particularly usefu
 A path may contain degenerate path segments because of special rules, e.g. the \tcode{line_cap} state of a \tcode{surface} object when they are rendered, which are set forth below.
 
 \pnum
-A \tcode{path_group} object is an immutable resource wrapper containing a path group (\ref{pathgroup}). A \tcode{path_group} object is created from a \tcode{path_factory} object. It can also be default constructed, in which case the \tcode{path_group} object contains no paths.
+A \tcode{path_group} object is an immutable resource wrapper containing a path group (\ref{pathgroup}). A \tcode{path_group} object is created from a \tcode{path_builder} object. It can also be default constructed, in which case the \tcode{path_group} object contains no paths.
 
 \rSec1 [paths.processing] {Processing paths}
 
@@ -70,7 +70,7 @@ The coordinates of a path group are in whatever units the user desires. Path ins
 The source code below demonstrates how to properly convert a path group into a processed path group.
 
 \pnum
-The \tcode{process_path_data} function template transforms the path group contained in a \tcode{path_factory} class template object into a processed path group which is returned as a \tcode{vector<path_data::path_data_types>} object. The processed path group only contains \tcode{path_data::abs_move}, \tcode{path_data::abs_line}, \tcode{path_data::abs_cubic_curve}, and \tcode{path_data::close_path} path items.
+The \tcode{process_path_data} function template transforms the path group contained in a \tcode{path_builder} class template object into a processed path group which is returned as a \tcode{vector<path_data::path_data_types>} object. The processed path group only contains \tcode{path_data::abs_move}, \tcode{path_data::abs_line}, \tcode{path_data::abs_cubic_curve}, and \tcode{path_data::close_path} path items.
 
 \input{path-process-code}
 

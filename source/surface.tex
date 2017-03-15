@@ -64,7 +64,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       const optional<render_props>& rp = nullopt,
       const optional<clip_props>& cl = nullopt);
     template <class Allocator>
-    void stroke(const brush& b, const path_factory<Allocator>& pf,
+    void stroke(const brush& b, const path_builder<Allocator>& pb,
       const optional<brush_props>& bp = nullopt,
       const optional<stroke_props>& sp = nullopt,
       const optional<dashes>& d = nullopt,
@@ -77,7 +77,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       const optional<render_props>& rp = nullopt,
       const optional<clip_props>& cl = nullopt);
     template <class Allocator>
-    void fill(const brush& b, const path_factory<Allocator>& pf,
+    void fill(const brush& b, const path_builder<Allocator>& pb,
       const optional<brush_props>& bp = nullopt,
       const optional<render_props>& rp = nullopt,
       const optional<clip_props>& cl = nullopt);
@@ -87,7 +87,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       const optional<clip_props>& cl = nullopt);
     template <class Allocator>
     void mask(const brush& b, const brush& mb,
-      const path_factory<Allocator>& pf,
+      const path_builder<Allocator>& pb,
       const optional<brush_props>& bp = nullopt,
       const optional<mask_props>& mp = nullopt,
       const optional<render_props>&rp = nullopt,
@@ -468,7 +468,7 @@ The errors, if any, produced by this function are \impldef{surface!paint}.
 \indexlibrary{\idxcode{stroke}!\idxcode{surface}}
 \begin{itemdecl}
 template <class Allocator>
-void stroke(const brush& b, const path_factory<Allocator>& pf,
+void stroke(const brush& b, const path_builder<Allocator>& pb,
   const optional<brush_props>& bp = nullopt,
   const optional<stroke_props>& sp = nullopt,
   const optional<dashes>& d = nullopt,
@@ -502,7 +502,7 @@ The errors, if any, produced by this function are \impldef{surface!stroke}.
 \indexlibrary{\idxcode{fill}!\idxcode{surface}}
 \begin{itemdecl}
 template <class Allocator>
-void fill(const brush& b, const path_factory<Allocator>& pf,
+void fill(const brush& b, const path_builder<Allocator>& pb,
   const optional<brush_props>& bp = nullopt,
   const optional<render_props>& rp = nullopt,
   const optional<clip_props>& cl = nullopt);
@@ -533,7 +533,7 @@ The errors, if any, produced by this function are \impldef{surface!fill}.
 \begin{itemdecl}
 template <class Allocator>
 void mask(const brush& b, const brush& mb,
-  const path_factory<Allocator>& pf,
+  const path_builder<Allocator>& pb,
   const optional<brush_props>& bp = nullopt,
   const optional<mask_props>& mp = nullopt,
   const optional<render_props>&rp = nullopt,

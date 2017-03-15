@@ -82,49 +82,49 @@ namespace std { namespace experimental {
   class path;
 
   template <class Allocator = allocator<path_data::path_data_types>>
-  class path_factory {
+  class path_builder {
   public:
     using value_type = path_data::path_data_types;
     using allocator_type = Allocator;
     using reference = value_type&;
     using const_reference = const value_type&;
-    using size_type       = @\impdefx{type of \tcode{path_factory::size_type}}@. // See [container.requirements] in \cppseventeen.
-    using difference_type = @\impdefx{type of \tcode{path_factory::size_type}}@. // See [container.requirements] in \cppseventeen.
-    using iterator       = @\impdefx{type of \tcode{path_factory::iterator}}@. // See [container.requirements] in \cppseventeen.
-    using const_iterator = @\impdefx{type of \tcode{path_factory::const_iterator}}@. // See [container.requirements] in \cppseventeen.
+    using size_type       = @\impdefx{type of \tcode{path_builder::size_type}}@. // See [container.requirements] in \cppseventeen.
+    using difference_type = @\impdefx{type of \tcode{path_builder::size_type}}@. // See [container.requirements] in \cppseventeen.
+    using iterator       = @\impdefx{type of \tcode{path_builder::iterator}}@. // See [container.requirements] in \cppseventeen.
+    using const_iterator = @\impdefx{type of \tcode{path_builder::const_iterator}}@. // See [container.requirements] in \cppseventeen.
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
     
-    // \ref{pathfactory.cons}, construct, copy, move, destroy:
-    path_factory() noexcept(noexcept(Allocator())) :
-      path_factory(Allocator()) { }
-    explicit path_factory(const Allocator&) noexcept;
-    explicit path_factory(size_type n, const Allocator& = Allocator());
-    path_factory(size_type n, const value_type& value,
+    // \ref{pathbuilder.cons}, construct, copy, move, destroy:
+    path_builder() noexcept(noexcept(Allocator())) :
+      path_builder(Allocator()) { }
+    explicit path_builder(const Allocator&) noexcept;
+    explicit path_builder(size_type n, const Allocator& = Allocator());
+    path_builder(size_type n, const value_type& value,
       const Allocator& = Allocator());
     template <class InputIterator>
-    path_factory(InputIterator first, InputIterator last,
+    path_builder(InputIterator first, InputIterator last,
       const Allocator& = Allocator());
-    path_factory(const path_factory& x);
-    path_factory(path_factory&&) noexcept;
-    path_factory(const path_factory&, const Allocator&);
-    path_factory(path_factory&&, const Allocator&);
-    path_factory(initializer_list<value_type>, const Allocator& = Allocator());
-    ~path_factory();
-    path_factory& operator=(const path_factory& x);
-    path_factory& operator=(path_factory&& x)
+    path_builder(const path_builder& x);
+    path_builder(path_builder&&) noexcept;
+    path_builder(const path_builder&, const Allocator&);
+    path_builder(path_builder&&, const Allocator&);
+    path_builder(initializer_list<value_type>, const Allocator& = Allocator());
+    ~path_builder();
+    path_builder& operator=(const path_builder& x);
+    path_builder& operator=(path_builder&& x)
       noexcept(
       allocator_traits<Allocator>::propagate_on_container_move_assignment::value
       ||
       allocator_traits<Allocator>::is_always_equal::value);
-    path_factory& operator=(initializer_list<value_type>);
+    path_builder& operator=(initializer_list<value_type>);
     template <class InputIterator>
     void assign(InputIterator first, InputIterator last);
     void assign(size_type n, const value_type& u);
     void assign(initializer_list<value_type>);
     allocator_type get_allocator() const noexcept;
     
-    // \ref{pathfactory.iterators}, iterators:
+    // \ref{pathbuilder.iterators}, iterators:
     iterator begin() noexcept;
     const_iterator begin() const noexcept;
     const_iterator cbegin() const noexcept;
@@ -141,7 +141,7 @@ namespace std { namespace experimental {
     const_reverse_iterator rend() const noexcept;
     const_reverse_iterator crend() const noexcept;
     
-    // \ref{pathfactory.capacity}, capacity
+    // \ref{pathbuilder.capacity}, capacity
     bool empty() const noexcept;
     size_type size() const noexcept;
     size_type max_size() const noexcept;
@@ -161,7 +161,7 @@ namespace std { namespace experimental {
     reference back();
     const_reference back() const;
 
-    // \ref{pathfactory.modifiers}, modifiers:
+    // \ref{pathbuilder.modifiers}, modifiers:
     void new_path() noexcept;
     void close_path() noexcept;
     void arc_clockwise(const vector_2d& center, double radius, double angle1,
@@ -201,12 +201,12 @@ namespace std { namespace experimental {
       initializer_list<value_type> il);
     iterator erase(const_iterator position);
     iterator erase(const_iterator first, const_iterator last);
-    void swap(path_factory&)
+    void swap(path_builder&)
       noexcept(allocator_traits<Allocator>::propagate_on_container_swap::value 
         || allocator_traits<Allocator>::is_always_equal::value);
     void clear() noexcept;
 
-    // \ref{pathfactory.observers}, observers:
+    // \ref{pathbuilder.observers}, observers:
     experimental::io2d::rectangle path_extents() const noexcept;
     bool has_current_point() const noexcept;
     vector_2d current_point() const;
@@ -216,15 +216,15 @@ namespace std { namespace experimental {
   }
 
   template <class Allocator>
-  bool operator==(const path_factory<Allocator>& lhs, 
-    const path_factory<Allocator>& rhs);
+  bool operator==(const path_builder<Allocator>& lhs, 
+    const path_builder<Allocator>& rhs);
   template <class Allocator>
-  bool operator!=(const path_factory<Allocator>& lhs, 
-    const path_factory<Allocator>& rhs);
+  bool operator!=(const path_builder<Allocator>& lhs, 
+    const path_builder<Allocator>& rhs);
   
-  // \ref{pathfactory.special}, specialized algorithms:
+  // \ref{pathbuilder.special}, specialized algorithms:
   template <class Allocator>
-  void swap(path_factory<Allocator>& lhs, path_factory<Allocator>& rhs)
+  void swap(path_builder<Allocator>& lhs, path_builder<Allocator>& rhs)
     noexcept(noexcept(lhs.swap(rhs)));
   
   class color_stop;
