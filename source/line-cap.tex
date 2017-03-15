@@ -14,7 +14,7 @@ Table~\ref{tab:linecap.meanings} for the meaning of each
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   enum class line_cap {
-    butt,
+    none,
     round,
     square
   };
@@ -36,7 +36,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  & \rhdr{Meaning}
  \\ \capsep
  \endhead
- \tcode{butt}
+ \tcode{none}
  & The line has no cap. It terminates exactly at the end \tcode{point}.
  \\
  \tcode{round}
