@@ -1,22 +1,22 @@
 %!TEX root = io2d.tex
-\rSec0 [compositing.operator] {Enum class \tcode{compositing_operator}}
+\rSec0 [compositingop] {Enum class \tcode{compositing_op}}
 
-\rSec1 [compositing.operator.summary] {\tcode{compositing_operator} 
+\rSec1 [compositingop.summary] {\tcode{compositing_op} 
 Summary}
 
 \pnum
-The \tcode{compositing_operator} enum class specifies composition algorithms. See Table~\ref{tab:compositing.operator.meanings.basic}, 
-Table~\ref{tab:compositing.operator.meanings.blend} and 
-Table~\ref{tab:compositing.operator.meanings.hsl} for the meaning of 
-each \tcode{compositing_operator} enumerator.
+The \tcode{compositing_op} enum class specifies composition algorithms. See Table~\ref{tab:compositingop.meanings.basic}, 
+Table~\ref{tab:compositingop.meanings.blend} and 
+Table~\ref{tab:compositingop.meanings.hsl} for the meaning of 
+each \tcode{compositing_op} enumerator.
 
-\rSec1 [compositing.operator.synopsis] {\tcode{compositing_operator} 
+\rSec1 [compositingop.synopsis] {\tcode{compositing_op} 
 Synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace drawing { inline namespace 
 v1 {
-  enum class compositing_operator {
+  enum class compositing_op {
     // basic
     over,
     clear,
@@ -53,7 +53,7 @@ v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [compositing.operator.enumerators] {\tcode{compositing_operator} 
+\rSec1 [compositingop.enumerators] {\tcode{compositing_op} 
 Enumerators}
 \pnum
 The tables below specifies the mathematical formula for each enumerator's composition algorithm. The formulas differentiate between three color channels (red, green, and blue) and an alpha channel (transparency). For all channels, valid channel values are in the range $[0.0, 1.0]$.
@@ -157,8 +157,8 @@ still set every area within the clip to transparent black. Areas outside the
 clip are not modified.
 
 \begin{libiotwodreqtab4b}
- {\tcode{compositing_operator} basic enumerator meanings}
- {tab:compositing.operator.meanings.basic}
+ {\tcode{compositing_op} basic enumerator meanings}
+ {tab:compositingop.meanings.basic}
  \\ \topline
  \lhdr{Enumerator}
  & \chdr{Bound}
@@ -317,8 +317,8 @@ is specified.
 
 \pnum
 For the enumerators in 
-Table~\ref{tab:compositing.operator.meanings.blend} and 
-Table~\ref{tab:compositing.operator.meanings.hsl} the result color's 
+Table~\ref{tab:compositingop.meanings.blend} and 
+Table~\ref{tab:compositingop.meanings.hsl} the result color's 
 alpha channel value formula is as follows: $Ra = Sa + Da \times (1 - Sa)$.
 \enternote
 Since it is the same formula for all enumerators in those tables, the formula 
@@ -329,8 +329,8 @@ is not included in those tables.
 All of the blend enumerators and hsl enumerators have a Bound value of 'N/A'.
 
 \begin{libreqtab2}
- {\tcode{compositing_operator} blend enumerator meanings}
- {tab:compositing.operator.meanings.blend}
+ {\tcode{compositing_op} blend enumerator meanings}
+ {tab:compositingop.meanings.blend}
  \\ \topline
  \lhdr{Enumerator}
  & \rhdr{Color}
@@ -507,8 +507,8 @@ modify the values of $R$ directly.
 \exitnote
 
 \begin{libreqtab2}
- {\tcode{compositing_operator} hsl enumerator meanings}
- {tab:compositing.operator.meanings.hsl}
+ {\tcode{compositing_op} hsl enumerator meanings}
+ {tab:compositingop.meanings.hsl}
  \\ \topline
  \lhdr{Enumerator}
  & \rhdr{Color \& Alpha}

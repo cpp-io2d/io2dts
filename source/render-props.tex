@@ -1,0 +1,27 @@
+%!TEX root = io2d.tex
+
+\rSec0 [renderprops] {Class \tcode{render_props}}
+
+\rSec1 [renderprops.summary] {\tcode{render_props} summary}
+
+\pnum
+The \tcode{render_props} class provides general state information that is applicable to all rendering and composing operations (\ref{surface.render}).
+
+\pnum
+It has a Transformation Matrix of type \tcode{matrix_2d}, an Antialiasing Value of type \tcode{antialias}, and a Compositing Operator of type \tcode{compositing_op}.
+
+\rSec1 [renderprops.synopsis] {\tcode{render_props} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class surface {
+  public:
+    constexpr render_props() noexcept;
+    constexpr explicit render_props(const matrix_2d& m,
+      experimental::io2d::antialias = experimental::io2d::good,
+      experimental::io2d::compositing_op = experimental::io2d::compositing_op::over) noexcept;
+    
+    // \ref{surface.modifiers.state}, state modifiers:
+  };
+}}}}
+\end{codeblock}
