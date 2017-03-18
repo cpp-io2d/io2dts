@@ -4,8 +4,7 @@
 \rSec1 [brushtype.summary] {\tcode{brush_type} Summary}
 
 \pnum
-The \tcode{brush_type} enum class denotes which brush factory was used 
-to form a \tcode{brush} object.
+The \tcode{brush_type} enum class denotes the type of a \tcode{brush} object.
 
 \pnum
 See Table~\ref{tab:brushtype.meanings} for the meaning of each
@@ -40,15 +39,15 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \\ \capsep
  \endhead
  \tcode{solid_color}
- & The \tcode{brush} object was created from a \tcode{solid_color_brush_factory} object.
+ & The \tcode{brush} object is a solid color brush.
  \\
  \tcode{surface}
- & The \tcode{brush} object was created from a \tcode{surface_brush_factory} object.
+ & The \tcode{brush} object is a surface brush.
  \\
  \tcode{linear}
- & The \tcode{brush} object was created from a \tcode{linear_brush_factory} object.
+ & The \tcode{brush} object is a linear gradient brush.
  \\
  \tcode{radial}
- & The \tcode{brush} object was created from a \tcode{radial_brush_factory} object.
+ & The \tcode{brush} object is a radial gradient brush.
  \\
 \end{libreqtab2}

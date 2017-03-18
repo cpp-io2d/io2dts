@@ -3,7 +3,7 @@
 \rSec0 [paths] {Paths}
 
 \pnum
-Paths define geometric objects which can be stroked (Table~\ref{tab:surface.rendering.operations}), filled, masked, and used to define or modify a Clip Area (Table~\ref{tab:surface.state.listing}).
+Paths define geometric objects which can be stroked (Table~\ref{tab:surface.rendering.operations}), filled, masked, and used to define a Clip Area (\ref{clipprops.summary}.
 
 \pnum
 Paths are created using a \tcode{path_builder} object, which stores a path group. 
@@ -63,7 +63,7 @@ Certain path instructions and path segments will modify this state data. The sta
 
 \pnum
 \enternote
-The coordinates of a path group are in whatever units the user desires. Path instructions such as \tcode{path_data::change_matrix} and \tcode{path_data::change_origin} affect the interpretation of instructions and segments that follow them within the path group. The coordinates of points within the processed path group are further transformed by the a \tcode{surface}-derived object's Transformation Matrix (\ref{surface.state}) when the processed path group is used by any of the object's member functions.
+The coordinates of a processed path group are in whatever units the user desires. This coordinate space is known as the User Coordinate Space (\ref{surface.coordinatespaces}). Path instructions such as \tcode{path_data::change_matrix} and \tcode{path_data::change_origin} affect the interpretation of path items that follow them within the path group. When a rendering and composing operation takes place, the coordinates of points within the processed path group are transformed into coordinates in the Surface Coordinate Space (\ref{surface.coordinatespaces}) using the Surface Properties' (\ref{surface.rendering.commonstate}) Surface Matrix (\ref{surfaceprops.summary}).
 \exitnote
 
 \pnum

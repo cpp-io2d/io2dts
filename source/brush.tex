@@ -8,23 +8,20 @@
 The class \tcode{brush} describes an opaque wrapper for a graphics data graphics resource.
 
 \pnum
-A \tcode{brush} object shall be usable with any \tcode{surface} or \tcode{surface}-derived object.
+A \tcode{brush} object is usable with any \tcode{surface} or \tcode{surface}-derived object.
 
 \pnum
-A \tcode{brush} object's graphics data is immutable. It is observable only by the effect that it produces when the brush is used as a Source Brush (\ref{surface.sourcebrush}) or as a Mask Brush (\ref{surface.rendering} and \ref{surface.masking}).
+A \tcode{brush} object's graphics data is immutable. It is observable only by the effect that it produces when the brush is used as a Source Brush or as a Mask Brush (\ref{surface.rendering.brushes}).
 
 \pnum
-A \tcode{brush} object also has a tiling value of type \tcode{tiling}, a filter value of type \tcode{filter}, and a transformation matrix of type \tcode{matrix_2d}.
+A \tcode{brush} object has an immutable \tcode{brush_type} value which indicates which type of brush it is (Table~\ref{tab:brushtype.meanings}).
 
 \pnum
-A \tcode{brush} object has an immutable \tcode{brush_type} observable state data value which indicates which type of brush it is (Table~\ref{tab:brushtype.meanings}).
-
-\pnum
-The \tcode{brush} object's graphics data may have less precision than the graphics data of the brush factory object from which it was created.
+As a result of technological limitations and considerations, \tcode{brush} object's graphics data can have less precision than the data from which it was created.
 
 \pnum
 \enterexample
-Several graphics and rendering technologies that are currently widely used store individual color and alpha channel data as 8-bit unsigned normalized integer values while the \tcode{double} type that is used by the \tcode{rgba_color} class for individual color and alpha is often a 64-bit value. It is precisely these situations which the preceding paragraph is intended to address.
+Several graphics and rendering technologies that are currently widely used typically store individual color and alpha channel data as 8-bit unsigned normalized integer values while the \tcode{double} type that is used by the \tcode{rgba_color} class for individual color and alpha is often a 64-bit value. As such, it is possible for a loss of precision when transforming the 64-bit channel data of an \tcode{rgba_color} object to the 8-bit channel data that is commonly used internally in such graphics and rendering technologies.
 \exitexample
 
 \rSec1 [brush.synopsis] {\tcode{brush} synopsis}
@@ -34,38 +31,20 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class brush {
   public:
     // \ref{brush.cons}, construct/copy/move/destroy:
-    brush() = delete;
-    brush(const brush&);
-    brush& operator=(const brush&);
-    brush(brush&& other) noexcept;
-    brush& operator=(brush&& other) noexcept;
-    
-    brush(const rgba_color& c);
-    brush(const rgba_color& c, error_code& ec) noexcept;
-    template <class Allocator>
+    explicit brush(const rgba_color& c);
+    template <class InputIterator>
     brush(const vector_2d& begin, const vector_2d& end,
-      const color_stop_group<Allocator>& csg);
-    template <class Allocator>
+      InputIterator first, InputIterator last);
     brush(const vector_2d& begin, const vector_2d& end,
-      const color_stop_group<Allocator>& csg, error_code& ec) noexcept;
-    template <class Allocator>
+      initializer_list<color_stop> il);
+    template <class InputIterator>
     brush(const circle& start, const circle& end,
-      const color_stop_group<Allocator>& csg);
-    template <class Allocator>
+      InputIterator first, InputIterator last);
     brush(const circle& start, const circle& end,
-      const color_stop_group<Allocator>& csg, error_code& ec) noexcept;
-    brush(image_surface&& img);
-    brush(image_surface&& img, error_code& ec) noexcept;
-
-    // \ref{brush.modifiers}, modifiers:
-    void tiling(experimental::io2d::tiling e) noexcept;
-    void filter(experimental::io2d::filter f) noexcept;
-    void matrix(const matrix_2d& m) noexcept;
+      initializer_list<color_stop> il);
+    explicit brush(image_surface&& img);
 
     // \ref{brush.observers}, observers:
-    experimental::io2d::tiling tiling() const noexcept;
-    experimental::io2d::filter filter() const noexcept;
-    matrix_2d matrix() const noexcept;
     brush_type type() const noexcept;
   };
 } } } }
@@ -85,22 +64,22 @@ When sampling from a \tcode{brush} object \tcode{b}, the \tcode{brush_type} retu
 \rSec2 [brush.sampling.color] {Sampling from a color brush}
 
 \pnum
-When \tcode{b} is a color brush, then when sampling from \tcode{b}, the visual data returned shall always be the visual data equivalent \tcode{rgba_code} which was passed in when \tcode{b} was created, regardless of the point which is to be sampled and regardless of the return values of \tcode{b.tiling()}, \tcode{b.filter()}, and \tcode{b.matrix()}.
+When \tcode{b} is a color brush, then when sampling from \tcode{b}, the visual data returned shall always be the visual data equivalent \tcode{rgba_code} which was passed in when \tcode{b} was created, regardless of the point which is to be sampled and regardless of the return values of \tcode{b.wrap_mode()}, \tcode{b.filter()}, and \tcode{b.matrix()}.
 
 \rSec2 [brush.sampling.linear] {Sampling from a linear gradient brush}
 
 \pnum
-When \tcode{b} is a linear gradient brush, then when sampling from \tcode{b}, the visual data returned shall be from the point \tcode{pt} in the rendered linear gradient, where \tcode{pt} is the return value when passing the point to be sampled to \tcode{b.matrix().transform_coords} and the rendered linear gradient is created as specified by \ref{gradients.linear} and \ref{gradients.sampling}, taking into account the value of \tcode{b.tiling()}.
+When \tcode{b} is a linear gradient brush, then when sampling from \tcode{b}, the visual data returned shall be from the point \tcode{pt} in the rendered linear gradient, where \tcode{pt} is the return value when passing the point to be sampled to \tcode{b.matrix().transform_coords} and the rendered linear gradient is created as specified by \ref{gradients.linear} and \ref{gradients.sampling}, taking into account the value of \tcode{b.wrap_mode()}.
 
 \rSec2 [brush.sampling.radial] {Sampling from a radial gradient brush}
 
 \pnum
-When \tcode{b} is a radial gradient brush, then when sampling from \tcode{b}, the visual data returned shall be from the point \tcode{pt} in the rendered radial gradient, where \tcode{pt} is the return value when passing the point to be sampled to \tcode{b.matrix().transform_coords} and the rendered radial gradient is created as specified by \ref{gradients.radial} and \ref{gradients.sampling}, taking into account the value of \tcode{b.tiling()}.
+When \tcode{b} is a radial gradient brush, then when sampling from \tcode{b}, the visual data returned shall be from the point \tcode{pt} in the rendered radial gradient, where \tcode{pt} is the return value when passing the point to be sampled to \tcode{b.matrix().transform_coords} and the rendered radial gradient is created as specified by \ref{gradients.radial} and \ref{gradients.sampling}, taking into account the value of \tcode{b.wrap_mode()}.
 
 \rSec2 [brush.sampling.surface] {Sampling from a surface brush}
 
 \pnum
-When \tcode{b} is a surface brush, then when sampling from \tcode{b}, the visual data returned shall be from the point \tcode{pt} in the graphics data of the brush, where \tcode{pt} is the return value when passing the point to be sampled to \tcode{b.matrix().transform_coords}, taking into account the value of \tcode{b.tiling()} and \tcode{b.filter()}.
+When \tcode{b} is a surface brush, then when sampling from \tcode{b}, the visual data returned shall be from the point \tcode{pt} in the graphics data of the brush, where \tcode{pt} is the return value when passing the point to be sampled to \tcode{b.matrix().transform_coords}, taking into account the value of \tcode{b.wrap_mode()} and \tcode{b.filter()}.
 
 \rSec1 [brush.cons] {\tcode{brush} constructors and assignment operators}
 
@@ -121,7 +100,7 @@ The brush shall be a color brush.
 The brush's brush type shall be set to the value \tcode{brush_type::solid_color}.
 
 \pnum
-The brush's tiling shall be set to the value \tcode{experimental::io2d::tiling::none}.
+The brush's wrap mode shall be set to the value \tcode{experimental::io2d::wrap_mode::none}.
 
 \pnum
 The brush's filter shall be set to the value \tcode{experimental::io2d::filter::fast}.
@@ -168,7 +147,7 @@ The brush shall be a linear gradient brush.
 The brush's brush type shall be set to the value \tcode{brush_type::linear}.
 
 \pnum
-The brush's tiling shall be set to the value \tcode{experimental::io2d::tiling::none}.
+The brush's wrap mode shall be set to the value \tcode{experimental::io2d::wrap_mode::none}.
 
 \pnum
 The brush's filter shall be set to the value \tcode{experimental::io2d::filter::fast}.
@@ -196,12 +175,9 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \indexlibrary{\idxcode{brush}!constructor}
 \begin{itemdecl}
-template <class Allocator>
+template <class InputIterator>
 brush(const circle& start, const circle& end,
-  const color_stop_group<Allocator>& csg);
-template <class Allocator>
-brush(const circle& start, const circle& end,
-  const color_stop_group<Allocator>& csg, error_code& ec) noexcept;
+  InputIterator first, InputIterator last);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -209,19 +185,12 @@ brush(const circle& start, const circle& end,
 Constructs an object of type \tcode{brush}.
 
 \pnum
-The brush shall be a radial gradient brush.
+The brush is a radial gradient brush.
 
 \pnum
-The brush's brush type shall be set to the value \tcode{brush_type::radial}.
 
 \pnum
-The brush's tiling shall be set to the value \tcode{experimental::io2d::tiling::none}.
-
-\pnum
-The brush's filter shall be set to the value \tcode{experimental::io2d::filter::fast}.
-
-\pnum
-The brush's transformation matrix shall be set to the value \tcode{matrix_2d::init_identity()}.
+The brush's brush type is \tcode{brush_type::radial}.
 
 \pnum
 The graphics data of the brush is nominally as specified the introductory paragraphs of \ref{gradients} and in \ref{gradients.radial}. Its color stops shall be the values contained in \tcode{csg}. However because the graphics data is not directly observable, it is \unspecnorm what data is stored and how it is stored, provided that the results of sampling from the brush are the same as if the brush's graphics data was stored as specified in the introductory paragraphs of \ref{gradients} and in \ref{gradients.radial}.
@@ -229,22 +198,11 @@ The graphics data of the brush is nominally as specified the introductory paragr
 \pnum
 \remarks
 Sampling from this brush shall produce the results specified in \ref{brush.sampling.radial}.
-
-\pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-\pnum
-\errors
-\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
-
-\tcode{io2d_error::invalid_status} if there was a failure to allocate a resource other than memory.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{brush}!constructor}
 \begin{itemdecl}
-brush(image_surface&& img);
-brush(image_surface&& img, error_code& ec) noexcept;
+explicit brush(image_surface&& img);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -253,19 +211,13 @@ brush(image_surface&& img, error_code& ec) noexcept;
 Constructs an object of type \tcode{brush}.
 
 \pnum
-The brush shall be a surface brush.
+The brush is a surface brush.
 
 \pnum
-The brush's brush type shall be set to the value \tcode{brush_type::surface}.
+The brush's brush type is \tcode{brush_type::surface}.
 
 \pnum
-The brush's tiling shall be set to the value \tcode{experimental::io2d::tiling::none}.
-
-\pnum
-The brush's filter shall be set to the value \tcode{experimental::io2d::filter::good}.
-
-\pnum
-The brush's transformation matrix shall be set to the value \tcode{matrix_2d::init_identity()}.
+The graphics data of the brush is nominally the same as the graphics data of the \underlyingimagesurface of \tcode{img}. However because the graphics data is not directly observable, it is \unspecnorm what data is stored and how it is stored.
 
 \pnum
 The graphics data of the brush shall be the \underlyingimagesurface of \tcode{img}.
@@ -273,90 +225,11 @@ The graphics data of the brush shall be the \underlyingimagesurface of \tcode{im
 \pnum
 \remarks
 Sampling from this brush shall produce the results specified in \ref{brush.sampling.surface}.
-
-\pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-\pnum
-\errors
-\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
-
-\tcode{io2d_error::invalid_status} if there was a failure to allocate a resource other than memory.
-\end{itemdescr}
-
-\rSec1 [brush.modifiers]{\tcode{brush} modifiers}
-
-\indexlibrary{\idxcode{brush}!\idxcode{tiling}}
-\indexlibrary{\idxcode{tiling}!\idxcode{brush}}
-\begin{itemdecl}
-void tiling(experimental::io2d::tiling e) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-The brush's tiling shall be set to the value of \tcode{e}.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{brush}!\idxcode{filter}}
-\indexlibrary{\idxcode{filter}!\idxcode{brush}}
-\begin{itemdecl}
-void filter(experimental::io2d::filter f) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-The brush's filter shall be set to the value \tcode{f}.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{brush}!\idxcode{matrix}}
-\indexlibrary{\idxcode{matrix}!\idxcode{brush}}
-\begin{itemdecl}
-void matrix(const matrix_2d& m) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-The brush's transformation matrix shall be set to the value \tcode{m}.
 \end{itemdescr}
 
 \rSec1 [brush.observers]{\tcode{brush} observers}
 
-\indexlibrary{\idxcode{brush}!\idxcode{tiling}}
-\indexlibrary{\idxcode{tiling}!\idxcode{brush}}
-\begin{itemdecl}
-experimental::io2d::tiling tiling() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-The value of brush's tiling.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{brush}!\idxcode{filter}}
-\indexlibrary{\idxcode{filter}!\idxcode{brush}}
-\begin{itemdecl}
-experimental::io2d::filter filter() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-The value of the brush's filter.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{brush}!\idxcode{matrix}}
-\indexlibrary{\idxcode{matrix}!\idxcode{brush}}
-\begin{itemdecl}
-matrix_2d matrix() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-The value of the brush's transformation matrix.
-\end{itemdescr}
-
 \indexlibrary{\idxcode{brush}!\idxcode{type}}
-\indexlibrary{\idxcode{type}!\idxcode{brush}}
 \begin{itemdecl}
 brush_type type() const noexcept;
 \end{itemdecl}

@@ -1,0 +1,103 @@
+%!TEX root = io2d.tex
+
+\rSec0 [clipprops] {Class \tcode{clip_props}}
+
+\rSec1 [clipprops.summary] {\tcode{clip_props} summary}
+
+\pnum
+The \tcode{clip_props} class provides general state information that is applicable to all rendering and composing operations (\ref{surface.rendering}).
+
+\pnum
+It has a Clip Area of type \tcode{path_group} and a Fill Rule of type \tcode{fill_rule}.
+
+\rSec1 [clipprops.synopsis] {\tcode{clip_props} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class clip_props {
+  public:
+    // \ref{clipprops.cons}, constructors:
+    clip_props() noexcept;
+    template <class Allocator>
+    explicit clip_props(const path_builder<Allocator>& pb,
+      experimental::io2d::fill_rule = experimental::io2d::fill_rule::winding);
+    explicit clip_props(const path_group& pg, experimental::io2d::fill_rule =
+      experimental::io2d::fill_rule::winding) noexcept;
+
+    // \ref{clipprops.modifiers}, modifiers:
+    template <class Allocator>
+    void clip(const path_builder<Allocator>& pb);
+    void clip(const path_group& pg) noexcept;
+    void fill_rule(experimental::io2d::fill_rule fr) noexcept;
+    
+    // \ref{clipprops.observers}, observers:
+    path_group clip() const noexcept;
+    experimental::io2d::fill_rule fill_rule() const noexcept;
+  };
+}}}}
+\end{codeblock}
+
+\rSec1 [clipprops.cons] {\tcode{clip_props} constructors}
+
+\indexlibrary{\idxcode{clip_props}!constructor}
+\begin{itemdecl}
+clip_props() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+The value of Clip Area is its default-constructed value.
+
+\pnum
+The value of Fill Rule is \tcode{experimental::io2d::fill_rule::winding}.
+\end{itemdescr}
+
+\rSec1 [clipprops.modifiers] {\tcode{clip_props} modifiers}
+
+\indexlibrary{\idxcode{clip_props}!\idxcode{clip}}
+\begin{itemdecl}
+template <class Allocator>
+void clip(const path_builder<Allocator>& pb);
+void clip(const path_group& pg) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+The value of Clip Area is:
+\begin{itemize}
+\item \tcode{path_group\{pb\}}; or
+\item \tcode{pg}.
+\end{itemize}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{clip_props}!\idxcode{fill_rule}}
+\begin{itemdecl}
+void fill_rule(experimental::io2d::fill_rule fr) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+The value of Fill Rule is \tcode{fr}.
+\end{itemdescr}
+
+\rSec1 [clipprops.observers] {\tcode{clip_props} observers}
+
+\indexlibrary{\idxcode{clip_props}!\idxcode{clip}}
+\begin{itemdecl}
+path_group clip() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The value of Clip Area.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{clip_props}!\idxcode{fill_rule}}
+\begin{itemdecl}
+experimental::io2d::fill_rule fill_rule() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The value of Fill Rule.
+\end{itemdescr}

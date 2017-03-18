@@ -9,13 +9,13 @@ The class \tcode{path_builder} is a container that stores and manipulates object
 A \tcode{path_builder} is a contiguous container. (See [container.requirements.general] in \cppseventeen.)
 
 \pnum
-The collection of \tcode{path_data::data} objects in a path factory is referred to as its path group.
+The collection of \tcode{path_data::data} objects in a path builder is referred to as its path group.
 
 \pnum
-In addition to its path group, a path factory has an origin of type \tcode{vector_2d}, a transformation matrix of type \tcode{matrix_2d}, a current point of type \tcode{std::optional<vector_2d>}, and a last-move-to point of type \tcode{vector_2d}.
+In addition to its path group, a path builder has an origin of type \tcode{vector_2d}, a transformation matrix of type \tcode{matrix_2d}, a current point of type \tcode{std::optional<vector_2d>}, and a last-move-to point of type \tcode{vector_2d}.
 
 \pnum
-When a path factory is default constructed:
+When a path builder is default constructed:
 
 \begin{itemize}
 	\item The path group shall be empty.
@@ -269,7 +269,7 @@ This class shall be considered a sequence container, as defined in [containers] 
 \begin{itemdescr}
 	\pnum
 	\returns
-	The total number of elements that the path factory can hold without requiring reallocation.
+	The total number of elements that the path builder can hold without requiring reallocation.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{reserve}}
@@ -284,7 +284,7 @@ This class shall be considered a sequence container, as defined in [containers] 
 	
 	\pnum
 	\effects
-	A directive that informs a path factory of a planned change in size, so that it can manage the storage
+	A directive that informs a path builder of a planned change in size, so that it can manage the storage
 	allocation accordingly. After \tcode{reserve()}, \tcode{capacity()} is greater or equal to the argument of \tcode{reserve} if
 	reallocation happens; and equal to the previous value of \tcode{capacity()} otherwise. Reallocation happens
 	at this point if and only if the current capacity is less than the argument of \tcode{reserve()}. If an exception
@@ -716,7 +716,7 @@ This class shall be considered a sequence container, as defined in [containers] 
 	\pnum
 	\complexity
 	The complexity is linear in the number of elements inserted plus the 
-	distance to the end of the path factory.
+	distance to the end of the path builder.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{erase}}
@@ -739,7 +739,7 @@ This class shall be considered a sequence container, as defined in [containers] 
 	The destructor of \tcode{value_type} is called the number of times equal to 
 	the number of the elements erased, but the assignment operator
 	of \tcode{value_type} is called the number of times equal to the number of
-	elements in the path factory after the erased elements.
+	elements in the path builder after the erased elements.
 	
 	\pnum
 	\throws

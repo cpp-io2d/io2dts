@@ -21,7 +21,7 @@ namespace std { namespace experimental {
   enum class line_join;
   enum class compositing_op;
   enum class format;
-  enum class tiling;
+  enum class wrap_mode;
   enum class filter;
   enum class brush_type;
   enum class subpixel_order;
@@ -225,126 +225,6 @@ namespace std { namespace experimental {
   // \ref{pathbuilder.special}, specialized algorithms:
   template <class Allocator>
   void swap(path_builder<Allocator>& lhs, path_builder<Allocator>& rhs)
-    noexcept(noexcept(lhs.swap(rhs)));
-  
-  class color_stop;
-
-  template <class Allocator = allocator<color_stop>>
-  class color_stop_group {
-  public:
-    using value_type      = color_stop;
-    using allocator_type  = Allocator;
-    using pointer = typename allocator_traits<Allocator>::pointer;
-    using const_pointer = typename allocator_traits<Allocator>::const_pointer;
-    using reference = value_type&;
-    using const_reference = const value_type&;
-    using size_type       = @\impdefx{type of \tcode{color_stop_group::size_type}}@. // See [container.requirements] in \cppseventeen.
-    using difference_type = @\impdefx{type of \tcode{color_stop_group::size_type}}@. // See [container.requirements] in \cppseventeen.
-    using iterator        = @\impdefx{type of \tcode{color_stop_group::iterator}}@. // See [container.requirements] in \cppseventeen.
-    using const_iterator  = @\impdefx{type of \tcode{color_stop_group::const_iterator}}@. // See [container.requirements] in \cppseventeen.
-    using reverse_iterator       = std::reverse_iterator<iterator>;
-    using const_reverse_iterator = std::reverse_iterator<const_iterator>;
-
-    // \ref{colorstops.colorstopgroup.cons}, constructors:    
-    color_stop_group() noexcept(noexcept(Allocator())) :
-    color_stop_group(Allocator()) { }
-    explicit color_stop_group(const Allocator&) noexcept;
-    explicit color_stop_group(size_type n, const Allocator& = Allocator());
-    color_stop_group(size_type n, const value_type& value,
-      const Allocator& = Allocator());
-    template <class InputIterator>
-    color_stop_group(InputIterator first, InputIterator last,
-    const Allocator& = Allocator());
-    color_stop_group(const color_stop_group& x);
-    color_stop_group(color_stop_group&&) noexcept;
-    color_stop_group(const color_stop_group&, const Allocator&);
-    color_stop_group(color_stop_group&&, const Allocator&);
-    color_stop_group(initializer_list<value_type>,
-      const Allocator& = Allocator());
-    ~color_stop_group();
-    color_stop_group& operator=(const color_stop_group& x);
-    color_stop_group& operator=(color_stop_group&& x)
-      noexcept(
-      allocator_traits<Allocator>::propagate_on_container_move_assignment::value
-      || allocator_traits<Allocator>::is_always_equal::value);
-    color_stop_group& operator=(initializer_list<value_type>);
-    template <class InputIterator>
-    void assign(InputIterator first, InputIterator last);
-    void assign(size_type n, const value_type& u);
-    void assign(initializer_list<value_type>);
-    allocator_type get_allocator() const noexcept;
-    
-    // \ref{colorstops.colorstopgroup.iterators}, iterators:
-    iterator begin() noexcept;
-    const_iterator begin() const noexcept;
-    const_iterator cbegin() const noexcept;
-    
-    iterator end() noexcept;
-    const_iterator end() const noexcept;
-    const_iterator cend() const noexcept;
-    
-    reverse_iterator rbegin() noexcept;
-    const_reverse_iterator rbegin() const noexcept;
-    const_reverse_iterator crbegin() const noexcept;
-    
-    reverse_iterator rend() noexcept;
-    const_reverse_iterator rend() const noexcept;
-    const_reverse_iterator crend() const noexcept;
-    
-    // \ref{colorstops.colorstopgroup.capacity}, capacity
-    bool empty() const noexcept;
-    size_type size() const noexcept;
-    size_type max_size() const noexcept;
-    size_type capacity() const noexcept;
-    void resize(size_type sz);
-    void resize(size_type sz, const value_type& c);
-    void reserve(size_type n);
-    void shrink_to_fit();
-    
-    // element access:
-    reference operator[](size_type n);
-    const_reference operator[](size_type n) const;
-    const_reference at(size_type n) const;
-    reference at(size_type n);
-    reference front();
-    const_reference front() const;
-    reference back();
-    const_reference back() const;
-    
-    // \ref{colorstops.colorstopgroup.modifiers}, modifiers:
-    template <class... Args>
-    reference emplace_back(Args&&... args);
-    void push_back(const value_type& x);
-    void push_back(value_type&& x);
-    void pop_back();
-    template <class... Args>
-    iterator emplace(const_iterator position, Args&&... args);
-    iterator insert(const_iterator position, const value_type& x);
-    iterator insert(const_iterator position, value_type&& x);
-    iterator insert(const_iterator position, size_type n, const value_type& x);
-    template <class InputIterator>
-    iterator insert(const_iterator position, InputIterator first,
-      InputIterator last);
-    iterator insert(const_iterator position,
-    initializer_list<value_type> il);
-    iterator erase(const_iterator position);
-    iterator erase(const_iterator first, const_iterator last);
-    void swap(color_stop_group&)
-      noexcept(allocator_traits<Allocator>::propagate_on_container_swap::value 
-      || allocator_traits<Allocator>::is_always_equal::value);
-    void clear() noexcept;
-  };
-
-  template <class Allocator>
-  bool operator==(const color_stop_group<Allocator>& lhs, 
-    const color_stop_group<Allocator>& rhs);
-  template <class Allocator>
-  bool operator!=(const color_stop_group<Allocator>& lhs, 
-    const color_stop_group<Allocator>& rhs);
-
-  // \ref{colorstops.colorstopgroup.special}, specialized algorithms:
-  template <class Allocator>
-  void swap(color_stop_group<Allocator>& lhs, color_stop_group<Allocator>& rhs)
     noexcept(noexcept(lhs.swap(rhs)));
   
   class device;

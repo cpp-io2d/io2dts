@@ -1,0 +1,145 @@
+%!TEX root = io2d.tex
+
+\rSec0 [surfaceprops] {Class \tcode{surface_props}}
+
+\rSec1 [surfaceprops.summary] {\tcode{surface_props} summary}
+
+\pnum
+The \tcode{surface_props} class provides general state information that is applicable to all rendering and composing operations (\ref{surface.rendering}).
+
+\pnum
+It has a Surface Matrix of type \tcode{matrix_2d}, an Antialiasing Value of type \tcode{antialias}, and a Compositing Operator of type \tcode{compositing_op}.
+
+\rSec1 [surfaceprops.synopsis] {\tcode{surface_props} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class surface_props {
+  public:
+    // \ref{surfaceprops.cons}, constructors:
+    constexpr surface_props() noexcept;
+    constexpr explicit surface_props(const matrix_2d& m,
+      antialias a = antialias::good,
+      compositing_op co = compositing_op::over) noexcept;
+    
+    // \ref{surfaceprops.modifiers}, modifiers:
+    constexpr void antialiasing(antialias a) noexcept;
+    constexpr void compositing(compositing_op co) noexcept;
+    constexpr void surface_matrix(const matrix_2d& m) noexcept;
+    
+    // \ref{surfaceprops.observers}, observers:
+    constexpr antialias antialiasing() const noexcept;
+    constexpr compositing_op compositing() const noexcept;
+    constexpr matrix_2d surface_matrix() const noexcept;
+  };
+}}}}
+\end{codeblock}
+
+\rSec1 [surfaceprops.cons] {\tcode{surface_props} constructors}
+
+\indexlibrary{\idxcode{surface_props}!constructor}
+\begin{itemdecl}
+constexpr surface_props() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+The value of Surface Matrix is its default-constructed value.
+
+\pnum
+The value of Antialiasing Value is \tcode{antialias::good}.
+
+\pnum
+The value of Compositing Operator is \tcode{compositing_op::over}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{surface_props}!constructor}
+\begin{itemdecl}
+constexpr explicit surface_props(const matrix_2d& m,
+  antialias a = antialias::good,
+  compositing_op co = compositing_op::over) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\preconditions
+\tcode{m.is_invertible() == true}.
+
+\pnum
+\effects
+The value of Surface Matrix is \tcode{m}.
+
+\pnum
+The value of Antialiasing Value is \tcode{a}.
+
+\pnum
+The value of Compositing Operator is \tcode{co}.
+\end{itemdescr}
+
+\rSec1 [surfaceprops.modifiers] {\tcode{surface_props} modifiers}
+
+\indexlibrary{\idxcode{surface_props}!\idxcode{antialiasing}}
+\begin{itemdecl}
+constexpr void antialiasing(antialias a) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+The value of Antialiasing Value is \tcode{a}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{surface_props}!\idxcode{compositing}}
+\begin{itemdecl}
+constexpr void compositing(compositing_op co) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+The value of Compositing Operator is \tcode{co}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{surface_props}!\idxcode{surface_matrix}}
+\begin{itemdecl}
+constexpr void surface_matrix(const matrix_2d& m) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\preconditions
+\tcode{m.is_invertible() == true}.
+
+\pnum
+\effects
+The value of Surface Matrix is \tcode{m}.
+\end{itemdescr}
+
+\rSec1 [surfaceprops.observers] {\tcode{surface_props} observers}
+
+\indexlibrary{\idxcode{surface_props}!\idxcode{antialiasing}}
+\begin{itemdecl}
+constexpr antialias antialiasing() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The value of Antialiasing Value.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{surface_props}!\idxcode{compositing}}
+\begin{itemdecl}
+constexpr compositing_op compositing() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The value of Compositing Operator.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{surface_props}!\idxcode{surface_matrix}}
+\begin{itemdecl}
+constexpr matrix_2d surface_matrix() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The value of Surface Matrix.
+\end{itemdescr}
+

@@ -3,7 +3,7 @@
 \rSec0 [brushes] {Brushes}
 
 \pnum
-Brushes serve as sources of visual data for composing operations.
+Brushes contain visual data and serve as sources of visual data for rendering and composing operations.
 
 There are four types of brushes:
 \begin{itemize}
@@ -14,33 +14,49 @@ There are four types of brushes:
 \end{itemize}
 
 \pnum
-A brush has its own coordinate space (\ref{surface.coordinatespaces}), which is by default the standard coordinate space. It is controlled by a \tcode{matrix_2d} value.
+Once a brush is created, its visual data is immutable.
 
 \pnum
-It possesses a \tcode{filter} value and a \tcode{tiling} value, which combine to determine the visual data value returned when a composing operation samples a brush.
+\enternote
+While copy and move operations along with a swap operation can change the visual data that a brush contains, the visual data itself is not modified.
+\exitnote
 
 \pnum
-The \tcode{filter} value determines the value returned by a brush when a composing operation samples a brush. When the visual data of the brush is a pixmap and the point the composing operation requests does not directly correspond to the exact coordinate of a pixel within the pixmap, the \tcode{filter} value is used to determine the value of the visual data that is returned. If the visual data of the brush is not a pixmap, the \tcode{filter} value is irrelevant.
+A brush is used either as a Source Brush or a Mask Brush (\ref{surface.brushes}).
 
 \pnum
-The \tcode{tiling} value controls what happens when a composing operation needs to sample from a point that is outside of the bounds of the brush.
+When a brush is used in a rendering and composing operation, a \tcode{brush_props} object or \tcode{mask_props} object can modify the result of sampling the brush.
 
 %\pnum
-%Excluding brushes created using a \tcode{solid_color_brush_factory} object, brushes produce very different composing operation results depending on the values of their mutable state.
+%A brush has its own coordinate space.
 %
+%\pnum
+%If it is being used as a Source Brush, it is the Brush Coordinate Space (\ref{surface.coordinatespaces}).
+%
+%\pnum
+%If it is being used as a Mask Brush, it is the Mask Coordinate Space (\ref{surface.coordinatespaces}).
+%
+%\pnum
+%It possesses a \tcode{filter} value and a \tcode{wrap_mode} value, which combine to determine the visual data value returned when a composing operation samples a brush.
+%
+%\pnum
+%The \tcode{filter} value determines the value returned by a brush when a composing operation samples a brush. When the visual data of the brush is a pixmap and the point the composing operation requests does not directly correspond to the exact coordinate of a pixel within the pixmap, the \tcode{filter} value is used to determine the value of the visual data that is returned. If the visual data of the brush is not a pixmap, the \tcode{filter} value is irrelevant.
+%
+%\pnum
+%The \tcode{wrap_mode} value controls what happens when a composing operation needs to sample from a point that is outside of the bounds of the brush.
+%
+\pnum
+Solid color brushes are unbounded and as such always produce the same visual data when sampled from, regardless of the requested point.
 
 \pnum
-Color brushes produce the same sampling result regardless of their coordinate space, \tcode{filter}, and \tcode{tiling}. They are unbounded and as such always produce the \tcode{rgba_color} value they were created with when sampled from, regardless of the requested point.
+Linear gradient and radial gradient brushes share similarities with each other that are not shared by the other types of brushes. This is discussed in more detail elsewhere (\ref{gradients}).
 
 \pnum
-Linear gradient and radial gradient brushes share similarities with each other that are not shared by the other types of brushes. This is discussed in more detail below (\ref{gradients}).
-
-\pnum
-Surface brushes take an \tcode{image_surface} object and use it as the source of the brush's visual data.
+Surface brushes are constructed from an \tcode{image_surface} object. Their visual data is a pixmap, which has implications on sampling from the brush that are not present in the other brush types.
 
 \addtocounter{SectionDepthBase}{1}
 \input{gradients}
-\input{tiling}
+\input{wrap-mode}
 \input{filter}
 \input{brush-type}
 \input{color-stop}
