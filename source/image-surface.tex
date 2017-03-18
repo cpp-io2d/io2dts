@@ -1,6 +1,17 @@
 %!TEX root = io2d.tex
 \rSec0 [imagesurface] {Class \tcode{image_surface}}
 
+\rSec1 [imagesurface.summary] {\tcode{image_surface} summary}
+
+\pnum
+\indexlibrary{\idxcode{image_surface}}
+The class \tcode{image_surface} derives from the \tcode{surface} class and provides an interface to a raster graphics data graphics resource.
+
+\pnum
+\enternote
+Because of the functionality it provides and what it can be used for, it is expected that developers familiar with other graphics technologies will think of the \tcode{image_surface} class as being a form of \term{render target}. This is intentional, though this \documenttypename{} does not formally define or use that term to avoid any minor ambiguities and differences in its meaning between the various graphics technologies that do use the term render target.
+\exitnote
+
 \rSec1 [imagesurface.synopsis] {\tcode{image_surface} synopsis}
 
 \begin{codeblock}
@@ -9,24 +20,11 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   public:
     // \ref{imagesurface.cons}, construct/copy/move/destroy:
     image_surface() = delete;
-    image_surface(const image_surface&) = delete;
-    image_surface& operator=(const image_surface&) = delete;
-    image_surface(image_surface&& other) noexcept;
-    image_surface& operator=(image_surface&& other) noexcept;
     image_surface(experimental::io2d::format fmt, int width, int height);
-    image_surface(experimental::io2d::format fmt, int width, int height, 
-      error_code& ec) noexcept;
-    image_surface(vector<unsigned char>& data, experimental::io2d::format fmt,
-      int width, int height);
-    image_surface(vector<unsigned char>& data, experimental::io2d::format fmt,
-      int width, int height, error_code& ec) noexcept;
-    virtual ~image_surface();
+    image_surface(filesystem::path f, experimental::io2d::format fmt);
     
-    // \ref{imagesurface.modifiers}, modifiers:
-    void data(const vector<unsigned char>& data);
-    void data(const vector<unsigned char>& data, error_code& ec) noexcept;
-    vector<unsigned char> data();
-    vector<unsigned char> data(error_code& ec) noexcept;
+    // \ref{imagesurface.members}, members:
+    void save(filesystem::path p);
     
     // \ref{imagesurface.observers}, observers:
     experimental::io2d::format format() const noexcept;
@@ -36,17 +34,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   };
 } } } }
 \end{codeblock}
-
-\rSec1 [imagesurface.intro] {\tcode{image_surface} Description}
-
-\pnum
-\indexlibrary{\idxcode{image_surface}}
-The class \tcode{image_surface} derives from the \tcode{surface} class and provides an interface to a raster graphics data graphics resource.
-
-\pnum
-\enternote
-Because of the functionality it provides and what it can be used for, it is expected that developers familiar with other graphics technologies will think of the \tcode{image_surface} class as being a form of \term{render target}. This is intentional, though this \documenttypename{} does not formally define or use that term to avoid any minor ambiguities and differences in its meaning between the various graphics technologies that do use it.
-\exitnote
 
 \rSec1 [imagesurface.cons] {\tcode{image_surface} constructors and assignment operators}
 
