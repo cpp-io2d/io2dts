@@ -22,16 +22,11 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       constexpr rel_cubic_curve() noexcept;
       constexpr rel_cubic_curve(const vector_2d& cpt1, const vector_2d& cpt2,
         const vector_2d& ept) noexcept;
-      constexpr rel_cubic_curve(const rel_cubic_curve&) noexcept = default;
-      constexpr rel_cubic_curve& operator=(const rel_cubic_curve&) noexcept =
-        default;
-      rel_cubic_curve(rel_cubic_curve&&) noexcept = default;
-      rel_cubic_curve& operator=(rel_cubic_curve&&) noexcept = default;
 
       // \ref{relcubiccurve.modifiers}, modifiers:
-      void control_point_1(const vector_2d& cpt) noexcept;
-      void control_point_2(const vector_2d& cpt) noexcept;
-      void end_point(const vector_2d& ept) noexcept;
+      constexpr void control_point_1(const vector_2d& cpt) noexcept;
+      constexpr void control_point_2(const vector_2d& cpt) noexcept;
+      constexpr void end_point(const vector_2d& ept) noexcept;
 
       // \ref{relcubiccurve.observers}, observers:
       constexpr vector_2d control_point_1() const noexcept;
@@ -86,9 +81,8 @@ The end point shall be set to the value of \tcode{ept}.
 \rSec1 [relcubiccurve.modifiers]{\tcode{rel_cubic_curve} modifiers}
 
 \indexlibrary{\idxcode{rel_cubic_curve}!\idxcode{control_point_1}}
-\indexlibrary{\idxcode{control_point_1}!\idxcode{rel_cubic_curve}}
 \begin{itemdecl}
-void control_point_1(const vector_2d& cpt) noexcept;
+constexpr void control_point_1(const vector_2d& cpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -97,9 +91,8 @@ The first control point shall be set to the value of \tcode{cpt}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rel_cubic_curve}!\idxcode{control_point_2}}
-\indexlibrary{\idxcode{control_point_2}!\idxcode{rel_cubic_curve}}
 \begin{itemdecl}
-void control_point_2(const vector_2d& cpt) noexcept;
+constexpr void control_point_2(const vector_2d& cpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -108,9 +101,8 @@ The second control point shall be set to the value of \tcode{cpt}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rel_cubic_curve}!\idxcode{end_point}}
-\indexlibrary{\idxcode{end_point}!\idxcode{rel_cubic_curve}}
 \begin{itemdecl}
-void end_point(const vector_2d& ept) noexcept;
+constexpr void end_point(const vector_2d& ept) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

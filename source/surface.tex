@@ -290,7 +290,7 @@ Given a point \tcode{pt}, a Brush Coordinate Space transformation matrix \tcode{
 \rSec1 [surface.painting] {\tcode{surface} painting}
 
 \pnum
-When a Painting operation is initiated on a surface, the implementation shall produce results as if the following steps were performed:
+When a Painting operation is initiated on a surface, the implementation shall produce results as-if the following steps were performed:
 
 \begin{enumerate}
 \item For each integral point $sp$ of the \underlyingsurface, determine if $sp$ is within the Clip Area (Table~\ref{tab:surface.state.listing}); if so, proceed with the remaining steps.
@@ -301,7 +301,7 @@ When a Painting operation is initiated on a surface, the implementation shall pr
 \rSec1 [surface.filling] {\tcode{surface} filling}
 
 \pnum
-When a Filling operation is initiated on a surface, the implementation shall produce results as if the following steps were performed:
+When a Filling operation is initiated on a surface, the implementation shall produce results as-if the following steps were performed:
 
 \begin{enumerate}
 \item For each integral point $sp$ of the \underlyingsurface, determine if $sp$ is within the Clip Area (Table~\ref{tab:surface.state.listing}); if so, proceed with the remaining steps.
@@ -350,7 +350,7 @@ If an open path consisting solely of a vertical line from \tcode{vector_2d(20.0,
 A \term{Mask Brush} is composed of a graphics data graphics resource, a \tcode{wrap_mode} value, a \tcode{filter} value, and a \tcode{matrix_2d} object.
 
 \pnum
-When a Masking operation is initiated on a surface, the implementation shall produce results as if the following steps were performed:
+When a Masking operation is initiated on a surface, the implementation shall produce results as-if the following steps were performed:
 
 \begin{enumerate}
 \item For each integral point $sp$ of the \underlyingsurface, determine if $sp$ is within the Clip Area (Table~\ref{tab:surface.state.listing}); if so, proceed with the remaining steps.

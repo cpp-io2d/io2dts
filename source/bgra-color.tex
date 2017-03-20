@@ -1,0 +1,1839 @@
+%!TEX root = io2d.tex
+\rSec0 [bgracolor] {Class \tcode{bgra_color}}
+
+\pnum
+\indexlibrary{\idxcode{bgra_color}}
+The class \tcode{bgra_color} describes a four channel color in premultiplied format.
+
+\pnum
+There are three color channels, red, green, and blue, each of which is a \tcode{double}.
+
+\pnum
+There is also an alpha channel, which is a \tcode{double}.
+
+\pnum
+Legal values for each channel are in the range \crange{0.0}{1.0}%$[0, 1]$.
+
+\pnum
+The type predefines a set of named colors, for which each channel is an unsigned normalized 8-bit integer.
+
+\rSec1 [bgracolor.synopsis] {\tcode{bgra_color} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  class bgra_color {
+    // \ref{bgracolor.cons}, construct/copy/move/destroy:
+    constexpr bgra_color() noexcept;
+    constexpr bgra_color(const bgra_color&) noexcept = default;
+    constexpr bgra_color& operator=(const bgra_color&) noexcept = default;
+    bgra_color(bgra_color&&) noexcept = default;
+    bgra_color& operator=(bgra_color&&) noexcept = default;
+    constexpr bgra_color(double r, double g, double b, double a = 1.0) noexcept;
+  
+    // \ref{bgracolor.modifiers}, modifiers:
+    void r(double val) noexcept;
+    void g(double val) noexcept;
+    void b(double val) noexcept;
+    void a(double val) noexcept;
+    
+    // \ref{bgracolor.observers}, observers:
+    constexpr double r() const noexcept;
+    constexpr double g() const noexcept;
+    constexpr double b() const noexcept;
+    constexpr double a() const noexcept;
+    
+    // \ref{bgracolor.statics}, static member functions:
+    static const bgra_color& alice_blue() noexcept;
+    static const bgra_color& antique_white() noexcept;
+    static const bgra_color& aqua() noexcept;
+    static const bgra_color& aquamarine() noexcept;
+    static const bgra_color& azure() noexcept;
+    static const bgra_color& beige() noexcept;
+    static const bgra_color& bisque() noexcept;
+    static const bgra_color& black() noexcept;
+    static const bgra_color& blanched_almond() noexcept;
+    static const bgra_color& blue() noexcept;
+    static const bgra_color& blue_violet() noexcept;
+    static const bgra_color& brown() noexcept;
+    static const bgra_color& burly_wood() noexcept;
+    static const bgra_color& cadet_blue() noexcept;
+    static const bgra_color& chartreuse() noexcept;
+    static const bgra_color& chocolate() noexcept;
+    static const bgra_color& coral() noexcept;
+    static const bgra_color& cornflower_blue() noexcept;
+    static const bgra_color& cornsilk() noexcept;
+    static const bgra_color& crimson() noexcept;
+    static const bgra_color& cyan() noexcept;
+    static const bgra_color& dark_blue() noexcept;
+    static const bgra_color& dark_cyan() noexcept;
+    static const bgra_color& dark_goldenrod() noexcept;
+    static const bgra_color& dark_gray() noexcept;
+    static const bgra_color& dark_green() noexcept;
+    static const bgra_color& dark_grey() noexcept;
+    static const bgra_color& dark_khaki() noexcept;
+    static const bgra_color& dark_magenta() noexcept;
+    static const bgra_color& dark_olive_green() noexcept;
+    static const bgra_color& dark_orange() noexcept;
+    static const bgra_color& dark_orchid() noexcept;
+    static const bgra_color& dark_red() noexcept;
+    static const bgra_color& dark_salmon() noexcept;
+    static const bgra_color& dark_sea_green() noexcept;
+    static const bgra_color& dark_slate_blue() noexcept;
+    static const bgra_color& dark_slate_gray() noexcept;
+    static const bgra_color& dark_slate_grey() noexcept;
+    static const bgra_color& dark_turquoise() noexcept;
+    static const bgra_color& dark_violet() noexcept;
+    static const bgra_color& deep_pink() noexcept;
+    static const bgra_color& deep_sky_blue() noexcept;
+    static const bgra_color& dim_gray() noexcept;
+    static const bgra_color& dim_grey() noexcept;
+    static const bgra_color& dodger_blue() noexcept;
+    static const bgra_color& firebrick() noexcept;
+    static const bgra_color& floral_white() noexcept;
+    static const bgra_color& forest_green() noexcept;
+    static const bgra_color& fuchsia() noexcept;
+    static const bgra_color& gainsboro() noexcept;
+    static const bgra_color& ghost_white() noexcept;
+    static const bgra_color& gold() noexcept;
+    static const bgra_color& goldenrod() noexcept;
+    static const bgra_color& gray() noexcept;
+    static const bgra_color& green() noexcept;
+    static const bgra_color& green_yellow() noexcept;
+    static const bgra_color& grey() noexcept;
+    static const bgra_color& honeydew() noexcept;
+    static const bgra_color& hot_pink() noexcept;
+    static const bgra_color& indian_red() noexcept;
+    static const bgra_color& indigo() noexcept;
+    static const bgra_color& ivory() noexcept;
+    static const bgra_color& khaki() noexcept;
+    static const bgra_color& lavender() noexcept;
+    static const bgra_color& lavender_blush() noexcept;
+    static const bgra_color& lawn_green() noexcept;
+    static const bgra_color& lemon_chiffon() noexcept;
+    static const bgra_color& light_blue() noexcept;
+    static const bgra_color& light_coral() noexcept;
+    static const bgra_color& light_cyan() noexcept;
+    static const bgra_color& light_goldenrod_yellow() noexcept;
+    static const bgra_color& light_gray() noexcept;
+    static const bgra_color& light_green() noexcept;
+    static const bgra_color& light_grey() noexcept;
+    static const bgra_color& light_pink() noexcept;
+    static const bgra_color& light_salmon() noexcept;
+    static const bgra_color& light_sea_green() noexcept;
+    static const bgra_color& light_sky_blue() noexcept;
+    static const bgra_color& light_slate_gray() noexcept;
+    static const bgra_color& light_slate_grey() noexcept;
+    static const bgra_color& light_steel_blue() noexcept;
+    static const bgra_color& light_yellow() noexcept;
+    static const bgra_color& lime() noexcept;
+    static const bgra_color& lime_green() noexcept;
+    static const bgra_color& linen() noexcept;
+    static const bgra_color& magenta() noexcept;
+    static const bgra_color& maroon() noexcept;
+    static const bgra_color& medium_aquamarine() noexcept;
+    static const bgra_color& medium_blue() noexcept;
+    static const bgra_color& medium_orchid() noexcept;
+    static const bgra_color& medium_purple() noexcept;
+    static const bgra_color& medium_sea_green() noexcept;
+    static const bgra_color& medium_slate_blue() noexcept;
+    static const bgra_color& medium_spring_green() noexcept;
+    static const bgra_color& medium_turquoise() noexcept;
+    static const bgra_color& medium_violet_red() noexcept;
+    static const bgra_color& midnight_blue() noexcept;
+    static const bgra_color& mint_cream() noexcept;
+    static const bgra_color& misty_rose() noexcept;
+    static const bgra_color& moccasin() noexcept;
+    static const bgra_color& navajo_white() noexcept;
+    static const bgra_color& navy() noexcept;
+    static const bgra_color& old_lace() noexcept;
+    static const bgra_color& olive() noexcept;
+    static const bgra_color& olive_drab() noexcept;
+    static const bgra_color& orange() noexcept;
+    static const bgra_color& orange_red() noexcept;
+    static const bgra_color& orchid() noexcept;
+    static const bgra_color& pale_goldenrod() noexcept;
+    static const bgra_color& pale_green() noexcept;
+    static const bgra_color& pale_turquoise() noexcept;
+    static const bgra_color& pale_violet_red() noexcept;
+    static const bgra_color& papaya_whip() noexcept;
+    static const bgra_color& peach_puff() noexcept;
+    static const bgra_color& peru() noexcept;
+    static const bgra_color& pink() noexcept;
+    static const bgra_color& plum() noexcept;
+    static const bgra_color& powder_blue() noexcept;
+    static const bgra_color& purple() noexcept;
+    static const bgra_color& red() noexcept;
+    static const bgra_color& rosy_brown() noexcept;
+    static const bgra_color& royal_blue() noexcept;
+    static const bgra_color& saddle_brown() noexcept;
+    static const bgra_color& salmon() noexcept;
+    static const bgra_color& sandy_brown() noexcept;
+    static const bgra_color& sea_green() noexcept;
+    static const bgra_color& sea_shell() noexcept;
+    static const bgra_color& sienna() noexcept;
+    static const bgra_color& silver() noexcept;
+    static const bgra_color& sky_blue() noexcept;
+    static const bgra_color& slate_blue() noexcept;
+    static const bgra_color& slate_gray() noexcept;
+    static const bgra_color& slate_grey() noexcept;
+    static const bgra_color& snow() noexcept;
+    static const bgra_color& spring_green() noexcept;
+    static const bgra_color& steel_blue() noexcept;
+    static const bgra_color& tan() noexcept;
+    static const bgra_color& teal() noexcept;
+    static const bgra_color& thistle() noexcept;
+    static const bgra_color& tomato() noexcept;
+    static const bgra_color& transparent_black() noexcept;
+    static const bgra_color& turquoise() noexcept;
+    static const bgra_color& violet() noexcept;
+    static const bgra_color& wheat() noexcept;
+    static const bgra_color& white() noexcept;
+    static const bgra_color& white_smoke() noexcept;
+    static const bgra_color& yellow() noexcept;
+    static const bgra_color& yellow_green() noexcept;
+  };
+
+  // \ref{bgracolor.ops}, non-member operators:
+  bool operator==(const bgra_color& lhs, const bgra_color& rhs) noexcept;
+  bool operator!=(const bgra_color& lhs, const bgra_color& rhs) noexcept;
+} } } }
+\end{codeblock}
+
+\rSec1 [bgracolor.cons] {\tcode{bgra_color} constructors and assignment operators}
+
+\indexlibrary{\idxcode{bgra_color}!constructor}
+\begin{itemdecl}
+constexpr bgra_color(double r, double g, double b, double a = 1.0) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{r >= 0.0} and \tcode{r <= 1.0} and \tcode{g >= 0.0} and \tcode{g <= 1.0} and \tcode{b >= 0.0} and \tcode{b <= 1.0}. Where there is an \tcode{a} parameter, \tcode{a >= 0.0} and \tcode{a <= 1.0}.
+
+\pnum
+\effects
+Constructs an object of type \tcode{bgra_color}.
+
+\pnum
+The alpha channel shall be set to the value of \tcode{a}.
+
+\pnum
+The red channel shall be set to \tcode{r} multiplied by the value of  \tcode{a}.
+
+\pnum
+The green channel shall be set to \tcode{g} multiplied by the value of \tcode{a}.
+
+\pnum
+The blue channel shall be set to \tcode{b} multiplied by the value of \tcode{a}.
+\end{itemdescr}
+
+\rSec1 [bgracolor.modifiers]{\tcode{bgra_color} modifiers}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{r}}
+\begin{itemdecl}
+void r(double val) noexcept;
+\end{itemdecl}
+
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{val >= 0.0} and \tcode{val <= 1.0}.
+
+\pnum
+\effects
+The red channel shall be set to \tcode{val} multiplied by the value of  \tcode{*this.a()}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{g}}
+\begin{itemdecl}
+void g(double val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{val >= 0.0} and \tcode{val <= 1.0}.
+
+\pnum
+\effects
+The green channel shall be set to \tcode{val} multiplied by the value of  \tcode{*this.a()}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{b}}
+\begin{itemdecl}
+void b(double val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{val >= 0.0} and \tcode{val <= 1.0}.
+
+\pnum
+\effects
+The blue channel shall be set to \tcode{val} multiplied by the value of  \tcode{*this.a()}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{a}}
+\begin{itemdecl}
+void a(double val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{val >= 0.0} and \tcode{val <= 1.0}.
+
+\pnum
+\effects
+The alpha channel shall be set to \tcode{val}.
+\end{itemdescr}
+
+\rSec1 [bgracolor.observers]{\tcode{bgra_color} observers}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{r}}
+\begin{itemdecl}
+constexpr double r() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The value of the red channel.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{g}}
+\begin{itemdecl}
+constexpr double g() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The value of the green channel.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{b}}
+\begin{itemdecl}
+constexpr double b() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The value of the blue channel.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{a}}
+\begin{itemdecl}
+constexpr double a() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The value of the alpha channel.
+\end{itemdescr}
+
+\rSec1 [bgracolor.statics] {\tcode{bgra_color} static member functions}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{alice_blue}}
+\begin{itemdecl}
+static const bgra_color& alice_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 240ubyte, 248ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{antique_white}}
+\begin{itemdecl}
+static const bgra_color& antique_white() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 250ubyte, 235ubyte, 215ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{aqua}}
+\begin{itemdecl}
+static const bgra_color& aqua() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 255ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{aquamarine}}
+\begin{itemdecl}
+static const bgra_color& aquamarine() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 127ubyte, 255ubyte, 212ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{azure}}
+\begin{itemdecl}
+static const bgra_color& azure() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 240ubyte, 255ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{beige}}
+\begin{itemdecl}
+static const bgra_color& beige() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 245ubyte, 245ubyte, 220ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{bisque}}
+\begin{itemdecl}
+static const bgra_color& bisque() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 228ubyte, 196ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{black}}
+\begin{itemdecl}
+static const bgra_color& black() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 0ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{blanched_almond}}
+\begin{itemdecl}
+static const bgra_color& blanched_almond() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 235ubyte, 205ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{blue}}
+\begin{itemdecl}
+static const bgra_color& blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 0ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{blue_violet}}
+\begin{itemdecl}
+static const bgra_color& blue_violet() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 138ubyte, 43ubyte, 226ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{brown}}
+\begin{itemdecl}
+static const bgra_color& brown() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 165ubyte, 42ubyte, 42ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{burly_wood}}
+\begin{itemdecl}
+static const bgra_color& burly_wood() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 222ubyte, 184ubyte, 135ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{cadet_blue}}
+\begin{itemdecl}
+static const bgra_color& cadet_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 95ubyte, 158ubyte, 160ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{chartreuse}}
+\begin{itemdecl}
+static const bgra_color& chartreuse() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 127ubyte, 255ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{chocolate}}
+\begin{itemdecl}
+static const bgra_color& chocolate() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 210ubyte, 105ubyte, 30ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{coral}}
+\begin{itemdecl}
+static const bgra_color& coral() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 127ubyte, 80ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{cornflower_blue}}
+\begin{itemdecl}
+static const bgra_color& cornflower_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 100ubyte, 149ubyte, 237ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{cornsilk}}
+\begin{itemdecl}
+static const bgra_color& cornsilk() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 248ubyte, 220ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{crimson}}
+\begin{itemdecl}
+static const bgra_color& crimson() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 220ubyte, 20ubyte, 60ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{cyan}}
+\begin{itemdecl}
+static const bgra_color& cyan() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 255ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dark_blue}}
+\begin{itemdecl}
+static const bgra_color& dark_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 0ubyte, 139ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dark_cyan}}
+\begin{itemdecl}
+static const bgra_color& dark_cyan() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 139ubyte, 139ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dark_goldenrod}}
+\begin{itemdecl}
+static const bgra_color& dark_goldenrod() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 184ubyte, 134ubyte, 11ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dark_gray}}
+\begin{itemdecl}
+static const bgra_color& dark_gray() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 169ubyte, 169ubyte, 169ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dark_green}}
+\begin{itemdecl}
+static const bgra_color& dark_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 100ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dark_grey}}
+\begin{itemdecl}
+static const bgra_color& dark_grey() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 169ubyte, 169ubyte, 169ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dark_khaki}}
+\begin{itemdecl}
+static const bgra_color& dark_khaki() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 189ubyte, 183ubyte, 107ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dark_magenta}}
+\begin{itemdecl}
+static const bgra_color& dark_magenta() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 139ubyte, 0ubyte, 139ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dark_olive_green}}
+\begin{itemdecl}
+static const bgra_color& dark_olive_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 85ubyte, 107ubyte, 47ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dark_orange}}
+\begin{itemdecl}
+static const bgra_color& dark_orange() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 140ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dark_orchid}}
+\begin{itemdecl}
+static const bgra_color& dark_orchid() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 153ubyte, 50ubyte, 204ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dark_red}}
+\begin{itemdecl}
+static const bgra_color& dark_red() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 139ubyte, 0ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dark_salmon}}
+\begin{itemdecl}
+static const bgra_color& dark_salmon() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 233ubyte, 150ubyte, 122ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dark_sea_green}}
+\begin{itemdecl}
+static const bgra_color& dark_sea_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 143ubyte, 188ubyte, 143ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dark_slate_blue}}
+\begin{itemdecl}
+static const bgra_color& dark_slate_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 72ubyte, 61ubyte, 139ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dark_slate_gray}}
+\begin{itemdecl}
+static const bgra_color& dark_slate_gray() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 47ubyte, 79ubyte, 79ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dark_slate_grey}}
+\begin{itemdecl}
+static const bgra_color& dark_slate_grey() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 47ubyte, 79ubyte, 79ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dark_turquoise}}
+\begin{itemdecl}
+static const bgra_color& dark_turquoise() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 206ubyte, 209ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dark_violet}}
+\begin{itemdecl}
+static const bgra_color& dark_violet() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 148ubyte, 0ubyte, 211ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{deep_pink}}
+\begin{itemdecl}
+static const bgra_color& deep_pink() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 20ubyte, 147ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{deep_sky_blue}}
+\begin{itemdecl}
+static const bgra_color& deep_sky_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 191ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dim_gray}}
+\begin{itemdecl}
+static const bgra_color& dim_gray() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 105ubyte, 105ubyte, 105ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dim_grey}}
+\begin{itemdecl}
+static const bgra_color& dim_grey() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 105ubyte, 105ubyte, 105ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{dodger_blue}}
+\begin{itemdecl}
+static const bgra_color& dodger_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 30ubyte, 144ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{firebrick}}
+\begin{itemdecl}
+static const bgra_color& firebrick() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 178ubyte, 34ubyte, 34ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{floral_white}}
+\begin{itemdecl}
+static const bgra_color& floral_white() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 250ubyte, 240ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{forest_green}}
+\begin{itemdecl}
+static const bgra_color& forest_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 34ubyte, 139ubyte, 34ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{fuchsia}}
+\begin{itemdecl}
+static const bgra_color& fuchsia() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 0ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{gainsboro}}
+\begin{itemdecl}
+static const bgra_color& gainsboro() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 220ubyte, 220ubyte, 220ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{ghost_white}}
+\begin{itemdecl}
+static const bgra_color& ghost_white() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 248ubyte, 248ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{gold}}
+\begin{itemdecl}
+static const bgra_color& gold() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 215ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{goldenrod}}
+\begin{itemdecl}
+static const bgra_color& goldenrod() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 218ubyte, 165ubyte, 32ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{gray}}
+\begin{itemdecl}
+static const bgra_color& gray() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 128ubyte, 128ubyte, 128ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{green}}
+\begin{itemdecl}
+static const bgra_color& green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 128ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{green_yellow}}
+\begin{itemdecl}
+static const bgra_color& green_yellow() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 173ubyte, 255ubyte, 47ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{grey}}
+\begin{itemdecl}
+static const bgra_color& grey() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 128ubyte, 128ubyte, 128ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{honeydew}}
+\begin{itemdecl}
+static const bgra_color& honeydew() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 240ubyte, 255ubyte, 240ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{hot_pink}}
+\begin{itemdecl}
+static const bgra_color& hot_pink() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 105ubyte, 180ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{indian_red}}
+\begin{itemdecl}
+static const bgra_color& indian_red() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 205ubyte, 92ubyte, 92ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{indigo}}
+\begin{itemdecl}
+static const bgra_color& indigo() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 75ubyte, 0ubyte, 130ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{ivory}}
+\begin{itemdecl}
+static const bgra_color& ivory() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 255ubyte, 240ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{khaki}}
+\begin{itemdecl}
+static const bgra_color& khaki() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 240ubyte, 230ubyte, 140ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{lavender}}
+\begin{itemdecl}
+static const bgra_color& lavender() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 230ubyte, 230ubyte, 250ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{lavender_blush}}
+\begin{itemdecl}
+static const bgra_color& lavender_blush() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 240ubyte, 245ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{lawn_green}}
+\begin{itemdecl}
+static const bgra_color& lawn_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 124ubyte, 252ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{lemon_chiffon}}
+\begin{itemdecl}
+static const bgra_color& lemon_chiffon() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 250ubyte, 205ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{light_blue}}
+\begin{itemdecl}
+static const bgra_color& light_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 173ubyte, 216ubyte, 230ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{light_coral}}
+\begin{itemdecl}
+static const bgra_color& light_coral() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 240ubyte, 128ubyte, 128ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{light_cyan}}
+\begin{itemdecl}
+static const bgra_color& light_cyan() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 224ubyte, 255ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{light_goldenrod_yellow}}
+\begin{itemdecl}
+static const bgra_color& light_goldenrod_yellow() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 250ubyte, 250ubyte, 210ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{light_gray}}
+\begin{itemdecl}
+static const bgra_color& light_gray() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 211ubyte, 211ubyte, 211ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{light_green}}
+\begin{itemdecl}
+static const bgra_color& light_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 144ubyte, 238ubyte, 144ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{light_grey}}
+\begin{itemdecl}
+static const bgra_color& light_grey() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 211ubyte, 211ubyte, 211ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{light_pink}}
+\begin{itemdecl}
+static const bgra_color& light_pink() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 182ubyte, 193ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{light_salmon}}
+\begin{itemdecl}
+static const bgra_color& light_salmon() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 160ubyte, 122ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{light_sea_green}}
+\begin{itemdecl}
+static const bgra_color& light_sea_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 32ubyte, 178ubyte, 170ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{light_sky_blue}}
+\begin{itemdecl}
+static const bgra_color& light_sky_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 135ubyte, 206ubyte, 250ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{light_slate_gray}}
+\begin{itemdecl}
+static const bgra_color& light_slate_gray() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 119ubyte, 136ubyte, 153ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{light_slate_grey}}
+\begin{itemdecl}
+static const bgra_color& light_slate_grey() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 119ubyte, 136ubyte, 153ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{light_steel_blue}}
+\begin{itemdecl}
+static const bgra_color& light_steel_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 176ubyte, 196ubyte, 222ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{light_yellow}}
+\begin{itemdecl}
+static const bgra_color& light_yellow() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 255ubyte, 224ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{lime}}
+\begin{itemdecl}
+static const bgra_color& lime() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 255ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{lime_green}}
+\begin{itemdecl}
+static const bgra_color& lime_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 50ubyte, 205ubyte, 50ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{linen}}
+\begin{itemdecl}
+static const bgra_color& linen() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 250ubyte, 240ubyte, 230ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{magenta}}
+\begin{itemdecl}
+static const bgra_color& magenta() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 0ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{maroon}}
+\begin{itemdecl}
+static const bgra_color& maroon() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 128ubyte, 0ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{medium_aquamarine}}
+\begin{itemdecl}
+static const bgra_color& medium_aquamarine() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 102ubyte, 205ubyte, 170ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{medium_blue}}
+\begin{itemdecl}
+static const bgra_color& medium_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 0ubyte, 205ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{medium_orchid}}
+\begin{itemdecl}
+static const bgra_color& medium_orchid() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 186ubyte, 85ubyte, 211ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{medium_purple}}
+\begin{itemdecl}
+static const bgra_color& medium_purple() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 147ubyte, 112ubyte, 219ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{medium_sea_green}}
+\begin{itemdecl}
+static const bgra_color& medium_sea_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 60ubyte, 179ubyte, 113ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{medium_slate_blue}}
+\begin{itemdecl}
+static const bgra_color& medium_slate_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 123ubyte, 104ubyte, 238ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{medium_spring_green}}
+\begin{itemdecl}
+static const bgra_color& medium_spring_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 250ubyte, 154ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{medium_turquoise}}
+\begin{itemdecl}
+static const bgra_color& medium_turquoise() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 72ubyte, 209ubyte, 204ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{medium_violet_red}}
+\begin{itemdecl}
+static const bgra_color& medium_violet_red() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 199ubyte, 21ubyte, 133ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{midnight_blue}}
+\begin{itemdecl}
+static const bgra_color& midnight_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 25ubyte, 25ubyte, 112ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{mint_cream}}
+\begin{itemdecl}
+static const bgra_color& mint_cream() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 245ubyte, 255ubyte, 250ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{misty_rose}}
+\begin{itemdecl}
+static const bgra_color& misty_rose() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 228ubyte, 225ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{moccasin}}
+\begin{itemdecl}
+static const bgra_color& moccasin() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 228ubyte, 181ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{navajo_white}}
+\begin{itemdecl}
+static const bgra_color& navajo_white() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 222ubyte, 173ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{navy}}
+\begin{itemdecl}
+static const bgra_color& navy() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 0ubyte, 128ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{old_lace}}
+\begin{itemdecl}
+static const bgra_color& old_lace() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 253ubyte, 245ubyte, 230ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{olive}}
+\begin{itemdecl}
+static const bgra_color& olive() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 128ubyte, 128ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{olive_drab}}
+\begin{itemdecl}
+static const bgra_color& olive_drab() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 107ubyte, 142ubyte, 35ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{orange}}
+\begin{itemdecl}
+static const bgra_color& orange() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 165ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{orange_red}}
+\begin{itemdecl}
+static const bgra_color& orange_red() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 69ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{orchid}}
+\begin{itemdecl}
+static const bgra_color& orchid() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 218ubyte, 112ubyte, 214ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{pale_goldenrod}}
+\begin{itemdecl}
+static const bgra_color& pale_goldenrod() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 238ubyte, 232ubyte, 170ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{pale_green}}
+\begin{itemdecl}
+static const bgra_color& pale_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 152ubyte, 251ubyte, 152ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{pale_turquoise}}
+\begin{itemdecl}
+static const bgra_color& pale_turquoise() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 175ubyte, 238ubyte, 238ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{pale_violet_red}}
+\begin{itemdecl}
+static const bgra_color& pale_violet_red() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 219ubyte, 112ubyte, 147ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{papaya_whip}}
+\begin{itemdecl}
+static const bgra_color& papaya_whip() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 239ubyte, 213ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{peach_puff}}
+\begin{itemdecl}
+static const bgra_color& peach_puff() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 218ubyte, 185ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{peru}}
+\begin{itemdecl}
+static const bgra_color& peru() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 205ubyte, 133ubyte, 63ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{pink}}
+\begin{itemdecl}
+static const bgra_color& pink() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 192ubyte, 203ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{plum}}
+\begin{itemdecl}
+static const bgra_color& plum() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 221ubyte, 160ubyte, 221ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{powder_blue}}
+\begin{itemdecl}
+static const bgra_color& powder_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 176ubyte, 224ubyte, 230ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{purple}}
+\begin{itemdecl}
+static const bgra_color& purple() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 128ubyte, 0ubyte, 128ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{red}}
+\indexlibrary{\idxcode{red}!\idxcode{bgra_color}}
+\begin{itemdecl}
+static const bgra_color& red() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 0ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{rosy_brown}}
+\indexlibrary{\idxcode{rosy_brown}!\idxcode{bgra_color}}
+\begin{itemdecl}
+static const bgra_color& rosy_brown() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 188ubyte, 143ubyte, 143ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{royal_blue}}
+\indexlibrary{\idxcode{royal_blue}!\idxcode{bgra_color}}
+\begin{itemdecl}
+static const bgra_color& royal_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 65ubyte, 105ubyte, 225ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{saddle_brown}}
+\begin{itemdecl}
+static const bgra_color& saddle_brown() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 139ubyte, 69ubyte, 19ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{salmon}}
+\begin{itemdecl}
+static const bgra_color& salmon() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 250ubyte, 128ubyte, 114ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{sandy_brown}}
+\begin{itemdecl}
+static const bgra_color& sandy_brown() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 244ubyte, 164ubyte, 96ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{sea_green}}
+\begin{itemdecl}
+static const bgra_color& sea_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 46ubyte, 139ubyte, 87ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{sea_shell}}
+\begin{itemdecl}
+static const bgra_color& sea_shell() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 245ubyte, 238ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{sienna}}
+\begin{itemdecl}
+static const bgra_color& sienna() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 160ubyte, 82ubyte, 45ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{silver}}
+\begin{itemdecl}
+static const bgra_color& silver() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 192ubyte, 192ubyte, 192ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{sky_blue}}
+\begin{itemdecl}
+static const bgra_color& sky_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 135ubyte, 206ubyte, 235ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{slate_blue}}
+\begin{itemdecl}
+static const bgra_color& slate_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 106ubyte, 90ubyte, 205ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{slate_gray}}
+\begin{itemdecl}
+static const bgra_color& slate_gray() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 112ubyte, 128ubyte, 144ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{slate_grey}}
+\begin{itemdecl}
+static const bgra_color& slate_grey() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 112ubyte, 128ubyte, 144ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{snow}}
+\begin{itemdecl}
+static const bgra_color& snow() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 250ubyte, 250ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{spring_green}}
+\begin{itemdecl}
+static const bgra_color& spring_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 255ubyte, 127ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{steel_blue}}
+\begin{itemdecl}
+static const bgra_color& steel_blue() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 70ubyte, 130ubyte, 180ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{tan}}
+\begin{itemdecl}
+static const bgra_color& tan() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 210ubyte, 180ubyte, 140ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{teal}}
+\begin{itemdecl}
+static const bgra_color& teal() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 128ubyte, 128ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{thistle}}
+\begin{itemdecl}
+static const bgra_color& thistle() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 216ubyte, 191ubyte, 216ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{tomato}}
+\begin{itemdecl}
+static const bgra_color& tomato() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 99ubyte, 71ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{transparent_black}}
+\begin{itemdecl}
+static const bgra_color& transparent_black() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 0ubyte, 0ubyte, 0ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{turquoise}}
+\begin{itemdecl}
+static const bgra_color& turquoise() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 64ubyte, 244ubyte, 208ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{violet}}
+\begin{itemdecl}
+static const bgra_color& violet() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 238ubyte, 130ubyte, 238ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{wheat}}
+\begin{itemdecl}
+static const bgra_color& wheat() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 245ubyte, 222ubyte, 179ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{white}}
+\begin{itemdecl}
+static const bgra_color& white() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 255ubyte, 255ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{white_smoke}}
+\begin{itemdecl}
+static const bgra_color& white_smoke() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 245ubyte, 245ubyte, 245ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{yellow}}
+\begin{itemdecl}
+static const bgra_color& yellow() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 255ubyte, 0ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{yellow_green}}
+\begin{itemdecl}
+static const bgra_color& yellow_green() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 154ubyte, 205ubyte, 50ubyte, 255ubyte \}}.
+\end{itemdescr}
+
+\rSec1 [bgracolor.ops] {\tcode{bgra_color} non-member operators}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{operator==}}
+\begin{itemdecl}
+bool operator==(const bgra_color& lhs, const bgra_color& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{lhs.r() == rhs.r() \&\&
+lhs.g() == rhs.g() \&\&
+lhs.b() == rhs.b() \&\&
+lhs.a() == rhs.a()}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!\idxcode{operator!=}}
+\begin{itemdecl}
+bool operator!=(const bgra_color& lhs, const bgra_color& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{!(lhs == rhs)}
+\end{itemdescr}

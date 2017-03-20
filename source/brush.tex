@@ -14,14 +14,14 @@ A \tcode{brush} object is usable with any \tcode{surface} or \tcode{surface}-der
 A \tcode{brush} object's graphics data is immutable. It is observable only by the effect that it produces when the brush is used as a Source Brush or as a Mask Brush (\ref{surface.rendering.brushes}).
 
 \pnum
-A \tcode{brush} object has an immutable \tcode{brush_type} value which indicates which type of brush it is (Table~\ref{tab:brushtype.meanings}).
+A \tcode{brush} object has a brush type of \tcode{brush_type}, which indicates which type of brush it is (Table~\ref{tab:brushtype.meanings}).
 
 \pnum
-As a result of technological limitations and considerations, \tcode{brush} object's graphics data can have less precision than the data from which it was created.
+As a result of technological limitations and considerations, a \tcode{brush} object's graphics data can have less precision than the data from which it was created.
 
 \pnum
 \enterexample
-Several graphics and rendering technologies that are currently widely used typically store individual color and alpha channel data as 8-bit unsigned normalized integer values while the \tcode{double} type that is used by the \tcode{rgba_color} class for individual color and alpha is often a 64-bit value. As such, it is possible for a loss of precision when transforming the 64-bit channel data of an \tcode{rgba_color} object to the 8-bit channel data that is commonly used internally in such graphics and rendering technologies.
+Several graphics and rendering technologies that are currently widely used typically store individual color and alpha channel data as 8-bit unsigned normalized integer values while the \tcode{double} type that is used by the \tcode{bgra_color} class for individual color and alpha is often a 64-bit value. As such, it is possible for a loss of precision when transforming the 64-bit channel data of an \tcode{bgra_color} object to the 8-bit channel data that is commonly used internally in such graphics and rendering technologies.
 \exitexample
 
 \rSec1 [brush.synopsis] {\tcode{brush} synopsis}
@@ -31,7 +31,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class brush {
   public:
     // \ref{brush.cons}, construct/copy/move/destroy:
-    explicit brush(const rgba_color& c);
+    explicit brush(const bgra_color& c);
     template <class InputIterator>
     brush(const vector_2d& begin, const vector_2d& end,
       InputIterator first, InputIterator last);
@@ -85,92 +85,59 @@ When \tcode{b} is a surface brush, then when sampling from \tcode{b}, the visual
 
 \indexlibrary{\idxcode{brush}!constructor}
 \begin{itemdecl}
-brush(const rgba_color& c);
-brush(const rgba_color& c, error_code& ec) noexcept;
+explicit brush(const bgra_color& c);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
 Constructs an object of type \tcode{brush}.
-
-\pnum
-The brush shall be a color brush.
 
 \pnum
 The brush's brush type shall be set to the value \tcode{brush_type::solid_color}.
 
 \pnum
-The brush's wrap mode shall be set to the value \tcode{experimental::io2d::wrap_mode::none}.
-
-\pnum
-The brush's filter shall be set to the value \tcode{experimental::io2d::filter::fast}.
-
-\pnum
-The brush's transformation matrix shall be set to the value \tcode{matrix_2d::init_identity()}.
-
-\pnum
-The graphics data of the brush shall be created from the return value of \tcode{f.color()}. The visual data format of the graphics data shall be as if it is that specified by \tcode{format::argb}.
+The graphics data of the brush shall be created from the return value of \tcode{f.color()}. The visual data format of the graphics data shall be as-if it is that specified by \tcode{format::argb}.
 
 \pnum
 \remarks
-Sampling from this brush shall produce the results specified in \ref{brush.sampling.color}.
-
-\pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-\pnum
-\errors
-\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
-
-\tcode{io2d_error::invalid_status} if there was a failure to allocate a resource other than memory.
+Sampling from this produces the results specified in \ref{brush.sampling.color}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{brush}!constructor}
 \begin{itemdecl}
-template <class Allocator>
+template <class InputIterator>
 brush(const vector_2d& begin, const vector_2d& end,
-  const color_stop_group<Allocator>& csg);
-template <class Allocator>
-brush(const vector_2d& begin, const vector_2d& end,
-  const color_stop_group<Allocator>& csg, error_code& ec) noexcept;
+  InputIterator first, InputIterator last);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs an object of type \tcode{brush}.
+Constructs a linear gradient \tcode{brush} object with a begin point of \tcode{begin}, an end point of \tcode{end}, and a color stop collection containing the values in the range \range{first}{last}.
 
 \pnum
-The brush shall be a linear gradient brush.
-
-\pnum
-The brush's brush type shall be set to the value \tcode{brush_type::linear}.
-
-\pnum
-The brush's wrap mode shall be set to the value \tcode{experimental::io2d::wrap_mode::none}.
-
-\pnum
-The brush's filter shall be set to the value \tcode{experimental::io2d::filter::fast}.
-
-\pnum
-The brush's transformation matrix shall be set to the value \tcode{matrix_2d::init_identity()}.
-
-\pnum
-The graphics data of the brush is nominally as specified the introductory paragraphs of \ref{gradients} and in \ref{gradients.linear}. Its color stops shall be the values contained in \tcode{csg}. However because the graphics data is not directly observable, it is \unspecnorm what data is stored and how it is stored, provided that the results of sampling from the brush are the same as if the brush's graphics data was stored as specified in the introductory paragraphs of \ref{gradients} and in \ref{gradients.linear}.
+The brush's brush type is \tcode{brush_type::linear}.
 
 \pnum
 \remarks
-Sampling from this brush shall produce the results specified in \ref{brush.sampling.linear}.
+Sampling from this brush produces the results specified in \ref{brush.sampling.linear}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{brush}!constructor}
+\begin{itemdecl}
+brush(const vector_2d& begin, const vector_2d& end,
+  initializer_list<color_stop> il);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs a linear gradient \tcode{brush} object with a begin point of \tcode{begin}, an end point of \tcode{end}, and a color stop collection containing the \tcode{color_stop} objects in \tcode{il}.
 
 \pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
+The brush's brush type is \tcode{brush_type::linear}.
 
 \pnum
-\errors
-\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
-
-\tcode{io2d_error::invalid_status} if there was a failure to allocate a resource other than memory.
+\remarks
+Sampling from this brush produces the results specified in \ref{brush.sampling.linear}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{brush}!constructor}
@@ -182,22 +149,32 @@ brush(const circle& start, const circle& end,
 \begin{itemdescr}
 \pnum
 \effects
-Constructs an object of type \tcode{brush}.
-
-\pnum
-The brush is a radial gradient brush.
-
-\pnum
+Constructs a radial gradient \tcode{brush} object with a start circle of \tcode{start}, an end circle of \tcode{end}, and a color stop collection containing the values in the range \range{first}{last}.
 
 \pnum
 The brush's brush type is \tcode{brush_type::radial}.
 
 \pnum
-The graphics data of the brush is nominally as specified the introductory paragraphs of \ref{gradients} and in \ref{gradients.radial}. Its color stops shall be the values contained in \tcode{csg}. However because the graphics data is not directly observable, it is \unspecnorm what data is stored and how it is stored, provided that the results of sampling from the brush are the same as if the brush's graphics data was stored as specified in the introductory paragraphs of \ref{gradients} and in \ref{gradients.radial}.
+\remarks
+Sampling from this brush produces the results specified in \ref{brush.sampling.radial}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{brush}!constructor}
+\begin{itemdecl}
+brush(const circle& start, const circle& end,
+  initializer_list<color_stop> il);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs a radial gradient \tcode{brush} object with a start circle of \tcode{start}, an end circle of \tcode{end}, and a color stop collection containing the \tcode{color_stop} objects in \tcode{il}.
+
+\pnum
+The brush's brush type is \tcode{brush_type::radial}.
 
 \pnum
 \remarks
-Sampling from this brush shall produce the results specified in \ref{brush.sampling.radial}.
+Sampling from this brush produces the results specified in \ref{brush.sampling.radial}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{brush}!constructor}
@@ -211,16 +188,10 @@ explicit brush(image_surface&& img);
 Constructs an object of type \tcode{brush}.
 
 \pnum
-The brush is a surface brush.
-
-\pnum
 The brush's brush type is \tcode{brush_type::surface}.
 
 \pnum
-The graphics data of the brush is nominally the same as the graphics data of the \underlyingimagesurface of \tcode{img}. However because the graphics data is not directly observable, it is \unspecnorm what data is stored and how it is stored.
-
-\pnum
-The graphics data of the brush shall be the \underlyingimagesurface of \tcode{img}.
+The graphics data of the brush is as-if it is the \underlyingimagesurface of \tcode{img}.
 
 \pnum
 \remarks

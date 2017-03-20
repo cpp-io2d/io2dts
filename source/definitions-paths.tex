@@ -28,7 +28,7 @@ It is possible for the initial path segment and final path segment to be the sam
 
 \indexdefn{path instruction}
 \definition{path instruction}{\iotwod.defns.pathinstruction}
-an instruction that creates a new path, closes an existing path, or modifies the interpretation of path segments that follow it
+an instruction that creates a new path, closes an existing path, adds a geometry as a new closed path, or modifies the interpretation of path segments that follow it
 
 \indexdefn{path item}
 \definition{path item}{\iotwod.defns.pathitem}
@@ -36,7 +36,7 @@ a path segment or path instruction
 
 \indexdefn{path}
 \definition{path}{\iotwod.defns.path}
-a collection of path instructions and path segments where the end point of each path segment, except the final path segment, defines the start point of exactly one other path segment in the collection
+a collection of path items where the end point of each path segment, except the final path segment, defines the start point of exactly one other path segment in the collection
 
 \indexdefn{current point}
 \definition{current point}{\iotwod.defns.currentpoint}

@@ -59,7 +59,7 @@ Each horizontal row of pixels begins with the leftmost pixel and proceeds right 
 The width in bytes of each horizontal row is provided by \tcode{mapped_surface::stride}. This value may be larger than the result of multiplying the width in pixels of each horizontal row by the size in bytes of the pixel's format (most commonly as a result of implementation-dependent memory alignment requirements).
 
 \pnum
-Whether the pixel data array provides direct access to the \underlyingsurface's memory or provides indirect access as if through a proxy or a copy is \unspecnorm.
+Whether the pixel data array provides direct access to the \underlyingsurface's memory or provides indirect access as-if through a proxy or a copy is \unspecnorm.
 
 \pnum
 Changes made to the pixel data array are considered to be \term{uncommitted} so long as those changes are not reflected in the \underlyingsurface.
@@ -127,7 +127,7 @@ Given the following code:
 
 \begin{codeblock}
 image_surface imgsfc{ format::argb32, 100, 100 };
-imgsfc.paint(rgba_color::red());
+imgsfc.paint(bgra_color::red());
 imgsfc.flush();
 imgsfc.map([](mapped_surface& mapsfc) -> void {
     auto pixelData = mapsfc.data();
@@ -174,7 +174,7 @@ Given the following code:
 
 \begin{codeblock}
 image_surface imgsfc{ format::argb32, 100, 100 };
-imgsfc.paint(rgba_color::red());
+imgsfc.paint(bgra_color::red());
 imgsfc.flush();
 imgsfc.map([](mapped_surface& mapsfc) -> void {
     auto pixelData = mapsfc.data();

@@ -28,9 +28,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class display_surface : public surface {
   public:
     // \ref{displaysurface.cons}, construct/copy/move/destroy:
-    display_surface() = delete;
-    display_surface(const display_surface&) = delete;
-    display_surface& operator=(const display_surface&) = delete;
     display_surface(display_surface&& other) noexcept;
     display_surface& operator=(display_surface&& other) noexcept;
     
@@ -43,7 +40,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       experimental::io2d::format preferredFormat, error_code& ec,
       experimental::io2d::scaling scl = experimental::io2d::scaling::letterbox,
       experimental::io2d::refresh_rate rr =
-      experimental::io2d::refresh_rate::as_fast_as_possible, double fps = 30.0)
+      experimental::io2d::refresh_rate::as_fast_as_possible, double fps = 30.0) 
       noexcept;
     
     display_surface(int preferredWidth, int preferredHeight, 
@@ -60,7 +57,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       experimental::io2d::refresh_rate::as_fast_as_possible, double fps = 30.0) 
       noexcept;
     
-    virtual ~display_surface();
+    ~display_surface();
     
     // \ref{displaysurface.modifiers}, modifiers:
     void draw_callback(const function<void(display_surface& sfc)>& fn) noexcept;
@@ -81,22 +78,14 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void scaling(experimental::io2d::scaling scl) noexcept;
     void user_scaling_callback(const function<experimental::io2d::rectangle(
       const display_surface&, bool&)>& fn) noexcept;
-    void letterbox_brush(experimental::nullvalue_t) noexcept;
-    void letterbox_brush(const rgba_color& c);
-    void letterbox_brush(const rgba_color& c, error_code& ec) noexcept;
-    void letterbox_brush(const experimental::io2d::brush& b);
-    void letterbox_brush(const experimental::io2d::brush& b, error_code& ec) 
-      noexcept;
+    void letterbox_brush(const optional<brush>& b,
+      const optional<brush_props> = nullopt) noexcept;
     void auto_clear(bool val) noexcept;
     void refresh_rate(experimental::io2d::refresh_rate rr) noexcept;
     bool desired_frame_rate(double fps) noexcept;
     void redraw_required() noexcept;
-    int show();
-    int show(error_code& ec) noexcept;
-    void exit_show();
-    void exit_show(error_code& ec) noexcept;
-    void exit_show(std::chrono::duration d);
-    void exit_show(std::chrono::duration d, error_code& ec) noexcept;
+    int begin_show();
+    void end_show();
     
     // \ref{displaysurface.observers}, observers:
     experimental::io2d::format format() const noexcept;
@@ -104,14 +93,14 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     int height() const noexcept;
     int display_width() const noexcept;
     int display_height() const noexcept;
-    tuple<int, int> dimensions() const noexcept;
-    tuple<int, int> display_dimensions() const noexcept;
+    vector_2d dimensions() const noexcept;
+    vector_2d display_dimensions() const noexcept;
     experimental::io2d::scaling scaling() const noexcept;
     function<experimental::io2d::rectangle(const display_surface&,
       bool&)> user_scaling_callback() const;
     function<experimental::io2d::rectangle(const display_surface&,
       bool&)> user_scaling_callback(error_code& ec) const noexcept;
-    experimental::io2d::brush letterbox_brush() const noexcept;
+    optional<brush> letterbox_brush() const noexcept;
     bool auto_clear() const noexcept;
     experimental::io2d::refresh_rate refresh_rate() const noexcept;
     double desired_frame_rate() const noexcept;
@@ -123,13 +112,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \rSec1 [displaysurface.misc] {\tcode{display_surface} miscellaneou behavior}
 
 \pnum
-What constitutes an output device is \impldef{output device}, with the sole constraint being that an output device shall allow the user to see the dynamically-updated contents of the Display Buffer.
+What constitutes an output device is \impldef{output device}, with the sole constraint being that an output device must allow the user to see the dynamically-updated contents of the Display Buffer.
 \enterexample
 An output device might be a window in a windowing system environment or the usable screen area of a smart phone or tablet.
 \exitexample
 
 \pnum
-Implementations need not support the simultaneous existence of multiple \tcode{display_surface} objects.
+Implementations do not need to support the simultaneous existence of multiple \tcode{display_surface} objects.
 
 \pnum
 All functions inherited from \tcode{surface} that affect its \underlyingsurface shall operate on the Back Buffer.
@@ -156,7 +145,7 @@ Because the \tcode{display_surface} class publicly derives from the \tcode{surfa
 	\term{Letterbox Brush} &
 	\tcode{brush} &
 	This is the brush that shall be used as specified by \tcode{scaling::letterbox} (Table~\ref{tab:scaling.meanings}) &
-	\tcode{brush\{ \{ rgba_color::black() \} \}} \\ \rowsep
+	\tcode{brush\{ \{ bgra_color::black() \} \}} \\ \rowsep
 	
 	\term{Scaling Type} &
 	\tcode{scaling} &
@@ -258,8 +247,8 @@ display_surface(int preferredWidth, int preferredHeight,
 display_surface(int preferredWidth, int preferredHeight, 
   experimental::io2d::format preferredFormat, error_code& ec,
   experimental::io2d::scaling scl = experimental::io2d::scaling::letterbox,
-    experimental::io2d::refresh_rate rr =
-    experimental::io2d::refresh_rate::as_fast_as_possible, double fps = 30.0)
+  experimental::io2d::refresh_rate rr =
+  experimental::io2d::refresh_rate::as_fast_as_possible, double fps = 30.0)
   noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -280,7 +269,7 @@ The value of Scaling Type shall be the value of \tcode{scl}.
 The value of Refresh Rate shall be the value of \tcode{rr}.
 
 \pnum
-The value of Desired Frame Rate shall be as if \tcode{display_surface::desired_frame_rate} was called with \tcode{fps} as its argument. If \tcode{!is_finite(fps)}, then the value of Desired Frame Rate shall be its default value.
+The value of Desired Frame Rate shall be as-if \tcode{display_surface::desired_frame_rate} was called with \tcode{fps} as its argument. If \tcode{!is_finite(fps)}, then the value of Desired Frame Rate shall be its default value.
 
 \pnum
 All other observable state data shall have their default values.
@@ -333,7 +322,7 @@ The value of Scaling Type shall be the value of \tcode{scl}.
 The value of Refresh Rate shall be the value of \tcode{rr}.
 
 \pnum
-The value of Desired Frame Rate shall be as if \tcode{display_surface::desired_frame_rate} was called with \tcode{fps} as its argument. If \tcode{!is_finite(fps)}, then the value of Desired Frame Rate shall be its default value.
+The value of Desired Frame Rate shall be as-if \tcode{display_surface::desired_frame_rate} was called with \tcode{fps} as its argument. If \tcode{!is_finite(fps)}, then the value of Desired Frame Rate shall be its default value.
 
 \pnum
 All other observable state data shall have their default values.
@@ -663,13 +652,13 @@ Sets the Letterbox Brush to its default value.
 \indexlibrary{\idxcode{display_surface}!\idxcode{letterbox_brush}}
 \indexlibrary{\idxcode{letterbox_brush}!\idxcode{display_surface}}
 \begin{itemdecl}
-void letterbox_brush(const rgba_color& c);
-void letterbox_brush(const rgba_color& c, error_code& ec) noexcept;
+void letterbox_brush(const bgra_color& c);
+void letterbox_brush(const bgra_color& c, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Sets the Letterbox Brush to a value as if \tcode{experimental::io2d::brush\{ solid_color_brush_factory\{ \} \}}.
+Sets the Letterbox Brush to a value as-if \tcode{experimental::io2d::brush\{ solid_color_brush_factory\{ \} \}}.
 
 \pnum
 \throws

@@ -18,14 +18,9 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       // \ref{changematrix.cons}, construct:
       constexpr change_matrix() noexcept;
       constexpr explicit change_matrix(const matrix_2d& m) noexcept;
-      constexpr change_matrix(const change_matrix&) noexcept = default;
-      constexpr change_matrix& operator=(const change_matrix&)
-        noexcept = default;
-      change_matrix(change_matrix&&) noexcept = default;
-      change_matrix& operator=(change_matrix&&) noexcept = default;
 
       // \ref{changematrix.modifiers}, modifiers:
-      void matrix(const matrix_2d& m) noexcept;
+      constexpr void matrix(const matrix_2d& m) noexcept;
 
       // \ref{changematrix.observers}, observers:
       constexpr matrix_2d matrix() const noexcept;
@@ -65,9 +60,8 @@ The Matrix shall be set to the value of \tcode{m}.
 \rSec1 [changematrix.modifiers]{\tcode{change_matrix} modifiers}
 
 \indexlibrary{\idxcode{change_matrix}!\idxcode{matrix}}
-\indexlibrary{\idxcode{matrix}!\idxcode{change_matrix}}
 \begin{itemdecl}
-void matrix(const matrix_2d& m) noexcept;
+constexpr void matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -78,7 +72,6 @@ The Matrix shall be set to the value of \tcode{m}.
 \rSec1 [changematrix.observers]{\tcode{change_matrix} observers}
 
 \indexlibrary{\idxcode{change_matrix}!\idxcode{matrix}}
-\indexlibrary{\idxcode{matrix}!\idxcode{change_matrix}}
 \begin{itemdecl}
 constexpr matrix_2d matrix() const noexcept;
 \end{itemdecl}

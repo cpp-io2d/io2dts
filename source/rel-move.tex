@@ -24,16 +24,12 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       // \ref{relmove.cons}, construct:
       constexpr rel_move() noexcept;
       constexpr explicit rel_move(const vector_2d& pt) noexcept;
-      constexpr rel_move(const rel_move&) noexcept = default;
-      constexpr rel_move& operator=(const rel_move&) noexcept = default;
-      rel_move(rel_move&&) noexcept = default;
-      rel_move& operator=(rel_move&&) noexcept = default;
 
       // \ref{relmove.modifiers}, modifiers:
-      void to(const vector_2d& pt) noexcept;
+      constexpr void to(const vector_2d& pt) noexcept;
 
       // \ref{relmove.observers}, observers:
-      vector_2d to() const noexcept;
+      constexpr vector_2d to() const noexcept;
     };
   };
 } } } }
@@ -70,9 +66,8 @@ The end point shall be set to the value of \tcode{pt}.
 \rSec1 [relmove.modifiers]{\tcode{rel_move} modifiers}
 
 \indexlibrary{\idxcode{rel_move}!\idxcode{to}}
-\indexlibrary{\idxcode{to}!\idxcode{rel_move}}
 \begin{itemdecl}
-void to(const vector_2d& pt) noexcept;
+constexpr void to(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -83,7 +78,6 @@ The end point shall be set to the value of \tcode{pt}.
 \rSec1 [relmove.observers]{\tcode{rel_move} observers}
 
 \indexlibrary{\idxcode{rel_move}!\idxcode{to}}
-\indexlibrary{\idxcode{to}!\idxcode{rel_move}}
 \begin{itemdecl}
 constexpr vector_2d to() const noexcept;
 \end{itemdecl}

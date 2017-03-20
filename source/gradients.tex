@@ -14,13 +14,13 @@ The collection of \tcode{color_stop} objects contribute to defining a brush whic
 A linear gradient is a type of gradient.
 
 \pnum
-In addition to the observable state of a gradient, a linear gradient also has a \term{begin point} and an \term{end point} as parts of its observable state, both of which are objects of type \tcode{vector_2d}.
+A linear gradient has a \term{begin point} and an \term{end point}, each of which are objects of type \tcode{vector_2d}.
 
 \pnum
 A linear gradient for which the distance between its begin point and its end point is not greater than \tcode{numeric_limits<double>::epsilon()} is a \term{degenerate linear gradient}.
 
 \pnum
-All attempts to sample from a \tcode{brush} object created using a degenerate linear gradient shall return the color \tcode{rgba_color::transparent_black()}. The remainder of \ref{gradients.linear} is inapplicable to degenerate linear gradients.
+All attempts to sample from a a degenerate linear gradient return the color \tcode{bgra_color::transparent_black()}. The remainder of \ref{gradients} is inapplicable to degenerate linear gradients.
 
 \pnum
 The begin point and end point of a linear gradient define a line segment, with a color stop offset value of 0.0 corresponding to the begin point and a color stop offset value of 1.0 corresponding to the end point.
@@ -56,7 +56,7 @@ To determine the offset value of a point $p$ for a linear gradient, perform the 
 A radial gradient is a type of gradient.
 
 \pnum
-In addition to the observable state of a gradient, a radial gradient also has a \term{start circle} and an \term{end circle} as part of its observable state, each of which is defined by a \tcode{vector_2d} object that denotes its center and a \tcode{double} value that denotes its radius.
+Aa radial gradient has a \term{start circle} and an \term{end circle}, each of which is defined by a \tcode{circle} object.
 
 \pnum
 A radial gradient is a \term{degenerate radial gradient} if:
@@ -68,7 +68,7 @@ A radial gradient is a \term{degenerate radial gradient} if:
 \end{itemize}
 
 \pnum
-All attempts to sample from a \tcode{brush} object created using a degenerate radial gradient shall return the color \tcode{rgba_color::transparent_black()}. The remainder of \ref{gradients.radial} is inapplicable to degenerate radial gradients.
+All attempts to sample from a \tcode{brush} object created using a degenerate radial gradient return the color \tcode{bgra_color::transparent_black()}. The remainder of \ref{gradients} is inapplicable to degenerate radial gradients.
 
 \pnum
 A color stop offset of 0.0 corresponds to all points along the diameter of the start circle or to its center point if it has a radius value of 0.0.
@@ -104,18 +104,18 @@ An interpolated circle shall not be rendered if its value for $o$ results in $ra
 For any offset value $o$, its color value shall be determined according to the following rules:
 
 \begin{enumeratea}
-\item If there are less than two color stops or if all color stops have the same offset value, then the color value of every offset value shall be \tcode{rgba_color::transparent_black()} and the remainder of \ref{gradients.sampling} is inapplicable.
+\item If there are less than two color stops or if all color stops have the same offset value, then the color value of every offset value shall be \tcode{bgra_color::transparent_black()} and the remainder of these rules are inapplicable.
 
-\item If exactly one color stop has an offset value equal to $o$, $o$'s color value shall be the color value of that color stop and the remainder of \ref{gradients.sampling} is inapplicable.
+\item If exactly one color stop has an offset value equal to $o$, $o$'s color value shall be the color value of that color stop and the remainder of these rules are inapplicable.
 
 \item If two or more color stops have an offset value equal to $o$, $o$'s color value shall be the color value of the color stop which has the lowest index value among the set of color stops that have an offset value equal to $o$ and the remainder of \ref{gradients.sampling} is inapplicable.
 
-\item When no color stop has the offset value of \tcode{0.0}, then, defining $n$ to be the offset value that is nearest to \tcode{0.0} among the offset values in the set of all color stops, if $o$ is in the offset range $[0, n)$, $o$'s color value shall be \tcode{rgba_color::transparent_black()} and the remainder of \ref{gradients.sampling} is inapplicable.
+\item When no color stop has the offset value of \tcode{0.0}, then, defining $n$ to be the offset value that is nearest to \tcode{0.0} among the offset values in the set of all color stops, if $o$ is in the offset range $[0, n)$, $o$'s color value shall be \tcode{bgra_color::transparent_black()} and the remainder of these rules are inapplicable.
 \enternote
 Since the range described does not include $n$, it does not matter how many color stops have $n$ as their offset value for purposes of this rule.
 \exitnote
 
-\item When no color stop has the offset value of \tcode{1.0}, then, defining $n$ to be the offset value that is nearest to \tcode{1.0} among the offset values in the set of all color stops, if $o$ is in the offset range $(n, 1]$, $o$'s color value shall be \tcode{rgba_color::transparent_black()} and the remainder of \ref{gradients.sampling} is inapplicable.
+\item When no color stop has the offset value of \tcode{1.0}, then, defining $n$ to be the offset value that is nearest to \tcode{1.0} among the offset values in the set of all color stops, if $o$ is in the offset range $(n, 1]$, $o$'s color value shall be \tcode{bgra_color::transparent_black()} and the remainder of these rules are inapplicable.
 \enternote
 Since the range described does not include $n$, it does not matter how many color stops have $n$ as their offset value for purposes of this rule.
 \exitnote
@@ -152,32 +152,32 @@ This includes any color stops with an offset value of \tcode{1.0} provided that 
 
 \item Where the value of $o$ is outside the range $[0,1]$, its color value depends on the \tcode{wrap_mode} value of the brush which is created using the gradient:
 	\begin{itemize}
-	\item If the \tcode{wrap_mode} value is \tcode{wrap_mode::none}, the color value of $o$ shall be \tcode{rgba_color::transparent_black()}.
+	\item If the \tcode{wrap_mode} value is \tcode{wrap_mode::none}, the color value of $o$ shall be \tcode{bgra_color::transparent_black()}.
 	
-	\item If the \tcode{wrap_mode} value is \tcode{wrap_mode::pad}, if $o$ is negative then the color value of $o$ shall be the same as if the value of $o$ was \tcode{0.0}, otherwise the color value of $o$ shall be the same as if the value of $o$ was \tcode{1.0}.
+	\item If the \tcode{wrap_mode} value is \tcode{wrap_mode::pad}, if $o$ is negative then the color value of $o$ shall be the same as-if the value of $o$ was \tcode{0.0}, otherwise the color value of $o$ shall be the same as-if the value of $o$ was \tcode{1.0}.
 	
 	\item If the \tcode{wrap_mode} value is \tcode{wrap_mode::repeat}, then \tcode{1.0} shall be added to or subtracted from $o$ until $o$ is in the range $[0,1]$, at which point its color value is the color value for the modified value of $o$ as determined by these rules.
 	\enterexample
-	Given $o == 2.1$, after application of this rule $o == 0.1$ and the color value of $o$ shall be the same value as if the initial value of $o$ was $0.1$.
+	Given $o == 2.1$, after application of this rule $o == 0.1$ and the color value of $o$ shall be the same value as-if the initial value of $o$ was $0.1$.
 	
-	Given $o == -0.3$, after application of this rule $o == 0.7$ and the color value of $o$ shall be the same as if the initial value of $o$ was $0.7$.
+	Given $o == -0.3$, after application of this rule $o == 0.7$ and the color value of $o$ shall be the same as-if the initial value of $o$ was $0.7$.
 	\exitexample
 	
 	\item If the \tcode{wrap_mode} value is \tcode{wrap_mode::reflect}, $o$ shall be set to the absolute value of $o$, then 2.0 shall be subtracted from $o$ until $o$ is in the range $[0,2]$, then if $o$ is in the range $(1,2]$ then $o$ shall be set to \tcode{1.0 - (o - 1.0)}, at which point its color value is the color value for the modified value of $o$ as determined by these rules.
 	\enterexample
-	Given $o == 2.8$, after application of this rule $o == 0.8$ and the color value of $o$ shall be the same value as if the initial value of $o$ was $0.8$.
+	Given $o == 2.8$, after application of this rule $o == 0.8$ and the color value of $o$ shall be the same value as-if the initial value of $o$ was $0.8$.
 	
-	Given $o == 3.6$, after application of this rule $o == 0.4$ and the color value of $o$ shall be the same value as if the initial value of $o$ was $0.4$.
+	Given $o == 3.6$, after application of this rule $o == 0.4$ and the color value of $o$ shall be the same value as-if the initial value of $o$ was $0.4$.
 	
-	Given $o == -0.3$, after application of this rule $o == 0.3$ and the color value of $o$ shall be the same as if the initial value of $o$ was $0.3$.
+	Given $o == -0.3$, after application of this rule $o == 0.3$ and the color value of $o$ shall be the same as-if the initial value of $o$ was $0.3$.
 	
-	Given $o == -5.8$, after application of this rule $o == 0.2$ and the color value of $o$ shall be the same as if the initial value of $o$ was $0.2$.
+	Given $o == -5.8$, after application of this rule $o == 0.2$ and the color value of $o$ shall be the same as-if the initial value of $o$ was $0.2$.
 	\exitexample
 	\end{itemize}
 \end{enumeratea}
 
 \pnum
-It is unspecified whether the interpolation between the color values of two adjacent color stops is performed linearly on each color channel, is performed within an RGB color space (with or without gamma correction), or is performed by a linear color interpolation algorithm implemented in hardware (typically in a graphics processing unit).
+It is unspecified whether the interpolation between the color values of two adjacent color stops is performed linearly on each color channel or is performed by a linear color interpolation algorithm implemented in hardware (typically in a graphics processing unit).
 
 \pnum
 Implementations shall interpolate between alpha channel values of adjacent color stops linearly except as provided in the following paragraph.

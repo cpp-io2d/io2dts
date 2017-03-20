@@ -29,18 +29,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
         double angle1, double angle2) noexcept;
       constexpr arc_clockwise(const vector_2d& ctr, double rad,
         double angle1, double angle2) noexcept;
-      constexpr arc_clockwise(const arc_clockwise&) noexcept = default;
-      constexpr arc_clockwise& operator=(const arc_clockwise&&)
-        noexcept = default;
-      arc_clockwise(arc_clockwise&&) noexcept = default;
-      arc_clockwise& operator=(arc_clockwise&&) noexcept = default;
 
       // \ref{arcclockwise.modifiers}, modifiers:
-      void circle(const experimental::io2d::circle& c) noexcept;
-      void center(const vector_2d& ctr) noexcept;
-      void radius(double r) noexcept;
-      void angle_1(double radians) noexcept;
-      void angle_2(double radians) noexcept;
+      constexpr void circle(const experimental::io2d::circle& c) noexcept;
+      constexpr void center(const vector_2d& ctr) noexcept;
+      constexpr void radius(double r) noexcept;
+      constexpr void angle_1(double radians) noexcept;
+      constexpr void angle_2(double radians) noexcept;
 
       // \ref{arcclockwise.observers}, observers:
       constexpr experimental::io2d::circle circle() const noexcept;
@@ -120,9 +115,8 @@ The Second Angle shall be set to the value of \tcode{angle2}.
 \rSec1 [arcclockwise.modifiers]{\tcode{arc_clockwise} modifiers}
 
 \indexlibrary{\idxcode{arc_clockwise}!\idxcode{circle}}
-\indexlibrary{\idxcode{circle}!\idxcode{arc_clockwise}}
 \begin{itemdecl}
-void circle(const experimental::io2d::circle& c) noexcept;
+constexpr void circle(const experimental::io2d::circle& c) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -131,9 +125,8 @@ The Circle shall be set to the value of \tcode{c}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{arc_clockwise}!\idxcode{center}}
-\indexlibrary{\idxcode{center}!\idxcode{arc_clockwise}}
 \begin{itemdecl}
-void center(const vector_2d& ctr) noexcept;
+constexpr void center(const vector_2d& ctr) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -142,9 +135,8 @@ The Circle's Center (\ref{circle.intro}) shall be set to the value of \tcode{ctr
 \end{itemdescr}
 
 \indexlibrary{\idxcode{arc_clockwise}!\idxcode{radius}}
-\indexlibrary{\idxcode{radius}!\idxcode{arc_clockwise}}
 \begin{itemdecl}
-void radius(double r) noexcept;
+constexpr void radius(double r) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -153,9 +145,8 @@ The Circle's Radius (\ref{circle.intro}) shall be set to the value of \tcode{r}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{arc_clockwise}!\idxcode{angle_1}}
-\indexlibrary{\idxcode{angle_1}!\idxcode{arc_clockwise}}
 \begin{itemdecl}
-void angle_1(double radians) noexcept;
+constexpr void angle_1(double radians) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -164,9 +155,8 @@ The First Angle shall be set to the value of \tcode{radians}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{arc_clockwise}!\idxcode{angle_2}}
-\indexlibrary{\idxcode{angle_2}!\idxcode{arc_clockwise}}
 \begin{itemdecl}
-void angle_2(double radians) noexcept;
+constexpr void angle_2(double radians) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -177,9 +167,8 @@ The Second Angle shall be set to the value of \tcode{radians}.
 \rSec1 [arcclockwise.observers]{\tcode{arc_clockwise} observers}
 
 \indexlibrary{\idxcode{arc_clockwise}!\idxcode{circle}}
-\indexlibrary{\idxcode{circle}!\idxcode{arc_clockwise}}
 \begin{itemdecl}
-constexpr experimental::io2d::circle circl() const noexcept;
+constexpr experimental::io2d::circle circle() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -188,7 +177,6 @@ The value of the Circle.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{arc_clockwise}!\idxcode{center}}
-\indexlibrary{\idxcode{center}!\idxcode{arc_clockwise}}
 \begin{itemdecl}
 constexpr vector_2d center() const noexcept;
 \end{itemdecl}
@@ -199,7 +187,6 @@ The value of the Circle's Center (\ref{circle.intro}).
 \end{itemdescr}
 
 \indexlibrary{\idxcode{arc_clockwise}!\idxcode{radius}}
-\indexlibrary{\idxcode{radius}!\idxcode{arc_clockwise}}
 \begin{itemdecl}
 constexpr double radius() const noexcept;
 \end{itemdecl}
@@ -210,7 +197,6 @@ The value of the Circle's Radius (\ref{circle.intro}).
 \end{itemdescr}
 
 \indexlibrary{\idxcode{arc_clockwise}!\idxcode{angle_1}}
-\indexlibrary{\idxcode{angle_1}!\idxcode{arc_clockwise}}
 \begin{itemdecl}
 constexpr double angle_1() const noexcept;
 \end{itemdecl}
@@ -221,7 +207,6 @@ The value of the First Angle.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{arc_clockwise}!\idxcode{angle_2}}
-\indexlibrary{\idxcode{angle_2}!\idxcode{arc_clockwise}}
 \begin{itemdecl}
 constexpr double angle_2() const noexcept;
 \end{itemdecl}

@@ -1,0 +1,47 @@
+%!TEX root = io2d.tex
+
+\rSec0 [imagefileformat] {Enum class \tcode{image_file_format}}
+
+\rSec1 [imagefileformat.summary] {\tcode{image_file_format} Summary}
+
+\pnum
+The \tcode{image_file_format} enum class specifies the data format that an \tcode{image_surface} object shall be constructed from or shall be saved to.
+
+\pnum
+This allows data in a format that is required to be supported to be read or written regardless of its extension.
+
+\rSec1 [imagefileformat.synopsis] {\tcode{image_file_format} Synopsis}
+
+\indexlibrary{\idxcode{image_file_format}}
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  enum class image_file_format {
+    png,
+    jpg
+  };
+} } } }
+\end{codeblock}
+
+\rSec1 [imagefileformat.enumerators] {\tcode{image_file_format} Enumerators}
+
+\begin{libreqtab2}
+ {\tcode{imagefileformat} enumerator meanings}
+ {tab:imagefileformat.meanings}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endhead
+ \tcode{png}
+ & The data is in the PNG format.
+ \\
+ \tcode{jpg}
+ & The data is in the JPEG format.
+ \\
+\end{libreqtab2}

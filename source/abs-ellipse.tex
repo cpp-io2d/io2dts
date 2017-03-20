@@ -1,0 +1,176 @@
+%!TEX root = io2d.tex
+\rSec0 [absellipse] {Class \tcode{abs_ellipse}}
+
+\pnum
+\indexlibrary{\idxcode{abs_ellipse}}
+The class \tcode{abs_ellipse} describes a path instruction that add a new path consisting of an ellipse and closes it.
+
+\pnum
+It has a Center of type \tcode{vector_2d}, an X Axis Radius of type \tcode{double}, and a Y Axis Radius of type \tcode{double}.
+
+\rSec1 [absellipse.synopsis] {\tcode{abs_ellipse} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  namespace path_data {
+    class abs_ellipse {
+    public:
+      // \ref{absellipse.cons}, construct/copy/move/destroy:
+      constexpr abs_ellipse() noexcept;
+      constexpr abs_ellipse(const vector_2d& ctr, double x, double y) noexcept;
+      constexpr explicit abs_ellipse(const circle& c) noexcept;
+
+      // \ref{absellipse.modifiers}, modifiers:
+      constexpr void center(const vector_2d& ctr) noexcept;
+      constexpr void x_axis(double rad) noexcept;
+      constexpr void y_axis(double rad) noexcept;
+    
+      // \ref{absellipse.observers}, observers:
+      constexpr vector_2d center() const noexcept;
+      constexpr double x_axis() const noexcept;
+      constexpr double y_axis() const noexcept;
+    };
+  }
+} } } }
+\end{codeblock}
+
+\rSec1 [absellipse.cons] {\tcode{abs_ellipse} constructors}
+
+\indexlibrary{\idxcode{abs_ellipse}!constructor}
+\begin{itemdecl}
+constexpr abs_ellipse() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{abs_ellipse}.
+
+\pnum
+The value of Center is \tcode{vector_2d\{0,0, 0.0\}}.
+
+\pnum
+The value of X Axis Radius is \tcode{0.0}.
+
+\pnum
+The value of Y Axis Radius is \tcode{0.0}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{abs_ellipse}!constructor}
+\begin{itemdecl}
+constexpr abs_ellipse(const vector_2d& ctr, double x, double y) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\preconditions
+\tcode{x >= 0.0}.
+
+\pnum
+\tcode{y >= 0.0}.
+
+\pnum
+\effects
+Constructs an object of type \tcode{abs_ellipse}.
+
+\pnum
+The value of Center is \tcode{ctr}.
+
+\pnum
+The value of X Axis Radius is \tcode{x}.
+
+\pnum
+The value of Y Axis Radius is \tcode{y}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{abs_ellipse}!constructor}
+\begin{itemdecl}
+constexpr explicit abs_ellipse(const circle& c) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\preconditions
+\tcode{c.radius() >= 0.0}.
+
+\pnum
+\effects
+Constructs an object of type \tcode{abs_ellipse}.
+
+\pnum
+The value of Center is \tcode{c.center()}.
+
+\pnum
+The value of X Axis Radius is \tcode{c.radius()}.
+
+\pnum
+The value of Y Axis Radius is \tcode{c.radius()}.
+\end{itemdescr}
+
+\rSec1 [absellipse.modifiers]{\tcode{abs_ellipse} modifiers}
+
+\indexlibrary{\idxcode{abs_ellipse}!\idxcode{center}}
+\begin{itemdecl}
+constexpr void center(const vector_2d& ctr) noexcept;
+\end{itemdecl}
+
+\begin{itemdescr}
+\pnum
+\effects
+The value of Center is \tcode{ctr}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{abs_ellipse}!\idxcode{x_axis}}
+\begin{itemdecl}
+constexpr void x_axis(double rad) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\preconditions
+\tcode{rad >= 0.0}.
+
+\pnum
+\effects
+The value of X Axis Radius is \tcode{rad}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{abs_ellipse}!\idxcode{y_axis}}
+\begin{itemdecl}
+constexpr void y_axis(double rad) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\preconditions
+\tcode{rad >= 0.0}.
+
+\pnum
+\effects
+The value of Y Axis Radius is \tcode{rad}.
+\end{itemdescr}
+
+\rSec1 [absellipse.observers]{\tcode{abs_ellipse} observers}
+
+\indexlibrary{\idxcode{abs_ellipse}!\idxcode{center}}
+\begin{itemdecl}
+constexpr double center() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The value of Center.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{abs_ellipse}!\idxcode{x_axis}}
+\begin{itemdecl}
+constexpr double x_axis() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The value of X Axis Radius.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{abs_ellipse}!\idxcode{y_axis}}
+\begin{itemdecl}
+constexpr double y_axis() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The value of Y Axis Radius.
+\end{itemdescr}

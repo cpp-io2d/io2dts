@@ -74,42 +74,25 @@ The \tcode{process_path_data} function template transforms the path group contai
 
 \input{path-process-code}
 
-%\rSec1 [paths.strokerules] {Stroking paths}
-%
-%\pnum
-%The following rules shall apply when a Stroking operation (\ref{surface.stroking}) is carried out on a path.
-%
-%\begin{enumerate}
-%\item If the path only contains a degenerate path segment, then if the \tcode{line_cap} value is
-%\end{enumerate}
-%
-%\begin{enumerate}
-%  \item Except as otherwise specified in these rules, the start point and end point of a path segment shall be rendered as specified by the meaning of the surface's current \tcode{line_cap} value (\ref{linecap}).
-%  
-%  \item If the end point of a path segment \textit{a} is set as the current point and is then used as the start point of another path segment, \textit{b}, the point where \tcode{a}'s end point meets \tcode{b}'s start point shall be rendered as specified by the meaning of the surface's current \tcode{line_join} value (\ref{linejoin}).
-%  
-%  \item ***FIXME***
-%\end{enumerate}
-%
-%\rSec1 [paths.fillrules] {Filling paths}
-%
-%\pnum
-
 \addtocounter{SectionDepthBase}{1}
-\input{new-path}
-\input{close-path}
-\input{abs-move}
-\input{rel-move}
-\input{abs-line}
-\input{rel-line}
 \input{abs-cubic-curve}
-\input{rel-cubic-curve}
+\input{abs-ellipse}
+\input{abs-line}
+\input{abs-move}
 \input{abs-quadratic-curve}
-\input{rel-quadratic-curve}
+\input{abs-rectangle}
 \input{arc-clockwise}
 \input{arc-counterclockwise}
 \input{change-matrix}
 \input{change-origin}
+\input{close-path}
+\input{new-path}
+\input{rel-cubic-curve}
+\input{rel-ellipse}
+\input{rel-line}
+\input{rel-move}
+\input{rel-quadratic-curve}
+\input{rel-rectangle}
 \input{path}
 \input{path-builder}
 \addtocounter{SectionDepthBase}{-1}

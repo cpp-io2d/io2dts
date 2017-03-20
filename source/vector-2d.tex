@@ -25,8 +25,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     vector_2d& operator=(vector_2d&&) noexcept = default;
 
     // \ref{\vectortwod.modifiers}, modifiers:
-    void x(double value) noexcept;
-    void y(double value) noexcept;
+    constexpr void x(double value) noexcept;
+    constexpr void y(double value) noexcept;
     
     // \ref{\vectortwod.observers}, observers:
     constexpr double x() const noexcept;
@@ -98,7 +98,7 @@ The Y coordinate shall be set to the value of \tcode{y}.
 \indexlibrary{\idxcode{vector_2d}!\idxcode{x}}
 \indexlibrary{\idxcode{x}!\idxcode{vector_2d}}
 \begin{itemdecl}
-void x(double value) noexcept;
+constexpr void x(double value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -109,7 +109,7 @@ The X coordinate shall be set to the value of \tcode{x}.
 \indexlibrary{\idxcode{vector_2d}!\idxcode{y}}
 \indexlibrary{\idxcode{y}!\idxcode{vector_2d}}
 \begin{itemdecl}
-void y(double value) noexcept;
+constexpr void y(double value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

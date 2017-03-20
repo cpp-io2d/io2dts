@@ -18,11 +18,6 @@ data representing color, transparency, or some combination thereof
 \definition{channel}{\iotwod.defs.channel}
 a bounded set of homogeneously-spaced real numbers in the range $[0,1]$
 
-%\indexdefn{channel}
-%\indexdefn{channel!color}
-%\definition{color channel}{\iotwod.defns.colorchannel}
-%a channel representing the intensity of a specific color
-%
 \indexdefn{visual data format}
 \definition{visual data format}{\iotwod.defns.visualdataformat}
 a specification of visual data channels which defines a total bit size for the format and each channel's role, bit size, and location relative to the upper (high-order) bit
@@ -54,7 +49,7 @@ an error in the results of the application of a composing operation
 
 \indexdefn{anti-aliasing}
 \definition{anti-aliasing}{\iotwod.defns.antialias}
-the application of a function or algorithm while rendering to 
+the application of a function or algorithm while composing to 
 reduce aliasing
 \enternote
 Certain algorithms can produce ``better'' results, i.e. results with less 
@@ -87,22 +82,10 @@ an additive color model using red, green, and blue color channels
 \indexdefn{color model!RGBA}
 \definition{RGBA color model}{\iotwod.defns.rgbacolormodel}
 the RGB color model with an alpha channel
-\enternote
-RGBA is not a proper color model; it is a convenient way to refer to the RGB color model to which an alpha channel has been added.
-
-The interpretation of the alpha channel and its effect on the interpretation of the RGB color channels is intentionally not defined here because it is context-dependent.
-\exitnote
 
 \indexdefn{color space}
 \definition{color space}{\iotwod.defns.colorspace}
 an unambiguous mapping of values to colorimetric colors
-\enternote
-The difference between a color model and a color space is often obscured, and sometimes the terms themselves are mistakenly used interchangeably.
-
-A color model defines color mathematically without regard to how humans actually perceive color. Color models are useful for working with color computationally but, since they deal in ideal colors rather than perceived colors, they fail to provide the information necessary to allow for the uniform display of their colors on different output devices (e.g. LCD monitors, CRT TVs, and printers).
-
-A color space, by contrast, maps unambiguous values to perceived colors. Since the perception of color varies from person to person, color spaces use the science of colorimetry to define those perceived colors in order to obtain uniformity. As such, the uniform display of the colors in a color space on different output devices is possible.
-\exitnote
 
 \indexdefn{color space}
 \indexdefn{color space!sRGB}
@@ -149,7 +132,7 @@ a mathematical function that determines the visual data value of a point for a g
 \indexdefn{graphics data}
 \indexdefn{graphics data!raster}
 \definition{graphics data}{\iotwod.defns.graphics.raster}
-<raster graphics data> visual data stored as pixels that is accessible as if it was an array of rows of pixels beginning with the pixel at the integral point $(0,0)$
+<raster graphics data> visual data stored as pixels that is accessible as-if it was an array of rows of pixels beginning with the pixel at the integral point $(0,0)$
 
 \indexdefn{graphics resource}
 \definition{graphics resource}{\iotwod.defns.graphicsresource}

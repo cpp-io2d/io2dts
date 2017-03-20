@@ -19,16 +19,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       constexpr abs_quadratic_curve() noexcept;
       constexpr abs_quadratic_curve(const vector_2d& cpt, const vector_2d& ept)
         noexcept;
-      constexpr abs_quadratic_curve(const abs_quadratic_curve&)
-        noexcept = default;
-      constexpr abs_quadratic_curve& operator=(const abs_quadratic_curve&)
-        noexcept = default;
-      abs_quadratic_curve(abs_quadratic_curve&&) noexcept = default;
-      abs_quadratic_curve& operator=(abs_quadratic_curve&&) noexcept = default;
 
       // \ref{absquadraticcurve.modifiers}, modifiers:
-      void control_point(const vector_2d& cpt) noexcept;
-      void end_point(const vector_2d& ept) noexcept;
+      constexpr void control_point(const vector_2d& cpt) noexcept;
+      constexpr void end_point(const vector_2d& ept) noexcept;
 
       // \ref{absquadraticcurve.observers}, observers:
       constexpr vector_2d control_point() const noexcept;
@@ -45,15 +39,15 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 constexpr abs_quadratic_curve() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{abs_quadratic_curve}.
-	
-	\pnum
-	The control point shall be set to the value of \tcode{vector_2d\{0.0, 0.0\}}.
-	
-	\pnum
-	The end point shall be set to the value of \tcode{vector_2d\{0.0, 0.0\}}.
+\pnum
+\effects
+Constructs an object of type \tcode{abs_quadratic_curve}.
+
+\pnum
+The control point shall be set to the value of \tcode{vector_2d\{0.0, 0.0\}}.
+
+\pnum
+The end point shall be set to the value of \tcode{vector_2d\{0.0, 0.0\}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{abs_quadratic_curve}!constructor}
@@ -62,61 +56,57 @@ constexpr abs_quadratic_curve(const vector_2d& cpt, const vector_2d& ept)
   noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{abs_quadratic_curve}.
-	
-	\pnum
-	The control point shall be set to the value of \tcode{cpt}.
-	
-	\pnum
-	The end point shall be set to the value of \tcode{ept}.
+\pnum
+\effects
+Constructs an object of type \tcode{abs_quadratic_curve}.
+
+\pnum
+The control point shall be set to the value of \tcode{cpt}.
+
+\pnum
+The end point shall be set to the value of \tcode{ept}.
 \end{itemdescr}
 
 \rSec1 [absquadraticcurve.modifiers]{\tcode{abs_quadratic_curve} modifiers}
 
 \indexlibrary{\idxcode{abs_quadratic_curve}!\idxcode{control_point}}
-\indexlibrary{\idxcode{control_point}!\idxcode{abs_quadratic_curve}}
 \begin{itemdecl}
-void control_point(const vector_2d& cpt) noexcept;
+constexpr void control_point(const vector_2d& cpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	The control point shall be set to the value of \tcode{cpt}.
+\pnum
+\effects
+The control point shall be set to the value of \tcode{cpt}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{abs_quadratic_curve}!\idxcode{end_point}}
-\indexlibrary{\idxcode{end_point}!\idxcode{abs_quadratic_curve}}
 \begin{itemdecl}
-void end_point(const vector_2d& ept) noexcept;
+constexpr void end_point(const vector_2d& ept) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	The end point shall be set to the value of \tcode{ept}.
+\pnum
+\effects
+The end point shall be set to the value of \tcode{ept}.
 \end{itemdescr}
 
 \rSec1 [absquadraticcurve.observers]{\tcode{abs_quadratic_curve} observers}
 
 \indexlibrary{\idxcode{abs_quadratic_curve}!\idxcode{control_point}}
-\indexlibrary{\idxcode{control_point}!\idxcode{abs_quadratic_curve}}
 \begin{itemdecl}
 constexpr vector_2d control_point() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	The value of the control point.
+\pnum
+\returns
+The value of the control point.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{abs_quadratic_curve}!\idxcode{end_point}}
-\indexlibrary{\idxcode{end_point}!\idxcode{abs_quadratic_curve}}
 \begin{itemdecl}
 constexpr vector_2d end_point() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	The value of the end point.
+\pnum
+\returns
+The value of the end point.
 \end{itemdescr}

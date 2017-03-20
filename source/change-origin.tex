@@ -18,13 +18,9 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       // \ref{changeorigin.cons}, construct:
       constexpr change_origin() noexcept;
       constexpr explicit change_origin(const vector_2d& pt) noexcept;
-      constexpr change_origin(const change_origin&) noexcept;
-      constexpr change_origin& operator=(const change_origin&) noexcept;
-      change_origin(change_origin&&) noexcept;
-      change_origin& operator=(change_origin&&) noexcept;
 
       // \ref{changeorigin.modifiers}, modifiers:
-      void origin(const vector_2d& pt) noexcept;
+      constexpr void origin(const vector_2d& pt) noexcept;
 
       // \ref{changeorigin.observers}, observers:
       constexpr vector_2d origin() const noexcept;
@@ -66,7 +62,7 @@ The Origin shall be set to the value of \tcode{pt}.
 \indexlibrary{\idxcode{change_origin}!\idxcode{origin}}
 \indexlibrary{\idxcode{origin}!\idxcode{change_origin}}
 \begin{itemdecl}
-void origin(const vector_2d& value) noexcept;
+constexpr void origin(const vector_2d& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

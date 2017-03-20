@@ -21,13 +21,9 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       // \ref{relline.cons}, construct:
       constexpr rel_line() noexcept;
       constexpr explicit rel_line(const vector_2d& pt) noexcept;
-      constexpr rel_line(const rel_line&) noexcept = default;
-      constexpr rel_line& operator=(const rel_line&) noexcept = default;
-      rel_line(rel_line&&) noexcept = default;
-      rel_line& operator=(rel_line&&) noexcept = default;
 
       // \ref{relline.modifiers}, modifiers:
-      void to(const vector_2d& pt) noexcept;
+      constexpr void to(const vector_2d& pt) noexcept;
 
       // \ref{relline.observers}, observers:
       constexpr vector_2d to() const noexcept;
@@ -67,9 +63,8 @@ The end point shall be set to the value of \tcode{pt}.
 \rSec1 [relline.modifiers]{\tcode{rel_line} modifiers}
 
 \indexlibrary{\idxcode{rel_line}!\idxcode{to}}
-\indexlibrary{\idxcode{to}!\idxcode{rel_line}}
 \begin{itemdecl}
-void to(const vector_2d& pt) noexcept;
+constexpr void to(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -80,7 +75,6 @@ The end point shall be set to the value of \tcode{pt}.
 \rSec1 [relline.observers]{\tcode{rel_line} observers}
 
 \indexlibrary{\idxcode{rel_line}!\idxcode{to}}
-\indexlibrary{\idxcode{to}!\idxcode{rel_line}}
 \begin{itemdecl}
 constexpr vector_2d to() const noexcept;
 \end{itemdecl}

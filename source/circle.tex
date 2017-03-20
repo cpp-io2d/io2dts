@@ -54,6 +54,9 @@ The value of Radius is \tcode{0.0}.
 constexpr circle(const vector_2d& ctr, double rad) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
+\preconditions
+\tcode{rad >= 0.0}.
+
 \pnum
 \effects
 Constructs an object of type \tcode{circle}.
@@ -83,6 +86,9 @@ The value of Center is \tcode{ctr}.
 constexpr void radius(double rad) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
+\preconditions
+\tcode{rad >= 0.0}.
+
 \pnum
 \effects
 The value of Radius is \tcode{rad}.

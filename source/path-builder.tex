@@ -18,10 +18,10 @@ In addition to its path group, a path builder has an origin of type \tcode{vecto
 When a path builder is default constructed:
 
 \begin{itemize}
-	\item The path group shall be empty.
-	\item The current point shall not contain a value.
-	\item The transformation matrix shall have a value of \tcode{matrix_2d::init_identity\{ \}}.
-	\item The origin shall have a value of \tcode{vector_2d\{ \}}.
+\item The path group shall be empty.
+\item The current point shall not contain a value.
+\item The transformation matrix shall have a value of \tcode{matrix_2d::init_identity\{ \}}.
+\item The origin shall have a value of \tcode{vector_2d\{ \}}.
 \end{itemize}
 
 \rSec1 [pathbuilder.synopsis] {\tcode{path_builder} synopsis}
@@ -112,22 +112,27 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void new_path() noexcept;
     void close_path() noexcept;
     void arc_clockwise(const vector_2d& center, double radius, double angle1,
-    double angle2) noexcept;
+      double angle2) noexcept;
     void arc_counterclockwise(const vector_2d& center, double radius,
-    double angle1, double angle2) noexcept;
+      double angle1, double angle2) noexcept;
+    void ellipse(const experimental::io2d::ellipse& val) noexcept;
+    void ellipse(const circle& val) noexcept;
     void cubic_curve_to(const vector_2d& pt0, const vector_2d& pt1,
-    const vector_2d& pt2) noexcept;
+      const vector_2d& pt2) noexcept;
     void line_to(const vector_2d& pt) noexcept;
     void move_to(const vector_2d& pt) noexcept;
     void quadratic_curve_to(const vector_2d& pt0, const vector_2d& pt2)
-    noexcept;
+      noexcept;
     void rectangle(const experimental::io2d::rectangle& r) noexcept;
+    void rel_rectangle(const experimental::io2d::rectangle& r) noexcept;
+    void rel_ellipse(const experimental::io2d::ellipse& val) noexcept;
+    void rel_ellipse(const circle& val) noexcept;
     void rel_cubic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1,
     const vector_2d& dpt2) noexcept;
     void rel_line_to(const vector_2d& dpt) noexcept;
     void rel_move_to(const vector_2d& dpt) noexcept;
     void rel_quadratic_curve_to(const vector_2d& pt0, const vector_2d& pt2)
-    noexcept;
+      noexcept;
     void transform_matrix(const matrix_2d& m) noexcept;
     void origin(const vector_2d& pt) noexcept;
     
@@ -155,11 +160,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
     // \ref{pathbuilder.observers}, observers:
     experimental::io2d::rectangle path_extents() const noexcept;
-    bool has_current_point() const noexcept;
-    vector_2d current_point() const;
-    vector_2d current_point(error_code& ec) const noexcept;
-    matrix_2d transform_matrix() const noexcept;
-    vector_2d origin() const noexcept;
   };
   
   template <class Allocator>
@@ -185,78 +185,78 @@ This class shall be considered a sequence container, as defined in [containers] 
 
 \indexlibrary{\idxcode{path_builder}!constructor}
 \begin{itemdecl}
-	explicit path_builder(const Allocator&);
+explicit path_builder(const Allocator&);
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an empty \tcode{path_builder}, using the specified allocator.
-	
-	\pnum
-	\complexity
-	Constant.
+\pnum
+\effects
+Constructs an empty \tcode{path_builder}, using the specified allocator.
+
+\pnum
+\complexity
+Constant.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!constructor}
 \begin{itemdecl}
-	explicit path_builder(size_type n, const Allocator& = Allocator());
+explicit path_builder(size_type n, const Allocator& = Allocator());
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs a \tcode{path_builder} with \tcode{n} default-inserted elements using the specified allocator.
-	
-	\pnum
-	\complexity
-	Linear in \tcode{n}.
+\pnum
+\effects
+Constructs a \tcode{path_builder} with \tcode{n} default-inserted elements using the specified allocator.
+
+\pnum
+\complexity
+Linear in \tcode{n}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!constructor}
 \begin{itemdecl}
-	path_builder(size_type n, const value_type& value,
-	  const Allocator& = Allocator());
+path_builder(size_type n, const value_type& value,
+  const Allocator& = Allocator());
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\requires
-	\tcode{value_type} shall be \tcode{CopyInsertable} into \tcode{*this}.
-	
-	\pnum
-	\effects
-	Constructs a \tcode{path_builder} with n copies of \tcode{value}, using the specified allocator.
-	
-	\pnum
-	\complexity
-	Linear in \tcode{n}.
+\pnum
+\requires
+\tcode{value_type} shall be \tcode{CopyInsertable} into \tcode{*this}.
+
+\pnum
+\effects
+Constructs a \tcode{path_builder} with n copies of \tcode{value}, using the specified allocator.
+
+\pnum
+\complexity
+Linear in \tcode{n}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!constructor}
 \begin{itemdecl}
-	template <class InputIterator>
-	path_builder(InputIterator first, InputIterator last,
-	  const Allocator& = Allocator());
+template <class InputIterator>
+path_builder(InputIterator first, InputIterator last,
+  const Allocator& = Allocator());
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs a \tcode{path_builder} equal to the range \range{first}{last}, using the specified allocator.
-	
-	\pnum
-	\complexity
-	Makes only $N$ calls to the copy constructor of \tcode{value_type} (where $N$
-	is the distance between
-	\tcode{first}
-	and
-	\tcode{last})
-	and no reallocations if iterators \tcode{first} and \tcode{last} are of forward, bidirectional, or random access categories.
-	It makes order
-	\tcode{N}
-	calls to the copy constructor of
-	\tcode{value_type}
-	and order
-	$\log(N)$
-	reallocations if they are just input iterators.
-	
+\pnum
+\effects
+Constructs a \tcode{path_builder} equal to the range \range{first}{last}, using the specified allocator.
+
+\pnum
+\complexity
+Makes only $N$ calls to the copy constructor of \tcode{value_type} (where $N$
+is the distance between
+\tcode{first}
+and
+\tcode{last})
+and no reallocations if iterators \tcode{first} and \tcode{last} are of forward, bidirectional, or random access categories.
+It makes order
+\tcode{N}
+calls to the copy constructor of
+\tcode{value_type}
+and order
+$\log(N)$
+reallocations if they are just input iterators.
+
 \end{itemdescr}
 
 \rSec1 [pathbuilder.capacity] {\tcode{path_builder} capacity}
@@ -264,459 +264,389 @@ This class shall be considered a sequence container, as defined in [containers] 
 \indexlibrary{\idxcode{path_builder}!\idxcode{capacity}}
 \indexlibrary{\idxcode{capacity}!\idxcode{path_builder}}
 \begin{itemdecl}
-	size_type capacity() const noexcept;
+size_type capacity() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	The total number of elements that the path builder can hold without requiring reallocation.
+\pnum
+\returns
+The total number of elements that the path builder can hold without requiring reallocation.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{reserve}}
-\indexlibrary{\idxcode{reserve}!\idxcode{path_builder}}
 \begin{itemdecl}
-	void reserve(size_type n);
+void reserve(size_type n);
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\requires
-	\tcode{value_type} shall be \tcode{MoveInsertable} into \tcode{*this}.
-	
-	\pnum
-	\effects
-	A directive that informs a path builder of a planned change in size, so that it can manage the storage
-	allocation accordingly. After \tcode{reserve()}, \tcode{capacity()} is greater or equal to the argument of \tcode{reserve} if
-	reallocation happens; and equal to the previous value of \tcode{capacity()} otherwise. Reallocation happens
-	at this point if and only if the current capacity is less than the argument of \tcode{reserve()}. If an exception
-	is thrown other than by the move constructor of a non-\tcode{CopyInsertable} type, there are no effects.
-	
-	\pnum
-	\complexity
-	It does not change the size of the sequence and takes at most linear time in the size of the
-	sequence.
-	
-	\pnum
-	\throws
-	\tcode{length_error} if \tcode{n >
-	max_size()}.\footnote{\tcode{reserve()} uses \tcode{Allocator::allocate()} which
-	may throw an appropriate exception.}
+\pnum
+\requires
+\tcode{value_type} shall be \tcode{MoveInsertable} into \tcode{*this}.
 
-	\pnum
-	\remarks
-	Reallocation invalidates all the references, pointers, and iterators
-	referring to the elements in the sequence.
-	No reallocation shall take place during insertions that happen
-	after a call to
-	\tcode{reserve()}
-	until the time when an insertion would make the size of the vector
-	greater than the value of
-	\tcode{capacity()}.
+\pnum
+\effects
+A directive that informs a path builder of a planned change in size, so that it can manage the storage
+allocation accordingly. After \tcode{reserve()}, \tcode{capacity()} is greater or equal to the argument of \tcode{reserve} if
+reallocation happens; and equal to the previous value of \tcode{capacity()} otherwise. Reallocation happens
+at this point if and only if the current capacity is less than the argument of \tcode{reserve()}. If an exception
+is thrown other than by the move constructor of a non-\tcode{CopyInsertable} type, there are no effects.
+
+\pnum
+\complexity
+It does not change the size of the sequence and takes at most linear time in the size of the
+sequence.
+
+\pnum
+\throws
+\tcode{length_error} if \tcode{n >
+max_size()}.\footnote{\tcode{reserve()} uses \tcode{Allocator::allocate()} which
+may throw an appropriate exception.}
+
+\pnum
+\remarks
+Reallocation invalidates all the references, pointers, and iterators
+referring to the elements in the sequence.
+No reallocation shall take place during insertions that happen
+after a call to
+\tcode{reserve()}
+until the time when an insertion would make the size of the vector
+greater than the value of
+\tcode{capacity()}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{shrink_to_fit}}
-\indexlibrary{\idxcode{shrink_to_fit}!\idxcode{path_builder}}
 \begin{itemdecl}
-	void shrink_to_fit();
+void shrink_to_fit();
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\requires
-	\tcode{value_type} shall be \tcode{MoveInsertable} into \tcode{*this}.
-	
-	\pnum
-	\effects
-	\tcode{shrink_to_fit} is a non-binding request to reduce
-	\tcode{capacity()} to \tcode{size()}.
-	\enternote
-	The request is non-binding to allow latitude for
-	implementation-specific optimizations.
-	\exitnote
-	It does not increase \tcode{capacity()}, but may reduce \tcode{capacity()}
-	by causing reallocation. 
-	If an exception is thrown other than by the move constructor
-	of a non-\tcode{CopyInsertable} \tcode{value_type} there are no effects.
+\pnum
+\requires
+\tcode{value_type} shall be \tcode{MoveInsertable} into \tcode{*this}.
 
-	\pnum
-	\complexity Linear in the size of the sequence.
+\pnum
+\effects
+\tcode{shrink_to_fit} is a non-binding request to reduce
+\tcode{capacity()} to \tcode{size()}.
+\enternote
+The request is non-binding to allow latitude for
+implementation-specific optimizations.
+\exitnote
+It does not increase \tcode{capacity()}, but may reduce \tcode{capacity()}
+by causing reallocation. 
+If an exception is thrown other than by the move constructor
+of a non-\tcode{CopyInsertable} \tcode{value_type} there are no effects.
 
-	\pnum
-	\remarks Reallocation invalidates all the references, pointers, and 
-	iterators referring to the elements in the sequence. If no reallocation 
-	happens, they remain valid.
+\pnum
+\complexity Linear in the size of the sequence.
+
+\pnum
+\remarks Reallocation invalidates all the references, pointers, and 
+iterators referring to the elements in the sequence. If no reallocation 
+happens, they remain valid.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{swap}}
-\indexlibrary{\idxcode{swap}!\idxcode{path_builder}}
 \begin{itemdecl}
-	void swap(path_builder&)
-	noexcept(allocator_traits<Allocator>::propagate_on_container_swap::value ||
-	allocator_traits<Allocator>::is_always_equal::value);
+void swap(path_builder&)
+  noexcept(allocator_traits<Allocator>::propagate_on_container_swap::value ||
+  allocator_traits<Allocator>::is_always_equal::value);
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Exchanges the contents and
-	\tcode{capacity()}
-	of
-	\tcode{*this}
-	with that of \tcode{x}.
-	
-	\pnum
-	\complexity
-	Constant time.
+\pnum
+\effects
+Exchanges the contents and
+\tcode{capacity()}
+of
+\tcode{*this}
+with that of \tcode{x}.
+
+\pnum
+\complexity
+Constant time.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{resize}}
-\indexlibrary{\idxcode{resize}!\idxcode{path_builder}}
 \begin{itemdecl}
-	void resize(size_type sz);
+void resize(size_type sz);
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	If \tcode{sz < size()}, erases the last \tcode{size() - sz} elements
-	from the sequence. Otherwise, appends \tcode{sz - size()} default-inserted 
-	elements to the sequence.
-	
-	\pnum
-	\requires
-	\tcode{value_type} shall be
-	\tcode{MoveInsertable} and \tcode{DefaultInsertable} into \tcode{*this}.
-	
-	\pnum
-	\remarks
-	If an exception is thrown other than by the move constructor of a 
-	non-\tcode{CopyInsertable}
-	\tcode{value_type} there are no effects.
+\pnum
+\effects
+If \tcode{sz < size()}, erases the last \tcode{size() - sz} elements
+from the sequence. Otherwise, appends \tcode{sz - size()} default-inserted 
+elements to the sequence.
+
+\pnum
+\requires
+\tcode{value_type} shall be
+\tcode{MoveInsertable} and \tcode{DefaultInsertable} into \tcode{*this}.
+
+\pnum
+\remarks
+If an exception is thrown other than by the move constructor of a 
+non-\tcode{CopyInsertable}
+\tcode{value_type} there are no effects.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{resize}}
-\indexlibrary{\idxcode{resize}!\idxcode{path_builder}}
 \begin{itemdecl}
-	void resize(size_type sz, const value_type& c);
+void resize(size_type sz, const value_type& c);
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	If \tcode{sz < size()}, erases the last \tcode{size() - sz} elements
-	from the sequence. Otherwise,
-	appends \tcode{sz - size()} copies of \tcode{c} to the sequence.
-	
-	\pnum
-	\requires
-	\tcode{value_type} shall be \tcode{CopyInsertable} into \tcode{*this}.
-	
-	\pnum
-	\remarks
-	If an exception is thrown there are no effects.
+\pnum
+\effects
+If \tcode{sz < size()}, erases the last \tcode{size() - sz} elements
+from the sequence. Otherwise,
+appends \tcode{sz - size()} copies of \tcode{c} to the sequence.
+
+\pnum
+\requires
+\tcode{value_type} shall be \tcode{CopyInsertable} into \tcode{*this}.
+
+\pnum
+\remarks
+If an exception is thrown there are no effects.
 \end{itemdescr}
 
 \rSec1 [pathbuilder.modifiers] {\tcode{path_builder} modifiers}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{new_path}}
-\indexlibrary{\idxcode{new_path}!\idxcode{path_builder}}
 \begin{itemdecl}
-    void new_path() noexcept;
+void new_path() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::new_path()} to the end of the path group and destroys the value, if any, of the current point.
+\pnum
+\effects
+Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::new_path()} to the end of the path group.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{close_path}}
-\indexlibrary{\idxcode{close_path}!\idxcode{path_builder}}
 \begin{itemdecl}
-    void close_path() noexcept;
+void close_path() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\requires
-	The current point contains a value.
-	
-	\pnum
-	\effects
-	Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::close_path()} to the end of the path group and sets the value of the current point to the value of the last-move-to point.
+\pnum
+\requires
+The current point contains a value.
+
+\pnum
+\effects
+Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::close_path()} to the end of the path group.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{arc_clockwise}}
 \indexlibrary{\idxcode{arc_clockwise}!\idxcode{path_builder}}
 \begin{itemdecl}
-    void arc_clockwise(const vector_2d& center, double radius, double angle1,
-      double angle2) noexcept;
+void arc_clockwise(const vector_2d& center, double radius, double angle1,
+  double angle2) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::arc_clockwise(center, radius, angle1, angle2)} to the end of the path group.
-	
-	\pnum
-	If the current point does not contain a value, the last-move-to point shall be set to \tcode{vector_2d\{ radius * cos(angle1), -(radius * -sin(angle1)) \} + center}.
-	
-	\pnum
-	The current point shall be set to \tcode{vector_2d\{ radius * cos(angle2), -(radius * -sin(angle2)) \} + center}.
+\pnum
+\effects
+Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::arc_clockwise(center, radius, angle1, angle2)} to the end of the path group.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{arc_counterclockwise}}
-\indexlibrary{\idxcode{arc_counterclockwise}!\idxcode{path_builder}}
 \begin{itemdecl}
-    void arc_counterclockwise(const vector_2d& center, double radius,
-      double angle1, double angle2) noexcept;
+void arc_counterclockwise(const vector_2d& center, double radius,
+  double angle1, double angle2) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::arc_counterclockwise(center, radius, angle1, angle2)} to the end of the path group.
-	
-	\pnum
-	If the current point does not contain a value, the last-move-to point shall be set to \tcode{vector_2d\{ radius * cos(angle2), radius * -sin(angle2) \} + center}.
-	
-	\pnum
-	The current point shall be set to \tcode{vector_2d\{ radius * cos(angle1), radius * -sin(angle1) \} + center}.
+\pnum
+\effects
+Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::arc_counterclockwise(center, radius, angle1, angle2)} to the end of the path group.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_builder}!\idxcode{ellipse}}
+\begin{itemdecl}
+void ellipse(const experimental::io2d::ellipse& val) noexcept;
+void ellipse(const circle& val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::abs_ellipse(val)} to the end of the path group.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{cubic_curve_to}}
-\indexlibrary{\idxcode{cubic_curve_to}!\idxcode{path_builder}}
 \begin{itemdecl}
-    void cubic_curve_to(const vector_2d& pt0, const vector_2d& pt1,
-      const vector_2d& pt2) noexcept;
+void cubic_curve_to(const vector_2d& pt0, const vector_2d& pt1,
+  const vector_2d& pt2) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	If the current point does not contain a value, adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::abs_move(pt0)} to the end of the path group.
-	
-	\pnum
-	Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::abs_cubic_curve(pt0, pt1, pt2)} to the end of the path group.
-	
-	\pnum
-	The current point shall be set to the value of \tcode{pt2}.
+\pnum
+\effects
+\pnum
+Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::abs_cubic_curve(pt0, pt1, pt2)} to the end of the path group.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{line_to}}
-\indexlibrary{\idxcode{line_to}!\idxcode{path_builder}}
 \begin{itemdecl}
-    void line_to(const vector_2d& pt) noexcept;
+void line_to(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	If the current point does not contain a value, the last-move-to point shall be set to the value of \tcode{pt}.
-	
-	\pnum
-	Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::abs_line(pt)} to the end of the path group.
-	
-	\pnum
-	The current point shall be set to the value of \tcode{pt}.
+\pnum
+Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::abs_line(pt)} to the end of the path group.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{move_to}}
-\indexlibrary{\idxcode{move_to}!\idxcode{path_builder}}
 \begin{itemdecl}
-    void move_to(const vector_2d& pt) noexcept;
+void move_to(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::abs_move(pt)} to the end of the path group.
-	
-	\pnum
-	The current point shall be set to the value of \tcode{pt}. The last-move-to point shall then be set to the value of the current point.
+\pnum
+\effects
+Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::abs_move(pt)} to the end of the path group.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{quadratic_curve_to}}
-\indexlibrary{\idxcode{quadratic_curve_to}!\idxcode{path_builder}}
 \begin{itemdecl}
-	void quadratic_curve_to(const vector_2d& pt0, const vector_2d& pt1)
-	  noexcept;
+void quadratic_curve_to(const vector_2d& pt0, const vector_2d& pt1) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	If the current point does not contain a value, adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::abs_move(pt0)} to the end of the path group.
-	
-	\pnum
-	Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::abs_quadratic_curve(pt0, pt1)} to the end of the path group.
-	
-	\pnum
-	The current point shall be set to the value of \tcode{pt1}.
+\pnum
+\effects
+\pnum
+Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::abs_quadratic_curve(pt0, pt1)} to the end of the path group.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{rectangle}}
-\indexlibrary{\idxcode{rectangle}!\idxcode{path_builder}}
 \begin{itemdecl}
-    void rectangle(const experimental::io2d::rectangle& r) noexcept;
+void rectangle(const experimental::io2d::rectangle& r) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	\begin{enumerate}
-	\item Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::abs_move(\{ r.x(), r.y() \})} to the end of the path group.
-	
-	\item Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::rel_line(\{ r.width(), 0.0 \})} to the end of the path group.
-	
-	\item Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::rel_line(\{ 0.0, r.height() \})} to the end of the path group.
-	
-	\item Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::rel_line(\{ -r.width(), 0.0 \})} to the end of the path group.
-	
-	\item Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::close_path()} to the end of the path group.
-	
-	\item The current point shall be set to \tcode{vector_2d\{ r.x() r.y() \}}.
-	
-	\item The last-move-to point shall be set to \tcode{vector_2d\{ r.x() r.y() \}}.
-	\end{enumerate}
+\pnum
+\effects
+Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::abs_rectangle(\{ r \})} to the end of the path group.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_builder}!\idxcode{rel_cubic_curve_to}}
-\indexlibrary{\idxcode{rel_cubic_curve_to}!\idxcode{path_builder}}
+\indexlibrary{\idxcode{path_builder}!\idxcode{rel_rectangle}}
 \begin{itemdecl}
-    void rel_cubic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1,
-      const vector_2d& dpt2) noexcept;
+void rel_rectangle(const experimental::io2d::rectangle& r) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\requires
-	The current point contains a value.
-	
-	\pnum
-	\effects
-	Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::rel_cubic_curve(dpt0, dpt1, dpt2)} to the end of the path group.
-	
-	\pnum
-	The current point shall be set to the value of the current point added to \tcode{dpt2}.
+\pnum
+\effects
+Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::rel_rectangle(\{ r \})} to the end of the path group.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_builder}!\idxcode{rel_ellipse}}
+\begin{itemdecl}
+void rel_ellipse(const experimental::io2d::ellipse& val) noexcept;
+void rel_ellipse(const circle& val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::rel_ellipse(\{ val \})} to the end of the path group.
+\end{itemdescr}
+
+
+\indexlibrary{\idxcode{path_builder}!\idxcode{rel_cubic_curve_to}}
+\begin{itemdecl}
+void rel_cubic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1,
+  const vector_2d& dpt2) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::rel_cubic_curve(dpt0, dpt1, dpt2)} to the end of the path group.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{rel_line_to}}
-\indexlibrary{\idxcode{rel_line_to}!\idxcode{path_builder}}
 \begin{itemdecl}
-    void rel_line_to(const vector_2d& dpt) noexcept;
+void rel_line_to(const vector_2d& dpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\requires
-	The current point contains a value.
-	
-	\pnum
-	\effects
-	Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::rel_line(pt)} to the end of the path group.
-	
-	\pnum
-	The current point shall be set to the value of the current point added to \tcode{dpt}.
+\pnum
+\effects
+Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::rel_line(pt)} to the end of the path group.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{rel_move_to}}
-\indexlibrary{\idxcode{rel_move_to}!\idxcode{path_builder}}
 \begin{itemdecl}
-    void rel_move_to(const vector_2d& dpt) noexcept;
+void rel_move_to(const vector_2d& dpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\requires
-	The current point contains a value.
-	
-	\pnum
-	\effects
-	Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::rel_move(dpt)} to the end of the path group.
-	
-	\pnum
-	The current point shall be set to the value of the current point added to \tcode{dpt}.The last-move-to point shall then be set to the value of the current point.
+\pnum
+\effects
+Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::rel_move(dpt)} to the end of the path group.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{rel_quadratic_curve_to}}
-\indexlibrary{\idxcode{rel_quadratic_curve_to}!\idxcode{path_builder}}
 \begin{itemdecl}
-	void rel_quadratic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1)
-	  noexcept;
+void rel_quadratic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1)
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\requires
-	The current point contains a value.
-	
-	\pnum
-	\effects
-	Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::rel_quadratic_curve(dpt0, dpt1)} to the end of the path group.
-	
-	\pnum
-	The current point shall be set to the value of the current point added to \tcode{dpt1}.
+\pnum
+\effects
+Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::rel_quadratic_curve(dpt0, dpt1)} to the end of the path group.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{transform_matrix}}
-\indexlibrary{\idxcode{transform_matrix}!\idxcode{path_builder}}
 \begin{itemdecl}
-    void transform_matrix(const matrix_2d& m) noexcept;
+void transform_matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\requires
-	The matrix \tcode{m} shall be invertible.
-	
-	\pnum
-	\effects
-	Adds a \tcode{path_data::path_data_types} object constructed from \tcode{(path_data::change_matrix(m)} to the end of the path group.
-	
-	\pnum
-	The transformation matrix shall be set to the value of \tcode{m}.
+\pnum
+\requires
+The matrix \tcode{m} shall be invertible.
+
+\pnum
+\effects
+Adds a \tcode{path_data::path_data_types} object constructed from \tcode{(path_data::change_matrix(m)} to the end of the path group.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{origin}}
-\indexlibrary{\idxcode{origin}!\idxcode{path_builder}}
 \begin{itemdecl}
-    void origin(const vector_2d& pt) noexcept;
+void origin(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::change_origin(pt)} to the end of the path group.
-	
-	\pnum
-	The origin shall be set to the value of \tcode{pt}.
+\pnum
+\effects
+Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::change_origin(pt)} to the end of the path group.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{insert}}
-\indexlibrary{\idxcode{insert}!\idxcode{path_builder}}
 \indexlibrary{\idxcode{path_builder}!\idxcode{emplace_back}}
-\indexlibrary{\idxcode{emplace_back}!\idxcode{path_builder}}
 \indexlibrary{\idxcode{path_builder}!\idxcode{push_back}}
-\indexlibrary{\idxcode{push_back}!\idxcode{path_builder}}
 \begin{itemdecl}
-	iterator insert(const_iterator position, const value_type& x);
-	iterator insert(const_iterator position, value_type&& x);
-	iterator insert(const_iterator position, size_type n, const value_type& x);
-	template <class InputIterator>
-	iterator insert(const_iterator position, InputIterator first,
-	  InputIterator last);
-	iterator insert(const_iterator position, initializer_list<value_type>);
-	template <class... Args>
-	reference emplace_back(Args&&... args);
-	template <class... Args>
-	iterator emplace(const_iterator position, Args&&... args);
-	void push_back(const value_type& x);
-	void push_back(value_type&& x);
+iterator insert(const_iterator position, const value_type& x);
+iterator insert(const_iterator position, value_type&& x);
+iterator insert(const_iterator position, size_type n, const value_type& x);
+template <class InputIterator>
+iterator insert(const_iterator position, InputIterator first,
+  InputIterator last);
+iterator insert(const_iterator position, initializer_list<value_type>);
+template <class... Args>
+reference emplace_back(Args&&... args);
+template <class... Args>
+iterator emplace(const_iterator position, Args&&... args);
+void push_back(const value_type& x);
+void push_back(value_type&& x);
 \end{itemdecl}
 
 \begin{itemdescr}
-	\pnum
-	\remarks
-	Causes reallocation if the new size is greater than the old capacity.
-	Reallocation invalidates all the references, pointers, and iterators
-	referring to the elements in the sequence.
-	If no reallocation happens, all the iterators and references before the insertion point remain valid.
-	If an exception is thrown other than by
-	the copy constructor, move constructor,
-	assignment operator, or move assignment operator of
-	\tcode{value_type} or by any \tcode{InputIterator} operation
-	there are no effects.
-	If an exception is thrown while inserting a single element at the end and
-	\tcode{value_type} is \tcode{CopyInsertable} or \tcode{is_nothrow_move_constructible_v<value_type>}
-	is \tcode{true}, there are no effects.
-	Otherwise, if an exception is thrown by the move constructor of a non-\tcode{CopyInsertable}
-	\tcode{value_type}, the effects are unspecified.
-	
-	\pnum
-	\complexity
-	The complexity is linear in the number of elements inserted plus the 
-	distance to the end of the path builder.
+\pnum
+\remarks
+Causes reallocation if the new size is greater than the old capacity.
+Reallocation invalidates all the references, pointers, and iterators
+referring to the elements in the sequence.
+If no reallocation happens, all the iterators and references before the insertion point remain valid.
+If an exception is thrown other than by
+the copy constructor, move constructor,
+assignment operator, or move assignment operator of
+\tcode{value_type} or by any \tcode{InputIterator} operation
+there are no effects.
+If an exception is thrown while inserting a single element at the end and
+\tcode{value_type} is \tcode{CopyInsertable} or \tcode{is_nothrow_move_constructible_v<value_type>}
+is \tcode{true}, there are no effects.
+Otherwise, if an exception is thrown by the move constructor of a non-\tcode{CopyInsertable}
+\tcode{value_type}, the effects are unspecified.
+
+\pnum
+\complexity
+The complexity is linear in the number of elements inserted plus the 
+distance to the end of the path builder.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{erase}}
@@ -724,71 +654,71 @@ This class shall be considered a sequence container, as defined in [containers] 
 \indexlibrary{\idxcode{path_builder}!\idxcode{pop_back}}
 \indexlibrary{\idxcode{pop_back}!\idxcode{path_builder}}
 \begin{itemdecl}
-	iterator erase(const_iterator position);
-	iterator erase(const_iterator first, const_iterator last);
-	void pop_back();
+iterator erase(const_iterator position);
+iterator erase(const_iterator first, const_iterator last);
+void pop_back();
 \end{itemdecl}
 
 \begin{itemdescr}
-	\pnum
-	\effects
-	Invalidates iterators and references at or after the point of the erase.
-	
-	\pnum
-	\complexity
-	The destructor of \tcode{value_type} is called the number of times equal to 
-	the number of the elements erased, but the assignment operator
-	of \tcode{value_type} is called the number of times equal to the number of
-	elements in the path builder after the erased elements.
-	
-	\pnum
-	\throws
-	Nothing unless an exception is thrown by the copy constructor, move 
-	constructor, assignment operator, or move assignment operator of
-	\tcode{value_type}.
+\pnum
+\effects
+Invalidates iterators and references at or after the point of the erase.
+
+\pnum
+\complexity
+The destructor of \tcode{value_type} is called the number of times equal to 
+the number of the elements erased, but the assignment operator
+of \tcode{value_type} is called the number of times equal to the number of
+elements in the path builder after the erased elements.
+
+\pnum
+\throws
+Nothing unless an exception is thrown by the copy constructor, move 
+constructor, assignment operator, or move assignment operator of
+\tcode{value_type}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{clear}}
 \indexlibrary{\idxcode{clear}!\idxcode{path_builder}}
 \begin{itemdecl}
-	void clear() noexcept;
+void clear() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\postconditions
-	\pnum
-	The current point shall not contain a value.
-	
-	\pnum
-	The transformation matrix shall have a value of \tcode{matrix_2d::init_identity\{ \}}.
-	
-	\pnum
-	The origin shall have a value of \tcode{vector_2d\{ \}}.
-	
-	\pnum
-	\remarks
-	The postconditions listed above are in addition to sequence container requirements for this function.
+\pnum
+\postconditions
+\pnum
+The current point shall not contain a value.
+
+\pnum
+The transformation matrix shall have a value of \tcode{matrix_2d::init_identity\{ \}}.
+
+\pnum
+The origin shall have a value of \tcode{vector_2d\{ \}}.
+
+\pnum
+\remarks
+The postconditions listed above are in addition to sequence container requirements for this function.
 \end{itemdescr}
 
 \rSec1 [pathbuilder.iterators] {\tcode{path_builder} iterators}
-    
+
 \indexlibrary{\idxcode{path_builder}!\idxcode{begin}}
 \indexlibrary{\idxcode{begin}!\idxcode{path_builder}}
 \indexlibrary{\idxcode{path_builder}!\idxcode{cbegin}}
 \indexlibrary{\idxcode{cbegin}!\idxcode{path_builder}}
 \begin{itemdecl}
-	iterator begin() noexcept;
-	const_iterator begin() const noexcept;
-	const_iterator cbegin() const noexcept;
+iterator begin() noexcept;
+const_iterator begin() const noexcept;
+const_iterator cbegin() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	An iterator referring to the first \tcode{path_data::path_data_types} item in the path group.
-	
-	\pnum
-	\remarks
-	Changing a \tcode{path_data::path_data_types} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_data_types} object or of any subsequent \tcode{path_data::path_data_types} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} unless all of the violations are fixed prior to such processing.
+\pnum
+\returns
+An iterator referring to the first \tcode{path_data::path_data_types} item in the path group.
+
+\pnum
+\remarks
+Changing a \tcode{path_data::path_data_types} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_data_types} object or of any subsequent \tcode{path_data::path_data_types} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} unless all of the violations are fixed prior to such processing.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{end}}
@@ -796,18 +726,18 @@ This class shall be considered a sequence container, as defined in [containers] 
 \indexlibrary{\idxcode{path_builder}!\idxcode{cend}}
 \indexlibrary{\idxcode{cend}!\idxcode{path_builder}}
 \begin{itemdecl}
-	iterator end() noexcept;
-	const_iterator end() const noexcept;
-	const_iterator cend() const noexcept;
+iterator end() noexcept;
+const_iterator end() const noexcept;
+const_iterator cend() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	An iterator which is the past-the-end value.
-	
-	\pnum
-	\remarks
-	Changing a \tcode{path_data::path_data_types} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_data_types} object or of any subsequent \tcode{path_data::path_data_types} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} unless all of the violations are fixed prior to such processing.
+\pnum
+\returns
+An iterator which is the past-the-end value.
+
+\pnum
+\remarks
+Changing a \tcode{path_data::path_data_types} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_data_types} object or of any subsequent \tcode{path_data::path_data_types} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} unless all of the violations are fixed prior to such processing.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{rbegin}}
@@ -815,18 +745,18 @@ This class shall be considered a sequence container, as defined in [containers] 
 \indexlibrary{\idxcode{path_builder}!\idxcode{crbegin}}
 \indexlibrary{\idxcode{crbegin}!\idxcode{path_builder}}
 \begin{itemdecl}
-	reverse_iterator rbegin() noexcept;
-	const_reverse_iterator rbegin() const noexcept;
-	const_reverse_iterator crbegin() const noexcept;
+reverse_iterator rbegin() noexcept;
+const_reverse_iterator rbegin() const noexcept;
+const_reverse_iterator crbegin() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	An iterator which is semantically equivalent to \tcode{reverse_iterator(end)}.
-	
-	\pnum
-	\remarks
-	Changing a \tcode{path_data::path_data_types} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_data_types} object or of any subsequent \tcode{path_data::path_data_types} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} all of the violations are fixed prior to such processing.
+\pnum
+\returns
+An iterator which is semantically equivalent to \tcode{reverse_iterator(end)}.
+
+\pnum
+\remarks
+Changing a \tcode{path_data::path_data_types} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_data_types} object or of any subsequent \tcode{path_data::path_data_types} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} all of the violations are fixed prior to such processing.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{rend}}
@@ -834,18 +764,18 @@ This class shall be considered a sequence container, as defined in [containers] 
 \indexlibrary{\idxcode{path_builder}!\idxcode{crend}}
 \indexlibrary{\idxcode{crend}!\idxcode{path_builder}}
 \begin{itemdecl}
-	reverse_iterator rend() noexcept;
-	const_reverse_iterator rend() const noexcept;
-	const_reverse_iterator crend() const noexcept;
+reverse_iterator rend() noexcept;
+const_reverse_iterator rend() const noexcept;
+const_reverse_iterator crend() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	An iterator which is semantically equivalent to \tcode{reverse_iterator(begin)}.
-	
-	\pnum
-	\remarks
-	Changing a \tcode{path_data::path_data_types} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_data_types} object or of any subsequent \tcode{path_data::path_data_types} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} unless all of the violations are fixed prior to such processing.
+\pnum
+\returns
+An iterator which is semantically equivalent to \tcode{reverse_iterator(begin)}.
+
+\pnum
+\remarks
+Changing a \tcode{path_data::path_data_types} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_data_types} object or of any subsequent \tcode{path_data::path_data_types} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} unless all of the violations are fixed prior to such processing.
 \end{itemdescr}
 
 \rSec1 [pathbuilder.observers] {\tcode{path_builder} observers}
@@ -853,63 +783,63 @@ This class shall be considered a sequence container, as defined in [containers] 
 \indexlibrary{\idxcode{path_builder}!\idxcode{path_extents}}
 \indexlibrary{\idxcode{path_extents}!\idxcode{path_builder}}
 \begin{itemdecl}
-    experimental::io2d::rectangle path_extents() const noexcept;
+experimental::io2d::rectangle path_extents() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	A \tcode{rectangle} object which contains the extents of the path segments, including degenerate path segments, in the path group when it is processed as described in \ref{paths.processing}.
-	\enternote
-	By using path segments, this description intentionally excludes points established by \tcode{move_to} and \tcode{rel_move_to} operations from the extents value except where those points are subsequently used in defining a path segment.
-	\exitnote
+\pnum
+\returns
+A \tcode{rectangle} object which contains the extents of the path segments, including degenerate path segments, in the path group when it is processed as described in \ref{paths.processing}.
+\enternote
+By using path segments, this description intentionally excludes points established by \tcode{move_to} and \tcode{rel_move_to} operations from the extents value except where those points are subsequently used in defining a path segment.
+\exitnote
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{has_current_point}}
 \indexlibrary{\idxcode{has_current_point}!\idxcode{path_builder}}
 \begin{itemdecl}
-    bool has_current_point() const noexcept;
+bool has_current_point() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	If the current point contains a value, \tcode{true}, otherwise \tcode{false}.
+\pnum
+\returns
+If the current point contains a value, \tcode{true}, otherwise \tcode{false}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{current_point}}
 \indexlibrary{\idxcode{current_point}!\idxcode{path_builder}}
 \begin{itemdecl}
-    vector_2d current_point() const noexcept;
+vector_2d current_point() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\requires
-	The current point contains a value.
-	
-	\pnum
-	\returns
-	The value of the current point.
+\pnum
+\requires
+The current point contains a value.
+
+\pnum
+\returns
+The value of the current point.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{transform_matrix}}
 \indexlibrary{\idxcode{transform_matrix}!\idxcode{path_builder}}
 \begin{itemdecl}
-    matrix_2d transform_matrix() const noexcept;
+matrix_2d transform_matrix() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	The value of the transformation matrix.
+\pnum
+\returns
+The value of the transformation matrix.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{path_builder}!\idxcode{origin}}
 \indexlibrary{\idxcode{origin}!\idxcode{path_builder}}
 \begin{itemdecl}
-    vector_2d origin() const noexcept;
+vector_2d origin() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	The value of the origin.
+\pnum
+\returns
+The value of the origin.
 \end{itemdescr}
 
 \rSec1[pathbuilder.special] {\tcode{path_builder} specialized algorithms}
@@ -917,13 +847,13 @@ This class shall be considered a sequence container, as defined in [containers] 
 \indexlibrary{path_builder}{swap}
 \indexlibrary{swap}{path_builder}
 \begin{itemdecl}
-	template <class Allocator>
-	void swap(path_builder<Allocator>& lhs, path_builder<Allocator>& rhs)
-	  noexcept(noexcept(lhs.swap(rhs)));
+template <class Allocator>
+void swap(path_builder<Allocator>& lhs, path_builder<Allocator>& rhs)
+  noexcept(noexcept(lhs.swap(rhs)));
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	As if by \tcode{lhs.swap(rhs)}.
+\pnum
+\effects
+As if by \tcode{lhs.swap(rhs)}.
 \end{itemdescr}
 

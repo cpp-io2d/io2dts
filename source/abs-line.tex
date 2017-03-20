@@ -18,13 +18,9 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       // \ref{absline.cons}, construct:
       constexpr abs_line() noexcept;
       constexpr explicit abs_line(const vector_2d& pt) noexcept;
-      constexpr abs_line(const abs_line&) noexcept = default;
-      constexpr abs_line& operator=(const abs_line&) noexcept = default;
-      abs_line(abs_line&&) noexcept = default;
-      abs_line& operator=(abs_line&&) noexcept = default;
 
       // \ref{absline.modifiers}, modifiers:
-      void to(const vector_2d& pt) noexcept;
+      constexpr void to(const vector_2d& pt) noexcept;
 
       // \ref{absline.observers}, observers:
       constexpr vector_2d to() const noexcept;
@@ -64,9 +60,8 @@ The end point shall be set to the value of \tcode{pt}.
 \rSec1 [absline.modifiers]{\tcode{abs_line} modifiers}
 
 \indexlibrary{\idxcode{abs_line}!\idxcode{to}}
-\indexlibrary{\idxcode{to}!\idxcode{abs_line}}
 \begin{itemdecl}
-void to(const vector_2d& pt) noexcept;
+constexpr void to(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -77,7 +72,6 @@ The end point shall be set to the value of \tcode{pt}.
 \rSec1 [absline.observers]{\tcode{abs_line} observers}
 
 \indexlibrary{\idxcode{abs_line}!\idxcode{to}}
-\indexlibrary{\idxcode{to}!\idxcode{abs_line}}
 \begin{itemdecl}
 constexpr vector_2d to() const noexcept;
 \end{itemdecl}

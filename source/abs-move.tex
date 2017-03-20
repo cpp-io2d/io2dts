@@ -21,13 +21,9 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       // \ref{absmove.cons}, construct:
       constexpr abs_move() noexcept;
       constexpr explicit abs_move(const vector_2d& pt) noexcept;
-      constexpr abs_move(const abs_move&) noexcept = default;
-      constexpr abs_move& operator=(const abs_move&) noexcept =  default;
-      abs_move(abs_move&&) noexcept = default;
-      abs_move& operator=(abs_move&&) noexcept = default;
 
       // \ref{absmove.modifiers}, modifiers:
-      void to(const vector_2d& pt) noexcept;
+      constexpr void to(const vector_2d& pt) noexcept;
 
       // \ref{absmove.observers}, observers:
       constexpr vector_2d to() const noexcept;
@@ -67,9 +63,8 @@ The end point shall be set to the value of \tcode{pt}.
 \rSec1 [absmove.modifiers]{\tcode{abs_move} modifiers}
 
 \indexlibrary{\idxcode{abs_move}!\idxcode{to}}
-\indexlibrary{\idxcode{to}!\idxcode{abs_move}}
 \begin{itemdecl}
-void to(const vector_2d& pt) noexcept;
+constexpr void to(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -80,7 +75,6 @@ The end point shall be set to the value of \tcode{pt}.
 \rSec1 [absmove.observers]{\tcode{abs_move} observers}
 
 \indexlibrary{\idxcode{abs_move}!\idxcode{to}}
-\indexlibrary{\idxcode{to}!\idxcode{abs_move}}
 \begin{itemdecl}
 constexpr vector_2d to() const noexcept;
 \end{itemdecl}

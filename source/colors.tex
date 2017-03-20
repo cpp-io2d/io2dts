@@ -2,10 +2,38 @@
 
 \rSec0 [colors] {Colors}
 
+\rSec1 [colors.intro] {Introduction to color}
+
 \pnum
-This section is forthcoming in a future revision.
+Color involves many disciplines and has been the subject of many papers, treatises, experiments, studies, and research work in general.
+
+\pnum
+While color is an important part of computer graphics, it is only necessary to understand a few concepts from the study of color for computer graphics.
+
+\pnum
+A color model defines color mathematically without regard to how humans actually perceive color. These color models are composed of some combination of channels which each channel representing alpha or an ideal color. Color models are useful for working with color computationally, such as in composing operations, because their channel values are homogeneously spaced. 
+
+\pnum
+A color space, for purposes of computer graphics, is the result of mapping the ideal color channels from a color model, after making any necessary adjustment for alpha, to color channels that are calibrated to align with human perception of colors. Since the perception of color varies from person to person, color spaces use the science of colorimetry to define those perceived colors in order to obtain uniformity to the extent possible. As such, the uniform display of the colors in a color space on different output devices is possible. The values of color channels in a color space are not necessarily homogeneously spaced because of human perception of color.
+
+\pnum
+Color models are often termed \term{linear} while color spaces are often termed \term{gamma corrected}. The mapping of a color model, such as the RGB color model, to a color space, such as the sRGB color space, is often the application of gamma correction.
+
+\pnum
+Gamma correction is the process of transforming homogeneously spaced visual data to visual data that, when displayed, matches the intent of the untransformed visual data.
+
+\pnum
+For example a color that is 50\% of the maximum intensity of red when encoded as homogeneously spaced visual data, will likely have a different intensity value when it has been gamma corrected so that a human looking at on a computer display will see it as being 50\% of the maximum intensity of red that the computer display is capable of producing. Without gamma correction, it would likely have appeared as though it was closer to the maximum intensity than the untransformed data intended it to be.
+
+\pnum
+In addition to color channels, colors in computer graphics often have an alpha channel. The value of the alpha channel represents transparency of the color channels when they are combined with other visual data using certain composing algorithms. When using alpha, it should be used in a premultiplied format in order to obtain the desired results when applying multiple composing algorithms that utilize alpha.
+
+\rSec1 [colors.reqs] {Color usage requirements}
+
+\pnum
+The use of color throughout this \documenttypename assumes that your color data is linear and that it is in premultiplied format if it has both color and alpha channels.
 
 \addtocounter{SectionDepthBase}{1}
-\input{rgba-color}
+\input{bgra-color}
 \input{literals}
 \addtocounter{SectionDepthBase}{-1}
