@@ -128,9 +128,6 @@ All functions inherited from \tcode{surface} that affect its \underlyingsurface 
 \pnum
 Table~\ref{tab:displaysurface.state.listing} specifies the name, type, function, and default value for each item of a display surface's observable state.
 
-\pnum
-Because the \tcode{display_surface} class publicly derives from the \tcode{surface} class, the observable state of a display surface also includes the observable state of a surface, as specified at \ref{surface.state.default}.
-
 \begin{libreqtab4b}
 	{Display surface observable state}
 	{tab:displaysurface.state.listing}
@@ -146,6 +143,11 @@ Because the \tcode{display_surface} class publicly derives from the \tcode{surfa
 	\tcode{brush} &
 	This is the brush that shall be used as specified by \tcode{scaling::letterbox} (Table~\ref{tab:scaling.meanings}) &
 	\tcode{brush\{ \{ bgra_color::black() \} \}} \\ \rowsep
+	
+	\term{Letterbox Brush Props} &
+	\tcode{brush_props} &
+	This is the brush properties for the Letterbox Brush &
+	\tcode{brush_props\{ \}} \\ \rowsep
 	
 	\term{Scaling Type} &
 	\tcode{scaling} &
@@ -211,7 +213,7 @@ Because the \tcode{display_surface} class publicly derives from the \tcode{surfa
 	
 	\term{User Scaling Callback} &
 	\tcode{function<\br
-	\tcode{experimental::}%%\br
+	\tcode{experimental::}\br
 	\tcode{io2d::}\br
 	\tcode{rectangle(}\br
 	\tcode{const display_surface\&,}\br
@@ -253,6 +255,17 @@ display_surface(int preferredWidth, int preferredHeight,
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
+\preconditions
+\tcode{preferredWidth > 0}.
+
+\pnum
+\tcode{preferredHeight > 0}.
+
+\pnum
+\tcode{preferredFormat != experimental::io2d::format::invalid}.
+
+
+\pnum
 \effects
 Constructs an object of type \tcode{display_surface}.
 
@@ -280,8 +293,6 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \pnum
 \errors
-\tcode{errc::invalid_argument} if \tcode{preferredWidth <= 0}, \tcode{preferredHeight <= 0}, or \tcode{preferredFormat == experimental::io2d::format::invalid}.
-
 \tcode{io2d::device_error} if successful creation of the \tcode{display_surface} object would exceed the maximum number of simultaneous valid \tcode{display_surface} objects that the implementation supports.
 
 \pnum
@@ -305,6 +316,22 @@ display_surface(int preferredWidth, int preferredHeight,
   noexcept;
 \end{itemdecl}
 \begin{itemdescr}
+\pnum
+\preconditions
+\tcode{preferredWidth > 0}.
+
+\pnum
+\tcode{preferredHeight > 0}.
+
+\pnum
+\tcode{preferredDisplayWidth > 0}.
+
+\pnum
+\tcode{preferredDisplayHeight > 0}.
+
+\pnum
+\tcode{preferredFormat != experimental::io2d::format::invalid}.
+
 \pnum
 \effects
 Constructs an object of type \tcode{display_surface}.
@@ -333,8 +360,6 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \pnum
 \errors
-\tcode{errc::invalid_argument} if \tcode{preferredWidth <= 0}, \tcode{preferredHeight <= 0}, \tcode{preferredDisplayWidth <= 0}, \tcode{preferredDisplayHeight <= 0}, or \tcode{preferredFormat == experimental::io2d::format::invalid}.
-
 \tcode{io2d::device_error} if successful creation of the \tcode{display_surface} object would exceed the maximum number of simultaneous valid \tcode{display_surface} objects that the implementation supports.
 
 \pnum
@@ -641,45 +666,18 @@ Sets the User Scaling Callback to \tcode{fn}.
 \indexlibrary{\idxcode{display_surface}!\idxcode{letterbox_brush}}
 \indexlibrary{\idxcode{letterbox_brush}!\idxcode{display_surface}}
 \begin{itemdecl}
-void letterbox_brush(experimental::nullvalue_t) noexcept;
+void letterbox_brush(const optional<brush&>b,
+  const optional<brush_props>& bp = nullopt);
+void letterbox_brush(const optional<brush&>b, error_code& ec,
+  const optional<brush_props>& bp = nullopt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Sets the Letterbox Brush to its default value.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{display_surface}!\idxcode{letterbox_brush}}
-\indexlibrary{\idxcode{letterbox_brush}!\idxcode{display_surface}}
-\begin{itemdecl}
-void letterbox_brush(const bgra_color& c);
-void letterbox_brush(const bgra_color& c, error_code& ec) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Sets the Letterbox Brush to a value as-if \tcode{experimental::io2d::brush\{ solid_color_brush_factory\{ \} \}}.
+Sets the Letterbox Brush to the value contained in \tcode{b} if it contains a value, otherwise set Letterbox Brush to its default value.
 
 \pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-\pnum
-\errors
-The errors, if any, produced by this function are \impldef{display_surface!letterbox_brush}.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{display_surface}!\idxcode{letterbox_brush}}
-\indexlibrary{\idxcode{letterbox_brush}!\idxcode{display_surface}}
-\begin{itemdecl}
-void letterbox_brush(const experimental::io2d::brush& b);
-void letterbox_brush(const experimental::io2d::brush& b, error_code& ec) 
-  noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Sets the Letterbox Brush to \tcode{b}.
+Sets the Letterbox Brush Props to the value contained in \tcode{bp} if it contains a value, otherwise sets it Letterbox Brush Props to its default value.
 
 \pnum
 \throws
@@ -738,14 +736,12 @@ void redraw_required() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-When \tcode{display_surface::show} is executing, informs the implementation that it shall call the Draw Callback as soon as possible.
+When \tcode{display_surface::begin_show} is executing, informs the implementation that the Draw Callback must be called as soon as possible.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{show}}
-\indexlibrary{\idxcode{show}!\idxcode{display_surface}}
+\indexlibrary{\idxcode{display_surface}!\idxcode{begin_show}}
 \begin{itemdecl}
-int show();
-int show(error_code& ec) noexcept;
+int begin_show();
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -764,7 +760,7 @@ Performs the following actions in a continuous loop:
 \end{enumeraten}
 
 \pnum
-If \tcode{display_surface::exit_show} is called from the Draw Callback, the implementation shall finish executing the Draw Callback and shall immediately cease to perform any actions in the continuous loop other than handling any implementation and host environment matters.
+If \tcode{display_surface::end_show} is called from the Draw Callback, the implementation shall finish executing the Draw Callback and shall immediately cease to perform any actions in the continuous loop other than handling any implementation and host environment matters needed to exit the loop properly.
 
 \pnum
 No later than when this function returns, the output device shall cease to display the contents of the Display Buffer.
@@ -793,41 +789,23 @@ Since this function calls the Draw Callback and can call the Size Change Callbac
 Other errors, if any, produced by this function are \impldef{display_surface!show}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{exit_show}}
-\indexlibrary{\idxcode{exit_show}!\idxcode{display_surface}}
+\indexlibrary{\idxcode{display_surface}!\idxcode{end_show}}
 \begin{itemdecl}
-void exit_show();
-void exit_show(error_code& ec) noexcept;
-void exit_show(std::chrono::duration d);
-void exit_show(std::chrono::duration d, error_code& ec) noexcept;
+void end_show();
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\requires
-This function shall only be called from the Draw Callback; no diagnostic is required.
-
-\pnum
 \effects
-The implementation shall initiate the process of exiting the \tcode{display_surface::show} function's continuous loop.
+If this function is called outside of the Draw Callback while it is being executed in the \tcode{display_surface::begin_show} function's continuous loop, it does nothing.
 
 \pnum
-Implementations shall not wait until the \tcode{display_surface::show} function's continuous loop ends before returning from this function.
+Otherwise, the implementation initiates the process of exiting the \tcode{display_surface::begin_show} function's continuous loop.
 
 \pnum
-Implementations should follow any procedures that the host environment requires in order to cause the \tcode{display_surface::show} function's continuous loop to stop executing without error.
+If possible, any procedures that the host environment requires in order to cause the \tcode{display_surface::show} function's continuous loop to stop executing without error should be followed.
 
 \pnum
-A \term{termination time duration} shall then be determined as follows:
-\begin{itemize}
-\item If no \tcode{std::chrono::duration} is provided, the termination time duration is \unspecnorm. Implementations should exit the \tcode{display_surface::show} function's continuous loop as soon as the host environment allows.
-\item Otherwise, implementations shall exit the \tcode{display_surface::show} function's continuous loop as soon as the host environment allows once the \tcode{std::chrono::duration} value has elapsed.
-\end{itemize}
-
-\pnum
-The implementation shall continue to execute the \tcode{display_surface::show} function until it returns or until termination time duration milliseconds have passed since the termination time duration was determined, whichever comes first.
-
-\pnum
-If the \tcode{display_surface::show} function has not returned before termination time duration milliseconds have passed since the termination time duration was determined the implementation shall force the \tcode{display_surface::show} function's continuous loop to stop executing and shall then cause \tcode{display_surface::show} to return.
+The \tcode{display_surface::begin_show} function's loop continues execution until it returns.
 \end{itemdescr}
 
 \rSec1 [displaysurface.observers]{\tcode{display_surface} observers}
@@ -890,23 +868,23 @@ The Display Height.
 \indexlibrary{\idxcode{display_surface}!\idxcode{dimensions}}
 \indexlibrary{\idxcode{dimensions}!\idxcode{display_surface}}
 \begin{itemdecl}
-tuple<int, int> dimensions() const noexcept;
+vector_2d dimensions() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-A \tcode{tuple<int, int>} where the first element is the Draw Width and the second element is the Draw Height.
+A \tcode{vector_2d} constructed using the Draw Width as the first argument and the Draw Height as the second argument.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{display_dimensions}}
 \indexlibrary{\idxcode{display_dimensions}!\idxcode{display_surface}}
 \begin{itemdecl}
-tuple<int, int> display_dimensions() const noexcept;
+vector_2d display_dimensions() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-A \tcode{tuple<int, int>} where the first element is the Display Width and the second element is the Display Height.
+A \tcode{vector_2d} constructed using the Display Width as the first argument and the Display Height as the second argument.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{scaling}}
@@ -945,12 +923,12 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 \indexlibrary{\idxcode{display_surface}!\idxcode{letterbox_brush}}
 \indexlibrary{\idxcode{letterbox_brush}!\idxcode{display_surface}}
 \begin{itemdecl}
-experimental::io2d::brush letterbox_brush() const noexcept;
+optional<brush> letterbox_brush() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The Letterbox Brush.
+A \tcode{optional<brush>} object constructed using the user-provided Letterbox Brush or, if no user-provided Letterbox Brush is set, an empty \tcode{optional<brush>} object.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{auto_clear}}

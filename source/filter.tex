@@ -12,7 +12,9 @@ Three of the \tcode{filter} enumerators, \tcode{filter::fast}, \tcode{filter::go
 The other two, \tcode{filter::nearest} and \tcode{filter::bilinear}, each specify a particular filter that shall be used.
 
 \pnum
-The result of sampling from a \tcode{brush} object \tcode{b} constructed from a \tcode{solid_color_brush_factory} is the same regardless of what filter is used and, as such, in these circumstances implementations should disregard the filter specified by the result of calling \tcode{b.filter()} when sampling from \tcode{b} and instead use an \unspecnorm filter, even if that filter does not correspond to a filter specified by one of the \tcode{filter} enumerators.
+\enternote
+The only type of brush that has a \pixmap as its \underlyingsurface is a brush with a brush type of \tcode{brush_type::surface}.
+\exitnote
 
 \pnum
 See Table~\ref{tab:filter.meanings} for the meaning of each

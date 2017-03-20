@@ -44,10 +44,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     constexpr matrix_2d() noexcept;
     constexpr matrix_2d(double v00, double v01, double v10, double v11,
       double v20, double v21) noexcept;
-    constexpr matrix_2d(const matrix_2d&) noexcept;
-    constexpr matrix_2d& operator=(const matrix_2d&) noexcept;
-    matrix_2d(matrix_2d&&) noexcept;
-    matrix_2d& operator=(matrix_2d&&) noexcept;
     
     // \ref{\matrixtwod.staticfactories}, static factory functions:
     constexpr static matrix_2d init_identity() noexcept;
@@ -58,12 +54,12 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     constexpr static matrix_2d init_shear_y(double factor) noexcept;
     
     // \ref{\matrixtwod.modifiers}, modifiers:
-    void m00(double v) noexcept;
-    void m01(double v) noexcept;
-    void m10(double v) noexcept;
-    void m11(double v) noexcept;
-    void m20(double v) noexcept;
-    void m21(double v) noexcept;
+    constexpr void m00(double v) noexcept;
+    constexpr void m01(double v) noexcept;
+    constexpr void m10(double v) noexcept;
+    constexpr void m11(double v) noexcept;
+    constexpr void m20(double v) noexcept;
+    constexpr void m21(double v) noexcept;
     matrix_2d& translate(const vector_2d& v) noexcept;
     matrix_2d& scale(const vector_2d& v) noexcept;
     matrix_2d& rotate(double radians) noexcept;
@@ -235,7 +231,7 @@ constexpr static matrix_2d init_shear_y(double factor) noexcept;
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{m00}}
 \indexlibrary{\idxcode{m00}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-void m00(double val) noexcept;
+constexpr void m00(double val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -246,7 +242,7 @@ The M00 value shall be set to the value of \tcode{val}.
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{m01}}
 \indexlibrary{\idxcode{m01}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-void m01(double val) noexcept;
+constexpr void m01(double val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -257,7 +253,7 @@ The M01 value shall be set to the value of \tcode{val}.
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{m10}}
 \indexlibrary{\idxcode{m10}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-void m10(double val) noexcept;
+constexpr void m10(double val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -268,7 +264,7 @@ The M10 value shall be set to the value of \tcode{val}.
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{m11}}
 \indexlibrary{\idxcode{m11}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-void m11(double val) noexcept;
+constexpr void m11(double val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -279,7 +275,7 @@ The M11 value shall be set to the value of \tcode{val}.
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{m20}}
 \indexlibrary{\idxcode{m20}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-void m20(double val) noexcept;
+constexpr void m20(double val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -290,7 +286,7 @@ The M20 value shall be set to the value of \tcode{val}.
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{m21}}
 \indexlibrary{\idxcode{m21}!\idxcode{matrix_2d}}
 \begin{itemdecl}
-void m21(double value) noexcept;
+constexpr void m21(double value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

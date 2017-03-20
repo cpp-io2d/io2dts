@@ -20,12 +20,12 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     constexpr color_stop(double o, const bgra_color& c);
     
     // \ref{colorstops.colorstop.modifiers}, modifiers:
-    void offset(double val) noexcept;
-	void color(const bgra_color& val) noexcept;
+    constexpr void offset(double val) noexcept;
+	constexpr void color(const bgra_color& val) noexcept;
 	
     // \ref{colorstops.colorstop.observers}, observers:
-	double offset() const noexcept;
-	bgra_color color() const noexcept;
+	constexpr double offset() const noexcept;
+	constexpr bgra_color color() const noexcept;
   };
 } } } }
 \end{codeblock}
@@ -53,7 +53,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \indexlibrary{\idxcode{color_stop}!\idxcode{offset}}
 \indexlibrary{\idxcode{offset}!\idxcode{color_stop}}
 \begin{itemdecl}
-	void offset(double val) noexcept;
+	constexpr void offset(double val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -64,7 +64,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \indexlibrary{\idxcode{color_stop}!\idxcode{color}}
 \indexlibrary{\idxcode{color}!\idxcode{color_stop}}
 \begin{itemdecl}
-	void color(double val) noexcept;
+	constexpr void color(double val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -77,7 +77,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \indexlibrary{\idxcode{color_stop}!\idxcode{offset}}
 \indexlibrary{\idxcode{offset}!\idxcode{color_stop}}
 \begin{itemdecl}
-	double offset() const noexcept;
+	constexpr double offset() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -88,7 +88,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \indexlibrary{\idxcode{color_stop}!\idxcode{color}}
 \indexlibrary{\idxcode{color}!\idxcode{color_stop}}
 \begin{itemdecl}
-	bgra_color color() const noexcept;
+	constexpr bgra_color color() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum

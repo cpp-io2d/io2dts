@@ -7,9 +7,10 @@
 \pnum
 Brushes contain visual data and serve as sources of visual data for rendering and composing operations.
 
+\pnum
 There are four types of brushes:
 \begin{itemize}
-	\item color;
+	\item solid color;
 	\item linear gradient;
 	\item radial gradient; and,
 	\item surface.
@@ -27,7 +28,11 @@ While copy and move operations along with a swap operation can change the visual
 A brush is used either as a Source Brush or a Mask Brush (\ref{surface.rendering.brushes}).
 
 \pnum
-When a brush is used in a rendering and composing operation, a \tcode{brush_props} object or \tcode{mask_props} object can modify the result of sampling the brush.
+When a brush is used in a rendering and composing operation, if it is used as a Source Brush, it has a \tcode{brush_props} object that describes how the brush is interpreted for purposes of sampling. If it is used as a Mask Brush, it has a \tcode{mask_props} object that describes how the brush is interpreted for purposes of sampling.
+
+\pnum
+The \tcode{brush_props} and \tcode{mask_props} classes both have a Wrap Mode, Filter and Matrix (\ref{brushprops.summary} and \ref{maskprops.summary}). Where necessary, these shall be referenced using those terms without regard to whether the brush is being used as a Source Brush or a Mask Brush.
+
 
 %\pnum
 %A brush has its own coordinate space.

@@ -86,8 +86,7 @@ Whether any uncommitted changes are committed during destruction of the \tcode{m
 Uncommitted changes shall not be committed during destruction of the \tcode{mapped_surface} object if doing so would result in an exception.
 
 \pnum
-\realnotes
-It is recommended that users use the \tcode{mapped_surface::commit_changes} function to commit changes prior to the destruction of the \tcode{mapped_surface} object to ensure consistent behavior.
+Users shall call \tcode{mapped_surface::commit_changes} to commit changes made to the surface's data prior to the destruction of the \tcode{mapped_surface} object.
 \end{itemdescr}
 
 \rSec1 [mappedsurface.modifiers]{\tcode{mapped_surface} modifiers}
@@ -154,7 +153,9 @@ The bounds of the pixel data array range from \tcode{a}, where \tcode{a} is the 
 
 \pnum
 \errors
-\tcode{io2d_error::null_pointer} if \tcode{this->format() == experimental::io2d::format::unknown || this->format() == experimental::io2d::format::invalid}.
+\tcode{io2d_error::null_pointer} if \tcode{this->format() == \\
+experimental::io2d::format::unknown || this->format() == \\
+experimental::io2d::format::invalid}.
 \end{itemdescr}
 
 \rSec1 [mappedsurface.observers]{\tcode{mapped_surface} observers}
@@ -201,7 +202,9 @@ The bounds of the pixel data array range from \tcode{a}, where \tcode{a} is the 
 
 \pnum
 \errors
-\tcode{io2d_error::null_pointer} if \tcode{this->format() == experimental::io2d::format::unknown || this->format() == experimental::io2d::format::invalid}.
+\tcode{io2d_error::null_pointer} if \tcode{this->format() == \\
+experimental::io2d::format::unknown || this->format() == \\
+experimental::io2d::format::invalid}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{mapped_surface}!\idxcode{format}}
@@ -216,7 +219,8 @@ The pixel format of the mapped surface.
 
 \pnum
 \remarks
-If the mapped surface is invalid, this function shall return \tcode{experimental::io2d::format::invalid}.
+If the mapped surface is invalid, this function shall return \\
+\tcode{experimental::io2d::format::invalid}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{mapped_surface}!\idxcode{width}}
@@ -231,7 +235,9 @@ The number of pixels per horizontal line of the mapped surface.
 
 \pnum
 \remarks
-This function shall return the value \tcode{0} if \tcode{this->format() == experimental::io2d::format::unknown || this->format() == experimental::io2d::format::invalid}.
+This function shall return the value \tcode{0} if \tcode{this->format() == \\
+experimental::io2d::format::unknown || this->format() == \\
+experimental::io2d::format::invalid}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{mapped_surface}!\idxcode{height}}
@@ -246,7 +252,9 @@ The number of horizontal lines of pixels in the mapped surface.
 
 \pnum
 \remarks
-This function shall return the value \tcode{0} if \tcode{this->format() == experimental::io2d::format::unknown || this->format() == experimental::io2d::format::invalid}.
+This function shall return the value \tcode{0} if \tcode{this->format() == \\
+experimental::io2d::format::unknown || this->format() == \\
+experimental::io2d::format::invalid}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{mapped_surface}!\idxcode{stride}}
@@ -264,5 +272,7 @@ This value is at least as large as the width in pixels of a horizontal line mult
 
 \pnum
 \remarks
-This function shall return the value \tcode{0} if \tcode{this->format() == experimental::io2d::format::unknown || this->format() == experimental::io2d::format::invalid}.
+This function shall return the value \tcode{0} if \tcode{this->format() == \\
+experimental::io2d::format::unknown || this->format() == \\
+experimental::io2d::format::invalid}.
 \end{itemdescr}

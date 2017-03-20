@@ -72,6 +72,12 @@ The source code below demonstrates how to properly convert a path group into a p
 \pnum
 The \tcode{process_path_data} function template transforms the path group contained in a \tcode{path_builder} class template object into a processed path group which is returned as a \tcode{vector<path_data::path_data_types>} object. The processed path group only contains \tcode{path_data::abs_move}, \tcode{path_data::abs_line}, \tcode{path_data::abs_cubic_curve}, and \tcode{path_data::close_path} path items.
 
+\pnum
+\enternote
+If the \underlyingrendandpresenttechs do not support lines or cubic \bezierlocal curves, Bresenham's algorithms and variations and improvements upon them allow computation of appropriate pixel values for these primitives.
+\exitnote
+\\
+
 \input{path-process-code}
 
 \addtocounter{SectionDepthBase}{1}

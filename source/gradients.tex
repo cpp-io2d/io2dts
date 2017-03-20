@@ -86,7 +86,7 @@ A radial gradient shall be rendered as a continuous series of interpolated circl
 where $o$ is a color stop offset value.
 
 \pnum
-The range of potential values for $o$ shall be determined by the \tcode{wrap_mode} value of the \tcode{brush} object created using the radial gradient:
+The range of potential values for $o$ shall be determined by the Wrap Mode:
 \begin{itemize}
 \item For \tcode{wrap_mode::none}, the range of potential values for $o$ is $[0,1]$.
 \item For all other \tcode{wrap_mode} values, the range of potential values for $o$ is\\ $[$~\tcode{numeric_limits<double>::lowest(),numeric_limits<double>::max()}~$]$.
@@ -150,20 +150,20 @@ This includes any color stops with an offset value of \tcode{1.0} provided that 
 
 \item Where the value of $o$ is in the range $[0,1]$, its color value shall be determined by interpolating between the color stop, $r$, which is the color stop whose offset value is closest to $o$ without being less than $o$ and which can have an adjacent color stop to its left, and the color stop that is adjacent to $r$ on $r$'s left. The acceptable forms of interpolating between color values is set forth later in this section.
 
-\item Where the value of $o$ is outside the range $[0,1]$, its color value depends on the \tcode{wrap_mode} value of the brush which is created using the gradient:
+\item Where the value of $o$ is outside the range $[0,1]$, its color value depends on the value of Wrap Mode:
 	\begin{itemize}
-	\item If the \tcode{wrap_mode} value is \tcode{wrap_mode::none}, the color value of $o$ shall be \tcode{bgra_color::transparent_black()}.
+	\item If Wrap Mode is \tcode{wrap_mode::none}, the color value of $o$ shall be \tcode{bgra_color::transparent_black()}.
 	
-	\item If the \tcode{wrap_mode} value is \tcode{wrap_mode::pad}, if $o$ is negative then the color value of $o$ shall be the same as-if the value of $o$ was \tcode{0.0}, otherwise the color value of $o$ shall be the same as-if the value of $o$ was \tcode{1.0}.
+	\item If Wrap Mode is \tcode{wrap_mode::pad}, if $o$ is negative then the color value of $o$ shall be the same as-if the value of $o$ was \tcode{0.0}, otherwise the color value of $o$ shall be the same as-if the value of $o$ was \tcode{1.0}.
 	
-	\item If the \tcode{wrap_mode} value is \tcode{wrap_mode::repeat}, then \tcode{1.0} shall be added to or subtracted from $o$ until $o$ is in the range $[0,1]$, at which point its color value is the color value for the modified value of $o$ as determined by these rules.
+	\item If Wrap Mode is \tcode{wrap_mode::repeat}, then \tcode{1.0} shall be added to or subtracted from $o$ until $o$ is in the range $[0,1]$, at which point its color value is the color value for the modified value of $o$ as determined by these rules.
 	\enterexample
 	Given $o == 2.1$, after application of this rule $o == 0.1$ and the color value of $o$ shall be the same value as-if the initial value of $o$ was $0.1$.
 	
 	Given $o == -0.3$, after application of this rule $o == 0.7$ and the color value of $o$ shall be the same as-if the initial value of $o$ was $0.7$.
 	\exitexample
 	
-	\item If the \tcode{wrap_mode} value is \tcode{wrap_mode::reflect}, $o$ shall be set to the absolute value of $o$, then 2.0 shall be subtracted from $o$ until $o$ is in the range $[0,2]$, then if $o$ is in the range $(1,2]$ then $o$ shall be set to \tcode{1.0 - (o - 1.0)}, at which point its color value is the color value for the modified value of $o$ as determined by these rules.
+	\item If Wrap Mode is \tcode{wrap_mode::reflect}, $o$ shall be set to the absolute value of $o$, then 2.0 shall be subtracted from $o$ until $o$ is in the range $[0,2]$, then if $o$ is in the range $(1,2]$ then $o$ shall be set to \tcode{1.0 - (o - 1.0)}, at which point its color value is the color value for the modified value of $o$ as determined by these rules.
 	\enterexample
 	Given $o == 2.8$, after application of this rule $o == 0.8$ and the color value of $o$ shall be the same value as-if the initial value of $o$ was $0.8$.
 	
