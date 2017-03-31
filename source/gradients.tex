@@ -26,7 +26,7 @@ All attempts to sample from a a degenerate linear gradient return the color \tco
 The begin point and end point of a linear gradient define a line segment, with a color stop offset value of 0.0 corresponding to the begin point and a color stop offset value of 1.0 corresponding to the end point.
 
 \pnum
-Color stop offset values in the range \orange{0.0}{1.0} linearly correspond to points on the line segment.
+Color stop offset values in the range \crange{0.0}{1.0} linearly correspond to points on the line segment.
 
 \pnum
 \enterexample
@@ -88,7 +88,7 @@ where $o$ is a color stop offset value.
 \pnum
 The range of potential values for $o$ shall be determined by the Wrap Mode:
 \begin{itemize}
-\item For \tcode{wrap_mode::none}, the range of potential values for $o$ is $[0,1]$.
+\item For \tcode{wrap_mode::none}, the range of potential values for $o$ is \crange{0}{1}.
 \item For all other \tcode{wrap_mode} values, the range of potential values for $o$ is\\ $[$~\tcode{numeric_limits<double>::lowest(),numeric_limits<double>::max()}~$]$.
 \end{itemize}
 
