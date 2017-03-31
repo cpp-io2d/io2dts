@@ -12,26 +12,28 @@ ISO and IEC maintain terminological databases for use in standardization at the 
 \end{itemize}
 
 \indexdefn{standard coordinate space}
-\definition{standard coordinate space}{\iotwod.defns.standardcoordinatespace}
+\definition{standard coordinate space}{\iotwod.defns.stndcrdspace}
 a Euclidean plane described by a Cartesian coordinate system where the first coordinate is measured along a horizontal axis, called the \xaxis, oriented from left to right, the second coordinate is measured along a vertical axis, called the \yaxis, oriented from top to bottom, and rotation of a point around the origin by a positive value expressed in radians is clockwise
 
 \indexdefn{visual data}
-\definition{visual data}{\iotwod.defns.visualdata}
+\definition{visual data}{\iotwod.defns.visdata}
 data representing color, transparency, or some combination thereof
 
 \indexdefn{channel}
 \definition{channel}{\iotwod.defs.channel}
-a bounded set of homogeneously-spaced real numbers in the range $[0,1]$
+%a bounded set of homogeneously-spaced real numbers in the range $[0,1]$
+a component of visual data with a defined bit size
 
 \indexdefn{visual data format}
-\definition{visual data format}{\iotwod.defns.visualdataformat}
-a specification of visual data channels which defines a total bit size for the format and each channel's role, bit size, and location relative to the upper (high-order) bit
-\enternote
-The total bit size may be larger than the sum of the bit sizes of all of the channels of the format.
-\exitnote
+\definition{visual data format}{\iotwod.defns.visdatafmt}
+a specification that defines a total bit size, a set of one or more channels, and each channel's role, bit size, and location relative to the upper (high-order) bit
+%a specification of visual data channels which defines a total bit size for the format and each channel's role, bit size, and location relative to the upper (high-order) bit
+%\enternote
+%The total bit size may be larger than the sum of the bit sizes of the channels of the format.
+%\exitnote
 
 \indexdefn{visual data element}
-\definition{visual data element}{\iotwod.defns.visualdataelement}
+\definition{visual data element}{\iotwod.defns.visdataelem}
 an item of visual data with a defined visual data format
 
 \indexdefn{alpha}
@@ -97,33 +99,22 @@ an unambiguous mapping of values to colorimetric colors
 \definition{sRGB color space}{\iotwod.defns.srgbcolorspace}
 an additive color space defined in IEC 61966-2-1 that is based on the RGB color model
 
-% %The following definition is malformed according to ISO/IEC Directives, Part 2, 2011 Appendix D
-%\indexdefn{compose}
-%\definition{compose}{\iotwod.defns.compose}
-%to combine a source of raster graphics data with a raster graphics data graphics resource in the manner specified by a composition algorithm and store the result to the graphics resource
-%\enternote
-%The 'source of raster graphics' data may be the results of rendering or may be another raster graphics data graphics resource.
-%
-%Where a statement in the form 'compose X and Y' is encountered, X is the 'source of raster graphics data' and Y is the 'raster graphics data graphics resource'.
-%\exitnote
-%
 \indexdefn{\bezierlocal curve}
 \indexdefn{\bezierlocal curve!cubic}
 \definition{\bezierlocal curve}{\iotwod.defns.bezier.cubic}
 <cubic> a curve defined by the 
 equation $f(t) = (1 - t)^{3} \times P_{0} + 3 \times t \times (1 - t)^{2} 
-\times P_{1} + 3 \times t^{2} \times (1 - t) \times P_{2} + t^{3} \times P_{3}$ 
-where $0.0 \le t \le 1.0$, $P_{0}$ is the starting point, $P_{1}$ is the first 
-control point, $P_{2}$ is the second control point, and $P_{3}$ is the 
-ending point
+\times P_{1} + 3 \times t^{2} \times (1 - t) \times P_{2} + t^{3} \times t 
+\times P_{3}$ where t is in the range \crange{0}{1}, $P_{0}$ is the starting point, $P_{1}$ 
+is the first control point, $P_{2}$ is the second control point, and $P_{3}$ is 
+the ending point
 
 \indexdefn{\bezierlocal curve}
 \indexdefn{\bezierlocal curve!quadratic}
 \definition{\bezierlocal curve}{\iotwod.defns.bezier.quadratic}
 <quadratic> a curve defined by the 
 equation $f(t) = (1 - t)^{2} \times P_{0} + 2 \times t \times (1 - t) 
-\times P_{1} + t^{2} \times (1 - t) \times P_{2}$ 
-where $0.0 \le t \le 1.0$, $P_{0}$ is the starting point, $P_{1}$ is the 
+\times P_{1} + t^{2} \times t \times P_{2}$ where t is in the range \crange{0}{1}, $P_{0}$ is the starting point, $P_{1}$ is the 
 control point, and $P_{2}$ is end point
 
 \indexdefn{filter}
