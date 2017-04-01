@@ -23,8 +23,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
     // \ref{ellipse.modifiers}, modifiers:
     constexpr void center(const vector_2d& ctr) noexcept;
-    constexpr void x_axis(double rad) noexcept;
-    constexpr void y_axis(double rad) noexcept;
+    constexpr void x_axis(double r) noexcept;
+    constexpr void y_axis(double r) noexcept;
     
     // \ref{ellipse.observers}, observers:
     constexpr vector_2d center() const noexcept;
@@ -119,20 +119,20 @@ The value of Center is \tcode{ctr}.
 
 \indexlibrary{\idxcode{ellipse}!\idxcode{x_axis}}
 \begin{itemdecl}
-constexpr void x_axis(double rad) noexcept;
+constexpr void x_axis(double r) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \preconditions
-\tcode{rad >= 0.0}.
+\tcode{r >= 0.0}.
 
 \pnum
 \effects
-The value of X Axis Radius is \tcode{rad}.
+The value of X Axis Radius is \tcode{r}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{ellipse}!\idxcode{y_axis}}
 \begin{itemdecl}
-constexpr void y_axis(double rad) noexcept;
+constexpr void y_axis(double r) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \preconditions
@@ -140,7 +140,7 @@ constexpr void y_axis(double rad) noexcept;
 
 \pnum
 \effects
-The value of Y Axis Radius is \tcode{rad}.
+The value of Y Axis Radius is \tcode{r}.
 \end{itemdescr}
 
 \rSec1 [ellipse.observers]{\tcode{ellipse} observers}

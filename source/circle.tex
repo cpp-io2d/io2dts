@@ -22,7 +22,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
     // \ref{circle.modifiers}, modifiers:
     constexpr void center(const vector_2d& ctr) noexcept;
-    constexpr void radius(double rad) noexcept;
+    constexpr void radius(double r) noexcept;
     
     // \ref{circle.observers}, observers:
     constexpr vector_2d center() const noexcept;
@@ -51,11 +51,11 @@ The value of Radius is \tcode{0.0}.
 
 \indexlibrary{\idxcode{circle}!constructor}
 \begin{itemdecl}
-constexpr circle(const vector_2d& ctr, double rad) noexcept;
+constexpr circle(const vector_2d& ctr, double r) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \preconditions
-\tcode{rad >= 0.0}.
+\tcode{r >= 0.0}.
 
 \pnum
 \effects
@@ -65,7 +65,7 @@ Constructs an object of type \tcode{circle}.
 The value of Center is \tcode{ctr}.
 
 \pnum
-The value of Radius is \tcode{rad}.
+The value of Radius is \tcode{r}.
 \end{itemdescr}
 
 \rSec1 [circle.modifiers]{\tcode{circle} modifiers}
@@ -83,15 +83,15 @@ The value of Center is \tcode{ctr}.
 
 \indexlibrary{\idxcode{circle}!\idxcode{radius}}
 \begin{itemdecl}
-constexpr void radius(double rad) noexcept;
+constexpr void radius(double r) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \preconditions
-\tcode{rad >= 0.0}.
+\tcode{r >= 0.0}.
 
 \pnum
 \effects
-The value of Radius is \tcode{rad}.
+The value of Radius is \tcode{r}.
 \end{itemdescr}
 
 \rSec1 [circle.observers]{\tcode{circle} observers}

@@ -3,12 +3,12 @@
 
 \rSec1 [\vectortwod.intro] {\tcode{vector_2d} Description}
 
-\pnum
 \indexlibrary{\idxcode{vector_2d}}
+\pnum
 The class \tcode{vector_2d} is used as both a point and as a two-dimensional Euclidian vector.
 
 \pnum
-It has an X coordinate of type \tcode{double} and a Y coordinate of type \tcode{double}.
+It has an x coordinate of type \tcode{double} and a y coordinate of type \tcode{double}.
 
 \rSec1 [\vectortwod.synopsis] {\tcode{vector_2d} synopsis}
 
@@ -31,9 +31,9 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     // \ref{\vectortwod.observers}, observers:
     constexpr double x() const noexcept;
     constexpr double y() const noexcept;
+    constexpr double dot(const vector_2d& other) const noexcept;
     double magnitude() const noexcept;
     constexpr double magnitude_squared() const noexcept;
-    constexpr double dot(const vector_2d& other) const noexcept;
     double angular_direction(const vector_2d& to) const noexcept
     vector_2d to_unit() const noexcept;
     
@@ -71,10 +71,10 @@ constexpr vector_2d() noexcept;
 Constructs an object of type \tcode{vector_2d}.
 
 \pnum
-The X coordinate shall be set to the value \tcode{0.0}.
+The x coordinate shall be set to the value \tcode{0.0}.
 
 \pnum
-The Y coordinate shall be set to the value \tcode{0.0}.
+The y coordinate shall be set to the value \tcode{0.0}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{vector_2d}!constructor}
@@ -87,10 +87,10 @@ constexpr vector_2d(double x, double y) noexcept;
 Constructs an object of type \tcode{vector_2d}.
 
 \pnum
-The X coordinate shall be set to the value of \tcode{x}.
+The x coordinate shall be set to the value of \tcode{x}.
 
 \pnum
-The Y coordinate shall be set to the value of \tcode{y}.
+The y coordinate shall be set to the value of \tcode{y}.
 \end{itemdescr}
 
 \rSec1 [\vectortwod.modifiers]{\tcode{vector_2d} modifiers}
@@ -103,7 +103,7 @@ constexpr void x(double value) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-The X coordinate shall be set to the value of \tcode{x}.
+The x coordinate shall be set to the value of \tcode{x}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{vector_2d}!\idxcode{y}}
@@ -114,7 +114,7 @@ constexpr void y(double value) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-The Y coordinate shall be set to the value of \tcode{y}.
+The y coordinate shall be set to the value of \tcode{y}.
 \end{itemdescr}
 
 \rSec1 [\vectortwod.observers]{\tcode{vector_2d} observers}
@@ -127,7 +127,7 @@ constexpr double x() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-The value of the X coordinate.
+The value of the x coordinate.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{vector_2d}!\idxcode{y}}
@@ -138,29 +138,7 @@ constexpr double y() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-The value of the Y coordinate.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{vector_2d}!\idxcode{magnitude}}
-\indexlibrary{\idxcode{magnitude}!\idxcode{vector_2d}}
-\begin{itemdecl}
-    double magnitude() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-\tcode{sqrt(*this.x() * *this.x() + *this.y() * *this.y())}.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{vector_2d}!\idxcode{magnitude_squared}}
-\indexlibrary{\idxcode{magnitude_squared}!\idxcode{vector_2d}}
-\begin{itemdecl}
-constexpr double magnitude_squared() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-\tcode{*this.x() * *this.x() + *this.y() * *this.y()}.
+The value of the y coordinate.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{vector_2d}!\idxcode{dot}}
@@ -174,6 +152,28 @@ constexpr double dot(const vector_2d& other) const noexcept;
 \tcode{*this.x() * other.x() + *this.y() * other.y()}.
 \end{itemdescr}
 
+\indexlibrary{\idxcode{vector_2d}!\idxcode{magnitude}}
+\indexlibrary{\idxcode{magnitude}!\idxcode{vector_2d}}
+\begin{itemdecl}
+    double magnitude() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+Equivalent to \tcode{sqrt(dot(*this));}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{vector_2d}!\idxcode{magnitude_squared}}
+\indexlibrary{\idxcode{magnitude_squared}!\idxcode{vector_2d}}
+\begin{itemdecl}
+constexpr double magnitude_squared() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+Equivalent to \tcode{dot(*this);}.
+\end{itemdescr}
+
 \indexlibrary{\idxcode{vector_2d}!\idxcode{angular_direction}}
 \indexlibrary{\idxcode{angular_direction}!\idxcode{vector_2d}}
 \begin{itemdecl}
@@ -182,7 +182,7 @@ double angular_direction() const noexcept
 \begin{itemdescr}
 \pnum
 \returns
-The result of \tcode{atan2(*this.y(), *this.x())} if it is greater than or equal to \tcode{0;0}.
+The result of \tcode{atan2(*this.y(), *this.x())} if it is greater than or equal to \tcode{0.0}.
 
 \pnum
 Otherwise, \tcode{atan2(*this.y(), *this.x()) + two_pi<double>}. 
@@ -282,7 +282,7 @@ constexpr vector_2d operator+(const vector_2d& lhs) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{vector_2d(lhs)}.
+\tcode{lhs}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{vector_2d}!\idxcode{operator+}}

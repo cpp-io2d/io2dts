@@ -1,35 +1,24 @@
 %!TEX root = io2d.tex
 \rSec0 [\matrixtwod] {Class \tcode{matrix_2d}}
 
-\rSec1 [\matrixtwod.intro] {\tcode{matrix_2d} Description}
+\rSec1 [\matrixtwod.intro] {\tcode{matrix_2d} description}
 
-\pnum
 \indexlibrary{\idxcode{matrix_2d}}
+\pnum
 The \tcode{matrix_2d} class represents a two-dimensional, three row by three column matrix. Its purpose is to perform affine transformations.
 
 \pnum
-Mathematically, regardless of the operations performed on a \tcode{matrix_2d}, the third column will always have the column vector value of $[0.0, 0.0, 1.0]$. As such, it is not included in the observable data of the matrix.
-
-\pnum
-The performance of any mathematical operation upon a \tcode{matrix_2d} shall be carried out as-if the omitted third column data members were present with the values prescribed in the previous paragraph.
-
-\pnum
-If the third column's data members were observable, they would be:
-
-\begin{itemize}
-\item M02, a \tcode{double} which would follow \tcode{m01} in the same row and would be assigned a value of \tcode{0.0}.
-
-\item M12, a \tcode{double} which would follow \tcode{m11} in the same row and would be assigned a value of \tcode{0.0}.
-
-\item M22, a \tcode{double} which would follow \tcode{m21} in the same row and would be assigned a value of \tcode{1.0}.
-\end{itemize}
-
 \pnum
 The layout of the matrix is: \\
 $
 ~[~[~M00~M01~M02~]~] \\
 ~[~[~M10~M11~M12~]~] \\
-~[~[~M20~M21~M22~]~]$
+~[~[~M20~M21~M22~]~]$ \\
+
+The value of M02 is \tcode{0.0}. The value of M12 is \tcode{0.0}. The value of M22 is \tcode{1.0}. None of the operations on a \tcode{matrix_2d} object can modify the values of M02, M12, and M22. As such they are not part of the observable state of a \tcode{matrix_2d} object.
+
+\pnum
+The performance of any mathematical operation upon a \tcode{matrix_2d} shall be carried out as-if the omitted third column data members were present with the values prescribed in the previous paragraph.
 
 \pnum
 The values M00, M01, M10, M11, M20, M21 shall each be of type \tcode{double}.

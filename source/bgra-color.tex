@@ -12,11 +12,11 @@ There are three color channels, red, green, and blue, each of which is a \tcode{
 There is also an alpha channel, which is a \tcode{double}.
 
 \pnum
-Legal values for each channel are in the range \crange{0.0}{1.0}%$[0, 1]$.
+Legal values for each channel are in the range \crange{0.0}{1.0}.
 
-\pnum
-The type predefines a set of named colors, for which each channel is an unsigned normalized 8-bit integer.
-
+%\pnum
+%The type predefines a set of named colors, for which each channel is an unsigned normalized 8-bit integer.
+%
 \rSec1 [bgracolor.synopsis] {\tcode{bgra_color} synopsis}
 
 \begin{codeblock}
@@ -208,24 +208,20 @@ constexpr bgra_color(double r, double g, double b, double a = 1.0) noexcept;
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{r >= 0.0} and \tcode{r <= 1.0} and \tcode{g >= 0.0} and \tcode{g <= 1.0} and \tcode{b >= 0.0} and \tcode{b <= 1.0}. Where there is an \tcode{a} parameter, \tcode{a >= 0.0} and \tcode{a <= 1.0}.
+\tcode{r >= 0.0} and \tcode{r <= 1.0} and \tcode{g >= 0.0} and \tcode{g <= 1.0} and \tcode{b >= 0.0} and \tcode{b <= 1.0} and \tcode{a >= 0.0} and \tcode{a <= 1.0}.
 
 \pnum
 \effects
 Constructs an object of type \tcode{bgra_color}.
 
-\pnum
-The alpha channel shall be set to the value of \tcode{a}.
-
-\pnum
-The red channel shall be set to \tcode{r} multiplied by the value of  \tcode{a}.
-
-\pnum
-The green channel shall be set to \tcode{g} multiplied by the value of \tcode{a}.
-
-\pnum
-The blue channel shall be set to \tcode{b} multiplied by the value of \tcode{a}.
+\begin{enumerate}
+\item The alpha channel shall be set to the value of \tcode{a}.
+\item The red channel shall be set to \tcode{r} multiplied by the value of  \tcode{a}.
+\item The green channel shall be set to \tcode{g} multiplied by the value of \tcode{a}.
+\item The blue channel shall be set to \tcode{b} multiplied by the value of \tcode{a}.
+\end{enumerate}
 \end{itemdescr}
+
 
 \rSec1 [bgracolor.modifiers]{\tcode{bgra_color} modifiers}
 
@@ -283,16 +279,12 @@ constexpr void a(double val) noexcept;
 
 \pnum
 \effects
-\tcode{b((b() / a()) * val);}
-
-\pnum
-\tcode{g((g() / a()) * val);}
-
-\pnum
-\tcode{r((r() / a()) * val);}
-
-\pnum
-The alpha channel shall be set to \tcode{val}.
+\begin{enumerate}
+\item \tcode{b((b() / a()) * val);}
+\item \tcode{g((g() / a()) * val);}
+\item \tcode{r((r() / a()) * val);}
+\item The alpha channel shall be set to \tcode{val}.
+\end{enumerate}
 \end{itemdescr}
 
 \rSec1 [bgracolor.observers]{\tcode{bgra_color} observers}
