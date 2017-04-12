@@ -91,25 +91,7 @@ constexpr matrix_2d() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Constructs an object of type \tcode{matrix_2d}.
-
-\pnum
-The M00 value shall be set to \tcode{1.0}.
-
-\pnum
-The M01 value shall be set to \tcode{0.0}.
-
-\pnum
-The M10 value shall be set to \tcode{0.0}.
-
-\pnum
-The M11 value shall be set to \tcode{1.0}.
-
-\pnum
-The M20 value shall be set to \tcode{0.0}.
-
-\pnum
-The M21 value shall be set to \tcode{0.0}.
+Equivalent to \tcode{matrix_2d \{1.0, 0.0, 0.0, 1.0, 0.0, 0.0\};}.
 
 \pnum
 \realnote
@@ -127,22 +109,30 @@ constexpr matrix_2d(double v00, double v01, double v10, double v11,
 Constructs an object of type \tcode{matrix_2d}.
 
 \pnum
-The M00 value shall be set to the value of \tcode{v00}.
+As-if the resulting matrix was:
 
-\pnum
-The M01 value shall be set to the value of \tcode{v01}.
+$\\
+~[~[~v00~v01~0.0~]~] \\
+~[~[~v10~v11~0.0~]~] \\
+~[~[~v20~v21~1.0~]~]$ \\
 
-\pnum
-The M10 value shall be set to the value of \tcode{v10}.
-
-\pnum
-The M11 value shall be set to the value of \tcode{v11}.
-
-\pnum
-The M20 value shall be set to the value of \tcode{v20}.
-
-\pnum
-The M21 value shall be set to the value of \tcode{v21}.
+%\pnum
+%The M00 value shall be set to the value of \tcode{v00}.
+%
+%\pnum
+%The M01 value shall be set to the value of \tcode{v01}.
+%
+%\pnum
+%The M10 value shall be set to the value of \tcode{v10}.
+%
+%\pnum
+%The M11 value shall be set to the value of \tcode{v11}.
+%
+%\pnum
+%The M20 value shall be set to the value of \tcode{v20}.
+%
+%\pnum
+%The M21 value shall be set to the value of \tcode{v21}.
 \end{itemdescr}
 
 \rSec1 [\matrixtwod.staticfactories] {\tcode{matrix_2d} static factory 
