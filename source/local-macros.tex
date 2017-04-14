@@ -18,3 +18,19 @@
 \newcommand{\pixmap}{pixmap\xspace}
 \newcommand{\cppseventeen}{N4618\xspace}
 \newcommand{\bezierlocal}{B\'{e}zier\xspace}
+
+%%--------------------------------------------------
+%% Environment for imported graphics
+% usage: \begin{importgraphiciotwod}{CAPTION}{TAG}{FILE}
+
+\newenvironment{importgraphiciotwod}[3]
+{%
+\newcommand{\cptn}{#1}
+\newcommand{\lbl}{#2}
+\begin{figure}[htp]\centering%
+\includegraphics[scale=1.0]{#3}
+}
+{
+\caption{\cptn}\label{\lbl}%
+\end{figure}}
+

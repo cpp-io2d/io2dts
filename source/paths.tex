@@ -2,23 +2,152 @@
 
 \rSec0 [paths] {Paths}
 
+\rSec1 [paths.overview]{Overview of paths}
+
 \pnum
 Paths define geometric objects which can be stroked (Table~\ref{tab:surface.rendering.operations}), filled, masked, and used to define a Clip Area (\ref{clipprops.summary}.
 
 \pnum
-Paths are created using a \tcode{path_builder} object, which stores a path group. 
+A path group contains zero or more paths.
 
 \pnum
-Paths provide vector graphics functionality. As such they are particularly useful in situations where an application is intended to run on a variety of platforms whose output devices (\ref{displaysurface.intro}) span a large gamut of sizes, both in terms of measurement units and in terms of a horizontal and vertical pixel count, in that order. For example, a pixel count expressed as 1280x720 means that there are 1280 horizontal pixels per row of pixels and 720 vertical pixels per column of pixels for a total of 921600 pixels.
+A path is composed of at least one path segment.
+
+\pnum
+A path may contain degenerate path segments. When a path is rendered in certain rendering and composing operations, degenerate path segments can produce observable behavior.
+\enterexample
+When a degenerate path segment is rendered in a stroke rendering and composing operation (see \ref{surface.stroking}), the \tcode{line_cap} value contained in its \tcode{stroke_props} argument can result in a degenerate path segment producing observable behavior in the form of a circle or square, or some variation thereof.
+\exitexample
+
+\pnum
+Paths provide vector graphics functionality. As such they are particularly useful in situations where an application is intended to run on a variety of platforms whose output devices (\ref{displaysurface.intro}) span a large gamut of sizes, both in terms of measurement units and in terms of a horizontal and vertical pixel count, in that order.
 %
 %\pnum
 %For output devices, the measurement size of a pixel is determined by the physical size of the output device. Many output devices represent pixels as having the same horizontal and vertical measurement sizes. As such, when they display a rendered image which does not have the same horizontal to vertical pixel ratio as the output device, it 
 
 \pnum
-A path may contain degenerate path segments because of special rules, e.g. the \tcode{line_cap} state of a \tcode{surface} object when they are rendered, which are set forth below.
+A \tcode{path_group} object is an immutable resource wrapper containing a path group (\ref{pathgroup}). A \tcode{path_group} object is created from the paths contained in a \tcode{path_builder} object. It can also be default constructed, in which case the \tcode{path_group} object contains no paths.
+\enternote
+\tcode{path_group} objects provide significant optimization opportunities for implementations due to being immutable and opaque.
+\exitnote
+
+\rSec1 [paths.example]{Path group examples (Informative)}
 
 \pnum
-A \tcode{path_group} object is an immutable resource wrapper containing a path group (\ref{pathgroup}). A \tcode{path_group} object is created from a \tcode{path_builder} object. It can also be default constructed, in which case the \tcode{path_group} object contains no paths.
+Path groups are composed of zero or more paths. The following examples show the basics of how path groups work in practice.
+
+\pnum
+Every example is placed within the following code at the indicated spot. This code is shown here once to avoid repetition:
+
+\begin{codeblock}
+#include <experimental/io2d>
+
+using namespace std;
+using namespace std::experimental::io2d;
+
+int main() {
+  auto imgSfc = make_image_surface(format::argb32, 300, 200);
+  brush backBrush{ bgra_color::black() };
+  brush foreBrush{ bgra_color::white() };
+  path_builder<> pb{};
+  imgSfc.paint(backBrush);
+  
+  // Example code goes here.
+
+  // Example code ends.
+  
+  imgSfc.save(filesystem::path("example.png"), image_file_format::png);
+  return 0;
+}
+\end{codeblock}
+
+\pnum
+Example 1 consists of a single path, forming a trapezoid:
+
+\begin{codeblock}
+  pb.move({ 80.0, 20.0 }); // Begins the path.
+  pb.line_to({ 220.0, 20.0 }); // Creates a line from the [80, 20] to [220, 20].
+  pb.rel_line_to({ 60.0, 160.0 }); // Line from [220, 20] to
+    // [220 + 60, 160 + 20]. The "to" point is relative to the starting point.
+  pb.rel_line_to({ -260.0, 0.0 }); // Line from [280, 180] to 
+    // [280 - 260, 180 + 0].
+  pb.close_path(); // Creates a line from [20, 180] to [80, 20] 
+    // (the last-move-to point), which makes this a closed path.
+  imgSfc.stroke(foreBrush, pb);
+\end{codeblock}
+
+\begin{importgraphiciotwod}
+{Example 1 result}
+{fig:pathsexample1}
+{pathexample01.png}
+\end{importgraphiciotwod}
+
+\FloatBarrier
+
+\pnum
+Example 2 consists of two paths. The first is a rectangular open path (on the left) and the second is a rectangular closed path (on the right):
+
+\begin{codeblock}
+  pb.move({ 20.0, 20.0 }); // Begin the first path.
+  pb.rel_line_to({ 100.0, 0.0 });
+  pb.rel_line_to({ 0.0, 160.0 });
+  pb.rel_line_to({ -100.0, 0.0 });
+  pb.rel_line_to({ 0.0, -160.0 });
+  
+  pb.move_to({ 180.0, 20.0 }); // End the first path and begin the second path.
+  pb.rel_line_to({ 100.0, 0.0 });
+  pb.rel_line_to({ 0.0, 160.0 });
+  pb.rel_line_to({ -100.0, 0.0 });
+  pb.close_path(); // End the second path.
+  imgSfc.stroke(foreBrush, pb, nullopt, stroke_props{ 10.0 }); // Make the
+    // stroke width 10.0 instead of the default 2.0.
+\end{codeblock}
+
+\begin{importgraphiciotwod}
+{Example 2 result}
+{fig:pathsexample2}
+{pathexample02.png}
+\end{importgraphiciotwod}
+
+\FloatBarrier
+
+\pnum
+The resulting image from example 2 shows the difference between an open path and a closed path. Each path begins and ends at the same point. The difference is that with the closed path, that the rendering of the point where the initial path segment and final path segment meet is controlled by the \tcode{line_join} value in the \tcode{stroke_props} class, which in this case is the default value of \tcode{line_join::miter}. In the open path, the rendering of that point receives no special treatment such that each path segment at that point is rendered using the \tcode{line_cap} value in the \tcode{stroke_props} class, which in this case is the default value of \tcode{line_cap::none}.
+
+\pnum
+That difference between rendering as a \tcode{line_join} versus rendering as two \tcode{line_cap}s is what causes the notch to appear in the open path segment. Path segments are rendered such that half of the stroke width is rendered on each side of the point being evaluated. With no line cap, each segment begins and ends exactly at the point specified.
+
+\pnum
+So for the open path, the first line begins at \tcode{vector_2d\{ 20.0, 20.0 \}} and the last line ends there. Given the stroke width of \tcode{10.0}, the visible result for the first line is a rectangle with an upper left corner of \tcode{vector_2d\{ 20.0, 15.0 \}} and a lower right corner of \tcode{vector_2d\{ 120.0, 25.0 \}}. The last line appears as a rectangle with an upper left corner of \tcode{vector_2d\{ 15.0, 20.0 \}} and a lower right corner of \tcode{vector_2d\{ 25.0, 180.0 \}}. This produces the appearance of a square gap between \tcode{vector_2d\{ 15.0, 15.0 \}} and \tcode{vector_2d\{20.0, 20.0 \}}.
+
+\pnum
+For the closed path, adjusting for the coordinate differences, the rendering facts are the same as for the open path except for one key difference: the point where the first line and last line meet is rendered as a line join rather than two line caps, which, given the default value of \tcode{line_join::miter}, produces a miter, adding that square area to the rendering result.
+
+%\pnum
+%Example 3 demonstrates one circumstance in which degenerate path segments are rendered and also several operations that collapse into the establishment of a single path.
+%
+%\begin{codeblock}
+%  pb.move({ 40.0, 40.0 }); // Begin the first path.
+%  pb.move({ 40.0, 160.0 }); // Replace the first path since it is empty.
+%  pb.line_to({ 40.0, 160.0 }); // Create a degenerate path segment.
+%  pb.new_path(); // Begin the second path.
+%  pb.line_to({ 100.0, 100.0 }); // Establish a current point and then create a 
+%    // line that goes to it, i.e. a degenerate path segment.
+%  pb.move_to({ 100.0, 160.0 }); // Begin the third path.
+%  pb.rel_quadratic_curve_to({}, {}); // Create a degenerate path segment.
+%  pb.move_to({ 100.0, 160.0 });
+%  
+%  imgSfc.stroke(foreBrush, pb, nullopt, stroke_props{ 10.0 }); // Make the
+%    // stroke width 10.0 instead of the default 2.0.
+%\end{codeblock}
+%
+%\begin{importgraphiciotwod}
+%{Path example 3}
+%{paths:example3}
+%{pathexample03.png}
+%\end{importgraphiciotwod}
+%
+%\FloatBarrier
 
 \rSec1 [paths.processing] {Processing paths}
 
