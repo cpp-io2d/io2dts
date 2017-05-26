@@ -49,8 +49,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     void mark_dirty(error_code& ec) noexcept;
     void mark_dirty(const rectangle& rect);
     void mark_dirty(const rectangle& rect, error_code& ec) noexcept;
-    shared_ptr<experimental::io2d::device> device();
-    shared_ptr<experimental::io2d::device> device(error_code& ec) noexcept;
     void map(const function<void(mapped_surface&)>& action);
     void map(const function<void(mapped_surface&, error_code&)>& action,
       error_code& ec);
@@ -461,26 +459,6 @@ The errors, if any, produced by this function are \impldefplain{surface!mark_dir
 
 \pnum
 If the implementation does not provide a native handle to the \tcode{surface} object's \underlyingsurface, this function shall not produce any errors.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{surface}!\idxcode{device}}
-\indexlibrary{\idxcode{device}!\idxcode{surface}}
-\begin{itemdecl}
-shared_ptr<experimental::io2d::device> device();
-shared_ptr<experimental::io2d::device> device(error_code& ec) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-A shared pointer to the \tcode{device} object for this \tcode{surface}. If a \tcode{device} object does not already exist for this \tcode{surface}, a shared \tcode{device} object shall be allocated and returned.
-
-\pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-\pnum
-\errors
-\tcode{errc::not_enough_memory} if a \tcode{device} object needs to be created and not enough memory exists to do so.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{surface}!\idxcode{map}}
