@@ -583,27 +583,6 @@ constructor, assignment operator, or move assignment operator of
 \tcode{value_type}.
 \end{itemdescr}
 
-\indexlibrarymember{clear}{path_builder}%
-\begin{itemdecl}
-void clear() noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\postconditions
-\pnum
-The current point shall not contain a value.
-
-\pnum
-The transformation matrix shall have a value of \tcode{matrix_2d::init_identity\{ \}}.
-
-\pnum
-The origin shall have a value of \tcode{vector_2d\{ \}}.
-
-\pnum
-\remarks
-The postconditions listed above are in addition to sequence container requirements for this function.
-\end{itemdescr}
-
 \rSec1 [pathbuilder.iterators] {\tcode{path_builder} iterators}
 
 \indexlibrarymember{begin}{path_builder}%

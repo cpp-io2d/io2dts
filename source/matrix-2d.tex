@@ -35,7 +35,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       double v20, double v21) noexcept;
     
     // \ref{\matrixtwod.staticfactories}, static factory functions:
-    constexpr static matrix_2d init_identity() noexcept;
     constexpr static matrix_2d init_translate(const vector_2d& value) noexcept;
     constexpr static matrix_2d init_scale(const vector_2d& value) noexcept;
     static matrix_2d init_rotate(double radians) noexcept;
@@ -95,7 +94,7 @@ Equivalent to \tcode{matrix_2d \{1.0, 0.0, 0.0, 1.0, 0.0, 0.0\};}.
 
 \pnum
 \begin{note}
-The resulting matrix is the identity matrix, which can also be obtained from \tcode{matrix_2d::init_identity()}.
+The resulting matrix is the identity matrix.
 \end{note}
 \end{itemdescr}
 
@@ -137,17 +136,6 @@ $
 
 \rSec1 [\matrixtwod.staticfactories] {\tcode{matrix_2d} static factory 
 functions}
-
-\indexlibrary{\idxcode{matrix_2d}!\idxcode{init_identity}}
-\indexlibrary{\idxcode{init_identity}!\idxcode{matrix_2d}}
-\begin{itemdecl}
-constexpr static matrix_2d init_identity() noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-\tcode{matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)}.
-\end{itemdescr}
 
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{init_translate}}
 \indexlibrary{\idxcode{init_translate}!\idxcode{matrix_2d}}
