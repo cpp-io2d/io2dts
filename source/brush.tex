@@ -21,7 +21,7 @@ As a result of technological limitations and considerations, a \tcode{brush} obj
 
 \pnum
 \begin{example}
-Several graphics and rendering technologies that are currently widely used typically store individual color and alpha channel data as 8-bit unsigned normalized integer values while the \tcode{double} type that is used by the \tcode{bgra_color} class for individual color and alpha is often a 64-bit value. As such, it is possible for a loss of precision when transforming the 64-bit channel data of an \tcode{bgra_color} object to the 8-bit channel data that is commonly used internally in such graphics and rendering technologies.
+Several graphics and rendering technologies that are currently widely used typically store individual color and alpha channel data as 8-bit unsigned normalized integer values while the \tcode{double} type that is used by the \tcode{rgba_color} class for individual color and alpha is often a 64-bit value. As such, it is possible for a loss of precision when transforming the 64-bit channel data of an \tcode{rgba_color} object to the 8-bit channel data that is commonly used internally in such graphics and rendering technologies.
 \end{example}
 
 \rSec1 [brush.synopsis] {\tcode{brush} synopsis}
@@ -31,7 +31,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class brush {
   public:
     // \ref{brush.cons}, construct/copy/move/destroy:
-    explicit brush(const bgra_color& c);
+    explicit brush(const rgba_color& c);
     template <class InputIterator>
     brush(const vector_2d& begin, const vector_2d& end,
       InputIterator first, InputIterator last);
@@ -64,7 +64,7 @@ When sampling from a \tcode{brush} object \tcode{b}, the \tcode{brush_type} retu
 \rSec2 [brush.sampling.color] {Sampling from a solid color brush}
 
 \pnum
-When \tcode{b} is a solid color brush, then when sampling from \tcode{b}, the visual data returned shall always be the visual data equivalent \tcode{bgra_color} used to construct \tcode{b}, regardless of the point which is to be sampled and regardless of the return values of Wrap Mode, Filter, and Matrix.
+When \tcode{b} is a solid color brush, then when sampling from \tcode{b}, the visual data returned shall always be the visual data equivalent \tcode{rgba_color} used to construct \tcode{b}, regardless of the point which is to be sampled and regardless of the return values of Wrap Mode, Filter, and Matrix.
 
 \rSec2 [brush.sampling.linear] {Sampling from a linear gradient brush}
 
@@ -85,7 +85,7 @@ When \tcode{b} is a surface brush, when sampling point \tcode{pt}, where \tcode{
 
 \indexlibrary{\idxcode{brush}!constructor}
 \begin{itemdecl}
-explicit brush(const bgra_color& c);
+explicit brush(const rgba_color& c);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

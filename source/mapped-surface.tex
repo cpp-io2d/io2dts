@@ -126,7 +126,7 @@ Given the following code:
 
 \begin{codeblock}
 image_surface imgsfc{ format::argb32, 100, 100 };
-imgsfc.paint(bgra_color::red());
+imgsfc.paint(rgba_color::red());
 imgsfc.flush();
 imgsfc.map([](mapped_surface& mapsfc) -> void {
     auto pixelData = mapsfc.data();
@@ -175,7 +175,7 @@ Given the following code:
 
 \begin{codeblock}
 image_surface imgsfc{ format::argb32, 100, 100 };
-imgsfc.paint(bgra_color::red());
+imgsfc.paint(rgba_color::red());
 imgsfc.flush();
 imgsfc.map([](mapped_surface& mapsfc) -> void {
     auto pixelData = mapsfc.data();

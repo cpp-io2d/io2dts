@@ -20,7 +20,7 @@ A linear gradient has a \term{begin point} and an \term{end point}, each of whic
 A linear gradient for which the distance between its begin point and its end point is not greater than \tcode{numeric_limits<double>::epsilon()} is a \term{degenerate linear gradient}.
 
 \pnum
-All attempts to sample from a a degenerate linear gradient return the color \tcode{bgra_color::transparent_black()}. The remainder of \ref{gradients} is inapplicable to degenerate linear gradients.
+All attempts to sample from a a degenerate linear gradient return the color \tcode{rgba_color::transparent_black()}. The remainder of \ref{gradients} is inapplicable to degenerate linear gradients.
 
 \pnum
 The begin point and end point of a linear gradient define a line segment, with a color stop offset value of 0.0 corresponding to the begin point and a color stop offset value of 1.0 corresponding to the end point.
@@ -68,7 +68,7 @@ A radial gradient is a \term{degenerate radial gradient} if:
 \end{itemize}
 
 \pnum
-All attempts to sample from a \tcode{brush} object created using a degenerate radial gradient return the color \tcode{bgra_color::transparent_black()}. The remainder of \ref{gradients} is inapplicable to degenerate radial gradients.
+All attempts to sample from a \tcode{brush} object created using a degenerate radial gradient return the color \tcode{rgba_color::transparent_black()}. The remainder of \ref{gradients} is inapplicable to degenerate radial gradients.
 
 \pnum
 A color stop offset of 0.0 corresponds to all points along the diameter of the start circle or to its center point if it has a radius value of 0.0.
@@ -104,18 +104,18 @@ An interpolated circle shall not be rendered if its value for $o$ results in $ra
 For any offset value $o$, its color value shall be determined according to the following rules:
 
 \begin{enumeratea}
-\item If there are less than two color stops or if all color stops have the same offset value, then the color value of every offset value shall be \tcode{bgra_color::transparent_black()} and the remainder of these rules are inapplicable.
+\item If there are less than two color stops or if all color stops have the same offset value, then the color value of every offset value shall be \tcode{rgba_color::transparent_black()} and the remainder of these rules are inapplicable.
 
 \item If exactly one color stop has an offset value equal to $o$, $o$'s color value shall be the color value of that color stop and the remainder of these rules are inapplicable.
 
 \item If two or more color stops have an offset value equal to $o$, $o$'s color value shall be the color value of the color stop which has the lowest index value among the set of color stops that have an offset value equal to $o$ and the remainder of \ref{gradients.sampling} is inapplicable.
 
-\item When no color stop has the offset value of \tcode{0.0}, then, defining $n$ to be the offset value that is nearest to \tcode{0.0} among the offset values in the set of all color stops, if $o$ is in the offset range $[0, n)$, $o$'s color value shall be \tcode{bgra_color::transparent_black()} and the remainder of these rules are inapplicable.
+\item When no color stop has the offset value of \tcode{0.0}, then, defining $n$ to be the offset value that is nearest to \tcode{0.0} among the offset values in the set of all color stops, if $o$ is in the offset range $[0, n)$, $o$'s color value shall be \tcode{rgba_color::transparent_black()} and the remainder of these rules are inapplicable.
 \begin{note}
 Since the range described does not include $n$, it does not matter how many color stops have $n$ as their offset value for purposes of this rule.
 \end{note}
 
-\item When no color stop has the offset value of \tcode{1.0}, then, defining $n$ to be the offset value that is nearest to \tcode{1.0} among the offset values in the set of all color stops, if $o$ is in the offset range $(n, 1]$, $o$'s color value shall be \tcode{bgra_color::transparent_black()} and the remainder of these rules are inapplicable.
+\item When no color stop has the offset value of \tcode{1.0}, then, defining $n$ to be the offset value that is nearest to \tcode{1.0} among the offset values in the set of all color stops, if $o$ is in the offset range $(n, 1]$, $o$'s color value shall be \tcode{rgba_color::transparent_black()} and the remainder of these rules are inapplicable.
 \begin{note}
 Since the range described does not include $n$, it does not matter how many color stops have $n$ as their offset value for purposes of this rule.
 \end{note}
@@ -152,7 +152,7 @@ This includes any color stops with an offset value of \tcode{1.0} provided that 
 
 \item Where the value of $o$ is outside the range $[0,1]$, its color value depends on the value of Wrap Mode:
 	\begin{itemize}
-	\item If Wrap Mode is \tcode{wrap_mode::none}, the color value of $o$ shall be \tcode{bgra_color::transparent_black()}.
+	\item If Wrap Mode is \tcode{wrap_mode::none}, the color value of $o$ shall be \tcode{rgba_color::transparent_black()}.
 	
 	\item If Wrap Mode is \tcode{wrap_mode::pad}, if $o$ is negative then the color value of $o$ shall be the same as-if the value of $o$ was \tcode{0.0}, otherwise the color value of $o$ shall be the same as-if the value of $o$ was \tcode{1.0}.
 	

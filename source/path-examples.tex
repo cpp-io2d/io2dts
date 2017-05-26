@@ -18,8 +18,8 @@ using namespace std::experimental::io2d;
 
 int main() {
   auto imgSfc = make_image_surface(format::argb32, 300, 200);
-  brush backBrush{ bgra_color::black() };
-  brush foreBrush{ bgra_color::white() };
+  brush backBrush{ rgba_color::black() };
+  brush foreBrush{ rgba_color::white() };
   path_builder<> pb{};
   imgSfc.paint(backBrush);
   
