@@ -87,12 +87,11 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       const optional<clip_props>& cl = nullopt);
     template <class Allocator>
     void mask(const brush& b, const brush& mb,
-      const path_builder<Allocator>& pb,
       const optional<brush_props>& bp = nullopt,
       const optional<mask_props>& mp = nullopt,
       const optional<surface_props>&rp = nullopt,
       const optional<clip_props>& cl = nullopt);
-    void mask(const brush& b, const brush& mb, const path_group& pg,
+    void mask(const brush& b, const brush& mb,
       const optional<brush_props>& bp = nullopt,
       const optional<mask_props>& mp = nullopt,
       const optional<surface_props>&rp = nullopt,
@@ -180,7 +179,7 @@ All rendering and composing operations use the following state data:
 \rSec2 [surface.rendering.specificstate] {Specific state data}
 
 \pnum
-In addition to the common state data (\ref{surface.rendering.commonstate}), certain rendering and composing operations use state data that is specific each of them:
+In addition to the common state data (\ref{surface.rendering.commonstate}), certain rendering and composing operations use state data that is specific to each of them:
 
 \begin{libiotwodtab3e}
  {\tcode{surface} rendering and composing specific state data}
