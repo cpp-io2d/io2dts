@@ -20,15 +20,14 @@ Legal values for each channel are in the range \crange{0.0}{1.0}.
 \rSec1 [bgracolor.synopsis] {\tcode{bgra_color} synopsis}
 
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std::experimental::io2d { inline namespace v1 {
   class bgra_color {
     // \ref{bgracolor.cons}, construct/copy/move/destroy:
     constexpr bgra_color() noexcept;
-    constexpr bgra_color(const bgra_color&) noexcept = default;
-    constexpr bgra_color& operator=(const bgra_color&) noexcept = default;
-    bgra_color(bgra_color&&) noexcept = default;
-    bgra_color& operator=(bgra_color&&) noexcept = default;
-    constexpr bgra_color(double r, double g, double b, double a = 1.0) noexcept;
+    template <class T>
+    constexpr bgra_color(T r, T g, T b, T a = static_cast<T>(0xFF)) noexcept;
+    template <class U>
+    constexpr bgra_color(U r, U g, U b, U a = static_cast<U>(1.0)) noexcept;
   
     // \ref{bgracolor.modifiers}, modifiers:
     constexpr void r(double val) noexcept;
@@ -203,7 +202,43 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 
 \indexlibrary{\idxcode{bgra_color}!constructor}
 \begin{itemdecl}
-constexpr bgra_color(double r, double g, double b, double a = 1.0) noexcept;
+constexpr bgra_color() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to: \tcode{bgra_color \{0.0, 0.0, 0.0. 0.0\};}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!constructor}
+\begin{itemdecl}
+template <class T>
+constexpr bgra_color(T r, T g, T b, T a = static_cast<T>(255)) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{is_integral_v<T> == true} and \tcode{r >= 0} and \tcode{r <= 255} and \tcode{g >= 0} and \tcode{g <= 255} and \tcode{b >= 0} and \tcode{b <= 255} and \tcode{a >= 0} and \tcode{a <= 255}.
+
+\pnum
+\effects
+Constructs an object of type \tcode{bgra_color}.
+
+\pnum
+\remarks
+This constructor shall not participate in overload resolution unless \tcode{is_integral_v<T>} is \tcode{true}.
+\begin{enumerate}
+\item The alpha channel shall be set to the value of \tcode{a}.
+\item The red channel shall be set to \tcode{r} multiplied by the value of  \tcode{a}.
+\item The green channel shall be set to \tcode{g} multiplied by the value of \tcode{a}.
+\item The blue channel shall be set to \tcode{b} multiplied by the value of \tcode{a}.
+\end{enumerate}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{bgra_color}!constructor}
+\begin{itemdecl}
+template <class U>
+constexpr bgra_color(U r, U g, U b, U a = static_cast<U>(1.0)) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -215,10 +250,10 @@ constexpr bgra_color(double r, double g, double b, double a = 1.0) noexcept;
 Constructs an object of type \tcode{bgra_color}.
 
 \begin{enumerate}
-\item The alpha channel shall be set to the value of \tcode{a}.
-\item The red channel shall be set to \tcode{r} multiplied by the value of  \tcode{a}.
-\item The green channel shall be set to \tcode{g} multiplied by the value of \tcode{a}.
-\item The blue channel shall be set to \tcode{b} multiplied by the value of \tcode{a}.
+\item The alpha channel shall be set to the value of \tcode{a / 255.0}.
+\item The red channel shall be set to \tcode{r / 255.0} multiplied by the value of  \tcode{a / 255.0}.
+\item The green channel shall be set to \tcode{g / 255.0} multiplied by the value of \tcode{a / 255.0}.
+\item The blue channel shall be set to \tcode{b / 255.0} multiplied by the value of \tcode{a / 255.0}.
 \end{enumerate}
 \end{itemdescr}
 
@@ -338,7 +373,7 @@ static const bgra_color& alice_blue() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 240ubyte, 248ubyte, 255ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 240, 248, 255, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{antique_white}}
@@ -348,7 +383,7 @@ static const bgra_color& antique_white() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 250ubyte, 235ubyte, 215ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 250, 235, 215, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{aqua}}
@@ -358,7 +393,7 @@ static const bgra_color& aqua() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 255ubyte, 255ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0, 255, 255, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{aquamarine}}
@@ -368,7 +403,7 @@ static const bgra_color& aquamarine() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 127ubyte, 255ubyte, 212ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 127, 255, 212, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{azure}}
@@ -378,7 +413,7 @@ static const bgra_color& azure() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 240ubyte, 255ubyte, 255ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 240, 255, 255, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{beige}}
@@ -388,7 +423,7 @@ static const bgra_color& beige() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 245ubyte, 245ubyte, 220ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 245, 245, 220, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{bisque}}
@@ -398,7 +433,7 @@ static const bgra_color& bisque() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 228ubyte, 196ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 228, 196, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{black}}
@@ -408,7 +443,7 @@ static const bgra_color& black() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 0ubyte, 0ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0, 0, 0, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{blanched_almond}}
@@ -418,7 +453,7 @@ static const bgra_color& blanched_almond() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 235ubyte, 205ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 235, 205, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{blue}}
@@ -428,7 +463,7 @@ static const bgra_color& blue() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 0ubyte, 255ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0, 0, 255, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{blue_violet}}
@@ -438,7 +473,7 @@ static const bgra_color& blue_violet() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 138ubyte, 43ubyte, 226ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 138, 43, 226, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{brown}}
@@ -448,7 +483,7 @@ static const bgra_color& brown() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 165ubyte, 42ubyte, 42ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 165, 42, 42, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{burly_wood}}
@@ -458,7 +493,7 @@ static const bgra_color& burly_wood() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 222ubyte, 184ubyte, 135ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 222, 184, 135, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{cadet_blue}}
@@ -468,7 +503,7 @@ static const bgra_color& cadet_blue() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 95ubyte, 158ubyte, 160ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 95, 158, 160, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{chartreuse}}
@@ -478,7 +513,7 @@ static const bgra_color& chartreuse() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 127ubyte, 255ubyte, 0ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 127, 255, 0, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{chocolate}}
@@ -488,7 +523,7 @@ static const bgra_color& chocolate() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 210ubyte, 105ubyte, 30ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 210, 105, 30, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{coral}}
@@ -498,7 +533,7 @@ static const bgra_color& coral() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 127ubyte, 80ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 127, 80, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{cornflower_blue}}
@@ -508,7 +543,7 @@ static const bgra_color& cornflower_blue() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 100ubyte, 149ubyte, 237ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 100, 149, 237, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{cornsilk}}
@@ -518,7 +553,7 @@ static const bgra_color& cornsilk() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 248ubyte, 220ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 248, 220, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{crimson}}
@@ -528,7 +563,7 @@ static const bgra_color& crimson() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 220ubyte, 20ubyte, 60ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 220, 20, 60, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{cyan}}
@@ -538,7 +573,7 @@ static const bgra_color& cyan() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 255ubyte, 255ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0, 255, 255, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dark_blue}}
@@ -548,7 +583,7 @@ static const bgra_color& dark_blue() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 0ubyte, 139ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0, 0, 139, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dark_cyan}}
@@ -558,7 +593,7 @@ static const bgra_color& dark_cyan() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 139ubyte, 139ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0, 139, 139, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dark_goldenrod}}
@@ -568,7 +603,7 @@ static const bgra_color& dark_goldenrod() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 184ubyte, 134ubyte, 11ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 184, 134, 11, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dark_gray}}
@@ -578,7 +613,7 @@ static const bgra_color& dark_gray() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 169ubyte, 169ubyte, 169ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 169, 169, 169, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dark_green}}
@@ -588,7 +623,7 @@ static const bgra_color& dark_green() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 100ubyte, 0ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0, 100, 0, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dark_grey}}
@@ -598,7 +633,7 @@ static const bgra_color& dark_grey() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 169ubyte, 169ubyte, 169ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 169, 169, 169, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dark_khaki}}
@@ -608,7 +643,7 @@ static const bgra_color& dark_khaki() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 189ubyte, 183ubyte, 107ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 189, 183, 107, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dark_magenta}}
@@ -618,7 +653,7 @@ static const bgra_color& dark_magenta() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 139ubyte, 0ubyte, 139ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 139, 0, 139, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dark_olive_green}}
@@ -628,7 +663,7 @@ static const bgra_color& dark_olive_green() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 85ubyte, 107ubyte, 47ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 85, 107, 47, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dark_orange}}
@@ -638,7 +673,7 @@ static const bgra_color& dark_orange() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 140ubyte, 0ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 140, 0, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dark_orchid}}
@@ -648,7 +683,7 @@ static const bgra_color& dark_orchid() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 153ubyte, 50ubyte, 204ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 153, 50, 204, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dark_red}}
@@ -658,7 +693,7 @@ static const bgra_color& dark_red() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 139ubyte, 0ubyte, 0ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 139, 0, 0, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dark_salmon}}
@@ -668,7 +703,7 @@ static const bgra_color& dark_salmon() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 233ubyte, 150ubyte, 122ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 233, 150, 122, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dark_sea_green}}
@@ -678,7 +713,7 @@ static const bgra_color& dark_sea_green() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 143ubyte, 188ubyte, 143ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 143, 188, 143, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dark_slate_blue}}
@@ -688,7 +723,7 @@ static const bgra_color& dark_slate_blue() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 72ubyte, 61ubyte, 139ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 72, 61, 139, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dark_slate_gray}}
@@ -698,7 +733,7 @@ static const bgra_color& dark_slate_gray() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 47ubyte, 79ubyte, 79ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 47, 79, 79, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dark_slate_grey}}
@@ -708,7 +743,7 @@ static const bgra_color& dark_slate_grey() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 47ubyte, 79ubyte, 79ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 47, 79, 79, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dark_turquoise}}
@@ -718,7 +753,7 @@ static const bgra_color& dark_turquoise() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 206ubyte, 209ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0, 206, 209, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dark_violet}}
@@ -728,7 +763,7 @@ static const bgra_color& dark_violet() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 148ubyte, 0ubyte, 211ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 148, 0, 211, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{deep_pink}}
@@ -738,7 +773,7 @@ static const bgra_color& deep_pink() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 20ubyte, 147ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 20, 147, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{deep_sky_blue}}
@@ -748,7 +783,7 @@ static const bgra_color& deep_sky_blue() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 191ubyte, 255ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0, 191, 255, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dim_gray}}
@@ -758,7 +793,7 @@ static const bgra_color& dim_gray() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 105ubyte, 105ubyte, 105ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 105, 105, 105, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dim_grey}}
@@ -768,7 +803,7 @@ static const bgra_color& dim_grey() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 105ubyte, 105ubyte, 105ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 105, 105, 105, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{dodger_blue}}
@@ -778,7 +813,7 @@ static const bgra_color& dodger_blue() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 30ubyte, 144ubyte, 255ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 30, 144, 255, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{firebrick}}
@@ -788,7 +823,7 @@ static const bgra_color& firebrick() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 178ubyte, 34ubyte, 34ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 178, 34, 34, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{floral_white}}
@@ -798,7 +833,7 @@ static const bgra_color& floral_white() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 250ubyte, 240ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 250, 240, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{forest_green}}
@@ -808,7 +843,7 @@ static const bgra_color& forest_green() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 34ubyte, 139ubyte, 34ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 34, 139, 34, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{fuchsia}}
@@ -818,7 +853,7 @@ static const bgra_color& fuchsia() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 0ubyte, 255ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 0, 255, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{gainsboro}}
@@ -828,7 +863,7 @@ static const bgra_color& gainsboro() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 220ubyte, 220ubyte, 220ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 220, 220, 220, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{ghost_white}}
@@ -838,7 +873,7 @@ static const bgra_color& ghost_white() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 248ubyte, 248ubyte, 255ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 248, 248, 255, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{gold}}
@@ -848,7 +883,7 @@ static const bgra_color& gold() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 215ubyte, 0ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 215, 0, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{goldenrod}}
@@ -858,7 +893,7 @@ static const bgra_color& goldenrod() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 218ubyte, 165ubyte, 32ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 218, 165, 32, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{gray}}
@@ -868,7 +903,7 @@ static const bgra_color& gray() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 128ubyte, 128ubyte, 128ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 128, 128, 128, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{green}}
@@ -878,7 +913,7 @@ static const bgra_color& green() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 128ubyte, 0ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0, 128, 0, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{green_yellow}}
@@ -888,7 +923,7 @@ static const bgra_color& green_yellow() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 173ubyte, 255ubyte, 47ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 173, 255, 47, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{grey}}
@@ -898,7 +933,7 @@ static const bgra_color& grey() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 128ubyte, 128ubyte, 128ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 128, 128, 128, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{honeydew}}
@@ -908,7 +943,7 @@ static const bgra_color& honeydew() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 240ubyte, 255ubyte, 240ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 240, 255, 240, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{hot_pink}}
@@ -918,7 +953,7 @@ static const bgra_color& hot_pink() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 105ubyte, 180ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 105, 180, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{indian_red}}
@@ -928,7 +963,7 @@ static const bgra_color& indian_red() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 205ubyte, 92ubyte, 92ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 205, 92, 92, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{indigo}}
@@ -938,7 +973,7 @@ static const bgra_color& indigo() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 75ubyte, 0ubyte, 130ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 75, 0, 130, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{ivory}}
@@ -948,7 +983,7 @@ static const bgra_color& ivory() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 255ubyte, 240ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 255, 240, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{khaki}}
@@ -958,7 +993,7 @@ static const bgra_color& khaki() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 240ubyte, 230ubyte, 140ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 240, 230, 140, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{lavender}}
@@ -968,7 +1003,7 @@ static const bgra_color& lavender() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 230ubyte, 230ubyte, 250ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 230, 230, 250, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{lavender_blush}}
@@ -978,7 +1013,7 @@ static const bgra_color& lavender_blush() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 240ubyte, 245ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 240, 245, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{lawn_green}}
@@ -988,7 +1023,7 @@ static const bgra_color& lawn_green() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 124ubyte, 252ubyte, 0ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 124, 252, 0, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{lemon_chiffon}}
@@ -998,7 +1033,7 @@ static const bgra_color& lemon_chiffon() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 250ubyte, 205ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 250, 205, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{light_blue}}
@@ -1008,7 +1043,7 @@ static const bgra_color& light_blue() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 173ubyte, 216ubyte, 230ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 173, 216, 230, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{light_coral}}
@@ -1018,7 +1053,7 @@ static const bgra_color& light_coral() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 240ubyte, 128ubyte, 128ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 240, 128, 128, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{light_cyan}}
@@ -1028,7 +1063,7 @@ static const bgra_color& light_cyan() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 224ubyte, 255ubyte, 255ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 224, 255, 255, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{light_goldenrod_yellow}}
@@ -1038,7 +1073,7 @@ static const bgra_color& light_goldenrod_yellow() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 250ubyte, 250ubyte, 210ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 250, 250, 210, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{light_gray}}
@@ -1048,7 +1083,7 @@ static const bgra_color& light_gray() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 211ubyte, 211ubyte, 211ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 211, 211, 211, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{light_green}}
@@ -1058,7 +1093,7 @@ static const bgra_color& light_green() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 144ubyte, 238ubyte, 144ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 144, 238, 144, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{light_grey}}
@@ -1068,7 +1103,7 @@ static const bgra_color& light_grey() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 211ubyte, 211ubyte, 211ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 211, 211, 211, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{light_pink}}
@@ -1078,7 +1113,7 @@ static const bgra_color& light_pink() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 182ubyte, 193ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 182, 193, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{light_salmon}}
@@ -1088,7 +1123,7 @@ static const bgra_color& light_salmon() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 160ubyte, 122ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 160, 122, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{light_sea_green}}
@@ -1098,7 +1133,7 @@ static const bgra_color& light_sea_green() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 32ubyte, 178ubyte, 170ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 32, 178, 170, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{light_sky_blue}}
@@ -1108,7 +1143,7 @@ static const bgra_color& light_sky_blue() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 135ubyte, 206ubyte, 250ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 135, 206, 250, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{light_slate_gray}}
@@ -1118,7 +1153,7 @@ static const bgra_color& light_slate_gray() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 119ubyte, 136ubyte, 153ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 119, 136, 153, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{light_slate_grey}}
@@ -1128,7 +1163,7 @@ static const bgra_color& light_slate_grey() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 119ubyte, 136ubyte, 153ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 119, 136, 153, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{light_steel_blue}}
@@ -1138,7 +1173,7 @@ static const bgra_color& light_steel_blue() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 176ubyte, 196ubyte, 222ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 176, 196, 222, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{light_yellow}}
@@ -1148,7 +1183,7 @@ static const bgra_color& light_yellow() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 255ubyte, 224ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 255, 224, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{lime}}
@@ -1158,7 +1193,7 @@ static const bgra_color& lime() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 255ubyte, 0ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0, 255, 0, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{lime_green}}
@@ -1168,7 +1203,7 @@ static const bgra_color& lime_green() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 50ubyte, 205ubyte, 50ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 50, 205, 50, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{linen}}
@@ -1178,7 +1213,7 @@ static const bgra_color& linen() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 250ubyte, 240ubyte, 230ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 250, 240, 230, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{magenta}}
@@ -1188,7 +1223,7 @@ static const bgra_color& magenta() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 0ubyte, 255ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 0, 255, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{maroon}}
@@ -1198,7 +1233,7 @@ static const bgra_color& maroon() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 128ubyte, 0ubyte, 0ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 128, 0, 0, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{medium_aquamarine}}
@@ -1208,7 +1243,7 @@ static const bgra_color& medium_aquamarine() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 102ubyte, 205ubyte, 170ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 102, 205, 170, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{medium_blue}}
@@ -1218,7 +1253,7 @@ static const bgra_color& medium_blue() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 0ubyte, 205ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0, 0, 205, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{medium_orchid}}
@@ -1228,7 +1263,7 @@ static const bgra_color& medium_orchid() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 186ubyte, 85ubyte, 211ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 186, 85, 211, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{medium_purple}}
@@ -1238,7 +1273,7 @@ static const bgra_color& medium_purple() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 147ubyte, 112ubyte, 219ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 147, 112, 219, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{medium_sea_green}}
@@ -1248,7 +1283,7 @@ static const bgra_color& medium_sea_green() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 60ubyte, 179ubyte, 113ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 60, 179, 113, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{medium_slate_blue}}
@@ -1258,7 +1293,7 @@ static const bgra_color& medium_slate_blue() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 123ubyte, 104ubyte, 238ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 123, 104, 238, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{medium_spring_green}}
@@ -1268,7 +1303,7 @@ static const bgra_color& medium_spring_green() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 250ubyte, 154ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0, 250, 154, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{medium_turquoise}}
@@ -1278,7 +1313,7 @@ static const bgra_color& medium_turquoise() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 72ubyte, 209ubyte, 204ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 72, 209, 204, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{medium_violet_red}}
@@ -1288,7 +1323,7 @@ static const bgra_color& medium_violet_red() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 199ubyte, 21ubyte, 133ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 199, 21, 133, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{midnight_blue}}
@@ -1298,7 +1333,7 @@ static const bgra_color& midnight_blue() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 25ubyte, 25ubyte, 112ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 25, 25, 112, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{mint_cream}}
@@ -1308,7 +1343,7 @@ static const bgra_color& mint_cream() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 245ubyte, 255ubyte, 250ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 245, 255, 250, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{misty_rose}}
@@ -1318,7 +1353,7 @@ static const bgra_color& misty_rose() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 228ubyte, 225ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 228, 225, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{moccasin}}
@@ -1328,7 +1363,7 @@ static const bgra_color& moccasin() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 228ubyte, 181ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 228, 181, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{navajo_white}}
@@ -1338,7 +1373,7 @@ static const bgra_color& navajo_white() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 222ubyte, 173ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 222, 173, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{navy}}
@@ -1348,7 +1383,7 @@ static const bgra_color& navy() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 0ubyte, 128ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0, 0, 128, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{old_lace}}
@@ -1358,7 +1393,7 @@ static const bgra_color& old_lace() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 253ubyte, 245ubyte, 230ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 253, 245, 230, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{olive}}
@@ -1368,7 +1403,7 @@ static const bgra_color& olive() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 128ubyte, 128ubyte, 0ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 128, 128, 0, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{olive_drab}}
@@ -1378,7 +1413,7 @@ static const bgra_color& olive_drab() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 107ubyte, 142ubyte, 35ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 107, 142, 35, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{orange}}
@@ -1388,7 +1423,7 @@ static const bgra_color& orange() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 165ubyte, 0ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 165, 0, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{orange_red}}
@@ -1398,7 +1433,7 @@ static const bgra_color& orange_red() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 69ubyte, 0ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 69, 0, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{orchid}}
@@ -1408,7 +1443,7 @@ static const bgra_color& orchid() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 218ubyte, 112ubyte, 214ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 218, 112, 214, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{pale_goldenrod}}
@@ -1418,7 +1453,7 @@ static const bgra_color& pale_goldenrod() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 238ubyte, 232ubyte, 170ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 238, 232, 170, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{pale_green}}
@@ -1428,7 +1463,7 @@ static const bgra_color& pale_green() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 152ubyte, 251ubyte, 152ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 152, 251, 152, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{pale_turquoise}}
@@ -1438,7 +1473,7 @@ static const bgra_color& pale_turquoise() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 175ubyte, 238ubyte, 238ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 175, 238, 238, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{pale_violet_red}}
@@ -1448,7 +1483,7 @@ static const bgra_color& pale_violet_red() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 219ubyte, 112ubyte, 147ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 219, 112, 147, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{papaya_whip}}
@@ -1458,7 +1493,7 @@ static const bgra_color& papaya_whip() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 239ubyte, 213ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 239, 213, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{peach_puff}}
@@ -1468,7 +1503,7 @@ static const bgra_color& peach_puff() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 218ubyte, 185ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 218, 185, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{peru}}
@@ -1478,7 +1513,7 @@ static const bgra_color& peru() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 205ubyte, 133ubyte, 63ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 205, 133, 63, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{pink}}
@@ -1488,7 +1523,7 @@ static const bgra_color& pink() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 192ubyte, 203ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 192, 203, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{plum}}
@@ -1498,7 +1533,7 @@ static const bgra_color& plum() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 221ubyte, 160ubyte, 221ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 221, 160, 221, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{powder_blue}}
@@ -1508,7 +1543,7 @@ static const bgra_color& powder_blue() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 176ubyte, 224ubyte, 230ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 176, 224, 230, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{purple}}
@@ -1518,7 +1553,7 @@ static const bgra_color& purple() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 128ubyte, 0ubyte, 128ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 128, 0, 128, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{red}}
@@ -1529,7 +1564,7 @@ static const bgra_color& red() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 0ubyte, 0ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 0, 0, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{rosy_brown}}
@@ -1540,7 +1575,7 @@ static const bgra_color& rosy_brown() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 188ubyte, 143ubyte, 143ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 188, 143, 143, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{royal_blue}}
@@ -1551,7 +1586,7 @@ static const bgra_color& royal_blue() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 65ubyte, 105ubyte, 225ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 65, 105, 225, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{saddle_brown}}
@@ -1561,7 +1596,7 @@ static const bgra_color& saddle_brown() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 139ubyte, 69ubyte, 19ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 139, 69, 19, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{salmon}}
@@ -1571,7 +1606,7 @@ static const bgra_color& salmon() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 250ubyte, 128ubyte, 114ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 250, 128, 114, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{sandy_brown}}
@@ -1581,7 +1616,7 @@ static const bgra_color& sandy_brown() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 244ubyte, 164ubyte, 96ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 244, 164, 96, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{sea_green}}
@@ -1591,7 +1626,7 @@ static const bgra_color& sea_green() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 46ubyte, 139ubyte, 87ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 46, 139, 87, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{sea_shell}}
@@ -1601,7 +1636,7 @@ static const bgra_color& sea_shell() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 245ubyte, 238ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 245, 238, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{sienna}}
@@ -1611,7 +1646,7 @@ static const bgra_color& sienna() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 160ubyte, 82ubyte, 45ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 160, 82, 45, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{silver}}
@@ -1621,7 +1656,7 @@ static const bgra_color& silver() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 192ubyte, 192ubyte, 192ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 192, 192, 192, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{sky_blue}}
@@ -1631,7 +1666,7 @@ static const bgra_color& sky_blue() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 135ubyte, 206ubyte, 235ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 135, 206, 235, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{slate_blue}}
@@ -1641,7 +1676,7 @@ static const bgra_color& slate_blue() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 106ubyte, 90ubyte, 205ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 106, 90, 205, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{slate_gray}}
@@ -1651,7 +1686,7 @@ static const bgra_color& slate_gray() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 112ubyte, 128ubyte, 144ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 112, 128, 144, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{slate_grey}}
@@ -1661,7 +1696,7 @@ static const bgra_color& slate_grey() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 112ubyte, 128ubyte, 144ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 112, 128, 144, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{snow}}
@@ -1671,7 +1706,7 @@ static const bgra_color& snow() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 250ubyte, 250ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 250, 250, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{spring_green}}
@@ -1681,7 +1716,7 @@ static const bgra_color& spring_green() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 255ubyte, 127ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0, 255, 127, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{steel_blue}}
@@ -1691,7 +1726,7 @@ static const bgra_color& steel_blue() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 70ubyte, 130ubyte, 180ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 70, 130, 180, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{tan}}
@@ -1701,7 +1736,7 @@ static const bgra_color& tan() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 210ubyte, 180ubyte, 140ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 210, 180, 140, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{teal}}
@@ -1711,7 +1746,7 @@ static const bgra_color& teal() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 128ubyte, 128ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0, 128, 128, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{thistle}}
@@ -1721,7 +1756,7 @@ static const bgra_color& thistle() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 216ubyte, 191ubyte, 216ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 216, 191, 216, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{tomato}}
@@ -1731,7 +1766,7 @@ static const bgra_color& tomato() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 99ubyte, 71ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 99, 71, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{transparent_black}}
@@ -1741,7 +1776,7 @@ static const bgra_color& transparent_black() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0ubyte, 0ubyte, 0ubyte, 0ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 0, 0, 0, 0 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{turquoise}}
@@ -1751,7 +1786,7 @@ static const bgra_color& turquoise() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 64ubyte, 244ubyte, 208ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 64, 244, 208, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{violet}}
@@ -1761,7 +1796,7 @@ static const bgra_color& violet() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 238ubyte, 130ubyte, 238ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 238, 130, 238, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{wheat}}
@@ -1771,7 +1806,7 @@ static const bgra_color& wheat() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 245ubyte, 222ubyte, 179ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 245, 222, 179, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{white}}
@@ -1781,7 +1816,7 @@ static const bgra_color& white() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 255ubyte, 255ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 255, 255, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{white_smoke}}
@@ -1791,7 +1826,7 @@ static const bgra_color& white_smoke() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 245ubyte, 245ubyte, 245ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 245, 245, 245, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{yellow}}
@@ -1801,7 +1836,7 @@ static const bgra_color& yellow() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255ubyte, 255ubyte, 0ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 255, 255, 0, 255 \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{bgra_color}!\idxcode{yellow_green}}
@@ -1811,7 +1846,7 @@ static const bgra_color& yellow_green() noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 154ubyte, 205ubyte, 50ubyte, 255ubyte \}}.
+a const reference to the static \tcode{bgra_color} object \tcode{bgra_color\{ 154, 205, 50, 255 \}}.
 \end{itemdescr}
 
 \rSec1 [bgracolor.ops] {\tcode{bgra_color} non-member operators}
