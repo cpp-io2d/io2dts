@@ -98,13 +98,13 @@ value of the color as a tuple in the unsigned normalized form (red, green,
 blue, alpha), where the value of each color channel is the product of each 
 color channel and the alpha channel and the value of the alpha channel is the 
 original value of the alpha channel.
-\enterexample
+\begin{example}
 When it appears in a formula, $Sca$ means (($Sc \times Sa$), $Sa$), such that, 
 given a source color $Sc = (1.0, 0.5, 0.0)$ and an source alpha $Sa = (0.5)$, 
 the value of $Sca$ when specified in one of the formulas would be $Sca = (1.0 
 \times 0.5, 0.5 \times 0.5, 0.0 \times 0.5, 0.5) = (0.5, 0.25, 0.0, 0.5)$. The 
 same is true for $Dca$ and $Rca$.
-\exitexample
+\end{example}
 
 \pnum
 No space is left between a value and its channel specifiers. Channel 
@@ -308,22 +308,22 @@ channel is zero. Instead, implementations shall bypass the division by zero and
 produce the result color (0.0, 0.0, 0.0, 0.0), i.e. \defnx{transparent 
 black}{color!transparent black}, if the result color alpha channel formula 
 evaluates to zero.
-\enternote
+\begin{note}
 The simplest way to comply with this requirement is to bypass evaluation of the 
 color channel formula in the event that the result alpha is zero. However, in 
 order to allow implementations the greatest latitude possible, only the result 
 is specified.
-\exitnote
+\end{note}
 
 \pnum
 For the enumerators in 
 Table~\ref{tab:compositingop.meanings.blend} and 
 Table~\ref{tab:compositingop.meanings.hsl} the result color's 
 alpha channel value formula is as follows: $Ra = Sa + Da \times (1 - Sa)$.
-\enternote
+\begin{note}
 Since it is the same formula for all enumerators in those tables, the formula 
 is not included in those tables.
-\exitnote
+\end{note}
 
 \pnum
 All of the blend enumerators and hsl enumerators have a Bound value of 'N/A'.
@@ -357,11 +357,11 @@ All of the blend enumerators and hsl enumerators have a Bound value of 'N/A'.
  \hspace*{2em}1 - 2 \times (1 - Sc) \times\br
  \hspace*{2em}(1 - Dc)\br
  \}$\br
- \enternote
+ \begin{note}
  The difference between this enumerator and \tcode{hard_light} is that this 
  tests the destination color ($Dc$) whereas \tcode{hard_light} tests the source 
  color ($Sc$).
- \exitnote
+ \end{note}
  \\
  \tcode{darken}
  & $f(Sc, Dc) = min(Sc, Dc)$
@@ -394,11 +394,11 @@ All of the blend enumerators and hsl enumerators have a Bound value of 'N/A'.
  \hspace*{2em}1 - 2 \times (1 - Sc) \times\br
  \hspace*{2em}(1 - Dc)\br
  \}$\br
- \enternote
+ \begin{note}
  The difference between this enumerator and \tcode{overlay} is that this 
  tests the source color ($Sc$) whereas \tcode{overlay} tests the destination 
  color ($Dc$).
- \exitnote
+ \end{note}
  \\
  \tcode{soft_light}
  & $if~(Sc \le 0.5)~\{\br
@@ -499,12 +499,12 @@ Rr)\\
 \hspace*{1em}min = 0.0\\
 \hspace*{1em}return~R\\
 \}$
-\enternote
+\begin{note}
 In the formula, $max$, $mid$, and $min$ are reference variables which are bound 
 to the highest value, second highest value, and lowest value color channels of 
 the (red, blue, green) tuple $R$ such that the subsequent operations 
 modify the values of $R$ directly.
-\exitnote
+\end{note}
 
 \begin{libreqtab2}
  {\tcode{compositing_op} hsl enumerator meanings}

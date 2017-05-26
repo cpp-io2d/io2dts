@@ -19,17 +19,17 @@ The \tcode{surface} class provides two ways to modify its graphics resource:
 \end{itemize}
 
 \pnum
-\enternote
+\begin{note}
 While a \tcode{surface} object manages a graphics data graphics resource, the \tcode{surface} class does not provide well-defined semantics for the graphics resource. The \tcode{surface} class is intended to serve only as a base class and as such is not directly instantiable.
-\exitnote
+\end{note}
 
 \pnum
 Directly instantiable types which derive, directly or indirectly, from the \tcode{surface} class shall either provide well-defined semantics for the graphics data graphics resource or inherit well-defined semantics for the graphics data graphics resource from a base class.
 
 \pnum
-\enterexample
+\begin{example}
 The \tcode{image_surface} class and the \tcode{display_surface} class each specify that they manage a raster graphics data graphics resource and that the members they inherit from the \tcode{surface} class shall use that raster graphics data graphics resource as their graphics data graphics resource. Since, unlike graphics data, raster graphics data provides well-defined semantics, these classes meet the requirements for being directly instantiable.
-\exitexample
+\end{example}
 
 \pnum
 The definitions of the rendering and composing operations in \ref{surface.rendering} shall only be applicable when the graphics data graphics resource on which the \tcode{surface} members operate is a raster graphics data graphics resource. In all other cases, any attempt to invoke the rendering and composing operations shall result in undefined behavior.
@@ -336,20 +336,20 @@ The following rules shall apply when a Stroking operation is carried out on a pa
 
 \item If the Dash Pattern's \tcode{vector<double>} member contains only one value, that value shall be used to define a repeating pattern in which the path is shown then hidden. The ends of each shown portion of the path shall be rendered as specified by the Line Cap value.
 
-\item If the Dash Pattern's \tcode{vector<double>} member contains two or more values, the values shall be used to define a pattern in which the path is alternatively rendered then not rendered for the length specified by the value. The ends of each rendered portion of the path shall be rendered as specified by the Line Cap value. If the Dash Pattern's \tcode{double} member, which specifies an offset value, is not \tcode{0.0}, the meaning of its value is \impldef{Dash Pattern!offset value}. If a rendered portion of the path overlaps a not rendered portion of the path, the rendered portion shall be rendered.
+\item If the Dash Pattern's \tcode{vector<double>} member contains two or more values, the values shall be used to define a pattern in which the path is alternatively rendered then not rendered for the length specified by the value. The ends of each rendered portion of the path shall be rendered as specified by the Line Cap value. If the Dash Pattern's \tcode{double} member, which specifies an offset value, is not \tcode{0.0}, the meaning of its value is \impldefplain{Dash Pattern!offset value}. If a rendered portion of the path overlaps a not rendered portion of the path, the rendered portion shall be rendered.
 \end{enumerate}
 
 \pnum
 When a Stroking operation is carried out on a path, the width of each rendered portion shall be the Line Width. Ideally this means that the diameter of the stroke at each rendered point should be equal to the Line Width. However, because there is an infinite number of points along each rendered portion, implementations may choose an \unspecnorm method of determining minimum distances between points along each rendered portion and the diameter of the stroke between those points shall be the same.
-\enternote
+\begin{note}
 This concept is sometimes referred to as a tolerance. It allows for a balance between precision and performance, especially in situations where the end result is in a non-exact format such as raster graphics data.
-\exitnote
+\end{note}
 
 \pnum
 After all paths in the path group have been rendered but before the rendered result is composed to the \underlyingsurface, the rendered result shall be transformed from the User Coordinate Space (\ref{surface.coordinatespaces}) to the Surface Coordinate Space (\ref{surface.coordinatespaces}).
-\enterexample
+\begin{example}
 If an open path consisting solely of a vertical line from \tcode{vector_2d(20.0, 20.0)} to \tcode{vector_2d(20.0, 60.0)} is to be composed to the \underlyingsurface, the Line Cap is \tcode{line_cap::none}, the Line Width is \tcode{12.0}, and the Transformation Matrix is \tcode{matrix_2d::init_scale(0.5, 1.0)}, then the line will end up being composed within the area \tcode{rectangle( \{ 7.0, 20.0 \}, \{ 13.0, 60.0 \} )} on the \underlyingsurface. The Transformation Matrix causes the center of the \xaxis of the line to move from \tcode{20.0} to \tcode{10.0} and then causes the horizontal width of the line to be reduced from \tcode{12.0} to \tcode{6.0}.
-\exitexample
+\end{example}
 
 \rSec1 [surface.masking] {\tcode{surface} masking}
 
@@ -399,7 +399,7 @@ This function exists to allow the user to take control of the underlying surface
 
 \pnum
 \errors
-The potential errors are \impldef{surface::flush errors}.
+The potential errors are \impldefplain{surface::flush errors}.
 
 \pnum
 Implementations should avoid producing errors here.
@@ -408,7 +408,7 @@ Implementations should avoid producing errors here.
 If the implementation does not provide a native handle to the \tcode{surface} object's \underlyingsurface, this function shall not produce any errors.
 
 \pnum
-\realnotes
+\begin{note}
 There are several purposes for \tcode{surface::flush} and \tcode{surface::mark_dirty}.
 
 \pnum
@@ -419,6 +419,7 @@ Another is to give implementations the chance during the call to \tcode{surface:
 
 \pnum
 Other uses of this pair of calls are also possible.
+\end{note}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{surface}!\idxcode{mark_dirty}}
@@ -451,13 +452,13 @@ After external changes are made to this \tcode{surface} object's \underlyingsurf
 
 \pnum
 No call to this function shall be required solely as a result of changes made to a surface using the functionality provided by \tcode{surface::map}.
-\enternote
+\begin{note}
 The \tcode{mapped_surface} type, which is used by \tcode{surface::map}, provides its own functionality for managing any such changes.
-\exitnote
+\end{note}
 
 \pnum
 \errors
-The errors, if any, produced by this function are \impldef{surface!mark_dirty}.
+The errors, if any, produced by this function are \impldefplain{surface!mark_dirty}.
 
 \pnum
 If the implementation does not provide a native handle to the \tcode{surface} object's \underlyingsurface, this function shall not produce any errors.
@@ -518,7 +519,7 @@ Calling this function on a \tcode{surface} object and then calling any function 
 
 \pnum
 \errors
-The errors, if any, produced by this function are \impldef{surface!map} or are produced by the user-provided function passed via the \tcode{action} argument.
+The errors, if any, produced by this function are \impldefplain{surface!map} or are produced by the user-provided function passed via the \tcode{action} argument.
 \end{itemdescr}
 
 \rSec1 [surface.modifiers.render] {\tcode{surface} render modifiers}
@@ -544,7 +545,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \pnum
 \errors
-The errors, if any, produced by this function are \impldef{surface!paint}.
+The errors, if any, produced by this function are \impldefplain{surface!paint}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{surface}!\idxcode{stroke}}
@@ -578,7 +579,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \pnum
 \errors
-The errors, if any, produced by this function are \impldef{surface!stroke}.
+The errors, if any, produced by this function are \impldefplain{surface!stroke}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{surface}!\idxcode{fill}}
@@ -608,7 +609,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \pnum
 \errors
-The errors, if any, produced by this function are \impldef{surface!fill}.
+The errors, if any, produced by this function are \impldefplain{surface!fill}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{surface}!\idxcode{mask}}
@@ -642,5 +643,5 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 \pnum
 \errors
 
-The errors, if any, produced by this function are \impldef{surface!mask}.
+The errors, if any, produced by this function are \impldefplain{surface!mask}.
 \end{itemdescr}

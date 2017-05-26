@@ -1,0 +1,19 @@
+%!TEX root = io2d.tex
+
+\rSec0 [paths.items.intro] {Introduction}
+
+\pnum
+The classes in the \tcode{path_data} namespace describe path items.
+%When used to define a path, the path items are interpreted sequentially starting with the first item.
+
+\pnum
+A path begins with an \tcode{abs_new_path} or \tcode{rel_new_path} object. A path ends when:
+
+\begin{itemize}
+\item a \tcode{close_path} object is encountered;
+\item a \tcode{abs_new_path} or \tcode{rel_new_path} object is encountered; or
+\item there are no more path items.
+\end{itemize}
+
+\pnum
+The \tcode{path_builder} class is a sequential container that contains zero or more paths. It provides a simple interface for building a path group but a path group can be created using any container that stores \tcode{path_data::path_data_types} objects.

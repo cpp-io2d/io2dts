@@ -1,14 +1,14 @@
 %!TEX root = io2d.tex
-\rSec0 [changematrix] {Class \tcode{change_matrix}}
+\rSec0 [changematrix] {Class \tcode{change_matrix}}%
 
-\rSec1 [changematrix.synopsis] {\tcode{change_matrix} synopsis}
+\rSec1 [changematrix.synopsis] {\tcode{change_matrix} synopsis}%
 
 \pnum
 \indexlibrary{\idxcode{change_matrix}}
-The class \tcode{change_matrix} describes path instruction that changes the transformation matrix used in processing a path group as described by \ref{paths.processing}.
+The class \tcode{change_matrix} describes a path item that assigns the value of the \tcode{change_matrix} object's \term{transform matrix} to a path group transformation matrix.
 
 \pnum
-It has a Matrix of type \tcode{matrix_2d}.
+The transform matrix is a \tcode{matrix_2d} object.
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
@@ -25,48 +25,59 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       // \ref{changematrix.observers}, observers:
       constexpr matrix_2d matrix() const noexcept;
     };
-  };
+    
+    \ref{changematrix.nonmember}, non-members
+    constexpr bool operator==(const change_matrix& lhs,
+      const change_matrix& rhs) noexcept;
+    constexpr bool operator!=(const change_matrix& lhs,
+      const change_matrix& rhs) noexcept;
+  }
 } } } }
 \end{codeblock}
 
-\rSec1 [changematrix.cons] {\tcode{change_matrix} constructors and assignment operators}
+\rSec1 [changematrix.cons] {\tcode{change_matrix} constructors}%
 
-\indexlibrary{\idxcode{change_matrix}!constructor}
+\indexlibrary{\idxcode{change_matrix}!constructor}%
 \begin{itemdecl}
 constexpr change_matrix() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs an object of type \tcode{change_matrix}.
-
-\pnum
-The Matrix shall be set to the value of \tcode{matrix\{ \}}.
+Equivalent to: \tcode{change_matrix\{ matrix_2d() \};}
 \end{itemdescr}
 
-\indexlibrary{\idxcode{change_matrix}!constructor}
+\indexlibrary{\idxcode{change_matrix}!constructor}%
 \begin{itemdecl}
 constexpr explicit change_matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
+\requires
+\tcode{m.is_invertible()} is \tcode{true}.
+
+\pnum
 \effects
 Constructs an object of type \tcode{change_matrix}.
 
 \pnum
-The Matrix shall be set to the value of \tcode{m}.
+The transform matrix is \tcode{m}.
 \end{itemdescr}
 
-\rSec1 [changematrix.modifiers]{\tcode{change_matrix} modifiers}
+\rSec1 [changematrix.modifiers]{\tcode{change_matrix} modifiers}%
 
-\indexlibrary{\idxcode{change_matrix}!\idxcode{matrix}}
+\indexlibrarymember{change_matrix}{matrix}
 \begin{itemdecl}
 constexpr void matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
+\requires
+\tcode{m.is_invertible()} is \tcode{true}.
+
+\pnum
 \effects
-The Matrix shall be set to the value of \tcode{m}.
+The transform matrix is \tcode{m}.
 \end{itemdescr}
 
 \rSec1 [changematrix.observers]{\tcode{change_matrix} observers}
@@ -78,5 +89,29 @@ constexpr matrix_2d matrix() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-The value of the Matrix.
+The transform matrix.
+\end{itemdescr}
+
+\rSec1 [changematrix.nonmember]{Non-member functions}%
+
+\indexlibrarymember{operator==}{change_matrix}%
+\begin{itemdecl}
+constexpr bool operator==(const change_matrix& lhs, const change_matrix& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{lhs.matrix() == rhs.matrix()}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{change_matrix}%
+\begin{itemdecl}
+constexpr bool operator!=(const change_matrix& lhs, const change_matrix& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{!(lhs == rhs)}.
 \end{itemdescr}

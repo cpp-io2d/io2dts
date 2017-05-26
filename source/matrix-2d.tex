@@ -8,13 +8,13 @@
 The \tcode{matrix_2d} class represents a two-dimensional, three row by three column matrix. Its purpose is to perform affine transformations.
 
 \pnum
-\pnum
 The layout of the matrix is: \\
 $
 ~[~[~M00~M01~M02~]~] \\
 ~[~[~M10~M11~M12~]~] \\
-~[~[~M20~M21~M22~]~]$ \\
+~[~[~M20~M21~M22~]~]$
 
+\pnum
 The value of M02 is \tcode{0.0}. The value of M12 is \tcode{0.0}. The value of M22 is \tcode{1.0}. None of the operations on a \tcode{matrix_2d} object can modify the values of M02, M12, and M22. As such they are not part of the observable state of a \tcode{matrix_2d} object.
 
 \pnum
@@ -94,8 +94,9 @@ constexpr matrix_2d() noexcept;
 Equivalent to \tcode{matrix_2d \{1.0, 0.0, 0.0, 1.0, 0.0, 0.0\};}.
 
 \pnum
-\realnote
+\begin{note}
 The resulting matrix is the identity matrix, which can also be obtained from \tcode{matrix_2d::init_identity()}.
+\end{note}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{matrix_2d}!constructor}
@@ -109,12 +110,11 @@ constexpr matrix_2d(double v00, double v01, double v10, double v11,
 Constructs an object of type \tcode{matrix_2d}.
 
 \pnum
-As-if the resulting matrix was:
-
-$\\
+As-if the resulting matrix was: \\
+$
 ~[~[~v00~v01~0.0~]~] \\
 ~[~[~v10~v11~0.0~]~] \\
-~[~[~v20~v21~1.0~]~]$ \\
+~[~[~v20~v21~1.0~]~]$
 
 %\pnum
 %The M00 value shall be set to the value of \tcode{v00}.
@@ -355,7 +355,7 @@ matrix_2d& invert() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\preconditions
+\requires
 \tcode{*this.isfinite() == true}.
 
 \pnum
@@ -487,7 +487,7 @@ constexpr bool is_invertible() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\preconditions
+\requires
 \tcode{*this.is_finite() == true}.
 
 \pnum
@@ -502,7 +502,7 @@ constexpr double determinant() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\preconditions
+\requires
 \tcode{*this.is_finite() == true}.
 
 \pnum
@@ -566,9 +566,12 @@ constexpr bool operator==(const matrix_2d& lhs, const matrix_2d& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns \tcode{lhs.m00() == rhs.m00() \&\& lhs.m01() == rhs.m01() \&\& 
-lhs.m10() == rhs.m10() \&\& lhs.m11() == rhs.m11() \&\&
-lhs.m20() == rhs.m20() \&\& lhs.m21() == rhs.m21()}.
+\returns
+\begin{codeblock}
+lhs.m00() == rhs.m00() && lhs.m01() == rhs.m01() && 
+lhs.m10() == rhs.m10() && lhs.m11() == rhs.m11() &&
+lhs.m20() == rhs.m20() && lhs.m21() == rhs.m21()
+\end{codeblock}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{matrix_2d}!\idxcode{operator!=}}

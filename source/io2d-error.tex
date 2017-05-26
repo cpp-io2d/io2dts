@@ -71,17 +71,17 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \tcode{invalid_status}
  & An internal error has occurred. The conditions and circumstances under which 
  this \tcode{io2d_error} value occurs are 
- \impldef{\idxcode{io2d_error}!\idxcode{invalid_status}}.
- \enternote
+ \impldefplain{\idxcode{io2d_error}!\idxcode{invalid_status}}.
+ \begin{note}
  This value should only be used when no other \tcode{io2d_error} value is
  appropriate. It signifies that an implementation-specific error
  occurred such as passing a bad native handle as an argument.
- \exitnote
+ \end{note}
  \\
  \tcode{null_pointer}
  & A null pointer value was unexpectedly encountered. The conditions and 
  circumstances under which this \tcode{io2d_error} value occurs are 
- \impldef{\idxcode{io2d_error}!\idxcode{null_pointer}}.
+ \impldefplain{\idxcode{io2d_error}!\idxcode{null_pointer}}.
  \\
  \tcode{invalid_string}
  & A UTF-8 string value was expected but the string is not a valid UTF-8
@@ -90,10 +90,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \tcode{invalid_path_data}
  & Invalid data was encountered in a \tcode{path_group} or a \tcode{path_builder}
  object.
- \enternote
+ \begin{note}
  This status value should only occur when a user creates invalid path data and 
  appends it to a path.
- \exitnote
+ \end{note}
  \\
  \tcode{read_error}
  & An error occurred while attempting to read data from an input stream.
@@ -104,10 +104,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \tcode{surface_finished}
  & An attempt was made to use or manipulate a \tcode{surface} object or
  \tcode{surface}-derived object which is no longer valid.
- \enternote
+ \begin{note}
  This can occur due to a previous call to \tcode{surface::finish} or as a
  result of erroneous usage of a native handle.
- \exitnote
+ \end{note}
  \\
  \tcode{invalid_dash}
  & An invalid dash value was specified in a call to \tcode{surface::set_dashes}.
@@ -128,10 +128,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \\
  \tcode{device_error}
  & The operation failed. The \tcode{device} encountered an error.
- \enternote
+ \begin{note}
  The conditions and circumstances in which this \tcode{io2d_error} value occurs 
  are 
- \impldef{\idxcode{io2d_error}!\idxcode{device_error}}.
- \exitnote
+ \impldefplain{\idxcode{io2d_error}!\idxcode{device_error}}.
+ \end{note}
  \\
 \end{libreqtab2}

@@ -12,9 +12,9 @@ It has a Line Width of type \tcode{double}, a Line Cap of type \tcode{line_cap},
 
 %\pnum
 %The Line Width determines the perpendicular width of a path segment at each point along the path segment. Half of the value of the Line Width extends to each side of a point along the path segment.
-%\enterexample
+%\begin{example}
 %Given a 20x20 \tcode{image_surface} *** FIXME ***
-%\exitexample
+%\end{example}
 %
 \rSec1 [strokeprops.synopsis] {\tcode{stroke_props} synopsis}
 
@@ -75,7 +75,7 @@ constexpr explicit stroke_props(double w,
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\preconditions
+\requires
 \tcode{w >= 0.0}.
 
 \pnum
@@ -103,7 +103,7 @@ constexpr void line_width(double w) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\preconditions
+\requires
 \tcode{w >= 0.0}.
 
 \pnum
@@ -136,7 +136,7 @@ constexpr void miter_limit(double ml) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\preconditions
+\requires
 \tcode{ml >= 1.0 \&\& ml <= max_miter_limit}.
 
 \pnum
@@ -192,7 +192,7 @@ constexpr double max_miter_limit() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-The \impldef{\idxcode{stroke_props}!\idxcode{max_miter_limit}} maximum allowable value of Miter Limit.
+The \impldefplain{\idxcode{stroke_props}!\idxcode{max_miter_limit}} maximum allowable value of Miter Limit.
 
 \pnum
 \remarks

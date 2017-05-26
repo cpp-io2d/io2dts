@@ -7,7 +7,7 @@ The components described in this technical specification are experimental and
 not part of the C++ standard library. All components described in this 
 technical specification are declared in namespace\\ \tcode{std::experimental::io2d::v1} or a sub-namespace thereof unless 
 otherwise specified. The header described in this technical specification 
-imports the contents of \tcode{std::experimental::io2d::v1} into 
+imports the contents of \tcode{std::experimental::io2d::v1} into\\
 \tcode{std::experimental::io2d} as-if by
 
 \pnum
@@ -47,24 +47,24 @@ These macros allow users to determine which version of this \documenttypename is
 %#define __cpp_lib_experimental_io2d 201707
 %\end{codeblock}
 %\pnum
-%\enternote
+%\begin{note}
 %The value of \tcode{__cpp_lib_experimental_io2d} is in the form yyyymm 
 %where yyyy is the year and mm the month when the version of the Technical 
 %Specification was completed. The value above \tcode{201707} 
-%\exitnote
+%\end{note}
 %
 \rSec1 [\iotwod.req.native] {Native handles}
 
 \pnum
 Several classes described in this \documenttypename{} have members 
 \tcode{native_handle_type} and \tcode{native_handle}. The presence of these 
-members and their semantics is \impldef{presence and meaning of 
+members and their semantics is \impldefplain{presence and meaning of 
 \tcode{native_handle_type} and \tcode{native_handle}}.
-\enternote
+\begin{note}
 These members allow implementations to provide access to implementation 
 details. Their names are specified to facilitate portable compile-time 
 detection. Actual use of these members is inherently non-portable.
-\exitnote
+\end{note}
 
 \rSec1 [\iotwod.req.\iecfivefivenine] {IEC 559 floating point support}
 
@@ -76,14 +76,14 @@ Certain requirements of this \documenttypename{} assume that
 \pnum
 If \tcode{numeric_limits<double>::is_iec559} evaluates to \tcode{false}, the 
 observable behavior of a well-formed program is \unspecnorm.
-\enternote
+\begin{note}
 An implementation in which \tcode{numeric_limits<double>::is_iec559} evaluates 
 to \tcode{false} should comply with the requirements of this \documenttypename 
 subject to any limitations resulting from 
 \tcode{numeric_limits<double>::is_iec559} evaluating to \tcode{false}.
-\exitnote
+\end{note}
 %The 
-%behavior of these requirements is \impldef{\tcode{numeric_limits<double>::is_iec559} evaluates to \tcode{false}} 
+%behavior of these requirements is \impldefplain{\tcode{numeric_limits<double>::is_iec559} evaluates to \tcode{false}} 
 %if \tcode{numeric_limits<double>::is_iec559} evaluates to \tcode{false}.
 
 %\rSec1 [\iotwod.req.cstdintopttypes] {Exact width integer types}

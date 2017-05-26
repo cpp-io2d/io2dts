@@ -1,14 +1,17 @@
 %!TEX root = io2d.tex
-\rSec0 [absline] {Class \tcode{abs_line}}
+\rSec0 [absline] {Class \tcode{abs_line}}%
 
 \pnum
-\indexlibrary{\idxcode{abs_line}}
-The class \tcode{abs_line} describes a path segment that is a line.
+\indexlibrary{\idxcode{abs_line}}%
+The class \tcode{abs_line} describes a path item that adds a line path segment to a path.
 
 \pnum
-It has an end point of type \tcode{vector_2d}.
+It has an \term{end point} of type \tcode{vector_2d}.
 
-\rSec1 [absline.synopsis] {\tcode{abs_line} synopsis}
+\pnum
+After the line is added to the path, the path's current point is the end point.
+
+\rSec1 [absline.synopsis] {\tcode{abs_line} synopsis}%
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
@@ -25,26 +28,29 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       // \ref{absline.observers}, observers:
       constexpr vector_2d to() const noexcept;
     };
-  };
+    
+    \ref{absline.nonmember}, non-members
+    constexpr bool operator==(const abs_line& lhs, const abs_line& rhs) 
+      noexcept;
+    constexpr bool operator!=(const abs_line& lhs, const abs_line& rhs) 
+      noexcept;
+  }
 } } } }
 \end{codeblock}
 
-\rSec1 [absline.cons] {\tcode{abs_line} constructors and assignment operators}
+\rSec1 [absline.cons] {\tcode{abs_line} constructors}%
 
-\indexlibrary{\idxcode{abs_line}!constructor}
+\indexlibrary{\idxcode{abs_line}!constructor}%
 \begin{itemdecl}
 constexpr abs_line() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs an object of type \tcode{abs_line}.
-
-\pnum
-The end point shall be set to the value of \tcode{vector_2d\{0.0, 0.0\}}.
+Equivalent to: \tcode{abs_line\{ vector_2d() \};}
 \end{itemdescr}
 
-\indexlibrary{\idxcode{abs_line}!constructor}
+\indexlibrary{\idxcode{abs_line}!constructor}%
 \begin{itemdecl}
 constexpr explicit abs_line(const vector_2d& pt) noexcept;
 \end{itemdecl}
@@ -54,29 +60,51 @@ constexpr explicit abs_line(const vector_2d& pt) noexcept;
 Constructs an object of type \tcode{abs_line}.
 
 \pnum
-The end point shall be set to the value of \tcode{pt}.
+The end point is \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [absline.modifiers]{\tcode{abs_line} modifiers}
+\rSec1 [absline.modifiers]{\tcode{abs_line} modifiers}%
 
-\indexlibrary{\idxcode{abs_line}!\idxcode{to}}
+\indexlibrarymember{abs_line}{to}%
 \begin{itemdecl}
 constexpr void to(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-The end point shall be set to the value of \tcode{pt}.
+The end point is \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [absline.observers]{\tcode{abs_line} observers}
+\rSec1 [absline.observers]{\tcode{abs_line} observers}%
 
-\indexlibrary{\idxcode{abs_line}!\idxcode{to}}
+\indexlibrarymember{abs_line}{to}%
 \begin{itemdecl}
 constexpr vector_2d to() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The value of the end point.
+The end point.
+\end{itemdescr}
+
+\rSec1 [absline.nonmember]{Non-member functions}%
+
+\indexlibrarymember{operator==}{abs_line}%
+\begin{itemdecl}
+constexpr bool operator==(const abs_line& lhs, const abs_line& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{lhs.to() == rhs.to()}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{abs_line}%
+\begin{itemdecl}
+constexpr bool operator!=(const abs_line& lhs, const abs_line& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{!(lhs == rhs)}.
 \end{itemdescr}

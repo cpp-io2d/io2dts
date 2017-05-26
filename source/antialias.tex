@@ -43,44 +43,47 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \\ \capsep
  \endhead
  \tcode{default_antialias}
- & The meaning of this value is \impldef{antialiasing!default}.
+ & The meaning of this value is \impldefplain{antialiasing!default}.
  \\
  \tcode{none}
  & No anti-aliasing.
  \\
  \tcode{gray}
  & Monochromatic anti-aliasing.
- \enternote
- When rendering black text on a white background, this would produce gray-scale 
+ \begin{note}
+ When rendering black text on a white background, this would produce gray-scale anti-aliasing.
+ \end{note}
  \\
  \tcode{subpixel}
  & Anti-aliasing that breaks pixels into their constituent color channels and 
  manipulates those color channels individually. The meaning of this value for 
  any rendering operation other than \tcode{surface::show_text}, 
  \tcode{surface::show_glyphs}, and \tcode{surface::show_text_glyphs} is 
- \impldef{antialias!subpixel}.
+ \impldefplain{antialias!subpixel}.
  \\
  \tcode{fast}
- & The meaning of this value is \impldef{antialiasing!fast}. Implementations 
+ & The meaning of this value is \impldefplain{antialiasing!fast}. Implementations 
  shall enable some form of anti-aliasing when this option is selected.
- \enternote
+ \begin{note}
  By choosing this value, the user is hinting that faster anti-aliasing is 
  preferable to better anti-aliasing.
- \exitnote
+ \end{note}
  \\
  \tcode{good}
- & The meaning of this value is \impldef{antialiasing!good}. Implementations 
+ & The meaning of this value is \impldefplain{antialiasing!good}. Implementations 
  shall enable some form of anti-aliasing when this option is selected.
- \enternote
+ \begin{note}
  By choosing this value, the user is hinting that sacrificing some performance 
  to obtain better anti-aliasing is acceptable but that performance is still a 
  concern.
+ \end{note}
  \\
  \tcode{best}
- & The meaning of this value is \impldef{antialiasing!best}. Implementations 
+ & The meaning of this value is \impldefplain{antialiasing!best}. Implementations 
  shall enable some form of text anti-aliasing when this option is selected.
- \enternote
+ \begin{note}
  By choosing this value, the user is hinting that better anti-aliasing is more 
  important than performance.
+ \end{note}
  \\
 \end{libreqtab2}

@@ -15,11 +15,11 @@ The Draw Callback (Table~\ref{tab:displaysurface.state.listing}) is called by \t
 
 \pnum
 After each execution of the Draw Callback, the contents of the Back Buffer are transferred using sampling with an \unspecnorm filter to the Display Buffer. The Display Buffer is then shown to the user via the \term{output device}.
-\enternote
+\begin{note}
 The filter is \unspecnorm to allow implementations to achieve the best possible result, including by changing filters at runtime depending on factors such as whether scaling is required and by using specialty hardware if available, while maintaining a balance between quality and performance that the implementer deems acceptable.
 
 In the absence of specialty hardware, implementers are encouraged to use a filter that is the equivalent of a nearest neighbor interpolation filter if no scaling is required and otherwise to use a filter that produces results that are at least as good as those that would be obtained by using a bilinear interpolation filter.
-\exitnote
+\end{note}
 
 \rSec1 [displaysurface.synopsis] {\tcode{display_surface} synopsis}
 
@@ -109,13 +109,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [displaysurface.misc] {\tcode{display_surface} miscellaneou behavior}
+\rSec1 [displaysurface.misc] {\tcode{display_surface} miscellaneous behavior}%
 
 \pnum
-What constitutes an output device is \impldef{output device}, with the sole constraint being that an output device must allow the user to see the dynamically-updated contents of the Display Buffer.
-\enterexample
+What constitutes an output device is \impldefplain{output device}, with the sole constraint being that an output device must allow the user to see the dynamically-updated contents of the Display Buffer.
+\begin{example}
 An output device might be a window in a windowing system environment or the usable screen area of a smart phone or tablet.
-\exitexample
+\end{example}
 
 \pnum
 Implementations do not need to support the simultaneous existence of multiple \tcode{display_surface} objects.
@@ -152,47 +152,47 @@ Table~\ref{tab:displaysurface.state.listing} specifies the name, type, function,
 	\term{Scaling Type} &
 	\tcode{scaling} &
 	When the User Scaling Callback is equal to its default value, this is the type of scaling that shall be used when transferring the Back Buffer to the Display Buffer &
-	\tcode{antialias::default_antialias}\\ \rowsep
+	\tcode{scaling::letterbox}\\ \rowsep
 	
 	\term{Draw Width} &
 	\tcode{int} &
 	The width in pixels of the Back Buffer. The minimum value is \tcode{1}. The maximum value is \unspecnorm. Because users can only request a preferred value for the Draw Width when setting and altering it, the maximum value may be a run-time determined value. If the preferred Draw Width exceeds the maximum value, then if a preferred Draw Height has also been supplied then implementations should provide a Back Buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the preferred Draw Width and the preferred Draw Height otherwise implementations should provide a Back Buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the preferred Draw Width and the current Draw Height &
 	\textit{N/A}
-	\enternote
+	\begin{note}
 	It is impossible to create a \tcode{display_surface} object without providing a preferred Draw Width value; as such a default value cannot exist.
-	\exitnote \\ \rowsep
+	\end{note} \\ \rowsep
 	
 	\term{Draw Height} &
 	\tcode{int} &
 	The height in pixels of the Back Buffer. The minimum value is \tcode{1}. The maximum value is \unspecnorm. Because users can only request a preferred value for the Draw Height when setting and altering it, the maximum value may be a run-time determined value. If the preferred Draw Height exceeds the maximum value, then if a preferred Draw Width has also been supplied then implementations should provide a Back Buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the preferred Draw Width and the preferred Draw Height otherwise implementations should provide a Back Buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the current Draw Width and the preferred Draw Height &
 	\textit{N/A}
-	\enternote
+	\begin{note}
 	It is impossible to create a \tcode{display_surface} object without providing a preferred Draw Height value; as such a default value cannot exist.
-	\exitnote \\ \rowsep
+	\end{note} \\ \rowsep
 	
 	\term{Draw Format} &
 	\tcode{format} &
-	The pixel format of the Back Buffer. When a \tcode{display_surface} object is created, a preferred pixel format value is provided. If the implementation does not support the preferred pixel format value as the value of Draw Format, the resulting value of Draw Format is \impldef{display_surface!unsupported Draw Format} &
+	The pixel format of the Back Buffer. When a \tcode{display_surface} object is created, a preferred pixel format value is provided. If the implementation does not support the preferred pixel format value as the value of Draw Format, the resulting value of Draw Format is \impldefplain{display_surface!unsupported draw format} &
 	\textit{N/A}
-	\enternote
+	\begin{note}
 	It is impossible to create a \tcode{display_surface} object without providing a preferred Draw Format value; as such a default value cannot exist.
-	\exitnote \\ \rowsep
+	\end{note} \\ \rowsep
 	
 	\term{Display Width} &
 	\tcode{int} &
 	The width in pixels of the Display Buffer. The minimum value is \unspecnorm. The maximum value is \unspecnorm. Because users can only request a preferred value for the Display Width when setting and altering it, both the minimum value and the maximum value may be run-time determined values. If the preferred Display Width is not within the range between the minimum value and the maximum value, inclusive, then if a preferred Display Height has also been supplied then implementations should provide a Display Buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the preferred Display Width and the preferred Display Height otherwise implementations should provide a Display Buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the preferred Display Width and the current Display Height &
 	\textit{N/A}
-	\enternote
+	\begin{note}
 	It is impossible to create a \tcode{display_surface} object without providing a preferred Display Width value since in the absence of an explicit Display Width argument the mandatory preferred Draw Width argument is used as the preferred Display Width; as such a default value cannot exist.
-	\exitnote \\ \rowsep
+	\end{note} \\ \rowsep
 	
 	\term{Display Height} &
 	\tcode{int} &
 	The height in pixels of the Display Buffer. The minimum value is \unspecnorm. The maximum value is \unspecnorm. Because users can only request a preferred value for the Display Height when setting and altering it, both the minimum value and the maximum value may be run-time determined values. If the preferred Display Height is not within the range between the minimum value and the maximum value, inclusive, then if a preferred Display Width has also been supplied then implementations should provide a Display Buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the preferred Display Width and the preferred Display Height otherwise implementations should provide a Display Buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the current Display Width and the preferred Display Height &
 	\textit{N/A}
-	\enternote
+	\begin{note}
 	It is impossible to create a \tcode{display_surface} object without providing a preferred Display Height value since in the absence of an explicit Display Height argument the mandatory preferred Draw Height argument is used as the preferred Display Height; as such a default value cannot exist.
-	\exitnote \\ \rowsep
+	\end{note} \\ \rowsep
 	
 	\term{Draw Callback} &
 	\tcode{function<\br
@@ -206,15 +206,13 @@ Table~\ref{tab:displaysurface.state.listing} specifies the name, type, function,
 	\tcode{void(}\br
 	\tcode{display_surface\&)>}} &
 	If it exists, this function shall be called whenever the Display Buffer has been resized. Neither the Display Width nor the Display Height shall be changed by the Size Change Callback; no diagnostic is required
-	\enternote
+	\begin{note}
 	This means that there has been a change to the Display Width, Display Height, or both. Its intent is to allow the user the opportunity to change other observable state, such as the Draw Width, Draw Height, or Scaling Type, in reaction to the change.
-	\exitnote &
+	\end{note} &
 	\tcode{nullptr} \\ \rowsep
 	
 	\term{User Scaling Callback} &
 	\tcode{function<\br
-	\tcode{experimental::}\br
-	\tcode{io2d::}\br
 	\tcode{rectangle(}\br
 	\tcode{const display_surface\&,}\br
 	\tcode{bool\&)>}} &
@@ -255,7 +253,7 @@ display_surface(int preferredWidth, int preferredHeight,
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\preconditions
+\requires
 \tcode{preferredWidth > 0}.
 
 \pnum
@@ -296,7 +294,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 \tcode{io2d::device_error} if successful creation of the \tcode{display_surface} object would exceed the maximum number of simultaneous valid \tcode{display_surface} objects that the implementation supports.
 
 \pnum
-Other errors, if any, produced by this function are \impldef{display_surface!constructor}.
+Other errors, if any, produced by this function are \impldefplain{display_surface!constructor}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!constructor}
@@ -317,7 +315,7 @@ display_surface(int preferredWidth, int preferredHeight,
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\preconditions
+\requires
 \tcode{preferredWidth > 0}.
 
 \pnum
@@ -363,7 +361,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 \tcode{io2d::device_error} if successful creation of the \tcode{display_surface} object would exceed the maximum number of simultaneous valid \tcode{display_surface} objects that the implementation supports.
 
 \pnum
-Other errors, if any, produced by this function are \impldef{display_surface!constructor}.
+Other errors, if any, produced by this function are \impldefplain{display_surface!constructor}.
 \end{itemdescr}
 
 \rSec1 [displaysurface.modifiers]{\tcode{display_surface} modifiers}
@@ -409,9 +407,9 @@ Otherwise, Draw Width is set as specified by Table~\ref{tab:displaysurface.state
 If the value of Draw Width changes as a result, the implementation shall attempt to create a new Back Buffer with the updated dimensions while retaining the existing Back Buffer. The implementation may destroy the existing Back Buffer prior to creating a new Back Buffer with the updated dimensions only if it can guarantee that in doing so it will either succeed in creating the new Back Buffer or will be able to create a Back Buffer with the previous dimensions in the event of failure.
 
 \pnum
-\enternote
+\begin{note}
 The intent of the previous paragraph is to ensure that, no matter the result, a valid Back Buffer continues to exist. Sometimes implementations will be able to determine that the new dimensions are valid but that to create the new Back Buffer successfully the previous one must be destroyed. The previous paragraph gives implementors that leeway. It goes even further in that it allows implementations to destroy the existing Back Buffer even if they cannot determine in advance that creating the new Back Buffer will succeed, provided that they can guarantee that if the attempt fails they can always successfully recreate a Back Buffer with the previous dimensions. Regardless, there must be a valid Back Buffer when this call completes.
-\exitnote
+\end{note}
 
 \pnum
 The value of the Back Buffer's pixel data shall be \unspecnorm upon completion of this function regardless of whether it succeeded.
@@ -429,7 +427,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \tcode{errc::not_enough_memory} if there is insufficient memory to create a Back Buffer with the updated dimensions.
 
-Other errors, if any, produced by this function are \impldef{display_surface!width}.
+Other errors, if any, produced by this function are \impldefplain{display_surface!width}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{height}}
@@ -450,9 +448,9 @@ Otherwise, Draw Height is set as specified by Table~\ref{tab:displaysurface.stat
 If the value of Draw Height changes as a result, the implementation shall attempt to create a new Back Buffer with the updated dimensions while retaining the existing Back Buffer. The implementation may destroy the existing Back Buffer prior to creating a new Back Buffer with the updated dimensions only if it can guarantee that in doing so it will either succeed in creating the new Back Buffer or will be able to create a Back Buffer with the previous dimensions in the event of failure.
 
 \pnum
-\enternote
+\begin{note}
 The intent of the previous paragraph is to ensure that, no matter the result, a valid Back Buffer continues to exist. Sometimes implementations will be able to determine that the new dimensions are valid but that to create the new Back Buffer successfully the previous one must be destroyed. The previous paragraph gives implementors that leeway. It goes even further in that it allows implementations to destroy the existing Back Buffer even if they cannot determine in advance that creating the new Back Buffer will succeed, provided that they can guarantee that if the attempt fails they can always successfully recreate a Back Buffer with the previous dimensions. Regardless, there must be a valid Back Buffer when this call completes.
-\exitnote
+\end{note}
 
 \pnum
 The value of the Back Buffer's pixel data shall be \unspecnorm upon completion of this function regardless of whether it succeeded.
@@ -470,7 +468,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \tcode{errc::not_enough_memory} if there is insufficient memory to create a Back Buffer with the updated dimensions.
 
-Other errors, if any, produced by this function are \impldef{display_surface!height}.
+Other errors, if any, produced by this function are \impldefplain{display_surface!height}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{display_width}}
@@ -491,9 +489,9 @@ Otherwise, Display Width is set as specified by Table~\ref{tab:displaysurface.st
 If the value of Display Width changes as a result, the implementation shall attempt to create a new Display Buffer with the updated dimensions while retaining the existing Display Buffer. The implementation may destroy the existing Display Buffer prior to creating a new Display Buffer with the updated dimensions only if it can guarantee that in doing so it will either succeed in creating the new Display Buffer or will be able to create a Display Buffer with the previous dimensions in the event of failure.
 
 \pnum
-\enternote
+\begin{note}
 The intent of the previous paragraph is to ensure that, no matter the result, a valid Display Buffer continues to exist. Sometimes implementations will be able to determine that the new dimensions are valid but that to create the new Display Buffer successfully the previous one must be destroyed. The previous paragraph gives implementors that leeway. It goes even further in that it allows implementations to destroy the existing Display Buffer even if they cannot determine in advance that creating the new Display Buffer will succeed, provided that they can guarantee that if the attempt fails they can always successfully recreate a Display Buffer with the previous dimensions. Regardless, there must be a valid Display Buffer when this call completes.
-\exitnote
+\end{note}
 
 \pnum
 The value of the Display Buffer's pixel data shall be \unspecnorm upon completion of this function regardless of whether it succeeded.
@@ -511,7 +509,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \tcode{errc::not_enough_memory} if there is insufficient memory to create a Display Buffer with the updated dimensions.
 
-Other errors, if any, produced by this function are \impldef{display_surface!display_width}.
+Other errors, if any, produced by this function are \impldefplain{display_surface!display_width}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{display_height}}
@@ -532,9 +530,9 @@ Otherwise, Display Height is set as specified by Table~\ref{tab:displaysurface.s
 If the value of Display Height changes as a result, the implementation shall attempt to create a new Display Buffer with the updated dimensions while retaining the existing Display Buffer. The implementation may destroy the existing Display Buffer prior to creating a new Display Buffer with the updated dimensions only if it can guarantee that in doing so it will either succeed in creating the new Display Buffer or will be able to create a Display Buffer with the previous dimensions in the event of failure.
 
 \pnum
-\enternote
+\begin{note}
 The intent of the previous paragraph is to ensure that, no matter the result, a valid Display Buffer continues to exist. Sometimes implementations will be able to determine that the new dimensions are valid but that to create the new Display Buffer successfully the previous one must be destroyed. The previous paragraph gives implementors that leeway. It goes even further in that it allows implementations to destroy the existing Display Buffer even if they cannot determine in advance that creating the new Display Buffer will succeed, provided that they can guarantee that if the attempt fails they can always successfully recreate a Display Buffer with the previous dimensions. Regardless, there must be a valid Display Buffer when this call completes.
-\exitnote
+\end{note}
 
 \pnum
 The value of the Display Buffer's pixel data shall be \unspecnorm upon completion of this function regardless of whether it succeeded.
@@ -552,7 +550,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \tcode{errc::not_enough_memory} if there is insufficient memory to create a Display Buffer with the updated dimensions.
 
-Other errors, if any, produced by this function are \impldef{display_surface!display_height}.
+Other errors, if any, produced by this function are \impldefplain{display_surface!display_height}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{dimensions}}
@@ -573,9 +571,9 @@ Otherwise, Draw Width is set as specified by Table~\ref{tab:displaysurface.state
 If the value of Draw Width changes as a result or the value of Draw Height changes as a result, the implementation shall attempt to create a new Back Buffer with the updated dimensions while retaining the existing Back Buffer. The implementation may destroy the existing Back Buffer prior to creating a new Back Buffer with the updated dimensions only if it can guarantee that in doing so it will either succeed in creating the new Back Buffer or will be able to create a Back Buffer with the previous dimensions in the event of failure.
 
 \pnum
-\enternote
+\begin{note}
 The intent of the previous paragraph is to ensure that, no matter the result, a valid Back Buffer continues to exist. Sometimes implementations will be able to determine that the new dimensions are valid but that to create the new Back Buffer successfully the previous one must be destroyed. The previous paragraph gives implementors that leeway. It goes even further in that it allows implementations to destroy the existing Back Buffer even if they cannot determine in advance that creating the new Back Buffer will succeed, provided that they can guarantee that if the attempt fails they can always successfully recreate a Back Buffer with the previous dimensions. Regardless, there must be a valid Back Buffer when this call completes.
-\exitnote
+\end{note}
 
 \pnum
 The value of the Back Buffer's pixel data shall be \unspecnorm upon completion of this function regardless of whether it succeeded.
@@ -593,7 +591,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \tcode{errc::not_enough_memory} if there is insufficient memory to create a Back Buffer with the updated dimensions.
 
-Other errors, if any, produced by this function are \impldef{display_surface!dimensions}.
+Other errors, if any, produced by this function are \impldefplain{display_surface!dimensions}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{display_dimensions}}
@@ -614,9 +612,9 @@ Otherwise, Display Width is set as specified by Table~\ref{tab:displaysurface.st
 If the value of Display Width or the value of Display Height changes as a result, the implementation shall attempt to create a new Display Buffer with the updated dimensions while retaining the existing Display Buffer. The implementation may destroy the existing Display Buffer prior to creating a new Display Buffer with the updated dimensions only if it can guarantee that in doing so it will either succeed in creating the new Display Buffer or will be able to create a Display Buffer with the previous dimensions in the event of failure.
 
 \pnum
-\enternote
+\begin{note}
 The intent of the previous paragraph is to ensure that, no matter the result, a valid Display Buffer continues to exist. Sometimes implementations will be able to determine that the new dimensions are valid but that to create the new Display Buffer successfully the previous one must be destroyed. The previous paragraph gives implementors that leeway. It goes even further in that it allows implementations to destroy the existing Display Buffer even if they cannot determine in advance that creating the new Display Buffer will succeed, provided that they can guarantee that if the attempt fails they can always successfully recreate a Display Buffer with the previous dimensions. Regardless, there must be a valid Display Buffer when this call completes.
-\exitnote
+\end{note}
 
 \pnum
 If an error occurs, the implementation shall ensure that the Display Buffer is valid and has the same dimensions it had prior to this call and that Display Width and Display Height shall retain the values they had prior to this call.
@@ -637,7 +635,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \tcode{errc::not_enough_memory} if there is insufficient memory to create a Display Buffer with the updated dimensions.
 
-Other errors, if any, produced by this function are \impldef{display_surface!display_dimensions}.
+Other errors, if any, produced by this function are \impldefplain{display_surface!display_dimensions}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{scaling}}
@@ -685,7 +683,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \pnum
 \errors
-The errors, if any, produced by this function are \impldef{display_surface!letterbox_brush}.
+The errors, if any, produced by this function are \impldefplain{display_surface!letterbox_brush}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{auto_clear}}
@@ -721,7 +719,7 @@ bool desired_frame_rate(double fps) noexcept;
 If \tcode{!is_finite(fps)}, this function has no effects.
 
 \pnum
-Sets the Desired Frame Rate to an \impldef{display_surface!minimum frame rate} minimum frame rate if \tcode{fps} is less than the minimum frame rate, an \impldef{display_surface!maximum frame rate} maximum frame rate if \tcode{fps} is greater than the maximum frame rate, otherwise to the value of \tcode{fps}.
+Sets the Desired Frame Rate to an \impldefplain{display_surface!minimum frame rate} minimum frame rate if \tcode{fps} is less than the minimum frame rate, an \impldefplain{display_surface!maximum frame rate} maximum frame rate if \tcode{fps} is greater than the maximum frame rate, otherwise to the value of \tcode{fps}.
 
 \pnum
 \returns
@@ -747,7 +745,7 @@ int begin_show();
 \pnum
 \effects
 Performs the following actions in a continuous loop:
-\begin{enumeraten}
+\begin{enumerate}
 	\item Handle any implementation and host environment matters. If there are no pending implementation or host environment matters to handle, proceed immediately to the next action.
 	\item Run the Size Change Callback if doing so is required by its specification and it does not have a value equivalent to its default value.
 	\item If the Refresh Rate requires that the Draw Callback be called then:
@@ -757,7 +755,7 @@ Performs the following actions in a continuous loop:
 		\item Ensure that all operations from the Draw Callback that can effect the Back Buffer have completed.
 		\item Transfer the contents of the Back Buffer to the Display Buffer using sampling with an \unspecnorm filter. If the User Scaling Callback does not have a value equivalent to its default value, use it to determine the position where the contents of the Back Buffer shall be transferred to and whether or not the Letterbox Brush should be used. Otherwise use the value of Scaling Type to determine the position and whether the Letterbox Brush should be used.
 	\end{enumeratea}
-\end{enumeraten}
+\end{enumerate}
 
 \pnum
 If \tcode{display_surface::end_show} is called from the Draw Callback, the implementation shall finish executing the Draw Callback and shall immediately cease to perform any actions in the continuous loop other than handling any implementation and host environment matters needed to exit the loop properly.
@@ -770,7 +768,7 @@ What the output device shall display when it is not displaying the contents of t
 
 \pnum
 \returns
-The possible values and meanings of the possible values returned are \impldef{display_surface!show return value}.
+The possible values and meanings of the possible values returned are \impldefplain{display_surface!show return value}.
 
 \pnum
 \throws
@@ -786,7 +784,7 @@ Since this function calls the Draw Callback and can call the Size Change Callbac
 \tcode{errc::operation_would_block} if the value of Draw Callback is equivalent to its default value or if it becomes equivalent to its default value before this function returns.
 
 \pnum
-Other errors, if any, produced by this function are \impldef{display_surface!show}.
+Other errors, if any, produced by this function are \impldefplain{display_surface!show}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{end_show}}

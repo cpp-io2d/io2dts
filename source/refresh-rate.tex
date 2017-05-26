@@ -36,21 +36,21 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \endhead
  \tcode{as_needed}
  & The Draw Callback shall be called when the implementation needs to do so.
- \enternote
+ \begin{note}
  The intention of this enumerator is that implementations will call the Draw Callback as little as possible in order to minimize power usage. Users can call \tcode{display_surface::redraw_required} to make the implementation run the Draw Callback whenever the user requires.
- \exitnote
+ \end{note}
  \\
  \tcode{as_fast_as_possible}
  & The Draw Callback shall be called as frequently as possible, subject to any limits of the execution environment and the \underlyingrendandpresenttechs.
  \\
  \tcode{fixed}
  & The Draw Callback shall be called as frequently as needed to maintain the Desired Frame Rate (Table~\ref{tab:displaysurface.state.listing}) as closely as possible. If more time has passed between two successive calls to the Draw Callback than is required, it shall be called \term{excess time} and it shall count towards the \term{required time}, which is the time that is required to pass after a call to the Draw Callback before the next successive call to the Draw Callback shall be made. If the excess time is greater than the required time, implementations shall call the Draw Callback and then repeatedly subtract the required time from the excess time until the excess time is less than the required time. If the implementation needs to call the Draw Callback for some other reason, it shall use that call as the new starting point for maintaining the Desired Frame Rate.
- \enterexample
+ \begin{example}
  Given a Desired Frame Rate of \tcode{20.0}, then as per the above, the implementation would call the Draw Callback at 50 millisecond intervals or as close thereto as possible.
  
  If for some reason the excess time is 51 milliseconds, the implementation would call the Draw Callback, subtract 50 milliseconds from the excess time, and then would wait 49 milliseconds before calling the Draw Callback again.
  
  If only 15 milliseconds have passed since the Draw Callback was last called and the implementation needs to call the Draw Callback again, then the implementation shall call the Draw Callback immediately and proceed to wait 50 milliseconds before calling the Draw Callback again.
- \exitexample
+ \end{example}
  \\
 \end{libreqtab2}

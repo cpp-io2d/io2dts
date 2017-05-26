@@ -3,10 +3,10 @@
 
 \pnum
 \indexlibrary{\idxcode{path_group}}
-The class \tcode{path_group} contains the result of processing \ref{paths.processing} a \tcode{path_builder} object. How it stores the resulting data is \unspecnorm.
+The class \tcode{path_group} contains the data that results from interpreting \ref{paths.interpretation} the path group in a \tcode{path_builder} object.
 
 \pnum
-A \tcode{path_group} object is used by a \tcode{surface}-derived object for rendering and composing operations.
+A \tcode{path_group} object is used by most rendering and composing operations.
 
 \pnum
 The contents of a \tcode{path_group} object are immutable, however the contents it contains are changeable using copy assignment or move assignment.
@@ -30,7 +30,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     public:
     // \ref{pathgroup.cons}, construct/copy/destroy:
     explicit path_group(const path_builder& pb);
-    path_group(const path_builder& pb, error_code& ec) noexcept;
+    template <class ForwardIterator>
+    path_group(ForwardIterator first, ForwardIterator last);
   };
 } } } }
 \end{codeblock}
@@ -40,12 +41,23 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 \indexlibrary{\idxcode{path_group}!constructor}
 \begin{itemdecl}
     explicit path_group(const path_builder& pb);
-    path_group(const path_builder& pb, error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to: \tcode{path_group\{ begin(pb), end(pb) \};}.	
+\end{itemdescr}
+
+\indexlibrary{\idxcode{path_group}!constructor}
+\begin{itemdecl}
+    template <class ForwardIterator>
+    path_group(ForwardIterator first, ForwardIterator last);
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
 	\effects
-	Constructs an object of class \tcode{path_group}. When a \tcode{path_group} object is used by a \tcode{surface}-derived object, it shall produce the same result as-if its contents were constructed by processing the \tcode{path_builder} object as specified at \ref{paths.processing}.
+	Constructs an object of type \tcode{path_group}.
+	% When a \tcode{path_group} object is used by a \tcode{surface}-derived object, it shall produce the same result as-if its contents were constructed by processing the \tcode{path_builder} object as specified at \ref{paths.processing}.
 
 	\pnum
 	\throws

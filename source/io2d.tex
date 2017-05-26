@@ -15,27 +15,27 @@
            {listings}     % code listings
 \usepackage{longtable}    % auto-breaking tables
 \usepackage{ltcaption}    % fix captions for long tables
-\usepackage{booktabs}     % fancy tables
 \usepackage{relsize}      % provide relative font size changes
+\usepackage{textcomp}     % provide \text{l,r}angle
 \usepackage{underscore}   % remove special status of '_' in ordinary text
-\usepackage{verbatim}     % improved verbatim environment
 \usepackage{parskip}      % handle non-indented paragraphs "properly"
 \usepackage{array}        % new column definitions for tables
 \usepackage[normalem]{ulem}
+\usepackage{enumitem}
 \usepackage{color}        % define colors for strikeouts and underlines
 \usepackage{amsmath}      % additional math symbols
 \usepackage{mathrsfs}     % mathscr font
+\usepackage[final]{microtype}
 \usepackage{multicol}
 \usepackage{xspace}
-\usepackage[status=draft]{fixme}
 \usepackage{lmodern}
-\usepackage{placeins}
+\usepackage{placeins}    % needed for FloatBarrier
 \usepackage[T1]{fontenc}
 \usepackage[pdftex, final]{graphicx}
 \usepackage[pdftex,
             pdftitle={A Proposal to Add 2D Graphics Rendering and Display to C++},
             pdfsubject={2D Graphics Technical Specification Proposal},
-            pdfcreator={Michael B. McLaughlin, Herb Sutter, Jason Zink},
+            pdfcreator={Michael B. McLaughlin, Herb Sutter, Jason Zink, Guy Davidson},
             bookmarks=true,
             bookmarksnumbered=true,
             pdfpagelabels=true,
@@ -47,6 +47,13 @@
             plainpages=false
            ]{hyperref}
 \usepackage{memhfixc}     % fix interactions between hyperref and memoir
+%\usepackage[active,header=false,handles=false,copydocumentclass=false,generate=std-gram.ext,extract-cmdline={gramSec},extract-env={bnftab,simplebnf,bnf,bnfkeywordtab}]{extract} % Grammar extraction
+
+\pdfminorversion=5
+\pdfcompresslevel=9
+\pdfobjcompresslevel=2
+
+\renewcommand\RSsmallest{5.5pt}  % smallest font size for relsize
 
 \input{layout}
 \input{styles}
@@ -59,7 +66,11 @@
 \makeindex[generalindex]
 \makeindex[libraryindex]
 %\makeindex[grammarindex]
+
 \makeindex[impldefindex]
+
+%\makeglossary[xrefindex]
+%\makeglossary[xrefdelta]
 
 %%--------------------------------------------------
 %% fix interaction between hyperref and other
@@ -71,7 +82,11 @@
 
 %%--------------------------------------------------
 %% add special hyphenation rules
-\hyphenation{tem-plate ex-am-ple in-put-it-er-a-tor name-space name-spaces}
+\hyphenation{tem-plate ex-am-ple in-put-it-er-a-tor name-space name-spaces non-zero}
+
+%%--------------------------------------------------
+%% turn off all ligatures inside \texttt
+\DisableLigatures{encoding = T1, family = tt*}
 
 \begin{document}
 \chapterstyle{cppstd}
@@ -127,8 +142,6 @@
 % %\include{limits}
 % %\include{compatibility}
 % %\include{future}
-% %\include{charname}
-% %\include{xref}
 
 %%--------------------------------------------------
 %% back matter

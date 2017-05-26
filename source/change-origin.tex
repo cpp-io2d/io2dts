@@ -1,14 +1,14 @@
 %!TEX root = io2d.tex
-\rSec0 [changeorigin] {Class \tcode{change_origin}}
+\rSec0 [changeorigin] {Class \tcode{change_origin}}%
 
 \pnum
-\indexlibrary{\idxcode{change_origin}}
-The class \tcode{change_origin} describes path instruction that changes the origin used in processing a path group as described by \ref{paths.processing}.
+\indexlibrary{\idxcode{change_origin}}%
+The class \tcode{change_origin} describes path item that assigns the value of the \tcode{change_origin} object's \term{origin value} to a path group origin.
 
 \pnum
-It has an Origin of type \tcode{vector_2d}.
+The origin value is a \tcode{vector_2d} object.
 
-\rSec1 [changeorigin.synopsis] {\tcode{change_origin} synopsis}
+\rSec1 [changeorigin.synopsis] {\tcode{change_origin} synopsis}%
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
@@ -25,26 +25,29 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       // \ref{changeorigin.observers}, observers:
       constexpr vector_2d origin() const noexcept;
     };
-  };
+    
+    \ref{changeorigin.nonmember}, non-members
+    constexpr bool operator==(const change_origin& lhs,
+      const change_origin& rhs) noexcept;
+    constexpr bool operator!=(const change_origin& lhs,
+      const change_origin& rhs) noexcept;
+  }
 } } } }
 \end{codeblock}
 
-\rSec1 [changeorigin.cons] {\tcode{change_origin} constructors and assignment operators}
+\rSec1 [changeorigin.cons] {\tcode{change_origin} constructors}%
 
-\indexlibrary{\idxcode{change_origin}!constructor}
+\indexlibrary{\idxcode{change_origin}!constructor}%
 \begin{itemdecl}
 constexpr change_origin() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs an object of type \tcode{change_origin}.
-
-\pnum
-The Origin shall be set to the value of \tcode{vector_2d\{ \}}.
+Equivalent to: \tcode{change_origin\{ vector_2d() \};}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{change_origin}!constructor}
+\indexlibrary{\idxcode{change_origin}!constructor}%
 \begin{itemdecl}
 constexpr explicit change_origin(const vector_2d& pt) noexcept;
 \end{itemdecl}
@@ -54,31 +57,53 @@ constexpr explicit change_origin(const vector_2d& pt) noexcept;
 Constructs an object of type \tcode{change_origin}.
 
 \pnum
-The Origin shall be set to the value of \tcode{pt}.
+The origin value is \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [changeorigin.modifiers]{\tcode{change_origin} modifiers}
+\rSec1 [changeorigin.modifiers]{\tcode{change_origin} modifiers}%
 
-\indexlibrary{\idxcode{change_origin}!\idxcode{origin}}
-\indexlibrary{\idxcode{origin}!\idxcode{change_origin}}
+\indexlibrarymember{change_origin}{origin}%
 \begin{itemdecl}
 constexpr void origin(const vector_2d& value) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-The Origin shall be set to the value of \tcode{pt}.
+The origin value is \tcode{pt}.
 \end{itemdescr}
 
 \rSec1 [changeorigin.observers]{\tcode{change_origin} observers}
 
-\indexlibrary{\idxcode{change_origin}!\idxcode{origin}}
-\indexlibrary{\idxcode{origin}!\idxcode{change_origin}}
+\indexlibrarymember{change_origin}{origin}%
 \begin{itemdecl}
 constexpr vector_2d origin() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The value of the Origin.
+The origin value.
+\end{itemdescr}
+
+\rSec1 [changeorigin.nonmember]{Non-member functions}%
+
+\indexlibrarymember{operator==}{change_origin}%
+\begin{itemdecl}
+constexpr bool operator==(const change_origin& lhs, const change_origin& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{lhs.origin() == rhs.origin()}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{change_origin}%
+\begin{itemdecl}
+constexpr bool operator!=(const change_origin& lhs, const change_origin& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{!(lhs == rhs)}.
 \end{itemdescr}

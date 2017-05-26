@@ -108,7 +108,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \pnum
 \errors
-The errors, if any, produced by this function are \impldef{mapped_surface!commit_changes}.
+The errors, if any, produced by this function are \impldefplain{mapped_surface!commit_changes}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{mapped_surface}!\idxcode{data}}
@@ -121,7 +121,7 @@ unsigned char* data(error_code& ec) noexcept;
 \pnum
 \returns
 A native-endian pointer to the pixel data array.
-\enterexample
+\begin{example}
 Given the following code:
 
 \begin{codeblock}
@@ -141,7 +141,7 @@ imgsfc.map([](mapped_surface& mapsfc) -> void {
 In a little-endian environment, \tcode{p0 == 0x0}, \tcode{p1 == 0x0}, \tcode{p2 == 0xFF}, and \tcode{p3 == 0xFF}.
 
 In a big-endian environment, \tcode{p0 == 0xFF}, \tcode{p1 == 0xFF}, \tcode{p2 == 0x0}, \tcode{p3 == 0x0}.
-\exitexample
+\end{example}
 
 \pnum
 \throws
@@ -170,7 +170,7 @@ const unsigned char* data(error_code& ec) const noexcept;
 \pnum
 \returns
 A const native-endian pointer to the pixel data array.
-\enterexample
+\begin{example}
 Given the following code:
 
 \begin{codeblock}
@@ -190,7 +190,7 @@ imgsfc.map([](mapped_surface& mapsfc) -> void {
 In a little-endian environment, \tcode{p0 == 0x0}, \tcode{p1 == 0x0}, \tcode{p2 == 0xFF}, and \tcode{p3 == 0xFF}.
 
 In a big-endian environment, \tcode{p0 == 0xFF}, \tcode{p1 == 0xFF}, \tcode{p2 == 0x0}, \tcode{p3 == 0x0}.
-\exitexample
+\end{example}
 
 \pnum
 \throws
@@ -266,9 +266,9 @@ int stride() const noexcept;
 \pnum
 \returns
 The length, in bytes, of a horizontal line of the mapped surface.
-\enternote
+\begin{note}
 This value is at least as large as the width in pixels of a horizontal line multiplied by the number of bytes per pixel but may be larger as a result of padding.
-\exitnote
+\end{note}
 
 \pnum
 \remarks

@@ -80,8 +80,9 @@ void flush() noexcept;
 	If the implementation does not provide a native handle to the underlying rendering and presentation technologies, this function shall have no observable behavior.
 	
 	\pnum
-	\realnotes
+	\begin{note}
 	Users call this function because they wish to use a native handle to the \underlyingrendandpresenttechs in order to do something not provided by this \documenttypename{} (e.g. render native UI controls). As such, the user needs to know that using the underlying rendering system outside of this library will not introduce any race conditions. This function, in combination with locking the device, exists to provide that surety.
+	\end{note}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{device}!\idxcode{lock}}
@@ -104,9 +105,9 @@ void lock(error_code& ec) noexcept;
 	\pnum
 	\errors
 	\tcode{errc::resource_unavailable_try_again} if a lock cannot be obtained.
-	\enternote
+	\begin{note}
 	One reason this error may occur is if a system limit on the maximum number of times a lock could be recursively acquired would be exceeded.
-	\exitnote
+	\end{note}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{device}!\idxcode{unlock}}

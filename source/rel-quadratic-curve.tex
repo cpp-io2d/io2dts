@@ -1,22 +1,26 @@
 %!TEX root = io2d.tex
-\rSec0 [relquadraticcurve] {Class \tcode{rel_quadratic_curve}}
+\rSec0 [relquadraticcurve] {Class \tcode{rel_quadratic_curve}}%
 
 \pnum
-\indexlibrary{\idxcode{rel_quadratic_curve}}
-The class \tcode{rel_quadratic_curve} describes a path segment that is a quadratic \bezierlocal curve.
+\indexlibrary{\idxcode{rel_quadratic_curve}}%
+The class \tcode{rel_quadratic_curve} describes a path item that adds a quadratic \bezierlocal curve path segment to a path.
 
 \pnum
-It has a control point of type \tcode{vector_2d} and an end point of type \tcode{vector_2d}.
+This is a relative path item.
 
 \pnum
-All of its points are relative to the most recently established current point.
+It has a \term{control point} of type \tcode{vector_2d} and an \term{end point} of type \tcode{vector_2d}.
 
-\rSec1 [relquadraticcurve.synopsis] {\tcode{rel_quadratic_curve} synopsis}
+\pnum
+When interpreting a path group, after the curve is added to the path, the path's current point becomes the end point.
+
+
+\rSec1 [relquadraticcurve.synopsis] {\tcode{rel_quadratic_curve} synopsis}%
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   namespace path_data {
-    class rel_cubic_curve {
+    class rel_quadratic_curve {
     public:
       // \ref{relquadraticcurve.cons}, construct:
       constexpr rel_quadratic_curve() noexcept;
@@ -24,20 +28,36 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
         noexcept;
 
       // \ref{relquadraticcurve.modifiers}, modifiers:
-      constexpr void control_point(const vector_2d& cpt) noexcept;
-      constexpr void end_point(const vector_2d& ept) noexcept;
+      constexpr void control(const vector_2d& cpt) noexcept;
+      constexpr void end(const vector_2d& ept) noexcept;
 
       // \ref{relquadraticcurve.observers}, observers:
-      constexpr vector_2d control_point() const noexcept;
-      constexpr vector_2d end_point() const noexcept;
+      constexpr vector_2d control() const noexcept;
+      constexpr vector_2d end() const noexcept;
     };
-  };
+    
+    \ref{relquadraticcurve.nonmember}, non-members
+    constexpr bool operator==(const rel_quadratic_curve& lhs,
+      const rel_quadratic_curve& rhs) noexcept;
+    constexpr bool operator!=(const rel_quadratic_curve& lhs,
+      const rel_quadratic_curve& rhs) noexcept;
+  }
 } } } }
 \end{codeblock}
 
-\rSec1 [relquadraticcurve.cons] {\tcode{rel_quadratic_curve} constructors}
+\rSec1 [relquadraticcurve.cons] {\tcode{rel_quadratic_curve} constructors}%
 
-\indexlibrary{\idxcode{rel_quadratic_curve}!constructor}
+\indexlibrary{\idxcode{rel_quadratic_curve}!constructor}%
+\begin{itemdecl}
+constexpr rel_quadratic_curve() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to: \tcode{rel_quadratic_curve\{ vector_2d(), vector_2d() \};}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rel_quadratic_curve}!constructor}%
 \begin{itemdecl}
 constexpr rel_quadratic_curve(const vector_2d& cpt, const vector_2d& ept)
   noexcept;
@@ -48,52 +68,76 @@ constexpr rel_quadratic_curve(const vector_2d& cpt, const vector_2d& ept)
 Constructs an object of type \tcode{rel_quadratic_curve}.
 
 \pnum
-The control point shall be set to the value of \tcode{cpt}.
+The control point is \tcode{cpt}.
 
 \pnum
-The end point shall be set to the value of \tcode{ept}.
+The end point is \tcode{ept}.
 \end{itemdescr}
 
-\rSec1 [relquadraticcurve.modifiers]{\tcode{rel_quadratic_curve} modifiers}
+\rSec1 [relquadraticcurve.modifiers]{\tcode{rel_quadratic_curve} modifiers}%
 
-\indexlibrary{\idxcode{rel_quadratic_curve}!\idxcode{control_point}}
+\indexlibrarymember{rel_quadratic_curve}{control}%
 \begin{itemdecl}
-constexpr void control_point(const vector_2d& cpt) noexcept;
+constexpr void control(const vector_2d& cpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-The control point shall be set to the value of \tcode{cp}.
+The control point is \tcode{cp}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rel_quadratic_curve}!\idxcode{end_point}}
+\indexlibrarymember{rel_quadratic_curve}{end_point}%
 \begin{itemdecl}
-constexpr void end_point(const vector_2d& ept) noexcept;
+constexpr void end(const vector_2d& ept) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-The end point shall be set to the value of \tcode{ept}.
+The end point is \tcode{ept}.
 \end{itemdescr}
 
-\rSec1 [relquadraticcurve.observers]{\tcode{rel_quadratic_curve} observers}
+\rSec1 [relquadraticcurve.observers]{\tcode{rel_quadratic_curve} observers}%
 
-\indexlibrary{\idxcode{rel_quadratic_curve}!\idxcode{control_point}}
+\indexlibrarymember{rel_quadratic_curve}{control}%
 \begin{itemdecl}
-constexpr vector_2d control_point() const noexcept;
+constexpr vector_2d control() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The value of the control point.
+The control point.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rel_quadratic_curve}!\idxcode{end_point}}
+\indexlibrarymember{rel_quadratic_curve}{end}%
 \begin{itemdecl}
-constexpr vector_2d end_point() const noexcept;
+constexpr vector_2d end() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The value of the end point.
+The end point.
+\end{itemdescr}
+
+\rSec1 [relquadraticcurve.nonmember]{Non-member functions}%
+
+\indexlibrarymember{operator==}{rel_quadratic_curve}%
+\begin{itemdecl}
+constexpr bool operator==(const rel_quadratic_curve& lhs,
+  const rel_quadratic_curve& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{lhs.control() == rhs.control() \&\& lhs.end() == rhs.end()}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{rel_quadratic_curve}%
+\begin{itemdecl}
+constexpr bool operator!=(const rel_quadratic_curve& lhs,
+  const rel_quadratic_curve& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{!(lhs == rhs)}.
 \end{itemdescr}

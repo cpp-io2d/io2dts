@@ -11,9 +11,16 @@ ISO and IEC maintain terminological databases for use in standardization at the 
 \item ISO Online browsing platform: available at http://www.iso.org/obp
 \end{itemize}
 
-\indexdefn{standard coordinate space}
+\pnum
+Terms that are used only in a small portion of this document
+are defined where they are used and italicized where they are
+defined.
+
+\def\definition{\definitionx{\section}}%
+
+\indexdefn{standard coordinate space}%
 \definition{standard coordinate space}{\iotwod.defns.stndcrdspace}
-a Euclidean plane described by a Cartesian coordinate system where the first coordinate is measured along a horizontal axis, called the \xaxis, oriented from left to right, the second coordinate is measured along a vertical axis, called the \yaxis, oriented from top to bottom, and rotation of a point around the origin by a positive value expressed in radians is clockwise
+a Euclidean plane described by a Cartesian coordinate system where the first coordinate is measured along a horizontal axis, called the \xaxis, oriented from left to right, the second coordinate is measured along a vertical axis, called the \yaxis, oriented from top to bottom, and rotation of a point around the origin by a positive value expressed in radians is counterclockwise
 
 \indexdefn{visual data}
 \definition{visual data}{\iotwod.defns.visdata}
@@ -28,9 +35,9 @@ a component of visual data with a defined bit size
 \definition{visual data format}{\iotwod.defns.visdatafmt}
 a specification that defines a total bit size, a set of one or more channels, and each channel's role, bit size, and location relative to the upper (high-order) bit
 %a specification of visual data channels which defines a total bit size for the format and each channel's role, bit size, and location relative to the upper (high-order) bit
-%\enternote
+%\begin{note}
 %The total bit size may be larger than the sum of the bit sizes of the channels of the format.
-%\exitnote
+%\end{note}
 
 \indexdefn{visual data element}
 \definition{visual data element}{\iotwod.defns.visdataelem}
@@ -58,14 +65,14 @@ an error in the results of the application of a composing operation
 \definition{anti-aliasing}{\iotwod.defns.antialias}
 the application of a function or algorithm while composing to 
 reduce aliasing
-\enternote
+\begin{note}
 Certain algorithms can produce ``better'' results, i.e. results with less 
 artifacts or with less pronounced artifacts, when rendering text with 
 anti-aliasing due to the nature of text rendering. As such, it often makes 
 sense to provide the ability to choose one type of anti-aliasing for text 
 rendering and another for all other rendering and to provide different sets of 
 anti-aliasing types to choose from for each of the two operations.
-\exitnote
+\end{note}
 
 % The following may not be needed. Already defined in IEC 60050 723-05-05.
 \indexdefn{aspect ratio}
@@ -133,9 +140,9 @@ a mathematical function that determines the visual data value of a point for a g
 \indexdefn{graphics resource}
 \definition{graphics resource}{\iotwod.defns.graphicsresource}
 <graphics resource> an object of unspecified type used by an implementation
-\enternote
+\begin{note}
 By its definition a graphics resource is an implementation detail. Often it will be a graphics subsystem object (e.g. a graphics device or a render target) or an aggregate composed of multiple graphics subsystem objects. However the only requirement placed upon a graphics resource is that the implementation is able to use it to provide the functionality required of the graphics resource.
-\exitnote
+\end{note}
 
 \indexdefn{graphics resource}
 \indexdefn{graphics resource!graphics data graphics resource}
@@ -158,13 +165,13 @@ a raster graphics data graphics resource
 \definition{premultiplied format}{\iotwod.defns.premultipliedformat}
 a format with color and alpha where each color channel is normalized and then 
 multiplied by the normalized alpha channel value
-\enterexample
+\begin{example}
 Given the 32-bit non-premultiplied RGBA pixel with 8 bits per channel \{255, 0, 
 0, 127\} (half-transparent red), when normalized it would become \{1.0, 0.0, 
 0.0, 0.5\}. As such, in premultiplied, normalized format it would become \{0.5, 
 0.0, 0.0, 0.5\} as a result of multiplying each of the three color channels by 
 the alpha channel value.
-\exitexample
+\end{example}
 
 \indexdefn{graphics state data}
 \definition{graphics state data}{\iotwod.defns.graphicsstatedata}
@@ -177,9 +184,9 @@ collection of unspecified operating system and library functionality used to ren
 \indexdefn{normalize}
 \definition{normalize}{\iotwod.defns.normalize}
 to map a closed set of evenly spaced values in the range $[0, x]$ to an evenly spaced sequence of floating point values in the range $[0, 1]$
-\enternote
+\begin{note}
 The definition of normalize given is the definition for normalizing unsigned input. Signed normalization, i.e. the mapping of a closed set of evenly spaced values in the range $[-x, x)$ to an evenly spaced sequence of floating point values in the range $[-1, 1]$, also exists but is not used in this \documenttypename{}.
-\exitnote
+\end{note}
 
 \indexdefn{render}
 \definition{render}{\iotwod.defns.render}

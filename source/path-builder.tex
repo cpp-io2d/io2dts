@@ -1,37 +1,24 @@
 %!TEX root = io2d.tex
-\rSec0 [pathbuilder] {Class \tcode{path_builder}}
+\rSec0 [pathbuilder] {Class \tcode{path_builder}}%
 
 \pnum
-\indexlibrary{\idxcode{path_builder}}
-The class \tcode{path_builder} is a container that stores and manipulates objects of type \tcode{path_data::data} from which \tcode{path_group} objects are created.
+\indexlibrary{\idxcode{path_builder}}%
+The class \tcode{path_builder} is a container that stores and manipulates objects of type \tcode{path_data::path_item} from which \tcode{path_group} objects are created.
 
 \pnum
 A \tcode{path_builder} is a contiguous container. (See [container.requirements.general] in \cppseventeen.)
 
 \pnum
-The collection of \tcode{path_data::data} objects in a path builder is referred to as its path group.
+The collection of \tcode{path_data::path_item} objects in a path builder is referred to as its path group.
 
-\pnum
-In addition to its path group, a path builder has an origin of type \tcode{vector_2d}, a transformation matrix of type \tcode{matrix_2d}, a current point of type \tcode{std::optional<vector_2d>}, and a last-move-to point of type \tcode{vector_2d}.
-
-\pnum
-When a path builder is default constructed:
-
-\begin{itemize}
-\item The path group shall be empty.
-\item The current point shall not contain a value.
-\item The transformation matrix shall have a value of \tcode{matrix_2d::init_identity\{ \}}.
-\item The origin shall have a value of \tcode{vector_2d\{ \}}.
-\end{itemize}
-
-\rSec1 [pathbuilder.synopsis] {\tcode{path_builder} synopsis}
+\rSec1 [pathbuilder.synopsis] {\tcode{path_builder} synopsis}%
 
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  template <class Allocator = allocator<path_data::path_data_types>>
+namespace std::experimental::io2d::v1 {
+  template <class Allocator = allocator<path_data::path_item>>
   class path_builder {
   public:
-    using value_type = path_data::path_data_types;
+    using value_type = path_data::path_item;
     using allocator_type = Allocator;
     using reference = value_type&;
     using const_reference = const value_type&;
@@ -109,32 +96,23 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     const_reference back() const;
 
     // \ref{pathbuilder.modifiers}, modifiers:
-    void new_path() noexcept;
+    void new_path(const vector_2d& pt) noexcept;
+    void rel_new_path(const vector_2d& pt) noexcept;
     void close_path() noexcept;
-    void arc_clockwise(const vector_2d& center, double radius, double angle1,
-      double angle2) noexcept;
-    void arc_counterclockwise(const vector_2d& center, double radius,
-      double angle1, double angle2) noexcept;
-    void ellipse(const experimental::io2d::ellipse& val) noexcept;
-    void ellipse(const circle& val) noexcept;
-    void cubic_curve_to(const vector_2d& pt0, const vector_2d& pt1,
-      const vector_2d& pt2) noexcept;
+    void change_matrix(const matrix_2d& m) noexcept;
+    void change_origin(const vector_2d& pt) noexcept;
     void line_to(const vector_2d& pt) noexcept;
-    void move_to(const vector_2d& pt) noexcept;
+    void rel_line_to(const vector_2d& dpt) noexcept;
     void quadratic_curve_to(const vector_2d& pt0, const vector_2d& pt2)
       noexcept;
-    void rectangle(const experimental::io2d::rectangle& r) noexcept;
-    void rel_rectangle(const experimental::io2d::rectangle& r) noexcept;
-    void rel_ellipse(const experimental::io2d::ellipse& val) noexcept;
-    void rel_ellipse(const circle& val) noexcept;
-    void rel_cubic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1,
-    const vector_2d& dpt2) noexcept;
-    void rel_line_to(const vector_2d& dpt) noexcept;
-    void rel_move_to(const vector_2d& dpt) noexcept;
     void rel_quadratic_curve_to(const vector_2d& pt0, const vector_2d& pt2)
       noexcept;
-    void transform_matrix(const matrix_2d& m) noexcept;
-    void origin(const vector_2d& pt) noexcept;
+    void cubic_curve_to(const vector_2d& pt0, const vector_2d& pt1,
+      const vector_2d& pt2) noexcept;
+    void rel_cubic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1,
+      const vector_2d& dpt2) noexcept;
+    void arc(const vector_2d& rad, double rot, double sang = pi<double>)
+      noexcept;
     
     template <class... Args>
     reference emplace_back(Args&&... args);
@@ -157,9 +135,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       noexcept(allocator_traits<Allocator>::propagate_on_container_swap::value 
         || allocator_traits<Allocator>::is_always_equal::value);
     void clear() noexcept;
-
-    // \ref{pathbuilder.observers}, observers:
-    experimental::io2d::rectangle path_extents() const noexcept;
   };
   
   template <class Allocator>
@@ -173,17 +148,17 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   template <class Allocator>
   void swap(path_builder<Allocator>& lhs, path_builder<Allocator>& rhs)
     noexcept(noexcept(lhs.swap(rhs)));
-} } } }
+}
 \end{codeblock}
 
-\rSec1 [pathbuilder.containerrequirements] {\tcode{path_builder} container requirements}
+\rSec1 [pathbuilder.containerrequirements] {\tcode{path_builder} container requirements}%
 
 \pnum
-This class shall be considered a sequence container, as defined in [containers] in \cppseventeen, and all sequence container requirements that apply specifically to \tcode{vector} shall also apply to this class.
+This class is a sequence container, as defined in [containers] in \cppseventeen, and all sequence container requirements that apply specifically to \tcode{vector} shall also apply to this class.
 
-\rSec1 [pathbuilder.cons] {\tcode{path_builder} constructors, copy, and assignment}
+\rSec1 [pathbuilder.cons] {\tcode{path_builder} constructors, copy, and assignment}%
 
-\indexlibrary{\idxcode{path_builder}!constructor}
+\indexlibrary{\idxcode{path_builder}!constructor}%
 \begin{itemdecl}
 explicit path_builder(const Allocator&);
 \end{itemdecl}
@@ -197,7 +172,7 @@ Constructs an empty \tcode{path_builder}, using the specified allocator.
 Constant.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_builder}!constructor}
+\indexlibrary{\idxcode{path_builder}!constructor}%
 \begin{itemdecl}
 explicit path_builder(size_type n, const Allocator& = Allocator());
 \end{itemdecl}
@@ -211,7 +186,7 @@ Constructs a \tcode{path_builder} with \tcode{n} default-inserted elements using
 Linear in \tcode{n}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_builder}!constructor}
+\indexlibrary{\idxcode{path_builder}!constructor}%
 \begin{itemdecl}
 path_builder(size_type n, const value_type& value,
   const Allocator& = Allocator());
@@ -230,7 +205,7 @@ Constructs a \tcode{path_builder} with n copies of \tcode{value}, using the spec
 Linear in \tcode{n}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_builder}!constructor}
+\indexlibrary{\idxcode{path_builder}!constructor}%
 \begin{itemdecl}
 template <class InputIterator>
 path_builder(InputIterator first, InputIterator last,
@@ -259,10 +234,9 @@ reallocations if they are just input iterators.
 
 \end{itemdescr}
 
-\rSec1 [pathbuilder.capacity] {\tcode{path_builder} capacity}
+\rSec1 [pathbuilder.capacity] {\tcode{path_builder} capacity}%
 
-\indexlibrary{\idxcode{path_builder}!\idxcode{capacity}}
-\indexlibrary{\idxcode{capacity}!\idxcode{path_builder}}
+\indexlibrarymember{capacity}{path_builder}%
 \begin{itemdecl}
 size_type capacity() const noexcept;
 \end{itemdecl}
@@ -272,7 +246,7 @@ size_type capacity() const noexcept;
 The total number of elements that the path builder can hold without requiring reallocation.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_builder}!\idxcode{reserve}}
+\indexlibrarymember{path_builder}{reserve}%
 \begin{itemdecl}
 void reserve(size_type n);
 \end{itemdecl}
@@ -312,7 +286,7 @@ greater than the value of
 \tcode{capacity()}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_builder}!\idxcode{shrink_to_fit}}
+\indexlibrarymember{path_builder}{shrink_to_fit}%
 \begin{itemdecl}
 void shrink_to_fit();
 \end{itemdecl}
@@ -325,10 +299,10 @@ void shrink_to_fit();
 \effects
 \tcode{shrink_to_fit} is a non-binding request to reduce
 \tcode{capacity()} to \tcode{size()}.
-\enternote
+\begin{note}
 The request is non-binding to allow latitude for
 implementation-specific optimizations.
-\exitnote
+\end{note}
 It does not increase \tcode{capacity()}, but may reduce \tcode{capacity()}
 by causing reallocation. 
 If an exception is thrown other than by the move constructor
@@ -343,7 +317,7 @@ iterators referring to the elements in the sequence. If no reallocation
 happens, they remain valid.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_builder}!\idxcode{swap}}
+\indexlibrarymember{path_builder}{swap}%
 \begin{itemdecl}
 void swap(path_builder&)
   noexcept(allocator_traits<Allocator>::propagate_on_container_swap::value ||
@@ -363,7 +337,7 @@ with that of \tcode{x}.
 Constant time.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_builder}!\idxcode{resize}}
+\indexlibrary{path_builder}{resize}%
 \begin{itemdecl}
 void resize(size_type sz);
 \end{itemdecl}
@@ -386,7 +360,7 @@ non-\tcode{CopyInsertable}
 \tcode{value_type} there are no effects.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_builder}!\idxcode{resize}}
+\indexlibrary{path_builder}{resize}%
 \begin{itemdecl}
 void resize(size_type sz, const value_type& c);
 \end{itemdecl}
@@ -406,19 +380,29 @@ appends \tcode{sz - size()} copies of \tcode{c} to the sequence.
 If an exception is thrown there are no effects.
 \end{itemdescr}
 
-\rSec1 [pathbuilder.modifiers] {\tcode{path_builder} modifiers}
+\rSec1 [pathbuilder.modifiers] {\tcode{path_builder} modifiers}%
 
-\indexlibrary{\idxcode{path_builder}!\idxcode{new_path}}
+\indexlibrarymember{path_builder}{new_path}%
 \begin{itemdecl}
-void new_path() noexcept;
+void new_path(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::new_path()} to the end of the path group.
+Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::abs_new_path(pt)} to the end of the path group.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_builder}!\idxcode{close_path}}
+\indexlibrarymember{path_builder}{rel_new_path}%
+\begin{itemdecl}
+void rel_new_path(const vector_2d& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::rel_new_path(pt)} to the end of the path group.
+\end{itemdescr}
+
+\indexlibrarymember{path_builder}{close_path}%
 \begin{itemdecl}
 void close_path() noexcept;
 \end{itemdecl}
@@ -429,165 +413,12 @@ The current point contains a value.
 
 \pnum
 \effects
-Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::close_path()} to the end of the path group.
+Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::close_path()} to the end of the path group.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_builder}!\idxcode{arc_clockwise}}
-\indexlibrary{\idxcode{arc_clockwise}!\idxcode{path_builder}}
+\indexlibrarymember{path_builder}{change_matrix}%
 \begin{itemdecl}
-void arc_clockwise(const vector_2d& center, double radius, double angle1,
-  double angle2) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Adds a \tcode{path_data::path_data_types} object constructed from \\ \tcode{path_data::arc_clockwise(center, radius, angle1, angle2)} to the end of the path group.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_builder}!\idxcode{arc_counterclockwise}}
-\begin{itemdecl}
-void arc_counterclockwise(const vector_2d& center, double radius,
-  double angle1, double angle2) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Adds a \tcode{path_data::path_data_types} object constructed from \\
-\tcode{path_data::arc_counterclockwise(center, \\
-radius, angle1, angle2)} 
-to the end of the path group.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_builder}!\idxcode{ellipse}}
-\begin{itemdecl}
-void ellipse(const experimental::io2d::ellipse& val) noexcept;
-void ellipse(const circle& val) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::abs_ellipse(val)} to the end of the path group.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_builder}!\idxcode{cubic_curve_to}}
-\begin{itemdecl}
-void cubic_curve_to(const vector_2d& pt0, const vector_2d& pt1,
-  const vector_2d& pt2) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-\pnum
-Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::abs_cubic_curve(pt0, pt1, pt2)} to the end of the path group.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_builder}!\idxcode{line_to}}
-\begin{itemdecl}
-void line_to(const vector_2d& pt) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::abs_line(pt)} to the end of the path group.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_builder}!\idxcode{move_to}}
-\begin{itemdecl}
-void move_to(const vector_2d& pt) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::abs_move(pt)} to the end of the path group.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_builder}!\idxcode{quadratic_curve_to}}
-\begin{itemdecl}
-void quadratic_curve_to(const vector_2d& pt0, const vector_2d& pt1) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-\pnum
-Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::abs_quadratic_curve(pt0, pt1)} to the end of the path group.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_builder}!\idxcode{rectangle}}
-\begin{itemdecl}
-void rectangle(const experimental::io2d::rectangle& r) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::abs_rectangle(\{ r \})} to the end of the path group.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_builder}!\idxcode{rel_rectangle}}
-\begin{itemdecl}
-void rel_rectangle(const experimental::io2d::rectangle& r) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::rel_rectangle(\{ r \})} to the end of the path group.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_builder}!\idxcode{rel_ellipse}}
-\begin{itemdecl}
-void rel_ellipse(const experimental::io2d::ellipse& val) noexcept;
-void rel_ellipse(const circle& val) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::rel_ellipse(\{ val \})} to the end of the path group.
-\end{itemdescr}
-
-
-\indexlibrary{\idxcode{path_builder}!\idxcode{rel_cubic_curve_to}}
-\begin{itemdecl}
-void rel_cubic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1,
-  const vector_2d& dpt2) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::rel_cubic_curve(dpt0, dpt1, dpt2)} to the end of the path group.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_builder}!\idxcode{rel_line_to}}
-\begin{itemdecl}
-void rel_line_to(const vector_2d& dpt) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::rel_line(pt)} to the end of the path group.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_builder}!\idxcode{rel_move_to}}
-\begin{itemdecl}
-void rel_move_to(const vector_2d& dpt) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::rel_move(dpt)} to the end of the path group.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_builder}!\idxcode{rel_quadratic_curve_to}}
-\begin{itemdecl}
-void rel_quadratic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1)
-  noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::rel_quadratic_curve(dpt0, dpt1)} to the end of the path group.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_builder}!\idxcode{transform_matrix}}
-\begin{itemdecl}
-void transform_matrix(const matrix_2d& m) noexcept;
+void change_matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -596,22 +427,95 @@ The matrix \tcode{m} shall be invertible.
 
 \pnum
 \effects
-Adds a \tcode{path_data::path_data_types} object constructed from \tcode{(path_data::change_matrix(m)} to the end of the path group.
+Adds a \tcode{path_data::path_item} object constructed from \tcode{(path_data::change_matrix(m)} to the end of the path group.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_builder}!\idxcode{origin}}
+\indexlibrarymember{path_builder}{change_origin}%
 \begin{itemdecl}
-void origin(const vector_2d& pt) noexcept;
+void change_origin(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Adds a \tcode{path_data::path_data_types} object constructed from \tcode{path_data::change_origin(pt)} to the end of the path group.
+Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::change_origin(pt)} to the end of the path group.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_builder}!\idxcode{insert}}
-\indexlibrary{\idxcode{path_builder}!\idxcode{emplace_back}}
-\indexlibrary{\idxcode{path_builder}!\idxcode{push_back}}
+\indexlibrarymember{path_builder}{line_to}%
+\begin{itemdecl}
+void line_to(const vector_2d& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::abs_line(pt)} to the end of the path group.
+\end{itemdescr}
+
+\indexlibrarymember{path_builder}{rel_line_to}%
+\begin{itemdecl}
+void rel_line_to(const vector_2d& dpt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::rel_line(pt)} to the end of the path group.
+\end{itemdescr}
+
+\indexlibrarymember{path_builder}{quadratic_curve_to}%
+\begin{itemdecl}
+void quadratic_curve_to(const vector_2d& pt0, const vector_2d& pt1) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Adds a \tcode{path_data::path_item} object constructed from\\ \tcode{path_data::abs_quadratic_curve(pt0, pt1)} to the end of the path group.
+\end{itemdescr}
+
+\indexlibrarymember{path_builder}{rel_quadratic_curve_to}%
+\begin{itemdecl}
+void rel_quadratic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1)
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Adds a \tcode{path_data::path_item} object constructed from\\ \tcode{path_data::rel_quadratic_curve(dpt0, dpt1)} to the end of the path group.
+\end{itemdescr}
+
+\indexlibrarymember{path_builder}{cubic_curve_to}%
+\begin{itemdecl}
+void cubic_curve_to(const vector_2d& pt0, const vector_2d& pt1,
+  const vector_2d& pt2) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+\pnum
+Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::abs_cubic_curve(pt0, pt1, pt2)} to the end of the path group.
+\end{itemdescr}
+
+\indexlibrarymember{path_builder}{rel_cubic_curve_to}%
+\begin{itemdecl}
+void rel_cubic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1,
+  const vector_2d& dpt2) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::rel_cubic_curve(dpt0, dpt1, dpt2)} to the end of the path group.
+\end{itemdescr}
+
+\indexlibrarymember{path_builder}{arc}%
+\begin{itemdecl}
+void arc(const vector_2d& rad, double rot, double sang) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Adds a \tcode{path_data::path_item} object constructed from \\ \tcode{path_data::arc(rad, rot, sang)} to the end of the path group.
+\end{itemdescr}
+
+\indexlibrarymember{path_builder}{insert}%
+\indexlibrarymember{path_builder}{emplace_back}%
+\indexlibrarymember{path_builder}{push_back}%
 \begin{itemdecl}
 iterator insert(const_iterator position, const value_type& x);
 iterator insert(const_iterator position, value_type&& x);
@@ -652,10 +556,8 @@ The complexity is linear in the number of elements inserted plus the
 distance to the end of the path builder.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_builder}!\idxcode{erase}}
-\indexlibrary{\idxcode{erase}!\idxcode{path_builder}}
-\indexlibrary{\idxcode{path_builder}!\idxcode{pop_back}}
-\indexlibrary{\idxcode{pop_back}!\idxcode{path_builder}}
+\indexlibrarymember{erase}{path_builder}%
+\indexlibrarymember{pop_back}{path_builder}%
 \begin{itemdecl}
 iterator erase(const_iterator position);
 iterator erase(const_iterator first, const_iterator last);
@@ -681,8 +583,7 @@ constructor, assignment operator, or move assignment operator of
 \tcode{value_type}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_builder}!\idxcode{clear}}
-\indexlibrary{\idxcode{clear}!\idxcode{path_builder}}
+\indexlibrarymember{clear}{path_builder}%
 \begin{itemdecl}
 void clear() noexcept;
 \end{itemdecl}
@@ -705,10 +606,8 @@ The postconditions listed above are in addition to sequence container requiremen
 
 \rSec1 [pathbuilder.iterators] {\tcode{path_builder} iterators}
 
-\indexlibrary{\idxcode{path_builder}!\idxcode{begin}}
-\indexlibrary{\idxcode{begin}!\idxcode{path_builder}}
-\indexlibrary{\idxcode{path_builder}!\idxcode{cbegin}}
-\indexlibrary{\idxcode{cbegin}!\idxcode{path_builder}}
+\indexlibrarymember{begin}{path_builder}%
+\indexlibrarymember{cbegin}{path_builder}%
 \begin{itemdecl}
 iterator begin() noexcept;
 const_iterator begin() const noexcept;
@@ -717,17 +616,15 @@ const_iterator cbegin() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-An iterator referring to the first \tcode{path_data::path_data_types} item in the path group.
+An iterator referring to the first \tcode{path_data::path_item} item in the path group.
 
 \pnum
 \remarks
-Changing a \tcode{path_data::path_data_types} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_data_types} object or of any subsequent \tcode{path_data::path_data_types} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} unless all of the violations are fixed prior to such processing.
+Changing a \tcode{path_data::path_item} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_item} object or of any subsequent \tcode{path_data::path_item} object in the path group produces undefined behavior when the path group is interpreted as described in \ref{paths.interpretation} unless all of the violations are fixed prior to such interpretation.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_builder}!\idxcode{end}}
-\indexlibrary{\idxcode{end}!\idxcode{path_builder}}
-\indexlibrary{\idxcode{path_builder}!\idxcode{cend}}
-\indexlibrary{\idxcode{cend}!\idxcode{path_builder}}
+\indexlibrarymember{end}{path_builder}%
+\indexlibrarymember{cend}{path_builder}%
 \begin{itemdecl}
 iterator end() noexcept;
 const_iterator end() const noexcept;
@@ -740,13 +637,11 @@ An iterator which is the past-the-end value.
 
 \pnum
 \remarks
-Changing a \tcode{path_data::path_data_types} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_data_types} object or of any subsequent \tcode{path_data::path_data_types} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} unless all of the violations are fixed prior to such processing.
+Changing a \tcode{path_data::path_item} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_item} object or of any subsequent \tcode{path_data::path_item} object in the path group produces undefined behavior when the path group is interpreted as described in \ref{paths.interpretation} unless all of the violations are fixed prior to such interpretation.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_builder}!\idxcode{rbegin}}
-\indexlibrary{\idxcode{rbegin}!\idxcode{path_builder}}
-\indexlibrary{\idxcode{path_builder}!\idxcode{crbegin}}
-\indexlibrary{\idxcode{crbegin}!\idxcode{path_builder}}
+\indexlibrarymember{rbegin}{path_builder}%
+\indexlibrarymember{crbegin}{path_builder}%
 \begin{itemdecl}
 reverse_iterator rbegin() noexcept;
 const_reverse_iterator rbegin() const noexcept;
@@ -759,13 +654,11 @@ An iterator which is semantically equivalent to \tcode{reverse_iterator(end)}.
 
 \pnum
 \remarks
-Changing a \tcode{path_data::path_data_types} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_data_types} object or of any subsequent \tcode{path_data::path_data_types} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} all of the violations are fixed prior to such processing.
+Changing a \tcode{path_data::path_item} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_item} object or of any subsequent \tcode{path_data::path_item} object in the path group produces undefined behavior when the path group is interpreted as described in \ref{paths.interpretation} all of the violations are fixed prior to such interpretation.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_builder}!\idxcode{rend}}
-\indexlibrary{\idxcode{rend}!\idxcode{path_builder}}
-\indexlibrary{\idxcode{path_builder}!\idxcode{crend}}
-\indexlibrary{\idxcode{crend}!\idxcode{path_builder}}
+\indexlibrarymember{rend}{path_builder}%
+\indexlibrarymember{crend}{path_builder}%
 \begin{itemdecl}
 reverse_iterator rend() noexcept;
 const_reverse_iterator rend() const noexcept;
@@ -778,77 +671,12 @@ An iterator which is semantically equivalent to \tcode{reverse_iterator(begin)}.
 
 \pnum
 \remarks
-Changing a \tcode{path_data::path_data_types} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_data_types} object or of any subsequent \tcode{path_data::path_data_types} object in the path group shall result in undefined behavior when the path group is processed as described in \ref{paths.processing} unless all of the violations are fixed prior to such processing.
+Changing a \tcode{path_data::path_item} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_item} object or of any subsequent \tcode{path_data::path_item} object in the path group produces undefined behavior when the path group is interpreted as described in \ref{paths.interpretation} unless all of the violations are fixed prior to such interpretation.
 \end{itemdescr}
 
-\rSec1 [pathbuilder.observers] {\tcode{path_builder} observers}
+\rSec1[pathbuilder.special] {\tcode{path_builder} specialized algorithms}%
 
-\indexlibrary{\idxcode{path_builder}!\idxcode{path_extents}}
-\indexlibrary{\idxcode{path_extents}!\idxcode{path_builder}}
-\begin{itemdecl}
-experimental::io2d::rectangle path_extents() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-A \tcode{rectangle} object which contains the extents of the path segments, including degenerate path segments, in the path group when it is processed as described in \ref{paths.processing}.
-\enternote
-By using path segments, this description intentionally excludes points established by \tcode{move_to} and \tcode{rel_move_to} operations from the extents value except where those points are subsequently used in defining a path segment.
-\exitnote
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_builder}!\idxcode{has_current_point}}
-\indexlibrary{\idxcode{has_current_point}!\idxcode{path_builder}}
-\begin{itemdecl}
-bool has_current_point() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-If the current point contains a value, \tcode{true}, otherwise \tcode{false}.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_builder}!\idxcode{current_point}}
-\indexlibrary{\idxcode{current_point}!\idxcode{path_builder}}
-\begin{itemdecl}
-vector_2d current_point() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\requires
-The current point contains a value.
-
-\pnum
-\returns
-The value of the current point.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_builder}!\idxcode{transform_matrix}}
-\indexlibrary{\idxcode{transform_matrix}!\idxcode{path_builder}}
-\begin{itemdecl}
-matrix_2d transform_matrix() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-The value of the transformation matrix.
-\end{itemdescr}
-
-\indexlibrary{\idxcode{path_builder}!\idxcode{origin}}
-\indexlibrary{\idxcode{origin}!\idxcode{path_builder}}
-\begin{itemdecl}
-vector_2d origin() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-The value of the origin.
-\end{itemdescr}
-
-\rSec1[pathbuilder.special] {\tcode{path_builder} specialized algorithms}
-
-\indexlibrary{path_builder}{swap}
-\indexlibrary{swap}{path_builder}
+\indexlibrary{\idxcode{swap}!\idxcode{path_builder}}%
 \begin{itemdecl}
 template <class Allocator>
 void swap(path_builder<Allocator>& lhs, path_builder<Allocator>& rhs)
@@ -859,4 +687,3 @@ void swap(path_builder<Allocator>& lhs, path_builder<Allocator>& rhs)
 \effects
 As if by \tcode{lhs.swap(rhs)}.
 \end{itemdescr}
-

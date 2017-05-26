@@ -61,7 +61,7 @@ constexpr abs_ellipse(const vector_2d& ctr, double x, double y) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\preconditions
+\requires
 \tcode{x >= 0.0}.
 
 \pnum
@@ -87,7 +87,7 @@ constexpr explicit abs_ellipse(const circle& c) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\preconditions
+\requires
 \tcode{c.radius() >= 0.0}.
 
 \pnum
@@ -122,7 +122,7 @@ The value of Center is \tcode{ctr}.
 constexpr void x_axis(double rad) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-\preconditions
+\requires
 \tcode{rad >= 0.0}.
 
 \pnum
@@ -135,7 +135,7 @@ The value of X Axis Radius is \tcode{rad}.
 constexpr void y_axis(double rad) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-\preconditions
+\requires
 \tcode{rad >= 0.0}.
 
 \pnum

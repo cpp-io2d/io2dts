@@ -8,9 +8,9 @@
 The class \tcode{image_surface} derives from the \tcode{surface} class and provides an interface to a raster graphics data graphics resource.
 
 \pnum
-\enternote
+\begin{note}
 Because of the functionality it provides and what it can be used for, it is expected that developers familiar with other graphics technologies will think of the \tcode{image_surface} class as being a form of \term{render target}. This is intentional, though this \documenttypename{} does not formally define or use that term to avoid any minor ambiguities and differences in its meaning between the various graphics technologies that do use the term render target.
-\exitnote
+\end{note}
 
 \rSec1 [imagesurface.synopsis] {\tcode{image_surface} synopsis}
 
@@ -43,7 +43,7 @@ image_surface(experimental::io2d::format fmt, int width, int height);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\preconditions
+\requires
 \tcode{w >= 1}.
 
 \pnum
@@ -71,7 +71,7 @@ image_surface(filesystem::path f, image_file_format i,
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\preconditions
+\requires
 \tcode{f} is a file and its contents are data in either JPEG format or PNG format.
 
 \pnum
@@ -96,7 +96,7 @@ As specified in Error reporting [fs.err.report] in \cppseventeen.
 Any error that could result from trying to access \tcode{f}, open \tcode{f} for reading, or reading data from \tcode{f}.
 
 \pnum
-Other errors, if any, produced by this function are \impldef{image_surface!data}.
+Other errors, if any, produced by this function are \impldefplain{image_surface!data}.
 \end{itemdescr}
 
 \rSec1 [imagesurface.members] {\tcode{image_surface} members}
@@ -107,7 +107,7 @@ void save(filesystem::path p, image_file_format i);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\preconditions
+\requires
 \tcode{p} shall be a valid path to a file. The file need not exist provided that the other components of the path are valid.
 
 \pnum
@@ -129,7 +129,7 @@ As specified in Error reporting [fs.err.report] in \cppseventeen.
 Any error that could result from trying to create \tcode{f}, access \tcode{f}, or write data to \tcode{f}.
 
 \pnum
-Other errors, if any, produced by this function are \impldef{image_surface!data}.
+Other errors, if any, produced by this function are \impldefplain{image_surface!data}.
 \end{itemdescr}
 
 \rSec1 [imagesurface.observers] {\tcode{image_surface} observers}

@@ -19,10 +19,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     // \ref{\vectortwod.cons}, construct/copy/move/destroy:
     constexpr vector_2d() noexcept;
     constexpr vector_2d(double x, double y) noexcept;
-    constexpr vector_2d(const vector_2d&) noexcept = default;
-    constexpr vector_2d& operator=(const vector_2d&) noexcept = default;
-    vector_2d(vector_2d&&) noexcept = default;
-    vector_2d& operator=(vector_2d&&) noexcept = default;
 
     // \ref{\vectortwod.modifiers}, modifiers:
     constexpr void x(double value) noexcept;
@@ -38,9 +34,12 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     vector_2d to_unit() const noexcept;
     
     // \ref{\vectortwod.member.ops}, member operators:
-    vector_2d& operator+=(const vector_2d& rhs) noexcept;
-    vector_2d& operator-=(const vector_2d& rhs) noexcept;
-    vector_2d& operator*=(double rhs) noexcept;
+    constexpr vector_2d& operator+=(const vector_2d& rhs) noexcept;
+    constexpr vector_2d& operator-=(const vector_2d& rhs) noexcept;
+    constexpr vector_2d& operator*=(double rhs) noexcept;
+    constexpr vector_2d& operator*=(const vector_2d& rhs) noexcept;
+    constexpr vector_2d& operator/=(double rhs) noexcept;
+    constexpr vector_2d& operator/=(const vector_2d& rhs) noexcept;
   };
   
   // \ref{\vectortwod.ops}, non-member operators:
@@ -56,6 +55,12 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     noexcept;
   constexpr vector_2d operator*(const vector_2d& lhs, double rhs) noexcept;
   constexpr vector_2d operator*(double lhs, const vector_2d& rhs) noexcept;
+  constexpr vector_2d operator*(const vector_2d& lhs, const vector_2d& rhs)
+    noexcept;
+  constexpr vector_2d operator/(const vector_2d& lhs, double rhs) noexcept;
+  constexpr vector_2d operator/(double lhs, const vector_2d& rhs) noexcept;
+  constexpr vector_2d operator/(const vector_2d& lhs, const vector_2d& rhs)
+    noexcept;
 } } } }
 \end{codeblock}
 
@@ -149,7 +154,7 @@ constexpr double dot(const vector_2d& other) const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{*this.x() * other.x() + *this.y() * other.y()}.
+\tcode{x() * other.x() + y() * other.y()}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{vector_2d}!\idxcode{magnitude}}
@@ -182,14 +187,15 @@ double angular_direction() const noexcept
 \begin{itemdescr}
 \pnum
 \returns
-The result of \tcode{atan2(*this.y(), *this.x())} if it is greater than or equal to \tcode{0.0}.
+The result of \tcode{atan2(y(), x())} if it is greater than or equal to \tcode{0.0}.
 
 \pnum
-Otherwise, \tcode{atan2(*this.y(), *this.x()) + two_pi<double>}. 
+Otherwise, \tcode{atan2(y(), x()) + two_pi<double>}. 
 
 \pnum
-\realnotes
+\begin{note}
 The purpose of adding $2\pi$ if the result is negative is to produce values in the range \range{0.0}{$2\pi$}.
+\end{note}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{vector_2d}!\idxcode{to_unit}}
@@ -200,7 +206,7 @@ vector_2d to_unit() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{vector_2d\{ *this.x() / magnitude(), *this.y() / magnitude()\}}.
+\tcode{vector_2d\{ x() / magnitude(), y() / magnitude()\}}.
 \end{itemdescr}
 
 \rSec1 [\vectortwod.member.ops] {\tcode{vector_2d} member operators}
@@ -213,7 +219,7 @@ vector_2d& operator+=(const vector_2d& rhs) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-\tcode{*this = *this + rhs}.
+\tcode{*this = (*this) + rhs}.
 	
 \pnum
 \returns
@@ -228,8 +234,8 @@ vector_2d& operator-=(const vector_2d& rhs) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-\tcode{*this = *this - rhs}.
-	
+Equivalent to: \tcode{*this = (*this) - rhs;}.
+
 \pnum
 \returns
 \tcode{*this}.
@@ -239,11 +245,12 @@ vector_2d& operator-=(const vector_2d& rhs) noexcept;
 \indexlibrary{\idxcode{operator*=}!\idxcode{vector_2d}}
 \begin{itemdecl}
 vector_2d& operator*=(double rhs) noexcept;
+vector_2d& operator*=(const vector_2d& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-\tcode{*this = *this * rhs}.
+Equivalent to: \tcode{*this = (*this) * rhs;}.
 	
 \pnum
 \returns

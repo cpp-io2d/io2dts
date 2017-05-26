@@ -20,9 +20,9 @@ A \tcode{brush} object has a brush type of \tcode{brush_type}, which indicates w
 As a result of technological limitations and considerations, a \tcode{brush} object's graphics data can have less precision than the data from which it was created.
 
 \pnum
-\enterexample
+\begin{example}
 Several graphics and rendering technologies that are currently widely used typically store individual color and alpha channel data as 8-bit unsigned normalized integer values while the \tcode{double} type that is used by the \tcode{bgra_color} class for individual color and alpha is often a 64-bit value. As such, it is possible for a loss of precision when transforming the 64-bit channel data of an \tcode{bgra_color} object to the 8-bit channel data that is commonly used internally in such graphics and rendering technologies.
-\exitexample
+\end{example}
 
 \rSec1 [brush.synopsis] {\tcode{brush} synopsis}
 

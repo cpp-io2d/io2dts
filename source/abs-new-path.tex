@@ -1,0 +1,112 @@
+%!TEX root = io2d.tex
+\rSec0 [absnewpath] {Class \tcode{abs_new_path}}%
+
+\pnum
+\indexlibrary{\idxcode{abs_new_path}}%
+The class \tcode{abs_new_path} describes a path item that creates a new path and makes the previous path, if any, an open path unless it was made a closed path by a \tcode{close_path} object.
+
+\pnum
+It has an \term{at point} of type \tcode{vector_2d}.
+
+\pnum
+When interpreting a path group, the path's last-move-to-point and current point are set to the value of the at point.
+
+\rSec1 [absnewpath.synopsis] {\tcode{abs_new_path} synopsis}%
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  namespace path_data {
+    class abs_new_path {
+    public:
+      // \ref{absnewpath.cons}, construct:
+      constexpr abs_new_path() noexcept;
+      constexpr explicit abs_new_path(const vector_2d& pt) noexcept;
+
+      // \ref{absnewpath.modifiers}, modifiers:
+      constexpr void at(const vector_2d& pt) noexcept;
+
+      // \ref{absnewpath.observers}, observers:
+      constexpr vector_2d at() const noexcept;
+    };
+    
+    // \ref{absnewpath.nonmember}, non-members:
+    constexpr bool operator==(const abs_new_path& lhs, const abs_new_path& rhs) 
+      noexcept;
+    constexpr bool operator!=(const abs_new_path& lhs, const abs_new_path& rhs) 
+      noexcept;
+  }
+} } } }
+\end{codeblock}
+
+\rSec1 [absnewpath.cons] {\tcode{abs_new_path} constructors}%
+
+\indexlibrary{\idxcode{abs_new_path}!constructor}%
+\begin{itemdecl}
+constexpr abs_new_path() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to: \tcode{abs_new_path\{ vector_2d() \};}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{abs_new_path}!constructor}%
+\begin{itemdecl}
+constexpr explicit abs_new_path(const vector_2d& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{abs_new_path}.
+
+\pnum
+The at point is \tcode{pt}.
+\end{itemdescr}
+
+\rSec1 [absnewpath.modifiers]{\tcode{abs_new_path} modifiers}%
+
+\indexlibrarymember{at}{abs_new_path}%
+\begin{itemdecl}
+constexpr void at(const vector_2d& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+The at point is \tcode{pt}.
+\end{itemdescr}
+
+\rSec1 [absnewpath.observers]{\tcode{abs_new_path} observers}%
+
+\indexlibrarymember{at}{abs_new_path}%
+\begin{itemdecl}
+constexpr vector_2d at() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The at point.
+\end{itemdescr}
+
+\rSec1 [absnewpath.nonmember]{Non-member functions}%
+
+\indexlibrary{operator==}{abs_new_path}%
+\begin{itemdecl}
+constexpr bool operator==(const abs_new_path& lhs, const abs_new_path& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{lhs.at() == rhs.at()}.
+\end{itemdescr}
+
+\indexlibrary{operator!=}{abs_new_path}%
+\begin{itemdecl}
+constexpr bool operator!=(const abs_new_path& lhs, const abs_new_path& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{!(lhs == rhs)}.
+\end{itemdescr}

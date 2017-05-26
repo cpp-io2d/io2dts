@@ -15,16 +15,16 @@ a path segment that has the same values for its start point, end point, and, if 
 \indexdefn{initial path segment}
 \definition{initial path segment}{\iotwod.defns.initialpathsegment}
 a path segment whose start point is not defined as being the end point of another path segment
-\enternote
+\begin{note}
 It is possible for the initial path segment and final path segment to be the same path segment.
-\exitnote
+\end{note}
 
 \indexdefn{final path segment}
 \definition{final path segment}{\iotwod.defns.finalpathsegment}
 a path segment whose end point does not define the start point of any other path segment
-\enternote
+\begin{note}
 It is possible for the initial path segment and final path segment to be the same path segment.
-\exitnote
+\end{note}
 
 \indexdefn{path instruction}
 \definition{path instruction}{\iotwod.defns.pathinstruction}
@@ -41,9 +41,9 @@ a collection of path items where the end point of each path segment, except the 
 \indexdefn{current point}
 \definition{current point}{\iotwod.defns.currentpoint}
 a point established by various operations used in creating a path
-\enternote
+\begin{note}
 A new path has no current point except as otherwise specified.
-\exitnote
+\end{note}
 
 \indexdefn{last-move-to point}
 \definition{last-move-to point}{\iotwod.defns.lastmovetopoint}
@@ -53,6 +53,14 @@ the point in a path that is the start point of the initial path segment
 \definition{path group}{\iotwod.defns.pathgroup}
 a collection of paths
 
+\indexdefn{path group origin}
+\definition{path group origin}{\iotwod.defns.pathgrporigin}
+a point to which each of the points in a path group is relative
+
+\indexdefn{path group transformation matrix}
+\definition{path group transformation matrix}{\iotwod.defns.pathgrptransform}
+an affine transformation matrix used to apply affine transformations to the points in a path group
+
 \indexdefn{closed path}
 \definition{closed path}{\iotwod.defns.closedpath}
 a path with one or more path segments where the last-move-to point is used to define the end point of the path's final path segment
@@ -60,13 +68,13 @@ a path with one or more path segments where the last-move-to point is used to de
 \indexdefn{open path}
 \definition{open path}{\iotwod.defns.openpath}
 a path with one or more path segments where the last-move-to point is not used to define the end point of the path's final path segment
-\enternote
+\begin{note}
 Even if the start point of the initial path segment and the end point of the final path segment are assigned the same coordinates, the path is still an open path since the final path segment's end point is not defined as being the start point of the initial segment but instead merely happens to have the same value as that point.
-\exitnote
-
-\indexdefn{degenerate path}
-\definition{degenerate path}{\iotwod.defns.degeneratepath}
-a path with only one path segment
-\enternote
-The path segment is not required to be a degenerate path segment.
-\exitnote
+\end{note}
+%
+%\indexdefn{degenerate path}
+%\definition{degenerate path}{\iotwod.defns.degeneratepath}
+%a path with only one path segment
+%\begin{note}
+%The path segment is not required to be a degenerate path segment.
+%\end{note}

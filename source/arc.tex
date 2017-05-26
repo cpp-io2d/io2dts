@@ -1,0 +1,176 @@
+%!TEX root = io2d.tex
+\rSec0 [arc] {Class \tcode{arc}}%
+
+\rSec1 [arc.general] {In general}%
+
+\pnum
+\indexlibrary{\idxcode{arc}}%
+The class \tcode{arc} describes a path item that adds an arc path segment to a path.
+
+\pnum
+It has a \term{radius} of type \tcode{vector_2d}, a \term{rotation} of type \tcode{double}, and a \term{start angle} of type \tcode{double}.
+
+\pnum
+The rotation and start angle are in radians. The arc begins at its start angle and ends at the angle that is rotation radians from the start angle.
+
+\pnum
+\begin{note}
+Negative rotation is clockwise. Positive rotation is counterclockwise.
+\end{note}
+
+\pnum
+The radius describes the \xaxis radius and \yaxis radius of the ellipse that the arc is on. The point of the start angle is the path's current point.
+
+\pnum
+After the arc is added to the path, the path's current point is the point at which the arc ends.
+
+\rSec1 [arc.synopsis] {\tcode{arc} synopsis}%
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  namespace path_data {
+    class arc {
+    public:
+      // \ref{arc.cons}, construct/copy/move/destroy:
+      constexpr arc() noexcept;
+      constexpr arc(const vector_2d& rad,
+        double rot, double sang) noexcept;
+
+      // \ref{arc.modifiers}, modifiers:
+      constexpr void radius(const vector_2d& rad) noexcept;
+      constexpr void rotation(double rot) noexcept;
+      constexpr void start_angle(double radians) noexcept;
+
+      // \ref{arc.observers}, observers:
+      constexpr vector_2d radius() const noexcept;
+      constexpr double rotation() const noexcept;
+      constexpr double start_angle() const noexcept;
+    };
+    
+    // \ref{arc.nonmember}, non-members
+    constexpr bool operator==(const arc& lhs, const arc& rhs) noexcept;
+    constexpr bool operator!=(const arc& lhs, const arc& rhs) noexcept;
+  }
+} } } }
+\end{codeblock}
+
+\rSec1 [arc.cons] {\tcode{arc} constructors}%
+
+\indexlibrary{\idxcode{arc}!constructor}%
+\begin{itemdecl}
+constexpr arc() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to: \tcode{arc\{ vector_2d(10.0, 10.0), pi<double>, pi<double> \};}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{arc}!constructor}%
+\begin{itemdecl}
+constexpr arc(const vector_2d& rad, double rot,
+  double start_angle = pi<double>) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{arc}.
+
+\pnum
+The radius is \tcode{rad}.
+
+\pnum
+The rotation is \tcode{rot}.
+
+\pnum
+The start angle is \tcode{sang}.
+\end{itemdescr}
+
+\rSec1 [arc.modifiers]{\tcode{arc} modifiers}%
+
+\indexlibrarymember{radius}{arc}%
+\begin{itemdecl}
+constexpr void radius(const vector_2d& rad) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+The radius is \tcode{rad}.
+\end{itemdescr}
+
+\indexlibrarymember{rotation}{arc}%
+\begin{itemdecl}
+constexpr void rotation(double rot) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+The rotation is \tcode{rot}.
+\end{itemdescr}
+
+\indexlibrarymember{start_angle}{arc}%
+\begin{itemdecl}
+constexpr void start_angle(double sang) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+The start angle is \tcode{sang}.
+\end{itemdescr}
+
+\rSec1 [arc.observers]{\tcode{arc} observers}%
+
+\indexlibrarymember{radius}{arc}%
+\begin{itemdecl}
+constexpr vector_2d radius() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The radius.
+\end{itemdescr}
+
+\indexlibrarymember{rotation}{arc}%
+\begin{itemdecl}
+constexpr double rotation() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The rotation.
+\end{itemdescr}
+
+\indexlibrarymember{start_angle}{arc}%
+\begin{itemdecl}
+constexpr double start_angle() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The start angle.
+\end{itemdescr}
+
+\rSec1 [arc.nonmember]{Non-member functions}%
+
+\indexlibrarymember{operator==}{arc}%
+\begin{itemdecl}
+constexpr bool operator==(const arc& lhs, const arc& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\begin{codeblock}
+lhs.radius() == rhs.radius() && lhs.rotation() == rhs.rotation() &&
+lhs.start_angle() && rhs.start_angle()
+\end{codeblock}
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{arc}%
+\begin{itemdecl}
+constexpr bool operator!=(const arc& lhs, const arc& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{!(lhs == rhs)}.
+\end{itemdescr}

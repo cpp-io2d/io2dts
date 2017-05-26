@@ -87,8 +87,8 @@
 %%--------------------------------------------------
 % set heading style for annexes
 \newcommand{\Annex}[3]{\chapter[#2]{(#3)\protect\\#2\hfill[#1]}\relax\label{#1}}
-\newcommand{\infannex}[2]{\Annex{#1}{#2}{informative}}
-\newcommand{\normannex}[2]{\Annex{#1}{#2}{normative}}
+\newcommand{\infannex}[2]{\Annex{#1}{#2}{informative}\addxref{#1}}
+\newcommand{\normannex}[2]{\Annex{#1}{#2}{normative}\addxref{#1}}
 
 %%--------------------------------------------------
 %%  set footnote style
@@ -98,7 +98,16 @@
 % set style for main text
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1ex}
-\setlength{\partopsep}{-1.5ex}
+
+% set style for lists (itemizations, enumerations)
+\setlength{\partopsep}{0pt}
+\newlist{indenthelper}{itemize}{1}
+\newlist{bnflist}{itemize}{1}
+\setlist[itemize]{parsep=\parskip, partopsep=0pt, itemsep=0pt, topsep=0pt}
+\setlist[enumerate]{parsep=\parskip, partopsep=0pt, itemsep=0pt, topsep=0pt}
+\setlist[indenthelper]{parsep=\parskip, partopsep=0pt, itemsep=0pt, topsep=0pt, label={}}
+\setlist[bnflist]{parsep=\parskip, partopsep=0pt, itemsep=0pt, topsep=0pt, label={},
+                  leftmargin=\bnfindentrest, listparindent=-\bnfindentinc, itemindent=\listparindent}
 
 %%--------------------------------------------------
 %%  set caption style and delimiter

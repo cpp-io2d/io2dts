@@ -1,0 +1,39 @@
+%!TEX root = io2d.tex
+
+\rSec0 [paths.interpretation]{Path group interpretation}
+
+\pnum
+A path group is \term{interpreted} when its path items are evaluated sequentially starting with the first path item in accordance with the following requirements. The data contained in a \tcode{path_group} object is as-if it were the data of a path group that has been interpreted.
+
+\pnum
+When interpreting a path group, the initial value of its path group origin is \tcode{vector_2d\{ \}} and the initial value of its path group tranformation matrix is \tcode{matrix_2d\{ \}}.
+
+\pnum
+Defining the path group's path group origin as \tcode{o} and its path group transformation matrix as \tcode{m}, when path items are interpreted, each point \tcode{pt} in a path group is evaluated as-if its value is the return value of \tcode{m.transform_point(pt - o) + o;}. Where the path item is a relative path item, the value of \tcode{pt} is the value of the point after the current point has been added to it. This paragraph is not applicable to the point contained in a \tcode{change_origin} object.
+
+\pnum
+When a path group is interpreted, if a path item sets the value of the current point, defining \tcode{cpt} as the point that the path item specifies as the new value for the current point, the value of the current point is \tcode{cpt}. Where the path item is a relative path item, the value of the current point is the result of adding \tcode{cpt} to the current point.
+
+\pnum
+\begin{note}
+Certain path items, when interpreted, set the value of both the current point and the last-move-to point. If, during interpretation, the path group origin or path group transformation matrix has a value that is different from its initial value, the new values for the current point and the last-move-to point will be determined differently. This is because the previous paragraph only applies when determining the value of the current point.
+\end{note}
+
+\pnum
+\begin{note}
+Because this subclause describes the conditions where the points of relative path items are added to the current point when a path group is interpreted, no mention of any such augmentation is included in the descriptions of relative path items.
+\end{note}
+
+%\pnum
+%\begin{note}
+%The points of path items in a path group are not subject to any 
+%When path items are added to a path group, their points, if any, are stored without regard to the path group origin or the path group transformation matrix.
+%
+%Because of that, when a path group is interpreted, the current point is not  because it is used to calculate the value of points in relative path items before they are interpreted.
+%\end{note}
+%
+\pnum
+Except for \tcode{change_origin} and \tcode{change_matrix} objects, if any, the first path item in a path group shall be an \tcode{abs_new_path} object when it is interpreted; no diagnostic is required.
+%\begin{note}
+%Only an \tcode{abs_new_path} object establishes a non-relative current point for a path. Except for \tcode{change_origin}, \tcode{change_matrix}, and \tcode{abs_new_path} objects, all other path items require a value for the path's current point.
+%\end{note}

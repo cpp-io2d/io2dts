@@ -12,9 +12,9 @@ Three of the \tcode{filter} enumerators, \tcode{filter::fast}, \tcode{filter::go
 The other two, \tcode{filter::nearest} and \tcode{filter::bilinear}, each specify a particular filter that shall be used.
 
 \pnum
-\enternote
+\begin{note}
 The only type of brush that has a \pixmap as its \underlyingsurface is a brush with a brush type of \tcode{brush_type::surface}.
-\exitnote
+\end{note}
 
 \pnum
 See Table~\ref{tab:filter.meanings} for the meaning of each
@@ -50,23 +50,23 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \\ \capsep
  \endhead
  \tcode{fast}
- & The filter that corresponds to this value is \impldef{filter!fast}. The implementation shall ensure that the time complexity of the chosen filter is not greater than the time complexity of the filter that corresponds to \tcode{filter::good}.
- \enternote
+ & The filter that corresponds to this value is \impldefplain{filter!fast}. The implementation shall ensure that the time complexity of the chosen filter is not greater than the time complexity of the filter that corresponds to \tcode{filter::good}.
+ \begin{note}
  By choosing this value, the user is hinting that performance is more important than quality.
- \exitnote
+ \end{note}
  \\
  \tcode{good}
- & The filter that corresponds to this value is \impldef{filter!good}. The implementation shall ensure that the time complexity of the chosen formula is not greater than the time complexity of the formula for \tcode{filter::best}.
- \enternote
+ & The filter that corresponds to this value is \impldefplain{filter!good}. The implementation shall ensure that the time complexity of the chosen formula is not greater than the time complexity of the formula for \tcode{filter::best}.
+ \begin{note}
  By choosing this value, the user is hinting that quality and performance are equally important.
- \exitnote
+ \end{note}
  \\
  \tcode{best}
- & The filter that corresponds to this value is \impldef{filter!best}.
- \enternote
+ & The filter that corresponds to this value is \impldefplain{filter!best}.
+ \begin{note}
  By choosing this value, the user is hinting that quality is more important 
  than performance.
- \exitnote
+ \end{note}
  \\
  \tcode{nearest}
  & Nearest-neighbor interpolation filtering shall be used.
@@ -74,6 +74,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  \\
  \tcode{bilinear}
  & Bilinear interpolation filtering shall be used.
-% The distance-weighted average of the four nearest pixels is used to create an interpolated color for the destination pixel. If some source pixel values do not exist (e.g. because an edge or corner of the source has been reached) then the current \tcode{wrap_mode} should be considered in order to determine the values for the missing source pixels. If a hardware sampler is available and offers bilinear filtering, implementations may use it even if its results do not conform to those produced by the description of bilinear filtering provided by this standard.% Whether mipmapping is used and whether mipmaps are generated for sources that do not have them is \impldef{filter!bilinear mipmapping}.
+% The distance-weighted average of the four nearest pixels is used to create an interpolated color for the destination pixel. If some source pixel values do not exist (e.g. because an edge or corner of the source has been reached) then the current \tcode{wrap_mode} should be considered in order to determine the values for the missing source pixels. If a hardware sampler is available and offers bilinear filtering, implementations may use it even if its results do not conform to those produced by the description of bilinear filtering provided by this standard.% Whether mipmapping is used and whether mipmaps are generated for sources that do not have them is \impldefplain{filter!bilinear mipmapping}.
  \\
 \end{libreqtab2}

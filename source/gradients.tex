@@ -29,9 +29,9 @@ The begin point and end point of a linear gradient define a line segment, with a
 Color stop offset values in the range \crange{0.0}{1.0} linearly correspond to points on the line segment.
 
 \pnum
-\enterexample
+\begin{example}
 Given a linear gradient with a begin point of \tcode{vector_2d(0.0, 0.0)} and an end point of \tcode{vector_2d(10.0, 5.0)}, a color stop offset value of 0.6 would correspond to the point \tcode{vector_2d(6.0, 3.0)}.
-\exitexample
+\end{example}
 
 \pnum
 To determine the offset value of a point $p$ for a linear gradient, perform the following steps:
@@ -111,28 +111,28 @@ For any offset value $o$, its color value shall be determined according to the f
 \item If two or more color stops have an offset value equal to $o$, $o$'s color value shall be the color value of the color stop which has the lowest index value among the set of color stops that have an offset value equal to $o$ and the remainder of \ref{gradients.sampling} is inapplicable.
 
 \item When no color stop has the offset value of \tcode{0.0}, then, defining $n$ to be the offset value that is nearest to \tcode{0.0} among the offset values in the set of all color stops, if $o$ is in the offset range $[0, n)$, $o$'s color value shall be \tcode{bgra_color::transparent_black()} and the remainder of these rules are inapplicable.
-\enternote
+\begin{note}
 Since the range described does not include $n$, it does not matter how many color stops have $n$ as their offset value for purposes of this rule.
-\exitnote
+\end{note}
 
 \item When no color stop has the offset value of \tcode{1.0}, then, defining $n$ to be the offset value that is nearest to \tcode{1.0} among the offset values in the set of all color stops, if $o$ is in the offset range $(n, 1]$, $o$'s color value shall be \tcode{bgra_color::transparent_black()} and the remainder of these rules are inapplicable.
-\enternote
+\begin{note}
 Since the range described does not include $n$, it does not matter how many color stops have $n$ as their offset value for purposes of this rule.
-\exitnote
+\end{note}
 
 \item Each color stop has, at most, two adjacent color stops: one to its left and one to its right.
 
 \item Adjacency of color stops is initially determined by offset values. If two or more color stops have the same offset value then index values are used to determine adjacency as described below.
 
 \item For each color stop \textit{a}, the \term{set of color stops to its left} are those color stops which have an offset value which is closer to \tcode{0.0} than \textit{a}'s offset value.
-\enternote
+\begin{note}
 This includes any color stops with an offset value of \tcode{0.0} provided that \textit{a}'s offset value is not \tcode{0.0}.
-\exitnote
+\end{note}
 
 \item For each color stop \textit{b}, the \term{set of color stops to its right} are those color stops which have an offset value which is closer to \tcode{1.0} than \textit{b}'s offset value.
-\enternote
+\begin{note}
 This includes any color stops with an offset value of \tcode{1.0} provided that \textit{b}'s offset value is not \tcode{1.0}.
-\exitnote
+\end{note}
 
 \item A color stop which has an offset value of \tcode{0.0} does not have an adjacent color stop to its left.
 
@@ -157,14 +157,14 @@ This includes any color stops with an offset value of \tcode{1.0} provided that 
 	\item If Wrap Mode is \tcode{wrap_mode::pad}, if $o$ is negative then the color value of $o$ shall be the same as-if the value of $o$ was \tcode{0.0}, otherwise the color value of $o$ shall be the same as-if the value of $o$ was \tcode{1.0}.
 	
 	\item If Wrap Mode is \tcode{wrap_mode::repeat}, then \tcode{1.0} shall be added to or subtracted from $o$ until $o$ is in the range $[0,1]$, at which point its color value is the color value for the modified value of $o$ as determined by these rules.
-	\enterexample
+	\begin{example}
 	Given $o == 2.1$, after application of this rule $o == 0.1$ and the color value of $o$ shall be the same value as-if the initial value of $o$ was $0.1$.
 	
 	Given $o == -0.3$, after application of this rule $o == 0.7$ and the color value of $o$ shall be the same as-if the initial value of $o$ was $0.7$.
-	\exitexample
+	\end{example}
 	
 	\item If Wrap Mode is \tcode{wrap_mode::reflect}, $o$ shall be set to the absolute value of $o$, then 2.0 shall be subtracted from $o$ until $o$ is in the range $[0,2]$, then if $o$ is in the range $(1,2]$ then $o$ shall be set to \tcode{1.0 - (o - 1.0)}, at which point its color value is the color value for the modified value of $o$ as determined by these rules.
-	\enterexample
+	\begin{example}
 	Given $o == 2.8$, after application of this rule $o == 0.8$ and the color value of $o$ shall be the same value as-if the initial value of $o$ was $0.8$.
 	
 	Given $o == 3.6$, after application of this rule $o == 0.4$ and the color value of $o$ shall be the same value as-if the initial value of $o$ was $0.4$.
@@ -172,7 +172,7 @@ This includes any color stops with an offset value of \tcode{1.0} provided that 
 	Given $o == -0.3$, after application of this rule $o == 0.3$ and the color value of $o$ shall be the same as-if the initial value of $o$ was $0.3$.
 	
 	Given $o == -5.8$, after application of this rule $o == 0.2$ and the color value of $o$ shall be the same as-if the initial value of $o$ was $0.2$.
-	\exitexample
+	\end{example}
 	\end{itemize}
 \end{enumeratea}
 

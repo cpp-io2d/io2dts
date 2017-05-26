@@ -6,6 +6,9 @@
 The class \tcode{rel_ellipse} describes a path instruction that adds an ellipse to the current path.
 
 \pnum
+This is a relative path item.
+
+\pnum
 It has a Center of type \tcode{vector_2d}, an X Axis Radius of type \tcode{double}, and a Y Axis Radius of type \tcode{double}.
 
 \rSec1 [relellipse.synopsis] {\tcode{abs_ellipse} synopsis}
@@ -61,7 +64,7 @@ constexpr rel_ellipse(const vector_2d& ctr, double x, double y) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\preconditions
+\requires
 \tcode{x >= 0.0}.
 
 \pnum
@@ -87,7 +90,7 @@ constexpr explicit rel_ellipse(const circle& c) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\preconditions
+\requires
 \tcode{c.radius() >= 0.0}.
 
 \pnum
@@ -122,7 +125,7 @@ The value of Center is \tcode{ctr}.
 constexpr void x_axis(double rad) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-\preconditions
+\requires
 \tcode{rad >= 0.0}.
 
 \pnum
@@ -135,7 +138,7 @@ The value of X Axis Radius is \tcode{rad}.
 constexpr void y_axis(double rad) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-\preconditions
+\requires
 \tcode{rad >= 0.0}.
 
 \pnum

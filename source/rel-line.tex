@@ -1,15 +1,18 @@
 %!TEX root = io2d.tex
-\rSec0 [relline] {Class \tcode{rel_line}}
+\rSec0 [relline] {Class \tcode{rel_line}}%
 
 \pnum
-\indexlibrary{\idxcode{rel_line}}
-The class \tcode{rel_line} describes a path segment that is a line.
+\indexlibrary{\idxcode{rel_line}}%
+The class \tcode{rel_line} describes a path item that adds a line path segment to a path.
 
 \pnum
-It has an end point of type \tcode{vector_2d}.
+This is a relative path item.
 
 \pnum
-Its end point is relative to the most recently established current point.
+It has an \term{end point} of type \tcode{vector_2d}.
+
+\pnum
+After the line is added to the path, the path's current point is the end point.
 
 \rSec1 [relline.synopsis] {\tcode{rel_line} synopsis}
 
@@ -28,26 +31,29 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       // \ref{relline.observers}, observers:
       constexpr vector_2d to() const noexcept;
     };
-  };
+    
+    \ref{relline.nonmember}, non-members
+    constexpr bool operator==(const rel_line& lhs, const rel_line& rhs) 
+      noexcept;
+    constexpr bool operator!=(const rel_line& lhs, const rel_line& rhs) 
+      noexcept;
+  }
 } } } }
 \end{codeblock}
 
-\rSec1 [relline.cons] {\tcode{rel_line} constructors}
+\rSec1 [relline.cons] {\tcode{rel_line} constructors}%
 
-\indexlibrary{\idxcode{rel_line}!constructor}
+\indexlibrary{\idxcode{rel_line}!constructor}%
 \begin{itemdecl}
 constexpr rel_line() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs an object of type \tcode{rel_line}.
-
-\pnum
-The end point shall be set to the value of \tcode{vector_2d\{0.0, 0.0\}}.
+Equivalent to: \tcode{rel_line\{ vector_2d() \};}
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rel_line}!constructor}
+\indexlibrary{\idxcode{rel_line}!constructor}%
 \begin{itemdecl}
 constexpr explicit rel_line(const vector_2d& pt) noexcept;
 \end{itemdecl}
@@ -57,29 +63,51 @@ constexpr explicit rel_line(const vector_2d& pt) noexcept;
 Constructs an object of type \tcode{rel_line}.
 
 \pnum
-The end point shall be set to the value of \tcode{pt}.
+The end point is \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [relline.modifiers]{\tcode{rel_line} modifiers}
+\rSec1 [relline.modifiers]{\tcode{rel_line} modifiers}%
 
-\indexlibrary{\idxcode{rel_line}!\idxcode{to}}
+\indexlibrarymember{rel_line}{to}
 \begin{itemdecl}
 constexpr void to(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-The end point shall be set to the value of \tcode{pt}.
+The end point is \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [relline.observers]{\tcode{rel_line} observers}
+\rSec1 [relline.observers]{\tcode{rel_line} observers}%
 
-\indexlibrary{\idxcode{rel_line}!\idxcode{to}}
+\indexlibrary{\idxcode{rel_line}!\idxcode{to}}%
 \begin{itemdecl}
 constexpr vector_2d to() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The value of the end point.
+The end point.
+\end{itemdescr}
+
+\rSec1 [relline.nonmember]{Non-member functions}%
+
+\indexlibrarymember{operator==}{rel_line}%
+\begin{itemdecl}
+constexpr bool operator==(const rel_line& lhs, const rel_line& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{lhs.to() == rhs.to()}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{rel_line}%
+\begin{itemdecl}
+constexpr bool operator!=(const rel_line& lhs, const rel_line& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{!(lhs == rhs)}.
 \end{itemdescr}
