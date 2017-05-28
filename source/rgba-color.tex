@@ -2,7 +2,7 @@
 \rSec0 [rgbacolor] {Class \tcode{rgba_color}}
 
 \pnum
-\indexlibrary{\idxcode{rgba_color}}
+\indexlibrary{\idxcode{rgba_color}}%
 The class \tcode{rgba_color} describes a four channel color in premultiplied format.
 
 \pnum
@@ -20,7 +20,7 @@ Legal values for each channel are in the range \crange{0.0}{1.0}.
 \rSec1 [rgbacolor.synopsis] {\tcode{rgba_color} synopsis}
 
 \begin{codeblock}
-namespace std::experimental::io2d { inline namespace v1 {
+namespace std::experimental::io2d::v1 {
   class rgba_color {
     // \ref{rgbacolor.cons}, construct/copy/move/destroy:
     constexpr rgba_color() noexcept;
@@ -193,9 +193,11 @@ namespace std::experimental::io2d { inline namespace v1 {
   };
 
   // \ref{rgbacolor.ops}, non-member operators:
-  bool operator==(const rgba_color& lhs, const rgba_color& rhs) noexcept;
-  bool operator!=(const rgba_color& lhs, const rgba_color& rhs) noexcept;
-} } } }
+  constexpr bool operator==(const rgba_color& lhs, const rgba_color& rhs) 
+    noexcept;
+  constexpr bool operator!=(const rgba_color& lhs, const rgba_color& rhs) 
+    noexcept;
+}
 \end{codeblock}
 
 \rSec1 [rgbacolor.cons] {\tcode{rgba_color} constructors and assignment operators}

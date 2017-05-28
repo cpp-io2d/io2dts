@@ -9,9 +9,9 @@ error condition value.
 
 \rSec1 [\iotwoderror.synopsis] {\tcode{io2d_error} Synopsis}
 
-\indexlibrary{\idxcode{io2d_error}}
+\indexlibrary{\idxcode{io2d_error}}%
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std::experimental::io2d::v1 {
   enum class io2d_error {
     success,
     invalid_pop_state,
@@ -31,8 +31,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     device_error,
     invalid_mesh_construction,
   };
-} } }
-
+}
+namespace std {
   template<>
   struct is_error_condition_enum<experimental::io2d::io2d_error>
   : public std::true_type{ };

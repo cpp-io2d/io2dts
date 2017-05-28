@@ -1,20 +1,16 @@
 %!TEX root = io2d.tex
 \rSec0[\iotwod.syn]{Header \tcode{<experimental/io2d>} synopsis}
 
-\indexlibrary{\idxhdr{experimental/io2d}|(}%
-\indextext{2D graphics!synopsis|(}
+\indexlibrary{\idxhdr{experimental/io2d}}%
+\indextext{2D graphics!synopsis|(}%
 \begin{codeblock}
 
 namespace std { namespace experimental {
   namespace io2d { inline namespace v1 {
 
-  struct nullvalue_t;
-  constexpr nullvalue_t nullvalue{ @\impdef@ };
-
   using dashes = tuple<vector<double>, double>;
 
   enum class io2d_error;
-  enum class content;
   enum class fill_rule;
   enum class line_cap;
   enum class line_join;
@@ -30,73 +26,101 @@ namespace std { namespace experimental {
   const error_category& io2d_category() noexcept;
 
   class rectangle;
+  constexpr bool operator==(const rectangle& lhs, const rectangle& rhs) 
+    noexcept;
+  constexpr bool operator!=(const rectangle& lhs, const rectangle& rhs) 
+    noexcept;
   class circle;
+  constexpr bool operator==(const circle& lhs, const circle& rhs) noexcept;
+  constexpr bool operator!=(const circle& lhs, const circle& rhs) noexcept;
 
   class rgba_color;
+  constexpr bool operator==(const rgba_color& lhs, const rgba_color& rhs) 
+    noexcept;
+  constexpr bool operator!=(const rgba_color& lhs, const rgba_color& rhs) 
+    noexcept;
 
   class vector_2d;
-  bool operator==(const vector_2d& lhs, const vector_2d& rhs) noexcept;
-  bool operator!=(const vector_2d& lhs, const vector_2d& rhs) noexcept;
-  vector_2d operator+(const vector_2d& lhs) noexcept;
-  vector_2d operator+(const vector_2d& lhs, const vector_2d& rhs) noexcept;
-  vector_2d operator-(const vector_2d& lhs) noexcept;
-  vector_2d operator-(const vector_2d& lhs, const vector_2d& rhs) noexcept;
-  vector_2d operator*(const vector_2d& lhs, double rhs) noexcept;
-  vector_2d operator*(double lhs, const vector_2d& rhs) noexcept;
+  constexpr bool operator==(const vector_2d& lhs, const vector_2d& rhs) 
+    noexcept;
+  constexpr bool operator!=(const vector_2d& lhs, const vector_2d& rhs) 
+    noexcept;
+  constexpr vector_2d operator+(const vector_2d& lhs) noexcept;
+  constexpr vector_2d operator+(const vector_2d& lhs, const vector_2d& rhs) 
+    noexcept;
+  constexpr vector_2d operator-(const vector_2d& lhs) noexcept;
+  constexpr vector_2d operator-(const vector_2d& lhs, const vector_2d& rhs) 
+    noexcept;
+  constexpr vector_2d operator*(const vector_2d& lhs, double rhs) noexcept;
+  constexpr vector_2d operator*(double lhs, const vector_2d& rhs) noexcept;
 
   class matrix_2d;
-
-  matrix_2d operator*(const matrix_2d& lhs, const matrix_2d& rhs) noexcept;
-  bool operator==(const matrix_2d& lhs, const matrix_2d& rhs) noexcept;
-  bool operator!=(const matrix_2d& lhs, const matrix_2d& rhs) noexcept;
+  constexpr matrix_2d operator*(const matrix_2d& lhs, const matrix_2d& rhs) 
+    noexcept;
+  constexpr bool operator==(const matrix_2d& lhs, const matrix_2d& rhs) 
+    noexcept;
+  constexpr bool operator!=(const matrix_2d& lhs, const matrix_2d& rhs) 
+    noexcept;
 
   namespace path_data {
     class abs_new_path;
-    bool operator==(const abs_new_path&, const abs_new_path&) noexcept;
-    bool operator!=(const abs_new_path&, const abs_new_path&) noexcept;
+    constexpr bool operator==(const abs_new_path&, const abs_new_path&) 
+      noexcept;
+    constexpr bool operator!=(const abs_new_path&, const abs_new_path&) 
+      noexcept;
     class rel_new_path;
-    bool operator==(const rel_new_path&, const rel_new_path&) noexcept;
-    bool operator!=(const rel_new_path&, const rel_new_path&) noexcept;
+    constexpr bool operator==(const rel_new_path&, const rel_new_path&) 
+      noexcept;
+    constexpr bool operator!=(const rel_new_path&, const rel_new_path&) 
+      noexcept;
     class close_path;
-    bool operator==(const close_path&, const close_path&) noexcept;
-    bool operator!=(const close_path&, const close_path&) noexcept;
+    constexpr bool operator==(const close_path&, const close_path&) noexcept;
+    constexpr bool operator!=(const close_path&, const close_path&) noexcept;
     class change_matrix;
-    bool operator==(const change_matrix&, const change_matrix&) noexcept;
-    bool operator!=(const change_matrix&, const change_matrix&) noexcept;
+    constexpr bool operator==(const change_matrix&, const change_matrix&) 
+      noexcept;
+    constexpr bool operator!=(const change_matrix&, const change_matrix&) 
+      noexcept;
     class change_origin;
-    bool operator==(const change_origin&, const change_origin&) noexcept;
-    bool operator!=(const change_origin&, const change_origin&) noexcept;
+    constexpr bool operator==(const change_origin&, const change_origin&) 
+      noexcept;
+    constexpr bool operator!=(const change_origin&, const change_origin&) 
+      noexcept;
     class abs_cubic_curve;
-    bool operator==(const abs_cubic_curve&, const abs_cubic_curve&) noexcept;
-    bool operator!=(const abs_cubic_curve&, const abs_cubic_curve&) noexcept;
+    constexpr bool operator==(const abs_cubic_curve&, const abs_cubic_curve&) 
+      noexcept;
+    constexpr bool operator!=(const abs_cubic_curve&, const abs_cubic_curve&) 
+      noexcept;
     class abs_line;
-    bool operator==(const abs_line&, const abs_line&) noexcept;
-    bool operator!=(const abs_line&, const abs_line&) noexcept;
+    constexpr bool operator==(const abs_line&, const abs_line&) noexcept;
+    constexpr bool operator!=(const abs_line&, const abs_line&) noexcept;
     class abs_move;
-    bool operator==(const abs_move&, const abs_move&) noexcept;
-    bool operator!=(const abs_move&, const abs_move&) noexcept;
+    constexpr bool operator==(const abs_move&, const abs_move&) noexcept;
+    constexpr bool operator!=(const abs_move&, const abs_move&) noexcept;
     class abs_quadratic_curve;
-    bool operator==(const abs_quadratic_curve&, const abs_quadratic_curve&) 
-      noexcept;
-    bool operator!=(const abs_quadratic_curve&, const abs_quadratic_curve&) 
-      noexcept;
+    constexpr bool operator==(const abs_quadratic_curve&,
+      const abs_quadratic_curve&) noexcept;
+    constexpr bool operator!=(const abs_quadratic_curve&,
+      const abs_quadratic_curve&) noexcept;
     class arc;
-    bool operator==(const arc&, const arc&) noexcept;
-    bool operator!=(const arc&, const arc&) noexcept;
+    constexpr bool operator==(const arc&, const arc&) noexcept;
+    constexpr bool operator!=(const arc&, const arc&) noexcept;
     class rel_cubic_curve;
-    bool operator==(const rel_cubic_curve&, const rel_cubic_curve&) noexcept;
-    bool operator!=(const rel_cubic_curve&, const rel_cubic_curve&) noexcept;
+    constexpr bool operator==(const rel_cubic_curve&, const rel_cubic_curve&) 
+      noexcept;
+    constexpr bool operator!=(const rel_cubic_curve&, const rel_cubic_curve&) 
+      noexcept;
     class rel_line;
-    bool operator==(const rel_line&, const rel_line&) noexcept;
-    bool operator!=(const rel_line&, const rel_line&) noexcept;
+    constexpr bool operator==(const rel_line&, const rel_line&) noexcept;
+    constexpr bool operator!=(const rel_line&, const rel_line&) noexcept;
     class rel_move;
-    bool operator==(const rel_move&, const rel_move&) noexcept;
-    bool operator!=(const rel_move&, const rel_move&) noexcept;
+    constexpr bool operator==(const rel_move&, const rel_move&) noexcept;
+    constexpr bool operator!=(const rel_move&, const rel_move&) noexcept;
     class rel_quadratic_curve;
-    bool operator==(const rel_quadratic_curve&, const rel_quadratic_curve&) 
-      noexcept;
-    bool operator!=(const rel_quadratic_curve&, const rel_quadratic_curve&) 
-      noexcept;
+    constexpr bool operator==(const rel_quadratic_curve&,
+      const rel_quadratic_curve&) noexcept;
+    constexpr bool operator!=(const rel_quadratic_curve&,
+      const rel_quadratic_curve&) noexcept;
     using path_item = variant<abs_cubic_curve, abs_line, abs_new_path,
       abs_quadratic_curve, arc, change_matrix, change_origin, close_path,
       rel_cubic_curve, rel_line, rel_new_path, rel_quadratic_curve>;
@@ -165,12 +189,11 @@ namespace std {
   struct is_error_code_enum<@\impdef@>
     : public true_type{ }; // \expos
 
-  std::error_condition make_error_condition(experimental::io2d::io2d_error e) 
+  error_condition make_error_condition(experimental::io2d::io2d_error e) 
     noexcept;
 
-  std::error_code make_error_code(experimental::io2d::io2d_error e) noexcept;
+  error_code make_error_code(experimental::io2d::io2d_error e) noexcept;
 }
 
 \end{codeblock}
 \indextext{2D graphics!synopsis|)}%
-\indexlibrary{\idxhdr{experimental/io2d}|)}

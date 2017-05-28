@@ -2,7 +2,7 @@
 
 \rSec0[\iotwod.defns]{Terms and definitions}
 
-\indextext{definitions|(}
+\indextext{definitions|(}%
 For the purposes of this document, the following terms and definitions apply.
 ISO and IEC maintain terminological databases for use in standardization at the following addresses:
 \begin{itemize}
@@ -22,16 +22,16 @@ defined.
 \definition{standard coordinate space}{\iotwod.defns.stndcrdspace}
 a Euclidean plane described by a Cartesian coordinate system where the first coordinate is measured along a horizontal axis, called the \xaxis, oriented from left to right, the second coordinate is measured along a vertical axis, called the \yaxis, oriented from top to bottom, and rotation of a point around the origin by a positive value expressed in radians is counterclockwise
 
-\indexdefn{visual data}
+\indexdefn{visual data}%
 \definition{visual data}{\iotwod.defns.visdata}
 data representing color, transparency, or some combination thereof
 
-\indexdefn{channel}
+\indexdefn{channel}%
 \definition{channel}{\iotwod.defs.channel}
 %a bounded set of homogeneously-spaced real numbers in the range $[0,1]$
 a component of visual data with a defined bit size
 
-\indexdefn{visual data format}
+\indexdefn{visual data format}%
 \definition{visual data format}{\iotwod.defns.visdatafmt}
 a specification that defines a total bit size, a set of one or more channels, and each channel's role, bit size, and location relative to the upper (high-order) bit
 %a specification of visual data channels which defines a total bit size for the format and each channel's role, bit size, and location relative to the upper (high-order) bit
@@ -39,11 +39,11 @@ a specification that defines a total bit size, a set of one or more channels, an
 %The total bit size may be larger than the sum of the bit sizes of the channels of the format.
 %\end{note}
 
-\indexdefn{visual data element}
+\indexdefn{visual data element}%
 \definition{visual data element}{\iotwod.defns.visdataelem}
 an item of visual data with a defined visual data format
 
-\indexdefn{alpha}
+\indexdefn{alpha}%
 \definition{alpha}{\iotwod.defns.alpha}
 visual data representing transparency
 
@@ -52,16 +52,16 @@ visual data representing transparency
 \definition{pixel}{\iotwod.defns.pixel}
 a discrete, rectangular visual data element
 
-\indexdefn{aliasing}
+\indexdefn{aliasing}%
 \definition{aliasing}{\iotwod.defns.alias}
 the presence of visual artifacts in the results of rendering due to 
 sampling imperfections
 
-\indexdefn{artifact}
+\indexdefn{artifact}%
 \definition{artifact}{\iotwod.defns.artifact}
 an error in the results of the application of a composing operation 
 
-\indexdefn{anti-aliasing}
+\indexdefn{anti-aliasing}%
 \definition{anti-aliasing}{\iotwod.defns.antialias}
 the application of a function or algorithm while composing to 
 reduce aliasing
@@ -75,95 +75,95 @@ anti-aliasing types to choose from for each of the two operations.
 \end{note}
 
 % The following may not be needed. Already defined in IEC 60050 723-05-05.
-\indexdefn{aspect ratio}
+\indexdefn{aspect ratio}%
 \definition{aspect ratio}{\iotwod.defns.aspectratio}
 the ratio of the width to the height of a rectangular area
 
-\indexdefn{color model}
-\definition{color model}{\iotwod.defns.colormodel}
-an ideal, mathematical representation of colors which often uses color channels
-
-\indexdefn{additive color}
+\indexdefn{additive color}%
 \definition{additive color}{\iotwod.defns.additivecolor}
 a color defined by the emissive intensity of its color channels
 
-\indexdefn{color model}
-\indexdefn{color model!RGB}
+\indexdefn{color model}%
+\definition{color model}{\iotwod.defns.colormodel}
+an ideal, mathematical representation of colors which often uses color channels
+
+\indexdefn{color model}%
+\indexdefn{color model!RGB}%
 \definition{RGB color model}{\iotwod.defns.rgbcolormodel}
-an additive color model using red, green, and blue color channels
+\defncontext{RGB} additive color model using red, green, and blue color channels
 
-\indexdefn{color model}
-\indexdefn{color model!RGBA}
+\indexdefn{color model}%
+\indexdefn{color model!RGBA}%
 \definition{RGBA color model}{\iotwod.defns.rgbacolormodel}
-the RGB color model with an alpha channel
+\defncontext{RGBA} RGB color model with an alpha channel
 
-\indexdefn{color space}
+\indexdefn{color space}%
 \definition{color space}{\iotwod.defns.colorspace}
-an unambiguous mapping of values to colorimetric colors
+unambiguous mapping of values to colorimetric colors
 
-\indexdefn{color space}
-\indexdefn{color space!sRGB}
+\indexdefn{color space}%
+\indexdefn{color space!sRGB}%
 \definition{sRGB color space}{\iotwod.defns.srgbcolorspace}
-an additive color space defined in IEC 61966-2-1 that is based on the RGB color model
+\defncontext{sRGB} additive color space defined in IEC 61966-2-1 that is based on the RGB color model
 
 \indexdefn{\bezierlocal curve}
 \indexdefn{\bezierlocal curve!cubic}
 \definition{\bezierlocal curve}{\iotwod.defns.bezier.cubic}
-<cubic> a curve defined by the 
+\defncontext{cubic} curve defined by the 
 equation $f(t) = (1 - t)^{3} \times P_{0} + 3 \times t \times (1 - t)^{2} 
 \times P_{1} + 3 \times t^{2} \times (1 - t) \times P_{2} + t^{3} \times t 
 \times P_{3}$ where t is in the range \crange{0}{1}, $P_{0}$ is the starting point, $P_{1}$ 
 is the first control point, $P_{2}$ is the second control point, and $P_{3}$ is 
 the ending point
 
-\indexdefn{\bezierlocal curve}
-\indexdefn{\bezierlocal curve!quadratic}
+\indexdefn{\bezierlocal curve}%
+\indexdefn{\bezierlocal curve!quadratic}%
 \definition{\bezierlocal curve}{\iotwod.defns.bezier.quadratic}
-<quadratic> a curve defined by the 
+\defncontext{quadratic} curve defined by the 
 equation $f(t) = (1 - t)^{2} \times P_{0} + 2 \times t \times (1 - t) 
 \times P_{1} + t^{2} \times t \times P_{2}$ where t is in the range \crange{0}{1}, $P_{0}$ is the starting point, $P_{1}$ is the 
 control point, and $P_{2}$ is end point
 
-\indexdefn{filter}
+\indexdefn{filter}%
 \definition{filter}{\iotwod.defns.filter}
-a mathematical function that determines the visual data value of a point for a graphics data graphics resource
+mathematical function that determines the visual data value of a point for a graphics data graphics resource
 
-\indexdefn{graphics data}
+\indexdefn{graphics data}%
 \definition{graphics data}{\iotwod.defns.graphicsdata}
-<graphics data> visual data stored in an unspecified form
+\defncontext{graphics data} visual data stored in an unspecified form
 
-\indexdefn{graphics data}
-\indexdefn{graphics data!raster}
+\indexdefn{graphics data}%
+\indexdefn{graphics data!raster}%
 \definition{graphics data}{\iotwod.defns.graphics.raster}
-<raster graphics data> visual data stored as pixels that is accessible as-if it was an array of rows of pixels beginning with the pixel at the integral point $(0,0)$
+\defncontext{raster graphics data} visual data stored as pixels that is accessible as-if it was an array of rows of pixels beginning with the pixel at the integral point $(0,0)$
 
-\indexdefn{graphics resource}
+\indexdefn{graphics resource}%
 \definition{graphics resource}{\iotwod.defns.graphicsresource}
-<graphics resource> an object of unspecified type used by an implementation
+\defncontext{graphics resource} object of unspecified type used by an implementation
 \begin{note}
 By its definition a graphics resource is an implementation detail. Often it will be a graphics subsystem object (e.g. a graphics device or a render target) or an aggregate composed of multiple graphics subsystem objects. However the only requirement placed upon a graphics resource is that the implementation is able to use it to provide the functionality required of the graphics resource.
 \end{note}
 
-\indexdefn{graphics resource}
-\indexdefn{graphics resource!graphics data graphics resource}
+\indexdefn{graphics resource}%
+\indexdefn{graphics resource!graphics data graphics resource}%
 \definition{graphics resource}{\iotwod.defns.graphicsresource.graphicsdata}
-<graphics data graphics resource> an object of unspecified type used by an implementation to provide access to and allow manipulation of visual data
+\defncontext{graphics data graphics resource} object of unspecified type used by an implementation to provide access to and allow manipulation of visual data
 
-\indexdefn{\pixmap}
+\indexdefn{\pixmap}%
 \definition{\pixmap}{\iotwod.defns.pixmap}
-a raster graphics data graphics resource
+raster graphics data graphics resource
 
-\indexdefn{point}
+\indexdefn{point}%
 \definition{point}{\iotwod.defns.point}
-<point> a coordinate designated by a floating point \xaxis{} value and a floating point \yaxis{} value within the standard coordinate space
+\defncontext{point} coordinate designated by a floating point \xaxis{} value and a floating point \yaxis{} value within the standard coordinate space
 
-\indexdefn{point}
+\indexdefn{point}%
 \definition{point}{\iotwod.defns.point.integral}
-<integral point> a coordinate designated by an integral \xaxis{} value and an integral \yaxis{} value within the standard coordinate space
+\defncontext{integral point} coordinate designated by an integral \xaxis{} value and an integral \yaxis{} value within the standard coordinate space
 
-\indexdefn{premultiplied format}
+\indexdefn{premultiplied format}%
 \definition{premultiplied format}{\iotwod.defns.premultipliedformat}
-a format with color and alpha where each color channel is normalized and then 
+format with color and alpha where each color channel is normalized and then 
 multiplied by the normalized alpha channel value
 \begin{example}
 Given the 32-bit non-premultiplied RGBA pixel with 8 bits per channel \{255, 0, 
@@ -173,51 +173,51 @@ Given the 32-bit non-premultiplied RGBA pixel with 8 bits per channel \{255, 0,
 the alpha channel value.
 \end{example}
 
-\indexdefn{graphics state data}
+\indexdefn{graphics state data}%
 \definition{graphics state data}{\iotwod.defns.graphicsstatedata}
 data which specify how some part of the process of rendering or of a composing operation shall be performed in part or in whole
 
-\indexdefn{graphics subsystem}
+\indexdefn{graphics subsystem}%
 \definition{graphics subsystem}{\iotwod.defns.graphicssubsystem}
 collection of unspecified operating system and library functionality used to render and display 2D computer graphics
 
-\indexdefn{normalize}
+\indexdefn{normalize}%
 \definition{normalize}{\iotwod.defns.normalize}
 to map a closed set of evenly spaced values in the range $[0, x]$ to an evenly spaced sequence of floating point values in the range $[0, 1]$
 \begin{note}
 The definition of normalize given is the definition for normalizing unsigned input. Signed normalization, i.e. the mapping of a closed set of evenly spaced values in the range $[-x, x)$ to an evenly spaced sequence of floating point values in the range $[-1, 1]$, also exists but is not used in this \documenttypename{}.
 \end{note}
 
-\indexdefn{render}
+\indexdefn{render}%
 \definition{render}{\iotwod.defns.render}
 to transform a path group into graphics data in the manner specified by a set of graphics state data
 
-\indexdefn{rendering operation}
+\indexdefn{rendering operation}%
 \definition{rendering operation}{\iotwod.defns.renderingoperation}
 an operation that performs rendering
 
-\indexdefn{compose}
+\indexdefn{compose}%
 \definition{compose}{\iotwod.defns.compose}
 to combine part or all of a source graphics data graphics resource with a destination graphics data graphics resource in the manner specified by a composition algorithm
 
-\indexdefn{composing operation}
+\indexdefn{composing operation}%
 \definition{composing operation}{\iotwod.defns.composingoperation}
 an operation that performs composing
 %an operation that uses a composition algorithm to combine part or all of a source of visual data capable of being treated as though it were a \pixmap with a \pixmap
 
-\indexdefn{composition algorithm}
+\indexdefn{composition algorithm}%
 \definition{composition algorithm}{\iotwod.defns.compositionalgorithm}
 an algorithm that combines a source visual data element and a destination visual data element producing a visual data element that has the same visual data format as the destination visual data element
 
-\indexdefn{rendering and composing operation}
+\indexdefn{rendering and composing operation}%
 \definition{rendering and composing operation}{\iotwod.defns.renderingandcomposingop}
 an operation that is either a composing operation or a rendering operation followed by a composing operation
 
-\indexdefn{sample}
+\indexdefn{sample}%
 \definition{sample}{\iotwod.defns.sample}
 to use a filter to obtain the visual data for a given point from a graphics data graphics resource
 
-\indexdefn{color stop}
+\indexdefn{color stop}%
 \definition{color stop}{\iotwod.defns.colorstop}
 a tuple composed of a floating point offset value in the range $[0, 1]$ and a color value
 

@@ -1,30 +1,30 @@
 %!TEX root = io2d.tex
-\rSec0 [\vectortwod] {Class \tcode{vector_2d}}
+\rSec0 [\iotwod.\vectortwod] {Class \tcode{vector_2d}}
 
-\rSec1 [\vectortwod.intro] {\tcode{vector_2d} Description}
+\rSec1 [\iotwod.\vectortwod.intro] {\tcode{vector_2d} Description}
 
-\indexlibrary{\idxcode{vector_2d}}
+\indexlibrary{\idxcode{vector_2d}}%
 \pnum
 The class \tcode{vector_2d} is used as both a point and as a two-dimensional Euclidian vector.
 
 \pnum
-It has an x coordinate of type \tcode{double} and a y coordinate of type \tcode{double}.
+It has an \term{x coordinate} of type \tcode{double} and a \term{y coordinate} of type \tcode{double}.
 
-\rSec1 [\vectortwod.synopsis] {\tcode{vector_2d} synopsis}
+\rSec1 [\iotwod.\vectortwod.synopsis] {\tcode{vector_2d} synopsis}
 
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std::experimental::io2d::v1 {
   class vector_2d {
   public:
-    // \ref{\vectortwod.cons}, construct/copy/move/destroy:
+    // \ref{\iotwod.\vectortwod.cons}, constructors:
     constexpr vector_2d() noexcept;
     constexpr vector_2d(double x, double y) noexcept;
 
-    // \ref{\vectortwod.modifiers}, modifiers:
-    constexpr void x(double value) noexcept;
-    constexpr void y(double value) noexcept;
+    // \ref{\iotwod.\vectortwod.modifiers}, modifiers:
+    constexpr void x(double val) noexcept;
+    constexpr void y(double val) noexcept;
     
-    // \ref{\vectortwod.observers}, observers:
+    // \ref{\iotwod.\vectortwod.observers}, observers:
     constexpr double x() const noexcept;
     constexpr double y() const noexcept;
     constexpr double dot(const vector_2d& other) const noexcept;
@@ -33,7 +33,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     double angular_direction(const vector_2d& to) const noexcept
     vector_2d to_unit() const noexcept;
     
-    // \ref{\vectortwod.member.ops}, member operators:
+    // \ref{\iotwod.\vectortwod.member.ops}, member operators:
     constexpr vector_2d& operator+=(const vector_2d& rhs) noexcept;
     constexpr vector_2d& operator-=(const vector_2d& rhs) noexcept;
     constexpr vector_2d& operator*=(double rhs) noexcept;
@@ -42,7 +42,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     constexpr vector_2d& operator/=(const vector_2d& rhs) noexcept;
   };
   
-  // \ref{\vectortwod.ops}, non-member operators:
+  // \ref{\iotwod.\vectortwod.ops}, non-member operators:
   constexpr bool operator==(const vector_2d& lhs, const vector_2d& rhs)
     noexcept;
   constexpr bool operator!=(const vector_2d& lhs, const vector_2d& rhs)
@@ -61,28 +61,22 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   constexpr vector_2d operator/(double lhs, const vector_2d& rhs) noexcept;
   constexpr vector_2d operator/(const vector_2d& lhs, const vector_2d& rhs)
     noexcept;
-} } } }
+}
 \end{codeblock}
 
-\rSec1 [\vectortwod.cons] {\tcode{vector_2d} constructors and assignment operators}
+\rSec1 [\iotwod.\vectortwod.cons] {\tcode{vector_2d} constructors}
 
-\indexlibrary{\idxcode{vector_2d}!constructor}
+\indexlibrary{\idxcode{vector_2d}!constructor}%
 \begin{itemdecl}
 constexpr vector_2d() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs an object of type \tcode{vector_2d}.
-
-\pnum
-The x coordinate shall be set to the value \tcode{0.0}.
-
-\pnum
-The y coordinate shall be set to the value \tcode{0.0}.
+Equivalent to \tcode{vector_2d\{ 0.0, 0.0 \}}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{vector_2d}!constructor}
+\indexlibrary{\idxcode{vector_2d}!constructor}%
 \begin{itemdecl}
 constexpr vector_2d(double x, double y) noexcept;
 \end{itemdecl}
@@ -92,62 +86,57 @@ constexpr vector_2d(double x, double y) noexcept;
 Constructs an object of type \tcode{vector_2d}.
 
 \pnum
-The x coordinate shall be set to the value of \tcode{x}.
+The x coordinate is \tcode{x}.
 
 \pnum
-The y coordinate shall be set to the value of \tcode{y}.
+The y coordinate is \tcode{y}.
 \end{itemdescr}
 
-\rSec1 [\vectortwod.modifiers]{\tcode{vector_2d} modifiers}
+\rSec1 [\iotwod.\vectortwod.modifiers]{\tcode{vector_2d} modifiers}
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{x}}
-\indexlibrary{\idxcode{x}!\idxcode{vector_2d}}
+\indexlibrarymember{x}{vector_2d}%
 \begin{itemdecl}
-constexpr void x(double value) noexcept;
+constexpr void x(double val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-The x coordinate shall be set to the value of \tcode{x}.
+The x coordinate is \tcode{val}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{y}}
-\indexlibrary{\idxcode{y}!\idxcode{vector_2d}}
+\indexlibrarymember{y}{vector_2d}%
 \begin{itemdecl}
-constexpr void y(double value) noexcept;
+constexpr void y(double val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-The y coordinate shall be set to the value of \tcode{y}.
+The y coordinate is \tcode{val}.
 \end{itemdescr}
 
-\rSec1 [\vectortwod.observers]{\tcode{vector_2d} observers}
+\rSec1 [\iotwod.\vectortwod.observers]{\tcode{vector_2d} observers}
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{x}}
-\indexlibrary{\idxcode{x}!\idxcode{vector_2d}}
+\indexlibrarymember{x}{vector_2d}%
 \begin{itemdecl}
 constexpr double x() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The value of the x coordinate.
+The x coordinate.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{y}}
-\indexlibrary{\idxcode{y}!\idxcode{vector_2d}}
+\indexlibrarymember{y}{vector_2d}%
 \begin{itemdecl}
 constexpr double y() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The value of the y coordinate.
+The y coordinate.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{dot}}
-\indexlibrary{\idxcode{dot}!\idxcode{vector_2d}}
+\indexlibrarymember{dot}{vector_2d}%
 \begin{itemdecl}
 constexpr double dot(const vector_2d& other) const noexcept;
 \end{itemdecl}
@@ -157,49 +146,45 @@ constexpr double dot(const vector_2d& other) const noexcept;
 \tcode{x() * other.x() + y() * other.y()}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{magnitude}}
-\indexlibrary{\idxcode{magnitude}!\idxcode{vector_2d}}
+\indexlibrarymember{magnitude}{vector_2d}%
 \begin{itemdecl}
-    double magnitude() const noexcept;
+double magnitude() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-Equivalent to \tcode{sqrt(dot(*this));}.
+Equivalent to: \tcode{sqrt(dot(*this));}
 \end{itemdescr}
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{magnitude_squared}}
-\indexlibrary{\idxcode{magnitude_squared}!\idxcode{vector_2d}}
+\indexlibrarymember{magnitude_squared}{vector_2d}%
 \begin{itemdecl}
 constexpr double magnitude_squared() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-Equivalent to \tcode{dot(*this);}.
+Equivalent to: \tcode{dot(*this);}
 \end{itemdescr}
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{angular_direction}}
-\indexlibrary{\idxcode{angular_direction}!\idxcode{vector_2d}}
+\indexlibrarymember{angular_direction}{vector_2d}%
 \begin{itemdecl}
 double angular_direction() const noexcept
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The result of \tcode{atan2(y(), x())} if it is greater than or equal to \tcode{0.0}.
+\tcode{atan2(y(), x())} if it is greater than or equal to \tcode{0.0}.
 
 \pnum
 Otherwise, \tcode{atan2(y(), x()) + two_pi<double>}. 
 
 \pnum
 \begin{note}
-The purpose of adding $2\pi$ if the result is negative is to produce values in the range \range{0.0}{$2\pi$}.
+The purpose of adding \tcode{two_pi<double>} if the result is negative is to produce values in the range \range{0.0}{two_pi<double>}.
 \end{note}
 \end{itemdescr}
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{to_unit}}
-\indexlibrary{\idxcode{to_unit}!\idxcode{vector_2d}}
+\indexlibrarymember{to_unit}{vector_2d}%
 \begin{itemdecl}
 vector_2d to_unit() const noexcept;
 \end{itemdecl}
@@ -209,58 +194,69 @@ vector_2d to_unit() const noexcept;
 \tcode{vector_2d\{ x() / magnitude(), y() / magnitude()\}}.
 \end{itemdescr}
 
-\rSec1 [\vectortwod.member.ops] {\tcode{vector_2d} member operators}
+\rSec1 [\iotwod.\vectortwod.member.ops] {\tcode{vector_2d} member operators}
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{operator+=}}
-\indexlibrary{\idxcode{operator+=}!\idxcode{vector_2d}}
+\indexlibrarymember{operator+=}{vector_2d}%
 \begin{itemdecl}
-vector_2d& operator+=(const vector_2d& rhs) noexcept;
+constexpr vector_2d& operator+=(const vector_2d& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-\tcode{*this = (*this) + rhs}.
+\tcode{*this = *this + rhs}.
 	
 \pnum
 \returns
 \tcode{*this}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{operator-=}}
-\indexlibrary{\idxcode{operator-=}!\idxcode{vector_2d}}
+\indexlibrarymember{operator-=}{vector_2d}%
 \begin{itemdecl}
-vector_2d& operator-=(const vector_2d& rhs) noexcept;
+constexpr vector_2d& operator-=(const vector_2d& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{*this = (*this) - rhs;}.
+Equivalent to: \tcode{*this = *this - rhs;}.
 
 \pnum
 \returns
 \tcode{*this}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{operator*=}}
-\indexlibrary{\idxcode{operator*=}!\idxcode{vector_2d}}
+\indexlibrarymember{operator*=}{vector_2d}%
 \begin{itemdecl}
-vector_2d& operator*=(double rhs) noexcept;
-vector_2d& operator*=(const vector_2d& rhs) noexcept;
+constexpr vector_2d& operator*=(double rhs) noexcept;
+constexpr vector_2d& operator*=(const vector_2d& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{*this = (*this) * rhs;}.
-	
+Equivalent to: \tcode{*this = *this * rhs;}.
+
 \pnum
 \returns
 \tcode{*this}.
 \end{itemdescr}
 
-\rSec1 [\vectortwod.ops] {\tcode{vector_2d} non-member operators}
+\indexlibrarymember{operator/=}{vector_2d}%
+\begin{itemdecl}
+constexpr vector_2d& operator/=(double rhs) noexcept;
+constexpr vector_2d& operator/=(const vector_2d& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to: \tcode{*this = *this / rhs;}.
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{operator==}}
-\indexlibrary{\idxcode{operator==}!\idxcode{vector_2d}}
+\pnum
+\returns
+\tcode{*this}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.\vectortwod.ops] {\tcode{vector_2d} non-member operators}
+
+\indexlibrarymember{operator==}{vector_2d}%
 \begin{itemdecl}
 constexpr bool operator==(const vector_2d& lhs, const vector_2d& rhs) noexcept;
 \end{itemdecl}
@@ -270,8 +266,7 @@ constexpr bool operator==(const vector_2d& lhs, const vector_2d& rhs) noexcept;
 \tcode{lhs.x() == rhs.x() \&\& lhs.y() == rhs.y()}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{operator!=}}
-\indexlibrary{\idxcode{operator!=}!\idxcode{vector_2d}}
+\indexlibrarymember{operator!=}{vector_2d}%
 \begin{itemdecl}
 constexpr bool operator!=(const vector_2d& lhs, const vector_2d& rhs) noexcept;
 \end{itemdecl}
@@ -281,8 +276,7 @@ constexpr bool operator!=(const vector_2d& lhs, const vector_2d& rhs) noexcept;
 \tcode{!(lhs == rhs)}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{operator+}}
-\indexlibrary{\idxcode{operator+}!\idxcode{vector_2d}}
+\indexlibrarymember{operator+}{vector_2d}%
 \begin{itemdecl}
 constexpr vector_2d operator+(const vector_2d& lhs) noexcept;
 \end{itemdecl}
@@ -292,10 +286,10 @@ constexpr vector_2d operator+(const vector_2d& lhs) noexcept;
 \tcode{lhs}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{operator+}}
-\indexlibrary{\idxcode{operator+}!\idxcode{vector_2d}}
+\indexlibrarymember{operator+}{vector_2d}%
 \begin{itemdecl}
-constexpr vector_2d operator+(const vector_2d& lhs, const vector_2d& rhs) noexcept;
+constexpr vector_2d operator+(const vector_2d& lhs, const vector_2d& rhs) 
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -303,8 +297,7 @@ constexpr vector_2d operator+(const vector_2d& lhs, const vector_2d& rhs) noexce
 \tcode{vector_2d\{ lhs.x() + rhs.x(), lhs.y() + rhs.y() \}}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{operator-}}
-\indexlibrary{\idxcode{operator-}!\idxcode{vector_2d}}
+\indexlibrarymember{operator-}{vector_2d}%
 \begin{itemdecl}
 constexpr vector_2d operator-(const vector_2d& lhs) noexcept;
 \end{itemdecl}
@@ -314,8 +307,7 @@ constexpr vector_2d operator-(const vector_2d& lhs) noexcept;
 \tcode{vector_2d\{ -lhs.x(), -lhs.y() \}}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{operator-}}
-\indexlibrary{\idxcode{operator-}!\idxcode{vector_2d}}
+\indexlibrarymember{operator-}{vector_2d}%
 \begin{itemdecl}
 constexpr vector_2d operator-(const vector_2d& lhs, const vector_2d& rhs) 
   noexcept;
@@ -326,8 +318,18 @@ constexpr vector_2d operator-(const vector_2d& lhs, const vector_2d& rhs)
 \tcode{vector_2d\{ lhs.x() - rhs.x(), lhs.y() - rhs.y() \}}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{operator*}}
-\indexlibrary{\idxcode{operator*}!\idxcode{vector_2d}}
+\indexlibrarymember{operator*}{vector_2d}%
+\begin{itemdecl}
+constexpr vector_2d operator*(const vector_2d& lhs, const vector_2d& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{vector_2d\{ lhs.x() * rhs.x(), lhs.y() * rhs.y() \}}.
+\end{itemdescr}
+
+\indexlibrarymember{operator*}{vector_2d}%
 \begin{itemdecl}
 constexpr vector_2d operator*(const vector_2d& lhs, double rhs) noexcept;
 \end{itemdecl}
@@ -337,8 +339,7 @@ constexpr vector_2d operator*(const vector_2d& lhs, double rhs) noexcept;
 \tcode{vector_2d\{ lhs.x() * rhs, lhs.y() * rhs \}}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{vector_2d}!\idxcode{operator*}}
-\indexlibrary{\idxcode{operator*}!\idxcode{vector_2d}}
+\indexlibrarymember{operator*}{vector_2d}%
 \begin{itemdecl}
 constexpr vector_2d operator*(double lhs, const vector_2d& rhs) noexcept;
 \end{itemdecl}
@@ -346,4 +347,47 @@ constexpr vector_2d operator*(double lhs, const vector_2d& rhs) noexcept;
 \pnum
 \returns
 \tcode{vector_2d\{ lhs * rhs.x(), lhs * rhs.y() \}}.
+\end{itemdescr}
+
+\indexlibrarymember{operator/}{vector_2d}%
+\begin{itemdecl}
+constexpr vector_2d operator/(const vector_2d& lhs, const vector_2d& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{rhs.x()} is not \tcode{0.0} and \tcode{rhs.y()} is not \tcode{0.0}.
+
+\pnum
+\returns
+\tcode{vector_2d\{ lhs.x() / rhs.x(), lhs.y() / rhs.y() \}}.
+\end{itemdescr}
+
+\indexlibrarymember{operator/}{vector_2d}%
+\begin{itemdecl}
+constexpr vector_2d operator/(const vector_2d& lhs, double rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{rhs} is not \tcode{0.0}.
+
+\pnum
+\returns
+\tcode{vector_2d\{ lhs.x() / rhs, lhs.y() / rhs \}}.
+\end{itemdescr}
+
+\indexlibrarymember{operator/}{vector_2d}%
+\begin{itemdecl}
+constexpr vector_2d operator/(double lhs, const vector_2d& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{rhs.x()} is not \tcode{0.0} and \tcode{rhs.y()} is not \tcode{0.0}.
+
+\pnum
+\returns
+\tcode{vector_2d\{ lhs / rhs.x(), lhs / rhs.y() \}}.
 \end{itemdescr}

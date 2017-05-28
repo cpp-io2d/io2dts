@@ -1,71 +1,71 @@
 %!TEX root = io2d.tex
 
-\indexdefn{path segment}
+\indexdefn{path segment}%
 \definition{path segment}{\iotwod.defns.pathsegment}
 a line, \bezierlocal curve, or arc, each of which has a start point and an end point
 
-\indexdefn{control point}
+\indexdefn{control point}%
 \definition{control point}{\iotwod.defns.controlpoint}
 a point other than the start point and end point that is used in defining a \bezierlocal curve
 
-\indexdefn{degenerate path segment}
+\indexdefn{degenerate path segment}%
 \definition{degenerate path segment}{\iotwod.defns.degeneratepathsegment}
 a path segment that has the same values for its start point, end point, and, if any, control points
 
-\indexdefn{initial path segment}
+\indexdefn{initial path segment}%
 \definition{initial path segment}{\iotwod.defns.initialpathsegment}
 a path segment whose start point is not defined as being the end point of another path segment
 \begin{note}
 It is possible for the initial path segment and final path segment to be the same path segment.
 \end{note}
 
-\indexdefn{final path segment}
+\indexdefn{final path segment}%
 \definition{final path segment}{\iotwod.defns.finalpathsegment}
 a path segment whose end point does not define the start point of any other path segment
 \begin{note}
 It is possible for the initial path segment and final path segment to be the same path segment.
 \end{note}
 
-\indexdefn{path instruction}
+\indexdefn{path instruction}%
 \definition{path instruction}{\iotwod.defns.pathinstruction}
 an instruction that creates a new path, closes an existing path, adds a geometry as a new closed path, or modifies the interpretation of path segments that follow it
 
-\indexdefn{path item}
+\indexdefn{path item}%
 \definition{path item}{\iotwod.defns.pathitem}
 a path segment or path instruction
 
-\indexdefn{path}
+\indexdefn{path}%
 \definition{path}{\iotwod.defns.path}
 a collection of path items where the end point of each path segment, except the final path segment, defines the start point of exactly one other path segment in the collection
 
-\indexdefn{current point}
+\indexdefn{current point}%
 \definition{current point}{\iotwod.defns.currentpoint}
 a point established by various operations used in creating a path
 \begin{note}
 A new path has no current point except as otherwise specified.
 \end{note}
 
-\indexdefn{last-move-to point}
+\indexdefn{last-move-to point}%
 \definition{last-move-to point}{\iotwod.defns.lastmovetopoint}
 the point in a path that is the start point of the initial path segment
 
-\indexdefn{path group}
+\indexdefn{path group}%
 \definition{path group}{\iotwod.defns.pathgroup}
 a collection of paths
 
-\indexdefn{path group origin}
+\indexdefn{path group origin}%
 \definition{path group origin}{\iotwod.defns.pathgrporigin}
 a point to which each of the points in a path group is relative
 
-\indexdefn{path group transformation matrix}
+\indexdefn{path group transformation matrix}%
 \definition{path group transformation matrix}{\iotwod.defns.pathgrptransform}
 an affine transformation matrix used to apply affine transformations to the points in a path group
 
-\indexdefn{closed path}
+\indexdefn{closed path}%
 \definition{closed path}{\iotwod.defns.closedpath}
 a path with one or more path segments where the last-move-to point is used to define the end point of the path's final path segment
 
-\indexdefn{open path}
+\indexdefn{open path}%
 \definition{open path}{\iotwod.defns.openpath}
 a path with one or more path segments where the last-move-to point is not used to define the end point of the path's final path segment
 \begin{note}

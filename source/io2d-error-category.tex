@@ -5,7 +5,7 @@
 synopsis}
 
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std::experimental::io2d::v1 {
   class io2d_error_category : public std::error_category {
   public:
     // \ref{\iotwoderrorcategory.observers}, observers:
@@ -19,8 +19,8 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   
   // \ref{\iotwoderrorcategory.nonmembers}, non-member functions:
   const error_category& io2d_category() noexcept;
-} } }
-
+}
+namespace std {
   error_condition make_error_condition(
     experimental::io2d::io2d_error e) noexcept;
   error_code make_error_code(experimental::io2d::io2d_error e) noexcept;
@@ -31,7 +31,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 description}
 
 \pnum
-\indexlibrary{\idxcode{io2d_error_category}}
+\indexlibrary{\idxcode{io2d_error_category}}%
 The \tcode{io2d_error_category} class derives from 
 \tcode{error_category} in order to provide a custom error category for 
 use by this library.
@@ -39,8 +39,7 @@ use by this library.
 \rSec1 [\iotwoderrorcategory.observers] {\tcode{io2d_error_category} 
 observers}
 
-\indexlibrary{\idxcode{io2d_error_category}!\idxcode{name}}
-\indexlibrary{\idxcode{name}!\idxcode{io2d_error_category}}
+\indexlibrarymember{name}{io2d_error_category}%
 \begin{itemdecl}
 virtual const char* name() const noexcept override;
 \end{itemdecl}
@@ -50,8 +49,7 @@ virtual const char* name() const noexcept override;
 	A pointer to the string \tcode{''io2d''}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{io2d_error_category}!\idxcode{message}}
-\indexlibrary{\idxcode{message}!\idxcode{io2d_error_category}}
+\indexlibrarymember{message}{io2d_error_category}%
 \begin{itemdecl}
 virtual string message(int errVal) const override;
 \end{itemdecl}
@@ -77,8 +75,7 @@ virtual string message(int errVal) const override;
 	
 \end{itemdescr}
 
-\indexlibrary{\idxcode{io2d_error_category}!\idxcode{equivalent}}
-\indexlibrary{\idxcode{equivalent}!\idxcode{io2d_error_category}}
+\indexlibrarymember{equivalent}{io2d_error_category}%
 \begin{itemdecl}
 virtual bool equivalent(int code,
   const error_condition& condition) const noexcept override;
@@ -94,6 +91,8 @@ virtual bool equivalent(int code,
 	implementors.
 	\end{note}
 \end{itemdescr}
+
+\indexlibrarymember{equivalent}{io2d_error_category}%
 \begin{itemdecl}
 virtual bool equivalent(const error_code& ec,
   int condition) const noexcept override;
@@ -113,7 +112,7 @@ virtual bool equivalent(const error_code& ec,
 \rSec1 [\iotwoderrorcategory.nonmembers] {\tcode{io2d_error_category} 
 non-member functions}
 
-\indexlibrary{\idxcode{io2d_category}}
+\indexlibrary{\idxcode{io2d_category}}%
 \begin{itemdecl}
   const error_category& io2d_category() noexcept;
 \end{itemdecl}
@@ -133,7 +132,7 @@ non-member functions}
 	shall return a pointer to the string \tcode{''io2d''}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{make_error_condition}}
+\indexlibrary{\idxcode{make_error_condition}}%
 \begin{itemdecl}
 error_condition make_error_condition(experimental::io2d::io2d_error e) noexcept;
 \end{itemdecl}
@@ -143,7 +142,7 @@ error_condition make_error_condition(experimental::io2d::io2d_error e) noexcept;
 \tcode{error_condition(static_cast<int>(e), experimental::io2d::io2d_category());}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{make_error_code}}
+\indexlibrary{\idxcode{make_error_code}}%
 \begin{itemdecl}
 error_code make_error_code(experimental::io2d::io2d_error e) noexcept;
 \end{itemdecl}
