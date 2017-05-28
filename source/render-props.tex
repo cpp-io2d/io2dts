@@ -1,42 +1,42 @@
 %!TEX root = io2d.tex
 
-\rSec0 [surfaceprops] {Class \tcode{surface_props}}
+\rSec0 [renderprops] {Class \tcode{render_props}}
 
-\rSec1 [surfaceprops.summary] {\tcode{surface_props} summary}
+\rSec1 [renderprops.summary] {\tcode{render_props} summary}
 
 \pnum
-The \tcode{surface_props} class provides general state information that is applicable to all rendering and composing operations (\ref{surface.rendering}).
+The \tcode{render_props} class provides general state information that is applicable to all rendering and composing operations (\ref{surface.rendering}).
 
 \pnum
 It has a Surface Matrix of type \tcode{matrix_2d}, and a Compositing Operator of type \tcode{compositing_op}.
 
-\rSec1 [surfaceprops.synopsis] {\tcode{surface_props} synopsis}
+\rSec1 [renderprops.synopsis] {\tcode{render_props} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
-  class surface_props {
+  class render_props {
   public:
-    // \ref{surfaceprops.cons}, constructors:
-    constexpr surface_props() noexcept;
-    constexpr explicit surface_props(const matrix_2d& m,
+    // \ref{renderprops.cons}, constructors:
+    constexpr render_props() noexcept;
+    constexpr explicit render_props(const matrix_2d& m,
       compositing_op co = compositing_op::over) noexcept;
     
-    // \ref{surfaceprops.modifiers}, modifiers:
+    // \ref{renderprops.modifiers}, modifiers:
     constexpr void compositing(compositing_op co) noexcept;
     constexpr void surface_matrix(const matrix_2d& m) noexcept;
     
-    // \ref{surfaceprops.observers}, observers:
+    // \ref{renderprops.observers}, observers:
     constexpr compositing_op compositing() const noexcept;
     constexpr matrix_2d surface_matrix() const noexcept;
   };
 }}}}
 \end{codeblock}
 
-\rSec1 [surfaceprops.cons] {\tcode{surface_props} constructors}
+\rSec1 [renderprops.cons] {\tcode{render_props} constructors}
 
-\indexlibrary{\idxcode{surface_props}!constructor}
+\indexlibrary{\idxcode{render_props}!constructor}
 \begin{itemdecl}
-constexpr surface_props() noexcept;
+constexpr render_props() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -47,9 +47,9 @@ The value of Surface Matrix is its default-constructed value.
 The value of Compositing Operator is \tcode{compositing_op::over}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{surface_props}!constructor}
+\indexlibrary{\idxcode{render_props}!constructor}
 \begin{itemdecl}
-constexpr explicit surface_props(const matrix_2d& m,
+constexpr explicit render_props(const matrix_2d& m,
   compositing_op co = compositing_op::over) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -65,9 +65,9 @@ The value of Surface Matrix is \tcode{m}.
 The value of Compositing Operator is \tcode{co}.
 \end{itemdescr}
 
-\rSec1 [surfaceprops.modifiers] {\tcode{surface_props} modifiers}
+\rSec1 [renderprops.modifiers] {\tcode{render_props} modifiers}
 
-\indexlibrary{\idxcode{surface_props}!\idxcode{compositing}}
+\indexlibrary{\idxcode{render_props}!\idxcode{compositing}}
 \begin{itemdecl}
 constexpr void compositing(compositing_op co) noexcept;
 \end{itemdecl}
@@ -77,7 +77,7 @@ constexpr void compositing(compositing_op co) noexcept;
 The value of Compositing Operator is \tcode{co}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{surface_props}!\idxcode{surface_matrix}}
+\indexlibrary{\idxcode{render_props}!\idxcode{surface_matrix}}
 \begin{itemdecl}
 constexpr void surface_matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
@@ -91,9 +91,9 @@ constexpr void surface_matrix(const matrix_2d& m) noexcept;
 The value of Surface Matrix is \tcode{m}.
 \end{itemdescr}
 
-\rSec1 [surfaceprops.observers] {\tcode{surface_props} observers}
+\rSec1 [renderprops.observers] {\tcode{render_props} observers}
 
-\indexlibrary{\idxcode{surface_props}!\idxcode{compositing}}
+\indexlibrary{\idxcode{render_props}!\idxcode{compositing}}
 \begin{itemdecl}
 constexpr compositing_op compositing() const noexcept;
 \end{itemdecl}
@@ -103,7 +103,7 @@ constexpr compositing_op compositing() const noexcept;
 The value of Compositing Operator.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{surface_props}!\idxcode{surface_matrix}}
+\indexlibrary{\idxcode{render_props}!\idxcode{surface_matrix}}
 \begin{itemdecl}
 constexpr matrix_2d surface_matrix() const noexcept;
 \end{itemdecl}
