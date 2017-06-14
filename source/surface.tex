@@ -223,7 +223,7 @@ There are four standard coordinate spaces relevant to the rendering and composin
 \end{itemize}
 
 \pnum
-The \term{Brush Coordinate Space} is the standard coordinate space of the Source Brush (\ref{surface.rendering.brushes}). Its transformation matrix is the Brush Properties' Brush Matrix (\ref{brushprops.summary}).
+The \term{Brush Coordinate Space} is the standard coordinate space of the Source Brush (\ref{surface.rendering.brushes}). Its transformation matrix is the Brush Properties' Brush Matrix (\ref{\iotwod.brushprops.summary}).
 
 \pnum
 The \term{Mask Coordinate Space} is the standard coordinate space of the Mask Brush (\ref{surface.rendering.brushes}). Its transformation matrix is the Mask Properties' Mask Matrix (\ref{maskprops.summary}).
@@ -310,7 +310,7 @@ When a Filling operation is initiated on a surface, the implementation shall pro
 \begin{enumerate}
 \item For each integral point $sp$ of the \underlyingsurface, determine if $sp$ is within the Clip Area (\ref{clipprops.summary}); if so, proceed with the remaining steps.
 \item Transform $sp$ from the Surface Coordinate Space (\ref{surface.coordinatespaces}) to the User Coordinate Space (Table~\ref{tab:surface.pointtransforms.listing}), resulting in point $up$.
-\item Using the Source Path (\ref{surface.rendering.sourcepath}) and the Fill Rule (\ref{brushprops.summary}), determine whether $up$ shall be filled; if so, proceed with the remaining steps.
+\item Using the Source Path (\ref{surface.rendering.sourcepath}) and the Fill Rule (\ref{\iotwod.brushprops.summary}), determine whether $up$ shall be filled; if so, proceed with the remaining steps.
 \item Transform $up$ from the User Coordinate Space to the Brush Coordinate Space (\ref{surface.coordinatespaces} and Table~\ref{tab:surface.pointtransforms.listing}), resulting in point $bp$.
 \item Sample from point $bp$ of the Source Brush (\ref{surface.rendering.brushes}), combine the resulting visual data with the visual data at point $sp$ in the \underlyingsurface in the manner specified by the surface's current Composition Operator (\ref{renderprops.summary}), and modify the visual data of the \underlyingsurface at point $sp$ to reflect the result produced by application of the Composition Operator.
 \end{enumerate}

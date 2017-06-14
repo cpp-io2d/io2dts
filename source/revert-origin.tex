@@ -1,0 +1,64 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.revertorigin] {Class \tcode{revert_origin}}
+
+\rSec1 [\iotwod.revertorigin.general] {In general}
+
+\pnum
+\indexlibrary{\idxcode{revert_origin}}%
+The class \tcode{revert_origin} describes a path item that reverts a path group origin to its previous value. If there is no previous value, the path group origin is set to the value it would have if it was default constructed.
+
+\rSec1 [\iotwod.revertorigin.synopsis] {\tcode{revert_origin} synopsis}
+
+\begin{codeblock}
+namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+  namespace path_data {
+    class revert_origin {
+    public:
+      // \ref{\iotwod.revertorigin.cons}, construct:
+      constexpr revert_origin() noexcept;
+    };
+    
+    \ref{\iotwod.revertorigin.nonmember}, non-members
+    constexpr bool operator==(const revert_origin& lhs,
+      const revert_origin& rhs) noexcept;
+    constexpr bool operator!=(const revert_origin& lhs,
+      const revert_origin& rhs) noexcept;
+  }
+} } } }
+\end{codeblock}
+
+\rSec1 [\iotwod.revertorigin.cons] {\tcode{revert_origin} constructors}
+
+\indexlibrary{\idxcode{revert_origin}!constructor}%
+\begin{itemdecl}
+constexpr revert_origin() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{revert_origin}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.revertorigin.nonmember]{Non-member functions}
+
+\indexlibrarymember{operator==}{revert_origin}%
+\begin{itemdecl}
+constexpr bool operator==(const revert_origin& lhs, const revert_origin& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{true}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{revert_origin}%
+\begin{itemdecl}
+constexpr bool operator!=(const revert_origin& lhs, const revert_origin& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{false}.
+\end{itemdescr}

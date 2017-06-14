@@ -4,7 +4,7 @@
 \rSec1 [\iotwod.standalone.synopsis] {Standalone functions synopsis}
 
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std::experimental::io2d::v1 {
   int format_stride_for_width(format format, int width) noexcept;
   display_surface make_display_surface(int preferredWidth,
     int preferredHeight, format preferredFormat,
@@ -26,12 +26,15 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   image_surface make_image_surface(format format, int width, int height);
   image_surface make_image_surface(format format, int width, int height, 
     error_code& ec) noexcept;
-} } } } // namespaces std::experimental::io2d::v1
+  double angle_for_point(const vector_2d& ctr, const vector_2d& pt) noexcept;
+  vector_2d point_for_angle(double ang, double rad = 1.0) noexcept;
+  vector_2d point_for_angle(double ang, const vector_2d& rad) noexcept;
+}
 \end{codeblock}
 
 \rSec1 [\iotwod.standalone.formatstrideforwidth] {\tcode{format_stride_for_width}}
 
-\indexlibrary{\idxcode{format_stride_for_width}}
+\indexlibrary{\idxcode{format_stride_for_width}}%
 \begin{itemdecl}
 int format_stride_for_width(format fmt, int width) noexcept;
 \end{itemdecl}
@@ -46,7 +49,7 @@ If \tcode{fmt == format::invalid}, this function shall return \tcode{0}.
 
 \rSec1 [\iotwod.standalone.makedisplaysurface] {\tcode{make_display_surface}}
 
-\indexlibrary{\idxcode{make_display_surface}}
+\indexlibrary{\idxcode{make_display_surface}}%
 \begin{itemdecl}
 display_surface make_display_surface(int preferredWidth,
   int preferredHeight, format preferredFormat,
@@ -84,7 +87,7 @@ The errors, if any, produced by this function are the same as the errors for the
 
 \rSec1 [\iotwod.standalone.makeimagesurface] {\tcode{make_image_surface}}
 
-\indexlibrary{\idxcode{make_image_surface}}
+\indexlibrary{\idxcode{make_image_surface}}%
 \begin{itemdecl}
 image_surface make_image_surface(int width, int height,
   format fmt = format::argb32);
@@ -103,4 +106,33 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 \pnum
 \errors
 The errors, if any, produced by this function are the same as the errors for the equivalent \tcode{display_surface} constructor (\ref{imagesurface.cons}).
+\end{itemdescr}
+
+\rSec1 [\iotwod.standalone.angleforpoint] {\tcode{angle_for_point}}
+
+\indexlibrary{\idxcode{angle_for_point}}%
+\begin{itemdecl}
+double angle_for_point(const vector_2d& ctr, const vector_2d& pt,
+  const vector_2d& scl = vector_2d{ 1.0, 1.0 }) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The angle, in radians, of \tcode{pt} as a point on a circle with a center at \tcode{ctr}. If the angle is less that \tcode{pi<double> / 180000.0}, returns \tcode{0.0}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.standalone.pointforangle] {\tcode{point_for_angle}}
+
+\indexlibrary{\idxcode{point_for_angle}}%
+\begin{itemdecl}
+vector_2d point_for_angle(double ang, double rad = 1.0) noexcept;
+vector_2d point_for_angle(double ang, const vector_2d& rad) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+If it is a \tcode{double}, \tcode{rad} is greater than \tcode{0.0}. If it is a \tcode{vector_2d}, \tcode{rad.x()} or \tcode{rad.y()} is greater than \tcode{0.0} and neither is less than \tcode{0.0}.
+
+\returns
+The result of rotating the point \tcode{vector_2d\{ 1.0, 0.0 \}}, around an origin of \tcode{vector_2d\{ 0.0, 0.0 \}} by \tcode{ang} radians, with a positive value of \tcode{ang} meaning counterclockwise rotation and a negative value meaning clockwise rotation, with the result being multiplied by \tcode{rad}.
 \end{itemdescr}

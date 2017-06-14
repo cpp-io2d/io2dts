@@ -99,8 +99,12 @@ namespace std::experimental::io2d::v1 {
     void new_path(const vector_2d& pt) noexcept;
     void rel_new_path(const vector_2d& pt) noexcept;
     void close_path() noexcept;
-    void change_matrix(const matrix_2d& m) noexcept;
-    void change_origin(const vector_2d& pt) noexcept;
+    void set_matrix(const matrix_2d& m) noexcept;
+    void modify_matrix(const matrix_2d& m) noexcept;
+    void revert_matrix() noexcept;
+    void set_origin(const vector_2d& pt) noexcept;
+    void modify_origin(const vector_2d& pt) noexcept;
+    void revert_origin() noexcept;
     void line_to(const vector_2d& pt) noexcept;
     void rel_line_to(const vector_2d& dpt) noexcept;
     void quadratic_curve_to(const vector_2d& pt0, const vector_2d& pt2)
@@ -416,9 +420,9 @@ The current point contains a value.
 Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::close_path()} to the end of the path group.
 \end{itemdescr}
 
-\indexlibrarymember{path_builder}{change_matrix}%
+\indexlibrarymember{path_builder}{set_matrix}%
 \begin{itemdecl}
-void change_matrix(const matrix_2d& m) noexcept;
+void set_matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -427,17 +431,61 @@ The matrix \tcode{m} shall be invertible.
 
 \pnum
 \effects
-Adds a \tcode{path_data::path_item} object constructed from \tcode{(path_data::change_matrix(m)} to the end of the path group.
+Adds a \tcode{path_data::path_item} object constructed from \tcode{(path_data::set_matrix(m)} to the end of the path group.
 \end{itemdescr}
 
-\indexlibrarymember{path_builder}{change_origin}%
+\indexlibrarymember{path_builder}{modify_matrix}%
 \begin{itemdecl}
-void change_origin(const vector_2d& pt) noexcept;
+void modify_matrix(const matrix_2d& m) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+The matrix \tcode{m} shall be invertible.
+
+\pnum
+\effects
+Adds a \tcode{path_data::path_item} object constructed from \tcode{(path_data::modify_matrix(m)} to the end of the path group.
+\end{itemdescr}
+
+\indexlibrarymember{path_builder}{revert_matrix}%
+\begin{itemdecl}
+void revert_matrix() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::change_origin(pt)} to the end of the path group.
+Adds a \tcode{path_data::path_item} object constructed from \tcode{(path_data::revert_matrix()} to the end of the path group.
+\end{itemdescr}
+
+\indexlibrarymember{path_builder}{set_origin}%
+\begin{itemdecl}
+void set_origin(const vector_2d& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::set_origin(pt)} to the end of the path group.
+\end{itemdescr}
+
+\indexlibrarymember{path_builder}{modify_origin}%
+\begin{itemdecl}
+void modify_origin(const vector_2d& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::modify_origin(pt)} to the end of the path group.
+\end{itemdescr}
+
+\indexlibrarymember{path_builder}{revert_origin}%
+\begin{itemdecl}
+void revert_origin() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::revert_origin()} to the end of the path group.
 \end{itemdescr}
 
 \indexlibrarymember{path_builder}{line_to}%

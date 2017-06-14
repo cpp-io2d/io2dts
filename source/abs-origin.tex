@@ -1,0 +1,109 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.absorigin] {Class \tcode{abs_origin}}
+
+\pnum
+\indexlibrary{\idxcode{abs_origin}}%
+The class \tcode{abs_origin} describes a path item that assigns the value of the \tcode{abs_origin} object's \term{origin value} to a path group origin.
+
+\pnum
+The origin value is a \tcode{vector_2d} object.
+
+\rSec1 [\iotwod.absorigin.synopsis] {\tcode{abs_origin} synopsis}
+
+\begin{codeblock}
+namespace std::experimental::io2d::v1 {
+  namespace path_data {
+    class abs_origin {
+    public:
+      // \ref{\iotwod.absorigin.cons}, construct:
+      constexpr abs_origin() noexcept;
+      constexpr explicit abs_origin(const vector_2d& pt) noexcept;
+
+      // \ref{\iotwod.absorigin.modifiers}, modifiers:
+      constexpr void origin(const vector_2d& pt) noexcept;
+
+      // \ref{\iotwod.absorigin.observers}, observers:
+      constexpr vector_2d origin() const noexcept;
+    };
+    
+    \ref{\iotwod.absorigin.nonmember}, non-members
+    constexpr bool operator==(const abs_origin& lhs,
+      const abs_origin& rhs) noexcept;
+    constexpr bool operator!=(const abs_origin& lhs,
+      const abs_origin& rhs) noexcept;
+  }
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.absorigin.cons] {\tcode{abs_origin} constructors}
+
+\indexlibrary{\idxcode{abs_origin}!constructor}%
+\begin{itemdecl}
+constexpr abs_origin() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to: \tcode{abs_origin\{ vector_2d() \};}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{abs_origin}!constructor}%
+\begin{itemdecl}
+constexpr explicit abs_origin(const vector_2d& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{abs_origin}.
+
+\pnum
+The origin value is \tcode{pt}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.absorigin.modifiers]{\tcode{abs_origin} modifiers}
+
+\indexlibrarymember{origin}{abs_origin}%
+\begin{itemdecl}
+constexpr void origin(const vector_2d& value) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+The origin is \tcode{pt}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.absorigin.observers]{\tcode{abs_origin} observers}
+
+\indexlibrarymember{origin}{abs_origin}%
+\begin{itemdecl}
+constexpr vector_2d origin() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The origin.
+\end{itemdescr}
+
+\rSec1 [\iotwod.absorigin.nonmember]{Non-member functions}
+
+\indexlibrarymember{operator==}{abs_origin}%
+\begin{itemdecl}
+constexpr bool operator==(const abs_origin& lhs, const abs_origin& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{lhs.origin() == rhs.origin()}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{abs_origin}%
+\begin{itemdecl}
+constexpr bool operator!=(const abs_origin& lhs, const abs_origin& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{!(lhs == rhs)}.
+\end{itemdescr}

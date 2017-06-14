@@ -45,6 +45,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       constexpr vector_2d radius() const noexcept;
       constexpr double rotation() const noexcept;
       constexpr double start_angle() const noexcept;
+      vector_2d center(const vector_2d& cpt, const matrix_2d& m = matrix_2d{}) 
+        const noexcept;
+      vector_2d end_pt(const vector_2d& cpt, const matrix_2d& m = matrix_2d{}) 
+        const noexcept;
     };
     
     // \ref{arc.nonmember}, non-members
@@ -148,6 +152,43 @@ constexpr double start_angle() const noexcept;
 \pnum
 \returns
 The start angle.
+\end{itemdescr}
+
+\indexlibrarymember{center}{arc}%
+\begin{itemdecl}
+vector_2d center(const vector_2d& cpt, const matrix_2d& m = matrix_2d{})
+  const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+As-if:
+\begin{codeblock}
+auto lmtx = m;
+lmtx.m20(0.0); lmtx.m21(0.0); // Eliminate translation.
+auto centerOffset = point_for_angle(two_pi<double> - _Start_angle, _Radius);
+centerOffset.y(-centerOffset.y());
+return cpt - centerOffset * lmtx;
+\end{codeblock}
+\end{itemdescr}
+
+\indexlibrarymember{start_angle}{arc}%
+\begin{itemdecl}
+vector_2d end_pt(const vector_2d& cpt, const matrix_2d& m = matrix_2d{})
+  const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+As-if:
+\begin{codeblock}
+auto lmtx = m;
+auto tfrm = matrix_2d::init_rotate(_Start_angle + _Rotation);
+lmtx.m20(0.0); lmtx.m21(0.0); // Eliminate translation.
+auto pt = (_Radius * tfrm);
+pt.y(-pt.y());
+return cpt + pt * lmtx;
+\end{codeblock}
 \end{itemdescr}
 
 \rSec1 [arc.nonmember]{Non-member functions}%

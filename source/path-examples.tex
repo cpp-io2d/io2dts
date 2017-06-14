@@ -2,7 +2,9 @@
 
 % Note: The rSec is included in paths.tex. If added here instead, it would be:
 
-\rSec1 [paths.example]{Path group examples (Informative)}%
+\rSec1 [paths.example]{Path group examples (Informative)}
+
+\rSec2 [\iotwod.paths.example.intro] {Overview}
 
 \pnum
 Path groups are composed of zero or more paths. The following examples show the basics of how path groups work in practice.
@@ -20,6 +22,7 @@ int main() {
   auto imgSfc = make_image_surface(format::argb32, 300, 200);
   brush backBrush{ rgba_color::black() };
   brush foreBrush{ rgba_color::white() };
+  render_props aliased{ antialias::none };
   path_builder<> pb{};
   imgSfc.paint(backBrush);
   
@@ -31,6 +34,8 @@ int main() {
   return 0;
 }
 \end{codeblock}
+
+\rSec2 [\iotwod.paths.examples.one] {Example 1}
 
 \pnum
 Example 1 consists of a single path, forming a trapezoid:
@@ -44,7 +49,7 @@ Example 1 consists of a single path, forming a trapezoid:
     // [280 - 260, 180 + 0].
   pb.close_path(); // Creates a line from [20, 180] to [80, 20] 
     // (the last-move-to point), which makes this a closed path.
-  imgSfc.stroke(foreBrush, pb);
+  imgSfc.stroke(foreBrush, pb, nullopt, nullopt, nullopt, aliased);
 \end{codeblock}
 
 \begin{importgraphiciotwod}
@@ -54,6 +59,8 @@ Example 1 consists of a single path, forming a trapezoid:
 \end{importgraphiciotwod}
 
 \FloatBarrier
+
+\rSec2 [\iotwod.paths.examples.two] {Example 2}
 
 \pnum
 Example 2 consists of two paths. The first is a rectangular open path (on the left) and the second is a rectangular closed path (on the right):
@@ -70,8 +77,7 @@ Example 2 consists of two paths. The first is a rectangular open path (on the le
   pb.rel_line_to({ 0.0, 160.0 });
   pb.rel_line_to({ -100.0, 0.0 });
   pb.close_path(); // End the second path.
-  imgSfc.stroke(foreBrush, pb, nullopt, stroke_props{ 10.0 }); // Make the
-    // stroke width 10.0 instead of the default 2.0.
+  imgSfc.stroke(foreBrush, pb, nullopt, stroke_props{ 10.0 }, nullopt, alised);
 \end{codeblock}
 
 \begin{importgraphiciotwod}
@@ -94,28 +100,123 @@ So for the open path, the first line begins at \tcode{vector_2d\{ 20.0, 20.0 \}}
 \pnum
 For the closed path, adjusting for the coordinate differences, the rendering facts are the same as for the open path except for one key difference: the point where the first line and last line meet is rendered as a line join rather than two line caps, which, given the default value of \tcode{line_join::miter}, produces a miter, adding that square area to the rendering result.
 
+\rSec2 [\iotwod.paths.examples.three] {Example 3}
+
+\pnum
+Example 3 demonstrates open and closed paths each containing either a quadratic curve or a cubic curve.
+
+\begin{codeblock}
+pb.new_path({ 20.0, 20.0 });
+pb.rel_quadratic_curve_to({ 60.0, 120.0 }, { 60.0, -120.0 });
+pb.rel_new_path({ 20.0, 0.0 });
+pb.rel_quadratic_curve_to({ 60.0, 120.0 }, { 60.0, -120.0 });
+pb.close_path();
+pb.new_path({ 20.0, 150.0 });
+pb.rel_cubic_curve_to({ 40.0, -120.0 }, { 40.0, 120.0 * 2.0 },
+  { 40.0, -120.0 });
+pb.rel_new_path({ 20.0, 0.0 });
+pb.rel_cubic_curve_to({ 40.0, -120.0 }, { 40.0, 120.0 * 2.0 },
+  { 40.0, -120.0 });
+pb.close_path();
+imgSfc.stroke(foreBrush, pb, nullopt, nullopt, nullopt, aliased);
+\end{codeblock}
+
+\begin{importgraphiciotwod}
+{Path example 3}
+{paths:example3}
+{pathexample03.png}
+\end{importgraphiciotwod}
+
+\FloatBarrier
+
+\pnum
+\begin{note}
+\tcode{pb.quadratic_curve_to(\{ 80.0, 140.0 \}, \{ 140.0, 20.0 \});} would be the absolute equivalent of the first curve in example 3.
+\end{note}
+
+\rSec2 [\iotwod.paths.examples.four] {Example 4}
+
+\pnum
+Example 4 shows how to draw "C++" using paths.
+
+\pnum
+For the "C", it is created using an arc. A scaling matrix is used to make it  slightly elliptical. It is also desirable that the arc has a fixed center point, \tcode{vector_2d\{ 85.0, 100.0 \}}. The inverse of the scaling matrix is used in combination with the \tcode{point_for_angle} function to determine the point at which the arc should begin in order to get achieve this fixed center point. The "C" is then stroked.
+
+\pnum
+Unlike the "C", which is created using an open path that is stroked, each "+" is created using a closed path that is filled. To avoid filling the "C", \tcode{pb.clear();} is called to empty the container. The first "+" is created using a series of lines and is then filled.
+
+\pnum
+Taking advantage of the fact that \tcode{path_builder} is a container, rather than create a brand new path for the second "+", a translation matrix is applied by inserting a \tcode{path_data::change_matrix} path item before the \tcode{path_data::new_path} object in the existing plus, reverting back to the old matrix immediately after the  and then filling it again.
+
+\begin{codeblock}
+// Create the "C".
+const matrix_2d scl = matrix_2d::init_scale({ 0.9, 1.1 });
+auto pt = scl.inverse().transform_point({ 85.0, 100.0 }) +
+  point_for_angle(half_pi<double> / 2.0, 50.0);
+pb.matrix(scl);
+pb.new_path(pt);
+pb.arc({ 50.0, 50.0 }, three_pi_over_two<double>, half_pi<double> / 2.0);
+imgSfc.stroke(foreBrush, pb, nullopt, stroke_props{ 10.0 });
+// Create the first "+".
+pb.clear();
+pb.new_path({ 130.0, 105.0 });
+pb.rel_line_to({ 0.0, -10.0 });
+pb.rel_line_to({ 25.0, 0.0 });
+pb.rel_line_to({ 0.0, -25.0 });
+pb.rel_line_to({ 10.0, 0.0 });
+pb.rel_line_to({ 0.0, 25.0 });
+pb.rel_line_to({ 25.0, 0.0 });
+pb.rel_line_to({ 0.0, 10.0 });
+pb.rel_line_to({ -25.0, 0.0 });
+pb.rel_line_to({ 0.0, 25.0 });
+pb.rel_line_to({ -10.0, 0.0 });
+pb.rel_line_to({ 0.0, -25.0 });
+pb.close_path();
+imgSfc.fill(foreBrush, pb);
+// Create the second "+".
+pb.insert(pb.begin(), path_data::change_matrix(
+  matrix_2d::init_translate({ 80.0, 0.0 })));
+// Revert to the old matrix after the path_data::new_path object.
+pb.insert(pb.begin() + 2, path_data::revert_matrix());
+imgSfc.fill(foreBrush, pb);
+\end{codeblock}
+
+\begin{importgraphiciotwod}
+{Path example 4}
+{paths:example4}
+{pathexample04.png}
+\end{importgraphiciotwod}
+
+\FloatBarrier
+%
+%\rSec2 [\iotwod.paths.examples.five] {Example 5}
+%
 %\pnum
-%Example 3 demonstrates one circumstance in which degenerate path segments are rendered and also several operations that collapse into the establishment of a single path.
+%Example 5 shows the difference between filling a path and then stroking it versus stroking that path then filling it.
 %
 %\begin{codeblock}
-%  pb.move({ 40.0, 40.0 }); // Begin the first path.
-%  pb.move({ 40.0, 160.0 }); // Replace the first path since it is empty.
-%  pb.line_to({ 40.0, 160.0 }); // Create a degenerate path segment.
-%  pb.new_path(); // Begin the second path.
-%  pb.line_to({ 100.0, 100.0 }); // Establish a current point and then create a 
-%    // line that goes to it, i.e. a degenerate path segment.
-%  pb.move_to({ 100.0, 160.0 }); // Begin the third path.
-%  pb.rel_quadratic_curve_to({}, {}); // Create a degenerate path segment.
-%  pb.move_to({ 100.0, 160.0 });
-%  
-%  imgSfc.stroke(foreBrush, pb, nullopt, stroke_props{ 10.0 }); // Make the
-%    // stroke width 10.0 instead of the default 2.0.
+%brush blueBrush{ rgba_color::blue() };
+%stroke_props ten{ 10.0 };
+%pb.new_path({ 30.0, 30.0 });
+%pb.rel_line_to({ 105.0, 0.0 });
+%pb.rel_line_to({ 0.0, 140.0 });
+%pb.rel_line_to({ -105.0, 0.0 });
+%pb.close_path();
+%imgSfc.stroke(foreBrush, pb, nullopt, ten);
+%imgSfc.fill(blueBrush, pb);
+%pb.insert(pb.begin(),
+%  path_data::change_matrix(matrix_2d::init_translate({ 135.0, 0.0 })));
+%imgSfc.fill(blueBrush, pb);
+%imgSfc.stroke(foreBrush, pb, nullopt, ten);
 %\end{codeblock}
 %
 %\begin{importgraphiciotwod}
-%{Path example 3}
-%{paths:example3}
-%{pathexample03.png}
+%{Path example 5}
+%{paths:example5}
+%{pathexample05.png}
 %\end{importgraphiciotwod}
 %
 %\FloatBarrier
+%
+%\pnum
+%As can be seen, a path is filled exactly to the lines of the path.

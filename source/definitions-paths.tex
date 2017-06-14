@@ -40,10 +40,7 @@ a collection of path items where the end point of each path segment, except the 
 
 \indexdefn{current point}%
 \definition{current point}{\iotwod.defns.currentpoint}
-a point established by various operations used in creating a path
-\begin{note}
-A new path has no current point except as otherwise specified.
-\end{note}
+a point established or used by various path items
 
 \indexdefn{last-move-to point}%
 \definition{last-move-to point}{\iotwod.defns.lastmovetopoint}
@@ -71,6 +68,10 @@ a path with one or more path segments where the last-move-to point is not used t
 \begin{note}
 Even if the start point of the initial path segment and the end point of the final path segment are assigned the same coordinates, the path is still an open path since the final path segment's end point is not defined as being the start point of the initial segment but instead merely happens to have the same value as that point.
 \end{note}
+%
+%\indexdefn{interpret}%
+%\definition{interpret}{\iotwod.defns.pathgrpinterpret}
+%\defncontext{path group} sequentially evaluate zero or more path items ...
 %
 %\indexdefn{degenerate path}
 %\definition{degenerate path}{\iotwod.defns.degeneratepath}

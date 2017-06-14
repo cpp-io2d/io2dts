@@ -1,16 +1,17 @@
 %!TEX root = io2d.tex
 
-\rSec0 [brushprops] {Class \tcode{brush_props}}
+\rSec0 [\iotwod.brushprops] {Class \tcode{brush_props}}
 
-\rSec1 [brushprops.summary] {\tcode{brush_props} summary}
+\rSec1 [\iotwod.brushprops.summary] {\tcode{brush_props} summary}
 
 \pnum
+\indexlibrary{\idxcode{brush_props}}%
 The \tcode{brush_props} class provides general state information that is applicable to all rendering and composing operations (\ref{surface.rendering}).
 
 \pnum
 It has a Wrap Mode of type \tcode{wrap_mode}, a Filter of type \tcode{filter}, a Fill Rule of type \tcode{fill_rule}, and a Brush Matrix of type \tcode{matrix_2d}.
 
-\rSec1 [brushprops.synopsis] {\tcode{brush_props} synopsis}
+\rSec1 [\iotwod.brushprops.synopsis] {\tcode{brush_props} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
@@ -18,20 +19,20 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   public:
     // \ref{brushprops.cons}, constructors:
     constexpr brush_props(
-      experimental::io2d::wrap_mode w = experimental::io2d::wrap_mode::none,
       experimental::io2d::filter fi = experimental::io2d::filter::good,
+      experimental::io2d::wrap_mode w = experimental::io2d::wrap_mode::none,
       experimental::io2d::fill_rule fr = experimental::io2d::fill_rule::winding,
       matrix_2d m = matrix_2d{}) noexcept;
 
     // \ref{brushprops.modifiers}, modifiers:
-    constexpr void wrap_mode(experimental::io2d::wrap_mode w) noexcept;
     constexpr void filter(experimental::io2d::filter fi) noexcept;
+    constexpr void wrap_mode(experimental::io2d::wrap_mode w) noexcept;
     constexpr void fill_rule(experimental::io2d::fill_rule fr) noexcept;
     constexpr void brush_matrix(const matrix_2d& m) noexcept;
 
     // \ref{brushprops.observers}, observers:
-    constexpr experimental::io2d::wrap_mode wrap_mode() const noexcept;
     constexpr experimental::io2d::filter filter() const noexcept;
+    constexpr experimental::io2d::wrap_mode wrap_mode() const noexcept;
     constexpr experimental::io2d::fill_rule fill_rule() const noexcept;
     constexpr matrix_2d brush_matrix() const noexcept;
   };

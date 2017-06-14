@@ -38,6 +38,7 @@ namespace std::experimental::io2d::v1 {
     constexpr static matrix_2d init_translate(const vector_2d& value) noexcept;
     constexpr static matrix_2d init_scale(const vector_2d& value) noexcept;
     static matrix_2d init_rotate(double radians) noexcept;
+    static matrix_2d init_reflect(double radians) noexcept;
     constexpr static matrix_2d init_shear_x(double factor) noexcept;
     constexpr static matrix_2d init_shear_y(double factor) noexcept;
     
@@ -48,12 +49,12 @@ namespace std::experimental::io2d::v1 {
     constexpr void m11(double v) noexcept;
     constexpr void m20(double v) noexcept;
     constexpr void m21(double v) noexcept;
-    matrix_2d& translate(const vector_2d& v) noexcept;
-    matrix_2d& scale(const vector_2d& v) noexcept;
+    constexpr matrix_2d& translate(const vector_2d& v) noexcept;
+    constexpr matrix_2d& scale(const vector_2d& v) noexcept;
     matrix_2d& rotate(double radians) noexcept;
-    matrix_2d& shear_x(double factor) noexcept;
-    matrix_2d& shear_y(double factor) noexcept;
-    matrix_2d& invert();
+    matrix_2d& reflect(double radians) noexcept;
+    constexpr matrix_2d& shear_x(double factor) noexcept;
+    constexpr matrix_2d& shear_y(double factor) noexcept;
     
     // \ref{\iotwod.\matrixtwod.observers}, observers:
     constexpr double m00() const noexcept;
@@ -64,7 +65,8 @@ namespace std::experimental::io2d::v1 {
     constexpr double m21() const noexcept;
     constexpr bool is_finite() const noexcept;
     constexpr bool is_invertible() const noexcept;
-    constexpr double determinant() const;
+    constexpr double determinant() const noexcept;
+    constexpr matrix_2d inverse() const noexcept;
     constexpr vector_2d transform_point(const vector_2d& pt) const noexcept;
     
     // \ref{\iotwod.\matrixtwod.member.ops}, matrix_2d member operators:
@@ -78,6 +80,8 @@ namespace std::experimental::io2d::v1 {
     noexcept;
   constexpr bool operator!=(const matrix_2d& lhs, const matrix_2d& rhs)
     noexcept;
+  constexpr vector_2d operator*(const vector_2d& v, const matrix_2d& m) 
+    noexcept;
 }
 \end{codeblock}
 
@@ -90,7 +94,7 @@ constexpr matrix_2d() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to \tcode{matrix_2d \{1.0, 0.0, 0.0, 1.0, 0.0, 0.0\}}.
+Equivalent to: \tcode{matrix_2d\{ 1.0, 0.0, 0.0, 1.0, 0.0, 0.0 \}}.
 
 \pnum
 \begin{note}
@@ -147,7 +151,19 @@ static matrix_2d init_rotate(double radians) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{matrix(cos(radians), sin(radians), -sin(radians), cos(radians), 
+\tcode{matrix(cos(radians), -sin(radians), sin(radians), cos(radians), 
+0.0, 0.0)}.
+\end{itemdescr}
+
+\indexlibrarymember{init_reflect}{matrix_2d}%
+\begin{itemdecl}
+static matrix_2d init_reflect(double radians) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{matrix(cos(radians * 2.0), sin(radians * 2.0), sin(radians * 2.0), 
+-cos(radians * 2.0), 
 0.0, 0.0)}.
 \end{itemdescr}
 
@@ -235,12 +251,12 @@ M21 is \tcode{val}.
 
 \indexlibrarymember{translate}{matrix_2d}%
 \begin{itemdecl}
-matrix_2d& translate(const vector_2d& val) noexcept;
+constexpr matrix_2d& translate(const vector_2d& val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-\tcode{*this = init_translate(value) * (*this)}.
+Equivalent to: \tcode{*this = *this * init_translate(val);}
 
 \pnum
 \returns
@@ -249,12 +265,12 @@ matrix_2d& translate(const vector_2d& val) noexcept;
 
 \indexlibrarymember{scale}{matrix_2d}%
 \begin{itemdecl}
-matrix_2d& scale(const vector_2d& val) noexcept;
+constexpr matrix_2d& scale(const vector_2d& val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-\tcode{*this = init_scale(value) * (*this)}.
+Equivalent to: \tcode{*this = *this * init_scale(val);}
 
 \pnum
 \returns
@@ -268,7 +284,21 @@ matrix_2d& rotate(double radians) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-\tcode{*this = init_rotate(radians) * (*this)}.
+Equivalent to: \tcode{*this = *this * init_rotate(radians);}
+
+\pnum
+\returns
+\tcode{*this}.
+\end{itemdescr}
+
+\indexlibrarymember{reflect}{matrix_2d}%
+\begin{itemdecl}
+matrix_2d& reflect(double radians) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to: \tcode{*this = *this * init_reflect(radians);}
 
 \pnum
 \returns
@@ -277,12 +307,12 @@ matrix_2d& rotate(double radians) noexcept;
 
 \indexlibrarymember{shear_x}{matrix_2d}%
 \begin{itemdecl}
-matrix_2d& shear_x(double factor) noexcept;
+constexpr matrix_2d& shear_x(double factor) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-\tcode{*this = init_shear_x(factor) * (*this)}.
+Equivalent to: \tcode{*this = *this * init_shear_x(factor);}
 
 \pnum
 \returns
@@ -291,48 +321,12 @@ matrix_2d& shear_x(double factor) noexcept;
 
 \indexlibrarymember{shear_y}{matrix_2d}%
 \begin{itemdecl}
-matrix_2d& shear_y(double factor) noexcept;
+constexpr matrix_2d& shear_y(double factor) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-\tcode{*this = init_shear_y(factor) * (*this)}.
-
-\pnum
-\returns
-\tcode{*this}.
-\end{itemdescr}
-
-\indexlibrarymember{invert}{matrix_2d}%
-\begin{itemdecl}
-matrix_2d& invert() noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\requires
-\tcode{is_invertible()} is \tcode{true}.
-
-\pnum
-\effects
-Equivalent to:
-
-\begin{codeblock}
-const auto inverseDet = 1.0 / determinant();
-
-const auto adjugateM00 =   m11() * 1.0 - 0.0 * m21();
-const auto adjugateM01 = -(m01() * 1.0 - 0.0 * m21());
-const auto adjugateM10 = -(m10() * 1.0 - 0.0 * m20());
-const auto adjugateM11 =   m00() * 1.0 - 0.0 * m20();
-const auto adjugateM20 =   m10() * m21() - m11() * m20();
-const auto adjugateM21 = -(m00() * m21() - m01() * m20());
-
-m00(inverseDet * adjugateM00);
-m01(inverseDet * adjugateM01);
-m10(inverseDet * adjugateM10);
-m11(inverseDet * adjugateM11);
-m20(inverseDet * adjugateM20);
-m21(inverseDet * adjugateM21);
-\end{codeblock}
+Equivalent to: \tcode{*this = *this * init_shear_y(factor);}
 
 \pnum
 \returns
@@ -441,6 +435,31 @@ constexpr bool is_invertible() const noexcept;
 \tcode{determinant() != 0.0}.
 \end{itemdescr}
 
+\indexlibrarymember{inverse}{matrix_2d}%
+\begin{itemdecl}
+constexpr matrix_2d inverse() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{is_invertible()} is \tcode{true}.
+
+\pnum
+\returns
+Let \tcode{inverseDeterminant} be \tcode{1.0 / determinant()}.
+
+\begin{codeblock}
+return matrix_2d{
+   (_M11 * 1.0 - 0.0 * _M21) * inverseDeterminant,
+  -(_M01 * 1.0 - 0.0 * _M21) * inverseDeterminant,
+  -(_M10 * 1.0 - 0.0 * _M20) * inverseDeterminant,
+   (_M00 * 1.0 - 0.0 * _M20) * inverseDeterminant,
+   (_M10 * _M21 - _M11 * _M20) * inverseDeterminant,
+  -(_M00 * _M21 - _M01 * _M20) * inverseDeterminant
+};
+\end{codeblock}
+\end{itemdescr}
+
 \indexlibrarymember{determinant}{matrix_2d}%
 \begin{itemdecl}
 constexpr double determinant() const noexcept;
@@ -491,14 +510,16 @@ constexpr matrix_2d operator*(const matrix_2d& lhs, const matrix_2d& rhs)
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{matrix_2d\{\\
-lhs.m00() * rhs.m00() + lhs.m01() * rhs.m10(),\\
-lhs.m00() * rhs.m01() + lhs.m01() * rhs.m11(),\\
-lhs.m10() * rhs.m00() + lhs.m11() * rhs.m10(),\\
-lhs.m10() * rhs.m01() + lhs.m11() * rhs.m11(),\\
-lhs.m20() * rhs.m00() + lhs.m21() * rhs.m10() + lhs.m20(),\\
-lhs.m20() * rhs.m01() + lhs.m21() * rhs.m11() + lhs.m21()\\
-\}}
+\begin{codeblock}
+matrix_2d{
+  lhs.m00() * rhs.m00() + lhs.m01() * rhs.m10(),
+  lhs.m00() * rhs.m01() + lhs.m01() * rhs.m11(),
+  lhs.m10() * rhs.m00() + lhs.m11() * rhs.m10(),
+  lhs.m10() * rhs.m01() + lhs.m11() * rhs.m11(),
+  lhs.m20() * rhs.m00() + lhs.m21() * rhs.m10() + lhs.m20(),
+  lhs.m20() * rhs.m01() + lhs.m21() * rhs.m11() + lhs.m21()
+}
+\end{codeblock}
 \end{itemdescr}
 
 \indexlibrarymember{operator==}{matrix_2d}%
@@ -523,4 +544,15 @@ constexpr bool operator!=(const matrix_2d& lhs, const matrix_2d& rhs) noexcept;
 \pnum
 \returns
 \tcode{!(lhs == rhs)}.
+\end{itemdescr}
+
+
+\indexlibrarymember{operator*}{matrix_2d}%
+\begin{itemdecl}
+constexpr vector_2d operator*(const vector_2d& v, const matrix_2d& m) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+Equivalent to: \tcode{m.transform_point(v)}.
 \end{itemdescr}

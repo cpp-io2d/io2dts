@@ -76,15 +76,31 @@ namespace std { namespace experimental {
     class close_path;
     constexpr bool operator==(const close_path&, const close_path&) noexcept;
     constexpr bool operator!=(const close_path&, const close_path&) noexcept;
-    class change_matrix;
-    constexpr bool operator==(const change_matrix&, const change_matrix&) 
+    class set_matrix;
+    constexpr bool operator==(const set_matrix&, const set_matrix&) noexcept;
+    constexpr bool operator!=(const set_matrix&, const set_matrix&) noexcept;
+    class modify_matrix;
+    constexpr bool operator==(const modify_matrix&, const modify_matrix&) 
       noexcept;
-    constexpr bool operator!=(const change_matrix&, const change_matrix&) 
+    constexpr bool operator!=(const modify_matrix&, const modify_matrix&) 
       noexcept;
-    class change_origin;
-    constexpr bool operator==(const change_origin&, const change_origin&) 
+    class revert_matrix;
+    constexpr bool operator==(const revert_matrix&, const revert_matrix&) 
       noexcept;
-    constexpr bool operator!=(const change_origin&, const change_origin&) 
+    constexpr bool operator!=(const revert_matrix&, const revert_matrix&) 
+      noexcept;
+    class set_origin;
+    constexpr bool operator==(const set_origin&, const set_origin&) noexcept;
+    constexpr bool operator!=(const set_origin&, const set_origin&) noexcept;
+    class modify_origin;
+    constexpr bool operator==(const modify_origin&, const modify_origin&) 
+      noexcept;
+    constexpr bool operator!=(const modify_origin&, const modify_origin&) 
+      noexcept;
+    class revert_origin;
+    constexpr bool operator==(const revert_origin&, const revert_origin&) 
+      noexcept;
+    constexpr bool operator!=(const revert_origin&, const revert_origin&) 
       noexcept;
     class abs_cubic_curve;
     constexpr bool operator==(const abs_cubic_curve&, const abs_cubic_curve&) 
@@ -122,8 +138,9 @@ namespace std { namespace experimental {
     constexpr bool operator!=(const rel_quadratic_curve&,
       const rel_quadratic_curve&) noexcept;
     using path_item = variant<abs_cubic_curve, abs_line, abs_new_path,
-      abs_quadratic_curve, arc, change_matrix, change_origin, close_path,
-      rel_cubic_curve, rel_line, rel_new_path, rel_quadratic_curve>;
+      abs_quadratic_curve, arc, close_path, modify_matrix, modify_origin,
+      rel_cubic_curve, rel_line, rel_new_path, rel_quadratic_curve, 
+      revert_matrix, revert_origin, set_matrix, set_origin>;
   };
   
   class path_group;
@@ -184,6 +201,10 @@ namespace std { namespace experimental {
   image_surface make_image_surface(format format, int width, int height);
   image_surface make_image_surface(format format, int width, int height, 
     error_code& ec) noexcept;
+  double angle_for_point(const vector_2d& ctr, const vector_2d& pt,
+    const vector_2d& scl = vector_2d{ 1.0, 1.0 }) noexcept;
+  vector_2d point_for_angle(double ang, double mgn = 1.0) noexcept;
+  vector_2d point_for_angle(double ang, const vector_2d& rad) noexcept;
 } } } }
 
 namespace std {

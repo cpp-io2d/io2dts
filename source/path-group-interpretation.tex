@@ -3,7 +3,114 @@
 \rSec0 [paths.interpretation]{Path group interpretation}
 
 \pnum
-A path group is \term{interpreted} when its path items are evaluated sequentially starting with the first path item in accordance with the following requirements. The data contained in a \tcode{path_group} object is as-if it were the data of a path group that has been interpreted.
+This subclause describes how to interpret a path group for use in a rendering and composing operation.
+
+\pnum
+Interpreting a path group consists of evaluating a sequence of \tcode{path_data::path_item} objects and transforming them into zero or more paths as-if in the manner specified in this subclause.
+
+\pnum
+Until a \tcode{path_data::path_item} object containing a \tcode{path_data::abs_new_path} object is evaluated, a path shall only contain \tcode{path_data::path_item} objects containing \tcode{path_data::abs_matrix} or \tcode{path_data::abs_origin} objects; no diagnostic is required.
+
+\pnum
+The interpretation of a path group requires the state data specified in \ref{tab:paths.interpretation.state}.
+
+\begin{floattable}
+{Path group interpretation state data}{tab:paths.interpretation.state}{llll}
+\hline
+\hdstyle{Name} &
+\hdstyle{Description} &
+\hdstyle{Type} &
+\hdstyle{Initial value} \\ \hline
+\tcode{mtx} &
+Path group transformation matrix &
+\tcode{matrix_2d} &
+\tcode{matrix_2d\{ \}} \\
+\tcode{ogn} &
+Origin &
+\tcode{vector_2d} &
+\tcode{vector_2d\{ \}} \\
+\tcode{currPt} &
+Current point &
+\tcode{vector_2d} &
+\unspec \\
+\tcode{lnPt} &
+Last new point &
+\tcode{vector_2d} &
+\unspec \\
+\tcode{ognStk} &
+Origin stack &
+\tcode{stack<vector_2d>} &
+\tcode{stack<vector_2d>\{ \}} \\
+\tcode{mtxStk} &
+Matrix stack &
+\tcode{stack<matrix_2d>} &
+\tcode{stack<matrix_2d>\{ \}} \\\hline
+\end{floattable}
+
+\FloatBarrier
+
+\pnum
+The effects of a path item contained in a \tcode{path_data::path_item} object when that object is being evaluated during path group interpretation are described in \ref{tab:paths.interpretation.effects}.
+
+\begin{libreqtab2a}{Path item interpretation effects}{tab:paths.interpretation.effects}
+\\ \topline
+\lhdr{Path item} & \rhdr{Effects} \\ \capsep
+\endfirsthead
+\continuedcaption\\
+\topline
+\lhdr{Path item} & \rhdr{Effects} \\ \capsep
+\endhead
+
+\tcode{path_data::abs_new_path p} &
+Creates a new path. Sets \tcode{currPt} to \tcode{mtx.transform_point(p.at() - ogn) + ogn}. Sets \tcode{lnPt} to \tcode{currPt}. \\ \rowsep
+
+\tcode{path_data::rel_new_path p} &
+Creates a new path. Sets \tcode{currPt} to \tcode{currPt + p.at() * mtx}. Sets \tcode{lnPt} to \tcode{currPt}. \\ \rowsep
+
+\tcode{path_data::close_path p} &
+Creates a line from \tcode{currPt} to \tcode{lnPt}. Makes the current path a closed path. Creates a new path. Sets \tcode{currPt} to \tcode{lnPt}. \\ \rowsep
+
+\tcode{path_data::abs_matrix p} &
+Calls \tcode{mtxStk.push(mtx)}. Sets \tcode{mtx} to \tcode{p.matrix()}. \\ \rowsep
+
+\tcode{path_data::rel_matrix p} &
+Calls \tcode{mtxStk.push(mtx)}. Sets \tcode{mtx} to \tcode{mtx * p.matrix()}. \\ \rowsep
+
+\tcode{path_data::revert_matrix p} &
+If \tcode{mtxStk.empty()} is \tcode{false}, sets \tcode{mtx} to \tcode{ognStk.top()} then calls \tcode{ognStk.pop()}. Otherwise sets \tcode{mtx} to its initial value as specified in \ref{tab:paths.interpretation.state}. \\ \rowsep
+
+\tcode{path_data::abs_origin p} &
+Calls \tcode{ognStk.push(ogn)}. Sets \tcode{ogn} to \tcode{p.origin() * mtx}. \\ \rowsep
+
+\tcode{path_data::rel_origin p} &
+Calls \tcode{ognStk.push(ogn)}. Sets \tcode{ogn} to \tcode{ogn + p.origin() * mtx}. \\ \rowsep
+
+\tcode{path_data::revert_origin p} &
+If \tcode{ognStk.empty()} is \tcode{false}, sets \tcode{ogn} to \tcode{ognStk.top()} then calls \tcode{ognStk.pop()}. Otherwise sets \tcode{ogn} to its initial value as specified in \ref{tab:paths.interpretation.state}. \\ \rowsep
+
+\tcode{path_data::abs_line p} &
+Let \tcode{pt} equal \tcode{mtx.transform_point(p.to() - ogn) + ogn}. Creates a line from \tcode{currPt} to \tcode{pt}. Sets \tcode{currPt} to \tcode{pt}. \\ \rowsep
+
+\tcode{path_data::rel_line p} &
+Let \tcode{mm} equal \tcode{mtx}. Evaluate \tcode{mm.m20(0.0)} and \tcode{mm.m21(0.0)}. Let \tcode{pt} equal \tcode{currPt + p.to() * mm}. Creates a line from \tcode{currPt} to \tcode{pt}. Sets \tcode{currPt} to \tcode{pt}. \\ \rowsep
+
+\tcode{path_data::abs_quadratic_curve p} &
+Let \tcode{cpt} equal \tcode{mtx.transform_point(p.control_pt() - ogn) + ogn}. Let \tcode{ept} equal \tcode{mtx.transform_point(p.end_pt() - ogn) + ogn}. Creates a quadratic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt} as the curve's control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
+
+\tcode{path_data::rel_quadratic_curve p} &
+Let \tcode{mm} equal \tcode{mtx}. Evaluate \tcode{mm.m20(0.0)} and \tcode{mm.m21(0.0)}. Let \tcode{cpt} equal \tcode{currPt + p.control_pt() * mm}. Let \tcode{ept} equal \tcode{currPt + p.control_pt() * mm + p.end_pt() * mm}. Creates a quadratic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt} as the curve's control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
+
+\tcode{path_data::abs_cubic_curve p} &
+Let \tcode{cpt1} equal \tcode{mtx.transform_point(p.control_pt1() - ogn) + ogn}. Let \tcode{cpt2} equal \tcode{mtx.transform_point(p.control_pt2() - ogn) + ogn}. Let \tcode{ept} equal \tcode{mtx.transform_point(p.end_pt() - ogn) + ogn}. Creates a cubic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt1} as the curve's first control point and \tcode{cpt2} as the curve's second control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
+
+\tcode{path_data::rel_cubic_curve p} &
+Let \tcode{mm} equal \tcode{mtx}. Evaluate \tcode{mm.m20(0.0)} and \tcode{mm.m21(0.0)}. Let \tcode{cpt1} equal \tcode{currPt + p.control_pt1() * mm}. Let \tcode{cpt2} equal \tcode{currPt + p.control_pt1() * mm + p.control_pt2() * mm}. Let \tcode{ept} equal \tcode{currPt + p.control_pt1() * mm + p.control_pt2() * mm + p.end_pt() * mm}. Creates a cubic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt1} as the curve's first control point and \tcode{cpt2} as the curve's second control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
+
+\tcode{path_data::arc p} &
+Let \tcode{mm} equal \tcode{mtx}. Evaluate \tcode{mm.m20(0.0)} and \tcode{mm.m21(0.0)}. Creates an arc. It begins at \tcode{currPt}, which is at \tcode{p.start_angle()} radians on the arc and rotates \tcode{p.rotation()} radians. If \tcode{p.rotation()} is positive, rotation is counterclockwise, otherwise it is clockwise. The center of the arc is located at \tcode{p.center(currPt, mm)}. The arc ends at \tcode{p.end_pt(currPt, mm)}. Sets \tcode{currPt} to \tcode{p.end_pt(currPt, mm)}.
+
+\begin{note} \tcode{p.radius()}, which specifies the radius of the arc, is implicitly included in the above statement of effects by the specifications of the center of the arc and the end of the arcs. The use of the current point as the origin for the application of the path group transformation matrix is also implicitly included by the same specifications. \end{note} \\
+\end{libreqtab2a}
 
 \pnum
 When interpreting a path group, the initial value of its path group origin is \tcode{vector_2d\{ \}} and the initial value of its path group tranformation matrix is \tcode{matrix_2d\{ \}}.
@@ -20,20 +127,4 @@ Certain path items, when interpreted, set the value of both the current point an
 \end{note}
 
 \pnum
-\begin{note}
-Because this subclause describes the conditions where the points of relative path items are added to the current point when a path group is interpreted, no mention of any such augmentation is included in the descriptions of relative path items.
-\end{note}
-
-%\pnum
-%\begin{note}
-%The points of path items in a path group are not subject to any 
-%When path items are added to a path group, their points, if any, are stored without regard to the path group origin or the path group transformation matrix.
-%
-%Because of that, when a path group is interpreted, the current point is not  because it is used to calculate the value of points in relative path items before they are interpreted.
-%\end{note}
-%
-\pnum
-Except for \tcode{change_origin} and \tcode{change_matrix} objects, if any, the first path item in a path group shall be an \tcode{abs_new_path} object when it is interpreted; no diagnostic is required.
-%\begin{note}
-%Only an \tcode{abs_new_path} object establishes a non-relative current point for a path. Except for \tcode{change_origin}, \tcode{change_matrix}, and \tcode{abs_new_path} objects, all other path items require a value for the path's current point.
-%\end{note}
+Excluding \tcode{abs_origin} and \tcode{abs_matrix} objects, if any, the first path item in a path group shall be an \tcode{abs_new_path} object when it is interpreted; no diagnostic is required.

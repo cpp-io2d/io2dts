@@ -1,0 +1,117 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.absmatrix] {Class \tcode{abs_matrix}}%
+
+\rSec1 [\iotwod.absmatrix.synopsis] {\tcode{abs_matrix} synopsis}%
+
+\pnum
+\indexlibrary{\idxcode{abs_matrix}}%
+The class \tcode{abs_matrix} describes a path item that assigns the value of the \tcode{abs_matrix} object's \term{transform matrix} to a path group transformation matrix.
+
+\pnum
+The transform matrix is a \tcode{matrix_2d} object.
+
+\begin{codeblock}
+namespace std::experimental::io2d::v1 {
+  namespace path_data {
+    class abs_matrix {
+    public:
+      // \ref{\iotwod.absmatrix.cons}, construct:
+      constexpr abs_matrix() noexcept;
+      constexpr explicit abs_matrix(const matrix_2d& m) noexcept;
+
+      // \ref{\iotwod.absmatrix.modifiers}, modifiers:
+      constexpr void matrix(const matrix_2d& m) noexcept;
+
+      // \ref{\iotwod.absmatrix.observers}, observers:
+      constexpr matrix_2d matrix() const noexcept;
+    };
+    
+    \ref{\iotwod.absmatrix.nonmember}, non-members
+    constexpr bool operator==(const abs_matrix& lhs, const abs_matrix& rhs) 
+      noexcept;
+    constexpr bool operator!=(const abs_matrix& lhs, const abs_matrix& rhs) 
+      noexcept;
+  }
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.absmatrix.cons] {\tcode{abs_matrix} constructors}
+
+\indexlibrary{\idxcode{change_matrix}!constructor}%
+\begin{itemdecl}
+constexpr abs_matrix() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to: \tcode{abs_matrix\{ matrix_2d() \};}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{abs_matrix}!constructor}%
+\begin{itemdecl}
+constexpr explicit abs_matrix(const matrix_2d& m) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{m.is_invertible()} is \tcode{true}.
+
+\pnum
+\effects
+Constructs an object of type \tcode{abs_matrix}.
+
+\pnum
+The transform matrix is \tcode{m}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.absmatrix.modifiers]{\tcode{abs_matrix} modifiers}
+
+\indexlibrarymember{matrix}{abs_matrix}%
+\begin{itemdecl}
+constexpr void matrix(const matrix_2d& m) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{m.is_invertible()} is \tcode{true}.
+
+\pnum
+\effects
+The transform matrix is \tcode{m}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.absmatrix.observers]{\tcode{abs_matrix} observers}
+
+\indexlibrarymember{matrix}{abs_matrix}%
+\begin{itemdecl}
+constexpr matrix_2d matrix() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The transform matrix.
+\end{itemdescr}
+
+\rSec1 [\iotwod.absmatrix.nonmember]{Non-member functions}
+
+\indexlibrarymember{operator==}{abs_matrix}%
+\begin{itemdecl}
+constexpr bool operator==(const abs_matrix& lhs, const abs_matrix& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{lhs.matrix() == rhs.matrix()}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{abs_matrix}%
+\begin{itemdecl}
+constexpr bool operator!=(const abs_matrix& lhs, const abs_matrix& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{!(lhs == rhs)}.
+\end{itemdescr}

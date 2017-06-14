@@ -5,7 +5,7 @@
 
 \pnum
 The antialias enum class specifies the type of anti-aliasing that the rendering
-system shall use for rendering text. See 
+system uses for rendering and composing paths. See 
 Table~\ref{tab:antialias.meanings} for the meaning of each
 \tcode{antialias} enumerator.
 
@@ -15,10 +15,7 @@ Table~\ref{tab:antialias.meanings} for the meaning of each
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   enum class antialias {
-    default_antialias,
     none,
-    gray,
-    subpixel,
     fast,
     good,
     best
@@ -42,47 +39,27 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
  & \rhdr{Meaning}
  \\ \capsep
  \endhead
- \tcode{default_antialias}
- & The meaning of this value is \impldefplain{antialiasing!default}.
- \\
- \tcode{none}
- & No anti-aliasing.
- \\
- \tcode{gray}
- & Monochromatic anti-aliasing.
- \begin{note}
- When rendering black text on a white background, this would produce gray-scale anti-aliasing.
- \end{note}
- \\
- \tcode{subpixel}
- & Anti-aliasing that breaks pixels into their constituent color channels and 
- manipulates those color channels individually. The meaning of this value for 
- any rendering operation other than \tcode{surface::show_text}, 
- \tcode{surface::show_glyphs}, and \tcode{surface::show_text_glyphs} is 
- \impldefplain{antialias!subpixel}.
+ & No anti-aliasing is performed.
  \\
  \tcode{fast}
- & The meaning of this value is \impldefplain{antialiasing!fast}. Implementations 
- shall enable some form of anti-aliasing when this option is selected.
+ & Some form of anti-aliasing shall be used when this option is selected, but the form used is \impldefplain{antialiasing!fast}.
  \begin{note}
- By choosing this value, the user is hinting that faster anti-aliasing is 
+ By specifying this value, the user is hinting that faster anti-aliasing is 
  preferable to better anti-aliasing.
  \end{note}
  \\
  \tcode{good}
- & The meaning of this value is \impldefplain{antialiasing!good}. Implementations 
- shall enable some form of anti-aliasing when this option is selected.
+ & Some form of anti-aliasing shall be used when this option is selected, but the form used is \impldefplain{antialiasing!good}.
  \begin{note}
- By choosing this value, the user is hinting that sacrificing some performance 
+ By specifying this value, the user is hinting that sacrificing some performance 
  to obtain better anti-aliasing is acceptable but that performance is still a 
  concern.
  \end{note}
  \\
  \tcode{best}
- & The meaning of this value is \impldefplain{antialiasing!best}. Implementations 
- shall enable some form of text anti-aliasing when this option is selected.
+ & Some form of anti-aliasing shall be used when this option is selected, but the form used is \impldefplain{antialiasing!best}.
  \begin{note}
- By choosing this value, the user is hinting that better anti-aliasing is more 
+ By specifying this value, the user is hinting that anti-aliasing is more 
  important than performance.
  \end{note}
  \\
