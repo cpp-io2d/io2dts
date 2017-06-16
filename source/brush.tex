@@ -4,7 +4,7 @@
 \rSec1 [\iotwod.brush.intro] {\tcode{brush} Description}
 
 \pnum
-\indexlibrary{\idxcode{brush}}
+\indexlibrary{\idxcode{brush}}%
 The class \tcode{brush} describes an opaque wrapper for a graphics data graphics resource.
 
 \pnum
@@ -83,7 +83,7 @@ When \tcode{b} is a surface brush, when sampling point \tcode{pt}, where \tcode{
 
 \rSec1 [\iotwod.brush.cons] {\tcode{brush} constructors and assignment operators}
 
-\indexlibrary{\idxcode{brush}!constructor}
+\indexlibrary{\idxcode{brush}!constructor}%
 \begin{itemdecl}
 explicit brush(const rgba_color& c);
 \end{itemdecl}
@@ -103,7 +103,7 @@ The graphics data of the brush shall be created from the value of \tcode{c}. The
 Sampling from this produces the results specified in \ref{\iotwod.brush.sampling.color}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{brush}!constructor}
+\indexlibrary{\idxcode{brush}!constructor}%
 \begin{itemdecl}
 template <class InputIterator>
 brush(const vector_2d& begin, const vector_2d& end,
@@ -122,7 +122,7 @@ The brush's brush type is \tcode{brush_type::linear}.
 Sampling from this brush produces the results specified in \ref{\iotwod.brush.sampling.linear}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{brush}!constructor}
+\indexlibrary{\idxcode{brush}!constructor}%
 \begin{itemdecl}
 brush(const vector_2d& begin, const vector_2d& end,
   initializer_list<color_stop> il);
@@ -140,7 +140,7 @@ The brush's brush type is \tcode{brush_type::linear}.
 Sampling from this brush produces the results specified in \ref{\iotwod.brush.sampling.linear}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{brush}!constructor}
+\indexlibrary{\idxcode{brush}!constructor}%
 \begin{itemdecl}
 template <class InputIterator>
 brush(const circle& start, const circle& end,
@@ -159,7 +159,7 @@ The brush's brush type is \tcode{brush_type::radial}.
 Sampling from this brush produces the results specified in \ref{\iotwod.brush.sampling.radial}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{brush}!constructor}
+\indexlibrary{\idxcode{brush}!constructor}%
 \begin{itemdecl}
 brush(const circle& start, const circle& end,
   initializer_list<color_stop> il);
@@ -177,7 +177,7 @@ The brush's brush type is \tcode{brush_type::radial}.
 Sampling from this brush produces the results specified in \ref{\iotwod.brush.sampling.radial}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{brush}!constructor}
+\indexlibrary{\idxcode{brush}!constructor}%
 \begin{itemdecl}
 explicit brush(image_surface&& img);
 \end{itemdecl}
@@ -200,7 +200,7 @@ Sampling from this brush shall produce the results specified in \ref{\iotwod.bru
 
 \rSec1 [\iotwod.brush.observers]{\tcode{brush} observers}
 
-\indexlibrary{\idxcode{brush}!\idxcode{type}}
+\indexlibrary{\idxcode{brush}!\idxcode{type}}%
 \begin{itemdecl}
 brush_type type() const noexcept;
 \end{itemdecl}

@@ -4,7 +4,7 @@
 \rSec1 [\iotwod.surface.intro] {\tcode{surface} description}
 
 \pnum
-\indexlibrary{\idxcode{surface}}
+\indexlibrary{\idxcode{surface}}%
 The \tcode{surface} class provides an interface for managing a graphics
 data graphics resource.
 
@@ -366,8 +366,8 @@ When a Masking operation is initiated on a surface, the implementation shall pro
 
 \rSec1 [\iotwod.surface.modifiers.state] {\tcode{surface} state modifiers}
 
-\indexlibrary{\idxcode{surface}!\idxcode{flush}}
-\indexlibrary{\idxcode{flush}!\idxcode{surface}}
+\indexlibrary{\idxcode{surface}!\idxcode{flush}}%
+\indexlibrary{\idxcode{flush}!\idxcode{surface}}%
 \begin{itemdecl}
 void flush();
 void flush(error_code& ec) noexcept;
@@ -461,8 +461,8 @@ The errors, if any, produced by this function are \impldefplain{surface!mark_dir
 If the implementation does not provide a native handle to the \tcode{surface} object's \underlyingsurface, this function shall not produce any errors.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{surface}!\idxcode{map}}
-\indexlibrary{\idxcode{map}!\idxcode{surface}}
+\indexlibrary{\idxcode{surface}!\idxcode{map}}%
+\indexlibrary{\idxcode{map}!\idxcode{surface}}%
 \begin{itemdecl}
 void map(const function<void(mapped_surface&)>& action);
 void map(const function<void(mapped_surface&, error_code&)>& action, error_code& ec);
@@ -501,8 +501,8 @@ Calling this function on a \tcode{surface} object and then calling any function 
 
 \rSec1 [\iotwod.surface.modifiers.render] {\tcode{surface} render modifiers}
 
-\indexlibrary{\idxcode{surface}!\idxcode{paint}}
-\indexlibrary{\idxcode{paint}!\idxcode{surface}}
+\indexlibrary{\idxcode{surface}!\idxcode{paint}}%
+\indexlibrary{\idxcode{paint}!\idxcode{surface}}%
 \begin{itemdecl}
 void paint(const brush& b, const optional<brush_props>& bp = nullopt,
   const optional<render_props>& rp = nullopt,
@@ -525,8 +525,8 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 The errors, if any, produced by this function are \impldefplain{surface!paint}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{surface}!\idxcode{stroke}}
-\indexlibrary{\idxcode{stroke}!\idxcode{surface}}
+\indexlibrary{\idxcode{surface}!\idxcode{stroke}}%
+\indexlibrary{\idxcode{stroke}!\idxcode{surface}}%
 \begin{itemdecl}
 template <class Allocator>
 void stroke(const brush& b, const path_builder<Allocator>& pb,
@@ -559,8 +559,8 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 The errors, if any, produced by this function are \impldefplain{surface!stroke}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{surface}!\idxcode{fill}}
-\indexlibrary{\idxcode{fill}!\idxcode{surface}}
+\indexlibrary{\idxcode{surface}!\idxcode{fill}}%
+\indexlibrary{\idxcode{fill}!\idxcode{surface}}%
 \begin{itemdecl}
 template <class Allocator>
 void fill(const brush& b, const path_builder<Allocator>& pb,
@@ -589,8 +589,8 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 The errors, if any, produced by this function are \impldefplain{surface!fill}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{surface}!\idxcode{mask}}
-\indexlibrary{\idxcode{mask}!\idxcode{surface}}
+\indexlibrary{\idxcode{surface}!\idxcode{mask}}%
+\indexlibrary{\idxcode{mask}!\idxcode{surface}}%
 \begin{itemdecl}
 template <class Allocator>
 void mask(const brush& b, const brush& mb,
