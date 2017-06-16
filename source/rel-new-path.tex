@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [relnewpath] {Class \tcode{rel_new_path}}%
+\rSec0 [\iotwod.relnewpath] {Class \tcode{rel_new_path}}%
 
 \pnum
 \indexlibrary{\idxcode{rel_new_path}}%
@@ -14,32 +14,32 @@ It has an \term{at point} of type \tcode{vector_2d}.
 \pnum
 When interpreting a path group, the path's last-move-to-point and current point are set to the value of the at point added to the path's current point.
 
-\rSec1 [relnewpath.synopsis] {\tcode{rel_new_path} synopsis}%
+\rSec1 [\iotwod.relnewpath.synopsis] {\tcode{rel_new_path} synopsis}%
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   namespace path_data {
     class rel_new_path {
     public:
-      // \ref{relnewpath.cons}, construct:
+      // \ref{\iotwod.relnewpath.cons}, construct:
       constexpr rel_new_path() noexcept;
       constexpr explicit rel_new_path(const vector_2d& pt) noexcept;
 
-      // \ref{relnewpath.modifiers}, modifiers:
+      // \ref{\iotwod.relnewpath.modifiers}, modifiers:
       constexpr void at(const vector_2d& pt) noexcept;
 
-      // \ref{relnewpath.observers}, observers:
+      // \ref{\iotwod.relnewpath.observers}, observers:
       constexpr vector_2d at() const noexcept;
     };
     
-    // \ref{relnewpath.nonmember}, non-members:
+    // \ref{\iotwod.relnewpath.nonmember}, non-members:
     bool operator==(const rel_new_path& lhs, const rel_new_path& rhs) noexcept;
     bool operator!=(const rel_new_path& lhs, const rel_new_path& rhs) noexcept;
   }
 } } } }
 \end{codeblock}
 
-\rSec1 [relnewpath.cons] {\tcode{rel_new_path} constructors}%
+\rSec1 [\iotwod.relnewpath.cons] {\tcode{rel_new_path} constructors}%
 
 \indexlibrary{\idxcode{rel_new_path}!constructor}%
 \begin{itemdecl}
@@ -64,7 +64,7 @@ Constructs an object of type \tcode{rel_new_path}.
 The at point is \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [relnewpath.modifiers]{\tcode{rel_new_path} modifiers}%
+\rSec1 [\iotwod.relnewpath.modifiers]{\tcode{rel_new_path} modifiers}%
 
 \indexlibrarymember{at}{rel_new_path}%
 \begin{itemdecl}
@@ -76,7 +76,7 @@ constexpr void at(const vector_2d& pt) noexcept;
 The at point is \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [relnewpath.observers]{\tcode{rel_new_path} observers}%
+\rSec1 [\iotwod.relnewpath.observers]{\tcode{rel_new_path} observers}%
 
 \indexlibrarymember{at}{rel_new_path}%
 \begin{itemdecl}
@@ -88,7 +88,7 @@ constexpr vector_2d at() const noexcept;
 The at point.
 \end{itemdescr}
 
-\rSec1 [relnewpath.nonmember]{Non-member functions}%
+\rSec1 [\iotwod.relnewpath.nonmember]{Non-member functions}%
 
 \indexlibrarymember{operator==}{rel_new_path}%
 \begin{itemdecl}

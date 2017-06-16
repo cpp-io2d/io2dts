@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [absline] {Class \tcode{abs_line}}%
+\rSec0 [\iotwod.absline] {Class \tcode{abs_line}}%
 
 \pnum
 \indexlibrary{\idxcode{abs_line}}%
@@ -11,25 +11,25 @@ It has an \term{end point} of type \tcode{vector_2d}.
 \pnum
 After the line is added to the path, the path's current point is the end point.
 
-\rSec1 [absline.synopsis] {\tcode{abs_line} synopsis}%
+\rSec1 [\iotwod.absline.synopsis] {\tcode{abs_line} synopsis}%
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   namespace path_data {
     class abs_line {
     public:
-      // \ref{absline.cons}, construct:
+      // \ref{\iotwod.absline.cons}, construct:
       constexpr abs_line() noexcept;
       constexpr explicit abs_line(const vector_2d& pt) noexcept;
 
-      // \ref{absline.modifiers}, modifiers:
+      // \ref{\iotwod.absline.modifiers}, modifiers:
       constexpr void to(const vector_2d& pt) noexcept;
 
-      // \ref{absline.observers}, observers:
+      // \ref{\iotwod.absline.observers}, observers:
       constexpr vector_2d to() const noexcept;
     };
     
-    \ref{absline.nonmember}, non-members
+    \ref{\iotwod.absline.nonmember}, non-members
     constexpr bool operator==(const abs_line& lhs, const abs_line& rhs) 
       noexcept;
     constexpr bool operator!=(const abs_line& lhs, const abs_line& rhs) 
@@ -38,7 +38,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [absline.cons] {\tcode{abs_line} constructors}%
+\rSec1 [\iotwod.absline.cons] {\tcode{abs_line} constructors}%
 
 \indexlibrary{\idxcode{abs_line}!constructor}%
 \begin{itemdecl}
@@ -63,7 +63,7 @@ Constructs an object of type \tcode{abs_line}.
 The end point is \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [absline.modifiers]{\tcode{abs_line} modifiers}%
+\rSec1 [\iotwod.absline.modifiers]{\tcode{abs_line} modifiers}%
 
 \indexlibrarymember{abs_line}{to}%
 \begin{itemdecl}
@@ -75,7 +75,7 @@ constexpr void to(const vector_2d& pt) noexcept;
 The end point is \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [absline.observers]{\tcode{abs_line} observers}%
+\rSec1 [\iotwod.absline.observers]{\tcode{abs_line} observers}%
 
 \indexlibrarymember{abs_line}{to}%
 \begin{itemdecl}
@@ -87,7 +87,7 @@ constexpr vector_2d to() const noexcept;
 The end point.
 \end{itemdescr}
 
-\rSec1 [absline.nonmember]{Non-member functions}%
+\rSec1 [\iotwod.absline.nonmember]{Non-member functions}%
 
 \indexlibrarymember{operator==}{abs_line}%
 \begin{itemdecl}

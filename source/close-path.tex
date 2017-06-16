@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [closepath] {Class \tcode{close_path}}%
+\rSec0 [\iotwod.closepath] {Class \tcode{close_path}}%
 
 \pnum
 \indexlibrary{\idxcode{close_path}}
@@ -8,7 +8,7 @@ The class \tcode{close_path} describes a path item that creates a line from the 
 \pnum
 The current point and last-move-to point of the new path are the last-move-to point of the closed path.
 
-\rSec1 [closepath.synopsis] {\tcode{close_path} synopsis}%
+\rSec1 [\iotwod.closepath.synopsis] {\tcode{close_path} synopsis}%
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
@@ -17,14 +17,14 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       constexpr close_path() noexcept;
     };
     
-    // \ref{closepath.nonmember}, non-members
+    // \ref{\iotwod.closepath.nonmember}, non-members
     constexpr bool operator==(const close_path&, const close_path&) noexcept;
     constexpr bool operator!=(const close_path&, const close_path&) noexcept;
   }
 } } } }
 \end{codeblock}
 
-\rSec1 [closepath.nonmember]{Non-member functions}%
+\rSec1 [\iotwod.closepath.nonmember]{Non-member functions}%
 
 \indexlibrarymember{operator==}{close_path}%
 \begin{itemdecl}

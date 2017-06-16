@@ -1,22 +1,22 @@
 %!TEX root = io2d.tex
 
-\rSec0 [clipprops] {Class \tcode{clip_props}}
+\rSec0 [\iotwod.clipprops] {Class \tcode{clip_props}}
 
-\rSec1 [clipprops.summary] {\tcode{clip_props} summary}
+\rSec1 [\iotwod.clipprops.summary] {\tcode{clip_props} summary}
 
 \pnum
-The \tcode{clip_props} class provides general state information that is applicable to all rendering and composing operations (\ref{surface.rendering}).
+The \tcode{clip_props} class provides general state information that is applicable to all rendering and composing operations (\ref{\iotwod.surface.rendering}).
 
 \pnum
 It has a Clip Area of type \tcode{path_group} and a Fill Rule of type \tcode{fill_rule}.
 
-\rSec1 [clipprops.synopsis] {\tcode{clip_props} synopsis}
+\rSec1 [\iotwod.clipprops.synopsis] {\tcode{clip_props} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class clip_props {
   public:
-    // \ref{clipprops.cons}, constructors:
+    // \ref{\iotwod.clipprops.cons}, constructors:
     clip_props() noexcept;
     template <class Allocator>
     explicit clip_props(const path_builder<Allocator>& pb,
@@ -24,20 +24,20 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     explicit clip_props(const path_group& pg, experimental::io2d::fill_rule =
       experimental::io2d::fill_rule::winding) noexcept;
 
-    // \ref{clipprops.modifiers}, modifiers:
+    // \ref{\iotwod.clipprops.modifiers}, modifiers:
     template <class Allocator>
     void clip(const path_builder<Allocator>& pb);
     void clip(const path_group& pg) noexcept;
     void fill_rule(experimental::io2d::fill_rule fr) noexcept;
     
-    // \ref{clipprops.observers}, observers:
+    // \ref{\iotwod.clipprops.observers}, observers:
     path_group clip() const noexcept;
     experimental::io2d::fill_rule fill_rule() const noexcept;
   };
 }}}}
 \end{codeblock}
 
-\rSec1 [clipprops.cons] {\tcode{clip_props} constructors}
+\rSec1 [\iotwod.clipprops.cons] {\tcode{clip_props} constructors}
 
 \indexlibrary{\idxcode{clip_props}!constructor}
 \begin{itemdecl}
@@ -52,7 +52,7 @@ The value of Clip Area is its default-constructed value.
 The value of Fill Rule is \tcode{experimental::io2d::fill_rule::winding}.
 \end{itemdescr}
 
-\rSec1 [clipprops.modifiers] {\tcode{clip_props} modifiers}
+\rSec1 [\iotwod.clipprops.modifiers] {\tcode{clip_props} modifiers}
 
 \indexlibrary{\idxcode{clip_props}!\idxcode{clip}}
 \begin{itemdecl}
@@ -80,7 +80,7 @@ void fill_rule(experimental::io2d::fill_rule fr) noexcept;
 The value of Fill Rule is \tcode{fr}.
 \end{itemdescr}
 
-\rSec1 [clipprops.observers] {\tcode{clip_props} observers}
+\rSec1 [\iotwod.clipprops.observers] {\tcode{clip_props} observers}
 
 \indexlibrary{\idxcode{clip_props}!\idxcode{clip}}
 \begin{itemdecl}

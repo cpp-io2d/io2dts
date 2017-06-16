@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [relquadraticcurve] {Class \tcode{rel_quadratic_curve}}%
+\rSec0 [\iotwod.relquadraticcurve] {Class \tcode{rel_quadratic_curve}}%
 
 \pnum
 \indexlibrary{\idxcode{rel_quadratic_curve}}%
@@ -15,28 +15,28 @@ It has a \term{control point} of type \tcode{vector_2d} and an \term{end point} 
 When interpreting a path group, after the curve is added to the path, the path's current point becomes the end point.
 
 
-\rSec1 [relquadraticcurve.synopsis] {\tcode{rel_quadratic_curve} synopsis}%
+\rSec1 [\iotwod.relquadraticcurve.synopsis] {\tcode{rel_quadratic_curve} synopsis}%
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   namespace path_data {
     class rel_quadratic_curve {
     public:
-      // \ref{relquadraticcurve.cons}, construct:
+      // \ref{\iotwod.relquadraticcurve.cons}, construct:
       constexpr rel_quadratic_curve() noexcept;
       constexpr rel_quadratic_curve(const vector_2d& cpt, const vector_2d& ept)
         noexcept;
 
-      // \ref{relquadraticcurve.modifiers}, modifiers:
+      // \ref{\iotwod.relquadraticcurve.modifiers}, modifiers:
       constexpr void control(const vector_2d& cpt) noexcept;
       constexpr void end(const vector_2d& ept) noexcept;
 
-      // \ref{relquadraticcurve.observers}, observers:
+      // \ref{\iotwod.relquadraticcurve.observers}, observers:
       constexpr vector_2d control() const noexcept;
       constexpr vector_2d end() const noexcept;
     };
     
-    \ref{relquadraticcurve.nonmember}, non-members
+    \ref{\iotwod.relquadraticcurve.nonmember}, non-members
     constexpr bool operator==(const rel_quadratic_curve& lhs,
       const rel_quadratic_curve& rhs) noexcept;
     constexpr bool operator!=(const rel_quadratic_curve& lhs,
@@ -45,7 +45,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [relquadraticcurve.cons] {\tcode{rel_quadratic_curve} constructors}%
+\rSec1 [\iotwod.relquadraticcurve.cons] {\tcode{rel_quadratic_curve} constructors}%
 
 \indexlibrary{\idxcode{rel_quadratic_curve}!constructor}%
 \begin{itemdecl}
@@ -74,7 +74,7 @@ The control point is \tcode{cpt}.
 The end point is \tcode{ept}.
 \end{itemdescr}
 
-\rSec1 [relquadraticcurve.modifiers]{\tcode{rel_quadratic_curve} modifiers}%
+\rSec1 [\iotwod.relquadraticcurve.modifiers]{\tcode{rel_quadratic_curve} modifiers}%
 
 \indexlibrarymember{rel_quadratic_curve}{control}%
 \begin{itemdecl}
@@ -96,7 +96,7 @@ constexpr void end(const vector_2d& ept) noexcept;
 The end point is \tcode{ept}.
 \end{itemdescr}
 
-\rSec1 [relquadraticcurve.observers]{\tcode{rel_quadratic_curve} observers}%
+\rSec1 [\iotwod.relquadraticcurve.observers]{\tcode{rel_quadratic_curve} observers}%
 
 \indexlibrarymember{rel_quadratic_curve}{control}%
 \begin{itemdecl}
@@ -118,7 +118,7 @@ constexpr vector_2d end() const noexcept;
 The end point.
 \end{itemdescr}
 
-\rSec1 [relquadraticcurve.nonmember]{Non-member functions}%
+\rSec1 [\iotwod.relquadraticcurve.nonmember]{Non-member functions}%
 
 \indexlibrarymember{operator==}{rel_quadratic_curve}%
 \begin{itemdecl}

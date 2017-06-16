@@ -1,33 +1,33 @@
 %!TEX root = io2d.tex
 
-\rSec0 [maskprops] {Class \tcode{mask_props}}
+\rSec0 [\iotwod.maskprops] {Class \tcode{mask_props}}
 
-\rSec1 [maskprops.summary] {\tcode{mask_props} summary}
+\rSec1 [\iotwod.maskprops.summary] {\tcode{mask_props} summary}
 
 \pnum
-The \tcode{mask_props} class provides state information that is applicable to the Mask rendering and composing operation (\ref{surface.rendering}).
+The \tcode{mask_props} class provides state information that is applicable to the Mask rendering and composing operation (\ref{\iotwod.surface.rendering}).
 
 \pnum
 It has a Wrap Mode of type \tcode{wrap_mode}, a Filter of type \tcode{filter}, and a Mask Matrix of type \tcode{matrix_2d}.
 
-\rSec1 [maskprops.synopsis] {\tcode{mask_props} synopsis}
+\rSec1 [\iotwod.maskprops.synopsis] {\tcode{mask_props} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class mask_props {
   public:
-    // \ref{maskprops.cons}, constructors:
+    // \ref{\iotwod.maskprops.cons}, constructors:
     constexpr mask_props(
       experimental::io2d::wrap_mode w = experimental::io2d::wrap_mode::repeat,
       experimental::io2d::filter fi = experimental::io2d::filter::good,
       matrix_2d m = matrix_2d{}) noexcept;
 
-    // \ref{maskprops.modifiers}, modifiers:
+    // \ref{\iotwod.maskprops.modifiers}, modifiers:
     constexpr void wrap_mode(experimental::io2d::wrap_mode w) noexcept;
     constexpr void filter(experimental::io2d::filter fi) noexcept;
     constexpr void mask_matrix(const matrix_2d& m) noexcept;
 
-    // \ref{maskprops.observers}, observers:
+    // \ref{\iotwod.maskprops.observers}, observers:
     constexpr experimental::io2d::wrap_mode wrap_mode() const noexcept;
     constexpr experimental::io2d::filter filter() const noexcept;
     constexpr matrix_2d mask_matrix() const noexcept;
@@ -35,7 +35,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 }}}}
 \end{codeblock}
 
-\rSec1 [maskprops.cons] {\tcode{mask_props} constructors}
+\rSec1 [\iotwod.maskprops.cons] {\tcode{mask_props} constructors}
 
 \indexlibrary{\idxcode{mask_props}!constructor}
 \begin{itemdecl}
@@ -60,7 +60,7 @@ The value of Filter is \tcode{fi}.
 The value of Mask Matrix is \tcode{m}.
 \end{itemdescr}
 
-\rSec1 [maskprops.modifiers] {\tcode{mask_props} modifiers}
+\rSec1 [\iotwod.maskprops.modifiers] {\tcode{mask_props} modifiers}
 
 \indexlibrary{\idxcode{mask_props}!\idxcode{wrap_mode}}
 \begin{itemdecl}
@@ -96,7 +96,7 @@ constexpr void mask_matrix(const matrix_2d& m) noexcept;
 The value of Mask Matrix is \tcode{m}.
 \end{itemdescr}
 
-\rSec1 [maskprops.observers] {\tcode{mask_props} observers}
+\rSec1 [\iotwod.maskprops.observers] {\tcode{mask_props} observers}
 
 \indexlibrary{\idxcode{mask_props}!\idxcode{wrap_mode}}
 \begin{itemdecl}

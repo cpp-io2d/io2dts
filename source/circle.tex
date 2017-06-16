@@ -1,7 +1,7 @@
 %!TEX root = io2d.tex
-\rSec0 [circle] {Class \tcode{circle}}
+\rSec0 [\iotwod.circle] {Class \tcode{circle}}
 
-\rSec1 [circle.intro] {\tcode{circle} Description}
+\rSec1 [\iotwod.circle.intro] {\tcode{circle} Description}
 
 \pnum
 \indexlibrary{\idxcode{circle}}
@@ -10,28 +10,28 @@ The class \tcode{circle} describes a circle.
 \pnum
 It has a Center of type \tcode{vector_2d} and a Radius of type \tcode{double}.
 
-\rSec1 [circle.synopsis] {\tcode{circle} synopsis}
+\rSec1 [\iotwod.circle.synopsis] {\tcode{circle} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class circle {
   public:
-    // \ref{circle.cons}, construct/copy/move/destroy:
+    // \ref{\iotwod.circle.cons}, construct/copy/move/destroy:
     constexpr circle() noexcept;
     contexpr circle(const vector_2d& ctr, double rad) noexcept;
 
-    // \ref{circle.modifiers}, modifiers:
+    // \ref{\iotwod.circle.modifiers}, modifiers:
     constexpr void center(const vector_2d& ctr) noexcept;
     constexpr void radius(double r) noexcept;
     
-    // \ref{circle.observers}, observers:
+    // \ref{\iotwod.circle.observers}, observers:
     constexpr vector_2d center() const noexcept;
     constexpr double radius() const noexcept;
   };
 } } } }
 \end{codeblock}
 
-\rSec1 [circle.cons] {\tcode{circle} constructors and assignment operators}
+\rSec1 [\iotwod.circle.cons] {\tcode{circle} constructors and assignment operators}
 
 \indexlibrary{\idxcode{circle}!constructor}
 \begin{itemdecl}
@@ -68,7 +68,7 @@ The value of Center is \tcode{ctr}.
 The value of Radius is \tcode{r}.
 \end{itemdescr}
 
-\rSec1 [circle.modifiers]{\tcode{circle} modifiers}
+\rSec1 [\iotwod.circle.modifiers]{\tcode{circle} modifiers}
 
 \indexlibrary{\idxcode{circle}!\idxcode{center}}
 \begin{itemdecl}
@@ -94,7 +94,7 @@ constexpr void radius(double r) noexcept;
 The value of Radius is \tcode{r}.
 \end{itemdescr}
 
-\rSec1 [circle.observers]{\tcode{circle} observers}
+\rSec1 [\iotwod.circle.observers]{\tcode{circle} observers}
 
 \indexlibrary{\idxcode{circle}!\idxcode{center}}
 \begin{itemdecl}

@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [relcubiccurve] {Class \tcode{rel_cubic_curve}}%
+\rSec0 [\iotwod.relcubiccurve] {Class \tcode{rel_cubic_curve}}%
 
 \pnum
 \indexlibrary{\idxcode{rel_cubic_curve}}%
@@ -8,37 +8,37 @@ The class \tcode{rel_cubic_curve} describes a path item that adds a cubic \bezie
 \pnum
 It has a \term{first control point} of type \tcode{vector_2d}, a \term{second control point} of type \tcode{vector_2d}, and an \tcode{end point} of type \tcode{vector_2d}.
 
-\rSec1 [relcubiccurve.synopsis] {\tcode{rel_cubic_curve} synopsis}
+\rSec1 [\iotwod.relcubiccurve.synopsis] {\tcode{rel_cubic_curve} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
   namespace path_data {
     class rel_cubic_curve {
     public:
-      // \ref{relcubiccurve.cons}, construct
+      // \ref{\iotwod.relcubiccurve.cons}, construct
       constexpr rel_cubic_curve() noexcept;
       constexpr rel_cubic_curve(const vector_2d& cpt1, const vector_2d& cpt2,
         const vector_2d& ept) noexcept;
 
-      // \ref{relcubiccurve.modifiers}, modifiers:
+      // \ref{\iotwod.relcubiccurve.modifiers}, modifiers:
       constexpr void control_pt1(const vector_2d& cpt) noexcept;
       constexpr void control_pt2(const vector_2d& cpt) noexcept;
       constexpr void end_pt(const vector_2d& ept) noexcept;
 
-      // \ref{relcubiccurve.observers}, observers:
+      // \ref{\iotwod.relcubiccurve.observers}, observers:
       constexpr vector_2d control_pt1() const noexcept;
       constexpr vector_2d control_pt2() const noexcept;
       constexpr vector_2d end_pt() const noexcept;
     };
     
-    \ref{relcubiccurve.nonmember}, non-members
+    \ref{\iotwod.relcubiccurve.nonmember}, non-members
     constexpr bool operator==(const & lhs, const & rhs) noexcept;
     constexpr bool operator!=(const & lhs, const & rhs) noexcept;
   }
 } } } }
 \end{codeblock}
 
-\rSec1 [relcubiccurve.cons] {\tcode{rel_cubic_curve} constructors}
+\rSec1 [\iotwod.relcubiccurve.cons] {\tcode{rel_cubic_curve} constructors}
 
 \indexlibrary{\idxcode{rel_cubic_curve}!constructor}%
 \begin{itemdecl}
@@ -64,7 +64,7 @@ Constructs an object of type \tcode{rel_cubic_curve}.
 The first control point is \tcode{cpt1}. The second control point is \tcode{cpt2}. The end point is \tcode{ept}.
 \end{itemdescr}
 
-\rSec1 [relcubiccurve.modifiers]{\tcode{rel_cubic_curve} modifiers}
+\rSec1 [\iotwod.relcubiccurve.modifiers]{\tcode{rel_cubic_curve} modifiers}
 
 \indexlibrarymember{rel_cubic_curve}{control_pt1}%
 \begin{itemdecl}
@@ -96,7 +96,7 @@ constexpr void end_pt(const vector_2d& ept) noexcept;
 The end point is \tcode{ept}.
 \end{itemdescr}
 
-\rSec1 [relcubiccurve.observers]{\tcode{rel_cubic_curve} observers}
+\rSec1 [\iotwod.relcubiccurve.observers]{\tcode{rel_cubic_curve} observers}
 
 \indexlibrarymember{rel_cubic_curve}{control_pt1}%
 \begin{itemdecl}
@@ -128,7 +128,7 @@ constexpr vector_2d end_pt() const noexcept;
 The end point.
 \end{itemdescr}
 
-\rSec1 [relcubiccurve.nonmember]{Non-member functions}
+\rSec1 [\iotwod.relcubiccurve.nonmember]{Non-member functions}
 
 \indexlibrarymember{operator==}{rel_cubic_curve}%
 \begin{itemdecl}

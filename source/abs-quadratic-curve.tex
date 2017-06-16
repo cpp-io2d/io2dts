@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [absquadraticcurve] {Class \tcode{abs_quadratic_curve}}%
+\rSec0 [\iotwod.absquadraticcurve] {Class \tcode{abs_quadratic_curve}}%
 
 \pnum
 \indexlibrary{\idxcode{abs_quadratic_curve}}
@@ -11,28 +11,28 @@ It has a \term{control point} of type \tcode{vector_2d} and an \term{end point} 
 \pnum
 When interpreting a path group, after the curve is added to the path, the path's current point becomes the end point.
 
-\rSec1 [absquadraticcurve.synopsis] {\tcode{abs_quadratic_curve} synopsis}%
+\rSec1 [\iotwod.absquadraticcurve.synopsis] {\tcode{abs_quadratic_curve} synopsis}%
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   namespace path_data {
     class abs_quadratic_curve {
     public:
-      // \ref{absquadraticcurve.cons}, construct:
+      // \ref{\iotwod.absquadraticcurve.cons}, construct:
       constexpr abs_quadratic_curve() noexcept;
       constexpr abs_quadratic_curve(const vector_2d& cpt, const vector_2d& ept)
         noexcept;
 
-      // \ref{absquadraticcurve.modifiers}, modifiers:
+      // \ref{\iotwod.absquadraticcurve.modifiers}, modifiers:
       constexpr void control(const vector_2d& cpt) noexcept;
       constexpr void end(const vector_2d& ept) noexcept;
 
-      // \ref{absquadraticcurve.observers}, observers:
+      // \ref{\iotwod.absquadraticcurve.observers}, observers:
       constexpr vector_2d control() const noexcept;
       constexpr vector_2d end() const noexcept;
     };
     
-    \ref{absquadraticcurve.nonmember}, non-members
+    \ref{\iotwod.absquadraticcurve.nonmember}, non-members
     constexpr bool operator==(const abs_quadratic_curve& lhs,
       const abs_quadratic_curve& rhs) noexcept;
     constexpr bool operator!=(const abs_quadratic_curve& lhs,
@@ -41,7 +41,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [absquadraticcurve.cons] {\tcode{abs_quadratic_curve} constructors}%
+\rSec1 [\iotwod.absquadraticcurve.cons] {\tcode{abs_quadratic_curve} constructors}%
 
 \indexlibrary{\idxcode{abs_quadratic_curve}!constructor}%
 \begin{itemdecl}
@@ -70,7 +70,7 @@ The control point is \tcode{cpt}.
 The end point is \tcode{ept}.
 \end{itemdescr}
 
-\rSec1 [absquadraticcurve.modifiers]{\tcode{abs_quadratic_curve} modifiers}%
+\rSec1 [\iotwod.absquadraticcurve.modifiers]{\tcode{abs_quadratic_curve} modifiers}%
 
 \indexlibrarymember{abs_quadratic_curve}{control}%
 \begin{itemdecl}
@@ -92,7 +92,7 @@ constexpr void end(const vector_2d& ept) noexcept;
 The end point is \tcode{ept}.
 \end{itemdescr}
 
-\rSec1 [absquadraticcurve.observers]{\tcode{abs_quadratic_curve} observers}%
+\rSec1 [\iotwod.absquadraticcurve.observers]{\tcode{abs_quadratic_curve} observers}%
 
 \indexlibrarymember{abs_quadratic_curve}{control}%
 \begin{itemdecl}
@@ -114,7 +114,7 @@ constexpr vector_2d end() const noexcept;
 The end point.
 \end{itemdescr}
 
-\rSec1 [absquadraticcurve.nonmember]{Non-member functions}%
+\rSec1 [\iotwod.absquadraticcurve.nonmember]{Non-member functions}%
 
 \indexlibrarymember{operator==}{abs_quadratic_curve}%
 \begin{itemdecl}

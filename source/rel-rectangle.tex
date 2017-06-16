@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [relrectangle] {Class \tcode{rel_rectangle}}
+\rSec0 [\iotwod.relrectangle] {Class \tcode{rel_rectangle}}
 
 \pnum
 \indexlibrary{\idxcode{rel_rectangle}}
@@ -11,21 +11,21 @@ This is a relative path item.
 \pnum
 It has an X coordinate of type \tcode{double}, a Y coordinate of type \tcode{double}, a Width of type \tcode{double}, and a Height of type \tcode{double}.
 
-\rSec1 [relrectangle.synopsis] {\tcode{rel_rectangle} synopsis}
+\rSec1 [\iotwod.relrectangle.synopsis] {\tcode{rel_rectangle} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   namespace path_data {
     class rel_rectangle {
     public:
-      // \ref{relrectangle.cons}, constructors:
+      // \ref{\iotwod.relrectangle.cons}, constructors:
       constexpr rel_rectangle() noexcept;
       constexpr rel_rectangle(double x, double y, double w, double h) noexcept;
       constexpr rel_rectangle(const vector_2d& tl, const vector_2d& br) 
         noexcept;
       constexpr rel_rectangle(const rectangle& r);
 
-      // \ref{relrectangle.modifiers}, modifiers:
+      // \ref{\iotwod.relrectangle.modifiers}, modifiers:
       constexpr void x(double value) noexcept;
       constexpr void y(double value) noexcept;
       constexpr void width(double value) noexcept;
@@ -35,7 +35,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       constexpr void top_left_bottom_right(const vector_2d& tl,
         const vector_2d& br) noexcept;
 
-      // \ref{relrectangle.observers}, observers:
+      // \ref{\iotwod.relrectangle.observers}, observers:
       constexpr double x() const noexcept;
       constexpr double y() const noexcept;
       constexpr double width() const noexcept;
@@ -51,7 +51,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [relrectangle.cons] {\tcode{rel_rectangle} constructors}
+\rSec1 [\iotwod.relrectangle.cons] {\tcode{rel_rectangle} constructors}
 
 \indexlibrary{\idxcode{rel_rectangle}!constructor}
 \begin{itemdecl}
@@ -110,7 +110,7 @@ The Width shall be set to the value of \tcode{max(0.0, br.x() - tl.x())}.
 The Height shall be set to the value of \tcode{max(0.0, br.y() - tl.y())}.
 \end{itemdescr}
 
-\rSec1 [relrectangle.modifiers]{\tcode{rel_rectangle} modifiers}
+\rSec1 [\iotwod.relrectangle.modifiers]{\tcode{rel_rectangle} modifiers}
 
 \indexlibrary{\idxcode{rel_rectangle}!\idxcode{x}}
 \begin{itemdecl}
@@ -179,7 +179,7 @@ The Width shall be set to the value of \tcode{max(0.0, val.x() - *this.x())}.
 The Height shall be set to the value of \tcode{max(0.0, value.y() - *this.y())}.
 \end{itemdescr}
 
-\rSec1 [relrectangle.observers]{\tcode{rel_rectangle} observers}
+\rSec1 [\iotwod.relrectangle.observers]{\tcode{rel_rectangle} observers}
 
 \indexlibrary{\idxcode{rel_rectangle}!\idxcode{x}}
 \begin{itemdecl}

@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [rgbacolor] {Class \tcode{rgba_color}}
+\rSec0 [\iotwod.rgbacolor] {Class \tcode{rgba_color}}
 
 \pnum
 \indexlibrary{\idxcode{rgba_color}}%
@@ -17,31 +17,31 @@ Legal values for each channel are in the range \crange{0.0}{1.0}.
 %\pnum
 %The type predefines a set of named colors, for which each channel is an unsigned normalized 8-bit integer.
 %
-\rSec1 [rgbacolor.synopsis] {\tcode{rgba_color} synopsis}
+\rSec1 [\iotwod.rgbacolor.synopsis] {\tcode{rgba_color} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
   class rgba_color {
-    // \ref{rgbacolor.cons}, construct/copy/move/destroy:
+    // \ref{\iotwod.rgbacolor.cons}, construct/copy/move/destroy:
     constexpr rgba_color() noexcept;
     template <class T>
     constexpr rgba_color(T r, T g, T b, T a = static_cast<T>(0xFF)) noexcept;
     template <class U>
     constexpr rgba_color(U r, U g, U b, U a = static_cast<U>(1.0)) noexcept;
   
-    // \ref{rgbacolor.modifiers}, modifiers:
+    // \ref{\iotwod.rgbacolor.modifiers}, modifiers:
     constexpr void r(double val) noexcept;
     constexpr void g(double val) noexcept;
     constexpr void b(double val) noexcept;
     constexpr void a(double val) noexcept;
     
-    // \ref{rgbacolor.observers}, observers:
+    // \ref{\iotwod.rgbacolor.observers}, observers:
     constexpr double r() const noexcept;
     constexpr double g() const noexcept;
     constexpr double b() const noexcept;
     constexpr double a() const noexcept;
     
-    // \ref{rgbacolor.statics}, static member functions:
+    // \ref{\iotwod.rgbacolor.statics}, static member functions:
     static const rgba_color& alice_blue() noexcept;
     static const rgba_color& antique_white() noexcept;
     static const rgba_color& aqua() noexcept;
@@ -192,7 +192,7 @@ namespace std::experimental::io2d::v1 {
     static const rgba_color& yellow_green() noexcept;
   };
 
-  // \ref{rgbacolor.ops}, non-member operators:
+  // \ref{\iotwod.rgbacolor.ops}, non-member operators:
   constexpr bool operator==(const rgba_color& lhs, const rgba_color& rhs) 
     noexcept;
   constexpr bool operator!=(const rgba_color& lhs, const rgba_color& rhs) 
@@ -200,7 +200,7 @@ namespace std::experimental::io2d::v1 {
 }
 \end{codeblock}
 
-\rSec1 [rgbacolor.cons] {\tcode{rgba_color} constructors and assignment operators}
+\rSec1 [\iotwod.rgbacolor.cons] {\tcode{rgba_color} constructors and assignment operators}
 
 \indexlibrary{\idxcode{rgba_color}!constructor}
 \begin{itemdecl}
@@ -260,7 +260,7 @@ Constructs an object of type \tcode{rgba_color}.
 \end{itemdescr}
 
 
-\rSec1 [rgbacolor.modifiers]{\tcode{rgba_color} modifiers}
+\rSec1 [\iotwod.rgbacolor.modifiers]{\tcode{rgba_color} modifiers}
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{r}}
 \begin{itemdecl}
@@ -324,7 +324,7 @@ constexpr void a(double val) noexcept;
 \end{enumerate}
 \end{itemdescr}
 
-\rSec1 [rgbacolor.observers]{\tcode{rgba_color} observers}
+\rSec1 [\iotwod.rgbacolor.observers]{\tcode{rgba_color} observers}
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{r}}
 \begin{itemdecl}
@@ -366,7 +366,7 @@ constexpr double a() const noexcept;
 The value of the alpha channel.
 \end{itemdescr}
 
-\rSec1 [rgbacolor.statics] {\tcode{rgba_color} static member functions}
+\rSec1 [\iotwod.rgbacolor.statics] {\tcode{rgba_color} static member functions}
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{alice_blue}}
 \begin{itemdecl}
@@ -1851,7 +1851,7 @@ static const rgba_color& yellow_green() noexcept;
 a const reference to the static \tcode{rgba_color} object \tcode{rgba_color\{ 154, 205, 50, 255 \}}.
 \end{itemdescr}
 
-\rSec1 [rgbacolor.ops] {\tcode{rgba_color} non-member operators}
+\rSec1 [\iotwod.rgbacolor.ops] {\tcode{rgba_color} non-member operators}
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{operator==}}
 \begin{itemdecl}

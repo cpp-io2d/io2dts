@@ -1,18 +1,18 @@
 %!TEX root = io2d.tex
-\rSec0 [fillrule] {Enum class \tcode{fill_rule}}
+\rSec0 [\iotwod.fillrule] {Enum class \tcode{fill_rule}}
 
-\rSec1 [fillrule.summary] {\tcode{fill_rule} Summary}
+\rSec1 [\iotwod.fillrule.summary] {\tcode{fill_rule} Summary}
 
 \pnum
-The \tcode{fill_rule} enum class determines how the Filling operation (\ref{surface.filling}) is performed on a path group.
+The \tcode{fill_rule} enum class determines how the Filling operation (\ref{\iotwod.surface.filling}) is performed on a path group.
 
 \pnum
 For each point, draw a ray from that point to infinity which does not pass through the start point or end point of any non-degenerate path segment in the path group, is not tangent to any non-degenerate path segment in the path group, and is not coincident with any non-degenerate path segment in the path group.
 
 \pnum
-See Table~\ref{tab:fillrule.meanings} for the meaning of each \tcode{fill_rule} enumerator.
+See Table~\ref{tab:\iotwod.fillrule.meanings} for the meaning of each \tcode{fill_rule} enumerator.
 
-\rSec1 [fillrule.synopsis] {\tcode{fill_rule} Synopsis}
+\rSec1 [\iotwod.fillrule.synopsis] {\tcode{fill_rule} Synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
@@ -23,11 +23,11 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [fillrule.enumerators] {\tcode{fill_rule} Enumerators}
+\rSec1 [\iotwod.fillrule.enumerators] {\tcode{fill_rule} Enumerators}
 
 \begin{libreqtab2}
  {\tcode{fill_rule} enumerator meanings}
- {tab:fillrule.meanings}
+ {tab:\iotwod.fillrule.meanings}
  \\ \topline
  \lhdr{Enumerator}
  & \rhdr{Meaning}

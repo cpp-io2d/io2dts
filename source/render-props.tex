@@ -1,38 +1,38 @@
 %!TEX root = io2d.tex
 
-\rSec0 [renderprops] {Class \tcode{render_props}}
+\rSec0 [\iotwod.renderprops] {Class \tcode{render_props}}
 
-\rSec1 [renderprops.summary] {\tcode{render_props} summary}
+\rSec1 [\iotwod.renderprops.summary] {\tcode{render_props} summary}
 
 \pnum
-The \tcode{render_props} class provides general state information that is applicable to all rendering and composing operations (\ref{surface.rendering}).
+The \tcode{render_props} class provides general state information that is applicable to all rendering and composing operations (\ref{\iotwod.surface.rendering}).
 
 \pnum
 It has a Surface Matrix of type \tcode{matrix_2d}, and a Compositing Operator of type \tcode{compositing_op}.
 
-\rSec1 [renderprops.synopsis] {\tcode{render_props} synopsis}
+\rSec1 [\iotwod.renderprops.synopsis] {\tcode{render_props} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class render_props {
   public:
-    // \ref{renderprops.cons}, constructors:
+    // \ref{\iotwod.renderprops.cons}, constructors:
     constexpr render_props() noexcept;
     constexpr explicit render_props(const matrix_2d& m,
       compositing_op co = compositing_op::over) noexcept;
     
-    // \ref{renderprops.modifiers}, modifiers:
+    // \ref{\iotwod.renderprops.modifiers}, modifiers:
     constexpr void compositing(compositing_op co) noexcept;
     constexpr void surface_matrix(const matrix_2d& m) noexcept;
     
-    // \ref{renderprops.observers}, observers:
+    // \ref{\iotwod.renderprops.observers}, observers:
     constexpr compositing_op compositing() const noexcept;
     constexpr matrix_2d surface_matrix() const noexcept;
   };
 }}}}
 \end{codeblock}
 
-\rSec1 [renderprops.cons] {\tcode{render_props} constructors}
+\rSec1 [\iotwod.renderprops.cons] {\tcode{render_props} constructors}
 
 \indexlibrary{\idxcode{render_props}!constructor}
 \begin{itemdecl}
@@ -65,7 +65,7 @@ The value of Surface Matrix is \tcode{m}.
 The value of Compositing Operator is \tcode{co}.
 \end{itemdescr}
 
-\rSec1 [renderprops.modifiers] {\tcode{render_props} modifiers}
+\rSec1 [\iotwod.renderprops.modifiers] {\tcode{render_props} modifiers}
 
 \indexlibrary{\idxcode{render_props}!\idxcode{compositing}}
 \begin{itemdecl}
@@ -91,7 +91,7 @@ constexpr void surface_matrix(const matrix_2d& m) noexcept;
 The value of Surface Matrix is \tcode{m}.
 \end{itemdescr}
 
-\rSec1 [renderprops.observers] {\tcode{render_props} observers}
+\rSec1 [\iotwod.renderprops.observers] {\tcode{render_props} observers}
 
 \indexlibrary{\idxcode{render_props}!\idxcode{compositing}}
 \begin{itemdecl}

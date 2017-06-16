@@ -1,13 +1,13 @@
 %!TEX root = io2d.tex
-\rSec0 [mappedsurface] {Class \tcode{mapped_surface}}
+\rSec0 [\iotwod.mappedsurface] {Class \tcode{mapped_surface}}
 
-\rSec1 [mappedsurface.synopsis] {\tcode{mapped_surface} synopsis}
+\rSec1 [\iotwod.mappedsurface.synopsis] {\tcode{mapped_surface} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class mapped_surface {
   public:
-    // \ref{mappedsurface.cons}, construct/copy/move/destroy:
+    // \ref{\iotwod.mappedsurface.cons}, construct/copy/move/destroy:
     mapped_surface() = delete;
     mapped_surface(const mapped_surface&) = delete;
     mapped_surface& operator=(const mapped_surface&) = delete;
@@ -15,7 +15,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     mapped_surface& operator=(mapped_surface&& other) = delete;
     ~mapped_surface();
     
-    // \ref{mappedsurface.modifiers}, modifiers:
+    // \ref{\iotwod.mappedsurface.modifiers}, modifiers:
     void commit_changes();
     void commit_changes(error_code& ec) noexcept;
     void commit_changes(const rectangle& area);
@@ -23,7 +23,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     unsigned char* data();
     unsigned char* data(error_code& ec) noexcept;
     
-    // \ref{mappedsurface.observers}, observers:
+    // \ref{\iotwod.mappedsurface.observers}, observers:
     const unsigned char* data() const;
     const unsigned char* data(error_code& ec) const noexcept;
     experimental::io2d::format format() const noexcept;
@@ -34,7 +34,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [mappedsurface.intro] {\tcode{mapped_surface} Description}
+\rSec1 [\iotwod.mappedsurface.intro] {\tcode{mapped_surface} Description}
 
 \pnum
 \indexlibrary{\idxcode{mapped_surface}}
@@ -47,7 +47,7 @@ A \tcode{mapped_surface} can only be created by the \tcode{surface::map} functio
 The pixel data is presented as an array in the form of a pointer to (possibly \tcode{const}) \tcode{unsigned char}.
 
 \pnum
-The actual format of the pixel data depends on the \tcode{format} enumerator returned by calling \tcode{mapped_surface::format} and is native-endian. For more information, see the description of the \tcode{format} enum class (\ref{format}).
+The actual format of the pixel data depends on the \tcode{format} enumerator returned by calling \tcode{mapped_surface::format} and is native-endian. For more information, see the description of the \tcode{format} enum class (\ref{\iotwod.format}).
 
 \pnum
 The pixel data array is presented as a series of horizontal rows of pixels with row \tcode{0} being the top row of pixels of the \underlyingsurface and the bottom row being the row at \tcode{mapped_surface::height() - 1}.
@@ -67,7 +67,7 @@ Changes made to the pixel data array are considered to be \term{uncommitted} so 
 \pnum
 Changes made to the pixel data array are considered to be \term{committed} once they are reflected in the \underlyingsurface.
 
-\rSec1 [mappedsurface.cons] {\tcode{mapped_surface} constructors and assignment operators}
+\rSec1 [\iotwod.mappedsurface.cons] {\tcode{mapped_surface} constructors and assignment operators}
 
 \indexlibrary{\idxcode{mapped_surface}!destructor}
 \begin{itemdecl}
@@ -89,7 +89,7 @@ Uncommitted changes shall not be committed during destruction of the \tcode{mapp
 Users shall call \tcode{mapped_surface::commit_changes} to commit changes made to the surface's data prior to the destruction of the \tcode{mapped_surface} object.
 \end{itemdescr}
 
-\rSec1 [mappedsurface.modifiers]{\tcode{mapped_surface} modifiers}
+\rSec1 [\iotwod.mappedsurface.modifiers]{\tcode{mapped_surface} modifiers}
 
 \indexlibrary{\idxcode{mapped_surface}!\idxcode{commit_changes}}
 \indexlibrary{\idxcode{commit_changes}!\idxcode{mapped_surface}}
@@ -158,7 +158,7 @@ experimental::io2d::format::unknown || this->format() == \\
 experimental::io2d::format::invalid}.
 \end{itemdescr}
 
-\rSec1 [mappedsurface.observers]{\tcode{mapped_surface} observers}
+\rSec1 [\iotwod.mappedsurface.observers]{\tcode{mapped_surface} observers}
 
 \indexlibrary{\idxcode{mapped_surface}!\idxcode{data}}
 \indexlibrary{\idxcode{data}!\idxcode{mapped_surface}}

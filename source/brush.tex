@@ -1,7 +1,7 @@
 %!TEX root = io2d.tex
-\rSec0 [brush] {Class \tcode{brush}}
+\rSec0 [\iotwod.brush] {Class \tcode{brush}}
 
-\rSec1 [brush.intro] {\tcode{brush} Description}
+\rSec1 [\iotwod.brush.intro] {\tcode{brush} Description}
 
 \pnum
 \indexlibrary{\idxcode{brush}}
@@ -11,10 +11,10 @@ The class \tcode{brush} describes an opaque wrapper for a graphics data graphics
 A \tcode{brush} object is usable with any \tcode{surface} or \tcode{surface}-derived object.
 
 \pnum
-A \tcode{brush} object's graphics data is immutable. It is observable only by the effect that it produces when the brush is used as a Source Brush or as a Mask Brush (\ref{surface.rendering.brushes}).
+A \tcode{brush} object's graphics data is immutable. It is observable only by the effect that it produces when the brush is used as a Source Brush or as a Mask Brush (\ref{\iotwod.surface.rendering.brushes}).
 
 \pnum
-A \tcode{brush} object has a brush type of \tcode{brush_type}, which indicates which type of brush it is (Table~\ref{tab:brushtype.meanings}).
+A \tcode{brush} object has a brush type of \tcode{brush_type}, which indicates which type of brush it is (Table~\ref{tab:\iotwod.brushtype.meanings}).
 
 \pnum
 As a result of technological limitations and considerations, a \tcode{brush} object's graphics data can have less precision than the data from which it was created.
@@ -24,13 +24,13 @@ As a result of technological limitations and considerations, a \tcode{brush} obj
 Several graphics and rendering technologies that are currently widely used typically store individual color and alpha channel data as 8-bit unsigned normalized integer values while the \tcode{double} type that is used by the \tcode{rgba_color} class for individual color and alpha is often a 64-bit value. As such, it is possible for a loss of precision when transforming the 64-bit channel data of an \tcode{rgba_color} object to the 8-bit channel data that is commonly used internally in such graphics and rendering technologies.
 \end{example}
 
-\rSec1 [brush.synopsis] {\tcode{brush} synopsis}
+\rSec1 [\iotwod.brush.synopsis] {\tcode{brush} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class brush {
   public:
-    // \ref{brush.cons}, construct/copy/move/destroy:
+    // \ref{\iotwod.brush.cons}, construct/copy/move/destroy:
     explicit brush(const rgba_color& c);
     template <class InputIterator>
     brush(const vector_2d& begin, const vector_2d& end,
@@ -44,13 +44,13 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       initializer_list<color_stop> il);
     explicit brush(image_surface&& img);
 
-    // \ref{brush.observers}, observers:
+    // \ref{\iotwod.brush.observers}, observers:
     brush_type type() const noexcept;
   };
 } } } }
 \end{codeblock}
 
-\rSec1 [brush.sampling] {Sampling from a \tcode{brush} object}
+\rSec1 [\iotwod.brush.sampling] {Sampling from a \tcode{brush} object}
 
 \pnum
 When sampling from a \tcode{brush} object \tcode{b}, the \tcode{brush_type} returned by calling \tcode{b.type()} shall determine how the results of sampling shall be determined:
@@ -61,27 +61,27 @@ When sampling from a \tcode{brush} object \tcode{b}, the \tcode{brush_type} retu
 \item If the result of \tcode{b.type()} is \tcode{brush_type::radial} then \tcode{b} is a \term{radial gradient brush}.
 \end{enumerate}
 
-\rSec2 [brush.sampling.color] {Sampling from a solid color brush}
+\rSec2 [\iotwod.brush.sampling.color] {Sampling from a solid color brush}
 
 \pnum
 When \tcode{b} is a solid color brush, then when sampling from \tcode{b}, the visual data returned shall always be the visual data equivalent \tcode{rgba_color} used to construct \tcode{b}, regardless of the point which is to be sampled and regardless of the return values of Wrap Mode, Filter, and Matrix.
 
-\rSec2 [brush.sampling.linear] {Sampling from a linear gradient brush}
+\rSec2 [\iotwod.brush.sampling.linear] {Sampling from a linear gradient brush}
 
 \pnum
-When \tcode{b} is a linear gradient brush, when sampling point \tcode{pt}, where \tcode{pt} is the return value of calling the \tcode{transform_point} member function of Matrix using the requested point, from \tcode{b}, the visual data returned shall be as specified by \ref{gradients.linear} and \ref{gradients.sampling}.
+When \tcode{b} is a linear gradient brush, when sampling point \tcode{pt}, where \tcode{pt} is the return value of calling the \tcode{transform_point} member function of Matrix using the requested point, from \tcode{b}, the visual data returned shall be as specified by \ref{\iotwod.gradients.linear} and \ref{\iotwod.gradients.sampling}.
 
-\rSec2 [brush.sampling.radial] {Sampling from a radial gradient brush}
+\rSec2 [\iotwod.brush.sampling.radial] {Sampling from a radial gradient brush}
 
 \pnum
-When \tcode{b} is a radial gradient brush, when sampling point \tcode{pt}, where \tcode{pt} is the return value of calling the \tcode{transform_point} member function of Matrix using the requested point, from \tcode{b}, the visual data returned shall be as specified by \ref{gradients.radial} and \ref{gradients.sampling}.
+When \tcode{b} is a radial gradient brush, when sampling point \tcode{pt}, where \tcode{pt} is the return value of calling the \tcode{transform_point} member function of Matrix using the requested point, from \tcode{b}, the visual data returned shall be as specified by \ref{\iotwod.gradients.radial} and \ref{\iotwod.gradients.sampling}.
 
-\rSec2 [brush.sampling.surface] {Sampling from a surface brush}
+\rSec2 [\iotwod.brush.sampling.surface] {Sampling from a surface brush}
 
 \pnum
 When \tcode{b} is a surface brush, when sampling point \tcode{pt}, where \tcode{pt} is the return value of calling the \tcode{transform_point} member function of Matrix using the requested point, from \tcode{b}, the visual data returned shall be from the point \tcode{pt} in the graphics data of the brush, taking into account the values of Wrap Mode and Filter.
 
-\rSec1 [brush.cons] {\tcode{brush} constructors and assignment operators}
+\rSec1 [\iotwod.brush.cons] {\tcode{brush} constructors and assignment operators}
 
 \indexlibrary{\idxcode{brush}!constructor}
 \begin{itemdecl}
@@ -100,7 +100,7 @@ The graphics data of the brush shall be created from the value of \tcode{c}. The
 
 \pnum
 \remarks
-Sampling from this produces the results specified in \ref{brush.sampling.color}.
+Sampling from this produces the results specified in \ref{\iotwod.brush.sampling.color}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{brush}!constructor}
@@ -119,7 +119,7 @@ The brush's brush type is \tcode{brush_type::linear}.
 
 \pnum
 \remarks
-Sampling from this brush produces the results specified in \ref{brush.sampling.linear}.
+Sampling from this brush produces the results specified in \ref{\iotwod.brush.sampling.linear}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{brush}!constructor}
@@ -137,7 +137,7 @@ The brush's brush type is \tcode{brush_type::linear}.
 
 \pnum
 \remarks
-Sampling from this brush produces the results specified in \ref{brush.sampling.linear}.
+Sampling from this brush produces the results specified in \ref{\iotwod.brush.sampling.linear}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{brush}!constructor}
@@ -156,7 +156,7 @@ The brush's brush type is \tcode{brush_type::radial}.
 
 \pnum
 \remarks
-Sampling from this brush produces the results specified in \ref{brush.sampling.radial}.
+Sampling from this brush produces the results specified in \ref{\iotwod.brush.sampling.radial}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{brush}!constructor}
@@ -174,7 +174,7 @@ The brush's brush type is \tcode{brush_type::radial}.
 
 \pnum
 \remarks
-Sampling from this brush produces the results specified in \ref{brush.sampling.radial}.
+Sampling from this brush produces the results specified in \ref{\iotwod.brush.sampling.radial}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{brush}!constructor}
@@ -195,10 +195,10 @@ The graphics data of the brush is as-if it is the \underlyingimagesurface of \tc
 
 \pnum
 \remarks
-Sampling from this brush shall produce the results specified in \ref{brush.sampling.surface}.
+Sampling from this brush shall produce the results specified in \ref{\iotwod.brush.sampling.surface}.
 \end{itemdescr}
 
-\rSec1 [brush.observers]{\tcode{brush} observers}
+\rSec1 [\iotwod.brush.observers]{\tcode{brush} observers}
 
 \indexlibrary{\idxcode{brush}!\idxcode{type}}
 \begin{itemdecl}

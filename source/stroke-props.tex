@@ -1,11 +1,11 @@
 %!TEX root = io2d.tex
 
-\rSec0 [strokeprops] {Class \tcode{stroke_props}}
+\rSec0 [\iotwod.strokeprops] {Class \tcode{stroke_props}}
 
-\rSec1 [strokeprops.summary] {\tcode{stroke_props} summary}
+\rSec1 [\iotwod.strokeprops.summary] {\tcode{stroke_props} summary}
 
 \pnum
-The \tcode{stroke_props} class provides state information that is applicable to the Stroke rendering and composing operation (\ref{surface.rendering} and \ref{surface.stroking}).
+The \tcode{stroke_props} class provides state information that is applicable to the Stroke rendering and composing operation (\ref{\iotwod.surface.rendering} and \ref{\iotwod.surface.stroking}).
 
 \pnum
 It has a Line Width of type \tcode{double}, a Line Cap of type \tcode{line_cap}, a Line Join of type \tcode{line_join}, and a Miter Limit of type \tcode{double}.
@@ -16,26 +16,26 @@ It has a Line Width of type \tcode{double}, a Line Cap of type \tcode{line_cap},
 %Given a 20x20 \tcode{image_surface} *** FIXME ***
 %\end{example}
 %
-\rSec1 [strokeprops.synopsis] {\tcode{stroke_props} synopsis}
+\rSec1 [\iotwod.strokeprops.synopsis] {\tcode{stroke_props} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class stroke_props {
   public:
-    // \ref{strokeprops.cons}, constructors:
+    // \ref{\iotwod.strokeprops.cons}, constructors:
     constexpr stroke_props() noexcept;
     constexpr explicit stroke_props(double w,
       experimental::io2d::line_cap lc = experimental::io2d::line_cap::none,
       experimental::io2d::line_join lj = experimental::io2d::line_join::miter,
       double ml = 10.0) noexcept    
 
-    // \ref{strokeprops.modifiers}, modifiers:
+    // \ref{\iotwod.strokeprops.modifiers}, modifiers:
     constexpr void line_width(double w) noexcept;
     constexpr void line_cap(experimental::io2d::line_cap lc) noexcept;
     constexpr void line_join(experimental::io2d::line_join lj) noexcept;
     constexpr void miter_limit(double ml) noexcept;
     
-    // \ref{strokeprops.observers}, observers:
+    // \ref{\iotwod.strokeprops.observers}, observers:
     constexpr double line_width() const noexcept;
     constexpr experimental::io2d::line_cap line_cap() const noexcept;
     constexpr experimental::io2d::line_join line_join() const noexcept;
@@ -45,7 +45,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 }}}}
 \end{codeblock}
 
-\rSec1 [strokeprops.cons] {\tcode{stroke_props} constructors}
+\rSec1 [\iotwod.strokeprops.cons] {\tcode{stroke_props} constructors}
 
 \indexlibrary{\idxcode{stroke_props}!constructor}
 \begin{itemdecl}
@@ -95,7 +95,7 @@ The value of Line Join is \tcode{lj}.
 The value of Miter Limit is \tcode{ml}.
 \end{itemdescr}
 
-\rSec1 [strokeprops.modifiers] {\tcode{stroke_props} modifiers}
+\rSec1 [\iotwod.strokeprops.modifiers] {\tcode{stroke_props} modifiers}
 
 \indexlibrary{\idxcode{stroke_props}!\idxcode{line_width}}
 \begin{itemdecl}
@@ -143,7 +143,7 @@ constexpr void miter_limit(double ml) noexcept;
 The value of Miter Limit if \tcode{ml}.
 \end{itemdescr}
 
-\rSec1 [strokeprops.observers] {\tcode{stroke_props} observers}
+\rSec1 [\iotwod.strokeprops.observers] {\tcode{stroke_props} observers}
 
 \indexlibrary{\idxcode{stroke_props}!\idxcode{line_width}}
 \begin{itemdecl}

@@ -1,7 +1,7 @@
 %!TEX root = io2d.tex
-\rSec0 [colorstops] {Color stops}
+\rSec0 [\iotwod.colorstops] {Color stops}
 
-\rSec1 [colorstops.colorstop]{Class \tcode{color_stop}}
+\rSec1 [\iotwod.colorstops.colorstop]{Class \tcode{color_stop}}
 
 \pnum
 \indexlibrary{\idxcode{color_stop}}
@@ -10,27 +10,27 @@ The class \tcode{color_stop} describes a color stop that is used by gradient bru
 \pnum
 It has an offset of type \tcode{double} and a color of type \tcode{rgba_color}.
 
-\rSec2 [colorstops.colorstop.synopsis] {\tcode{color_stop} Synopsis}
+\rSec2 [\iotwod.colorstops.colorstop.synopsis] {\tcode{color_stop} Synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class color_stop {
   public:
-  	// \ref{colorstops.colorstop.cons}, construct:
+  	// \ref{\iotwod.colorstops.colorstop.cons}, construct:
     constexpr color_stop(double o, const rgba_color& c);
     
-    // \ref{colorstops.colorstop.modifiers}, modifiers:
+    // \ref{\iotwod.colorstops.colorstop.modifiers}, modifiers:
     constexpr void offset(double val) noexcept;
 	constexpr void color(const rgba_color& val) noexcept;
 	
-    // \ref{colorstops.colorstop.observers}, observers:
+    // \ref{\iotwod.colorstops.colorstop.observers}, observers:
 	constexpr double offset() const noexcept;
 	constexpr rgba_color color() const noexcept;
   };
 } } } }
 \end{codeblock}
 
-\rSec2 [colorstops.colorstop.cons]{\tcode{color_stop} constructors}
+\rSec2 [\iotwod.colorstops.colorstop.cons]{\tcode{color_stop} constructors}
 
 \indexlibrary{\idxcode{color_stop}!constructor}
 \begin{itemdecl}
@@ -48,7 +48,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The color shall be set to the value of \tcode{c}.
 \end{itemdescr}
 
-\rSec2 [colorstops.colorstop.modifiers]{\tcode{color_stop} modifiers}
+\rSec2 [\iotwod.colorstops.colorstop.modifiers]{\tcode{color_stop} modifiers}
 
 \indexlibrary{\idxcode{color_stop}!\idxcode{offset}}
 \indexlibrary{\idxcode{offset}!\idxcode{color_stop}}
@@ -72,7 +72,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 	The color shall be set to the value of \tcode{val}.
 \end{itemdescr}
 
-\rSec2 [colorstops.colorstop.observers]{\tcode{color_stop} observers}
+\rSec2 [\iotwod.colorstops.colorstop.observers]{\tcode{color_stop} observers}
 
 \indexlibrary{\idxcode{color_stop}!\idxcode{offset}}
 \indexlibrary{\idxcode{offset}!\idxcode{color_stop}}

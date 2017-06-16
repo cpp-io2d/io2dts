@@ -6,7 +6,7 @@
 
 \pnum
 \indexlibrary{\idxcode{brush_props}}%
-The \tcode{brush_props} class provides general state information that is applicable to all rendering and composing operations (\ref{surface.rendering}).
+The \tcode{brush_props} class provides general state information that is applicable to all rendering and composing operations (\ref{\iotwod.surface.rendering}).
 
 \pnum
 It has a Wrap Mode of type \tcode{wrap_mode}, a Filter of type \tcode{filter}, a Fill Rule of type \tcode{fill_rule}, and a Brush Matrix of type \tcode{matrix_2d}.
@@ -17,20 +17,20 @@ It has a Wrap Mode of type \tcode{wrap_mode}, a Filter of type \tcode{filter}, a
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class brush_props {
   public:
-    // \ref{brushprops.cons}, constructors:
+    // \ref{\iotwod.brushprops.cons}, constructors:
     constexpr brush_props(
       experimental::io2d::filter fi = experimental::io2d::filter::good,
       experimental::io2d::wrap_mode w = experimental::io2d::wrap_mode::none,
       experimental::io2d::fill_rule fr = experimental::io2d::fill_rule::winding,
       matrix_2d m = matrix_2d{}) noexcept;
 
-    // \ref{brushprops.modifiers}, modifiers:
+    // \ref{\iotwod.brushprops.modifiers}, modifiers:
     constexpr void filter(experimental::io2d::filter fi) noexcept;
     constexpr void wrap_mode(experimental::io2d::wrap_mode w) noexcept;
     constexpr void fill_rule(experimental::io2d::fill_rule fr) noexcept;
     constexpr void brush_matrix(const matrix_2d& m) noexcept;
 
-    // \ref{brushprops.observers}, observers:
+    // \ref{\iotwod.brushprops.observers}, observers:
     constexpr experimental::io2d::filter filter() const noexcept;
     constexpr experimental::io2d::wrap_mode wrap_mode() const noexcept;
     constexpr experimental::io2d::fill_rule fill_rule() const noexcept;
@@ -39,7 +39,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 }}}}
 \end{codeblock}
 
-\rSec1 [brushprops.cons] {\tcode{brush_props} constructors}
+\rSec1 [\iotwod.brushprops.cons] {\tcode{brush_props} constructors}
 
 \indexlibrary{\idxcode{brush_props}!constructor}
 \begin{itemdecl}
@@ -68,7 +68,7 @@ The value of Fill Rule is \tcode{fr}.
 The value of Brush Matrix is \tcode{m}.
 \end{itemdescr}
 
-\rSec1 [brushprops.modifiers] {\tcode{brush_props} modifiers}
+\rSec1 [\iotwod.brushprops.modifiers] {\tcode{brush_props} modifiers}
 
 \indexlibrary{\idxcode{brush_props}!\idxcode{wrap_mode}}
 \begin{itemdecl}
@@ -114,7 +114,7 @@ constexpr void brush_matrix(const matrix_2d& m) noexcept;
 The value of Brush Matrix is \tcode{m}.
 \end{itemdescr}
 
-\rSec1 [brushprops.observers] {\tcode{brush_props} observers}
+\rSec1 [\iotwod.brushprops.observers] {\tcode{brush_props} observers}
 
 \indexlibrary{\idxcode{brush_props}!\idxcode{wrap_mode}}
 \begin{itemdecl}

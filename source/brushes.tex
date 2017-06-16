@@ -1,8 +1,8 @@
 %!TEX root = io2d.tex
 
-\rSec0 [brushes] {Brushes}
+\rSec0 [\iotwod.brushes] {Brushes}
 
-\rSec1 [brushes.intro] {Overview of brushes}
+\rSec1 [\iotwod.brushes.intro] {Overview of brushes}
 
 \pnum
 Brushes contain visual data and serve as sources of visual data for rendering and composing operations.
@@ -25,23 +25,23 @@ While copy and move operations along with a swap operation can change the visual
 \end{note}
 
 \pnum
-A brush is used either as a Source Brush or a Mask Brush (\ref{surface.rendering.brushes}).
+A brush is used either as a Source Brush or a Mask Brush (\ref{\iotwod.surface.rendering.brushes}).
 
 \pnum
 When a brush is used in a rendering and composing operation, if it is used as a Source Brush, it has a \tcode{brush_props} object that describes how the brush is interpreted for purposes of sampling. If it is used as a Mask Brush, it has a \tcode{mask_props} object that describes how the brush is interpreted for purposes of sampling.
 
 \pnum
-The \tcode{brush_props} and \tcode{mask_props} classes both have a Wrap Mode, Filter and Matrix (\ref{\iotwod.brushprops.summary} and \ref{maskprops.summary}). Where necessary, these shall be referenced using those terms without regard to whether the brush is being used as a Source Brush or a Mask Brush.
+The \tcode{brush_props} and \tcode{mask_props} classes both have a Wrap Mode, Filter and Matrix (\ref{\iotwod.brushprops.summary} and \ref{\iotwod.maskprops.summary}). Where necessary, these shall be referenced using those terms without regard to whether the brush is being used as a Source Brush or a Mask Brush.
 
 
 %\pnum
 %A brush has its own coordinate space.
 %
 %\pnum
-%If it is being used as a Source Brush, it is the Brush Coordinate Space (\ref{surface.coordinatespaces}).
+%If it is being used as a Source Brush, it is the Brush Coordinate Space (\ref{\iotwod.surface.coordinatespaces}).
 %
 %\pnum
-%If it is being used as a Mask Brush, it is the Mask Coordinate Space (\ref{surface.coordinatespaces}).
+%If it is being used as a Mask Brush, it is the Mask Coordinate Space (\ref{\iotwod.surface.coordinatespaces}).
 %
 %\pnum
 %It possesses a \tcode{filter} value and a \tcode{wrap_mode} value, which combine to determine the visual data value returned when a composing operation samples a brush.
@@ -56,7 +56,7 @@ The \tcode{brush_props} and \tcode{mask_props} classes both have a Wrap Mode, Fi
 Solid color brushes are unbounded and as such always produce the same visual data when sampled from, regardless of the requested point.
 
 \pnum
-Linear gradient and radial gradient brushes share similarities with each other that are not shared by the other types of brushes. This is discussed in more detail elsewhere (\ref{gradients}).
+Linear gradient and radial gradient brushes share similarities with each other that are not shared by the other types of brushes. This is discussed in more detail elsewhere (\ref{\iotwod.gradients}).
 
 \pnum
 Surface brushes are constructed from an \tcode{image_surface} object. Their visual data is a pixmap, which has implications on sampling from the brush that are not present in the other brush types.

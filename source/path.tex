@@ -1,9 +1,9 @@
 %!TEX root = io2d.tex
-\rSec0 [pathgroup] {Class \tcode{path_group}}
+\rSec0 [\iotwod.pathgroup] {Class \tcode{path_group}}
 
 \pnum
 \indexlibrary{\idxcode{path_group}}
-The class \tcode{path_group} contains the data that results from interpreting \ref{paths.interpretation} a sequence of \tcode{path_data::path_item} objects. %%in a \tcode{path_builder} object or in another container of path items.
+The class \tcode{path_group} contains the data that results from interpreting \ref{\iotwod.paths.interpretation} a sequence of \tcode{path_data::path_item} objects. %%in a \tcode{path_builder} object or in another container of path items.
 
 \pnum
 A \tcode{path_group} object is used by most rendering and composing operations.
@@ -22,13 +22,13 @@ The contents of a \tcode{path_group} object are immutable, however the contents 
 %\pnum
 %A \tcode{path_group} object shall be usable with any \tcode{surface} or \tcode{surface}-derived object.
 %
-\rSec1 [pathgroup.synopsis] {\tcode{path_group} synopsis}
+\rSec1 [\iotwod.pathgroup.synopsis] {\tcode{path_group} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class path_group {
     public:
-    // \ref{pathgroup.cons}, construct/copy/destroy:
+    // \ref{\iotwod.pathgroup.cons}, construct/copy/destroy:
     explicit path_group(const path_builder& pb);
     template <class ForwardIterator>
     path_group(ForwardIterator first, ForwardIterator last);
@@ -36,7 +36,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [pathgroup.cons] {\tcode{path_group} constructors}
+\rSec1 [\iotwod.pathgroup.cons] {\tcode{path_group} constructors}
 
 \indexlibrary{\idxcode{path_group}!constructor}
 \begin{itemdecl}
@@ -57,7 +57,7 @@ Equivalent to: \tcode{path_group\{ begin(pb), end(pb) \};}.
 	\pnum
 	\effects
 	Constructs an object of type \tcode{path_group}.
-	% When a \tcode{path_group} object is used by a \tcode{surface}-derived object, it shall produce the same result as-if its contents were constructed by processing the \tcode{path_builder} object as specified at \ref{paths.processing}.
+	% When a \tcode{path_group} object is used by a \tcode{surface}-derived object, it shall produce the same result as-if its contents were constructed by processing the \tcode{path_builder} object as specified at \ref{\iotwod.paths.processing}.
 
 	\pnum
 	\throws

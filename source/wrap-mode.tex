@@ -1,11 +1,11 @@
 %!TEX root = io2d.tex
-\rSec0 [wrapmode] {Enum class \tcode{wrap_mode}}
+\rSec0 [\iotwod.wrapmode] {Enum class \tcode{wrap_mode}}
 
-\rSec1 [wrapmode.summary] {\tcode{wrap_mode} Summary}
+\rSec1 [\iotwod.wrapmode.summary] {\tcode{wrap_mode} Summary}
 
 \pnum
 The \tcode{wrap_mode} enum class describes how a point's visual data is 
-determined if it is outside the bounds of the Source Brush (\ref{surface.rendering.brushes}) when sampling.
+determined if it is outside the bounds of the Source Brush (\ref{\iotwod.surface.rendering.brushes}) when sampling.
 
 \pnum
 Depending on the Source Brush's \tcode{filter} value, the visual data of several points may be required to determine the appropriate visual data value for the point that is being sampled. In this case, each point shall be sampled according to the Source Brush's \tcode{wrap_mode} value with two exceptions:
@@ -18,9 +18,9 @@ Depending on the Source Brush's \tcode{filter} value, the visual data of several
 If a point to be sampled does not have a defined visual data element and the search for the nearest point with defined visual data produces two or more points with defined visual data that are equidistant from the point to be sampled, the returned visual data shall be an \unspecnorm value which is the visual data of one of those equidistant points. Where possible, implementations should choose the among the equidistant points that have an \xaxis value and a \yaxis value that is nearest to \tcode{0.0}.
 
 \pnum
-See Table~\ref{tab:wrap_mode.meanings} for the meaning of each \tcode{wrap_mode} enumerator.
+See Table~\ref{tab:\iotwod.wrap_mode.meanings} for the meaning of each \tcode{wrap_mode} enumerator.
 
-\rSec1 [wrapmode.synopsis] {\tcode{wrap_mode} Synopsis}
+\rSec1 [\iotwod.wrapmode.synopsis] {\tcode{wrap_mode} Synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
@@ -33,10 +33,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [wrapmode.enumerators] {\tcode{wrap_mode} Enumerators}
+\rSec1 [\iotwod.wrapmode.enumerators] {\tcode{wrap_mode} Enumerators}
 \begin{libreqtab2}
  {\tcode{wrap_mode} enumerator meanings}
- {tab:wrap_mode.meanings}
+ {tab:\iotwod.wrap_mode.meanings}
  \\ \topline
  \lhdr{Enumerator}
  & \rhdr{Meaning}

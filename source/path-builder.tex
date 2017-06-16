@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [pathbuilder] {Class \tcode{path_builder}}%
+\rSec0 [\iotwod.pathbuilder] {Class \tcode{path_builder}}
 
 \pnum
 \indexlibrary{\idxcode{path_builder}}%
@@ -11,7 +11,7 @@ A \tcode{path_builder} is a contiguous container. (See [container.requirements.g
 \pnum
 The collection of \tcode{path_data::path_item} objects in a path builder is referred to as its path group.
 
-\rSec1 [pathbuilder.synopsis] {\tcode{path_builder} synopsis}%
+\rSec1 [\iotwod.pathbuilder.synopsis] {\tcode{path_builder} synopsis}%
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
@@ -29,7 +29,7 @@ namespace std::experimental::io2d::v1 {
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
     
-    // \ref{pathbuilder.cons}, construct, copy, move, destroy:
+    // \ref{\iotwod.pathbuilder.cons}, construct, copy, move, destroy:
     path_builder() noexcept(noexcept(Allocator())) :
       path_builder(Allocator()) { }
     explicit path_builder(const Allocator&) noexcept;
@@ -58,7 +58,7 @@ namespace std::experimental::io2d::v1 {
     void assign(initializer_list<value_type>);
     allocator_type get_allocator() const noexcept;
     
-    // \ref{pathbuilder.iterators}, iterators:
+    // \ref{\iotwod.pathbuilder.iterators}, iterators:
     iterator begin() noexcept;
     const_iterator begin() const noexcept;
     const_iterator cbegin() const noexcept;
@@ -75,7 +75,7 @@ namespace std::experimental::io2d::v1 {
     const_reverse_iterator rend() const noexcept;
     const_reverse_iterator crend() const noexcept;
     
-    // \ref{pathbuilder.capacity}, capacity
+    // \ref{\iotwod.pathbuilder.capacity}, capacity
     bool empty() const noexcept;
     size_type size() const noexcept;
     size_type max_size() const noexcept;
@@ -95,7 +95,7 @@ namespace std::experimental::io2d::v1 {
     reference back();
     const_reference back() const;
 
-    // \ref{pathbuilder.modifiers}, modifiers:
+    // \ref{\iotwod.pathbuilder.modifiers}, modifiers:
     void new_path(const vector_2d& pt) noexcept;
     void rel_new_path(const vector_2d& pt) noexcept;
     void close_path() noexcept;
@@ -145,19 +145,19 @@ namespace std::experimental::io2d::v1 {
   bool operator!=(const path_builder<Allocator>& lhs, 
     const path_builder<Allocator>& rhs);
   
-  // \ref{pathbuilder.special}, specialized algorithms:
+  // \ref{\iotwod.pathbuilder.special}, specialized algorithms:
   template <class Allocator>
   void swap(path_builder<Allocator>& lhs, path_builder<Allocator>& rhs)
     noexcept(noexcept(lhs.swap(rhs)));
 }
 \end{codeblock}
 
-\rSec1 [pathbuilder.containerrequirements] {\tcode{path_builder} container requirements}%
+\rSec1 [\iotwod.pathbuilder.containerrequirements] {\tcode{path_builder} container requirements}
 
 \pnum
 This class is a sequence container, as defined in [containers] in \cppseventeen, and all sequence container requirements that apply specifically to \tcode{vector} shall also apply to this class.
 
-\rSec1 [pathbuilder.cons] {\tcode{path_builder} constructors, copy, and assignment}%
+\rSec1 [\iotwod.pathbuilder.cons] {\tcode{path_builder} constructors, copy, and assignment}
 
 \indexlibrary{\idxcode{path_builder}!constructor}%
 \begin{itemdecl}
@@ -235,7 +235,7 @@ reallocations if they are just input iterators.
 
 \end{itemdescr}
 
-\rSec1 [pathbuilder.capacity] {\tcode{path_builder} capacity}%
+\rSec1 [\iotwod.pathbuilder.capacity] {\tcode{path_builder} capacity}%
 
 \indexlibrarymember{capacity}{path_builder}%
 \begin{itemdecl}
@@ -381,7 +381,7 @@ appends \tcode{sz - size()} copies of \tcode{c} to the sequence.
 If an exception is thrown there are no effects.
 \end{itemdescr}
 
-\rSec1 [pathbuilder.modifiers] {\tcode{path_builder} modifiers}%
+\rSec1 [\iotwod.pathbuilder.modifiers] {\tcode{path_builder} modifiers}
 
 \indexlibrarymember{path_builder}{new_path}%
 \begin{itemdecl}
@@ -598,7 +598,7 @@ constructor, assignment operator, or move assignment operator of
 \tcode{value_type}.
 \end{itemdescr}
 
-\rSec1 [pathbuilder.iterators] {\tcode{path_builder} iterators}
+\rSec1 [\iotwod.pathbuilder.iterators] {\tcode{path_builder} iterators}
 
 \indexlibrarymember{begin}{path_builder}%
 \indexlibrarymember{cbegin}{path_builder}%
@@ -614,7 +614,7 @@ An iterator referring to the first \tcode{path_data::path_item} item in the path
 
 \pnum
 \remarks
-Changing a \tcode{path_data::path_item} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_item} object or of any subsequent \tcode{path_data::path_item} object in the path group produces undefined behavior when the path group is interpreted as described in \ref{paths.interpretation} unless all of the violations are fixed prior to such interpretation.
+Changing a \tcode{path_data::path_item} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_item} object or of any subsequent \tcode{path_data::path_item} object in the path group produces undefined behavior when the path group is interpreted as described in \ref{\iotwod.paths.interpretation} unless all of the violations are fixed prior to such interpretation.
 \end{itemdescr}
 
 \indexlibrarymember{end}{path_builder}%
@@ -631,7 +631,7 @@ An iterator which is the past-the-end value.
 
 \pnum
 \remarks
-Changing a \tcode{path_data::path_item} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_item} object or of any subsequent \tcode{path_data::path_item} object in the path group produces undefined behavior when the path group is interpreted as described in \ref{paths.interpretation} unless all of the violations are fixed prior to such interpretation.
+Changing a \tcode{path_data::path_item} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_item} object or of any subsequent \tcode{path_data::path_item} object in the path group produces undefined behavior when the path group is interpreted as described in \ref{\iotwod.paths.interpretation} unless all of the violations are fixed prior to such interpretation.
 \end{itemdescr}
 
 \indexlibrarymember{rbegin}{path_builder}%
@@ -648,7 +648,7 @@ An iterator which is semantically equivalent to \tcode{reverse_iterator(end)}.
 
 \pnum
 \remarks
-Changing a \tcode{path_data::path_item} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_item} object or of any subsequent \tcode{path_data::path_item} object in the path group produces undefined behavior when the path group is interpreted as described in \ref{paths.interpretation} all of the violations are fixed prior to such interpretation.
+Changing a \tcode{path_data::path_item} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_item} object or of any subsequent \tcode{path_data::path_item} object in the path group produces undefined behavior when the path group is interpreted as described in \ref{\iotwod.paths.interpretation} all of the violations are fixed prior to such interpretation.
 \end{itemdescr}
 
 \indexlibrarymember{rend}{path_builder}%
@@ -665,10 +665,10 @@ An iterator which is semantically equivalent to \tcode{reverse_iterator(begin)}.
 
 \pnum
 \remarks
-Changing a \tcode{path_data::path_item} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_item} object or of any subsequent \tcode{path_data::path_item} object in the path group produces undefined behavior when the path group is interpreted as described in \ref{paths.interpretation} unless all of the violations are fixed prior to such interpretation.
+Changing a \tcode{path_data::path_item} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_item} object or of any subsequent \tcode{path_data::path_item} object in the path group produces undefined behavior when the path group is interpreted as described in \ref{\iotwod.paths.interpretation} unless all of the violations are fixed prior to such interpretation.
 \end{itemdescr}
 
-\rSec1[pathbuilder.special] {\tcode{path_builder} specialized algorithms}%
+\rSec1[\iotwod.pathbuilder.special] {\tcode{path_builder} specialized algorithms}
 
 \indexlibrary{\idxcode{swap}!\idxcode{path_builder}}%
 \begin{itemdecl}

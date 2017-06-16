@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [absrectangle] {Class \tcode{abs_rectangle}}
+\rSec0 [\iotwod.absrectangle] {Class \tcode{abs_rectangle}}
 
 \pnum
 \indexlibrary{\idxcode{abs_rectangle}}
@@ -8,21 +8,21 @@ The class \tcode{abs_rectangle} describes a path instruction that adds a rectang
 \pnum
 It has an X coordinate of type \tcode{double}, a Y coordinate of type \tcode{double}, a Width of type \tcode{double}, and a Height of type \tcode{double}.
 
-\rSec1 [absrectangle.synopsis] {\tcode{abs_rectangle} synopsis}
+\rSec1 [\iotwod.absrectangle.synopsis] {\tcode{abs_rectangle} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   namespace path_data {
     class abs_rectangle {
     public:
-      // \ref{absrectangle.cons}, constructors:
+      // \ref{\iotwod.absrectangle.cons}, constructors:
       constexpr abs_rectangle() noexcept;
       constexpr abs_rectangle(double x, double y, double w, double h) noexcept;
       constexpr abs_rectangle(const vector_2d& tl, const vector_2d& br) 
         noexcept;
       constexpr abs_rectangle(const rectangle& r);
 
-      // \ref{absrectangle.modifiers}, modifiers:
+      // \ref{\iotwod.absrectangle.modifiers}, modifiers:
       constexpr void x(double value) noexcept;
       constexpr void y(double value) noexcept;
       constexpr void width(double value) noexcept;
@@ -32,7 +32,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       constexpr void top_left_bottom_right(const vector_2d& tl,
         const vector_2d& br) noexcept;
 
-      // \ref{absrectangle.observers}, observers:
+      // \ref{\iotwod.absrectangle.observers}, observers:
       constexpr double x() const noexcept;
       constexpr double y() const noexcept;
       constexpr double width() const noexcept;
@@ -48,7 +48,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [absrectangle.cons] {\tcode{abs_rectangle} constructors}
+\rSec1 [\iotwod.absrectangle.cons] {\tcode{abs_rectangle} constructors}
 
 \indexlibrary{\idxcode{abs_rectangle}!constructor}
 \begin{itemdecl}
@@ -107,7 +107,7 @@ The Width shall be set to the value of \tcode{max(0.0, br.x() - tl.x())}.
 The Height shall be set to the value of \tcode{max(0.0, br.y() - tl.y())}.
 \end{itemdescr}
 
-\rSec1 [absrectangle.modifiers]{\tcode{abs_rectangle} modifiers}
+\rSec1 [\iotwod.absrectangle.modifiers]{\tcode{abs_rectangle} modifiers}
 
 \indexlibrary{\idxcode{abs_rectangle}!\idxcode{x}}
 \begin{itemdecl}
@@ -176,7 +176,7 @@ The Width shall be set to the value of \tcode{max(0.0, val.x() - *this.x())}.
 The Height shall be set to the value of \tcode{max(0.0, value.y() - *this.y())}.
 \end{itemdescr}
 
-\rSec1 [absrectangle.observers]{\tcode{abs_rectangle} observers}
+\rSec1 [\iotwod.absrectangle.observers]{\tcode{abs_rectangle} observers}
 
 \indexlibrary{\idxcode{abs_rectangle}!\idxcode{x}}
 \begin{itemdecl}

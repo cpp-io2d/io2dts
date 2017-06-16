@@ -1,7 +1,7 @@
 %!TEX root = io2d.tex
-\rSec0 [displaysurface] {Class \tcode{display_surface}}
+\rSec0 [\iotwod.displaysurface] {Class \tcode{display_surface}}
 
-\rSec1 [displaysurface.intro] {\tcode{display_surface} Description}
+\rSec1 [\iotwod.displaysurface.intro] {\tcode{display_surface} Description}
 
 \pnum
 \indexlibrary{\idxcode{display_surface}}
@@ -11,7 +11,7 @@ The class \tcode{display_surface} derives from the \tcode{surface} class and pro
 The pixel data of the Display Buffer can never be accessed by the user except through a native handle, if one is provided. As such, its pixel format need not equate to any of the pixel formats described by the \tcode{experimental::io2d::format} enumerators. This is meant to give implementors more flexibility in trying to display the pixels of the Back Buffer in a way that is visually as close as possible to the colors of those pixels.
 
 \pnum
-The Draw Callback (Table~\ref{tab:displaysurface.state.listing}) is called by \tcode{display_surface::show} as required by the Refresh Rate and when otherwise needed by the implementation in order to update the pixel content of the Back Buffer.
+The Draw Callback (Table~\ref{tab:\iotwod.displaysurface.state.listing}) is called by \tcode{display_surface::show} as required by the Refresh Rate and when otherwise needed by the implementation in order to update the pixel content of the Back Buffer.
 
 \pnum
 After each execution of the Draw Callback, the contents of the Back Buffer are transferred using sampling with an \unspecnorm filter to the Display Buffer. The Display Buffer is then shown to the user via the \term{output device}.
@@ -21,13 +21,13 @@ The filter is \unspecnorm to allow implementations to achieve the best possible 
 In the absence of specialty hardware, implementers are encouraged to use a filter that is the equivalent of a nearest neighbor interpolation filter if no scaling is required and otherwise to use a filter that produces results that are at least as good as those that would be obtained by using a bilinear interpolation filter.
 \end{note}
 
-\rSec1 [displaysurface.synopsis] {\tcode{display_surface} synopsis}
+\rSec1 [\iotwod.displaysurface.synopsis] {\tcode{display_surface} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class display_surface : public surface {
   public:
-    // \ref{displaysurface.cons}, construct/copy/move/destroy:
+    // \ref{\iotwod.displaysurface.cons}, construct/copy/move/destroy:
     display_surface(display_surface&& other) noexcept;
     display_surface& operator=(display_surface&& other) noexcept;
     
@@ -59,7 +59,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     
     ~display_surface();
     
-    // \ref{displaysurface.modifiers}, modifiers:
+    // \ref{\iotwod.displaysurface.modifiers}, modifiers:
     void draw_callback(const function<void(display_surface& sfc)>& fn) noexcept;
     void size_change_callback(const function<void(display_surface& sfc)>& fn)
       noexcept;
@@ -87,7 +87,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     int begin_show();
     void end_show();
     
-    // \ref{displaysurface.observers}, observers:
+    // \ref{\iotwod.displaysurface.observers}, observers:
     experimental::io2d::format format() const noexcept;
     int width() const noexcept;
     int height() const noexcept;
@@ -109,7 +109,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [displaysurface.misc] {\tcode{display_surface} miscellaneous behavior}%
+\rSec1 [\iotwod.displaysurface.misc] {\tcode{display_surface} miscellaneous behavior}%
 
 \pnum
 What constitutes an output device is \impldefplain{output device}, with the sole constraint being that an output device must allow the user to see the dynamically-updated contents of the Display Buffer.
@@ -123,14 +123,14 @@ Implementations do not need to support the simultaneous existence of multiple \t
 \pnum
 All functions inherited from \tcode{surface} that affect its \underlyingsurface shall operate on the Back Buffer.
 
-\rSec1 [displaysurface.state] {\tcode{display_surface} state}
+\rSec1 [\iotwod.displaysurface.state] {\tcode{display_surface} state}
 
 \pnum
-Table~\ref{tab:displaysurface.state.listing} specifies the name, type, function, and default value for each item of a display surface's observable state.
+Table~\ref{tab:\iotwod.displaysurface.state.listing} specifies the name, type, function, and default value for each item of a display surface's observable state.
 
 \begin{libreqtab4b}
 	{Display surface observable state}
-	{tab:displaysurface.state.listing}
+	{tab:\iotwod.displaysurface.state.listing}
 	\\ \topline
 	\lhdr{Name}   &   \chdr{Type}  &   \chdr{Function}  &   \rhdr{Default value}       \\ \capsep
 	\endfirsthead
@@ -141,7 +141,7 @@ Table~\ref{tab:displaysurface.state.listing} specifies the name, type, function,
 	
 	\term{Letterbox Brush} &
 	\tcode{brush} &
-	This is the brush that shall be used as specified by \tcode{scaling::letterbox} (Table~\ref{tab:scaling.meanings}) &
+	This is the brush that shall be used as specified by \tcode{scaling::letterbox} (Table~\ref{tab:\iotwod.scaling.meanings}) &
 	\tcode{brush\{ \{ rgba_color::black() \} \}} \\ \rowsep
 	
 	\term{Letterbox Brush Props} &
@@ -216,7 +216,7 @@ Table~\ref{tab:displaysurface.state.listing} specifies the name, type, function,
 	\tcode{rectangle(}\br
 	\tcode{const display_surface\&,}\br
 	\tcode{bool\&)>}} &
-	If it exists, this function shall be called whenever the contents of the Back Buffer need to be copied to the Display Buffer. The function is called with the const reference to \tcode{display_surface} object and a reference to a \tcode{bool} variable which has the value \tcode{false}. If the value of the \tcode{bool} is \tcode{true} when the function returns, the Letterbox Brush shall be used as specified by \tcode{scaling::letterbox} (Table~\ref{tab:scaling.meanings}). The function shall return a \tcode{rectangle} object that defines the area within the Display Buffer to which the Back Buffer shall be transferred. The \tcode{rectangle} may include areas outside of the bounds of the Display Buffer, in which case only the area of the Back Buffer that lies within the bounds of the Display Buffer will ultimately be visible to the user &
+	If it exists, this function shall be called whenever the contents of the Back Buffer need to be copied to the Display Buffer. The function is called with the const reference to \tcode{display_surface} object and a reference to a \tcode{bool} variable which has the value \tcode{false}. If the value of the \tcode{bool} is \tcode{true} when the function returns, the Letterbox Brush shall be used as specified by \tcode{scaling::letterbox} (Table~\ref{tab:\iotwod.scaling.meanings}). The function shall return a \tcode{rectangle} object that defines the area within the Display Buffer to which the Back Buffer shall be transferred. The \tcode{rectangle} may include areas outside of the bounds of the Display Buffer, in which case only the area of the Back Buffer that lies within the bounds of the Display Buffer will ultimately be visible to the user &
 	\tcode{nullptr} \\ \rowsep
 	
 	\term{Auto Clear} &
@@ -231,11 +231,11 @@ Table~\ref{tab:displaysurface.state.listing} specifies the name, type, function,
 	
 	\term{Desired Frame Rate} &
 	\tcode{double} &
-	This value is the number of times the Draw Callback shall be called per second while \tcode{display_surface::show} is being executed when the value of Refresh Rate is \tcode{refresh_rate::fixed}, subject to the additional requirements documented in the meaning of \tcode{refresh_rate::fixed} (Table~\ref{tab:refreshrate.meanings}) \\ \rowsep
+	This value is the number of times the Draw Callback shall be called per second while \tcode{display_surface::show} is being executed when the value of Refresh Rate is \tcode{refresh_rate::fixed}, subject to the additional requirements documented in the meaning of \tcode{refresh_rate::fixed} (Table~\ref{tab:\iotwod.refreshrate.meanings}) \\ \rowsep
 	
 \end{libreqtab4b}
 
-\rSec1 [displaysurface.cons] {\tcode{display_surface} constructors and assignment operators}
+\rSec1 [\iotwod.displaysurface.cons] {\tcode{display_surface} constructors and assignment operators}
 
 \indexlibrary{\idxcode{display_surface}!constructor}
 \begin{itemdecl}
@@ -364,7 +364,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 Other errors, if any, produced by this function are \impldefplain{display_surface!constructor}.
 \end{itemdescr}
 
-\rSec1 [displaysurface.modifiers]{\tcode{display_surface} modifiers}
+\rSec1 [\iotwod.displaysurface.modifiers]{\tcode{display_surface} modifiers}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{draw_callback}}
 \indexlibrary{\idxcode{draw_callback}!\idxcode{display_surface}}
@@ -401,7 +401,7 @@ void width(int w, error_code& ec) noexcept;
 If the value of Draw Width is the same as \tcode{w}, this function does nothing.
 
 \pnum
-Otherwise, Draw Width is set as specified by Table~\ref{tab:displaysurface.state.listing} with \tcode{w} treated as being the preferred Draw Width.
+Otherwise, Draw Width is set as specified by Table~\ref{tab:\iotwod.displaysurface.state.listing} with \tcode{w} treated as being the preferred Draw Width.
 
 \pnum
 If the value of Draw Width changes as a result, the implementation shall attempt to create a new Back Buffer with the updated dimensions while retaining the existing Back Buffer. The implementation may destroy the existing Back Buffer prior to creating a new Back Buffer with the updated dimensions only if it can guarantee that in doing so it will either succeed in creating the new Back Buffer or will be able to create a Back Buffer with the previous dimensions in the event of failure.
@@ -442,7 +442,7 @@ void height(int h, error_code& ec) noexcept;
 If the value of Draw Height is the same as \tcode{h}, this function does nothing.
 
 \pnum
-Otherwise, Draw Height is set as specified by Table~\ref{tab:displaysurface.state.listing} with \tcode{h} treated as being the preferred Draw Height.
+Otherwise, Draw Height is set as specified by Table~\ref{tab:\iotwod.displaysurface.state.listing} with \tcode{h} treated as being the preferred Draw Height.
 
 \pnum
 If the value of Draw Height changes as a result, the implementation shall attempt to create a new Back Buffer with the updated dimensions while retaining the existing Back Buffer. The implementation may destroy the existing Back Buffer prior to creating a new Back Buffer with the updated dimensions only if it can guarantee that in doing so it will either succeed in creating the new Back Buffer or will be able to create a Back Buffer with the previous dimensions in the event of failure.
@@ -483,7 +483,7 @@ void display_width(int w, error_code& ec) noexcept;
 If the value of Display Width is the same as \tcode{w}, this function does nothing.
 
 \pnum
-Otherwise, Display Width is set as specified by Table~\ref{tab:displaysurface.state.listing} with \tcode{w} treated as being the preferred Display Width.
+Otherwise, Display Width is set as specified by Table~\ref{tab:\iotwod.displaysurface.state.listing} with \tcode{w} treated as being the preferred Display Width.
 
 \pnum
 If the value of Display Width changes as a result, the implementation shall attempt to create a new Display Buffer with the updated dimensions while retaining the existing Display Buffer. The implementation may destroy the existing Display Buffer prior to creating a new Display Buffer with the updated dimensions only if it can guarantee that in doing so it will either succeed in creating the new Display Buffer or will be able to create a Display Buffer with the previous dimensions in the event of failure.
@@ -524,7 +524,7 @@ void display_height(int h, error_code& ec) noexcept;
 If the value of Display Height is the same as \tcode{h}, this function does nothing.
 
 \pnum
-Otherwise, Display Height is set as specified by Table~\ref{tab:displaysurface.state.listing} with \tcode{h} treated as being the preferred Display Height.
+Otherwise, Display Height is set as specified by Table~\ref{tab:\iotwod.displaysurface.state.listing} with \tcode{h} treated as being the preferred Display Height.
 
 \pnum
 If the value of Display Height changes as a result, the implementation shall attempt to create a new Display Buffer with the updated dimensions while retaining the existing Display Buffer. The implementation may destroy the existing Display Buffer prior to creating a new Display Buffer with the updated dimensions only if it can guarantee that in doing so it will either succeed in creating the new Display Buffer or will be able to create a Display Buffer with the previous dimensions in the event of failure.
@@ -565,7 +565,7 @@ void dimensions(int w, int h, error_code& ec) noexcept;
 If the value of Draw Width is the same as \tcode{w} and the value of Draw Height is the same as \tcode{h}, this function does nothing.
 
 \pnum
-Otherwise, Draw Width is set as specified by Table~\ref{tab:displaysurface.state.listing} with \tcode{w} treated as being the preferred Draw Width and Draw Height is set as specified by Table~\ref{tab:displaysurface.state.listing} with \tcode{h} treated as being the preferred Draw Height.
+Otherwise, Draw Width is set as specified by Table~\ref{tab:\iotwod.displaysurface.state.listing} with \tcode{w} treated as being the preferred Draw Width and Draw Height is set as specified by Table~\ref{tab:\iotwod.displaysurface.state.listing} with \tcode{h} treated as being the preferred Draw Height.
 
 \pnum
 If the value of Draw Width changes as a result or the value of Draw Height changes as a result, the implementation shall attempt to create a new Back Buffer with the updated dimensions while retaining the existing Back Buffer. The implementation may destroy the existing Back Buffer prior to creating a new Back Buffer with the updated dimensions only if it can guarantee that in doing so it will either succeed in creating the new Back Buffer or will be able to create a Back Buffer with the previous dimensions in the event of failure.
@@ -606,7 +606,7 @@ void display_dimensions(int dw, int dh, error_code& ec) noexcept;
 If the value of Display Width is the same as \tcode{w} and the value of Display Height is the same as \tcode{h}, this function does nothing.
 
 \pnum
-Otherwise, Display Width is set as specified by Table~\ref{tab:displaysurface.state.listing} with \tcode{w} treated as being the preferred Display Height and Display Height is set as specified by Table~\ref{tab:displaysurface.state.listing} with \tcode{h} treated as being the preferred Display Height.
+Otherwise, Display Width is set as specified by Table~\ref{tab:\iotwod.displaysurface.state.listing} with \tcode{w} treated as being the preferred Display Height and Display Height is set as specified by Table~\ref{tab:\iotwod.displaysurface.state.listing} with \tcode{h} treated as being the preferred Display Height.
 
 \pnum
 If the value of Display Width or the value of Display Height changes as a result, the implementation shall attempt to create a new Display Buffer with the updated dimensions while retaining the existing Display Buffer. The implementation may destroy the existing Display Buffer prior to creating a new Display Buffer with the updated dimensions only if it can guarantee that in doing so it will either succeed in creating the new Display Buffer or will be able to create a Display Buffer with the previous dimensions in the event of failure.
@@ -806,7 +806,7 @@ If possible, any procedures that the host environment requires in order to cause
 The \tcode{display_surface::begin_show} function's loop continues execution until it returns.
 \end{itemdescr}
 
-\rSec1 [displaysurface.observers]{\tcode{display_surface} observers}
+\rSec1 [\iotwod.displaysurface.observers]{\tcode{display_surface} observers}
 
 \indexlibrary{\idxcode{display_surface}!\idxcode{format}}
 \indexlibrary{\idxcode{format}!\idxcode{display_surface}}

@@ -1,7 +1,7 @@
 %!TEX root = io2d.tex
-\rSec0 [imagesurface] {Class \tcode{image_surface}}
+\rSec0 [\iotwod.imagesurface] {Class \tcode{image_surface}}
 
-\rSec1 [imagesurface.summary] {\tcode{image_surface} summary}
+\rSec1 [\iotwod.imagesurface.summary] {\tcode{image_surface} summary}
 
 \pnum
 \indexlibrary{\idxcode{image_surface}}
@@ -12,22 +12,22 @@ The class \tcode{image_surface} derives from the \tcode{surface} class and provi
 Because of the functionality it provides and what it can be used for, it is expected that developers familiar with other graphics technologies will think of the \tcode{image_surface} class as being a form of \term{render target}. This is intentional, though this \documenttypename{} does not formally define or use that term to avoid any minor ambiguities and differences in its meaning between the various graphics technologies that do use the term render target.
 \end{note}
 
-\rSec1 [imagesurface.synopsis] {\tcode{image_surface} synopsis}
+\rSec1 [\iotwod.imagesurface.synopsis] {\tcode{image_surface} synopsis}
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   class image_surface : public surface {
   public:
-    // \ref{imagesurface.cons}, construct/copy/move/destroy:
+    // \ref{\iotwod.imagesurface.cons}, construct/copy/move/destroy:
     image_surface() = delete;
     image_surface(experimental::io2d::format fmt, int width, int height);
     image_surface(filesystem::path f, image_file_format i, 
       experimental::io2d::format fmt);
     
-    // \ref{imagesurface.members}, members:
+    // \ref{\iotwod.imagesurface.members}, members:
     void save(filesystem::path p, image_file_format i);
     
-    // \ref{imagesurface.observers}, observers:
+    // \ref{\iotwod.imagesurface.observers}, observers:
     experimental::io2d::format format() const noexcept;
     int width() const noexcept;
     int height() const noexcept;
@@ -35,7 +35,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [imagesurface.cons] {\tcode{image_surface} constructors and assignment operators}
+\rSec1 [\iotwod.imagesurface.cons] {\tcode{image_surface} constructors and assignment operators}
 
 \indexlibrary{\idxcode{image_surface}!constructor}
 \begin{itemdecl}
@@ -89,7 +89,7 @@ The resulting uncompressed raster graphics data is then transformed into the dat
 
 \pnum
 \throws
-As specified in Error reporting [fs.err.report] in \cppseventeen.
+As specified in Error reporting [\iotwod.fs.err.report] in \cppseventeen.
 
 \pnum
 \errors
@@ -99,7 +99,7 @@ Any error that could result from trying to access \tcode{f}, open \tcode{f} for 
 Other errors, if any, produced by this function are \impldefplain{image_surface!data}.
 \end{itemdescr}
 
-\rSec1 [imagesurface.members] {\tcode{image_surface} members}
+\rSec1 [\iotwod.imagesurface.members] {\tcode{image_surface} members}
 
 \indexlibrary{\idxcode{image_surface}!\idxcode{save}}
 \begin{itemdecl}
@@ -115,14 +115,14 @@ If the file exists, it shall be writable. If the file does not exist, it shall b
 
 \pnum
 \effects
-Any pending rendering and composing operations (\ref{surface.rendering}) shall be performed.
+Any pending rendering and composing operations (\ref{\iotwod.surface.rendering}) shall be performed.
 
 \pnum
 The visual data of the \underlyingimagesurface is written to \tcode{p} in the data format specified by \tcode{i}.
 
 \pnum
 \throws
-As specified in Error reporting [fs.err.report] in \cppseventeen.
+As specified in Error reporting [\iotwod.fs.err.report] in \cppseventeen.
 
 \pnum
 \errors
@@ -132,7 +132,7 @@ Any error that could result from trying to create \tcode{f}, access \tcode{f}, o
 Other errors, if any, produced by this function are \impldefplain{image_surface!data}.
 \end{itemdescr}
 
-\rSec1 [imagesurface.observers] {\tcode{image_surface} observers}
+\rSec1 [\iotwod.imagesurface.observers] {\tcode{image_surface} observers}
 
 \indexlibrary{\idxcode{image_surface}!\idxcode{format}}
 \indexlibrary{\idxcode{format}!\idxcode{image_surface}}

@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [absnewpath] {Class \tcode{abs_new_path}}
+\rSec0 [\iotwod.absnewpath] {Class \tcode{abs_new_path}}
 
 \pnum
 \indexlibrary{\idxcode{abs_new_path}}%
@@ -11,25 +11,25 @@ It has an \term{at point} of type \tcode{vector_2d}.
 \pnum
 When interpreting a path group, the path's last-move-to-point and current point are set to the value of the at point.
 
-\rSec1 [absnewpath.synopsis] {\tcode{abs_new_path} synopsis}%
+\rSec1 [\iotwod.absnewpath.synopsis] {\tcode{abs_new_path} synopsis}%
 
 \begin{codeblock}
 namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   namespace path_data {
     class abs_new_path {
     public:
-      // \ref{absnewpath.cons}, construct:
+      // \ref{\iotwod.absnewpath.cons}, construct:
       constexpr abs_new_path() noexcept;
       constexpr explicit abs_new_path(const vector_2d& pt) noexcept;
 
-      // \ref{absnewpath.modifiers}, modifiers:
+      // \ref{\iotwod.absnewpath.modifiers}, modifiers:
       constexpr void at(const vector_2d& pt) noexcept;
 
-      // \ref{absnewpath.observers}, observers:
+      // \ref{\iotwod.absnewpath.observers}, observers:
       constexpr vector_2d at() const noexcept;
     };
     
-    // \ref{absnewpath.nonmember}, non-members:
+    // \ref{\iotwod.absnewpath.nonmember}, non-members:
     constexpr bool operator==(const abs_new_path& lhs, const abs_new_path& rhs) 
       noexcept;
     constexpr bool operator!=(const abs_new_path& lhs, const abs_new_path& rhs) 
@@ -38,7 +38,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 } } } }
 \end{codeblock}
 
-\rSec1 [absnewpath.cons] {\tcode{abs_new_path} constructors}%
+\rSec1 [\iotwod.absnewpath.cons] {\tcode{abs_new_path} constructors}%
 
 \indexlibrary{\idxcode{abs_new_path}!constructor}%
 \begin{itemdecl}
@@ -63,7 +63,7 @@ Constructs an object of type \tcode{abs_new_path}.
 The at point is \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [absnewpath.modifiers]{\tcode{abs_new_path} modifiers}%
+\rSec1 [\iotwod.absnewpath.modifiers]{\tcode{abs_new_path} modifiers}%
 
 \indexlibrarymember{at}{abs_new_path}%
 \begin{itemdecl}
@@ -75,7 +75,7 @@ constexpr void at(const vector_2d& pt) noexcept;
 The at point is \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [absnewpath.observers]{\tcode{abs_new_path} observers}%
+\rSec1 [\iotwod.absnewpath.observers]{\tcode{abs_new_path} observers}%
 
 \indexlibrarymember{at}{abs_new_path}%
 \begin{itemdecl}
@@ -87,7 +87,7 @@ constexpr vector_2d at() const noexcept;
 The at point.
 \end{itemdescr}
 
-\rSec1 [absnewpath.nonmember]{Non-member functions}%
+\rSec1 [\iotwod.absnewpath.nonmember]{Non-member functions}%
 
 \indexlibrary{operator==}{abs_new_path}%
 \begin{itemdecl}

@@ -1,6 +1,6 @@
 %!TEX root = io2d.tex
 
-\rSec0 [paths.interpretation]{Path group interpretation}
+\rSec0 [\iotwod.paths.interpretation]{Path group interpretation}
 
 \pnum
 This subclause describes how to interpret a path group for use in a rendering and composing operation.
@@ -12,10 +12,10 @@ Interpreting a path group consists of evaluating a sequence of \tcode{path_data:
 Until a \tcode{path_data::path_item} object containing a \tcode{path_data::abs_new_path} object is evaluated, a path shall only contain \tcode{path_data::path_item} objects containing \tcode{path_data::abs_matrix} or \tcode{path_data::abs_origin} objects; no diagnostic is required.
 
 \pnum
-The interpretation of a path group requires the state data specified in Table~\ref{tab:paths.interpretation.state}.
+The interpretation of a path group requires the state data specified in Table~\ref{tab:\iotwod.paths.interpretation.state}.
 
 \begin{floattable}
-{Path group interpretation state data}{tab:paths.interpretation.state}{llll}
+{Path group interpretation state data}{tab:\iotwod.paths.interpretation.state}{llll}
 \hline
 \hdstyle{Name} &
 \hdstyle{Description} &
@@ -42,9 +42,9 @@ Matrix stack &
 \FloatBarrier
 
 \pnum
-The effects of a path item contained in a \tcode{path_data::path_item} object when that object is being evaluated during path group interpretation are described in \ref{tab:paths.interpretation.effects}.
+The effects of a path item contained in a \tcode{path_data::path_item} object when that object is being evaluated during path group interpretation are described in Table~\ref{tab:\iotwod.paths.interpretation.effects}.
 
-\begin{libreqtab2a} {Path item interpretation effects} {tab:paths.interpretation.effects}
+\begin{libreqtab2a} {Path item interpretation effects} {tab:\iotwod.paths.interpretation.effects}
 \\ \topline
 \lhdr{Path item} & \rhdr{Effects} \\ \capsep
 \endfirsthead
@@ -69,7 +69,7 @@ Calls \tcode{mtxStk.push(mtx)}. Sets \tcode{mtx} to \tcode{p.matrix()}. \\ \rows
 Calls \tcode{mtxStk.push(mtx)}. Sets \tcode{mtx} to \tcode{mtx * p.matrix()}. \\ \rowsep
 
 \tcode{path_data::revert_matrix p} &
-If \tcode{mtxStk.empty()} is \tcode{false}, sets \tcode{mtx} to \tcode{ognStk.top()} then calls \tcode{ognStk.pop()}. Otherwise sets \tcode{mtx} to its initial value as specified in Table~\ref{tab:paths.interpretation.state}. \\ \rowsep
+If \tcode{mtxStk.empty()} is \tcode{false}, sets \tcode{mtx} to \tcode{ognStk.top()} then calls \tcode{ognStk.pop()}. Otherwise sets \tcode{mtx} to its initial value as specified in Table~\ref{tab:\iotwod.paths.interpretation.state}. \\ \rowsep
 
 \tcode{path_data::abs_line p} &
 Let \tcode{pt} equal \tcode{mtx.transform_point(p.to() - currPt) + currPt}. Creates a line from \tcode{currPt} to \tcode{pt}. Sets \tcode{currPt} to \tcode{pt}. \\ \rowsep
@@ -100,5 +100,5 @@ Excluding \tcode{path_data::abs_matrix} objects, if any, the first path item in 
 
 \pnum
 \begin{note}
-The interpretation of all path items other than \tcode{path_data::abs_matrix} objects and \tcode{path_data::abs_new_path} objects requires that the current point (see: Table~\ref{tab:paths.interpretation.state}) has a value, and only a \tcode{path_data::abs_new_path} object establishes a value for the current point without needing an existing value for the current point.
+The interpretation of all path items other than \tcode{path_data::abs_matrix} objects and \tcode{path_data::abs_new_path} objects requires that the current point (see: Table~\ref{tab:\iotwod.paths.interpretation.state}) has a value, and only a \tcode{path_data::abs_new_path} object establishes a value for the current point without needing an existing value for the current point.
 \end{note}
