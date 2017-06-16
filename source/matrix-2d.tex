@@ -15,13 +15,13 @@ $
 ~[~[~M20~M21~M22~]~]$
 
 \pnum
-The value of M02 is \tcode{0.0}. The value of M12 is \tcode{0.0}. The value of M22 is \tcode{1.0}. None of the operations on a \tcode{matrix_2d} object can modify the values of M02, M12, and M22. As such they are not part of the observable state of a \tcode{matrix_2d} object.
+The value of M02 is \tcode{0.0f}. The value of M12 is \tcode{0.0f}. The value of M22 is \tcode{1.0f}. None of the operations on a \tcode{matrix_2d} object can modify the values of M02, M12, and M22. As such they are not part of the observable state of a \tcode{matrix_2d} object.
 
 \pnum
 The performance of any mathematical operation upon a \tcode{matrix_2d} shall be carried out as-if the omitted third column data members were present with the values prescribed in the previous paragraph.
 
 \pnum
-The values M00, M01, M10, M11, M20, M21 shall each be of type \tcode{double}.
+The values M00, M01, M10, M11, M20, M21 shall each be of type \tcode{float}.
 
 \rSec1 [\iotwod.\matrixtwod.synopsis] {\tcode{matrix_2d} synopsis}
 
@@ -31,41 +31,41 @@ namespace std::experimental::io2d::v1 {
   public:
     // \ref{\iotwod.\matrixtwod.cons}, construct:
     constexpr matrix_2d() noexcept;
-    constexpr matrix_2d(double v00, double v01, double v10, double v11,
-      double v20, double v21) noexcept;
+    constexpr matrix_2d(float v00, float v01, float v10, float v11,
+      float v20, float v21) noexcept;
     
     // \ref{\iotwod.\matrixtwod.staticfactories}, static factory functions:
     constexpr static matrix_2d init_translate(const vector_2d& value) noexcept;
     constexpr static matrix_2d init_scale(const vector_2d& value) noexcept;
-    static matrix_2d init_rotate(double radians) noexcept;
-    static matrix_2d init_reflect(double radians) noexcept;
-    constexpr static matrix_2d init_shear_x(double factor) noexcept;
-    constexpr static matrix_2d init_shear_y(double factor) noexcept;
+    static matrix_2d init_rotate(float radians) noexcept;
+    static matrix_2d init_reflect(float radians) noexcept;
+    constexpr static matrix_2d init_shear_x(float factor) noexcept;
+    constexpr static matrix_2d init_shear_y(float factor) noexcept;
     
     // \ref{\iotwod.\matrixtwod.modifiers}, modifiers:
-    constexpr void m00(double v) noexcept;
-    constexpr void m01(double v) noexcept;
-    constexpr void m10(double v) noexcept;
-    constexpr void m11(double v) noexcept;
-    constexpr void m20(double v) noexcept;
-    constexpr void m21(double v) noexcept;
+    constexpr void m00(float v) noexcept;
+    constexpr void m01(float v) noexcept;
+    constexpr void m10(float v) noexcept;
+    constexpr void m11(float v) noexcept;
+    constexpr void m20(float v) noexcept;
+    constexpr void m21(float v) noexcept;
     constexpr matrix_2d& translate(const vector_2d& v) noexcept;
     constexpr matrix_2d& scale(const vector_2d& v) noexcept;
-    matrix_2d& rotate(double radians) noexcept;
-    matrix_2d& reflect(double radians) noexcept;
-    constexpr matrix_2d& shear_x(double factor) noexcept;
-    constexpr matrix_2d& shear_y(double factor) noexcept;
+    matrix_2d& rotate(float radians) noexcept;
+    matrix_2d& reflect(float radians) noexcept;
+    constexpr matrix_2d& shear_x(float factor) noexcept;
+    constexpr matrix_2d& shear_y(float factor) noexcept;
     
     // \ref{\iotwod.\matrixtwod.observers}, observers:
-    constexpr double m00() const noexcept;
-    constexpr double m01() const noexcept;
-    constexpr double m10() const noexcept;
-    constexpr double m11() const noexcept;
-    constexpr double m20() const noexcept;
-    constexpr double m21() const noexcept;
+    constexpr float m00() const noexcept;
+    constexpr float m01() const noexcept;
+    constexpr float m10() const noexcept;
+    constexpr float m11() const noexcept;
+    constexpr float m20() const noexcept;
+    constexpr float m21() const noexcept;
     constexpr bool is_finite() const noexcept;
     constexpr bool is_invertible() const noexcept;
-    constexpr double determinant() const noexcept;
+    constexpr float determinant() const noexcept;
     constexpr matrix_2d inverse() const noexcept;
     constexpr vector_2d transform_point(const vector_2d& pt) const noexcept;
     
@@ -94,7 +94,7 @@ constexpr matrix_2d() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{matrix_2d\{ 1.0, 0.0, 0.0, 1.0, 0.0, 0.0 \}}.
+Equivalent to: \tcode{matrix_2d\{ 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f \}}.
 
 \pnum
 \begin{note}
@@ -104,8 +104,8 @@ The resulting matrix is the identity matrix.
 
 \indexlibrary{\idxcode{matrix_2d}!constructor}%
 \begin{itemdecl}
-constexpr matrix_2d(double v00, double v01, double v10, double v11,
-  double v20, double v21) noexcept;
+constexpr matrix_2d(float v00, float v01, float v10, float v11,
+  float v20, float v21) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -115,9 +115,9 @@ Constructs an object of type \tcode{matrix_2d}.
 \pnum
 As-if the resulting matrix was: \\
 $
-~[~[~v00~v01~0.0~]~] \\
-~[~[~v10~v11~0.0~]~] \\
-~[~[~v20~v21~1.0~]~]$
+~[~[~v00~v01~0.0f~]~] \\
+~[~[~v10~v11~0.0f~]~] \\
+~[~[~v20~v21~1.0f~]~]$
 
 \end{itemdescr}
 
@@ -131,7 +131,7 @@ constexpr static matrix_2d init_translate(const vector_2d& value) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{matrix(1.0, 0.0, 0.0, 1.0, value.x(), value.y())}.
+\tcode{matrix(1.0f, 0.0f, 0.0f, 1.0f, value.x(), value.y())}.
 \end{itemdescr}
 
 \indexlibrarymember{init_scale}{matrix_2d}%
@@ -141,58 +141,58 @@ constexpr static matrix_2d init_scale(const vector_2d& value) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{matrix(value.x(), 0.0, 0.0, value.y(), 0.0, 0.0)}.
+\tcode{matrix(value.x(), 0.0f, 0.0f, value.y(), 0.0f, 0.0f)}.
 \end{itemdescr}
 
 \indexlibrarymember{init_rotate}{matrix_2d}%
 \begin{itemdecl}
-static matrix_2d init_rotate(double radians) noexcept;
+static matrix_2d init_rotate(float radians) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
 \tcode{matrix(cos(radians), -sin(radians), sin(radians), cos(radians), 
-0.0, 0.0)}.
+0.0f, 0.0f)}.
 \end{itemdescr}
 
 \indexlibrarymember{init_reflect}{matrix_2d}%
 \begin{itemdecl}
-static matrix_2d init_reflect(double radians) noexcept;
+static matrix_2d init_reflect(float radians) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
 \begin{codeblock}
 \end{codeblock}
-matrix(cos(radians * 2.0), sin(radians * 2.0), sin(radians * 2.0),
-  -cos(radians * 2.0), 0.0, 0.0)
+matrix(cos(radians * 2.0f), sin(radians * 2.0f), sin(radians * 2.0f),
+  -cos(radians * 2.0f), 0.0f, 0.0f)
 \end{itemdescr}
 
 \indexlibrarymember{init_shear_y}{matrix_2d}%
 \begin{itemdecl}
-constexpr static matrix_2d init_shear_x(double factor) noexcept;
+constexpr static matrix_2d init_shear_x(float factor) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{matrix(1.0, 0.0, factor, 1.0, 0.0, 0.0)}.
+\tcode{matrix(1.0f, 0.0f, factor, 1.0f, 0.0f, 0.0f)}.
 \end{itemdescr}
 
 \indexlibrarymember{init_shear_y}{matrix_2d}%
 \begin{itemdecl}
-constexpr static matrix_2d init_shear_y(double factor) noexcept;
+constexpr static matrix_2d init_shear_y(float factor) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{matrix\{ 1.0, factor, 0.0, 1.0, 0.0, 0.0 \}}
+\tcode{matrix\{ 1.0f, factor, 0.0f, 1.0f, 0.0f, 0.0f \}}
 \end{itemdescr}
 
 \rSec1 [\iotwod.\matrixtwod.modifiers] {\tcode{matrix_2d} modifiers}
 
 \indexlibrarymember{m00}{matrix_2d}%
 \begin{itemdecl}
-constexpr void m00(double val) noexcept;
+constexpr void m00(float val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -202,7 +202,7 @@ M00 is \tcode{val}.
 
 \indexlibrarymember{m01}{matrix_2d}%
 \begin{itemdecl}
-constexpr void m01(double val) noexcept;
+constexpr void m01(float val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -212,7 +212,7 @@ M01 is \tcode{val}.
 
 \indexlibrarymember{m10}{matrix_2d}%
 \begin{itemdecl}
-constexpr void m10(double val) noexcept;
+constexpr void m10(float val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -222,7 +222,7 @@ M10 is \tcode{val}.
 
 \indexlibrarymember{m11}{matrix_2d}%
 \begin{itemdecl}
-constexpr void m11(double val) noexcept;
+constexpr void m11(float val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -232,7 +232,7 @@ M11 is \tcode{val}.
 
 \indexlibrarymember{m20}{matrix_2d}%
 \begin{itemdecl}
-constexpr void m20(double val) noexcept;
+constexpr void m20(float val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -242,7 +242,7 @@ M20 is \tcode{val}.
 
 \indexlibrarymember{m21}{matrix_2d}%
 \begin{itemdecl}
-constexpr void m21(double val) noexcept;
+constexpr void m21(float val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -280,7 +280,7 @@ Equivalent to: \tcode{*this = *this * init_scale(val);}
 
 \indexlibrarymember{rotate}{matrix_2d}%
 \begin{itemdecl}
-matrix_2d& rotate(double radians) noexcept;
+matrix_2d& rotate(float radians) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -294,7 +294,7 @@ Equivalent to: \tcode{*this = *this * init_rotate(radians);}
 
 \indexlibrarymember{reflect}{matrix_2d}%
 \begin{itemdecl}
-matrix_2d& reflect(double radians) noexcept;
+matrix_2d& reflect(float radians) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -308,7 +308,7 @@ Equivalent to: \tcode{*this = *this * init_reflect(radians);}
 
 \indexlibrarymember{shear_x}{matrix_2d}%
 \begin{itemdecl}
-constexpr matrix_2d& shear_x(double factor) noexcept;
+constexpr matrix_2d& shear_x(float factor) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -322,7 +322,7 @@ Equivalent to: \tcode{*this = *this * init_shear_x(factor);}
 
 \indexlibrarymember{shear_y}{matrix_2d}%
 \begin{itemdecl}
-constexpr matrix_2d& shear_y(double factor) noexcept;
+constexpr matrix_2d& shear_y(float factor) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -338,7 +338,7 @@ Equivalent to: \tcode{*this = *this * init_shear_y(factor);}
 
 \indexlibrarymember{m00}{matrix_2d}%
 \begin{itemdecl}
-constexpr double m00() const noexcept;
+constexpr float m00() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -348,7 +348,7 @@ M00.
 
 \indexlibrarymember{m01}{matrix_2d}%
 \begin{itemdecl}
-constexpr double m01() const noexcept;
+constexpr float m01() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -358,7 +358,7 @@ M01.
 
 \indexlibrarymember{m10}{matrix_2d}%
 \begin{itemdecl}
-constexpr double m10() const noexcept;
+constexpr float m10() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -368,7 +368,7 @@ M10.
 
 \indexlibrarymember{m11}{matrix_2d}%
 \begin{itemdecl}
-constexpr double m11() const noexcept;
+constexpr float m11() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -378,7 +378,7 @@ M11.
 
 \indexlibrarymember{m20}{matrix_2d}%
 \begin{itemdecl}
-constexpr double m20() const noexcept;
+constexpr float m20() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -388,7 +388,7 @@ M20.
 
 \indexlibrarymember{m21}{matrix_2d}%
 \begin{itemdecl}
-constexpr double m21() const noexcept;
+constexpr float m21() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -433,7 +433,7 @@ constexpr bool is_invertible() const noexcept;
 
 \pnum
 \returns
-\tcode{determinant() != 0.0}.
+\tcode{determinant() != 0.0f}.
 \end{itemdescr}
 
 \indexlibrarymember{inverse}{matrix_2d}%
@@ -447,14 +447,14 @@ constexpr matrix_2d inverse() const noexcept;
 
 \pnum
 \returns
-Let \tcode{inverseDeterminant} be \tcode{1.0 / determinant()}.
+Let \tcode{inverseDeterminant} be \tcode{1.0f / determinant()}.
 
 \begin{codeblock}
 return matrix_2d{
-   (_M11 * 1.0 - 0.0 * _M21) * inverseDeterminant,
-  -(_M01 * 1.0 - 0.0 * _M21) * inverseDeterminant,
-  -(_M10 * 1.0 - 0.0 * _M20) * inverseDeterminant,
-   (_M00 * 1.0 - 0.0 * _M20) * inverseDeterminant,
+   (_M11 * 1.0f - 0.0f * _M21) * inverseDeterminant,
+  -(_M01 * 1.0f - 0.0f * _M21) * inverseDeterminant,
+  -(_M10 * 1.0f - 0.0f * _M20) * inverseDeterminant,
+   (_M00 * 1.0f - 0.0f * _M20) * inverseDeterminant,
    (_M10 * _M21 - _M11 * _M20) * inverseDeterminant,
   -(_M00 * _M21 - _M01 * _M20) * inverseDeterminant
 };
@@ -463,7 +463,7 @@ return matrix_2d{
 
 \indexlibrarymember{determinant}{matrix_2d}%
 \begin{itemdecl}
-constexpr double determinant() const noexcept;
+constexpr float determinant() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

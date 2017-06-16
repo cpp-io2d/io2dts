@@ -8,7 +8,7 @@
 namespace std { namespace experimental {
   namespace io2d { inline namespace v1 {
 
-  using dashes = tuple<vector<double>, double>;
+  using dashes = tuple<vector<float>, float>;
 
   enum class fill_rule;
   enum class line_cap;
@@ -47,8 +47,8 @@ namespace std { namespace experimental {
   constexpr vector_2d operator-(const vector_2d& lhs) noexcept;
   constexpr vector_2d operator-(const vector_2d& lhs, const vector_2d& rhs) 
     noexcept;
-  constexpr vector_2d operator*(const vector_2d& lhs, double rhs) noexcept;
-  constexpr vector_2d operator*(double lhs, const vector_2d& rhs) noexcept;
+  constexpr vector_2d operator*(const vector_2d& lhs, float rhs) noexcept;
+  constexpr vector_2d operator*(float lhs, const vector_2d& rhs) noexcept;
 
   class matrix_2d;
   constexpr matrix_2d operator*(const matrix_2d& lhs, const matrix_2d& rhs) 
@@ -185,15 +185,15 @@ namespace std { namespace experimental {
   image_surface make_image_surface(format format, int width, int height, 
     error_code& ec) noexcept;
   image_surface make_image_surface(image_surface& sfc) noexcept;
-  double angle_for_point(const vector_2d& ctr, const vector_2d& pt,
-    const vector_2d& scl = vector_2d{ 1.0, 1.0 }) noexcept;
-  vector_2d point_for_angle(double ang, double mgn = 1.0) noexcept;
-  vector_2d point_for_angle(double ang, const vector_2d& rad) noexcept;
-  vector_2d arc_start(const vector_2d& ctr, double sang, const vector_2d& rad, 
+  float angle_for_point(const vector_2d& ctr, const vector_2d& pt,
+    const vector_2d& scl = vector_2d{ 1.0f, 1.0f }) noexcept;
+  vector_2d point_for_angle(float ang, float mgn = 1.0f) noexcept;
+  vector_2d point_for_angle(float ang, const vector_2d& rad) noexcept;
+  vector_2d arc_start(const vector_2d& ctr, float sang, const vector_2d& rad, 
     const matrix_2d& m = matrix_2d{}) noexcept;
-  vector_2d arc_center(const vector_2d& cpt, double sang, const vector_2d& rad, 
+  vector_2d arc_center(const vector_2d& cpt, float sang, const vector_2d& rad, 
     const matrix_2d& m = matrix_2d{}) noexcept;
-  vector_2d arc_end(const vector_2d& cpt, double eang, const vector_2d& rad, 
+  vector_2d arc_end(const vector_2d& cpt, float eang, const vector_2d& rad, 
     const matrix_2d& m = matrix_2d{}) noexcept;
 } } } }
 

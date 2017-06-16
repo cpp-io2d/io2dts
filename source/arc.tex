@@ -8,7 +8,7 @@
 The class \tcode{arc} describes a path item that adds an arc path segment to a path.
 
 \pnum
-It has a \term{radius} of type \tcode{vector_2d}, a \term{rotation} of type \tcode{double}, and a \term{start angle} of type \tcode{double}.
+It has a \term{radius} of type \tcode{vector_2d}, a \term{rotation} of type \tcode{float}, and a \term{start angle} of type \tcode{float}.
 
 \pnum
 The rotation and start angle are in radians. The arc begins at its start angle and ends at the angle that is rotation radians from the start angle.
@@ -34,17 +34,17 @@ namespace std::experimental::io2d::v1 {
       // \ref{\iotwod.arc.cons}, construct/copy/move/destroy:
       constexpr arc() noexcept;
       constexpr arc(const vector_2d& rad,
-        double rot, double sang) noexcept;
+        float rot, float sang) noexcept;
 
       // \ref{\iotwod.arc.modifiers}, modifiers:
       constexpr void radius(const vector_2d& rad) noexcept;
-      constexpr void rotation(double rot) noexcept;
-      constexpr void start_angle(double radians) noexcept;
+      constexpr void rotation(float rot) noexcept;
+      constexpr void start_angle(float radians) noexcept;
 
       // \ref{\iotwod.arc.observers}, observers:
       constexpr vector_2d radius() const noexcept;
-      constexpr double rotation() const noexcept;
-      constexpr double start_angle() const noexcept;
+      constexpr float rotation() const noexcept;
+      constexpr float start_angle() const noexcept;
       vector_2d center(const vector_2d& cpt, const matrix_2d& m = matrix_2d{}) 
         const noexcept;
       vector_2d end_pt(const vector_2d& cpt, const matrix_2d& m = matrix_2d{}) 
@@ -67,13 +67,13 @@ constexpr arc() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{arc\{ vector_2d(10.0, 10.0), pi<double>, pi<double> \};}.
+Equivalent to: \tcode{arc\{ vector_2d(10.0f, 10.0f), pi<float>, pi<float> \};}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{arc}!constructor}%
 \begin{itemdecl}
-constexpr arc(const vector_2d& rad, double rot,
-  double start_angle = pi<double>) noexcept;
+constexpr arc(const vector_2d& rad, float rot,
+  float start_angle = pi<float>) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -104,7 +104,7 @@ The radius is \tcode{rad}.
 
 \indexlibrarymember{rotation}{arc}%
 \begin{itemdecl}
-constexpr void rotation(double rot) noexcept;
+constexpr void rotation(float rot) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -114,7 +114,7 @@ The rotation is \tcode{rot}.
 
 \indexlibrarymember{start_angle}{arc}%
 \begin{itemdecl}
-constexpr void start_angle(double sang) noexcept;
+constexpr void start_angle(float sang) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -136,7 +136,7 @@ The radius.
 
 \indexlibrarymember{rotation}{arc}%
 \begin{itemdecl}
-constexpr double rotation() const noexcept;
+constexpr float rotation() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -146,7 +146,7 @@ The rotation.
 
 \indexlibrarymember{start_angle}{arc}%
 \begin{itemdecl}
-constexpr double start_angle() const noexcept;
+constexpr float start_angle() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -165,8 +165,8 @@ vector_2d center(const vector_2d& cpt, const matrix_2d& m = matrix_2d{})
 As-if:
 \begin{codeblock}
 auto lmtx = m;
-lmtx.m20(0.0); lmtx.m21(0.0); // Eliminate translation.
-auto centerOffset = point_for_angle(two_pi<double> - _Start_angle, _Radius);
+lmtx.m20(0.0f); lmtx.m21(0.0f); // Eliminate translation.
+auto centerOffset = point_for_angle(two_pi<float> - _Start_angle, _Radius);
 centerOffset.y(-centerOffset.y());
 return cpt - centerOffset * lmtx;
 \end{codeblock}
@@ -184,7 +184,7 @@ As-if:
 \begin{codeblock}
 auto lmtx = m;
 auto tfrm = matrix_2d::init_rotate(_Start_angle + _Rotation);
-lmtx.m20(0.0); lmtx.m21(0.0); // Eliminate translation.
+lmtx.m20(0.0f); lmtx.m21(0.0f); // Eliminate translation.
 auto pt = (_Radius * tfrm);
 pt.y(-pt.y());
 return cpt + pt * lmtx;

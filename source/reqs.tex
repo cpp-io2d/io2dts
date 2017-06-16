@@ -69,22 +69,22 @@ detection. Actual use of these members is inherently non-portable.
 \rSec1 [\iotwod.req.\iecfivefivenine] {IEC 559 floating point support}
 
 \pnum
-%In a conforming implementation, \tcode{numeric_limits<double>::is_iec559} evaluates to \tcode{true}.
+%In a conforming implementation, \tcode{numeric_limits<float>::is_iec559} evaluates to \tcode{true}.
 Certain requirements of this \documenttypename{} assume that 
-\tcode{numeric_limits<double>::is_iec559} evaluates to \tcode{true}.
+\tcode{numeric_limits<float>::is_iec559} evaluates to \tcode{true}.
 
 \pnum
-If \tcode{numeric_limits<double>::is_iec559} evaluates to \tcode{false}, the 
+If \tcode{numeric_limits<float>::is_iec559} evaluates to \tcode{false}, the 
 observable behavior of a well-formed program is \unspecnorm.
 \begin{note}
-An implementation in which \tcode{numeric_limits<double>::is_iec559} evaluates 
+An implementation in which \tcode{numeric_limits<float>::is_iec559} evaluates 
 to \tcode{false} should comply with the requirements of this \documenttypename 
 subject to any limitations resulting from 
-\tcode{numeric_limits<double>::is_iec559} evaluating to \tcode{false}.
+\tcode{numeric_limits<float>::is_iec559} evaluating to \tcode{false}.
 \end{note}
 %The 
-%behavior of these requirements is \impldefplain{\tcode{numeric_limits<double>::is_iec559} evaluates to \tcode{false}} 
-%if \tcode{numeric_limits<double>::is_iec559} evaluates to \tcode{false}.
+%behavior of these requirements is \impldefplain{\tcode{numeric_limits<float>::is_iec559} evaluates to \tcode{false}} 
+%if \tcode{numeric_limits<float>::is_iec559} evaluates to \tcode{false}.
 
 %\rSec1 [\iotwod.req.cstdintopttypes] {Exact width integer types}
 %

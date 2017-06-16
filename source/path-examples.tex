@@ -41,11 +41,11 @@ int main() {
 Example 1 consists of a single path, forming a trapezoid:
 
 \begin{codeblock}
-  pb.new_path({ 80.0, 20.0 }); // Begins the path.
-  pb.line({ 220.0, 20.0 }); // Creates a line from the [80, 20] to [220, 20].
-  pb.rel_line({ 60.0, 160.0 }); // Line from [220, 20] to
+  pb.new_path({ 80.0f, 20.0f }); // Begins the path.
+  pb.line({ 220.0f, 20.0f }); // Creates a line from the [80, 20] to [220, 20].
+  pb.rel_line({ 60.0f, 160.0f }); // Line from [220, 20] to
     // [220 + 60, 160 + 20]. The "to" point is relative to the starting point.
-  pb.rel_line({ -260.0, 0.0 }); // Line from [280, 180] to 
+  pb.rel_line({ -260.0f, 0.0f }); // Line from [280, 180] to 
     // [280 - 260, 180 + 0].
   pb.close_path(); // Creates a line from [20, 180] to [80, 20] 
     // (the last-move-to point), which makes this a closed path.
@@ -66,18 +66,18 @@ Example 1 consists of a single path, forming a trapezoid:
 Example 2 consists of two paths. The first is a rectangular open path (on the left) and the second is a rectangular closed path (on the right):
 
 \begin{codeblock}
-  pb.new_path({ 20.0, 20.0 }); // Begin the first path.
-  pb.rel_line({ 100.0, 0.0 });
-  pb.rel_line({ 0.0, 160.0 });
-  pb.rel_line({ -100.0, 0.0 });
-  pb.rel_line({ 0.0, -160.0 });
+  pb.new_path({ 20.0f, 20.0f }); // Begin the first path.
+  pb.rel_line({ 100.0f, 0.0f });
+  pb.rel_line({ 0.0f, 160.0f });
+  pb.rel_line({ -100.0f, 0.0f });
+  pb.rel_line({ 0.0f, -160.0f });
   
-  pb.new_path({ 180.0, 20.0 }); // End the first path and begin the second path.
-  pb.rel_line({ 100.0, 0.0 });
-  pb.rel_line({ 0.0, 160.0 });
-  pb.rel_line({ -100.0, 0.0 });
+  pb.new_path({ 180.0f, 20.0f }); // End the first path and begin the second path.
+  pb.rel_line({ 100.0f, 0.0f });
+  pb.rel_line({ 0.0f, 160.0f });
+  pb.rel_line({ -100.0f, 0.0f });
   pb.close_path(); // End the second path.
-  imgSfc.stroke(foreBrush, pb, nullopt, stroke_props{ 10.0 }, nullopt, alised);
+  imgSfc.stroke(foreBrush, pb, nullopt, stroke_props{ 10.0f }, nullopt, alised);
 \end{codeblock}
 
 \begin{importgraphiciotwod}
@@ -95,7 +95,7 @@ The resulting image from example 2 shows the difference between an open path and
 That difference between rendering as a \tcode{line_join} versus rendering as two \tcode{line_cap}s is what causes the notch to appear in the open path segment. Path segments are rendered such that half of the stroke width is rendered on each side of the point being evaluated. With no line cap, each segment begins and ends exactly at the point specified.
 
 \pnum
-So for the open path, the first line begins at \tcode{vector_2d\{ 20.0, 20.0 \}} and the last line ends there. Given the stroke width of \tcode{10.0}, the visible result for the first line is a rectangle with an upper left corner of \tcode{vector_2d\{ 20.0, 15.0 \}} and a lower right corner of \tcode{vector_2d\{ 120.0, 25.0 \}}. The last line appears as a rectangle with an upper left corner of \tcode{vector_2d\{ 15.0, 20.0 \}} and a lower right corner of \tcode{vector_2d\{ 25.0, 180.0 \}}. This produces the appearance of a square gap between \tcode{vector_2d\{ 15.0, 15.0 \}} and \tcode{vector_2d\{20.0, 20.0 \}}.
+So for the open path, the first line begins at \tcode{vector_2d\{ 20.0f, 20.0f \}} and the last line ends there. Given the stroke width of \tcode{10.0f}, the visible result for the first line is a rectangle with an upper left corner of \tcode{vector_2d\{ 20.0f, 15.0f \}} and a lower right corner of \tcode{vector_2d\{ 120.0f, 25.0f \}}. The last line appears as a rectangle with an upper left corner of \tcode{vector_2d\{ 15.0f, 20.0f \}} and a lower right corner of \tcode{vector_2d\{ 25.0f, 180.0f \}}. This produces the appearance of a square gap between \tcode{vector_2d\{ 15.0f, 15.0f \}} and \tcode{vector_2d\{20.0f, 20.0f \}}.
 
 \pnum
 For the closed path, adjusting for the coordinate differences, the rendering facts are the same as for the open path except for one key difference: the point where the first line and last line meet is rendered as a line join rather than two line caps, which, given the default value of \tcode{line_join::miter}, produces a miter, adding that square area to the rendering result.
@@ -106,17 +106,17 @@ For the closed path, adjusting for the coordinate differences, the rendering fac
 Example 3 demonstrates open and closed paths each containing either a quadratic curve or a cubic curve.
 
 \begin{codeblock}
-pb.new_path({ 20.0, 20.0 });
-pb.rel_quadratic_curve({ 60.0, 120.0 }, { 60.0, -120.0 });
-pb.rel_new_path({ 20.0, 0.0 });
-pb.rel_quadratic_curve({ 60.0, 120.0 }, { 60.0, -120.0 });
+pb.new_path({ 20.0f, 20.0f });
+pb.rel_quadratic_curve({ 60.0f, 120.0f }, { 60.0f, -120.0f });
+pb.rel_new_path({ 20.0f, 0.0f });
+pb.rel_quadratic_curve({ 60.0f, 120.0f }, { 60.0f, -120.0f });
 pb.close_path();
-pb.new_path({ 20.0, 150.0 });
-pb.rel_cubic_curve({ 40.0, -120.0 }, { 40.0, 120.0 * 2.0 },
-  { 40.0, -120.0 });
-pb.rel_new_path({ 20.0, 0.0 });
-pb.rel_cubic_curve({ 40.0, -120.0 }, { 40.0, 120.0 * 2.0 },
-  { 40.0, -120.0 });
+pb.new_path({ 20.0f, 150.0f });
+pb.rel_cubic_curve({ 40.0f, -120.0f }, { 40.0f, 120.0f * 2.0f },
+  { 40.0f, -120.0f });
+pb.rel_new_path({ 20.0f, 0.0f });
+pb.rel_cubic_curve({ 40.0f, -120.0f }, { 40.0f, 120.0f * 2.0f },
+  { 40.0f, -120.0f });
 pb.close_path();
 imgSfc.stroke(foreBrush, pb, nullopt, nullopt, nullopt, aliased);
 \end{codeblock}
@@ -131,7 +131,7 @@ imgSfc.stroke(foreBrush, pb, nullopt, nullopt, nullopt, aliased);
 
 \pnum
 \begin{note}
-\tcode{pb.quadratic_curve(\{ 80.0, 140.0 \}, \{ 140.0, 20.0 \});} would be the absolute equivalent of the first curve in example 3.
+\tcode{pb.quadratic_curve(\{ 80.0f, 140.0f \}, \{ 140.0f, 20.0f \});} would be the absolute equivalent of the first curve in example 3.
 \end{note}
 
 \rSec2 [\iotwod.paths.examples.four] {Example 4}
@@ -140,7 +140,7 @@ imgSfc.stroke(foreBrush, pb, nullopt, nullopt, nullopt, aliased);
 Example 4 shows how to draw "C++" using paths.
 
 \pnum
-For the "C", it is created using an arc. A scaling matrix is used to make it  slightly elliptical. It is also desirable that the arc has a fixed center point, \tcode{vector_2d\{ 85.0, 100.0 \}}. The inverse of the scaling matrix is used in combination with the \tcode{point_for_angle} function to determine the point at which the arc should begin in order to get achieve this fixed center point. The "C" is then stroked.
+For the "C", it is created using an arc. A scaling matrix is used to make it  slightly elliptical. It is also desirable that the arc has a fixed center point, \tcode{vector_2d\{ 85.0f, 100.0f \}}. The inverse of the scaling matrix is used in combination with the \tcode{point_for_angle} function to determine the point at which the arc should begin in order to get achieve this fixed center point. The "C" is then stroked.
 
 \pnum
 Unlike the "C", which is created using an open path that is stroked, each "+" is created using a closed path that is filled. To avoid filling the "C", \tcode{pb.clear();} is called to empty the container. The first "+" is created using a series of lines and is then filled.
@@ -150,32 +150,32 @@ Taking advantage of the fact that \tcode{path_builder} is a container, rather th
 
 \begin{codeblock}
 // Create the "C".
-const matrix_2d scl = matrix_2d::init_scale({ 0.9, 1.1 });
-auto pt = scl.inverse().transform_point({ 85.0, 100.0 }) +
-  point_for_angle(half_pi<double> / 2.0, 50.0);
+const matrix_2d scl = matrix_2d::init_scale({ 0.9f, 1.1f });
+auto pt = scl.inverse().transform_point({ 85.0f, 100.0f }) +
+  point_for_angle(half_pi<float> / 2.0f, 50.0f);
 pb.matrix(scl);
 pb.new_path(pt);
-pb.arc({ 50.0, 50.0 }, three_pi_over_two<double>, half_pi<double> / 2.0);
-imgSfc.stroke(foreBrush, pb, nullopt, stroke_props{ 10.0 });
+pb.arc({ 50.0f, 50.0f }, three_pi_over_two<float>, half_pi<float> / 2.0f);
+imgSfc.stroke(foreBrush, pb, nullopt, stroke_props{ 10.0f });
 // Create the first "+".
 pb.clear();
-pb.new_path({ 130.0, 105.0 });
-pb.rel_line({ 0.0, -10.0 });
-pb.rel_line({ 25.0, 0.0 });
-pb.rel_line({ 0.0, -25.0 });
-pb.rel_line({ 10.0, 0.0 });
-pb.rel_line({ 0.0, 25.0 });
-pb.rel_line({ 25.0, 0.0 });
-pb.rel_line({ 0.0, 10.0 });
-pb.rel_line({ -25.0, 0.0 });
-pb.rel_line({ 0.0, 25.0 });
-pb.rel_line({ -10.0, 0.0 });
-pb.rel_line({ 0.0, -25.0 });
+pb.new_path({ 130.0f, 105.0f });
+pb.rel_line({ 0.0f, -10.0f });
+pb.rel_line({ 25.0f, 0.0f });
+pb.rel_line({ 0.0f, -25.0f });
+pb.rel_line({ 10.0f, 0.0f });
+pb.rel_line({ 0.0f, 25.0f });
+pb.rel_line({ 25.0f, 0.0f });
+pb.rel_line({ 0.0f, 10.0f });
+pb.rel_line({ -25.0f, 0.0f });
+pb.rel_line({ 0.0f, 25.0f });
+pb.rel_line({ -10.0f, 0.0f });
+pb.rel_line({ 0.0f, -25.0f });
 pb.close_path();
 imgSfc.fill(foreBrush, pb);
 // Create the second "+".
 pb.insert(pb.begin(), path_data::change_matrix(
-  matrix_2d::init_translate({ 80.0, 0.0 })));
+  matrix_2d::init_translate({ 80.0f, 0.0f })));
 imgSfc.fill(foreBrush, pb);
 \end{codeblock}
 
@@ -194,16 +194,16 @@ imgSfc.fill(foreBrush, pb);
 %
 %\begin{codeblock}
 %brush blueBrush{ rgba_color::blue() };
-%stroke_props ten{ 10.0 };
-%pb.new_path({ 30.0, 30.0 });
-%pb.rel_line({ 105.0, 0.0 });
-%pb.rel_line({ 0.0, 140.0 });
-%pb.rel_line({ -105.0, 0.0 });
+%stroke_props ten{ 10.0f };
+%pb.new_path({ 30.0f, 30.0f });
+%pb.rel_line({ 105.0f, 0.0f });
+%pb.rel_line({ 0.0f, 140.0f });
+%pb.rel_line({ -105.0f, 0.0f });
 %pb.close_path();
 %imgSfc.stroke(foreBrush, pb, nullopt, ten);
 %imgSfc.fill(blueBrush, pb);
 %pb.insert(pb.begin(),
-%  path_data::change_matrix(matrix_2d::init_translate({ 135.0, 0.0 })));
+%  path_data::change_matrix(matrix_2d::init_translate({ 135.0f, 0.0f })));
 %imgSfc.fill(blueBrush, pb);
 %imgSfc.stroke(foreBrush, pb, nullopt, ten);
 %\end{codeblock}

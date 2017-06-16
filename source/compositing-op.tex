@@ -304,7 +304,7 @@ result, if the result color's alpha channel is zero then a division by zero
 would normally occur. Implementations shall not throw an exception nor  
 otherwise produce any observable error condition if the result color's alpha 
 channel is zero. Instead, implementations shall bypass the division by zero and 
-produce the result color (0.0, 0.0, 0.0, 0.0), i.e. \defnx{transparent 
+produce the result color (0, 0, 0, 0), i.e. \defnx{transparent 
 black}{color!transparent black}, if the result color alpha channel formula 
 evaluates to zero.
 \begin{note}
@@ -348,7 +348,7 @@ All of the blend enumerators and hsl enumerators have a Bound value of 'N/A'.
  & $f(Sc, Dc) = Sc + Dc - Sc \times Dc$
  \\
  \tcode{overlay}
- & $if (Dc \le 0.5)~\{\br
+ & $if (Dc \le 0.5f)~\{\br
  \hspace*{1em}f(Sc, Dc) = 2 \times Sc \times Dc\br
  \}\br
  else~\{\br
@@ -385,7 +385,7 @@ All of the blend enumerators and hsl enumerators have a Bound value of 'N/A'.
  \}$
  \\
  \tcode{hard_light}
- & $if~(Sc \le 0.5)~\{\br
+ & $if~(Sc \le 0.5f)~\{\br
  \hspace*{1em}f(Sc, Dc) = 2 \times Sc \times Dc\br
  \}\br
  else~\{\br

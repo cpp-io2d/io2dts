@@ -167,10 +167,9 @@ format with color and alpha where each color channel is normalized and then
 multiplied by the normalized alpha channel value
 \begin{example}
 Given the 32-bit non-premultiplied RGBA pixel with 8 bits per channel \{255, 0, 
-0, 127\} (half-transparent red), when normalized it would become \{1.0, 0.0, 
-0.0, 0.5\}. As such, in premultiplied, normalized format it would become \{0.5, 
-0.0, 0.0, 0.5\} as a result of multiplying each of the three color channels by 
-the alpha channel value.
+0, 127\} (half-transparent red), when normalized it would become \{1.0f, 0.0f, 
+0.0f, 0.5f\}. As such, in premultiplied, normalized format it would become 
+\{0.5f, 0.0f, 0.0f, 0.5f\} as a result of multiplying each of the three color channels by the alpha channel value.
 \end{example}
 
 \indexdefn{graphics state data}%

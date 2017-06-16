@@ -112,7 +112,7 @@ namespace std::experimental::io2d::v1 {
       const vector_2d& pt2) noexcept;
     void rel_cubic_curve(const vector_2d& dpt0, const vector_2d& dpt1,
       const vector_2d& dpt2) noexcept;
-    void arc(const vector_2d& rad, double rot, double sang = pi<double>)
+    void arc(const vector_2d& rad, float rot, float sang = pi<float>)
       noexcept;
     
     template <class... Args>
@@ -520,7 +520,7 @@ Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::re
 
 \indexlibrarymember{path_builder}{arc}%
 \begin{itemdecl}
-void arc(const vector_2d& rad, double rot, double sang) noexcept;
+void arc(const vector_2d& rad, float rot, float sang) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

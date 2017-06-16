@@ -6,13 +6,13 @@
 The class \tcode{rgba_color} describes a four channel color in premultiplied format.
 
 \pnum
-There are three color channels, red, green, and blue, each of which is a \tcode{double}.
+There are three color channels, red, green, and blue, each of which is a \tcode{float}.
 
 \pnum
-There is also an alpha channel, which is a \tcode{double}.
+There is also an alpha channel, which is a \tcode{float}.
 
 \pnum
-Legal values for each channel are in the range \crange{0.0}{1.0}.
+Legal values for each channel are in the range \crange{0.0f}{1.0f}.
 
 %\pnum
 %The type predefines a set of named colors, for which each channel is an unsigned normalized 8-bit integer.
@@ -27,19 +27,19 @@ namespace std::experimental::io2d::v1 {
     template <class T>
     constexpr rgba_color(T r, T g, T b, T a = static_cast<T>(0xFF)) noexcept;
     template <class U>
-    constexpr rgba_color(U r, U g, U b, U a = static_cast<U>(1.0)) noexcept;
+    constexpr rgba_color(U r, U g, U b, U a = static_cast<U>(1.0f)) noexcept;
   
     // \ref{\iotwod.rgbacolor.modifiers}, modifiers:
-    constexpr void r(double val) noexcept;
-    constexpr void g(double val) noexcept;
-    constexpr void b(double val) noexcept;
-    constexpr void a(double val) noexcept;
+    constexpr void r(float val) noexcept;
+    constexpr void g(float val) noexcept;
+    constexpr void b(float val) noexcept;
+    constexpr void a(float val) noexcept;
     
     // \ref{\iotwod.rgbacolor.observers}, observers:
-    constexpr double r() const noexcept;
-    constexpr double g() const noexcept;
-    constexpr double b() const noexcept;
-    constexpr double a() const noexcept;
+    constexpr float r() const noexcept;
+    constexpr float g() const noexcept;
+    constexpr float b() const noexcept;
+    constexpr float a() const noexcept;
     
     // \ref{\iotwod.rgbacolor.statics}, static member functions:
     static const rgba_color& alice_blue() noexcept;
@@ -209,7 +209,7 @@ constexpr rgba_color() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{rgba_color \{0.0, 0.0, 0.0. 0.0\};}.
+Equivalent to: \tcode{rgba_color \{0.0f, 0.0f, 0.0f. 0.0f\};}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rgba_color}!constructor}
@@ -240,22 +240,22 @@ This constructor shall not participate in overload resolution unless \tcode{is_i
 \indexlibrary{\idxcode{rgba_color}!constructor}
 \begin{itemdecl}
 template <class U>
-constexpr rgba_color(U r, U g, U b, U a = static_cast<U>(1.0)) noexcept;
+constexpr rgba_color(U r, U g, U b, U a = static_cast<U>(1.0f)) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{r >= 0.0} and \tcode{r <= 1.0} and \tcode{g >= 0.0} and \tcode{g <= 1.0} and \tcode{b >= 0.0} and \tcode{b <= 1.0} and \tcode{a >= 0.0} and \tcode{a <= 1.0}.
+\tcode{r >= 0.0f} and \tcode{r <= 1.0f} and \tcode{g >= 0.0f} and \tcode{g <= 1.0f} and \tcode{b >= 0.0f} and \tcode{b <= 1.0f} and \tcode{a >= 0.0f} and \tcode{a <= 1.0f}.
 
 \pnum
 \effects
 Constructs an object of type \tcode{rgba_color}.
 
 \begin{enumerate}
-\item The alpha channel shall be set to the value of \tcode{a / 255.0}.
-\item The red channel shall be set to \tcode{r / 255.0} multiplied by the value of  \tcode{a / 255.0}.
-\item The green channel shall be set to \tcode{g / 255.0} multiplied by the value of \tcode{a / 255.0}.
-\item The blue channel shall be set to \tcode{b / 255.0} multiplied by the value of \tcode{a / 255.0}.
+\item The alpha channel shall be set to the value of \tcode{a / 255.0f}.
+\item The red channel shall be set to \tcode{r / 255.0f} multiplied by the value of  \tcode{a / 255.0f}.
+\item The green channel shall be set to \tcode{g / 255.0f} multiplied by the value of \tcode{a / 255.0f}.
+\item The blue channel shall be set to \tcode{b / 255.0f} multiplied by the value of \tcode{a / 255.0f}.
 \end{enumerate}
 \end{itemdescr}
 
@@ -264,13 +264,13 @@ Constructs an object of type \tcode{rgba_color}.
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{r}}
 \begin{itemdecl}
-constexpr void r(double val) noexcept;
+constexpr void r(float val) noexcept;
 \end{itemdecl}
 
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{val >= 0.0} and \tcode{val <= 1.0}.
+\tcode{val >= 0.0f} and \tcode{val <= 1.0f}.
 
 \pnum
 \effects
@@ -279,12 +279,12 @@ The red channel shall be set to \tcode{val} multiplied by the value of  \tcode{a
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{g}}
 \begin{itemdecl}
-constexpr void g(double val) noexcept;
+constexpr void g(float val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{val >= 0.0} and \tcode{val <= 1.0}.
+\tcode{val >= 0.0f} and \tcode{val <= 1.0f}.
 
 \pnum
 \effects
@@ -293,12 +293,12 @@ The green channel shall be set to \tcode{val} multiplied by the value of  \tcode
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{b}}
 \begin{itemdecl}
-constexpr void b(double val) noexcept;
+constexpr void b(float val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{val >= 0.0} and \tcode{val <= 1.0}.
+\tcode{val >= 0.0f} and \tcode{val <= 1.0f}.
 
 \pnum
 \effects
@@ -307,12 +307,12 @@ The blue channel shall be set to \tcode{val} multiplied by the value of  \tcode{
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{a}}
 \begin{itemdecl}
-constexpr void a(double val) noexcept;
+constexpr void a(float val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{val >= 0.0} and \tcode{val <= 1.0}.
+\tcode{val >= 0.0f} and \tcode{val <= 1.0f}.
 
 \pnum
 \effects
@@ -328,7 +328,7 @@ constexpr void a(double val) noexcept;
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{r}}
 \begin{itemdecl}
-constexpr double r() const noexcept;
+constexpr float r() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -338,7 +338,7 @@ The value of the red channel.
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{g}}
 \begin{itemdecl}
-constexpr double g() const noexcept;
+constexpr float g() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -348,7 +348,7 @@ The value of the green channel.
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{b}}
 \begin{itemdecl}
-constexpr double b() const noexcept;
+constexpr float b() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -358,7 +358,7 @@ The value of the blue channel.
 
 \indexlibrary{\idxcode{rgba_color}!\idxcode{a}}
 \begin{itemdecl}
-constexpr double a() const noexcept;
+constexpr float a() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

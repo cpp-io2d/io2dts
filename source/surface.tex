@@ -329,11 +329,11 @@ The following rules shall apply when a Stroking operation is carried out on a pa
 
 \item If the path is a closed path, then the point where the end point of its final path segment meets the start point of the initial path segment shall be rendered as specified by the Line Join value; otherwise the start point of the initial path segment and end point of the final path segment shall each by rendered as specified by the Line Cap value. The remaining meetings between successive end points and start points shall be rendered as specified by the Line Join value.
 
-\item If the Dash Pattern has its default value or if its \tcode{vector<double>} member is empty, the path segments shall be rendered as a continuous path.
+\item If the Dash Pattern has its default value or if its \tcode{vector<float>} member is empty, the path segments shall be rendered as a continuous path.
 
-\item If the Dash Pattern's \tcode{vector<double>} member contains only one value, that value shall be used to define a repeating pattern in which the path is shown then hidden. The ends of each shown portion of the path shall be rendered as specified by the Line Cap value.
+\item If the Dash Pattern's \tcode{vector<float>} member contains only one value, that value shall be used to define a repeating pattern in which the path is shown then hidden. The ends of each shown portion of the path shall be rendered as specified by the Line Cap value.
 
-\item If the Dash Pattern's \tcode{vector<double>} member contains two or more values, the values shall be used to define a pattern in which the path is alternatively rendered then not rendered for the length specified by the value. The ends of each rendered portion of the path shall be rendered as specified by the Line Cap value. If the Dash Pattern's \tcode{double} member, which specifies an offset value, is not \tcode{0.0}, the meaning of its value is \impldefplain{Dash Pattern!offset value}. If a rendered portion of the path overlaps a not rendered portion of the path, the rendered portion shall be rendered.
+\item If the Dash Pattern's \tcode{vector<float>} member contains two or more values, the values shall be used to define a pattern in which the path is alternatively rendered then not rendered for the length specified by the value. The ends of each rendered portion of the path shall be rendered as specified by the Line Cap value. If the Dash Pattern's \tcode{float} member, which specifies an offset value, is not \tcode{0.0f}, the meaning of its value is \impldefplain{Dash Pattern!offset value}. If a rendered portion of the path overlaps a not rendered portion of the path, the rendered portion shall be rendered.
 \end{enumerate}
 
 \pnum
@@ -345,7 +345,7 @@ This concept is sometimes referred to as a tolerance. It allows for a balance be
 \pnum
 After all paths in the path group have been rendered but before the rendered result is composed to the \underlyingsurface, the rendered result shall be transformed from the User Coordinate Space (\ref{\iotwod.surface.coordinatespaces}) to the Surface Coordinate Space (\ref{\iotwod.surface.coordinatespaces}).
 \begin{example}
-If an open path consisting solely of a vertical line from \tcode{vector_2d(20.0, 20.0)} to \tcode{vector_2d(20.0, 60.0)} is to be composed to the \underlyingsurface, the Line Cap is \tcode{line_cap::none}, the Line Width is \tcode{12.0}, and the Transformation Matrix is \tcode{matrix_2d::init_scale(0.5, 1.0)}, then the line will end up being composed within the area \tcode{rectangle( \{ 7.0, 20.0 \}, \{ 13.0, 60.0 \} )} on the \underlyingsurface. The Transformation Matrix causes the center of the \xaxis of the line to move from \tcode{20.0} to \tcode{10.0} and then causes the horizontal width of the line to be reduced from \tcode{12.0} to \tcode{6.0}.
+If an open path consisting solely of a vertical line from \tcode{vector_2d(20.0f, 20.0f)} to \tcode{vector_2d(20.0f, 60.0f)} is to be composed to the \underlyingsurface, the Line Cap is \tcode{line_cap::none}, the Line Width is \tcode{12.0f}, and the Transformation Matrix is \tcode{matrix_2d::init_scale(0.5f, 1.0f)}, then the line will end up being composed within the area \tcode{rectangle( \{ 7.0f, 20.0f \}, \{ 13.0f, 60.0f \} )} on the \underlyingsurface. The Transformation Matrix causes the center of the \xaxis of the line to move from \tcode{20.0f} to \tcode{10.0f} and then causes the horizontal width of the line to be reduced from \tcode{12.0f} to \tcode{6.0f}.
 \end{example}
 
 \rSec1 [\iotwod.surface.masking] {\tcode{surface} masking}

@@ -8,7 +8,7 @@
 The class \tcode{color_stop} describes a color stop that is used by gradient brushes.
 
 \pnum
-It has an offset of type \tcode{double} and a color of type \tcode{rgba_color}.
+It has an offset of type \tcode{float} and a color of type \tcode{rgba_color}.
 
 \rSec2 [\iotwod.colorstops.colorstop.synopsis] {\tcode{color_stop} Synopsis}
 
@@ -17,14 +17,14 @@ namespace std::experimental::io2d::v1 {
   class color_stop {
   public:
   	// \ref{\iotwod.colorstops.colorstop.cons}, construct:
-    constexpr color_stop(double o, const rgba_color& c);
+    constexpr color_stop(float o, const rgba_color& c);
     
     // \ref{\iotwod.colorstops.colorstop.modifiers}, modifiers:
-    constexpr void offset(double val) noexcept;
+    constexpr void offset(float val) noexcept;
 	constexpr void color(const rgba_color& val) noexcept;
 	
     // \ref{\iotwod.colorstops.colorstop.observers}, observers:
-	constexpr double offset() const noexcept;
+	constexpr float offset() const noexcept;
 	constexpr rgba_color color() const noexcept;
   };
 }
@@ -34,7 +34,7 @@ namespace std::experimental::io2d::v1 {
 
 \indexlibrary{\idxcode{color_stop}!constructor}%
 \begin{itemdecl}
-constexpr color_stop(double o, const rgba_color& c) noexcept;
+constexpr color_stop(float o, const rgba_color& c) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -52,7 +52,7 @@ The color shall be set to the value of \tcode{c}.
 
 \indexlibrarymember{offset}{color_stop}%
 \begin{itemdecl}
-constexpr void offset(double val) noexcept;
+constexpr void offset(float val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -62,7 +62,7 @@ constexpr void offset(double val) noexcept;
 
 \indexlibrarymember{color}{color_stop}%
 \begin{itemdecl}
-constexpr void color(double val) noexcept;
+constexpr void color(float val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum
@@ -75,7 +75,7 @@ constexpr void color(double val) noexcept;
 \indexlibrary{\idxcode{color_stop}!\idxcode{offset}}
 \indexlibrary{\idxcode{offset}!\idxcode{color_stop}}
 \begin{itemdecl}
-	constexpr double offset() const noexcept;
+	constexpr float offset() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 	\pnum

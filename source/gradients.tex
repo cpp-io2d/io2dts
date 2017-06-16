@@ -17,20 +17,20 @@ A linear gradient is a type of gradient.
 A linear gradient has a \term{begin point} and an \term{end point}, each of which are objects of type \tcode{vector_2d}.
 
 \pnum
-A linear gradient for which the distance between its begin point and its end point is not greater than \tcode{numeric_limits<double>::epsilon()} is a \term{degenerate linear gradient}.
+A linear gradient for which the distance between its begin point and its end point is not greater than \tcode{numeric_limits<float>::epsilon()} is a \term{degenerate linear gradient}.
 
 \pnum
 All attempts to sample from a a degenerate linear gradient return the color \tcode{rgba_color::transparent_black()}. The remainder of \ref{\iotwod.gradients} is inapplicable to degenerate linear gradients.
 
 \pnum
-The begin point and end point of a linear gradient define a line segment, with a color stop offset value of 0.0 corresponding to the begin point and a color stop offset value of 1.0 corresponding to the end point.
+The begin point and end point of a linear gradient define a line segment, with a color stop offset value of 0.0f corresponding to the begin point and a color stop offset value of 1.0f corresponding to the end point.
 
 \pnum
-Color stop offset values in the range \crange{0.0}{1.0} linearly correspond to points on the line segment.
+Color stop offset values in the range \crange{0.0f}{1.0f} linearly correspond to points on the line segment.
 
 \pnum
 \begin{example}
-Given a linear gradient with a begin point of \tcode{vector_2d(0.0, 0.0)} and an end point of \tcode{vector_2d(10.0, 5.0)}, a color stop offset value of 0.6 would correspond to the point \tcode{vector_2d(6.0, 3.0)}.
+Given a linear gradient with a begin point of \tcode{vector_2d(0.0f, 0.0f)} and an end point of \tcode{vector_2d(10.0f, 5.0f)}, a color stop offset value of 0.6f would correspond to the point \tcode{vector_2d(6.0f, 3.0f)}.
 \end{example}
 
 \pnum
@@ -63,18 +63,18 @@ A radial gradient is a \term{degenerate radial gradient} if:
 \begin{itemize}
 \item its start circle has a negative radius; or,
 \item its end circle has a negative radius; or,
-\item the distance between the center point of its start circle and the center point of its end circle is not greater than \tcode{numeric_limits<double>::epsilon()} and the difference between the radius of its start circle and the radius of its end circle is not greater than \tcode{numeric_limits<double>::epsilon()}; or,
-\item its start circle has a radius of 0.0 and its end circle has a radius of 0.0.
+\item the distance between the center point of its start circle and the center point of its end circle is not greater than \tcode{numeric_limits<float>::epsilon()} and the difference between the radius of its start circle and the radius of its end circle is not greater than \tcode{numeric_limits<float>::epsilon()}; or,
+\item its start circle has a radius of 0.0f and its end circle has a radius of 0.0f.
 \end{itemize}
 
 \pnum
 All attempts to sample from a \tcode{brush} object created using a degenerate radial gradient return the color \tcode{rgba_color::transparent_black()}. The remainder of \ref{\iotwod.gradients} is inapplicable to degenerate radial gradients.
 
 \pnum
-A color stop offset of 0.0 corresponds to all points along the diameter of the start circle or to its center point if it has a radius value of 0.0.
+A color stop offset of 0.0f corresponds to all points along the diameter of the start circle or to its center point if it has a radius value of 0.0f.
 
 \pnum
-A color stop offset of 1.0 corresponds to all points along the diameter of the end circle or to its center point if it has a radius value of 0.0.
+A color stop offset of 1.0f corresponds to all points along the diameter of the end circle or to its center point if it has a radius value of 0.0f.
 
 \pnum
 A radial gradient shall be rendered as a continuous series of interpolated circles defined by the following equations:
@@ -89,7 +89,7 @@ where $o$ is a color stop offset value.
 The range of potential values for $o$ shall be determined by the Wrap Mode:
 \begin{itemize}
 \item For \tcode{wrap_mode::none}, the range of potential values for $o$ is \crange{0}{1}.
-\item For all other \tcode{wrap_mode} values, the range of potential values for $o$ is\\ $[$~\tcode{numeric_limits<double>::lowest(),numeric_limits<double>::max()}~$]$.
+\item For all other \tcode{wrap_mode} values, the range of potential values for $o$ is\\ $[$~\tcode{numeric_limits<float>::lowest(),numeric_limits<float>::max()}~$]$.
 \end{itemize}
 
 \pnum
@@ -110,12 +110,12 @@ For any offset value $o$, its color value shall be determined according to the f
 
 \item If two or more color stops have an offset value equal to $o$, $o$'s color value shall be the color value of the color stop which has the lowest index value among the set of color stops that have an offset value equal to $o$ and the remainder of \ref{\iotwod.gradients.sampling} is inapplicable.
 
-\item When no color stop has the offset value of \tcode{0.0}, then, defining $n$ to be the offset value that is nearest to \tcode{0.0} among the offset values in the set of all color stops, if $o$ is in the offset range $[0, n)$, $o$'s color value shall be \tcode{rgba_color::transparent_black()} and the remainder of these rules are inapplicable.
+\item When no color stop has the offset value of \tcode{0.0f}, then, defining $n$ to be the offset value that is nearest to \tcode{0.0f} among the offset values in the set of all color stops, if $o$ is in the offset range $[0, n)$, $o$'s color value shall be \tcode{rgba_color::transparent_black()} and the remainder of these rules are inapplicable.
 \begin{note}
 Since the range described does not include $n$, it does not matter how many color stops have $n$ as their offset value for purposes of this rule.
 \end{note}
 
-\item When no color stop has the offset value of \tcode{1.0}, then, defining $n$ to be the offset value that is nearest to \tcode{1.0} among the offset values in the set of all color stops, if $o$ is in the offset range $(n, 1]$, $o$'s color value shall be \tcode{rgba_color::transparent_black()} and the remainder of these rules are inapplicable.
+\item When no color stop has the offset value of \tcode{1.0f}, then, defining $n$ to be the offset value that is nearest to \tcode{1.0f} among the offset values in the set of all color stops, if $o$ is in the offset range $(n, 1]$, $o$'s color value shall be \tcode{rgba_color::transparent_black()} and the remainder of these rules are inapplicable.
 \begin{note}
 Since the range described does not include $n$, it does not matter how many color stops have $n$ as their offset value for purposes of this rule.
 \end{note}
@@ -124,19 +124,19 @@ Since the range described does not include $n$, it does not matter how many colo
 
 \item Adjacency of color stops is initially determined by offset values. If two or more color stops have the same offset value then index values are used to determine adjacency as described below.
 
-\item For each color stop \textit{a}, the \term{set of color stops to its left} are those color stops which have an offset value which is closer to \tcode{0.0} than \textit{a}'s offset value.
+\item For each color stop \textit{a}, the \term{set of color stops to its left} are those color stops which have an offset value which is closer to \tcode{0.0f} than \textit{a}'s offset value.
 \begin{note}
-This includes any color stops with an offset value of \tcode{0.0} provided that \textit{a}'s offset value is not \tcode{0.0}.
+This includes any color stops with an offset value of \tcode{0.0f} provided that \textit{a}'s offset value is not \tcode{0.0f}.
 \end{note}
 
-\item For each color stop \textit{b}, the \term{set of color stops to its right} are those color stops which have an offset value which is closer to \tcode{1.0} than \textit{b}'s offset value.
+\item For each color stop \textit{b}, the \term{set of color stops to its right} are those color stops which have an offset value which is closer to \tcode{1.0f} than \textit{b}'s offset value.
 \begin{note}
-This includes any color stops with an offset value of \tcode{1.0} provided that \textit{b}'s offset value is not \tcode{1.0}.
+This includes any color stops with an offset value of \tcode{1.0f} provided that \textit{b}'s offset value is not \tcode{1.0f}.
 \end{note}
 
-\item A color stop which has an offset value of \tcode{0.0} does not have an adjacent color stop to its left.
+\item A color stop which has an offset value of \tcode{0.0f} does not have an adjacent color stop to its left.
 
-\item A color stop which has an offset value of \tcode{1.0} does not have an adjacent color stop to its right.
+\item A color stop which has an offset value of \tcode{1.0f} does not have an adjacent color stop to its right.
 
 \item If a color stop \textit{a}'s set of color stops to its left consists of exactly one color stop, that color stop is the color stop that is adjacent to \textit{a} on its left.
 
@@ -154,16 +154,16 @@ This includes any color stops with an offset value of \tcode{1.0} provided that 
 	\begin{itemize}
 	\item If Wrap Mode is \tcode{wrap_mode::none}, the color value of $o$ shall be \tcode{rgba_color::transparent_black()}.
 	
-	\item If Wrap Mode is \tcode{wrap_mode::pad}, if $o$ is negative then the color value of $o$ shall be the same as-if the value of $o$ was \tcode{0.0}, otherwise the color value of $o$ shall be the same as-if the value of $o$ was \tcode{1.0}.
+	\item If Wrap Mode is \tcode{wrap_mode::pad}, if $o$ is negative then the color value of $o$ shall be the same as-if the value of $o$ was \tcode{0.0f}, otherwise the color value of $o$ shall be the same as-if the value of $o$ was \tcode{1.0f}.
 	
-	\item If Wrap Mode is \tcode{wrap_mode::repeat}, then \tcode{1.0} shall be added to or subtracted from $o$ until $o$ is in the range $[0,1]$, at which point its color value is the color value for the modified value of $o$ as determined by these rules.
+	\item If Wrap Mode is \tcode{wrap_mode::repeat}, then \tcode{1.0f} shall be added to or subtracted from $o$ until $o$ is in the range $[0,1]$, at which point its color value is the color value for the modified value of $o$ as determined by these rules.
 	\begin{example}
 	Given $o == 2.1$, after application of this rule $o == 0.1$ and the color value of $o$ shall be the same value as-if the initial value of $o$ was $0.1$.
 	
 	Given $o == -0.3$, after application of this rule $o == 0.7$ and the color value of $o$ shall be the same as-if the initial value of $o$ was $0.7$.
 	\end{example}
 	
-	\item If Wrap Mode is \tcode{wrap_mode::reflect}, $o$ shall be set to the absolute value of $o$, then 2.0 shall be subtracted from $o$ until $o$ is in the range $[0,2]$, then if $o$ is in the range $(1,2]$ then $o$ shall be set to \tcode{1.0 - (o - 1.0)}, at which point its color value is the color value for the modified value of $o$ as determined by these rules.
+	\item If Wrap Mode is \tcode{wrap_mode::reflect}, $o$ shall be set to the absolute value of $o$, then 2.0f shall be subtracted from $o$ until $o$ is in the range $[0,2]$, then if $o$ is in the range $(1,2]$ then $o$ shall be set to \tcode{1.0f - (o - 1.0f)}, at which point its color value is the color value for the modified value of $o$ as determined by these rules.
 	\begin{example}
 	Given $o == 2.8$, after application of this rule $o == 0.8$ and the color value of $o$ shall be the same value as-if the initial value of $o$ was $0.8$.
 	

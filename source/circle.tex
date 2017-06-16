@@ -8,7 +8,7 @@
 The class \tcode{circle} describes a circle.
 
 \pnum
-It has a Center of type \tcode{vector_2d} and a Radius of type \tcode{double}.
+It has a Center of type \tcode{vector_2d} and a Radius of type \tcode{float}.
 
 \rSec1 [\iotwod.circle.synopsis] {\tcode{circle} synopsis}
 
@@ -18,15 +18,15 @@ namespace std::experimental::io2d::v1 {
   public:
     // \ref{\iotwod.circle.cons}, construct/copy/move/destroy:
     constexpr circle() noexcept;
-    contexpr circle(const vector_2d& ctr, double rad) noexcept;
+    contexpr circle(const vector_2d& ctr, float rad) noexcept;
 
     // \ref{\iotwod.circle.modifiers}, modifiers:
     constexpr void center(const vector_2d& ctr) noexcept;
-    constexpr void radius(double r) noexcept;
+    constexpr void radius(float r) noexcept;
     
     // \ref{\iotwod.circle.observers}, observers:
     constexpr vector_2d center() const noexcept;
-    constexpr double radius() const noexcept;
+    constexpr float radius() const noexcept;
   };
 }
 \end{codeblock}
@@ -43,19 +43,19 @@ constexpr circle() noexcept;
 Constructs an object of type \tcode{circle}.
 
 \pnum
-The value of Center is \tcode{vector_2d\{0,0, 0.0\}}.
+The value of Center is \tcode{vector_2d\{0,0, 0.0f\}}.
 
 \pnum
-The value of Radius is \tcode{0.0}.
+The value of Radius is \tcode{0.0f}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{circle}!constructor}%
 \begin{itemdecl}
-constexpr circle(const vector_2d& ctr, double r) noexcept;
+constexpr circle(const vector_2d& ctr, float r) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \requires
-\tcode{r >= 0.0}.
+\tcode{r >= 0.0f}.
 
 \pnum
 \effects
@@ -83,11 +83,11 @@ The value of Center is \tcode{ctr}.
 
 \indexlibrary{\idxcode{circle}!\idxcode{radius}}%
 \begin{itemdecl}
-constexpr void radius(double r) noexcept;
+constexpr void radius(float r) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \requires
-\tcode{r >= 0.0}.
+\tcode{r >= 0.0f}.
 
 \pnum
 \effects
@@ -98,7 +98,7 @@ The value of Radius is \tcode{r}.
 
 \indexlibrary{\idxcode{circle}!\idxcode{center}}%
 \begin{itemdecl}
-constexpr double center() const noexcept;
+constexpr float center() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -108,7 +108,7 @@ The value of Center.
 
 \indexlibrary{\idxcode{circle}!\idxcode{radius}}%
 \begin{itemdecl}
-constexpr double radius() const noexcept;
+constexpr float radius() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

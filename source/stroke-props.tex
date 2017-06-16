@@ -8,7 +8,7 @@
 The \tcode{stroke_props} class provides state information that is applicable to the Stroke rendering and composing operation (\ref{\iotwod.surface.rendering} and \ref{\iotwod.surface.stroking}).
 
 \pnum
-It has a Line Width of type \tcode{double}, a Line Cap of type \tcode{line_cap}, a Line Join of type \tcode{line_join}, and a Miter Limit of type \tcode{double}.
+It has a Line Width of type \tcode{float}, a Line Cap of type \tcode{line_cap}, a Line Join of type \tcode{line_join}, and a Miter Limit of type \tcode{float}.
 
 %\pnum
 %The Line Width determines the perpendicular width of a path segment at each point along the path segment. Half of the value of the Line Width extends to each side of a point along the path segment.
@@ -24,23 +24,23 @@ namespace std::experimental::io2d::v1 {
   public:
     // \ref{\iotwod.strokeprops.cons}, constructors:
     constexpr stroke_props() noexcept;
-    constexpr explicit stroke_props(double w,
+    constexpr explicit stroke_props(float w,
       experimental::io2d::line_cap lc = experimental::io2d::line_cap::none,
       experimental::io2d::line_join lj = experimental::io2d::line_join::miter,
-      double ml = 10.0) noexcept    
+      float ml = 10.0f) noexcept    
 
     // \ref{\iotwod.strokeprops.modifiers}, modifiers:
-    constexpr void line_width(double w) noexcept;
+    constexpr void line_width(float w) noexcept;
     constexpr void line_cap(experimental::io2d::line_cap lc) noexcept;
     constexpr void line_join(experimental::io2d::line_join lj) noexcept;
-    constexpr void miter_limit(double ml) noexcept;
+    constexpr void miter_limit(float ml) noexcept;
     
     // \ref{\iotwod.strokeprops.observers}, observers:
-    constexpr double line_width() const noexcept;
+    constexpr float line_width() const noexcept;
     constexpr experimental::io2d::line_cap line_cap() const noexcept;
     constexpr experimental::io2d::line_join line_join() const noexcept;
-    constexpr double miter_limit() const noexcept;
-    constexpr double max_miter_limit() const noexcept;
+    constexpr float miter_limit() const noexcept;
+    constexpr float max_miter_limit() const noexcept;
   };
 }
 \end{codeblock}
@@ -54,7 +54,7 @@ constexpr stroke_props() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-The value of Line Width is \tcode{2.0}.
+The value of Line Width is \tcode{2.0f}.
 
 \pnum
 The value of Line Cap is \tcode{experimental::io2d::line_cap::none}.
@@ -63,23 +63,23 @@ The value of Line Cap is \tcode{experimental::io2d::line_cap::none}.
 The value of Line Join is \tcode{experimental::io2d::line_join::miter}.
 
 \pnum
-The value of Miter Limit is \tcode{10.0}.
+The value of Miter Limit is \tcode{10.0f}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{stroke_props}!constructor}
 \begin{itemdecl}
-constexpr explicit stroke_props(double w,
+constexpr explicit stroke_props(float w,
   experimental::io2d::line_cap lc = experimental::io2d::line_cap::none,
   experimental::io2d::line_join lj = experimental::io2d::line_join::miter,
-  double ml = 10.0) noexcept    
+  float ml = 10.0f) noexcept    
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{w >= 0.0}.
+\tcode{w >= 0.0f}.
 
 \pnum
-\tcode{ml >= 1.0 \&\& ml <= max_miter_limit()}
+\tcode{ml >= 1.0f \&\& ml <= max_miter_limit()}
 
 \pnum
 \effects
@@ -99,12 +99,12 @@ The value of Miter Limit is \tcode{ml}.
 
 \indexlibrary{\idxcode{stroke_props}!\idxcode{line_width}}
 \begin{itemdecl}
-constexpr void line_width(double w) noexcept;
+constexpr void line_width(float w) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{w >= 0.0}.
+\tcode{w >= 0.0f}.
 
 \pnum
 \effects
@@ -132,12 +132,12 @@ The value of Line Join is \tcode{lj}.
 
 \indexlibrary{\idxcode{stroke_props}!\idxcode{miter_limit}}
 \begin{itemdecl}
-constexpr void miter_limit(double ml) noexcept;
+constexpr void miter_limit(float ml) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{ml >= 1.0 \&\& ml <= max_miter_limit}.
+\tcode{ml >= 1.0f \&\& ml <= max_miter_limit}.
 
 \pnum
 The value of Miter Limit if \tcode{ml}.
@@ -147,7 +147,7 @@ The value of Miter Limit if \tcode{ml}.
 
 \indexlibrary{\idxcode{stroke_props}!\idxcode{line_width}}
 \begin{itemdecl}
-constexpr double line_width() const noexcept;
+constexpr float line_width() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -177,7 +177,7 @@ The value of Line Join.
 
 \indexlibrary{\idxcode{stroke_props}!\idxcode{miter_limit}}
 \begin{itemdecl}
-constexpr double miter_limit() const noexcept;
+constexpr float miter_limit() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -187,7 +187,7 @@ The value of Miter Limit.
 
 \indexlibrary{\idxcode{stroke_props}!\idxcode{max_miter_limit}}
 \begin{itemdecl}
-constexpr double max_miter_limit() const noexcept;
+constexpr float max_miter_limit() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -196,5 +196,5 @@ The \impldefplain{\idxcode{stroke_props}!\idxcode{max_miter_limit}} maximum allo
 
 \pnum
 \remarks
-It is possible for this value to be \tcode{numeric_limits<double>::infinity()}.
+It is possible for this value to be \tcode{numeric_limits<float>::infinity()}.
 \end{itemdescr}

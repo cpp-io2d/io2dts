@@ -9,32 +9,32 @@ namespace std::experimental::io2d::v1 {
   display_surface make_display_surface(int preferredWidth,
     int preferredHeight, format preferredFormat,
     scaling scl = scaling::letterbox,
-    refresh_rate rr = refresh_rate::as_fast_as_possible, double fps = 30.0);
+    refresh_rate rr = refresh_rate::as_fast_as_possible, float fps = 30.0f);
   display_surface make_display_surface(int preferredWidth,
     int preferredHeight, format preferredFormat, error_code& ec,
     scaling scl = scaling::letterbox,
-    refresh_rate rr = refresh_rate::as_fast_as_possible, double fps = 30.0) noexcept;
+    refresh_rate rr = refresh_rate::as_fast_as_possible, float fps = 30.0f) noexcept;
   display_surface make_display_surface(int preferredWidth,
     int preferredHeight, format preferredFormat, int preferredDisplayWidth, 
     int preferredDisplayHeight, scaling scl = scaling::letterbox,
-    refresh_rate rr = refresh_rate::as_fast_as_possible, double fps = 30.0);
+    refresh_rate rr = refresh_rate::as_fast_as_possible, float fps = 30.0f);
   display_surface make_display_surface(int preferredWidth,
     int preferredHeight, format preferredFormat, int preferredDisplayWidth, 
     int preferredDisplayHeight, ::std::error_code& ec,
     scaling scl = scaling::letterbox,
-    refresh_rate rr = refresh_rate::as_fast_as_possible, double fps = 30.0) noexcept;
+    refresh_rate rr = refresh_rate::as_fast_as_possible, float fps = 30.0f) noexcept;
   image_surface make_image_surface(format format, int width, int height);
   image_surface make_image_surface(format format, int width, int height, 
     error_code& ec) noexcept;
   image_surface make_image_surface(image_surface& sfc) noexcept;
-  double angle_for_point(const vector_2d& ctr, const vector_2d& pt) noexcept;
-  vector_2d point_for_angle(double ang, double rad = 1.0) noexcept;
-  vector_2d point_for_angle(double ang, const vector_2d& rad) noexcept;
-  vector_2d arc_start(const vector_2d& ctr, double sang, const vector_2d& rad, 
+  float angle_for_point(const vector_2d& ctr, const vector_2d& pt) noexcept;
+  vector_2d point_for_angle(float ang, float rad = 1.0f) noexcept;
+  vector_2d point_for_angle(float ang, const vector_2d& rad) noexcept;
+  vector_2d arc_start(const vector_2d& ctr, float sang, const vector_2d& rad, 
     const matrix_2d& m = matrix_2d{}) noexcept;
-  vector_2d arc_center(const vector_2d& cpt, double sang, const vector_2d& rad, 
+  vector_2d arc_center(const vector_2d& cpt, float sang, const vector_2d& rad, 
     const matrix_2d& m = matrix_2d{}) noexcept;
-  vector_2d arc_end(const vector_2d& cpt, double eang, const vector_2d& rad, 
+  vector_2d arc_end(const vector_2d& cpt, float eang, const vector_2d& rad, 
     const matrix_2d& m = matrix_2d{}) noexcept;
 }
 \end{codeblock}
@@ -61,21 +61,21 @@ If \tcode{fmt == format::invalid}, this function shall return \tcode{0}.
 display_surface make_display_surface(int preferredWidth,
   int preferredHeight, format preferredFormat,
   scaling scl = scaling::letterbox,
-  refresh_rate rr = refresh_rate::as_fast_as_possible, double fps = 30.0);
+  refresh_rate rr = refresh_rate::as_fast_as_possible, float fps = 30.0f);
 display_surface make_display_surface(int preferredWidth,
   int preferredHeight, format preferredFormat, error_code& ec,
   scaling scl = scaling::letterbox,
-  refresh_rate rr = refresh_rate::as_fast_as_possible, double fps = 30.0) 
+  refresh_rate rr = refresh_rate::as_fast_as_possible, float fps = 30.0f) 
   noexcept;
 display_surface make_display_surface(int preferredWidth,
   int preferredHeight, format preferredFormat, int preferredDisplayWidth, 
   int preferredDisplayHeight, scaling scl = scaling::letterbox,
-  refresh_rate rr = refresh_rate::as_fast_as_possible, double fps = 30.0);
+  refresh_rate rr = refresh_rate::as_fast_as_possible, float fps = 30.0f);
 display_surface make_display_surface(int preferredWidth,
   int preferredHeight, format preferredFormat, int preferredDisplayWidth, 
   int preferredDisplayHeight, ::std::error_code& ec,
   scaling scl = scaling::letterbox,
-  refresh_rate rr = refresh_rate::as_fast_as_possible, double fps = 30.0) 
+  refresh_rate rr = refresh_rate::as_fast_as_possible, float fps = 30.0f) 
   noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -133,50 +133,50 @@ The \tcode{image_surface} class intentionally does not provide copy semantics be
 
 \indexlibrary{\idxcode{angle_for_point}}%
 \begin{itemdecl}
-double angle_for_point(const vector_2d& ctr, const vector_2d& pt,
-  const vector_2d& scl = vector_2d{ 1.0, 1.0 }) noexcept;
+float angle_for_point(const vector_2d& ctr, const vector_2d& pt,
+  const vector_2d& scl = vector_2d{ 1.0f, 1.0f }) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The angle, in radians, of \tcode{pt} as a point on a circle with a center at \tcode{ctr}. If the angle is less that \tcode{pi<double> / 180000.0}, returns \tcode{0.0}.
+The angle, in radians, of \tcode{pt} as a point on a circle with a center at \tcode{ctr}. If the angle is less that \tcode{pi<float> / 180000.0f}, returns \tcode{0.0f}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.standalone.pointforangle] {\tcode{point_for_angle}}
 
 \indexlibrary{\idxcode{point_for_angle}}%
 \begin{itemdecl}
-vector_2d point_for_angle(double ang, double rad = 1.0) noexcept;
-vector_2d point_for_angle(double ang, const vector_2d& rad) noexcept;
+vector_2d point_for_angle(float ang, float rad = 1.0f) noexcept;
+vector_2d point_for_angle(float ang, const vector_2d& rad) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \requires
-If it is a \tcode{double}, \tcode{rad} is greater than \tcode{0.0}. If it is a \tcode{vector_2d}, \tcode{rad.x()} or \tcode{rad.y()} is greater than \tcode{0.0} and neither is less than \tcode{0.0}.
+If it is a \tcode{float}, \tcode{rad} is greater than \tcode{0.0f}. If it is a \tcode{vector_2d}, \tcode{rad.x()} or \tcode{rad.y()} is greater than \tcode{0.0f} and neither is less than \tcode{0.0f}.
 
 \pnum
 \returns
-The result of rotating the point \tcode{vector_2d\{ 1.0, 0.0 \}}, around an origin of \tcode{vector_2d\{ 0.0, 0.0 \}} by \tcode{ang} radians, with a positive value of \tcode{ang} meaning counterclockwise rotation and a negative value meaning clockwise rotation, with the result being multiplied by \tcode{rad}.
+The result of rotating the point \tcode{vector_2d\{ 1.0f, 0.0f \}}, around an origin of \tcode{vector_2d\{ 0.0f, 0.0f \}} by \tcode{ang} radians, with a positive value of \tcode{ang} meaning counterclockwise rotation and a negative value meaning clockwise rotation, with the result being multiplied by \tcode{rad}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.standalone.arcstart] {\tcode{arc_start}}
 
 \indexlibrary{\idxcode{arc_start}}%
 \begin{itemdecl}
-vector_2d arc_start(const vector_2d& ctr, double sang, const vector_2d& rad, 
+vector_2d arc_start(const vector_2d& ctr, float sang, const vector_2d& rad, 
   const matrix_2d& m = matrix_2d{}) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{rad.x()} and \tcode{rad.y()} are both greater than \tcode{0.0}.
+\tcode{rad.x()} and \tcode{rad.y()} are both greater than \tcode{0.0f}.
 
 \pnum
 \returns
 As-if:
 \begin{codeblock}
 auto lmtx = m;
-lmtx.m20(0.0); lmtx.m21(0.0);
+lmtx.m20(0.0f); lmtx.m21(0.0f);
 auto pt = point_for_angle(sang, rad);
 return ctr + pt * lmtx;
 \end{codeblock}
@@ -191,21 +191,21 @@ Among other things, this function is useful for determining the point at which a
 
 \indexlibrary{\idxcode{arc_center}}%
 \begin{itemdecl}
-vector_2d arc_center(const vector_2d& cpt, double sang, const vector_2d& rad, 
+vector_2d arc_center(const vector_2d& cpt, float sang, const vector_2d& rad, 
   const matrix_2d& m = matrix_2d{}) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{rad.x()} and \tcode{rad.y()} are both greater than \tcode{0.0}.
+\tcode{rad.x()} and \tcode{rad.y()} are both greater than \tcode{0.0f}.
 
 \pnum
 \returns
 As-if:
 \begin{codeblock}
 auto lmtx = m;
-lmtx.m20(0.0); lmtx.m21(0.0);
-auto centerOffset = point_for_angle(two_pi<double> - sang, rad);
+lmtx.m20(0.0f); lmtx.m21(0.0f);
+auto centerOffset = point_for_angle(two_pi<float> - sang, rad);
 centerOffset.y(-centerOffset.y());
 return cpt - centerOffset * lmtx;
 \end{codeblock}
@@ -215,13 +215,13 @@ return cpt - centerOffset * lmtx;
 
 \indexlibrary{\idxcode{arc_end}}%
 \begin{itemdecl}
-vector_2d arc_end(const vector_2d& cpt, double eang, const vector_2d& rad, 
+vector_2d arc_end(const vector_2d& cpt, float eang, const vector_2d& rad, 
   const matrix_2d& m = matrix_2d{}) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{rad.x()} and \tcode{rad.y()} are both greater than \tcode{0.0}.
+\tcode{rad.x()} and \tcode{rad.y()} are both greater than \tcode{0.0f}.
 
 \pnum
 \returns
@@ -229,7 +229,7 @@ As-if:
 \begin{codeblock}
 auto lmtx = m;
 auto tfrm = matrix_2d::init_rotate(eang);
-lmtx.m20(0.0); lmtx.m21(0.0);
+lmtx.m20(0.0f); lmtx.m21(0.0f);
 auto pt = (rad * tfrm);
 pt.y(-pt.y());
 return cpt + pt * lmtx;
