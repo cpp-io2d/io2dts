@@ -26,9 +26,16 @@ namespace std::experimental::io2d::v1 {
   image_surface make_image_surface(format format, int width, int height);
   image_surface make_image_surface(format format, int width, int height, 
     error_code& ec) noexcept;
+  image_surface make_image_surface(image_surface& sfc) noexcept;
   double angle_for_point(const vector_2d& ctr, const vector_2d& pt) noexcept;
   vector_2d point_for_angle(double ang, double rad = 1.0) noexcept;
   vector_2d point_for_angle(double ang, const vector_2d& rad) noexcept;
+  vector_2d arc_start(const vector_2d& ctr, double sang, const vector_2d& rad, 
+    const matrix_2d& m = matrix_2d{}) noexcept;
+  vector_2d arc_center(const vector_2d& cpt, double sang, const vector_2d& rad, 
+    const matrix_2d& m = matrix_2d{}) noexcept;
+  vector_2d arc_end(const vector_2d& cpt, double eang, const vector_2d& rad, 
+    const matrix_2d& m = matrix_2d{}) noexcept;
 }
 \end{codeblock}
 
@@ -108,6 +115,20 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 The errors, if any, produced by this function are the same as the errors for the equivalent \tcode{display_surface} constructor (\ref{imagesurface.cons}).
 \end{itemdescr}
 
+\indexlibrary{\idxcode{make_image_surface}}%
+\begin{itemdecl}
+image_surface make_image_surface(image_surface& sfc) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+An exact copy of \tcode{sfc}.
+
+\pnum
+\begin{note}
+The \tcode{image_surface} class intentionally does not provide copy semantics because with many modern graphics technologies, making such a copy is almost always a very time consuming operation. This function allows users to make a copy of an \tcode{image_surface} object while preserving the move-only semantics of the \tcode{image_surface} class.
+\end{note}
+\end{itemdescr}
 \rSec1 [\iotwod.standalone.angleforpoint] {\tcode{angle_for_point}}
 
 \indexlibrary{\idxcode{angle_for_point}}%
@@ -133,6 +154,84 @@ vector_2d point_for_angle(double ang, const vector_2d& rad) noexcept;
 \requires
 If it is a \tcode{double}, \tcode{rad} is greater than \tcode{0.0}. If it is a \tcode{vector_2d}, \tcode{rad.x()} or \tcode{rad.y()} is greater than \tcode{0.0} and neither is less than \tcode{0.0}.
 
+\pnum
 \returns
 The result of rotating the point \tcode{vector_2d\{ 1.0, 0.0 \}}, around an origin of \tcode{vector_2d\{ 0.0, 0.0 \}} by \tcode{ang} radians, with a positive value of \tcode{ang} meaning counterclockwise rotation and a negative value meaning clockwise rotation, with the result being multiplied by \tcode{rad}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.standalone.arcstart] {\tcode{arc_start}}
+
+\indexlibrary{\idxcode{arc_start}}%
+\begin{itemdecl}
+vector_2d arc_start(const vector_2d& ctr, double sang, const vector_2d& rad, 
+  const matrix_2d& m = matrix_2d{}) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{rad.x()} and \tcode{rad.y()} are both greater than \tcode{0.0}.
+
+\pnum
+\returns
+As-if:
+\begin{codeblock}
+auto lmtx = m;
+lmtx.m20(0.0); lmtx.m21(0.0);
+auto pt = point_for_angle(sang, rad);
+return ctr + pt * lmtx;
+\end{codeblock}
+
+\pnum
+\begin{note}
+Among other things, this function is useful for determining the point at which a new path should begin if the first item in the path is an arc and the user wishes to clearly define its center.
+\end{note}
+\end{itemdescr}
+
+\rSec1 [\iotwod.standalone.arccenter] {\tcode{arc_center}}
+
+\indexlibrary{\idxcode{arc_center}}%
+\begin{itemdecl}
+vector_2d arc_center(const vector_2d& cpt, double sang, const vector_2d& rad, 
+  const matrix_2d& m = matrix_2d{}) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{rad.x()} and \tcode{rad.y()} are both greater than \tcode{0.0}.
+
+\pnum
+\returns
+As-if:
+\begin{codeblock}
+auto lmtx = m;
+lmtx.m20(0.0); lmtx.m21(0.0);
+auto centerOffset = point_for_angle(two_pi<double> - sang, rad);
+centerOffset.y(-centerOffset.y());
+return cpt - centerOffset * lmtx;
+\end{codeblock}
+\end{itemdescr}
+
+\rSec1 [\iotwod.standalone.arcend] {\tcode{arc_end}}
+
+\indexlibrary{\idxcode{arc_end}}%
+\begin{itemdecl}
+vector_2d arc_end(const vector_2d& cpt, double eang, const vector_2d& rad, 
+  const matrix_2d& m = matrix_2d{}) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{rad.x()} and \tcode{rad.y()} are both greater than \tcode{0.0}.
+
+\pnum
+\returns
+As-if:
+\begin{codeblock}
+auto lmtx = m;
+auto tfrm = matrix_2d::init_rotate(eang);
+lmtx.m20(0.0); lmtx.m21(0.0);
+auto pt = (rad * tfrm);
+pt.y(-pt.y());
+return cpt + pt * lmtx;
+\end{codeblock}
 \end{itemdescr}

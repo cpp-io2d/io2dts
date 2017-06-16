@@ -42,10 +42,10 @@ Example 1 consists of a single path, forming a trapezoid:
 
 \begin{codeblock}
   pb.new_path({ 80.0, 20.0 }); // Begins the path.
-  pb.line_to({ 220.0, 20.0 }); // Creates a line from the [80, 20] to [220, 20].
-  pb.rel_line_to({ 60.0, 160.0 }); // Line from [220, 20] to
+  pb.line({ 220.0, 20.0 }); // Creates a line from the [80, 20] to [220, 20].
+  pb.rel_line({ 60.0, 160.0 }); // Line from [220, 20] to
     // [220 + 60, 160 + 20]. The "to" point is relative to the starting point.
-  pb.rel_line_to({ -260.0, 0.0 }); // Line from [280, 180] to 
+  pb.rel_line({ -260.0, 0.0 }); // Line from [280, 180] to 
     // [280 - 260, 180 + 0].
   pb.close_path(); // Creates a line from [20, 180] to [80, 20] 
     // (the last-move-to point), which makes this a closed path.
@@ -67,15 +67,15 @@ Example 2 consists of two paths. The first is a rectangular open path (on the le
 
 \begin{codeblock}
   pb.new_path({ 20.0, 20.0 }); // Begin the first path.
-  pb.rel_line_to({ 100.0, 0.0 });
-  pb.rel_line_to({ 0.0, 160.0 });
-  pb.rel_line_to({ -100.0, 0.0 });
-  pb.rel_line_to({ 0.0, -160.0 });
+  pb.rel_line({ 100.0, 0.0 });
+  pb.rel_line({ 0.0, 160.0 });
+  pb.rel_line({ -100.0, 0.0 });
+  pb.rel_line({ 0.0, -160.0 });
   
   pb.new_path({ 180.0, 20.0 }); // End the first path and begin the second path.
-  pb.rel_line_to({ 100.0, 0.0 });
-  pb.rel_line_to({ 0.0, 160.0 });
-  pb.rel_line_to({ -100.0, 0.0 });
+  pb.rel_line({ 100.0, 0.0 });
+  pb.rel_line({ 0.0, 160.0 });
+  pb.rel_line({ -100.0, 0.0 });
   pb.close_path(); // End the second path.
   imgSfc.stroke(foreBrush, pb, nullopt, stroke_props{ 10.0 }, nullopt, alised);
 \end{codeblock}
@@ -107,15 +107,15 @@ Example 3 demonstrates open and closed paths each containing either a quadratic 
 
 \begin{codeblock}
 pb.new_path({ 20.0, 20.0 });
-pb.rel_quadratic_curve_to({ 60.0, 120.0 }, { 60.0, -120.0 });
+pb.rel_quadratic_curve({ 60.0, 120.0 }, { 60.0, -120.0 });
 pb.rel_new_path({ 20.0, 0.0 });
-pb.rel_quadratic_curve_to({ 60.0, 120.0 }, { 60.0, -120.0 });
+pb.rel_quadratic_curve({ 60.0, 120.0 }, { 60.0, -120.0 });
 pb.close_path();
 pb.new_path({ 20.0, 150.0 });
-pb.rel_cubic_curve_to({ 40.0, -120.0 }, { 40.0, 120.0 * 2.0 },
+pb.rel_cubic_curve({ 40.0, -120.0 }, { 40.0, 120.0 * 2.0 },
   { 40.0, -120.0 });
 pb.rel_new_path({ 20.0, 0.0 });
-pb.rel_cubic_curve_to({ 40.0, -120.0 }, { 40.0, 120.0 * 2.0 },
+pb.rel_cubic_curve({ 40.0, -120.0 }, { 40.0, 120.0 * 2.0 },
   { 40.0, -120.0 });
 pb.close_path();
 imgSfc.stroke(foreBrush, pb, nullopt, nullopt, nullopt, aliased);
@@ -131,7 +131,7 @@ imgSfc.stroke(foreBrush, pb, nullopt, nullopt, nullopt, aliased);
 
 \pnum
 \begin{note}
-\tcode{pb.quadratic_curve_to(\{ 80.0, 140.0 \}, \{ 140.0, 20.0 \});} would be the absolute equivalent of the first curve in example 3.
+\tcode{pb.quadratic_curve(\{ 80.0, 140.0 \}, \{ 140.0, 20.0 \});} would be the absolute equivalent of the first curve in example 3.
 \end{note}
 
 \rSec2 [\iotwod.paths.examples.four] {Example 4}
@@ -160,24 +160,22 @@ imgSfc.stroke(foreBrush, pb, nullopt, stroke_props{ 10.0 });
 // Create the first "+".
 pb.clear();
 pb.new_path({ 130.0, 105.0 });
-pb.rel_line_to({ 0.0, -10.0 });
-pb.rel_line_to({ 25.0, 0.0 });
-pb.rel_line_to({ 0.0, -25.0 });
-pb.rel_line_to({ 10.0, 0.0 });
-pb.rel_line_to({ 0.0, 25.0 });
-pb.rel_line_to({ 25.0, 0.0 });
-pb.rel_line_to({ 0.0, 10.0 });
-pb.rel_line_to({ -25.0, 0.0 });
-pb.rel_line_to({ 0.0, 25.0 });
-pb.rel_line_to({ -10.0, 0.0 });
-pb.rel_line_to({ 0.0, -25.0 });
+pb.rel_line({ 0.0, -10.0 });
+pb.rel_line({ 25.0, 0.0 });
+pb.rel_line({ 0.0, -25.0 });
+pb.rel_line({ 10.0, 0.0 });
+pb.rel_line({ 0.0, 25.0 });
+pb.rel_line({ 25.0, 0.0 });
+pb.rel_line({ 0.0, 10.0 });
+pb.rel_line({ -25.0, 0.0 });
+pb.rel_line({ 0.0, 25.0 });
+pb.rel_line({ -10.0, 0.0 });
+pb.rel_line({ 0.0, -25.0 });
 pb.close_path();
 imgSfc.fill(foreBrush, pb);
 // Create the second "+".
 pb.insert(pb.begin(), path_data::change_matrix(
   matrix_2d::init_translate({ 80.0, 0.0 })));
-// Revert to the old matrix after the path_data::new_path object.
-pb.insert(pb.begin() + 2, path_data::revert_matrix());
 imgSfc.fill(foreBrush, pb);
 \end{codeblock}
 
@@ -198,9 +196,9 @@ imgSfc.fill(foreBrush, pb);
 %brush blueBrush{ rgba_color::blue() };
 %stroke_props ten{ 10.0 };
 %pb.new_path({ 30.0, 30.0 });
-%pb.rel_line_to({ 105.0, 0.0 });
-%pb.rel_line_to({ 0.0, 140.0 });
-%pb.rel_line_to({ -105.0, 0.0 });
+%pb.rel_line({ 105.0, 0.0 });
+%pb.rel_line({ 0.0, 140.0 });
+%pb.rel_line({ -105.0, 0.0 });
 %pb.close_path();
 %imgSfc.stroke(foreBrush, pb, nullopt, ten);
 %imgSfc.fill(blueBrush, pb);

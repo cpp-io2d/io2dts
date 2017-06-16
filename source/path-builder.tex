@@ -99,21 +99,18 @@ namespace std::experimental::io2d::v1 {
     void new_path(const vector_2d& pt) noexcept;
     void rel_new_path(const vector_2d& pt) noexcept;
     void close_path() noexcept;
-    void set_matrix(const matrix_2d& m) noexcept;
-    void modify_matrix(const matrix_2d& m) noexcept;
+    void matrix(const matrix_2d& m) noexcept;
+    void rel_matrix(const matrix_2d& m) noexcept;
     void revert_matrix() noexcept;
-    void set_origin(const vector_2d& pt) noexcept;
-    void modify_origin(const vector_2d& pt) noexcept;
-    void revert_origin() noexcept;
-    void line_to(const vector_2d& pt) noexcept;
-    void rel_line_to(const vector_2d& dpt) noexcept;
-    void quadratic_curve_to(const vector_2d& pt0, const vector_2d& pt2)
+    void line(const vector_2d& pt) noexcept;
+    void rel_line(const vector_2d& dpt) noexcept;
+    void quadratic_curve(const vector_2d& pt0, const vector_2d& pt2)
       noexcept;
-    void rel_quadratic_curve_to(const vector_2d& pt0, const vector_2d& pt2)
+    void rel_quadratic_curve(const vector_2d& pt0, const vector_2d& pt2)
       noexcept;
-    void cubic_curve_to(const vector_2d& pt0, const vector_2d& pt1,
+    void cubic_curve(const vector_2d& pt0, const vector_2d& pt1,
       const vector_2d& pt2) noexcept;
-    void rel_cubic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1,
+    void rel_cubic_curve(const vector_2d& dpt0, const vector_2d& dpt1,
       const vector_2d& dpt2) noexcept;
     void arc(const vector_2d& rad, double rot, double sang = pi<double>)
       noexcept;
@@ -422,7 +419,7 @@ Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::cl
 
 \indexlibrarymember{path_builder}{set_matrix}%
 \begin{itemdecl}
-void set_matrix(const matrix_2d& m) noexcept;
+void matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -431,12 +428,12 @@ The matrix \tcode{m} shall be invertible.
 
 \pnum
 \effects
-Adds a \tcode{path_data::path_item} object constructed from \tcode{(path_data::set_matrix(m)} to the end of the path group.
+Adds a \tcode{path_data::path_item} object constructed from \tcode{(path_data::abs_matrix(m)} to the end of the path group.
 \end{itemdescr}
 
 \indexlibrarymember{path_builder}{modify_matrix}%
 \begin{itemdecl}
-void modify_matrix(const matrix_2d& m) noexcept;
+void rel_matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -445,7 +442,7 @@ The matrix \tcode{m} shall be invertible.
 
 \pnum
 \effects
-Adds a \tcode{path_data::path_item} object constructed from \tcode{(path_data::modify_matrix(m)} to the end of the path group.
+Adds a \tcode{path_data::path_item} object constructed from \tcode{(path_data::rel_matrix(m)} to the end of the path group.
 \end{itemdescr}
 
 \indexlibrarymember{path_builder}{revert_matrix}%
@@ -458,48 +455,18 @@ void revert_matrix() noexcept;
 Adds a \tcode{path_data::path_item} object constructed from \tcode{(path_data::revert_matrix()} to the end of the path group.
 \end{itemdescr}
 
-\indexlibrarymember{path_builder}{set_origin}%
+\indexlibrarymember{path_builder}{line}%
 \begin{itemdecl}
-void set_origin(const vector_2d& pt) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::set_origin(pt)} to the end of the path group.
-\end{itemdescr}
-
-\indexlibrarymember{path_builder}{modify_origin}%
-\begin{itemdecl}
-void modify_origin(const vector_2d& pt) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::modify_origin(pt)} to the end of the path group.
-\end{itemdescr}
-
-\indexlibrarymember{path_builder}{revert_origin}%
-\begin{itemdecl}
-void revert_origin() noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::revert_origin()} to the end of the path group.
-\end{itemdescr}
-
-\indexlibrarymember{path_builder}{line_to}%
-\begin{itemdecl}
-void line_to(const vector_2d& pt) noexcept;
+void line(const vector_2d& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::abs_line(pt)} to the end of the path group.
 \end{itemdescr}
 
-\indexlibrarymember{path_builder}{rel_line_to}%
+\indexlibrarymember{path_builder}{rel_line}%
 \begin{itemdecl}
-void rel_line_to(const vector_2d& dpt) noexcept;
+void rel_line(const vector_2d& dpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -507,9 +474,9 @@ void rel_line_to(const vector_2d& dpt) noexcept;
 Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::rel_line(pt)} to the end of the path group.
 \end{itemdescr}
 
-\indexlibrarymember{path_builder}{quadratic_curve_to}%
+\indexlibrarymember{path_builder}{quadratic_curve}%
 \begin{itemdecl}
-void quadratic_curve_to(const vector_2d& pt0, const vector_2d& pt1) noexcept;
+void quadratic_curve(const vector_2d& pt0, const vector_2d& pt1) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -517,9 +484,9 @@ void quadratic_curve_to(const vector_2d& pt0, const vector_2d& pt1) noexcept;
 Adds a \tcode{path_data::path_item} object constructed from\\ \tcode{path_data::abs_quadratic_curve(pt0, pt1)} to the end of the path group.
 \end{itemdescr}
 
-\indexlibrarymember{path_builder}{rel_quadratic_curve_to}%
+\indexlibrarymember{path_builder}{rel_quadratic_curve}%
 \begin{itemdecl}
-void rel_quadratic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1)
+void rel_quadratic_curve(const vector_2d& dpt0, const vector_2d& dpt1)
   noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -528,9 +495,9 @@ void rel_quadratic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1)
 Adds a \tcode{path_data::path_item} object constructed from\\ \tcode{path_data::rel_quadratic_curve(dpt0, dpt1)} to the end of the path group.
 \end{itemdescr}
 
-\indexlibrarymember{path_builder}{cubic_curve_to}%
+\indexlibrarymember{path_builder}{cubic_curve}%
 \begin{itemdecl}
-void cubic_curve_to(const vector_2d& pt0, const vector_2d& pt1,
+void cubic_curve(const vector_2d& pt0, const vector_2d& pt1,
   const vector_2d& pt2) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -540,9 +507,9 @@ void cubic_curve_to(const vector_2d& pt0, const vector_2d& pt1,
 Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::abs_cubic_curve(pt0, pt1, pt2)} to the end of the path group.
 \end{itemdescr}
 
-\indexlibrarymember{path_builder}{rel_cubic_curve_to}%
+\indexlibrarymember{path_builder}{rel_cubic_curve}%
 \begin{itemdecl}
-void rel_cubic_curve_to(const vector_2d& dpt0, const vector_2d& dpt1,
+void rel_cubic_curve(const vector_2d& dpt0, const vector_2d& dpt1,
   const vector_2d& dpt2) noexcept;
 \end{itemdecl}
 \begin{itemdescr}

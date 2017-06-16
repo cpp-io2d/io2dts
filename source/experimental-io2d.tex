@@ -201,10 +201,17 @@ namespace std { namespace experimental {
   image_surface make_image_surface(format format, int width, int height);
   image_surface make_image_surface(format format, int width, int height, 
     error_code& ec) noexcept;
+  image_surface make_image_surface(image_surface& sfc) noexcept;
   double angle_for_point(const vector_2d& ctr, const vector_2d& pt,
     const vector_2d& scl = vector_2d{ 1.0, 1.0 }) noexcept;
   vector_2d point_for_angle(double ang, double mgn = 1.0) noexcept;
   vector_2d point_for_angle(double ang, const vector_2d& rad) noexcept;
+  vector_2d arc_start(const vector_2d& ctr, double sang, const vector_2d& rad, 
+    const matrix_2d& m = matrix_2d{}) noexcept;
+  vector_2d arc_center(const vector_2d& cpt, double sang, const vector_2d& rad, 
+    const matrix_2d& m = matrix_2d{}) noexcept;
+  vector_2d arc_end(const vector_2d& cpt, double eang, const vector_2d& rad, 
+    const matrix_2d& m = matrix_2d{}) noexcept;
 } } } }
 
 namespace std {
