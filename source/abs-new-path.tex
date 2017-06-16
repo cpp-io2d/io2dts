@@ -14,7 +14,7 @@ When interpreting a path group, the path's last-move-to-point and current point 
 \rSec1 [\iotwod.absnewpath.synopsis] {\tcode{abs_new_path} synopsis}%
 
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std::experimental::io2d::v1 {
   namespace path_data {
     class abs_new_path {
     public:
@@ -35,7 +35,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     constexpr bool operator!=(const abs_new_path& lhs, const abs_new_path& rhs) 
       noexcept;
   }
-} } } }
+}
 \end{codeblock}
 
 \rSec1 [\iotwod.absnewpath.cons] {\tcode{abs_new_path} constructors}%

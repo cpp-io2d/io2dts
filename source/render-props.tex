@@ -13,7 +13,7 @@ It has a Surface Matrix of type \tcode{matrix_2d}, and a Compositing Operator of
 \rSec1 [\iotwod.renderprops.synopsis] {\tcode{render_props} synopsis}
 
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std::experimental::io2d::v1 {
   class render_props {
   public:
     // \ref{\iotwod.renderprops.cons}, constructors:
@@ -29,7 +29,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     constexpr compositing_op compositing() const noexcept;
     constexpr matrix_2d surface_matrix() const noexcept;
   };
-}}}}
+}
 \end{codeblock}
 
 \rSec1 [\iotwod.renderprops.cons] {\tcode{render_props} constructors}

@@ -13,7 +13,7 @@ It has a Clip Area of type \tcode{path_group} and a Fill Rule of type \tcode{fil
 \rSec1 [\iotwod.clipprops.synopsis] {\tcode{clip_props} synopsis}
 
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std::experimental::io2d::v1 {
   class clip_props {
   public:
     // \ref{\iotwod.clipprops.cons}, constructors:
@@ -34,7 +34,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     path_group clip() const noexcept;
     experimental::io2d::fill_rule fill_rule() const noexcept;
   };
-}}}}
+}
 \end{codeblock}
 
 \rSec1 [\iotwod.clipprops.cons] {\tcode{clip_props} constructors}

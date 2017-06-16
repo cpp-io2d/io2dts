@@ -37,7 +37,7 @@ The definitions of the rendering and composing operations in \ref{\iotwod.surfac
 \rSec1 [\iotwod.surface.synopsis] {\tcode{surface} synopsis}
 
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std::experimental::io2d::v1 {
   class surface {
   public:
     surface() = delete;
@@ -95,7 +95,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       const optional<render_props>&rp = nullopt,
       const optional<clip_props>& cl = nullopt);
   };
-} } } }
+}
 \end{codeblock}
 
 \rSec1 [\iotwod.surface.rendering] {Rendering and composing}

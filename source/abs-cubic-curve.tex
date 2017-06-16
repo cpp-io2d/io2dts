@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.abscubiccurve] {Class \tcode{abs_cubic_curve}}%
+\rSec0 [\iotwod.abscubiccurve] {Class \tcode{abs_cubic_curve}}
 
 \pnum
 \indexlibrary{\idxcode{abs_cubic_curve}}%
@@ -11,10 +11,10 @@ It has a \term{first control point} of type \tcode{vector_2d}, a \term{second co
 \pnum
 When interpreting a path group, after the curve is added to the path, the path's current point is the end point.
 
-\rSec1 [\iotwod.abscubiccurve.synopsis] {\tcode{abs_cubic_curve} synopsis}%
+\rSec1 [\iotwod.abscubiccurve.synopsis] {\tcode{abs_cubic_curve} synopsis}
 
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std::experimental::io2d::v1 {
   namespace path_data {
     class abs_cubic_curve {
     public:
@@ -28,7 +28,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
       constexpr void control_2(const vector_2d& cpt) noexcept;
       constexpr void end(const vector_2d& ept) noexcept;
 
-
       // \ref{\iotwod.abscubiccurve.observers}, observers:
       constexpr vector_2d control_1() const noexcept;
       constexpr vector_2d control_2() const noexcept;
@@ -41,7 +40,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     constexpr bool operator!=(const abs_cubic_curve& lhs,
       const abs_cubic_curve& rhs) noexcept;
   }
-} } } }
+}
 \end{codeblock}
 
 \rSec1 [\iotwod.abscubiccurve.cons] {\tcode{abs_cubic_curve} constructors}
@@ -76,7 +75,7 @@ The second control point is \tcode{cpt2}.
 The end point is \tcode{ept}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.abscubiccurve.modifiers]{\tcode{abs_cubic_curve} modifiers}%
+\rSec1 [\iotwod.abscubiccurve.modifiers]{\tcode{abs_cubic_curve} modifiers}
 
 \indexlibrarymember{control_1}{abs_cubic_curve}%
 \begin{itemdecl}
@@ -108,7 +107,7 @@ constexpr void end(const vector_2d& ept) noexcept;
 The end point is \tcode{ept}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.abscubiccurve.observers]{\tcode{abs_cubic_curve} observers}%
+\rSec1 [\iotwod.abscubiccurve.observers]{\tcode{abs_cubic_curve} observers}
 
 \indexlibrarymember{control_1}{abs_cubic_curve}%
 \begin{itemdecl}
@@ -140,7 +139,7 @@ constexpr vector_2d end() const noexcept;
 The end point.
 \end{itemdescr}
 
-\rSec1 [\iotwod.abscubiccurve.nonmember]{Non-member functions}%
+\rSec1 [\iotwod.abscubiccurve.nonmember]{Non-member functions}
 
 \indexlibrarymember{operator==}{abs_cubic_curve}%
 \begin{itemdecl}

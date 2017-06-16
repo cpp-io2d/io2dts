@@ -4,7 +4,7 @@
 \rSec1 [\iotwod.displaysurface.intro] {\tcode{display_surface} Description}
 
 \pnum
-\indexlibrary{\idxcode{display_surface}}
+\indexlibrary{\idxcode{display_surface}}%
 The class \tcode{display_surface} derives from the \tcode{surface} class and provides an interface to a raster graphics data graphics resource called the \tcode{Back Buffer} and to a second raster graphics data graphics resource called the \tcode{Display Buffer}.
 
 \pnum
@@ -24,7 +24,7 @@ In the absence of specialty hardware, implementers are encouraged to use a filte
 \rSec1 [\iotwod.displaysurface.synopsis] {\tcode{display_surface} synopsis}
 
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std::experimental::io2d::v1 {
   class display_surface : public surface {
   public:
     // \ref{\iotwod.displaysurface.cons}, construct/copy/move/destroy:
@@ -106,7 +106,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     double desired_frame_rate() const noexcept;
     double elapsed_draw_time() const noexcept;
   };
-} } } }
+}
 \end{codeblock}
 
 \rSec1 [\iotwod.displaysurface.misc] {\tcode{display_surface} miscellaneous behavior}%

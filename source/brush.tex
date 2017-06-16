@@ -27,7 +27,7 @@ Several graphics and rendering technologies that are currently widely used typic
 \rSec1 [\iotwod.brush.synopsis] {\tcode{brush} synopsis}
 
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std::experimental::io2d::v1 {
   class brush {
   public:
     // \ref{\iotwod.brush.cons}, construct/copy/move/destroy:
@@ -47,7 +47,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     // \ref{\iotwod.brush.observers}, observers:
     brush_type type() const noexcept;
   };
-} } } }
+}
 \end{codeblock}
 
 \rSec1 [\iotwod.brush.sampling] {Sampling from a \tcode{brush} object}

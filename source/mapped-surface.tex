@@ -4,7 +4,7 @@
 \rSec1 [\iotwod.mappedsurface.synopsis] {\tcode{mapped_surface} synopsis}
 
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std::experimental::io2d::v1 {
   class mapped_surface {
   public:
     // \ref{\iotwod.mappedsurface.cons}, construct/copy/move/destroy:
@@ -27,7 +27,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     int height() const noexcept;
     int stride() const noexcept;
   };
-} } } }
+}
 \end{codeblock}
 
 \rSec1 [\iotwod.mappedsurface.intro] {\tcode{mapped_surface} Description}

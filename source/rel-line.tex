@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.relline] {Class \tcode{rel_line}}%
+\rSec0 [\iotwod.relline] {Class \tcode{rel_line}}
 
 \pnum
 \indexlibrary{\idxcode{rel_line}}%
@@ -17,7 +17,7 @@ After the line is added to the path, the path's current point is the end point.
 \rSec1 [\iotwod.relline.synopsis] {\tcode{rel_line} synopsis}
 
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std::experimental::io2d::v1 {
   namespace path_data {
     class rel_line {
     public:
@@ -38,10 +38,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     constexpr bool operator!=(const rel_line& lhs, const rel_line& rhs) 
       noexcept;
   }
-} } } }
+}
 \end{codeblock}
 
-\rSec1 [\iotwod.relline.cons] {\tcode{rel_line} constructors}%
+\rSec1 [\iotwod.relline.cons] {\tcode{rel_line} constructors}
 
 \indexlibrary{\idxcode{rel_line}!constructor}%
 \begin{itemdecl}
@@ -66,7 +66,7 @@ Constructs an object of type \tcode{rel_line}.
 The end point is \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.relline.modifiers]{\tcode{rel_line} modifiers}%
+\rSec1 [\iotwod.relline.modifiers]{\tcode{rel_line} modifiers}
 
 \indexlibrarymember{rel_line}{to}
 \begin{itemdecl}
@@ -78,7 +78,7 @@ constexpr void to(const vector_2d& pt) noexcept;
 The end point is \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.relline.observers]{\tcode{rel_line} observers}%
+\rSec1 [\iotwod.relline.observers]{\tcode{rel_line} observers}
 
 \indexlibrary{\idxcode{rel_line}!\idxcode{to}}%
 \begin{itemdecl}
@@ -90,7 +90,7 @@ constexpr vector_2d to() const noexcept;
 The end point.
 \end{itemdescr}
 
-\rSec1 [\iotwod.relline.nonmember]{Non-member functions}%
+\rSec1 [\iotwod.relline.nonmember]{Non-member functions}
 
 \indexlibrarymember{operator==}{rel_line}%
 \begin{itemdecl}

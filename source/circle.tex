@@ -13,7 +13,7 @@ It has a Center of type \tcode{vector_2d} and a Radius of type \tcode{double}.
 \rSec1 [\iotwod.circle.synopsis] {\tcode{circle} synopsis}
 
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std::experimental::io2d::v1 {
   class circle {
   public:
     // \ref{\iotwod.circle.cons}, construct/copy/move/destroy:
@@ -28,7 +28,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     constexpr vector_2d center() const noexcept;
     constexpr double radius() const noexcept;
   };
-} } } }
+}
 \end{codeblock}
 
 \rSec1 [\iotwod.circle.cons] {\tcode{circle} constructors and assignment operators}

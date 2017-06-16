@@ -85,19 +85,6 @@ namespace std { namespace experimental {
       noexcept;
     constexpr bool operator!=(const revert_matrix&, const revert_matrix&) 
       noexcept;
-    class set_origin;
-    constexpr bool operator==(const set_origin&, const set_origin&) noexcept;
-    constexpr bool operator!=(const set_origin&, const set_origin&) noexcept;
-    class modify_origin;
-    constexpr bool operator==(const modify_origin&, const modify_origin&) 
-      noexcept;
-    constexpr bool operator!=(const modify_origin&, const modify_origin&) 
-      noexcept;
-    class revert_origin;
-    constexpr bool operator==(const revert_origin&, const revert_origin&) 
-      noexcept;
-    constexpr bool operator!=(const revert_origin&, const revert_origin&) 
-      noexcept;
     class abs_cubic_curve;
     constexpr bool operator==(const abs_cubic_curve&, const abs_cubic_curve&) 
       noexcept;
@@ -133,10 +120,10 @@ namespace std { namespace experimental {
       const rel_quadratic_curve&) noexcept;
     constexpr bool operator!=(const rel_quadratic_curve&,
       const rel_quadratic_curve&) noexcept;
-    using path_item = variant<abs_cubic_curve, abs_line, abs_new_path,
-      abs_quadratic_curve, arc, close_path, modify_matrix, modify_origin,
-      rel_cubic_curve, rel_line, rel_new_path, rel_quadratic_curve, 
-      revert_matrix, revert_origin, set_matrix, set_origin>;
+    using path_item = variant<abs_cubic_curve, abs_line, abs_matrix, 
+      abs_new_path, abs_quadratic_curve, arc, close_path,
+      rel_cubic_curve, rel_line, rel_matrix, rel_new_path, rel_quadratic_curve, 
+      revert_matrix>;
   };
   
   class path_group;

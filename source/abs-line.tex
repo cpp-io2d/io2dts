@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.absline] {Class \tcode{abs_line}}%
+\rSec0 [\iotwod.absline] {Class \tcode{abs_line}}
 
 \pnum
 \indexlibrary{\idxcode{abs_line}}%
@@ -11,10 +11,10 @@ It has an \term{end point} of type \tcode{vector_2d}.
 \pnum
 After the line is added to the path, the path's current point is the end point.
 
-\rSec1 [\iotwod.absline.synopsis] {\tcode{abs_line} synopsis}%
+\rSec1 [\iotwod.absline.synopsis] {\tcode{abs_line} synopsis}
 
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std::experimental::io2d::v1 {
   namespace path_data {
     class abs_line {
     public:
@@ -35,10 +35,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     constexpr bool operator!=(const abs_line& lhs, const abs_line& rhs) 
       noexcept;
   }
-} } } }
+}
 \end{codeblock}
 
-\rSec1 [\iotwod.absline.cons] {\tcode{abs_line} constructors}%
+\rSec1 [\iotwod.absline.cons] {\tcode{abs_line} constructors}
 
 \indexlibrary{\idxcode{abs_line}!constructor}%
 \begin{itemdecl}
@@ -63,7 +63,7 @@ Constructs an object of type \tcode{abs_line}.
 The end point is \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.absline.modifiers]{\tcode{abs_line} modifiers}%
+\rSec1 [\iotwod.absline.modifiers]{\tcode{abs_line} modifiers}
 
 \indexlibrarymember{abs_line}{to}%
 \begin{itemdecl}
@@ -75,7 +75,7 @@ constexpr void to(const vector_2d& pt) noexcept;
 The end point is \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.absline.observers]{\tcode{abs_line} observers}%
+\rSec1 [\iotwod.absline.observers]{\tcode{abs_line} observers}
 
 \indexlibrarymember{abs_line}{to}%
 \begin{itemdecl}
@@ -87,7 +87,7 @@ constexpr vector_2d to() const noexcept;
 The end point.
 \end{itemdescr}
 
-\rSec1 [\iotwod.absline.nonmember]{Non-member functions}%
+\rSec1 [\iotwod.absline.nonmember]{Non-member functions}
 
 \indexlibrarymember{operator==}{abs_line}%
 \begin{itemdecl}

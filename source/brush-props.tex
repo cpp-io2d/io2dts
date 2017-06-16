@@ -14,7 +14,7 @@ It has a Wrap Mode of type \tcode{wrap_mode}, a Filter of type \tcode{filter}, a
 \rSec1 [\iotwod.brushprops.synopsis] {\tcode{brush_props} synopsis}
 
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std::experimental::io2d::v1 {
   class brush_props {
   public:
     // \ref{\iotwod.brushprops.cons}, constructors:
@@ -36,7 +36,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     constexpr experimental::io2d::fill_rule fill_rule() const noexcept;
     constexpr matrix_2d brush_matrix() const noexcept;
   };
-}}}}
+}
 \end{codeblock}
 
 \rSec1 [\iotwod.brushprops.cons] {\tcode{brush_props} constructors}

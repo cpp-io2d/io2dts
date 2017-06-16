@@ -1,7 +1,7 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.arc] {Class \tcode{arc}}%
+\rSec0 [\iotwod.arc] {Class \tcode{arc}}
 
-\rSec1 [\iotwod.arc.general] {In general}%
+\rSec1 [\iotwod.arc.general] {In general}
 
 \pnum
 \indexlibrary{\idxcode{arc}}%
@@ -24,10 +24,10 @@ The radius describes the \xaxis radius and \yaxis radius of the ellipse that the
 \pnum
 After the arc is added to the path, the path's current point is the point at which the arc ends.
 
-\rSec1 [\iotwod.arc.synopsis] {\tcode{arc} synopsis}%
+\rSec1 [\iotwod.arc.synopsis] {\tcode{arc} synopsis}
 
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std::experimental::io2d::v1 {
   namespace path_data {
     class arc {
     public:
@@ -55,10 +55,10 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     constexpr bool operator==(const arc& lhs, const arc& rhs) noexcept;
     constexpr bool operator!=(const arc& lhs, const arc& rhs) noexcept;
   }
-} } } }
+}
 \end{codeblock}
 
-\rSec1 [\iotwod.arc.cons] {\tcode{arc} constructors}%
+\rSec1 [\iotwod.arc.cons] {\tcode{arc} constructors}
 
 \indexlibrary{\idxcode{arc}!constructor}%
 \begin{itemdecl}
@@ -90,7 +90,7 @@ The rotation is \tcode{rot}.
 The start angle is \tcode{sang}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.arc.modifiers]{\tcode{arc} modifiers}%
+\rSec1 [\iotwod.arc.modifiers]{\tcode{arc} modifiers}
 
 \indexlibrarymember{radius}{arc}%
 \begin{itemdecl}
@@ -122,7 +122,7 @@ constexpr void start_angle(double sang) noexcept;
 The start angle is \tcode{sang}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.arc.observers]{\tcode{arc} observers}%
+\rSec1 [\iotwod.arc.observers]{\tcode{arc} observers}
 
 \indexlibrarymember{radius}{arc}%
 \begin{itemdecl}
@@ -191,7 +191,7 @@ return cpt + pt * lmtx;
 \end{codeblock}
 \end{itemdescr}
 
-\rSec1 [\iotwod.arc.nonmember]{Non-member functions}%
+\rSec1 [\iotwod.arc.nonmember]{Non-member functions}
 
 \indexlibrarymember{operator==}{arc}%
 \begin{itemdecl}
