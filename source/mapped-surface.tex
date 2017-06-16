@@ -9,10 +9,6 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
   public:
     // \ref{\iotwod.mappedsurface.cons}, construct/copy/move/destroy:
     mapped_surface() = delete;
-    mapped_surface(const mapped_surface&) = delete;
-    mapped_surface& operator=(const mapped_surface&) = delete;
-    mapped_surface(mapped_surface&& other) = delete;
-    mapped_surface& operator=(mapped_surface&& other) = delete;
     ~mapped_surface();
     
     // \ref{\iotwod.mappedsurface.modifiers}, modifiers:
@@ -41,7 +37,7 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 The \tcode{mapped_surface} class provides access to inspect and modify the pixel data of a \tcode{surface} object's \underlyingsurface or a subsection thereof.
 
 \pnum
-A \tcode{mapped_surface} can only be created by the \tcode{surface::map} function. It cannot be copied or moved.
+A \tcode{mapped_surface} object can only be created by the \tcode{surface::map} function. Creation of a \tcode{mapped_surface} object fails if the format of the pixel data would be \tcode{format::invalid} or \tcode{format::unknown}.
 
 \pnum
 The pixel data is presented as an array in the form of a pointer to (possibly \tcode{const}) \tcode{unsigned char}.
@@ -144,18 +140,8 @@ In a big-endian environment, \tcode{p0 == 0xFF}, \tcode{p1 == 0xFF}, \tcode{p2 =
 \end{example}
 
 \pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-\pnum
 \remarks
 The bounds of the pixel data array range from \tcode{a}, where \tcode{a} is the address returned by this function, to \tcode{a + this->stride() * this->height()}. Given a height \tcode{h} where \tcode{h} is any value from \tcode{0} to \tcode{this->height() - 1}, any attempt to read or write a byte with an address that is not within the range of addresses defined by \tcode{a + this->stride() * h} shall result in undefined behavior; no diagnostic is required.
-
-\pnum
-\errors
-\tcode{io2d_error::null_pointer} if \tcode{this->format() == \\
-experimental::io2d::format::unknown || this->format() == \\
-experimental::io2d::format::invalid}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.mappedsurface.observers]{\tcode{mapped_surface} observers}
@@ -193,18 +179,8 @@ In a big-endian environment, \tcode{p0 == 0xFF}, \tcode{p1 == 0xFF}, \tcode{p2 =
 \end{example}
 
 \pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-\pnum
 \remarks
 The bounds of the pixel data array range from \tcode{a}, where \tcode{a} is the address returned by this function, to \tcode{a + this->stride() * this->height()}. Given a height \tcode{h} where \tcode{h} is any value from \tcode{0} to \tcode{this->height() - 1}, any attempt to read a byte with an address that is not within the range of addresses defined by \tcode{a + this->stride() * h} shall result in undefined behavior; no diagnostic is required.
-
-\pnum
-\errors
-\tcode{io2d_error::null_pointer} if \tcode{this->format() == \\
-experimental::io2d::format::unknown || this->format() == \\
-experimental::io2d::format::invalid}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{mapped_surface}!\idxcode{format}}

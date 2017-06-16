@@ -496,7 +496,7 @@ Calling this function on a \tcode{surface} object and then calling any function 
 
 \pnum
 \errors
-The errors, if any, produced by this function are \impldefplain{surface!map} or are produced by the user-provided function passed via the \tcode{action} argument.
+\tcode{errc::not_supported} if a \tcode{mapped_surface} object cannot be created for the \tcode{surface} object. The \tcode{surface} object is not modified if an error occurs.
 \end{itemdescr}
 
 \rSec1 [\iotwod.surface.modifiers.render] {\tcode{surface} render modifiers}

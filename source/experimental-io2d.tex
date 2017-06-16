@@ -10,7 +10,6 @@ namespace std { namespace experimental {
 
   using dashes = tuple<vector<double>, double>;
 
-  enum class io2d_error;
   enum class fill_rule;
   enum class line_cap;
   enum class line_join;
@@ -21,9 +20,6 @@ namespace std { namespace experimental {
   enum class brush_type;
   enum class scaling;
   enum class refresh_rate;
-
-  class io2d_error_category;
-  const error_category& io2d_category() noexcept;
 
   class rectangle;
   constexpr bool operator==(const rectangle& lhs, const rectangle& rhs) 
@@ -213,21 +209,6 @@ namespace std { namespace experimental {
   vector_2d arc_end(const vector_2d& cpt, double eang, const vector_2d& rad, 
     const matrix_2d& m = matrix_2d{}) noexcept;
 } } } }
-
-namespace std {
-  template<>
-  struct is_error_condition_enum<experimental::io2d::io2d_error>
-    : public std::true_type{ };
-
-  template<>
-  struct is_error_code_enum<@\impdef@>
-    : public true_type{ }; // \expos
-
-  error_condition make_error_condition(experimental::io2d::io2d_error e) 
-    noexcept;
-
-  error_code make_error_code(experimental::io2d::io2d_error e) noexcept;
-}
 
 \end{codeblock}
 \indextext{2D graphics!synopsis|)}%

@@ -2,15 +2,15 @@
 \rSec0 [\iotwod.pathgroup] {Class \tcode{path_group}}
 
 \pnum
-\indexlibrary{\idxcode{path_group}}
-The class \tcode{path_group} contains the data that results from interpreting \ref{\iotwod.paths.interpretation} a sequence of \tcode{path_data::path_item} objects. %%in a \tcode{path_builder} object or in another container of path items.
+\indexlibrary{\idxcode{path_group}}%
+The class \tcode{path_group} contains the data that result from interpreting \ref{\iotwod.paths.interpretation} a sequence of \tcode{path_data::path_item} objects. %%in a \tcode{path_builder} object or in another container of path items.
 
 \pnum
 A \tcode{path_group} object is used by most rendering and composing operations.
 
-\pnum
-The contents of a \tcode{path_group} object are immutable, however the contents it contains are changeable using copy assignment or move assignment.
-
+%\pnum
+%The contents of a \tcode{path_group} object are immutable, however the contents it contains are changeable using copy assignment or move assignment.
+%
 %\pnum
 %A \tcode{path_group} object can be default constructed. Default construction of a \tcode{path_group} object produces the same result as constructing it from an empty \tcode{path_builder} object.
 %
@@ -18,14 +18,14 @@ The contents of a \tcode{path_group} object are immutable, however the contents 
 %When a \tcode{path_group} object is set on a \tcode{surface} object using 
 %\tcode{surface::path}, the geometric paths represented by it can be 
 %stroked or filled.
-
+%
 %\pnum
 %A \tcode{path_group} object shall be usable with any \tcode{surface} or \tcode{surface}-derived object.
 %
 \rSec1 [\iotwod.pathgroup.synopsis] {\tcode{path_group} synopsis}
 
 \begin{codeblock}
-namespace std { namespace experimental { namespace io2d { inline namespace v1 {
+namespace std::experimental::io2d::v1 {
   class path_group {
     public:
     // \ref{\iotwod.pathgroup.cons}, construct/copy/destroy:
@@ -33,14 +33,14 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
     template <class ForwardIterator>
     path_group(ForwardIterator first, ForwardIterator last);
   };
-} } } }
+}
 \end{codeblock}
 
 \rSec1 [\iotwod.pathgroup.cons] {\tcode{path_group} constructors}
 
-\indexlibrary{\idxcode{path_group}!constructor}
+\indexlibrary{\idxcode{path_group}!constructor}%
 \begin{itemdecl}
-    explicit path_group(const path_builder& pb);
+explicit path_group(const path_builder& pb);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -48,38 +48,21 @@ namespace std { namespace experimental { namespace io2d { inline namespace v1 {
 Equivalent to: \tcode{path_group\{ begin(pb), end(pb) \};}.	
 \end{itemdescr}
 
-\indexlibrary{\idxcode{path_group}!constructor}
+\indexlibrary{\idxcode{path_group}!constructor}%
 \begin{itemdecl}
-    template <class ForwardIterator>
-    path_group(ForwardIterator first, ForwardIterator last);
+template <class ForwardIterator>
+path_group(ForwardIterator first, ForwardIterator last);
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	Constructs an object of type \tcode{path_group}.
-	% When a \tcode{path_group} object is used by a \tcode{surface}-derived object, it shall produce the same result as-if its contents were constructed by processing the \tcode{path_builder} object as specified at \ref{\iotwod.paths.processing}.
-
-	\pnum
-	\throws
-	As specified in Error reporting (\ref{\iotwod.err.report}).
-
-	\pnum
-	\remarks
-	A \tcode{path_group} object may require further processing by the graphics subsystem when it is passed as an argument to a \tcode{surface} or \tcode{surface}-derived object.
-	
-	\pnum
-	Implementations should avoid or minimize the need for further processing of a \tcode{path_group} object after it has been constructed.
-
-	\pnum
-	\errors
-	\tcode{errc::not_enough_memory} if there was a failure to allocate memory.
-	
-	\pnum
-	\tcode{io2d_error::no_current_point} if, when processing the path group of the \tcode{path_builder}, an operation was encountered which required a current point the current point had no value.
-	
-	\pnum
-	\tcode{io2d_error::invalid_matrix} if, when processing path group of the \tcode{path_builder}, an operation was encountered which required the current transformation matrix to be invertible and the matrix was not invertible.
-	
-	\pnum
-	\tcode{io2d_error::invalid_status} if the implementation or graphics subsystem encountered an error other than those specified above.
+\pnum
+\effects
+Constructs an object of type \tcode{path_group}.
+%When a \tcode{path_group} object is used by a \tcode{surface}-derived object, it produces the same result as-if its contents were constructed by processing the \tcode{path_builder} object as specified at \ref{\iotwod.paths.interpretion}.
+%
+%\pnum
+%\remarks
+%A \tcode{path_group} object may require further processing by the graphics subsystem when it is passed as an argument to a \tcode{surface} or \tcode{surface}-derived object.
+%	
+%\pnum
+%Implementations should avoid or minimize the need for further processing of a \tcode{path_group} object after it has been constructed.
 \end{itemdescr}

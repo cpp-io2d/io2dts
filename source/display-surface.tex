@@ -291,10 +291,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \pnum
 \errors
-\tcode{io2d::device_error} if successful creation of the \tcode{display_surface} object would exceed the maximum number of simultaneous valid \tcode{display_surface} objects that the implementation supports.
-
-\pnum
-Other errors, if any, produced by this function are \impldefplain{display_surface!constructor}.
+\tcode{errc::not_supported} if creating the \tcode{display_surface} object would exceed the maximum number of simultaneous \tcode{display_surface} objects the implementation supports.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{display_surface}!constructor}
@@ -358,10 +355,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \pnum
 \errors
-\tcode{io2d::device_error} if successful creation of the \tcode{display_surface} object would exceed the maximum number of simultaneous valid \tcode{display_surface} objects that the implementation supports.
-
-\pnum
-Other errors, if any, produced by this function are \impldefplain{display_surface!constructor}.
+\tcode{errc::not_supported} if creating the \tcode{display_surface} object would exceed the maximum number of simultaneous \tcode{display_surface} objects the implementation supports.
 \end{itemdescr}
 
 \rSec1 [\iotwod.displaysurface.modifiers]{\tcode{display_surface} modifiers}
