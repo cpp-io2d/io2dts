@@ -9,7 +9,7 @@
 The \tcode{brush_props} class provides general state information that is applicable to all rendering and composing operations (\ref{\iotwod.surface.rendering}).
 
 \pnum
-It has a Wrap Mode of type \tcode{wrap_mode}, a Filter of type \tcode{filter}, a Fill Rule of type \tcode{fill_rule}, and a Brush Matrix of type \tcode{matrix_2d}.
+It has a \term{wrap mode} of type \tcode{wrap_mode}, a \term{filter} of type \tcode{filter}, a \term{fill rule} of type \tcode{fill_rule}, and a \term{brush matrix} of type \tcode{matrix_2d}.
 
 \rSec1 [\iotwod.brushprops.synopsis] {\tcode{brush_props} synopsis}
 
@@ -41,7 +41,7 @@ namespace std::experimental::io2d::v1 {
 
 \rSec1 [\iotwod.brushprops.cons] {\tcode{brush_props} constructors}
 
-\indexlibrary{\idxcode{brush_props}!constructor}
+\indexlibrary{\idxcode{brush_props}!constructor}%
 \begin{itemdecl}
 constexpr brush_props(
   experimental::io2d::wrap_mode w = experimental::io2d::wrap_mode::none,
@@ -56,51 +56,45 @@ constexpr brush_props(
 
 \pnum
 \effects
-The value of Wrap Mode is \tcode{w}.
+Constructs an object of type \tcode{brush_props}.
 
 \pnum
-The value of Filter is \tcode{fi}.
-
-\pnum
-The value of Fill Rule is \tcode{fr}.
-
-\pnum
-The value of Brush Matrix is \tcode{m}.
+The wrap mode is \tcode{w}. The filter is \tcode{fi}. The fill rule is \tcode{fr}. The brush matrix is \tcode{m}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.brushprops.modifiers] {\tcode{brush_props} modifiers}
 
-\indexlibrary{\idxcode{brush_props}!\idxcode{wrap_mode}}
+\indexlibrarymember{brush_props}{wrap_mode}%
 \begin{itemdecl}
 constexpr void wrap_mode(experimental::io2d::wrap_mode w) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-The value of Wrap Mode is \tcode{w}.
+The wrap mode is \tcode{w}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{brush_props}!\idxcode{filter}}
+\indexlibrarymember{brush_props}{filter}%
 \begin{itemdecl}
 constexpr void filter(experimental::io2d::filter fi) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-The value of Filter is \tcode{fi}.
+The filter is \tcode{fi}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{brush_props}!\idxcode{fill_rule}}
+\indexlibrarymember{brush_props}{fill_rule}%
 \begin{itemdecl}
 constexpr void fill_rule(experimental::io2d::fill_rule fr) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-The value of Fill Rule is \tcode{fr}.
+The fill rule is \tcode{fr}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{brush_props}!\idxcode{brush_matrix}}
+\indexlibrarymember{brush_props}{brush_matrix}%
 \begin{itemdecl}
 constexpr void brush_matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
@@ -111,47 +105,47 @@ constexpr void brush_matrix(const matrix_2d& m) noexcept;
 
 \pnum
 \effects
-The value of Brush Matrix is \tcode{m}.
+The brush matrix is \tcode{m}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.brushprops.observers] {\tcode{brush_props} observers}
 
-\indexlibrary{\idxcode{brush_props}!\idxcode{wrap_mode}}
+\indexlibrarymember{brush_props}{wrap_mode}%
 \begin{itemdecl}
 constexpr experimental::io2d::wrap_mode wrap_mode() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The value of Wrap Mode.
+The wrap mode.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{brush_props}!\idxcode{filter}}
+\indexlibrarymember{brush_props}{filter}%
 \begin{itemdecl}
 constexpr experimental::io2d::filter filter() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The value of Filter.
+The filter.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{brush_props}!\idxcode{fill_rule}}
+\indexlibrarymember{brush_props}{fill_rule}%
 \begin{itemdecl}
 constexpr experimental::io2d::fill_rule fill_rule() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The value of Fill Rule.
+The fill rule.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{brush_props}!\idxcode{brush_matrix}}
+\indexlibrarymember{brush_props}{brush_matrix}%
 \begin{itemdecl}
 constexpr matrix_2d brush_matrix() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The value of Brush Matrix.
+The brush matrix.
 \end{itemdescr}

@@ -8,7 +8,7 @@
 The \tcode{render_props} class provides general state information that is applicable to all rendering and composing operations (\ref{\iotwod.surface.rendering}).
 
 \pnum
-It has a Surface Matrix of type \tcode{matrix_2d}, and a Compositing Operator of type \tcode{compositing_op}.
+It has an \term{antialias} of type \tcode{antialias}, a \term{surface matrix} of type \tcode{matrix_2d}, and a \term{compositing operator} of type \tcode{compositing_op}.
 
 \rSec1 [\iotwod.renderprops.synopsis] {\tcode{render_props} synopsis}
 
@@ -18,14 +18,16 @@ namespace std::experimental::io2d::v1 {
   public:
     // \ref{\iotwod.renderprops.cons}, constructors:
     constexpr render_props() noexcept;
-    constexpr explicit render_props(const matrix_2d& m,
-      compositing_op co = compositing_op::over) noexcept;
+    constexpr explicit render_props(antialias a, const matrix_2d& m = 
+      matrix_2d{ }, compositing_op co = compositing_op::over) noexcept;
     
     // \ref{\iotwod.renderprops.modifiers}, modifiers:
+    constexpr void antialiasing(antialias a) noexcept;
     constexpr void compositing(compositing_op co) noexcept;
     constexpr void surface_matrix(const matrix_2d& m) noexcept;
     
     // \ref{\iotwod.renderprops.observers}, observers:
+    constexpr antialias antialiasing() const noexcept;
     constexpr compositing_op compositing() const noexcept;
     constexpr matrix_2d surface_matrix() const noexcept;
   };
@@ -41,16 +43,13 @@ constexpr render_props() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-The value of Surface Matrix is its default-constructed value.
-
-\pnum
-The value of Compositing Operator is \tcode{compositing_op::over}.
+Equivalent to: \tcode{render_props(antialias::good)}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{render_props}!constructor}
+\indexlibrary{\idxcode{render_props}!constructor}%
 \begin{itemdecl}
-constexpr explicit render_props(const matrix_2d& m,
-  compositing_op co = compositing_op::over) noexcept;
+constexpr explicit render_props(antialias a, const matrix_2d& m,
+  compositing_op co) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -59,25 +58,32 @@ constexpr explicit render_props(const matrix_2d& m,
 
 \pnum
 \effects
-The value of Surface Matrix is \tcode{m}.
-
-\pnum
-The value of Compositing Operator is \tcode{co}.
+The antialias is \tcode{a}. The surface matrix is \tcode{m}. The compositing operator is \tcode{co}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.renderprops.modifiers] {\tcode{render_props} modifiers}
 
-\indexlibrary{\idxcode{render_props}!\idxcode{compositing}}
+\indexlibrarymember{antialiasing}{render_props}%
+\begin{itemdecl}
+constexpr void antialiasing(antialias a) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+The antialias is \tcode{a}.
+\end{itemdescr}
+
+\indexlibrarymember{compositing}{render_props}%
 \begin{itemdecl}
 constexpr void compositing(compositing_op co) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-The value of Compositing Operator is \tcode{co}.
+The compositing operator is \tcode{co}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{render_props}!\idxcode{surface_matrix}}
+\indexlibrarymember{surface_member}{render_props}%
 \begin{itemdecl}
 constexpr void surface_matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
@@ -88,28 +94,37 @@ constexpr void surface_matrix(const matrix_2d& m) noexcept;
 
 \pnum
 \effects
-The value of Surface Matrix is \tcode{m}.
+The surface matrix is \tcode{m}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.renderprops.observers] {\tcode{render_props} observers}
 
-\indexlibrary{\idxcode{render_props}!\idxcode{compositing}}
+\indexlibrarymember{antialiasing}{render_props}%
+\begin{itemdecl}
+constexpr antialias antialiasing() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The antialias.
+\end{itemdescr}
+
+\indexlibrarymember{compositing}{render_props}%
 \begin{itemdecl}
 constexpr compositing_op compositing() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The value of Compositing Operator.
+The compositing operator.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{render_props}!\idxcode{surface_matrix}}
+\indexlibrarymember{surface_matrix}{render_props}%
 \begin{itemdecl}
 constexpr matrix_2d surface_matrix() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The value of Surface Matrix.
+The surface matrix.
 \end{itemdescr}
-

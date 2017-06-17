@@ -8,7 +8,7 @@
 The \tcode{clip_props} class provides general state information that is applicable to all rendering and composing operations (\ref{\iotwod.surface.rendering}).
 
 \pnum
-It has a Clip Area of type \tcode{path_group} and a Fill Rule of type \tcode{fill_rule}.
+It has a \term{clip area} of type \tcode{path_group} and a \term{fill rule} of type \tcode{fill_rule}.
 
 \rSec1 [\iotwod.clipprops.synopsis] {\tcode{clip_props} synopsis}
 
@@ -20,8 +20,9 @@ namespace std::experimental::io2d::v1 {
     clip_props() noexcept;
     template <class Allocator>
     explicit clip_props(const path_builder<Allocator>& pb,
-      experimental::io2d::fill_rule = experimental::io2d::fill_rule::winding);
-    explicit clip_props(const path_group& pg, experimental::io2d::fill_rule =
+      experimental::io2d::fill_rule fr = 
+      experimental::io2d::fill_rule::winding);
+    explicit clip_props(const path_group& pg, experimental::io2d::fill_rule fr =
       experimental::io2d::fill_rule::winding) noexcept;
 
     // \ref{\iotwod.clipprops.modifiers}, modifiers:
@@ -39,65 +40,86 @@ namespace std::experimental::io2d::v1 {
 
 \rSec1 [\iotwod.clipprops.cons] {\tcode{clip_props} constructors}
 
-\indexlibrary{\idxcode{clip_props}!constructor}
+\indexlibrary{\idxcode{clip_props}!constructor}%
 \begin{itemdecl}
 clip_props() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-The value of Clip Area is its default-constructed value.
-
-\pnum
-The value of Fill Rule is \tcode{experimental::io2d::fill_rule::winding}.
+Equivalent to: \tcode{clip_props(path_builder<>\{ \})}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.clipprops.modifiers] {\tcode{clip_props} modifiers}
-
-\indexlibrary{\idxcode{clip_props}!\idxcode{clip}}
+\indexlibrary{\idxcode{clip_props}!constructor}%
 \begin{itemdecl}
 template <class Allocator>
-void clip(const path_builder<Allocator>& pb);
-void clip(const path_group& pg) noexcept;
+explicit clip_props(const path_builder<Allocator>& pb,
+  experimental::io2d::fill_rule fr);
+explicit clip_props(const path_group& pg, experimental::io2d::fill_rule fr) 
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-The value of Clip Area is:
+Constructs an object of type \tcode{clip_props}.
+
+\pnum
+The clip area is:
+\begin{itemize}
+\item \tcode{path_group\{pb\}}; or
+\item \tcode{pg}.
+\end{itemize}
+
+\pnum
+The fill rule is \tcode{fr}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.clipprops.modifiers] {\tcode{clip_props} modifiers}
+
+\indexlibrarymember{clip}{clip_props}%
+\begin{itemdecl}
+template <class Allocator>
+void clip(const path_builder<Allocator>& pb, experimental::io2d::fill_rule fr);
+void clip(const path_group& pg, experimental::io2d::fill_rule fr) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+The clip area is:
 \begin{itemize}
 \item \tcode{path_group\{pb\}}; or
 \item \tcode{pg}.
 \end{itemize}
 \end{itemdescr}
 
-\indexlibrary{\idxcode{clip_props}!\idxcode{fill_rule}}
+\indexlibrarymember{fill_rule}{clip_props}%
 \begin{itemdecl}
 void fill_rule(experimental::io2d::fill_rule fr) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-The value of Fill Rule is \tcode{fr}.
+The fill rule is \tcode{fr}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.clipprops.observers] {\tcode{clip_props} observers}
 
-\indexlibrary{\idxcode{clip_props}!\idxcode{clip}}
+\indexlibrarymember{clip}{clip_props}%
 \begin{itemdecl}
 path_group clip() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The value of Clip Area.
+The clip area.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{clip_props}!\idxcode{fill_rule}}
+\indexlibrarymember{fill_rule}{clip_props}%
 \begin{itemdecl}
 experimental::io2d::fill_rule fill_rule() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The value of Fill Rule.
+The fill rule.
 \end{itemdescr}
