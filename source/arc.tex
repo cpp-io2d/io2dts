@@ -5,24 +5,10 @@
 
 \pnum
 \indexlibrary{\idxcode{arc}}%
-The class \tcode{arc} describes a path item that adds an arc path segment to a path.
+The class \tcode{arc} describes a path item that is a path segment.
 
 \pnum
 It has a \term{radius} of type \tcode{vector_2d}, a \term{rotation} of type \tcode{float}, and a \term{start angle} of type \tcode{float}.
-
-\pnum
-The rotation and start angle are in radians. The arc begins at its start angle and ends at the angle that is rotation radians from the start angle.
-
-\pnum
-\begin{note}
-Negative rotation is clockwise. Positive rotation is counterclockwise.
-\end{note}
-
-\pnum
-The radius describes the \xaxis radius and \yaxis radius of the ellipse that the arc is on. The point of the start angle is the path's current point.
-
-\pnum
-After the arc is added to the path, the path's current point is the point at which the arc ends.
 
 \rSec1 [\iotwod.arc.synopsis] {\tcode{arc} synopsis}
 

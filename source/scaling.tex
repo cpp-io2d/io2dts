@@ -5,7 +5,7 @@
 
 \pnum
 The scaling enum class specifies the type of scaling a \tcode{display_surface} 
-will use when the size of its Display Buffer (\ref{\iotwod.displaysurface.intro}) differs from the size of its Back Buffer (\ref{\iotwod.displaysurface.intro}).
+will use when the size of its \term{display buffer} (\ref{\iotwod.displaysurface.intro}) differs from the size of its \term{back buffer} (\ref{\iotwod.displaysurface.intro}).
 
 \pnum
 See Table~\ref{tab:\iotwod.scaling.meanings} for the meaning of each \tcode{scaling} enumerator.
@@ -30,9 +30,9 @@ namespace std::experimental::io2d::v1 {
 \begin{note}
 In the following table, examples will be given to help explain the meaning of each enumerator. The examples will all use a \tcode{display_surface} called \tcode{ds}.
 
-The Back Buffer (\ref{\iotwod.displaysurface.intro}) of \tcode{ds} is 640x480 (i.e. it has a width of 640 pixels and a height of 480 pixels), giving it an aspect ratio of $1.\bar{3}$.
+The back buffer (\ref{\iotwod.displaysurface.intro}) of \tcode{ds} is 640x480 (i.e. it has a width of 640 pixels and a height of 480 pixels), giving it an aspect ratio of $1.\bar{3}$.
 
-The Display Buffer (\ref{\iotwod.displaysurface.intro}) of \tcode{ds} is 1280x720, giving it an aspect ratio of $1.\bar{7}$.
+The display buffer (\ref{\iotwod.displaysurface.intro}) of \tcode{ds} is 1280x720, giving it an aspect ratio of $1.\bar{7}$.
 
 When a rectangle is defined in an example, the coordinate $(x1,y1)$ denotes the top left corner of the rectangle, inclusive, and the coordinate $(x2,y2)$ denotes the bottom right corner of the rectangle, exclusive. As such, a rectangle with $(x1,y1) = (10,10)$, $(x2,y2) = (20, 20)$ is 10 pixels wide and 10 pixels tall and includes the pixel $(x,y) = (19,19)$ but does not include the pixels $(x,y) = (20,19)$ or $(x,y) = (19,20)$.
 \end{note}
@@ -52,41 +52,41 @@ When a rectangle is defined in an example, the coordinate $(x1,y1)$ denotes the 
  \\ \capsep
  \endhead
  \tcode{letterbox}
- & Fill the Display Buffer with the Letterbox Brush (\ref{\iotwod.displaysurface.state}) of the \tcode{display_surface}. Uniformly scale the Back Buffer so that one dimension of it is the same length as the same dimension of the Display Buffer and the second dimension of it is not longer than the second dimension of the Display Buffer and transfer the scaled Back Buffer to the Display Buffer using sampling such that it is centered in the Display Buffer.
+ & Fill the display buffer with the letterbox brush (\ref{\iotwod.displaysurface.state}) of the \tcode{display_surface}. Uniformly scale the back buffer so that one dimension of it is the same length as the same dimension of the display buffer and the second dimension of it is not longer than the second dimension of the display buffer and transfer the scaled back buffer to the display buffer using sampling such that it is centered in the display buffer.
 
  \begin{example}
- The Display Buffer of \tcode{ds} will be filled with the \tcode{brush} object returned by \tcode{ds.letterbox_brush();}. The Back Buffer of \tcode{ds} will be scaled so that it is 960x720, thereby retaining its original aspect ratio. The scaled Back Buffer will be transfered to the Display Buffer using sampling such that it is in the rectangle $(x1,y1) = (\dfrac{1280}{2} - \dfrac{960}{2},0) = (160,0)$, $(x2,y2) = (960 + (\dfrac{1280}{2} - \dfrac{960}{2}),720) = (1120,720)$. This fulfills all of the conditions. At least one dimension of the scaled Back Buffer is the same length as the same dimension of the Display Buffer (both have a height of 720 pixels). The second dimension of the scaled Back Buffer is not longer than the second dimension of the Display Buffer (the Back Buffer's scaled width is 960 pixels, which is not longer than the Display Buffer's width of 1280 pixels. Lastly, the scaled Back Buffer is centered in the Display Buffer (on the $x$ axis there are 160 pixels between each vertical side of the scaled Back Buffer and the nearest vertical edge of the Display Buffer and on the $y$ axis there are 0 pixels between each horizontal side of the scaled Back Buffer and the nearest horizontal edge of the Display Buffer).
+ The display buffer of \tcode{ds} will be filled with the \tcode{brush} object returned by \tcode{ds.letterbox_brush();}. The back buffer of \tcode{ds} will be scaled so that it is 960x720, thereby retaining its original aspect ratio. The scaled back buffer will be transfered to the display buffer using sampling such that it is in the rectangle $(x1,y1) = (\dfrac{1280}{2} - \dfrac{960}{2},0) = (160,0)$, $(x2,y2) = (960 + (\dfrac{1280}{2} - \dfrac{960}{2}),720) = (1120,720)$. This fulfills all of the conditions. At least one dimension of the scaled back buffer is the same length as the same dimension of the display buffer (both have a height of 720 pixels). The second dimension of the scaled back buffer is not longer than the second dimension of the display buffer (the back buffer's scaled width is 960 pixels, which is not longer than the display buffer's width of 1280 pixels. Lastly, the scaled back buffer is centered in the display buffer (on the $x$ axis there are 160 pixels between each vertical side of the scaled back buffer and the nearest vertical edge of the display buffer and on the $y$ axis there are 0 pixels between each horizontal side of the scaled back buffer and the nearest horizontal edge of the display buffer).
  \end{example}
  \\
  \tcode{uniform}
- & Uniformly scale the Back Buffer so that one dimension of it is the same length as the same dimension of the Display Buffer and the second dimension of it is not longer than the second dimension of the Display Buffer and transfer the scaled Back Buffer to the Display Buffer using sampling such that it is centered in the Display Buffer.
+ & Uniformly scale the back buffer so that one dimension of it is the same length as the same dimension of the display buffer and the second dimension of it is not longer than the second dimension of the display buffer and transfer the scaled back buffer to the display buffer using sampling such that it is centered in the display buffer.
  
  \begin{example}
- The Back Buffer of \tcode{ds} will be scaled so that it is 960x720, thereby retaining its original aspect ratio. The scaled Back Buffer will be transfered to the Display Buffer using sampling such that it is in the rectangle $(x1,y1) = (\dfrac{1280}{2} - \dfrac{960}{2},0) = (160,0)$, $(x2,y2) = (960 + (\dfrac{1280}{2} - \dfrac{960}{2}),720) = (1120,720)$. This fulfills all of the conditions. At least one dimension of the scaled Back Buffer is the same length as the same dimension of the Display Buffer (both have a height of 720 pixels). The second dimension of the scaled Back Buffer is not longer than the second dimension of the Display Buffer (the Back Buffer's scaled width is 960 pixels, which is not longer than the Display Buffer's width of 1280 pixels. Lastly, the scaled Back Buffer is centered in the Display Buffer (on the $x$ axis there are 160 pixels between each vertical side of the scaled Back Buffer and the nearest vertical edge of the Display Buffer and on the $y$ axis there are 0 pixels between each horizontal side of the scaled Back Buffer and the nearest horizontal edge of the Display Buffer).
+ The back buffer of \tcode{ds} will be scaled so that it is 960x720, thereby retaining its original aspect ratio. The scaled back buffer will be transfered to the display buffer using sampling such that it is in the rectangle $(x1,y1) = (\dfrac{1280}{2} - \dfrac{960}{2},0) = (160,0)$, $(x2,y2) = (960 + (\dfrac{1280}{2} - \dfrac{960}{2}),720) = (1120,720)$. This fulfills all of the conditions. At least one dimension of the scaled back buffer is the same length as the same dimension of the display buffer (both have a height of 720 pixels). The second dimension of the scaled back buffer is not longer than the second dimension of the display buffer (the back buffer's scaled width is 960 pixels, which is not longer than the display buffer's width of 1280 pixels. Lastly, the scaled back buffer is centered in the display buffer (on the $x$ axis there are 160 pixels between each vertical side of the scaled back buffer and the nearest vertical edge of the display buffer and on the $y$ axis there are 0 pixels between each horizontal side of the scaled back buffer and the nearest horizontal edge of the display buffer).
  \end{example}
  \begin{note}
- The difference between \tcode{uniform} and \tcode{letterbox} is that \tcode{uniform} does not modify the contents of the Display Buffer that fall outside of the rectangle into which the scaled Back Buffer is drawn while \tcode{letterbox} fills those areas with the \tcode{display_surface} object's Letterbox Brush.
+ The difference between \tcode{uniform} and \tcode{letterbox} is that \tcode{uniform} does not modify the contents of the display buffer that fall outside of the rectangle into which the scaled back buffer is drawn while \tcode{letterbox} fills those areas with the \tcode{display_surface} object's Letterbox Brush.
  \end{note}
  \\
  \tcode{fill_uniform}
- & Uniformly scale the Back Buffer so that one dimension of it is the same length as the same dimension of the Display Buffer and the second dimension of it is not shorter than the second dimension of the Display Buffer and transfer the scaled Back Buffer to the Display Buffer using sampling such that it is centered in the Display Buffer.
+ & Uniformly scale the back buffer so that one dimension of it is the same length as the same dimension of the display buffer and the second dimension of it is not shorter than the second dimension of the display buffer and transfer the scaled back buffer to the display buffer using sampling such that it is centered in the display buffer.
  
  \begin{example}
- The Back Buffer of \tcode{ds} will be drawn in the rectangle $(x1,y1) = (0,-120)$, $(x2,y2) = (1280,840)$. This fulfills all of the conditions. At least one dimension of the scaled Back Buffer is the same length as the same dimension of the Display Buffer (both have a width of 1280 pixels). The second dimension of the scaled Back Buffer is not shorter than the second dimension of the Display Buffer (the Back Buffer's scaled height is 840 pixels, which is not shorter than the Display Buffer's height of 720 pixels). Lastly, the scaled Back Buffer is centered in the Display Buffer (on the $x$ axis there are 0 pixels between each vertical side of the rectangle and the nearest vertical edge of the Display Buffer and on the $y$ axis there are 120 pixels between each horizontal side of the rectangle and the nearest horizontal edge of the Display Buffer).
+ The back buffer of \tcode{ds} will be drawn in the rectangle $(x1,y1) = (0,-120)$, $(x2,y2) = (1280,840)$. This fulfills all of the conditions. At least one dimension of the scaled back buffer is the same length as the same dimension of the display buffer (both have a width of 1280 pixels). The second dimension of the scaled back buffer is not shorter than the second dimension of the display buffer (the back buffer's scaled height is 840 pixels, which is not shorter than the display buffer's height of 720 pixels). Lastly, the scaled back buffer is centered in the display buffer (on the $x$ axis there are 0 pixels between each vertical side of the rectangle and the nearest vertical edge of the display buffer and on the $y$ axis there are 120 pixels between each horizontal side of the rectangle and the nearest horizontal edge of the display buffer).
  \end{example} 
  \\
  \tcode{fill_exact}
- & Scale the Back Buffer so that each dimension of it is the same length as the same dimension of the Display Buffer and transfer the scaled Back Buffer to the Display Buffer using sampling such that its origin is at the origin of the Display Buffer.
+ & Scale the back buffer so that each dimension of it is the same length as the same dimension of the display buffer and transfer the scaled back buffer to the display buffer using sampling such that its origin is at the origin of the display buffer.
  
  \begin{example}
- The Back Buffer will be drawn in the rectangle $(x1,y1) = (0,0)$, $(x2,y2) = (1280,720)$. This fulfills all of the conditions. Each dimension of the scaled Back Buffer is the same length as the same dimension of the Display Buffer (both have a width of 1280 pixels and a height of 720 pixels) and the origin of the scaled Back Buffer is at the origin of the Display Buffer.
+ The back buffer will be drawn in the rectangle $(x1,y1) = (0,0)$, $(x2,y2) = (1280,720)$. This fulfills all of the conditions. Each dimension of the scaled back buffer is the same length as the same dimension of the display buffer (both have a width of 1280 pixels and a height of 720 pixels) and the origin of the scaled back buffer is at the origin of the display buffer.
  \end{example}
  \\
  \tcode{none}
- & Do not perform any scaling. Transfer the Back Buffer to the Display Buffer using sampling such that its origin is at the origin of the Display Buffer.
+ & Do not perform any scaling. Transfer the back buffer to the display buffer using sampling such that its origin is at the origin of the display buffer.
  
  \begin{example}
- The Back Buffer of \tcode{ds} will be drawn in the rectangle $(x1,y1) = (0,0)$, $(x2,y2) = (640,480)$ such that no scaling occurs and the origin of the Back Buffer is at the origin of the Display Buffer.
+ The back buffer of \tcode{ds} will be drawn in the rectangle $(x1,y1) = (0,0)$, $(x2,y2) = (640,480)$ such that no scaling occurs and the origin of the back buffer is at the origin of the display buffer.
  \end{example}
  \\
 \end{libreqtab2}

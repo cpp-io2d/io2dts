@@ -1,17 +1,17 @@
 %!TEX root = io2d.tex
 \rSec0 [\iotwod.wrapmode] {Enum class \tcode{wrap_mode}}
 
-\rSec1 [\iotwod.wrapmode.summary] {\tcode{wrap_mode} Summary}
+\rSec1 [\iotwod.wrapmode.summary] {\tcode{wrap_mode} summary}
 
 \pnum
 The \tcode{wrap_mode} enum class describes how a point's visual data is 
-determined if it is outside the bounds of the Source Brush (\ref{\iotwod.surface.rendering.brushes}) when sampling.
+determined if it is outside the bounds of the \term{source brush} (\ref{\iotwod.surface.rendering.brushes}) when sampling.
 
 \pnum
-Depending on the Source Brush's \tcode{filter} value, the visual data of several points may be required to determine the appropriate visual data value for the point that is being sampled. In this case, each point shall be sampled according to the Source Brush's \tcode{wrap_mode} value with two exceptions:
+Depending on the source brush's \tcode{filter} value, the visual data of several points may be required to determine the appropriate visual data value for the point that is being sampled. In this case, each point shall be sampled according to the source brush's \tcode{wrap_mode} value with two exceptions:
 \begin{enumeratea}
-\item If the point to be sampled is within the bounds of the Source Brush and the Source Brush's \tcode{wrap_mode} value is \tcode{wrap_mode::none}, then if the Source Brush's \tcode{filter} value requires that one or more points which are outside of the bounds of the Source Brush shall be sampled, each of those points shall be sampled as-if the Source Brush's \tcode{wrap_mode} value is \tcode{wrap_mode::pad} rather than \tcode{wrap_mode::none}.
-\item If the point to be sampled is within the bounds of the Source Brush and the Source Brush's \tcode{wrap_mode} value is \tcode{wrap_mode::none}, ce Brush and the Source Brush's \tcode{wrap_mode} value is \tcode{wrap_mode::none}, then if the Source Brush's \tcode{filter} value requires that one or more points which are inside of the bounds of the Source Brush shall be sampled, each of those points shall be sampled such that the visual data that is returned shall be the equivalent of \tcode{rgba_color::transparent_black()}.
+\item If the point to be sampled is within the bounds of the source brush and the source brush's \tcode{wrap_mode} value is \tcode{wrap_mode::none}, then if the source brush's \tcode{filter} value requires that one or more points which are outside of the bounds of the source brush shall be sampled, each of those points shall be sampled as-if the source brush's \tcode{wrap_mode} value is \tcode{wrap_mode::pad} rather than \tcode{wrap_mode::none}.
+\item If the point to be sampled is within the bounds of the source brush and the source brush's \tcode{wrap_mode} value is \tcode{wrap_mode::none}, ce Brush and the source brush's \tcode{wrap_mode} value is \tcode{wrap_mode::none}, then if the source brush's \tcode{filter} value requires that one or more points which are inside of the bounds of the source brush shall be sampled, each of those points shall be sampled such that the visual data that is returned shall be the equivalent of \tcode{rgba_color::transparent_black()}.
 \end{enumeratea}
 
 \pnum
@@ -49,17 +49,17 @@ namespace std::experimental::io2d::v1 {
  \\ \capsep
  \endhead
  \tcode{none}
- & If the point to be sampled is outside of the bounds of the Source Brush, the visual data that is returned shall be the equivalent of \tcode{rgba_color::transparent_black()}.
+ & If the point to be sampled is outside of the bounds of the source brush, the visual data that is returned shall be the equivalent of \tcode{rgba_color::transparent_black()}.
  \\
  \tcode{repeat}
- & If the point to be sampled is outside of the bounds of the Source Brush, the visual data that is returned shall be the visual data that would have been returned if the Source Brush was infinitely large and repeated itself in 
+ & If the point to be sampled is outside of the bounds of the source brush, the visual data that is returned shall be the visual data that would have been returned if the source brush was infinitely large and repeated itself in 
  a left-to-right-left-to-right and top-to-bottom-top-to-bottom fashion.
  \\
  \tcode{reflect}
- & If the point to be sampled is outside of the bounds of the Source Brush, the visual data that is returned shall be the visual data that would have been returned if the Source Brush was infinitely large and repeated itself in 
+ & If the point to be sampled is outside of the bounds of the source brush, the visual data that is returned shall be the visual data that would have been returned if the source brush was infinitely large and repeated itself in 
  a left-to-right-to-left-to-right and top-to-bottom-to-top-to-bottom fashion.
  \\
  \tcode{pad}
- & If the point to be sampled is outside of the bounds of the Source Brush, the visual data that is returned shall be the visual data that would have been returned for the nearest defined point that is in bounds.
+ & If the point to be sampled is outside of the bounds of the source brush, the visual data that is returned shall be the visual data that would have been returned for the nearest defined point that is in bounds.
  \\
 \end{libreqtab2}

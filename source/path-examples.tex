@@ -48,7 +48,7 @@ Example 1 consists of a single path, forming a trapezoid:
   pb.rel_line({ -260.0f, 0.0f }); // Line from [280, 180] to 
     // [280 - 260, 180 + 0].
   pb.close_path(); // Creates a line from [20, 180] to [80, 20] 
-    // (the last-move-to point), which makes this a closed path.
+    // (the new path point), which makes this a closed path.
   imgSfc.stroke(foreBrush, pb, nullopt, nullopt, nullopt, aliased);
 \end{codeblock}
 

@@ -6,10 +6,7 @@
 This subclause describes how to interpret a path group for use in a rendering and composing operation.
 
 \pnum
-Interpreting a path group consists of evaluating a sequence of \tcode{path_data::path_item} objects and transforming them into zero or more paths as-if in the manner specified in this subclause.
-
-\pnum
-Until a \tcode{path_data::path_item} object containing a \tcode{path_data::abs_new_path} object is evaluated, a path shall only contain \tcode{path_data::path_item} objects containing \tcode{path_data::abs_matrix} or \tcode{path_data::abs_origin} objects; no diagnostic is required.
+Interpreting a path group consists of sequentially evaluating the \tcode{path_data::path_item} objects in a path group and transforming them into zero or more paths as-if in the manner specified in this subclause.
 
 \pnum
 The interpretation of a path group requires the state data specified in Table~\ref{tab:\iotwod.paths.interpretation.state}.
@@ -41,6 +38,17 @@ Matrix stack &
 
 \FloatBarrier
 
+\pnum
+When interpreting a path group, until a \tcode{path_data::abs_new_path} path item is reached, a path shall only contain path group instruction path items; no diagnostic is required. If a path is a degenerate path, none of its path items have any effects, with two exceptions:
+\begin{itemize}
+\item the path's \tcode{path_data::abs_new_path} or \tcode{path_data::rel_new_path} path item sets the value of \tcode{currPt} as-if the path item was interpreted; and,
+\item any path group instruction path items are evaluated with full effect.
+\end{itemize}.
+
+%\pnum
+%\begin{note}
+%The requirement above stating "until a \tcode{path_data::abs_new_path} path item is reached..." uses the word "reached" to make it clear that whether the first path is a degenerate path is irrelevant to that requirement.
+%\end{note}
 \pnum
 The effects of a path item contained in a \tcode{path_data::path_item} object when that object is being evaluated during path group interpretation are described in Table~\ref{tab:\iotwod.paths.interpretation.effects}.
 
@@ -94,11 +102,3 @@ Let \tcode{mm} equal \tcode{mtx}. Evaluate \tcode{mm.m20(0.0f)} and \tcode{mm.m2
 
 \begin{note} \tcode{p.radius()}, which specifies the radius of the arc, is implicitly included in the above statement of effects by the specifications of the center of the arc and the end of the arcs. The use of the current point as the origin for the application of the path group transformation matrix is also implicitly included by the same specifications. \end{note} \\
 \end{libreqtab2a}
-
-\pnum
-Excluding \tcode{path_data::abs_matrix} objects, if any, the first path item in a path group shall be an \tcode{path_data::abs_new_path} object when it is interpreted; no diagnostic is required.
-
-\pnum
-\begin{note}
-The interpretation of all path items other than \tcode{path_data::abs_matrix} objects and \tcode{path_data::abs_new_path} objects requires that the current point (see: Table~\ref{tab:\iotwod.paths.interpretation.state}) has a value, and only a \tcode{path_data::abs_new_path} object establishes a value for the current point without needing an existing value for the current point.
-\end{note}
