@@ -329,28 +329,25 @@ The following rules shall apply when a stroking operation is carried out on a pa
 \begin{enumerate}
 \item No part of the \underlyingsurface that is outside of the clip area shall be modified.
 
-\item If the path only contains a degenerate path segment, then if the Line Cap value is either \tcode{line_cap::round} or \tcode{line_cap::square}, the line caps shall be rendered, resulting in a circle or a square, respectively. The remaining rules shall not apply.
+\item If the path only contains a degenerate path segment, then if the \term{line cap} value (see: \ref{\iotwod.strokeprops.summary} and \ref{\iotwod.surface.rendering.specificstate}) is either \tcode{line_cap::round} or \tcode{line_cap::square}, the line caps shall be rendered, resulting in a circle or a square, respectively. The remaining rules shall not apply.
 
-\item If the path is a closed path, then the point where the end point of its final path segment meets the start point of the initial path segment shall be rendered as specified by the Line Join value; otherwise the start point of the initial path segment and end point of the final path segment shall each by rendered as specified by the Line Cap value. The remaining meetings between successive end points and start points shall be rendered as specified by the Line Join value.
+\item If the path is a closed path, then the point where the end point of its final path segment meets the start point of the initial path segment shall be rendered as specified by the \term{line join} value (see: \ref{\iotwod.strokeprops.summary} and \ref{\iotwod.surface.rendering.specificstate}); otherwise the start point of the initial path segment and end point of the final path segment shall each by rendered as specified by the line cap value. The remaining meetings between successive end points and start points shall be rendered as specified by the line join value.
 
-\item If the Dash Pattern has its default value or if its \tcode{vector<float>} member is empty, the path segments shall be rendered as a continuous path.
+\item If the dash pattern (Table~\ref{tab:\iotwod.surface.rendering.specificstate.listing}) has its default value or if its \tcode{vector<float>} member is empty, the path segments shall be rendered as a continuous path.
 
-\item If the Dash Pattern's \tcode{vector<float>} member contains only one value, that value shall be used to define a repeating pattern in which the path is shown then hidden. The ends of each shown portion of the path shall be rendered as specified by the Line Cap value.
+\item If the dash pattern's \tcode{vector<float>} member contains only one value, that value shall be used to define a repeating pattern in which the path is shown then hidden. The ends of each shown portion of the path shall be rendered as specified by the line cap value.
 
-\item If the Dash Pattern's \tcode{vector<float>} member contains two or more values, the values shall be used to define a pattern in which the path is alternatively rendered then not rendered for the length specified by the value. The ends of each rendered portion of the path shall be rendered as specified by the Line Cap value. If the Dash Pattern's \tcode{float} member, which specifies an offset value, is not \tcode{0.0f}, the meaning of its value is \impldefplain{Dash Pattern!offset value}. If a rendered portion of the path overlaps a not rendered portion of the path, the rendered portion shall be rendered.
+\item If the dash pattern's \tcode{vector<float>} member contains two or more values, the values shall be used to define a pattern in which the path is alternatively rendered then not rendered for the length specified by the value. The ends of each rendered portion of the path shall be rendered as specified by the line cap value. If the dash pattern's \tcode{float} member, which specifies an offset value, is not \tcode{0.0f}, the meaning of its value is \impldefplain{dash pattern!offset value}. If a rendered portion of the path overlaps a not rendered portion of the path, the rendered portion shall be rendered.
 \end{enumerate}
 
 \pnum
-When a stroking operation is carried out on a path, the width of each rendered portion shall be the Line Width. Ideally this means that the diameter of the stroke at each rendered point should be equal to the Line Width. However, because there is an infinite number of points along each rendered portion, implementations may choose an \unspecnorm method of determining minimum distances between points along each rendered portion and the diameter of the stroke between those points shall be the same.
+When a stroking operation is carried out on a path, the width of each rendered portion shall be the \term{line width} (see: \ref{\iotwod.strokeprops.summary} and \ref{\iotwod.surface.rendering.specificstate}). Ideally this means that the diameter of the stroke at each rendered point should be equal to the line width. However, because there is an infinite number of points along each rendered portion, implementations may choose an \unspecnorm method of determining minimum distances between points along each rendered portion and the diameter of the stroke between those points shall be the same.
 \begin{note}
 This concept is sometimes referred to as a tolerance. It allows for a balance between precision and performance, especially in situations where the end result is in a non-exact format such as raster graphics data.
 \end{note}
 
 \pnum
 After all paths in the path group have been rendered but before the rendered result is composed to the \underlyingsurface, the rendered result shall be transformed from the user coordinate space (\ref{\iotwod.surface.coordinatespaces}) to the surface coordinate space (\ref{\iotwod.surface.coordinatespaces}).
-\begin{example}
-If an open path consisting solely of a vertical line from \tcode{vector_2d(20.0f, 20.0f)} to \tcode{vector_2d(20.0f, 60.0f)} is to be composed to the \underlyingsurface, the Line Cap is \tcode{line_cap::none}, the Line Width is \tcode{12.0f}, and the Transformation Matrix is \tcode{matrix_2d::init_scale(0.5f, 1.0f)}, then the line will end up being composed within the area \tcode{rectangle( \{ 7.0f, 20.0f \}, \{ 13.0f, 60.0f \} )} on the \underlyingsurface. The Transformation Matrix causes the center of the \xaxis of the line to move from \tcode{20.0f} to \tcode{10.0f} and then causes the horizontal width of the line to be reduced from \tcode{12.0f} to \tcode{6.0f}.
-\end{example}
 
 \rSec1 [\iotwod.surface.masking] {\tcode{surface} masking}
 

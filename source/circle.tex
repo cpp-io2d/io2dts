@@ -1,14 +1,14 @@
 %!TEX root = io2d.tex
 \rSec0 [\iotwod.circle] {Class \tcode{circle}}
 
-\rSec1 [\iotwod.circle.intro] {\tcode{circle} Description}
+\rSec1 [\iotwod.circle.intro] {\tcode{circle} description}
 
 \pnum
 \indexlibrary{\idxcode{circle}}%
 The class \tcode{circle} describes a circle.
 
 \pnum
-It has a Center of type \tcode{vector_2d} and a Radius of type \tcode{float}.
+It has a \term{center} of type \tcode{vector_2d} and a \term{radius} of type \tcode{float}.
 
 \rSec1 [\iotwod.circle.synopsis] {\tcode{circle} synopsis}
 
@@ -16,7 +16,7 @@ It has a Center of type \tcode{vector_2d} and a Radius of type \tcode{float}.
 namespace std::experimental::io2d::v1 {
   class circle {
   public:
-    // \ref{\iotwod.circle.cons}, construct/copy/move/destroy:
+    // \ref{\iotwod.circle.cons}, constructors:
     constexpr circle() noexcept;
     contexpr circle(const vector_2d& ctr, float rad) noexcept;
 
@@ -31,7 +31,7 @@ namespace std::experimental::io2d::v1 {
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.circle.cons] {\tcode{circle} constructors and assignment operators}
+\rSec1 [\iotwod.circle.cons] {\tcode{circle} constructors}
 
 \indexlibrary{\idxcode{circle}!constructor}%
 \begin{itemdecl}
@@ -40,13 +40,7 @@ constexpr circle() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Constructs an object of type \tcode{circle}.
-
-\pnum
-The value of Center is \tcode{vector_2d\{0,0, 0.0f\}}.
-
-\pnum
-The value of Radius is \tcode{0.0f}.
+Equivalent to: \tcode{circle(\{ 0.0f, 0.0f \}, 0.0f)}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{circle}!constructor}%
@@ -62,10 +56,7 @@ constexpr circle(const vector_2d& ctr, float r) noexcept;
 Constructs an object of type \tcode{circle}.
 
 \pnum
-The value of Center is \tcode{ctr}.
-
-\pnum
-The value of Radius is \tcode{r}.
+The center is \tcode{ctr}. The fadius is \tcode{r}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.circle.modifiers]{\tcode{circle} modifiers}
@@ -78,7 +69,7 @@ constexpr void center(const vector_2d& ctr) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-The value of Center is \tcode{ctr}.
+The center is \tcode{ctr}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{circle}!\idxcode{radius}}%
@@ -91,7 +82,7 @@ constexpr void radius(float r) noexcept;
 
 \pnum
 \effects
-The value of Radius is \tcode{r}.
+The radius is \tcode{r}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.circle.observers]{\tcode{circle} observers}
@@ -103,7 +94,7 @@ constexpr float center() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-The value of Center.
+The center.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{circle}!\idxcode{radius}}%
@@ -113,5 +104,5 @@ constexpr float radius() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-The value of Radius.
+The radius.
 \end{itemdescr}

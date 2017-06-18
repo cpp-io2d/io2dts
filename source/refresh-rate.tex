@@ -1,12 +1,12 @@
 %!TEX root = io2d.tex
 \rSec0 [\iotwod.refreshrate] {Enum class \tcode{refresh_rate}}
 
-\rSec1 [\iotwod.refreshrate.summary] {\tcode{refresh_rate} Summary}
+\rSec1 [\iotwod.refreshrate.summary] {\tcode{refresh_rate} summary}
 
 \pnum
-The \tcode{refresh_rate} enum class describes when the Draw Callback (Table~\ref{tab:\iotwod.displaysurface.state.listing}) of a \tcode{display_surface} object shall be called. See Table~\ref{tab:\iotwod.refreshrate.meanings} for the meaning of each \tcode{} enumerator.
+The \tcode{refresh_rate} enum class describes when the \term{draw callback} (Table~\ref{tab:\iotwod.displaysurface.state.listing}) of a \tcode{display_surface} object shall be called. See Table~\ref{tab:\iotwod.refreshrate.meanings} for the meaning of each \tcode{} enumerator.
 
-\rSec1 [\iotwod.refreshrate.synopsis] {\tcode{refresh_rate} Synopsis}
+\rSec1 [\iotwod.refreshrate.synopsis] {\tcode{refresh_rate} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
@@ -18,7 +18,7 @@ namespace std::experimental::io2d::v1 {
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.refreshrate.enumerators] {\tcode{refresh_rate} Enumerators}
+\rSec1 [\iotwod.refreshrate.enumerators] {\tcode{refresh_rate} enumerators}
 
 \begin{libreqtab2}
  {\tcode{refresh_rate} value meanings}
@@ -35,22 +35,22 @@ namespace std::experimental::io2d::v1 {
  \\ \capsep
  \endhead
  \tcode{as_needed}
- & The Draw Callback shall be called when the implementation needs to do so.
+ & The draw callback shall be called when the implementation needs to do so.
  \begin{note}
- The intention of this enumerator is that implementations will call the Draw Callback as little as possible in order to minimize power usage. Users can call \tcode{display_surface::redraw_required} to make the implementation run the Draw Callback whenever the user requires.
+ The intention of this enumerator is that implementations will call the draw callback as little as possible in order to minimize power usage. Users can call \tcode{display_surface::redraw_required} to make the implementation run the draw callback whenever the user requires.
  \end{note}
  \\
  \tcode{as_fast_as_possible}
- & The Draw Callback shall be called as frequently as possible, subject to any limits of the execution environment and the \underlyingrendandpresenttechs.
+ & The draw callback shall be called as frequently as possible, subject to any limits of the execution environment and the \underlyingrendandpresenttechs.
  \\
  \tcode{fixed}
- & The Draw Callback shall be called as frequently as needed to maintain the Desired Frame Rate (Table~\ref{tab:\iotwod.displaysurface.state.listing}) as closely as possible. If more time has passed between two successive calls to the Draw Callback than is required, it shall be called \term{excess time} and it shall count towards the \term{required time}, which is the time that is required to pass after a call to the Draw Callback before the next successive call to the Draw Callback shall be made. If the excess time is greater than the required time, implementations shall call the Draw Callback and then repeatedly subtract the required time from the excess time until the excess time is less than the required time. If the implementation needs to call the Draw Callback for some other reason, it shall use that call as the new starting point for maintaining the Desired Frame Rate.
+ & The draw callback shall be called as frequently as needed to maintain the \term{desired frame rate} (Table~\ref{tab:\iotwod.displaysurface.state.listing}) as closely as possible. If more time has passed between two successive calls to the draw callback than is required, it shall be called \term{excess time} and it shall count towards the \term{required time}, which is the time that is required to pass after a call to the draw callback before the next successive call to the draw callback shall be made. If the excess time is greater than the required time, implementations shall call the draw callback and then repeatedly subtract the required time from the excess time until the excess time is less than the required time. If the implementation needs to call the draw callback for some other reason, it shall use that call as the new starting point for maintaining the desired frame rate.
  \begin{example}
- Given a Desired Frame Rate of \tcode{20.0f}, then as per the above, the implementation would call the Draw Callback at 50 millisecond intervals or as close thereto as possible.
+ Given a desired frame rate of \tcode{20.0f}, then as per the above, the implementation would call the draw callback at 50 millisecond intervals or as close thereto as possible.
  
- If for some reason the excess time is 51 milliseconds, the implementation would call the Draw Callback, subtract 50 milliseconds from the excess time, and then would wait 49 milliseconds before calling the Draw Callback again.
+ If for some reason the excess time is 51 milliseconds, the implementation would call the draw callback, subtract 50 milliseconds from the excess time, and then would wait 49 milliseconds before calling the draw callback again.
  
- If only 15 milliseconds have passed since the Draw Callback was last called and the implementation needs to call the Draw Callback again, then the implementation shall call the Draw Callback immediately and proceed to wait 50 milliseconds before calling the Draw Callback again.
+ If only 15 milliseconds have passed since the draw callback was last called and the implementation needs to call the draw callback again, then the implementation shall call the draw callback immediately and proceed to wait 50 milliseconds before calling the draw callback again.
  \end{example}
  \\
 \end{libreqtab2}

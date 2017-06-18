@@ -115,17 +115,17 @@ channels, each color channel should be evaluated individually to produce its
 own value.
 
 \pnum
-The basic enumerators specify a value for Bound. This value may be 'Yes', 
+The basic enumerators specify a value for \term{bound}. This value may be 'Yes', 
 'No', or 'N/A'.
 
 \pnum
-If the Bound value is 'Yes', then the source is treated as though it is 
+If the bound value is 'Yes', then the source is treated as though it is 
 also a mask. As such, only areas of the surface where the source would affect 
 the surface are altered. The remaining areas of the surface have the same color 
 value as before the compositing operation.
 
 \pnum
-If the Bound value is 'No', then every area of the surface that is not 
+If the bound value is 'No', then every area of the surface that is not 
 affected by the source will become transparent black. In effect, it is as 
 though the source was treated as being the same size as the destination surface 
 with every part of the source that does not already have a color value assigned 
@@ -134,9 +134,9 @@ formula with this precondition results in those areas evaluating to transparent
 black such that evaluation can be bypassed due to the predetermined outcome.
 
 \pnum
-If the Bound value is 'N/A', the operation would have the same effect 
+If the bound value is 'N/A', the operation would have the same effect 
 regardless of whether it was treated as 'Yes' or 'No' such that those 
-Bound values are not applicable to the operation. A 'N/A' formula when 
+bound values are not applicable to the operation. A 'N/A' formula when 
 applied to an area where the source does not provide a value will evaluate to 
 the original value of the destination even if the source is treated as having a 
 value there of transparent black. As such the result is the same as-if the 
@@ -144,12 +144,12 @@ source were treated as being a mask, i.e. 'Yes' and 'No' treatment each
 produce the same result in areas where the source does not have a value.
 
 \pnum
-If a clip is set and the Bound value is 'Yes' or 'N/A', then only those
+If a clip is set and the bound value is 'Yes' or 'N/A', then only those
 areas of the surface that the are within the clip will be affected by the
 compositing operation.
 
 \pnum
-If a clip is set and the Bound value is 'No', then only those areas of
+If a clip is set and the bound value is 'No', then only those areas of
 the surface that the are within the clip will be affected by the compositing
 operation. Even if no part of the source is within the clip, the operation will
 still set every area within the clip to transparent black. Areas outside the
@@ -325,7 +325,7 @@ is not included in those tables.
 \end{note}
 
 \pnum
-All of the blend enumerators and hsl enumerators have a Bound value of 'N/A'.
+All of the blend enumerators and hsl enumerators have a bound value of 'N/A'.
 
 \begin{libreqtab2}
  {\tcode{compositing_op} blend enumerator meanings}

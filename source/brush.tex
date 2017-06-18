@@ -1,29 +1,30 @@
 %!TEX root = io2d.tex
 \rSec0 [\iotwod.brush] {Class \tcode{brush}}
 
-\rSec1 [\iotwod.brush.intro] {\tcode{brush} Description}
+\rSec1 [\iotwod.brush.intro] {\tcode{brush} summary}
 
 \pnum
 \indexlibrary{\idxcode{brush}}%
-The class \tcode{brush} describes an opaque wrapper for a graphics data graphics resource.
+The class \tcode{brush} describes an opaque wrapper for graphics data.
 
 \pnum
 A \tcode{brush} object is usable with any \tcode{surface} or \tcode{surface}-derived object.
 
 \pnum
-A \tcode{brush} object's graphics data is immutable. It is observable only by the effect that it produces when the brush is used as a Source Brush or as a Mask Brush (\ref{\iotwod.surface.rendering.brushes}).
+A \tcode{brush} object's graphics data is immutable. It is observable only by the effect that it produces when the brush is used as a \term{
+source brush} or as a \term{mask brush} (\ref{\iotwod.surface.rendering.brushes}).
 
 \pnum
 A \tcode{brush} object has a brush type of \tcode{brush_type}, which indicates which type of brush it is (Table~\ref{tab:\iotwod.brushtype.meanings}).
 
 \pnum
-As a result of technological limitations and considerations, a \tcode{brush} object's graphics data can have less precision than the data from which it was created.
+As a result of technological limitations and considerations, a \tcode{brush} object's graphics data may have less precision than the data from which it was created.
 
-\pnum
-\begin{example}
-Several graphics and rendering technologies that are currently widely used typically store individual color and alpha channel data as 8-bit unsigned normalized integer values while the \tcode{float} type that is used by the \tcode{rgba_color} class for individual color and alpha is often a 64-bit value. As such, it is possible for a loss of precision when transforming the 64-bit channel data of an \tcode{rgba_color} object to the 8-bit channel data that is commonly used internally in such graphics and rendering technologies.
-\end{example}
-
+%\pnum
+%\begin{example}
+%Several graphics and rendering technologies that are currently widely used typically store individual color and alpha channel data as 8-bit unsigned normalized integer values while the \tcode{float} type that is used by the \tcode{rgba_color} class for individual color and alpha is often a 64-bit value. As such, it is possible for a loss of precision when transforming the 64-bit channel data of an \tcode{rgba_color} object to the 8-bit channel data that is commonly used internally in such graphics and rendering technologies.
+%\end{example}
+%
 \rSec1 [\iotwod.brush.synopsis] {\tcode{brush} synopsis}
 
 \begin{codeblock}
@@ -64,22 +65,22 @@ When sampling from a \tcode{brush} object \tcode{b}, the \tcode{brush_type} retu
 \rSec2 [\iotwod.brush.sampling.color] {Sampling from a solid color brush}
 
 \pnum
-When \tcode{b} is a solid color brush, then when sampling from \tcode{b}, the visual data returned shall always be the visual data equivalent \tcode{rgba_color} used to construct \tcode{b}, regardless of the point which is to be sampled and regardless of the return values of Wrap Mode, Filter, and Matrix.
+When \tcode{b} is a solid color brush, then when sampling from \tcode{b}, the visual data returned is always the visual data used to construct \tcode{b}, regardless of the point which is to be sampled and regardless of the return values of wrap mode, filter, and brush matrix or mask matrix.
 
 \rSec2 [\iotwod.brush.sampling.linear] {Sampling from a linear gradient brush}
 
 \pnum
-When \tcode{b} is a linear gradient brush, when sampling point \tcode{pt}, where \tcode{pt} is the return value of calling the \tcode{transform_point} member function of Matrix using the requested point, from \tcode{b}, the visual data returned shall be as specified by \ref{\iotwod.gradients.linear} and \ref{\iotwod.gradients.sampling}.
+When \tcode{b} is a linear gradient brush, when sampling point \tcode{pt}, where \tcode{pt} is the return value of calling the \tcode{transform_point} member function of brush matrix or mask matrix using the requested point, from \tcode{b}, the visual data returned are as specified by \ref{\iotwod.gradients.linear} and \ref{\iotwod.gradients.sampling}.
 
 \rSec2 [\iotwod.brush.sampling.radial] {Sampling from a radial gradient brush}
 
 \pnum
-When \tcode{b} is a radial gradient brush, when sampling point \tcode{pt}, where \tcode{pt} is the return value of calling the \tcode{transform_point} member function of Matrix using the requested point, from \tcode{b}, the visual data returned shall be as specified by \ref{\iotwod.gradients.radial} and \ref{\iotwod.gradients.sampling}.
+When \tcode{b} is a radial gradient brush, when sampling point \tcode{pt}, where \tcode{pt} is the return value of calling the \tcode{transform_point} member function of brush matrix or mask matrix using the requested point, from \tcode{b}, the visual data are as specified by \ref{\iotwod.gradients.radial} and \ref{\iotwod.gradients.sampling}.
 
 \rSec2 [\iotwod.brush.sampling.surface] {Sampling from a surface brush}
 
 \pnum
-When \tcode{b} is a surface brush, when sampling point \tcode{pt}, where \tcode{pt} is the return value of calling the \tcode{transform_point} member function of Matrix using the requested point, from \tcode{b}, the visual data returned shall be from the point \tcode{pt} in the graphics data of the brush, taking into account the values of Wrap Mode and Filter.
+When \tcode{b} is a surface brush, when sampling point \tcode{pt}, where \tcode{pt} is the return value of calling the \tcode{transform_point} member function of brush matrix or mask matrix using the requested point, from \tcode{b}, the visual data returned are from the point \tcode{pt} in the graphics data of the brush, taking into account the values of wrap mode and filter.
 
 \rSec1 [\iotwod.brush.cons] {\tcode{brush} constructors and assignment operators}
 
@@ -96,7 +97,7 @@ Constructs an object of type \tcode{brush}.
 The brush's brush type shall be set to the value \tcode{brush_type::solid_color}.
 
 \pnum
-The graphics data of the brush shall be created from the value of \tcode{c}. The visual data format of the graphics data shall be as-if it is that specified by \tcode{format::argb}.
+The graphics data of the brush are created from the value of \tcode{c}. The visual data format of the graphics data are as-if it is that specified by \tcode{format::argb32}.
 
 \pnum
 \remarks
@@ -112,7 +113,7 @@ brush(const vector_2d& begin, const vector_2d& end,
 \begin{itemdescr}
 \pnum
 \effects
-Constructs a linear gradient \tcode{brush} object with a begin point of \tcode{begin}, an end point of \tcode{end}, and a color stop collection containing the values in the range \range{first}{last}.
+Constructs a linear gradient \tcode{brush} object with a begin point of \tcode{begin}, an end point of \tcode{end}, and a sequential series of \tcode{color stop} values beginning at {first} and ending at {last - 1}.
 
 \pnum
 The brush's brush type is \tcode{brush_type::linear}.
@@ -130,7 +131,7 @@ brush(const vector_2d& begin, const vector_2d& end,
 \begin{itemdescr}
 \pnum
 \effects
-Constructs a linear gradient \tcode{brush} object with a begin point of \tcode{begin}, an end point of \tcode{end}, and a color stop collection containing the \tcode{color_stop} objects in \tcode{il}.
+Constructs a linear gradient \tcode{brush} object with a begin point of \tcode{begin}, an end point of \tcode{end}, and the sequential series of \tcode{color stop} values in \tcode{il}.
 
 \pnum
 The brush's brush type is \tcode{brush_type::linear}.
@@ -149,7 +150,7 @@ brush(const circle& start, const circle& end,
 \begin{itemdescr}
 \pnum
 \effects
-Constructs a radial gradient \tcode{brush} object with a start circle of \tcode{start}, an end circle of \tcode{end}, and a color stop collection containing the values in the range \range{first}{last}.
+Constructs a radial gradient \tcode{brush} object with a start circle of \tcode{start}, an end circle of \tcode{end},  and a sequential series of \tcode{color stop} values beginning at {first} and ending at {last - 1}.
 
 \pnum
 The brush's brush type is \tcode{brush_type::radial}.
@@ -167,7 +168,7 @@ brush(const circle& start, const circle& end,
 \begin{itemdescr}
 \pnum
 \effects
-Constructs a radial gradient \tcode{brush} object with a start circle of \tcode{start}, an end circle of \tcode{end}, and a color stop collection containing the \tcode{color_stop} objects in \tcode{il}.
+Constructs a radial gradient \tcode{brush} object with a start circle of \tcode{start}, an end circle of \tcode{end}, and the sequential series of \tcode{color stop} values in \tcode{il}.
 
 \pnum
 The brush's brush type is \tcode{brush_type::radial}.
@@ -191,11 +192,11 @@ Constructs an object of type \tcode{brush}.
 The brush's brush type is \tcode{brush_type::surface}.
 
 \pnum
-The graphics data of the brush is as-if it is the \underlyingimagesurface of \tcode{img}.
+The graphics data of the brush is as-if it is the raster graphics data of \tcode{img}.
 
 \pnum
 \remarks
-Sampling from this brush shall produce the results specified in \ref{\iotwod.brush.sampling.surface}.
+Sampling from this brush produces the results specified in \ref{\iotwod.brush.sampling.surface}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.brush.observers]{\tcode{brush} observers}

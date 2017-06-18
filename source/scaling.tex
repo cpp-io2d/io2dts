@@ -1,7 +1,7 @@
 %!TEX root = io2d.tex
 \rSec0 [\iotwod.scaling] {Enum class \tcode{scaling}}
 
-\rSec1 [\iotwod.scaling.summary] {\tcode{scaling} Summary}
+\rSec1 [\iotwod.scaling.summary] {\tcode{scaling} summary}
 
 \pnum
 The scaling enum class specifies the type of scaling a \tcode{display_surface} 
@@ -10,7 +10,7 @@ will use when the size of its \term{display buffer} (\ref{\iotwod.displaysurface
 \pnum
 See Table~\ref{tab:\iotwod.scaling.meanings} for the meaning of each \tcode{scaling} enumerator.
 
-\rSec1 [\iotwod.scaling.synopsis] {\tcode{scaling} Synopsis}
+\rSec1 [\iotwod.scaling.synopsis] {\tcode{scaling} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
@@ -24,7 +24,7 @@ namespace std::experimental::io2d::v1 {
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.scaling.enumerators] {\tcode{scaling} Enumerators}
+\rSec1 [\iotwod.scaling.enumerators] {\tcode{scaling} enumerators}
 
 \pnum
 \begin{note}
@@ -65,7 +65,7 @@ When a rectangle is defined in an example, the coordinate $(x1,y1)$ denotes the 
  The back buffer of \tcode{ds} will be scaled so that it is 960x720, thereby retaining its original aspect ratio. The scaled back buffer will be transfered to the display buffer using sampling such that it is in the rectangle $(x1,y1) = (\dfrac{1280}{2} - \dfrac{960}{2},0) = (160,0)$, $(x2,y2) = (960 + (\dfrac{1280}{2} - \dfrac{960}{2}),720) = (1120,720)$. This fulfills all of the conditions. At least one dimension of the scaled back buffer is the same length as the same dimension of the display buffer (both have a height of 720 pixels). The second dimension of the scaled back buffer is not longer than the second dimension of the display buffer (the back buffer's scaled width is 960 pixels, which is not longer than the display buffer's width of 1280 pixels. Lastly, the scaled back buffer is centered in the display buffer (on the $x$ axis there are 160 pixels between each vertical side of the scaled back buffer and the nearest vertical edge of the display buffer and on the $y$ axis there are 0 pixels between each horizontal side of the scaled back buffer and the nearest horizontal edge of the display buffer).
  \end{example}
  \begin{note}
- The difference between \tcode{uniform} and \tcode{letterbox} is that \tcode{uniform} does not modify the contents of the display buffer that fall outside of the rectangle into which the scaled back buffer is drawn while \tcode{letterbox} fills those areas with the \tcode{display_surface} object's Letterbox Brush.
+ The difference between \tcode{uniform} and \tcode{letterbox} is that \tcode{uniform} does not modify the contents of the display buffer that fall outside of the rectangle into which the scaled back buffer is drawn while \tcode{letterbox} fills those areas with the \tcode{display_surface} object's letterbox brush (see: \ref{\iotwod.displaysurface.state}).
  \end{note}
  \\
  \tcode{fill_uniform}

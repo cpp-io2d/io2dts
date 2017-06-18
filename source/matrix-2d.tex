@@ -5,7 +5,7 @@
 
 \indexlibrary{\idxcode{matrix_2d}}%
 \pnum
-The \tcode{matrix_2d} class represents a two-dimensional, three row by three column matrix. Its purpose is to perform affine transformations.
+The \tcode{matrix_2d} class represents a three row by three column matrix. Its purpose is to perform affine transformations.
 
 \pnum
 The layout of the matrix is: \\
@@ -20,9 +20,9 @@ The value of M02 is \tcode{0.0f}. The value of M12 is \tcode{0.0f}. The value of
 \pnum
 The performance of any mathematical operation upon a \tcode{matrix_2d} shall be carried out as-if the omitted third column data members were present with the values prescribed in the previous paragraph.
 
-\pnum
-The values M00, M01, M10, M11, M20, M21 shall each be of type \tcode{float}.
-
+%\pnum
+%The values M00, M01, M10, M11, M20, M21 shall each be of type \tcode{float}.
+%
 \rSec1 [\iotwod.\matrixtwod.synopsis] {\tcode{matrix_2d} synopsis}
 
 \begin{codeblock}
@@ -546,7 +546,6 @@ constexpr bool operator!=(const matrix_2d& lhs, const matrix_2d& rhs) noexcept;
 \returns
 \tcode{!(lhs == rhs)}.
 \end{itemdescr}
-
 
 \indexlibrarymember{operator*}{matrix_2d}%
 \begin{itemdecl}

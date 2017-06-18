@@ -1,7 +1,7 @@
 %!TEX root = io2d.tex
 \rSec0 [\iotwod.linejoin] {Enum class \tcode{line_join}}
 
-\rSec1 [\iotwod.linejoin.summary] {\tcode{line_join} Summary}
+\rSec1 [\iotwod.linejoin.summary] {\tcode{line_join} summary}
 
 \pnum
 The \tcode{line_join} enum class specifies how the junction of two line 
@@ -9,7 +9,7 @@ segments should be rendered when a \tcode{path_group} is stroked.
 See Table~\ref{tab:\iotwod.linejoin.meanings} for the meaning of each
 \tcode{} enumerator.
 
-\rSec1 [\iotwod.linejoin.synopsis] {\tcode{line_join} Synopsis}
+\rSec1 [\iotwod.linejoin.synopsis] {\tcode{line_join} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
@@ -21,7 +21,7 @@ namespace std::experimental::io2d::v1 {
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.linejoin.enumerators] {\tcode{line_join} Enumerators}
+\rSec1 [\iotwod.linejoin.enumerators] {\tcode{line_join} enumerators}
 \begin{libreqtab2}
  {\tcode{line_join} enumerator meanings}
  {tab:\iotwod.linejoin.meanings}
@@ -37,7 +37,7 @@ namespace std::experimental::io2d::v1 {
  \\ \capsep
  \endhead
  \tcode{miter}
- & Joins will be mitered or beveled, depending on the Miter Limit (\ref{\iotwod.strokeprops.summary}).
+ & Joins will be mitered or beveled, depending on the miter limit (see: \ref{\iotwod.strokeprops.summary}).
  \\
  \tcode{round}
  & Joins will be rounded, with the center of the circle being the join point.

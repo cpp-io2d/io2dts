@@ -151,7 +151,8 @@ vector_2d center(const vector_2d& cpt, const matrix_2d& m = matrix_2d{})
 As-if:
 \begin{codeblock}
 auto lmtx = m;
-lmtx.m20(0.0f); lmtx.m21(0.0f); // Eliminate translation.
+lmtx.m20(0.0f);
+lmtx.m21(0.0f);
 auto centerOffset = point_for_angle(two_pi<float> - _Start_angle, _Radius);
 centerOffset.y(-centerOffset.y());
 return cpt - centerOffset * lmtx;
@@ -170,7 +171,8 @@ As-if:
 \begin{codeblock}
 auto lmtx = m;
 auto tfrm = matrix_2d::init_rotate(_Start_angle + _Rotation);
-lmtx.m20(0.0f); lmtx.m21(0.0f); // Eliminate translation.
+lmtx.m20(0.0f);
+lmtx.m21(0.0f);
 auto pt = (_Radius * tfrm);
 pt.y(-pt.y());
 return cpt + pt * lmtx;

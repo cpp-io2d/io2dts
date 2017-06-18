@@ -25,23 +25,22 @@ While copy and move operations along with a swap operation can change the visual
 \end{note}
 
 \pnum
-A brush is used either as a Source Brush or a Mask Brush (\ref{\iotwod.surface.rendering.brushes}).
+A brush is used either as a \term{source brush} or a \term{mask brush} (\ref{\iotwod.surface.rendering.brushes}).
 
 \pnum
-When a brush is used in a rendering and composing operation, if it is used as a Source Brush, it has a \tcode{brush_props} object that describes how the brush is interpreted for purposes of sampling. If it is used as a Mask Brush, it has a \tcode{mask_props} object that describes how the brush is interpreted for purposes of sampling.
+When a brush is used in a rendering and composing operation, if it is used as a source brush, it has a \tcode{brush_props} object that describes how the brush is interpreted for purposes of sampling. If it is used as a mask brush, it has a \tcode{mask_props} object that describes how the brush is interpreted for purposes of sampling.
 
 \pnum
-The \tcode{brush_props} and \tcode{mask_props} classes both have a Wrap Mode, Filter and Matrix (\ref{\iotwod.brushprops.summary} and \ref{\iotwod.maskprops.summary}). Where necessary, these shall be referenced using those terms without regard to whether the brush is being used as a Source Brush or a Mask Brush.
-
+The \tcode{brush_props} (\ref{\iotwod.brushprops.summary}) and \tcode{mask_props} (\ref{\iotwod.maskprops.summary}) classes each have a \term{wrap mode} and a \term{filter}. The \tcode{brush_props} class also has a \term{brush matrix} and a \term{fill rule}. The \tcode{mask_props} class also has a \tcode{mask matrix}. Where possible, the terms that are common between the two classes are referenced without regard to whether the brush is being used as a source brush or a mask brush.
 
 %\pnum
 %A brush has its own coordinate space.
 %
 %\pnum
-%If it is being used as a Source Brush, it is the Brush Coordinate Space (\ref{\iotwod.surface.coordinatespaces}).
+%If it is being used as a source brush, it is the Brush Coordinate Space (\ref{\iotwod.surface.coordinatespaces}).
 %
 %\pnum
-%If it is being used as a Mask Brush, it is the Mask Coordinate Space (\ref{\iotwod.surface.coordinatespaces}).
+%If it is being used as a mask brush, it is the Mask Coordinate Space (\ref{\iotwod.surface.coordinatespaces}).
 %
 %\pnum
 %It possesses a \tcode{filter} value and a \tcode{wrap_mode} value, which combine to determine the visual data value returned when a composing operation samples a brush.

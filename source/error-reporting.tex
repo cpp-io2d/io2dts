@@ -13,7 +13,7 @@ When an error prevents the function from meeting its specifications:
 
 \begin{itemize}
 \item Functions that do not take argument of type \tcode{error_code\&} throw an exception of type \tcode{system_error} or of a \tcode{system_error}-derived type. The exception object shall include the enumerator specified by the function as part of its observable state.
-%If the cause of the error is described in the function's \textit{Error conditions} description, the exception object includes the enumerator specified by the function. It may also include \impldefplain{error condition, additional information} Otherwise the data included in the exception object is \impldefplain{error condition, undocumented}.
+%If the cause of the error is described in the function's \textit{Error conditions} description, the exception object includes the enumerator specified by the function. It may also include \impldefplain{error condition, additional information} additional information. Other data included in the exception object, if any, is \impldefplain{error condition, undocumented}.
 
 \item Functions that take an argument of type \tcode{error_code\&} assigns the specified enumerator to the provided \tcode{error_code} object and then returns.
 \end{itemize}
