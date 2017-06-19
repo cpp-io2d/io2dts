@@ -132,6 +132,14 @@ The \tcode{surface} class provides four fundamental rendering and composing oper
  \\
 \end{libreqtab2}
 
+\pnum
+All composing operations shall happen in a linear color space, regardless of the color space of the graphics data that is involved.
+
+\pnum
+\begin{note}
+While a color space such as sRGB helps produce expected, consistent results when graphics data are viewed by people, composing operations only produce expected results when the channel data in the graphics data involved are uniformly (i.e. linearly) spaced. 
+\end{note}
+
 \rSec2 [\iotwod.surface.rendering.brushes] {Rendering and composing brushes}
 
 \pnum
