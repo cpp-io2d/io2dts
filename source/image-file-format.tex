@@ -5,10 +5,10 @@
 \rSec1 [\iotwod.imagefileformat.summary] {\tcode{image_file_format} summary}
 
 \pnum
-The \tcode{image_file_format} enum class specifies the data format that an \tcode{image_surface} object shall be constructed from or shall be saved to.
+The \tcode{image_file_format} enum class specifies the data format that an \tcode{image_surface} object is constructed from or saved to. This allows data in a format that is required to be supported to be read or written regardless of its extension.
 
 \pnum
-This allows data in a format that is required to be supported to be read or written regardless of its extension.
+It also has a value that allows implementations to support additional file formats if it recognizes them.
 
 \rSec1 [\iotwod.imagefileformat.synopsis] {\tcode{image_file_format} synopsis}
 
@@ -16,8 +16,10 @@ This allows data in a format that is required to be supported to be read or writ
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
   enum class image_file_format {
+    unknown,
     png,
-    jpg
+    jpg,
+    tiff
   };
 }
 \end{codeblock}
@@ -38,10 +40,16 @@ namespace std::experimental::io2d::v1 {
  & \rhdr{Meaning}
  \\ \capsep
  \endhead
+ \tcode{unknown}
+ & The format is unknown because it is not an image file format that is required to be supported. It may be known and supported by the implementation.
+ \\
  \tcode{png}
- & The data is in the PNG format.
+ & The PNG format.
  \\
  \tcode{jpg}
- & The data is in the JPEG format.
+ & The JPEG format.
+ \\
+ \tcode{tiff}
+ & The TIFF format.
  \\
 \end{libreqtab2}

@@ -85,15 +85,21 @@ The data of the \underlyingimagesurface is the raster graphics data that results
 The data of \tcode{f} is processed into uncompressed raster graphics data as specified by the value of \tcode{i}.
 
 \pnum
+If \tcode{i} is \tcode{image_file_format::unknown}, it is \impldefplain{image_surface!constructor} whether the surface is created in the image file format, if any, that the implementation associates with \tcode{p.extension()} provided that \tcode{p.has_extension() == true}. If \tcode{p.has_extension() == false}, the implementation does not associate an image file format with \tcode{p.extension()}, or the implementation does not support reading in graphics data in that image file format, the error specified below occurs.
+
+\pnum
 The resulting uncompressed raster graphics data is then transformed into the data format specified by \tcode{fmt}. If the format specified by \tcode{fmt} only contains an alpha channel, the values of the color channels, if any, of the \underlyingimagesurface are \unspecnorm. If the format specified by \tcode{fmt} only contains color channels and the resulting uncompressed raster graphics data is in a premultiplied format, then the value of each color channel for each pixel shall be divided by the value of the alpha channel for that pixel. The visual data shall then be set as the visual data of the \underlyingimagesurface.
 
 \pnum
 \throws
-As specified in Error reporting [\iotwod.fs.err.report] in \cppseventeen.
+As specified in Error reporting [\iotwod.err.report].
 
 \pnum
 \errors
 Any error that could result from trying to access \tcode{f}, open \tcode{f} for reading, or reading data from \tcode{f}.
+
+\pnum
+\tcode{errc::not_supported} if \tcode{image_file_format::unknown} is passed as an argument and the implementation is unable to determine the file format or does not support saving in the image file format it determined.
 
 \pnum
 Other errors, if any, produced by this function are \impldefplain{image_surface!data}.
@@ -115,18 +121,24 @@ If the file exists, it shall be writable. If the file does not exist, it shall b
 
 \pnum
 \effects
-Any pending rendering and composing operations (\ref{\iotwod.surface.rendering}) shall be performed.
+Any pending rendering and composing operations (\ref{\iotwod.surface.rendering}) are performed.
 
 \pnum
 The visual data of the \underlyingimagesurface is written to \tcode{p} in the data format specified by \tcode{i}.
 
 \pnum
+If \tcode{i} is \tcode{image_file_format::unknown}, it is \impldefplain{image_surface!save} whether the surface is saved in the image file format, if any, that the implementation associates with \tcode{p.extension()} provided that \tcode{p.has_extension() == true}. If \tcode{p.has_extension() == false}, the implementation does not associate an image file format with \tcode{p.extension()}, or the implementation does not support saving in that image file format, the error specified below occurs.
+
+\pnum
 \throws
-As specified in Error reporting [\iotwod.fs.err.report] in \cppseventeen.
+As specified in Error reporting [\iotwod.err.report].
 
 \pnum
 \errors
 Any error that could result from trying to create \tcode{f}, access \tcode{f}, or write data to \tcode{f}.
+
+\pnum
+\tcode{errc::not_supported} if \tcode{image_file_format::unknown} is passed as an argument and the implementation is unable to determine the file format or does not support saving in the image file format it determined.
 
 \pnum
 Other errors, if any, produced by this function are \impldefplain{image_surface!data}.
