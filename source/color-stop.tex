@@ -1,8 +1,7 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.colorstops] {Color stops}
+\rSec0 [\iotwod.colorstop]{Class \tcode{color_stop}}
 
-\rSec1 [\iotwod.colorstops.colorstop]{Class \tcode{color_stop}}
-
+\rSec1 [\iotwod.colorstop.intro] {Overview}
 \pnum
 \indexlibrary{\idxcode{color_stop}}%
 The class \tcode{color_stop} describes a color stop that is used by gradient brushes.
@@ -10,27 +9,38 @@ The class \tcode{color_stop} describes a color stop that is used by gradient bru
 \pnum
 It has an offset of type \tcode{float} and a color of type \tcode{rgba_color}.
 
-\rSec2 [\iotwod.colorstops.colorstop.synopsis] {\tcode{color_stop} synopsis}
+\rSec1 [\iotwod.colorstop.synopsis] {\tcode{color_stop} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
   class color_stop {
   public:
-  	// \ref{\iotwod.colorstops.colorstop.cons}, construct:
-    constexpr color_stop(float o, const rgba_color& c);
+  	// \ref{\iotwod.colorstop.cons}, construct:
+  	constexpr color_stop() noexcept;
+    constexpr color_stop(float o, const rgba_color& c) noexcept;
     
-    // \ref{\iotwod.colorstops.colorstop.modifiers}, modifiers:
-    constexpr void offset(float val) noexcept;
-	constexpr void color(const rgba_color& val) noexcept;
+    // \ref{\iotwod.colorstop.modifiers}, modifiers:
+    constexpr void offset(float o) noexcept;
+	constexpr void color(const rgba_color& c) noexcept;
 	
-    // \ref{\iotwod.colorstops.colorstop.observers}, observers:
+    // \ref{\iotwod.colorstop.observers}, observers:
 	constexpr float offset() const noexcept;
 	constexpr rgba_color color() const noexcept;
   };
 }
 \end{codeblock}
 
-\rSec2 [\iotwod.colorstops.colorstop.cons]{\tcode{color_stop} constructors}
+\rSec1 [\iotwod.colorstop.cons]{\tcode{color_stop} constructors}
+
+\indexlibrary{\idxcode{color_stop}!constructor}%
+\begin{itemdecl}
+constexpr color_stop() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to: \tcode{color_stop(0.0f, rgba_color::transparent_black())}.
+\end{itemdescr}
 
 \indexlibrary{\idxcode{color_stop}!constructor}%
 \begin{itemdecl}
@@ -38,58 +48,61 @@ constexpr color_stop(float o, const rgba_color& c) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
+\requires
+\tcode{o >= 0.0f} and \tcode{o <= 1.0f}.
+
+\pnum
 \effects
 Constructs a \tcode{color_stop} object.
 
 \pnum
-The offset shall be set to the value of \tcode{o}.
-
-\pnum
-The color shall be set to the value of \tcode{c}.
+The offset is \tcode{o}. The color is \tcode{c}.
 \end{itemdescr}
 
-\rSec2 [\iotwod.colorstops.colorstop.modifiers]{\tcode{color_stop} modifiers}
+\rSec1 [\iotwod.colorstop.modifiers]{\tcode{color_stop} modifiers}
 
 \indexlibrarymember{offset}{color_stop}%
 \begin{itemdecl}
-constexpr void offset(float val) noexcept;
+constexpr void offset(float o) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	The offset shall be set to the value of \tcode{val}.
+\pnum
+\requires
+\tcode{o >= 0.0f} and \tcode{o <= 1.0f}.
+
+\pnum
+\effects
+The offset is \tcode{o}.
 \end{itemdescr}
 
 \indexlibrarymember{color}{color_stop}%
 \begin{itemdecl}
-constexpr void color(float val) noexcept;
+constexpr void color(const rgba_color& c) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\effects
-	The color shall be set to the value of \tcode{val}.
+\pnum
+\effects
+The color is \tcode{c}.
 \end{itemdescr}
 
-\rSec2 [\iotwod.colorstops.colorstop.observers]{\tcode{color_stop} observers}
+\rSec1 [\iotwod.colorstop.observers]{\tcode{color_stop} observers}
 
-\indexlibrary{\idxcode{color_stop}!\idxcode{offset}}
-\indexlibrary{\idxcode{offset}!\idxcode{color_stop}}
+\indexlibrarymember{offset}{color_stop}%
 \begin{itemdecl}
-	constexpr float offset() const noexcept;
+constexpr float offset() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	The value of the offset.
+\pnum
+\returns
+The offset.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{color_stop}!\idxcode{color}}
-\indexlibrary{\idxcode{color}!\idxcode{color_stop}}
+\indexlibrarymember{color}{color_stop}%
 \begin{itemdecl}
-	constexpr rgba_color color() const noexcept;
+constexpr rgba_color color() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-	\pnum
-	\returns
-	The value of the color.
+\pnum
+\returns
+The color.
 \end{itemdescr}
