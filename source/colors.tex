@@ -31,7 +31,7 @@ In addition to color channels, colors in computer graphics often have an alpha c
 \rSec1 [\iotwod.colors.reqs] {Color usage requirements}
 
 \pnum
-The use of color throughout this \documenttypename assumes that during rendering and composing operations, color data is linear and that it is in premultiplied format if it has both color and alpha channels.
+During rendering and composing operations, color data is linear and, when it has an alpha channel associated with it, in premultiplied format. Implementations shall make any necessary conversions to ensure this. 
 
 \addtocounter{SectionDepthBase}{1}
 \input{rgba-color}

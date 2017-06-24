@@ -1,6 +1,8 @@
 %!TEX root = io2d.tex
 \rSec0 [\iotwod.rgbacolor] {Class \tcode{rgba_color}}
 
+\rSec1 [\iotwod.rgbacolor.intro] {\tcode{rgba_color} overview}
+
 \pnum
 \indexlibrary{\idxcode{rgba_color}}%
 The class \tcode{rgba_color} describes a four channel color in premultiplied format.
@@ -30,10 +32,22 @@ namespace std::experimental::io2d::v1 {
     constexpr rgba_color(U r, U g, U b, U a = static_cast<U>(1.0f)) noexcept;
   
     // \ref{\iotwod.rgbacolor.modifiers}, modifiers:
-    constexpr void r(float val) noexcept;
-    constexpr void g(float val) noexcept;
-    constexpr void b(float val) noexcept;
-    constexpr void a(float val) noexcept;
+    template <class T>
+    constexpr void r(T val) noexcept;
+    template <class U>
+    constexpr void r(U val) noexcept;
+    template <class T>
+    constexpr void g(T val) noexcept;
+    template <class U>
+    constexpr void g(U val) noexcept;
+    template <class T>
+    constexpr void b(T val) noexcept;
+    template <class U>
+    constexpr void b(U val) noexcept;
+    template <class T>
+    constexpr void a(T val) noexcept;
+    template <class U>
+    constexpr void a(U val) noexcept;
     
     // \ref{\iotwod.rgbacolor.observers}, observers:
     constexpr float r() const noexcept;
@@ -190,19 +204,33 @@ namespace std::experimental::io2d::v1 {
     static const rgba_color white_smoke;
     static const rgba_color yellow;
     static const rgba_color yellow_green;
+    
+    // \ref{\iotwod.rgbacolor.ops}, operators
+    template <class T>
+    constexpr rgba_color& operator*=(T rhs) noexcept;
+    template <class U>
+    constexpr rgba_color& operator*=(U rhs) noexcept;
   };
 
-  // \ref{\iotwod.rgbacolor.ops}, non-member operators:
+  // \ref{\iotwod.rgbacolor.ops}, operators:
   constexpr bool operator==(const rgba_color& lhs, const rgba_color& rhs) 
     noexcept;
   constexpr bool operator!=(const rgba_color& lhs, const rgba_color& rhs) 
     noexcept;
+  template <class T>
+  constexpr rgba_color operator*(const rgba_color& lhs, T rhs) noexcept;
+  template <class U>
+  constexpr rgba_color operator*(const rgba_color& lhs, U rhs) noexcept;
+  template <class T>
+  constexpr rgba_color operator*(T lhs, const rgba_color& rhs) noexcept;
+  template <class U>
+  constexpr rgba_color operator*(U lhs, const rgba_color& rhs) noexcept;
 }
 \end{codeblock}
 
 \rSec1 [\iotwod.rgbacolor.cons] {\tcode{rgba_color} constructors and assignment operators}
 
-\indexlibrary{\idxcode{rgba_color}!constructor}
+\indexlibrary{\idxcode{rgba_color}!constructor}%
 \begin{itemdecl}
 constexpr rgba_color() noexcept;
 \end{itemdecl}
@@ -212,7 +240,7 @@ constexpr rgba_color() noexcept;
 Equivalent to: \tcode{rgba_color \{0.0f, 0.0f, 0.0f. 0.0f\};}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rgba_color}!constructor}
+\indexlibrary{\idxcode{rgba_color}!constructor}%
 \begin{itemdecl}
 template <class T>
 constexpr rgba_color(T r, T g, T b, T a = static_cast<T>(255)) noexcept;
@@ -220,24 +248,18 @@ constexpr rgba_color(T r, T g, T b, T a = static_cast<T>(255)) noexcept;
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{is_integral_v<T> == true} and \tcode{r >= 0} and \tcode{r <= 255} and \tcode{g >= 0} and \tcode{g <= 255} and \tcode{b >= 0} and \tcode{b <= 255} and \tcode{a >= 0} and \tcode{a <= 255}.
+\tcode{r >= 0} and \tcode{r <= 255} and \tcode{g >= 0} and \tcode{g <= 255} and \tcode{b >= 0} and \tcode{b <= 255} and \tcode{a >= 0} and \tcode{a <= 255}.
 
 \pnum
 \effects
-Constructs an object of type \tcode{rgba_color}.
+Constructs an object of type \tcode{rgba_color}. The alpha channel is \tcode{a / 255.0F}. The red channel is \tcode{r / 255.0F * a / 255.0F }. The green channel is \tcode{g / 255.0F * a / 255.0F }. The blue channel is \tcode{b / 255.0F * a / 255.0F }.
 
 \pnum
 \remarks
 This constructor shall not participate in overload resolution unless \tcode{is_integral_v<T>} is \tcode{true}.
-\begin{enumerate}
-\item The alpha channel shall be set to the value of \tcode{a}.
-\item The red channel shall be set to \tcode{r} multiplied by the value of  \tcode{a}.
-\item The green channel shall be set to \tcode{g} multiplied by the value of \tcode{a}.
-\item The blue channel shall be set to \tcode{b} multiplied by the value of \tcode{a}.
-\end{enumerate}
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rgba_color}!constructor}
+\indexlibrary{\idxcode{rgba_color}!constructor}%
 \begin{itemdecl}
 template <class U>
 constexpr rgba_color(U r, U g, U b, U a = static_cast<U>(1.0f)) noexcept;
@@ -249,37 +271,39 @@ constexpr rgba_color(U r, U g, U b, U a = static_cast<U>(1.0f)) noexcept;
 
 \pnum
 \effects
-Constructs an object of type \tcode{rgba_color}.
+Constructs an object of type \tcode{rgba_color}. The alpha channel is {a}. The red channel is \tcode{r * a}. The green channel is \tcode{g * a}. The blue channel is \tcode{b * a}.
 
-\begin{enumerate}
-\item The alpha channel shall be set to the value of \tcode{a / 255.0f}.
-\item The red channel shall be set to \tcode{r / 255.0f} multiplied by the value of  \tcode{a / 255.0f}.
-\item The green channel shall be set to \tcode{g / 255.0f} multiplied by the value of \tcode{a / 255.0f}.
-\item The blue channel shall be set to \tcode{b / 255.0f} multiplied by the value of \tcode{a / 255.0f}.
-\end{enumerate}
+\pnum
+\remarks
+This constructor shall not participate in overload resolution unless \tcode{is_floating_point_v<U>} is \tcode{true}.
 \end{itemdescr}
 
 
 \rSec1 [\iotwod.rgbacolor.modifiers]{\tcode{rgba_color} modifiers}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{r}}
+\indexlibrarymember{r}{rgba_color}%
 \begin{itemdecl}
-constexpr void r(float val) noexcept;
+template <class T>
+constexpr void r(T val) noexcept;
 \end{itemdecl}
-
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{val >= 0.0f} and \tcode{val <= 1.0f}.
+\tcode{val >= 0} and \tcode{val <= 255}.
 
 \pnum
 \effects
-The red channel shall be set to \tcode{val} multiplied by the value of  \tcode{a()}.
+The red channel is \tcode{val / 255.0F * a()}.
+
+\pnum
+\remarks
+This function shall not participate in overload resolution unless \tcode{is_integral_v<T>} is \tcode{true}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{g}}
+\indexlibrarymember{r}{rgba_color}%
 \begin{itemdecl}
-constexpr void g(float val) noexcept;
+template <class U>
+constexpr void r(U val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -288,26 +312,37 @@ constexpr void g(float val) noexcept;
 
 \pnum
 \effects
-The green channel shall be set to \tcode{val} multiplied by the value of  \tcode{a()}.
+The red channel is \tcode{val * a()}.
+
+\pnum
+\remarks
+This function shall not participate in overload resolution unless \tcode{is_floating_point_v<U>} is \tcode{true}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{b}}
+\indexlibrarymember{g}{rgba_color}%
 \begin{itemdecl}
-constexpr void b(float val) noexcept;
+template <class T>
+constexpr void g(T val) noexcept;
 \end{itemdecl}
+
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{val >= 0.0f} and \tcode{val <= 1.0f}.
+\tcode{val >= 0} and \tcode{val <= 255}.
 
 \pnum
 \effects
-The blue channel shall be set to \tcode{val} multiplied by the value of  \tcode{a()}.
+The green channel is \tcode{val / 255.0F * a()}.
+
+\pnum
+\remarks
+This function shall not participate in overload resolution unless \tcode{is_integral_v<T>} is \tcode{true}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{a}}
+\indexlibrarymember{g}{rgba_color}%
 \begin{itemdecl}
-constexpr void a(float val) noexcept;
+template <class U>
+constexpr void g(U val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -316,60 +351,147 @@ constexpr void a(float val) noexcept;
 
 \pnum
 \effects
+The green channel is \tcode{val * a()}.
+
+\pnum
+\remarks
+This function shall not participate in overload resolution unless \tcode{is_floating_point_v<U>} is \tcode{true}.
+\end{itemdescr}
+
+\indexlibrarymember{b}{rgba_color}%
+\begin{itemdecl}
+template <class T>
+constexpr void b(T val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{val >= 0} and \tcode{val <= 255}.
+
+\pnum
+\effects
+The blue channel is \tcode{val / 255.0F * a()}.
+
+\pnum
+\remarks
+This function shall not participate in overload resolution unless \tcode{is_integral_v<T>} is \tcode{true}.
+\end{itemdescr}
+
+\indexlibrarymember{b}{rgba_color}%
+\begin{itemdecl}
+template <class U>
+constexpr void b(U val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{val >= 0.0f} and \tcode{val <= 1.0f}.
+
+\pnum
+\effects
+The blue channel is \tcode{val * a()}.
+
+\pnum
+\remarks
+This function shall not participate in overload resolution unless \tcode{is_floating_point_v<U>} is \tcode{true}.
+\end{itemdescr}
+
+\indexlibrarymember{a}{rgba_color}%
+\begin{itemdecl}
+template <class T>
+constexpr void a(T val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{val >= 0} and \tcode{val <= 255}.
+
+\pnum
+\effects
+If \tcode{a() == 0.0f} the alpha channel is \tcode{val / 255.0F}, otherwise:
 \begin{enumerate}
-\item \tcode{b((b() / a()) * val);}
-\item \tcode{g((g() / a()) * val);}
-\item \tcode{r((r() / a()) * val);}
-\item The alpha channel shall be set to \tcode{val}.
+\item \tcode{r((r() / a()) * val / 255.0F);}
+\item \tcode{g((g() / a()) * val / 255.0F);}
+\item \tcode{b((b() / a()) * val / 255.0F);}
+\item The alpha channel is \tcode{val / 255.0F}.
 \end{enumerate}
+
+\pnum
+\remarks
+This function shall not participate in overload resolution unless \tcode{is_integral_v<T>} is \tcode{true}.
+\end{itemdescr}
+
+\indexlibrarymember{a}{rgba_color}%
+\begin{itemdecl}
+template <class U>
+constexpr void a(U val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{val >= 0.0f} and \tcode{val <= 1.0f}.
+
+\pnum
+\effects
+If \tcode{a() == 0.0f} the alpha channel is \tcode{val}, otherwise:
+\begin{enumerate}
+\item \tcode{r((r() / a()) * val);}
+\item \tcode{g((g() / a()) * val);}
+\item \tcode{b((b() / a()) * val);}
+\item The alpha channel is \tcode{val}.
+\end{enumerate}
+
+\pnum
+\remarks
+This function shall not participate in overload resolution unless \tcode{is_floating_point_v<U>} is \tcode{true}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.rgbacolor.observers]{\tcode{rgba_color} observers}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{r}}
+\indexlibrarymember{r}{rgba_color}%
 \begin{itemdecl}
 constexpr float r() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The value of the red channel.
+The red channel.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{g}}
+\indexlibrarymember{g}{rgba_color}%
 \begin{itemdecl}
 constexpr float g() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The value of the green channel.
+The green channel.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{b}}
+\indexlibrarymember{b}{rgba_color}%
 \begin{itemdecl}
 constexpr float b() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The value of the blue channel.
+The blue channel.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{a}}
+\indexlibrarymember{a}{rgba_color}%
 \begin{itemdecl}
 constexpr float a() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The value of the alpha channel.
+The alpha channel.
 \end{itemdescr}
 
 \rSec1 [\iotwod.rgbacolor.statics] {\tcode{rgba_color} static members}
 
 \pnum
-The \tcode{alpha} value of all of the predefined \tcode{rgba_color} static members in Table~\ref{tab:\iotwod.rgbacolor.members.values} is \tcode{255} except for \tcode{transparent_black}, which has an \tcode{alpha} value of \tcode{0}.
+The \tcode{alpha} value of all of the predefined \tcode{rgba_color} static member object in Table~\ref{tab:\iotwod.rgbacolor.members.values} is \tcode{1.0F} except for \tcode{transparent_black}, which has an \tcode{alpha} value of \tcode{0.0F}.
 
 \begin{libiotwodtab4}
  {\tcode{rgba_color} static members values}
@@ -1131,11 +1253,74 @@ The \tcode{alpha} value of all of the predefined \tcode{rgba_color} static membe
  \\
 \end{libiotwodtab4}
 
-\rSec1 [\iotwod.rgbacolor.ops] {\tcode{rgba_color} non-member operators}
+\rSec1 [\iotwod.rgbacolor.ops] {\tcode{rgba_color} operators}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{operator==}}
+\indexlibrarymember{operator*=}{rgba_color}%
 \begin{itemdecl}
-bool operator==(const rgba_color& lhs, const rgba_color& rhs) noexcept;
+template <class T>
+constexpr rgba_color& operator*=(T rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{rhs >= 0} and \tcode{rhs <= 255}.
+
+\pnum
+\effects
+\tcode{r(min(r() * rhs / 255.0F, 1.0F))}.
+
+\pnum
+\tcode{g(min(g() * rhs / 255.0F, 1.0F))}.
+
+\pnum
+\tcode{b(min(b() * rhs / 255.0F, 1.0F))}.
+
+\pnum
+\tcode{a(min(a() * rhs / 255.0F, 1.0F))}.
+
+\returns
+\tcode{*this}.
+
+\pnum
+\remarks
+This function shall not participate in overload resolution unless \tcode{is_integral_v<T>} is \tcode{true}.
+\end{itemdescr}
+
+\indexlibrarymember{operator*=}{rgba_color}%
+\begin{itemdecl}
+template <class U>
+constexpr rgba_color& operator*=(U rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{rhs >= 0.0F} and \tcode{rhs <= 1.0F}.
+
+\pnum
+\effects
+\tcode{r(min(r() * rhs, 1.0F))}.
+
+\pnum
+\tcode{g(min(g() * rhs, 1.0F))}.
+
+\pnum
+\tcode{b(min(b() * rhs, 1.0F))}.
+
+\pnum
+\tcode{a(min(a() * rhs, 1.0F))}.
+
+\returns
+\tcode{*this}.
+
+\pnum
+\remarks
+This function shall not participate in overload resolution unless \tcode{is_floating_point_v<T>} is \tcode{true}.
+\end{itemdescr}
+
+\indexlibrarymember{operator==}{rgba_color}%
+\begin{itemdecl}
+constexpr bool operator==(const rgba_color& lhs, const rgba_color& rhs) 
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -1146,12 +1331,90 @@ lhs.b() == rhs.b() \&\&
 lhs.a() == rhs.a()}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rgba_color}!\idxcode{operator!=}}
+\indexlibrarymember{operator*}{rgba_color}%
 \begin{itemdecl}
-bool operator!=(const rgba_color& lhs, const rgba_color& rhs) noexcept;
+template <class T>
+constexpr rgba_color operator*(const rgba_color& lhs, T rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
+\requires
+\tcode{rhs >= 0} and \tcode{rhs <= 255}.
+
+\pnum
 \returns
-\tcode{!(lhs == rhs)}
+\begin{codeblock}
+rgba_color(min(lhs.r() * rhs / 255.0F, 1.0F), min(lhs.g() * rhs / 255.0F, 1.0F),
+  min(lhs.b() * rhs / 255.0F, 1.0F), min(lhs.a() * rhs / 255.0F, 1.0F))
+\end{codeblock}
+
+\pnum
+\remarks
+This function shall not participate in overload resolution unless \tcode{is_integral_v<T>} is \tcode{true}.
+\end{itemdescr}
+
+\indexlibrarymember{operator*}{rgba_color}%
+\begin{itemdecl}
+template <class U>
+constexpr rgba_color& operator*(const rgba_color& lhs, U rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{rhs >= 0.0F} and \tcode{rhs <= 1.0F}.
+
+\pnum
+\returns
+\begin{codeblock}
+rgba_color(min(lhs.r() * rhs, 1.0F), min(lhs.g() * rhs, 1.0F),
+  min(lhs.b() * rhs, 1.0F), min(lhs.a() * rhs, 1.0F))
+\end{codeblock}
+
+\pnum
+\remarks
+This function shall not participate in overload resolution unless \tcode{is_floating_point_v<U>} is \tcode{true}.
+\end{itemdescr}
+
+\indexlibrarymember{operator*}{rgba_color}%
+\begin{itemdecl}
+template <class T>
+constexpr rgba_color operator*(T lhs, const rgba_color& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{lhs >= 0} and \tcode{lhs <= 255}.
+
+\pnum
+\returns
+\begin{codeblock}
+rgba_color(min(lhs * rhs.r() / 255.0F, 1.0F), min(lhs * rhs.g() / 255.0F, 1.0F),
+  min(lhs * rhs.b() / 255.0F, 1.0F), min(lhs * rhs.a() / 255.0F, 1.0F))
+\end{codeblock}
+
+\pnum
+\remarks
+This function shall not participate in overload resolution unless \tcode{is_integral_v<T>} is \tcode{true}.
+\end{itemdescr}
+
+\indexlibrarymember{operator*}{rgba_color}%
+\begin{itemdecl}
+template <class U>
+constexpr rgba_color& operator*(U lhs, const rgba_color& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+\tcode{lhs >= 0.0F} and \tcode{lhs <= 1.0F}.
+
+\pnum
+\returns
+\begin{codeblock}
+rgba_color(min(lhs * rhs.r(), 1.0F), min(lhs * rhs.g(), 1.0F),
+  min(lhs * rhs.b(), 1.0F), min(lhs * rhs.a(), 1.0F))
+\end{codeblock}
+
+\pnum
+\remarks
+This function shall not participate in overload resolution unless \tcode{is_floating_point_v<U>} is \tcode{true}.
 \end{itemdescr}
