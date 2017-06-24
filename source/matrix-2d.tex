@@ -67,7 +67,7 @@ namespace std::experimental::io2d::v1 {
     constexpr bool is_invertible() const noexcept;
     constexpr float determinant() const noexcept;
     constexpr matrix_2d inverse() const noexcept;
-    constexpr vector_2d transform_point(const vector_2d& pt) const noexcept;
+    constexpr vector_2d transform_pt(const vector_2d& pt) const noexcept;
     
     // \ref{\iotwod.\matrixtwod.member.ops}, matrix_2d member operators:
     constexpr matrix_2d& operator*=(const matrix_2d& rhs) noexcept;
@@ -475,9 +475,9 @@ constexpr float determinant() const noexcept;
 \tcode{m00() * m11() - m01() * m10()}.
 \end{itemdescr}
 
-\indexlibrarymember{transform_point}{matrix_2d}%
+\indexlibrarymember{transform_pt}{matrix_2d}%
 \begin{itemdecl}
-constexpr vector_2d transform_point(const vector_2d& pt) const noexcept;
+constexpr vector_2d transform_pt(const vector_2d& pt) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -554,5 +554,5 @@ constexpr vector_2d operator*(const vector_2d& v, const matrix_2d& m) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-Equivalent to: \tcode{m.transform_point(v)}.
+Equivalent to: \tcode{m.transform_pt(v)}.
 \end{itemdescr}

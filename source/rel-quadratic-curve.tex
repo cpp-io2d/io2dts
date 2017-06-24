@@ -21,12 +21,12 @@ namespace std::experimental::io2d::v1 {
         noexcept;
 
       // \ref{\iotwod.relquadraticcurve.modifiers}, modifiers:
-      constexpr void control(const vector_2d& cpt) noexcept;
-      constexpr void end(const vector_2d& ept) noexcept;
+      constexpr void control_pt(const vector_2d& cpt) noexcept;
+      constexpr void end_pt(const vector_2d& ept) noexcept;
 
       // \ref{\iotwod.relquadraticcurve.observers}, observers:
-      constexpr vector_2d control() const noexcept;
-      constexpr vector_2d end() const noexcept;
+      constexpr vector_2d control_pt() const noexcept;
+      constexpr vector_2d end_pt() const noexcept;
     };
     
     \ref{\iotwod.relquadraticcurve.nonmember}, non-members
@@ -69,9 +69,9 @@ The end point is \tcode{ept}.
 
 \rSec1 [\iotwod.relquadraticcurve.modifiers]{\tcode{rel_quadratic_curve} modifiers}
 
-\indexlibrarymember{rel_quadratic_curve}{control}%
+\indexlibrarymember{control_pt}{rel_quadratic_curve}%
 \begin{itemdecl}
-constexpr void control(const vector_2d& cpt) noexcept;
+constexpr void control_pt(const vector_2d& cpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -79,9 +79,9 @@ constexpr void control(const vector_2d& cpt) noexcept;
 The control point is \tcode{cp}.
 \end{itemdescr}
 
-\indexlibrarymember{rel_quadratic_curve}{end_point}%
+\indexlibrarymember{end_pt}{rel_quadratic_curve}%
 \begin{itemdecl}
-constexpr void end(const vector_2d& ept) noexcept;
+constexpr void end_pt(const vector_2d& ept) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -91,9 +91,9 @@ The end point is \tcode{ept}.
 
 \rSec1 [\iotwod.relquadraticcurve.observers]{\tcode{rel_quadratic_curve} observers}
 
-\indexlibrarymember{rel_quadratic_curve}{control}%
+\indexlibrarymember{control_pt}{rel_quadratic_curve}%
 \begin{itemdecl}
-constexpr vector_2d control() const noexcept;
+constexpr vector_2d control_pt() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -101,9 +101,9 @@ constexpr vector_2d control() const noexcept;
 The control point.
 \end{itemdescr}
 
-\indexlibrarymember{rel_quadratic_curve}{end}%
+\indexlibrarymember{end_pt}{rel_quadratic_curve}%
 \begin{itemdecl}
-constexpr vector_2d end() const noexcept;
+constexpr vector_2d end_pt() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -121,7 +121,7 @@ constexpr bool operator==(const rel_quadratic_curve& lhs,
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{lhs.control() == rhs.control() \&\& lhs.end() == rhs.end()}.
+\tcode{lhs.control_pt() == rhs.control_pt() \&\& lhs.end_pt() == rhs.end_pt()}.
 \end{itemdescr}
 
 \indexlibrarymember{operator!=}{rel_quadratic_curve}%

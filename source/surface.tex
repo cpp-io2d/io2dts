@@ -267,39 +267,39 @@ Given a point \tcode{pt}, a brush coordinate space transformation matrix \tcode{
  \endhead
  brush coordinate space
  & mask coordinate space
- & \tcode{mcsm.transform_point(bcsm.invert().transform_point(pt))}.
+ & \tcode{mcsm.transform_pt(bcsm.invert().transform_pt(pt))}.
  \\
  brush coordinate space
  & user coordinate space
- & \tcode{bcsm.invert().transform_point(pt)}.
+ & \tcode{bcsm.invert().transform_pt(pt)}.
  \\
  brush coordinate space
  & surface coordinate space
- & \tcode{scsm.transform_point(bcsm.invert().transform_point(pt))}.
+ & \tcode{scsm.transform_pt(bcsm.invert().transform_pt(pt))}.
  \\
  user coordinate space
  & brush coordinate space
- & \tcode{bcsm.transform_point(pt)}.
+ & \tcode{bcsm.transform_pt(pt)}.
  \\
  user coordinate space
  & mask coordinate space
- & \tcode{mcsm.transform_point(pt)}.
+ & \tcode{mcsm.transform_pt(pt)}.
  \\
  user coordinate space
  & surface coordinate space
- & \tcode{scsm.transform_point(pt)}.
+ & \tcode{scsm.transform_pt(pt)}.
  \\
  surface coordinate space
  & brush coordinate space
- & \tcode{bcsm.transform_point(scsm.invert().transform_point(pt))}.
+ & \tcode{bcsm.transform_pt(scsm.invert().transform_pt(pt))}.
  \\
  surface coordinate space
  & mask coordinate space
- & \tcode{mcsm.transform_point(scsm.invert().transform_point(pt))}.
+ & \tcode{mcsm.transform_pt(scsm.invert().transform_pt(pt))}.
  \\
  surface coordinate space
  & user coordinate space
- & \tcode{scsm.invert().transform_point(pt)}.
+ & \tcode{scsm.invert().transform_pt(pt)}.
  \\
 \end{libiotwodreqtab3}
 

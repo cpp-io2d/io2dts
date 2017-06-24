@@ -151,7 +151,7 @@ Taking advantage of the fact that \tcode{path_builder} is a container, rather th
 \begin{codeblock}
 // Create the "C".
 const matrix_2d scl = matrix_2d::init_scale({ 0.9f, 1.1f });
-auto pt = scl.inverse().transform_point({ 85.0f, 100.0f }) +
+auto pt = scl.inverse().transform_pt({ 85.0f, 100.0f }) +
   point_for_angle(half_pi<float> / 2.0f, 50.0f);
 pb.matrix(scl);
 pb.new_path(pt);

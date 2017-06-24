@@ -66,7 +66,7 @@ The first control point is \tcode{cpt1}. The second control point is \tcode{cpt2
 
 \rSec1 [\iotwod.relcubiccurve.modifiers]{\tcode{rel_cubic_curve} modifiers}
 
-\indexlibrarymember{rel_cubic_curve}{control_pt1}%
+\indexlibrarymember{control_pt2}{rel_cubic_curve}%
 \begin{itemdecl}
 constexpr void control_pt1(const vector_2d& cpt) noexcept;
 \end{itemdecl}
@@ -76,7 +76,7 @@ constexpr void control_pt1(const vector_2d& cpt) noexcept;
 The first control point is \tcode{cpt}.
 \end{itemdescr}
 
-\indexlibrarymember{rel_cubic_curve}{control_pt2}%
+\indexlibrarymember{control_pt2}{rel_cubic_curve}%
 \begin{itemdecl}
 constexpr void control_pt2(const vector_2d& cpt) noexcept;
 \end{itemdecl}
@@ -86,7 +86,7 @@ constexpr void control_pt2(const vector_2d& cpt) noexcept;
 The second control point is \tcode{cpt}.
 \end{itemdescr}
 
-\indexlibrarymember{rel_cubic_curve}{end_pt}%
+\indexlibrarymember{end_pt}{rel_cubic_curve}%
 \begin{itemdecl}
 constexpr void end_pt(const vector_2d& ept) noexcept;
 \end{itemdecl}
@@ -98,7 +98,7 @@ The end point is \tcode{ept}.
 
 \rSec1 [\iotwod.relcubiccurve.observers]{\tcode{rel_cubic_curve} observers}
 
-\indexlibrarymember{rel_cubic_curve}{control_pt1}%
+\indexlibrarymember{control_pt1}{rel_cubic_curve}%
 \begin{itemdecl}
 constexpr vector_2d control_pt1() const noexcept;
 \end{itemdecl}
@@ -108,7 +108,7 @@ constexpr vector_2d control_pt1() const noexcept;
 The first control point.
 \end{itemdescr}
 
-\indexlibrarymember{rel_cubic_curve}{control_pt2}%
+\indexlibrarymember{control_pt2}{rel_cubic_curve}%
 \begin{itemdecl}
 constexpr vector_2d control_pt2() const noexcept;
 \end{itemdecl}
@@ -118,7 +118,7 @@ constexpr vector_2d control_pt2() const noexcept;
 The second control point.
 \end{itemdescr}
 
-\indexlibrarymember{rel_cubic_curve}{end_pt}%
+\indexlibrarymember{end_pt}{rel_cubic_curve}%
 \begin{itemdecl}
 constexpr vector_2d end_pt() const noexcept;
 \end{itemdecl}
@@ -139,8 +139,9 @@ constexpr bool operator==(const rel_cubic_curve& lhs,
 \pnum
 \returns
 \begin{codeblock}
-lhs.control_1() == rhs.control_1() && lhs.control_2() == rhs.control_2() &&
-lhs.end() && rhs.end()
+lhs.control_pt1() == rhs.control_pt1() &&
+lhs.control_pt2() == rhs.control_2pt() &&
+lhs.end_pt() && rhs.end_pt()
 \end{codeblock}
 \end{itemdescr}
 
