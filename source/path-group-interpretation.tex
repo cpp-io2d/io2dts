@@ -77,7 +77,7 @@ Calls \tcode{mtxStk.push(mtx)}. Sets \tcode{mtx} to \tcode{p.matrix()}. \\ \rows
 Calls \tcode{mtxStk.push(mtx)}. Sets \tcode{mtx} to \tcode{mtx * p.matrix()}. \\ \rowsep
 
 \tcode{path_data::revert_matrix p} &
-If \tcode{mtxStk.empty()} is \tcode{false}, sets \tcode{mtx} to \tcode{ognStk.top()} then calls \tcode{ognStk.pop()}. Otherwise sets \tcode{mtx} to its initial value as specified in Table~\ref{tab:\iotwod.paths.interpretation.state}. \\ \rowsep
+If \tcode{mtxStk.empty()} is \tcode{false}, sets \tcode{mtx} to \tcode{mtxStk.top()} then calls \tcode{mtxStk.pop()}. Otherwise sets \tcode{mtx} to its initial value as specified in Table~\ref{tab:\iotwod.paths.interpretation.state}. \\ \rowsep
 
 \tcode{path_data::abs_line p} &
 Let \tcode{pt} equal \tcode{mtx.transform_pt(p.to() - currPt) + currPt}. Creates a line from \tcode{currPt} to \tcode{pt}. Sets \tcode{currPt} to \tcode{pt}. \\ \rowsep

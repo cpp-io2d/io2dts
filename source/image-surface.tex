@@ -4,8 +4,11 @@
 \rSec1 [\iotwod.imagesurface.summary] {\tcode{image_surface} summary}
 
 \pnum
-\indexlibrary{\idxcode{image_surface}}
+\indexlibrary{\idxcode{image_surface}}%
 The class \tcode{image_surface} derives from the \tcode{surface} class and provides an interface to a raster graphics data graphics resource.
+
+\pnum
+It has a \term{pixel format} of type \tcode{format}, a \term{width} of type \tcode{int}, and a \term{height} of type \tcode{int}.
 
 \pnum
 \begin{note}
@@ -19,16 +22,24 @@ namespace std::experimental::io2d::v1 {
   class image_surface : public surface {
   public:
     // \ref{\iotwod.imagesurface.cons}, construct/copy/move/destroy:
-    image_surface() = delete;
-    image_surface(experimental::io2d::format fmt, int width, int height);
+    image_surface(io2d::format fmt, int width, int height);
     image_surface(filesystem::path f, image_file_format i, 
-      experimental::io2d::format fmt);
+      io2d::format fmt);
+    image_surface(filesystem::path f, image_file_format i, 
+      io2d::format fmt, error_code& ec) noexcept;
+    image_surface(image_surface&&);
+    image_surface& operator=(image_surface&&);
     
     // \ref{\iotwod.imagesurface.members}, members:
     void save(filesystem::path p, image_file_format i);
+    void save(filesystem::path p, image_file_format i, error_code& ec) noexcept;
+    
+    // \ref{\iotwod.imagesurface.staticmembers}, static members:
+    static int max_width() const noexcept;
+    static int max_height() const noexcept;
     
     // \ref{\iotwod.imagesurface.observers}, observers:
-    experimental::io2d::format format() const noexcept;
+    io2d::format format() const noexcept;
     int width() const noexcept;
     int height() const noexcept;
   };
@@ -37,42 +48,43 @@ namespace std::experimental::io2d::v1 {
 
 \rSec1 [\iotwod.imagesurface.cons] {\tcode{image_surface} constructors and assignment operators}
 
-\indexlibrary{\idxcode{image_surface}!constructor}
+\indexlibrary{\idxcode{image_surface}!constructor}%
 \begin{itemdecl}
-image_surface(experimental::io2d::format fmt, int width, int height);
+image_surface(io2d::format fmt, int w, int h);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{w >= 1}.
+\tcode{w} is greater than \tcode{0} and not greater than \tcode{image_surface::max_width()}.
 
 \pnum
-\tcode{h >= 1}.
+\tcode{h} is greater than \tcode{0} and not greater than \tcode{image_surface::max_height()}.
+
+\pnum
+\tcode{fmt} is not \tcode{io2d::format::invalid}.
 
 \pnum
 \effects
 Constructs an object of type \tcode{image_surface}.
 
 \pnum
-\postconditions
-\tcode{this->format() == fmt}.
-
-\pnum
-\tcode{this->width() == width}.
-
-\pnum
-\tcode{this->height() == height}.
+The pixel format is \tcode{fmt}, the width is \tcode{w}, and the height is \tcode{h}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{image_surface}!constructor}
+\indexlibrary{\idxcode{image_surface}!constructor}%
 \begin{itemdecl}
 image_surface(filesystem::path f, image_file_format i,
-  experimental::io2d::format fmt);
+  io2d::format fmt);
+image_surface(filesystem::path f, image_file_format i,
+  io2d::format fmt, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \requires
 \tcode{f} is a file and its contents are data in either JPEG format or PNG format.
+
+\pnum
+\tcode{fmt} is not \tcode{io2d::format::invalid}.
 
 \pnum
 \effects
@@ -85,14 +97,25 @@ The data of the \underlyingimagesurface is the raster graphics data that results
 The data of \tcode{f} is processed into uncompressed raster graphics data as specified by the value of \tcode{i}.
 
 \pnum
-If \tcode{i} is \tcode{image_file_format::unknown}, it is \impldefplain{image_surface!constructor} whether the surface is created in the image file format, if any, that the implementation associates with \tcode{p.extension()} provided that \tcode{p.has_extension() == true}. If \tcode{p.has_extension() == false}, the implementation does not associate an image file format with \tcode{p.extension()}, or the implementation does not support reading in graphics data in that image file format, the error specified below occurs.
+If \tcode{i} is \tcode{image_file_format::unknown}, implementations may attempt to process the data of \tcode{f} into uncompressed raster graphics data. The manner in which it does so is \unspecnorm. If no uncompressed raster graphics data is produced, the error specified below occurs.
 
 \pnum
-The resulting uncompressed raster graphics data is then transformed into the data format specified by \tcode{fmt}. If the format specified by \tcode{fmt} only contains an alpha channel, the values of the color channels, if any, of the \underlyingimagesurface are \unspecnorm. If the format specified by \tcode{fmt} only contains color channels and the resulting uncompressed raster graphics data is in a premultiplied format, then the value of each color channel for each pixel shall be divided by the value of the alpha channel for that pixel. The visual data shall then be set as the visual data of the \underlyingimagesurface.
+\begin{note}
+The intent of \tcode{image_file_format::unknown} is to allow implementations to support image file formats that are not required to be supported.
+\end{note}
+
+\pnum
+If the width of the uncompressed raster graphics data would be less than \tcode{1} or greater than \tcode{image_surface::max_width()} or if the height of the uncompressed raster graphics data would be less than \tcode{1} or greater than \tcode{image_surface::max_height()}, the error specified below occurs.
+
+\pnum
+The resulting uncompressed raster graphics data is then transformed into the data format specified by \tcode{fmt}. If the format specified by \tcode{fmt} only contains an alpha channel, the values of the color channels, if any, of the \underlyingimagesurface are \unspecnorm. If the format specified by \tcode{fmt} only contains color channels and the resulting uncompressed raster graphics data is in a premultiplied format, then the value of each color channel for each pixel is be divided by the value of the alpha channel for that pixel. The visual data is then set as the visual data of the \underlyingimagesurface.
+
+\pnum
+The width is the width of the uncompressed raster graphics data. The height is the height of the uncompressed raster graphics data.
 
 \pnum
 \throws
-As specified in Error reporting [\iotwod.err.report].
+As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \pnum
 \errors
@@ -102,14 +125,18 @@ Any error that could result from trying to access \tcode{f}, open \tcode{f} for 
 \tcode{errc::not_supported} if \tcode{image_file_format::unknown} is passed as an argument and the implementation is unable to determine the file format or does not support saving in the image file format it determined.
 
 \pnum
-Other errors, if any, produced by this function are \impldefplain{image_surface!data}.
+\tcode{errc::invalid_argument} if \tcode{fmt} is \tcode{io2d::format::invalid}.
+
+\pnum
+\tcode{errc::argument_out_of_domain} if the width would be less than \tcode{1}, the width would be greater than \tcode{image_surface::max_width()}, the height would be less than \tcode{1}, or the height would be greater than \tcode{image_surface::max_height()}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.imagesurface.members] {\tcode{image_surface} members}
 
-\indexlibrary{\idxcode{image_surface}!\idxcode{save}}
+\indexlibrarymember{save}{image_surface}%
 \begin{itemdecl}
 void save(filesystem::path p, image_file_format i);
+void save(filesystem::path p, image_file_format i, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -131,7 +158,7 @@ If \tcode{i} is \tcode{image_file_format::unknown}, it is \impldefplain{image_su
 
 \pnum
 \throws
-As specified in Error reporting [\iotwod.err.report].
+As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \pnum
 \errors
@@ -139,56 +166,59 @@ Any error that could result from trying to create \tcode{f}, access \tcode{f}, o
 
 \pnum
 \tcode{errc::not_supported} if \tcode{image_file_format::unknown} is passed as an argument and the implementation is unable to determine the file format or does not support saving in the image file format it determined.
-
-\pnum
-Other errors, if any, produced by this function are \impldefplain{image_surface!data}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.imagesurface.observers] {\tcode{image_surface} observers}
+\rSec1 [\iotwod.imagesurface.staticmembers] {\tcode{image_surface} static members}
 
-\indexlibrary{\idxcode{image_surface}!\idxcode{format}}
-\indexlibrary{\idxcode{format}!\idxcode{image_surface}}
+\indexlibrarymember{max_width}{image_surface}%
 \begin{itemdecl}
-experimental::io2d::format format() const noexcept;
+static int max_width() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The pixel format of the \tcode{image_surface} object.
-
-\pnum
-\remarks
-If the \tcode{image_surface} object is invalid, this function shall return \\ \tcode{experimental::io2d::format::invalid}.
+The maximum width for an \tcode{image_surface} object.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{image_surface}!\idxcode{width}}
-\indexlibrary{\idxcode{width}!\idxcode{image_surface}}
+\indexlibrarymember{max_height}{image_surface}%
+\begin{itemdecl}
+static int max_height() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The maximum height for an \tcode{image_surface} object.
+\end{itemdescr}
+    
+
+\rSec1 [\iotwod.imagesurface.observers] {\tcode{image_surface} observers}
+
+\indexlibrarymember{format}{image_surface}%
+\begin{itemdecl}
+io2d::format format() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The pixel format.
+\end{itemdescr}
+
+\indexlibrarymember{width}{image_surface}%
 \begin{itemdecl}
 int width() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The number of pixels per horizontal line of the \tcode{image_surface} object.
-
-\pnum
-\remarks
-This function shall return the value \tcode{0} if \\
-\tcode{this->format() == experimental::io2d::format::invalid}.
+The width.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{image_surface}!\idxcode{height}}
-\indexlibrary{\idxcode{height}!\idxcode{image_surface}}
+\indexlibrarymember{height}{image_surface}%
 \begin{itemdecl}
 int height() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The number of horizontal lines of pixels in the \tcode{image_surface} object.
-
-\pnum
-\remarks
-This function shall return the value \tcode{0} if \\
-\tcode{this->format() == experimental::io2d::format::invalid}.
+The height.
 \end{itemdescr}

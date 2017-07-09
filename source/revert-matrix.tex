@@ -16,7 +16,7 @@ namespace std::experimental::io2d::v1 {
       constexpr revert_matrix() noexcept;
     };
     
-    \ref{\iotwod.revertmatrix.nonmember}, non-members
+    // \ref{\iotwod.revertmatrix.ops}, operators:
     constexpr bool operator==(const revert_matrix& lhs,
       const revert_matrix& rhs) noexcept;
     constexpr bool operator!=(const revert_matrix& lhs,
@@ -27,7 +27,7 @@ namespace std::experimental::io2d::v1 {
 
 \rSec1 [\iotwod.revertmatrix.cons] {\tcode{revert_matrix} constructors}
 
-\indexlibrary{\idxcode{change_matrix}!constructor}%
+\indexlibrary{\idxcode{revert_matrix}!constructor}%
 \begin{itemdecl}
 constexpr revert_matrix() noexcept;
 \end{itemdecl}
@@ -37,7 +37,7 @@ constexpr revert_matrix() noexcept;
 Constructs an object of type \tcode{revert_matrix}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.revertmatrix.nonmember]{Non-member functions}
+\rSec1 [\iotwod.revertmatrix.ops]{\tcode{revert_matrix} operators}
 
 \indexlibrarymember{operator==}{revert_matrix}%
 \begin{itemdecl}
@@ -48,15 +48,4 @@ constexpr bool operator==(const revert_matrix& lhs, const revert_matrix& rhs)
 \pnum
 \returns
 \tcode{true}.
-\end{itemdescr}
-
-\indexlibrarymember{operator!=}{revert_matrix}%
-\begin{itemdecl}
-constexpr bool operator!=(const revert_matrix& lhs, const revert_matrix& rhs) 
-  noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-\tcode{false}.
 \end{itemdescr}

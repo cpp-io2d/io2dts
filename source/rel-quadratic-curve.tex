@@ -29,7 +29,7 @@ namespace std::experimental::io2d::v1 {
       constexpr vector_2d end_pt() const noexcept;
     };
     
-    \ref{\iotwod.relquadraticcurve.nonmember}, non-members
+    // \ref{\iotwod.relquadraticcurve.ops}, operators:
     constexpr bool operator==(const rel_quadratic_curve& lhs,
       const rel_quadratic_curve& rhs) noexcept;
     constexpr bool operator!=(const rel_quadratic_curve& lhs,
@@ -111,7 +111,7 @@ constexpr vector_2d end_pt() const noexcept;
 The end point.
 \end{itemdescr}
 
-\rSec1 [\iotwod.relquadraticcurve.nonmember]{Non-member functions}
+\rSec1 [\iotwod.relquadraticcurve.ops]{\tcode{rel_quadratic_curve} operators}
 
 \indexlibrarymember{operator==}{rel_quadratic_curve}%
 \begin{itemdecl}
@@ -122,15 +122,4 @@ constexpr bool operator==(const rel_quadratic_curve& lhs,
 \pnum
 \returns
 \tcode{lhs.control_pt() == rhs.control_pt() \&\& lhs.end_pt() == rhs.end_pt()}.
-\end{itemdescr}
-
-\indexlibrarymember{operator!=}{rel_quadratic_curve}%
-\begin{itemdecl}
-constexpr bool operator!=(const rel_quadratic_curve& lhs,
-  const rel_quadratic_curve& rhs) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-\tcode{!(lhs == rhs)}.
 \end{itemdescr}

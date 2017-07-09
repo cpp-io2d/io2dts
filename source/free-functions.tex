@@ -26,7 +26,7 @@ namespace std::experimental::io2d::v1 {
   image_surface make_image_surface(format format, int width, int height);
   image_surface make_image_surface(format format, int width, int height, 
     error_code& ec) noexcept;
-  image_surface make_image_surface(image_surface& sfc) noexcept;
+  image_surface copy_image_surface(image_surface& sfc) noexcept;
   float angle_for_point(const vector_2d& ctr, const vector_2d& pt) noexcept;
   vector_2d point_for_angle(float ang, float rad = 1.0f) noexcept;
   vector_2d point_for_angle(float ang, const vector_2d& rad) noexcept;
@@ -115,9 +115,11 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 The errors, if any, produced by this function are the same as the errors for the equivalent \tcode{display_surface} constructor (\ref{\iotwod.imagesurface.cons}).
 \end{itemdescr}
 
-\indexlibrary{\idxcode{make_image_surface}}%
+\rSec1 [\iotwod.standalone.copyimagesurface] {\tcode{copy_image_surface}}
+
+\indexlibrary{\idxcode{copy_image_surface}}%
 \begin{itemdecl}
-image_surface make_image_surface(image_surface& sfc) noexcept;
+image_surface copy_image_surface(image_surface& sfc) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -126,9 +128,10 @@ An exact copy of \tcode{sfc}.
 
 \pnum
 \begin{note}
-The \tcode{image_surface} class intentionally does not provide copy semantics because with many modern graphics technologies, making such a copy is almost always a very time consuming operation. This function allows users to make a copy of an \tcode{image_surface} object while preserving the move-only semantics of the \tcode{image_surface} class.
+The \tcode{image_surface} class intentionally does not provide copy semantics because with many modern graphics technologies, making such a copy is almost always a very time consuming operation. This function allows users to make a copy of an \tcode{image_surface} object while preserving the move-only semantics of the \tcode{image_surface} class, thus preventing unintentional copying.
 \end{note}
 \end{itemdescr}
+
 \rSec1 [\iotwod.standalone.angleforpoint] {\tcode{angle_for_point}}
 
 \indexlibrary{\idxcode{angle_for_point}}%

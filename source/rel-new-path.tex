@@ -26,9 +26,11 @@ namespace std::experimental::io2d::v1 {
       constexpr vector_2d at() const noexcept;
     };
     
-    // \ref{\iotwod.relnewpath.nonmember}, non-members:
-    bool operator==(const rel_new_path& lhs, const rel_new_path& rhs) noexcept;
-    bool operator!=(const rel_new_path& lhs, const rel_new_path& rhs) noexcept;
+  // \ref{\iotwod.relnewpath.ops}, operators:
+  constexpr bool operator==(const rel_new_path& lhs, const rel_new_path& rhs) 
+    noexcept;
+  constexpr bool operator!=(const rel_new_path& lhs, const rel_new_path& rhs) 
+    noexcept;
   }
 }
 \end{codeblock}
@@ -82,7 +84,7 @@ constexpr vector_2d at() const noexcept;
 The at point.
 \end{itemdescr}
 
-\rSec1 [\iotwod.relnewpath.nonmember]{Non-member functions}%
+\rSec1 [\iotwod.relnewpath.ops]{\tcode{rel_new_path} operators}%
 
 \indexlibrarymember{operator==}{rel_new_path}%
 \begin{itemdecl}
@@ -93,15 +95,4 @@ constexpr bool operator==(const rel_new_path& lhs, const rel_new_path& rhs)
 \pnum
 \returns
 \tcode{lhs.at() == rhs.at()}.
-\end{itemdescr}
-
-\indexlibrarymember{operator!=}{rel_new_path}%
-\begin{itemdecl}
-constexpr bool operator!=(const rel_new_path& lhs, const rel_new_path& rhs) 
-  noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-\tcode{!(lhs == rhs)}.
 \end{itemdescr}

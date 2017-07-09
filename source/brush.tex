@@ -70,17 +70,17 @@ When \tcode{b} is a solid color brush, then when sampling from \tcode{b}, the vi
 \rSec2 [\iotwod.brush.sampling.linear] {Sampling from a linear gradient brush}
 
 \pnum
-When \tcode{b} is a linear gradient brush, when sampling point \tcode{pt}, where \tcode{pt} is the return value of calling the \tcode{transform_point} member function of brush matrix or mask matrix using the requested point, from \tcode{b}, the visual data returned are as specified by \ref{\iotwod.gradients.linear} and \ref{\iotwod.gradients.sampling}.
+When \tcode{b} is a linear gradient brush, when sampling point \tcode{pt}, where \tcode{pt} is the return value of calling the \tcode{transform_pt} member function of brush matrix or mask matrix using the requested point, from \tcode{b}, the visual data returned are as specified by \ref{\iotwod.gradients.linear} and \ref{\iotwod.gradients.sampling}.
 
 \rSec2 [\iotwod.brush.sampling.radial] {Sampling from a radial gradient brush}
 
 \pnum
-When \tcode{b} is a radial gradient brush, when sampling point \tcode{pt}, where \tcode{pt} is the return value of calling the \tcode{transform_point} member function of brush matrix or mask matrix using the requested point, from \tcode{b}, the visual data are as specified by \ref{\iotwod.gradients.radial} and \ref{\iotwod.gradients.sampling}.
+When \tcode{b} is a radial gradient brush, when sampling point \tcode{pt}, where \tcode{pt} is the return value of calling the \tcode{transform_pt} member function of brush matrix or mask matrix using the requested point, from \tcode{b}, the visual data are as specified by \ref{\iotwod.gradients.radial} and \ref{\iotwod.gradients.sampling}.
 
 \rSec2 [\iotwod.brush.sampling.surface] {Sampling from a surface brush}
 
 \pnum
-When \tcode{b} is a surface brush, when sampling point \tcode{pt}, where \tcode{pt} is the return value of calling the \tcode{transform_point} member function of brush matrix or mask matrix using the requested point, from \tcode{b}, the visual data returned are from the point \tcode{pt} in the graphics data of the brush, taking into account the values of wrap mode and filter.
+When \tcode{b} is a surface brush, when sampling point \tcode{pt}, where \tcode{pt} is the return value of calling the \tcode{transform_pt} member function of brush matrix or mask matrix using the requested point, from \tcode{b}, the visual data returned are from the point \tcode{pt} in the graphics data of the brush, taking into account the values of wrap mode and filter.
 
 \rSec1 [\iotwod.brush.cons] {\tcode{brush} constructors and assignment operators}
 

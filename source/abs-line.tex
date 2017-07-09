@@ -26,7 +26,7 @@ namespace std::experimental::io2d::v1 {
       constexpr vector_2d to() const noexcept;
     };
     
-    \ref{\iotwod.absline.nonmember}, non-members
+    // \ref{\iotwod.absline.ops}, operators:
     constexpr bool operator==(const abs_line& lhs, const abs_line& rhs) 
       noexcept;
     constexpr bool operator!=(const abs_line& lhs, const abs_line& rhs) 
@@ -84,7 +84,7 @@ constexpr vector_2d to() const noexcept;
 The end point.
 \end{itemdescr}
 
-\rSec1 [\iotwod.absline.nonmember]{Non-member functions}
+\rSec1 [\iotwod.absline.ops]{\tcode{abs_line} operators}
 
 \indexlibrarymember{operator==}{abs_line}%
 \begin{itemdecl}
@@ -94,14 +94,4 @@ constexpr bool operator==(const abs_line& lhs, const abs_line& rhs) noexcept;
 \pnum
 \returns
 \tcode{lhs.to() == rhs.to()}.
-\end{itemdescr}
-
-\indexlibrarymember{operator!=}{abs_line}%
-\begin{itemdecl}
-constexpr bool operator!=(const abs_line& lhs, const abs_line& rhs) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-\tcode{!(lhs == rhs)}.
 \end{itemdescr}

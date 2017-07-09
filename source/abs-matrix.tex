@@ -26,7 +26,7 @@ namespace std::experimental::io2d::v1 {
       constexpr matrix_2d matrix() const noexcept;
     };
     
-    \ref{\iotwod.absmatrix.nonmember}, non-members
+    // \ref{\iotwod.absmatrix.ops}, operators:
     constexpr bool operator==(const abs_matrix& lhs, const abs_matrix& rhs) 
       noexcept;
     constexpr bool operator!=(const abs_matrix& lhs, const abs_matrix& rhs) 
@@ -37,7 +37,7 @@ namespace std::experimental::io2d::v1 {
 
 \rSec1 [\iotwod.absmatrix.cons] {\tcode{abs_matrix} constructors}
 
-\indexlibrary{\idxcode{change_matrix}!constructor}%
+\indexlibrary{\idxcode{abs_matrix}!constructor}%
 \begin{itemdecl}
 constexpr abs_matrix() noexcept;
 \end{itemdecl}
@@ -92,7 +92,7 @@ constexpr matrix_2d matrix() const noexcept;
 The transform matrix.
 \end{itemdescr}
 
-\rSec1 [\iotwod.absmatrix.nonmember]{Non-member functions}
+\rSec1 [\iotwod.absmatrix.ops]{\tcode{abs_matrix} operators}
 
 \indexlibrarymember{operator==}{abs_matrix}%
 \begin{itemdecl}
@@ -103,15 +103,4 @@ constexpr bool operator==(const abs_matrix& lhs, const abs_matrix& rhs)
 \pnum
 \returns
 \tcode{lhs.matrix() == rhs.matrix()}.
-\end{itemdescr}
-
-\indexlibrarymember{operator!=}{abs_matrix}%
-\begin{itemdecl}
-constexpr bool operator!=(const abs_matrix& lhs, const abs_matrix& rhs) 
-  noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-\tcode{!(lhs == rhs)}.
 \end{itemdescr}

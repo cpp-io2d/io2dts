@@ -24,6 +24,7 @@ Legal values for each channel are in the range \crange{0.0f}{1.0f}.
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
   class rgba_color {
+  public:
     // \ref{\iotwod.rgbacolor.cons}, construct/copy/move/destroy:
     constexpr rgba_color() noexcept;
     template <class T>
@@ -237,7 +238,7 @@ constexpr rgba_color() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{rgba_color \{0.0f, 0.0f, 0.0f. 0.0f\};}.
+Equivalent to: \tcode{rgba_color\{ 0.0f, 0.0f, 0.0f. 0.0f \}}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rgba_color}!constructor}%
@@ -410,10 +411,10 @@ constexpr void a(T val) noexcept;
 \effects
 If \tcode{a() == 0.0f} the alpha channel is \tcode{val / 255.0F}, otherwise:
 \begin{enumerate}
-\item \tcode{r((r() / a()) * val / 255.0F);}
-\item \tcode{g((g() / a()) * val / 255.0F);}
-\item \tcode{b((b() / a()) * val / 255.0F);}
-\item The alpha channel is \tcode{val / 255.0F}.
+\item The red channel is set to \tcode{(r() / a()) * val / 255.0F;}
+\item The green channel is set to \tcode{(g() / a()) * val / 255.0F;}
+\item The blue channel is set to \tcode{(b() / a()) * val / 255.0F;}
+\item The alpha channel is set to \tcode{val / 255.0F}.
 \end{enumerate}
 
 \pnum
@@ -435,9 +436,9 @@ constexpr void a(U val) noexcept;
 \effects
 If \tcode{a() == 0.0f} the alpha channel is \tcode{val}, otherwise:
 \begin{enumerate}
-\item \tcode{r((r() / a()) * val);}
-\item \tcode{g((g() / a()) * val);}
-\item \tcode{b((b() / a()) * val);}
+\item The red channel is set to \tcode{(r() / a()) * val;}
+\item The green channel is set to \tcode{(g() / a()) * val;}
+\item The blue channel is set to \tcode{(b() / a()) * val;}
 \item The alpha channel is \tcode{val}.
 \end{enumerate}
 

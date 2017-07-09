@@ -30,7 +30,7 @@ namespace std::experimental::io2d::v1 {
     constexpr float dot(const vector_2d& other) const noexcept;
     float magnitude() const noexcept;
     constexpr float magnitude_squared() const noexcept;
-    float angular_direction(const vector_2d& to) const noexcept
+    float angular_direction(const vector_2d& to) const noexcept;
     vector_2d to_unit() const noexcept;
     
     // \ref{\iotwod.\vectortwod.member.ops}, member operators:
@@ -47,10 +47,10 @@ namespace std::experimental::io2d::v1 {
     noexcept;
   constexpr bool operator!=(const vector_2d& lhs, const vector_2d& rhs)
     noexcept;
-  constexpr vector_2d operator+(const vector_2d& lhs) noexcept;
+  constexpr vector_2d operator+(const vector_2d& val) noexcept;
   constexpr vector_2d operator+(const vector_2d& lhs, const vector_2d& rhs)
     noexcept;
-  constexpr vector_2d operator-(const vector_2d& lhs) noexcept;
+  constexpr vector_2d operator-(const vector_2d& val) noexcept;
   constexpr vector_2d operator-(const vector_2d& lhs, const vector_2d& rhs)
     noexcept;
   constexpr vector_2d operator*(const vector_2d& lhs, float rhs) noexcept;
@@ -278,12 +278,12 @@ constexpr bool operator!=(const vector_2d& lhs, const vector_2d& rhs) noexcept;
 
 \indexlibrarymember{operator+}{vector_2d}%
 \begin{itemdecl}
-constexpr vector_2d operator+(const vector_2d& lhs) noexcept;
+constexpr vector_2d operator+(const vector_2d& val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{lhs}.
+\tcode{val}.
 \end{itemdescr}
 
 \indexlibrarymember{operator+}{vector_2d}%
@@ -299,12 +299,12 @@ constexpr vector_2d operator+(const vector_2d& lhs, const vector_2d& rhs)
 
 \indexlibrarymember{operator-}{vector_2d}%
 \begin{itemdecl}
-constexpr vector_2d operator-(const vector_2d& lhs) noexcept;
+constexpr vector_2d operator-(const vector_2d& val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{vector_2d\{ -lhs.x(), -lhs.y() \}}.
+\tcode{vector_2d\{ -val.x(), -val.y() \}}.
 \end{itemdescr}
 
 \indexlibrarymember{operator-}{vector_2d}%

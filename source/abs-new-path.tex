@@ -26,7 +26,7 @@ namespace std::experimental::io2d::v1 {
       constexpr vector_2d at() const noexcept;
     };
     
-    // \ref{\iotwod.absnewpath.nonmember}, non-members:
+    // \ref{\iotwod.absnewpath.ops}, operators:
     constexpr bool operator==(const abs_new_path& lhs, const abs_new_path& rhs) 
       noexcept;
     constexpr bool operator!=(const abs_new_path& lhs, const abs_new_path& rhs) 
@@ -84,7 +84,7 @@ constexpr vector_2d at() const noexcept;
 The at point.
 \end{itemdescr}
 
-\rSec1 [\iotwod.absnewpath.nonmember]{Non-member functions}%
+\rSec1 [\iotwod.absnewpath.ops]{\tcode{abs_new_path} operators}%
 
 \indexlibrarymember{operator==}{abs_new_path}%
 \begin{itemdecl}
@@ -95,15 +95,4 @@ constexpr bool operator==(const abs_new_path& lhs, const abs_new_path& rhs)
 \pnum
 \returns
 \tcode{lhs.at() == rhs.at()}.
-\end{itemdescr}
-
-\indexlibrarymember{operator!=}{abs_new_path}%
-\begin{itemdecl}
-constexpr bool operator!=(const abs_new_path& lhs, const abs_new_path& rhs) 
-  noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-\tcode{!(lhs == rhs)}.
 \end{itemdescr}

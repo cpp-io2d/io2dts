@@ -11,17 +11,18 @@ The class \tcode{close_path} describes a path item that is a close path instruct
 namespace std::experimental::io2d::v1 {
   namespace path_data {
     class close_path {
+    public:
       constexpr close_path() noexcept;
     };
     
-    // \ref{\iotwod.closepath.nonmember}, non-members
+    // \ref{\iotwod.closepath.ops}, operators:
     constexpr bool operator==(const close_path&, const close_path&) noexcept;
     constexpr bool operator!=(const close_path&, const close_path&) noexcept;
   }
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.closepath.nonmember]{Non-member functions}%
+\rSec1 [\iotwod.closepath.ops]{\tcode{close_path} operators}%
 
 \indexlibrarymember{operator==}{close_path}%
 \begin{itemdecl}
@@ -31,14 +32,4 @@ constexpr bool operator==(const close_path&, const close_path&) noexcept;
 \pnum
 \returns
 \tcode{true}.
-\end{itemdescr}
-
-\indexlibrarymember{operator!=}{close_path}%
-\begin{itemdecl}
-constexpr bool operator!=(const close_path&, const close_path&) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-\tcode{false}.
 \end{itemdescr}

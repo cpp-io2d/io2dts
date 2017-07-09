@@ -10,16 +10,18 @@ namespace std { namespace experimental {
 
   using dashes = tuple<vector<float>, float>;
 
+  enum class wrap_mode;
+  enum class filter;
+  enum class brush_type;
+  enum class antialias;
   enum class fill_rule;
   enum class line_cap;
   enum class line_join;
   enum class compositing_op;
   enum class format;
-  enum class wrap_mode;
-  enum class filter;
-  enum class brush_type;
   enum class scaling;
   enum class refresh_rate;
+  enum class image_file_format;
 
   class rectangle;
   constexpr bool operator==(const rectangle& lhs, const rectangle& rhs) 
@@ -72,14 +74,12 @@ namespace std { namespace experimental {
     class close_path;
     constexpr bool operator==(const close_path&, const close_path&) noexcept;
     constexpr bool operator!=(const close_path&, const close_path&) noexcept;
-    class set_matrix;
-    constexpr bool operator==(const set_matrix&, const set_matrix&) noexcept;
-    constexpr bool operator!=(const set_matrix&, const set_matrix&) noexcept;
-    class modify_matrix;
-    constexpr bool operator==(const modify_matrix&, const modify_matrix&) 
-      noexcept;
-    constexpr bool operator!=(const modify_matrix&, const modify_matrix&) 
-      noexcept;
+    class abs_matrix;
+    constexpr bool operator==(const abs_matrix&, const abs_matrix&) noexcept;
+    constexpr bool operator!=(const abs_matrix&, const abs_matrix&) noexcept;
+    class rel_matrix;
+    constexpr bool operator==(const rel_matrix&, const rel_matrix&) noexcept;
+    constexpr bool operator!=(const rel_matrix&, const rel_matrix&) noexcept;
     class revert_matrix;
     constexpr bool operator==(const revert_matrix&, const revert_matrix&) 
       noexcept;
@@ -93,9 +93,6 @@ namespace std { namespace experimental {
     class abs_line;
     constexpr bool operator==(const abs_line&, const abs_line&) noexcept;
     constexpr bool operator!=(const abs_line&, const abs_line&) noexcept;
-    class abs_move;
-    constexpr bool operator==(const abs_move&, const abs_move&) noexcept;
-    constexpr bool operator!=(const abs_move&, const abs_move&) noexcept;
     class abs_quadratic_curve;
     constexpr bool operator==(const abs_quadratic_curve&,
       const abs_quadratic_curve&) noexcept;
@@ -112,9 +109,6 @@ namespace std { namespace experimental {
     class rel_line;
     constexpr bool operator==(const rel_line&, const rel_line&) noexcept;
     constexpr bool operator!=(const rel_line&, const rel_line&) noexcept;
-    class rel_move;
-    constexpr bool operator==(const rel_move&, const rel_move&) noexcept;
-    constexpr bool operator!=(const rel_move&, const rel_move&) noexcept;
     class rel_quadratic_curve;
     constexpr bool operator==(const rel_quadratic_curve&,
       const rel_quadratic_curve&) noexcept;
@@ -124,7 +118,7 @@ namespace std { namespace experimental {
       abs_new_path, abs_quadratic_curve, arc, close_path,
       rel_cubic_curve, rel_line, rel_matrix, rel_new_path, rel_quadratic_curve, 
       revert_matrix>;
-  };
+  }
   
   class path_group;
 
@@ -141,7 +135,12 @@ namespace std { namespace experimental {
   template <class Allocator>
   void swap(path_builder<Allocator>& lhs, path_builder<Allocator>& rhs)
     noexcept(noexcept(lhs.swap(rhs)));
-  
+
+  class color_stop;
+  constexpr bool operator==(const color_stop& lhs, const color_stop& rhs)
+    noexcept;
+  constexpr bool operator!=(const color_stop& lhs, const color_stop& rhs)
+    noexcept;
   class brush;
 
   class render_props;
@@ -179,15 +178,15 @@ namespace std { namespace experimental {
     int preferredDisplayHeight, scaling scl = scaling::letterbox);
   display_surface make_display_surface(int preferredWidth,
     int preferredHeight, format preferredFormat, int preferredDisplayWidth, 
-    int preferredDisplayHeight, ::std::error_code& ec,
+    int preferredDisplayHeight, error_code& ec,
     scaling scl = scaling::letterbox) noexcept;
   image_surface make_image_surface(format format, int width, int height);
   image_surface make_image_surface(format format, int width, int height, 
     error_code& ec) noexcept;
-  image_surface make_image_surface(image_surface& sfc) noexcept;
+  image_surface copy_image_surface(image_surface& sfc) noexcept;
   float angle_for_point(const vector_2d& ctr, const vector_2d& pt,
     const vector_2d& scl = vector_2d{ 1.0f, 1.0f }) noexcept;
-  vector_2d point_for_angle(float ang, float mgn = 1.0f) noexcept;
+  vector_2d point_for_angle(float ang, float rad = 1.0f) noexcept;
   vector_2d point_for_angle(float ang, const vector_2d& rad) noexcept;
   vector_2d arc_start(const vector_2d& ctr, float sang, const vector_2d& rad, 
     const matrix_2d& m = matrix_2d{}) noexcept;

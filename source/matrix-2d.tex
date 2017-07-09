@@ -20,9 +20,6 @@ The value of M02 is \tcode{0.0f}. The value of M12 is \tcode{0.0f}. The value of
 \pnum
 The performance of any mathematical operation upon a \tcode{matrix_2d} shall be carried out as-if the omitted third column data members were present with the values prescribed in the previous paragraph.
 
-%\pnum
-%The values M00, M01, M10, M11, M20, M21 shall each be of type \tcode{float}.
-%
 \rSec1 [\iotwod.\matrixtwod.synopsis] {\tcode{matrix_2d} synopsis}
 
 \begin{codeblock}
@@ -451,12 +448,12 @@ Let \tcode{inverseDeterminant} be \tcode{1.0f / determinant()}.
 
 \begin{codeblock}
 return matrix_2d{
-   (_M11 * 1.0f - 0.0f * _M21) * inverseDeterminant,
-  -(_M01 * 1.0f - 0.0f * _M21) * inverseDeterminant,
-  -(_M10 * 1.0f - 0.0f * _M20) * inverseDeterminant,
-   (_M00 * 1.0f - 0.0f * _M20) * inverseDeterminant,
-   (_M10 * _M21 - _M11 * _M20) * inverseDeterminant,
-  -(_M00 * _M21 - _M01 * _M20) * inverseDeterminant
+   (m11() * 1.0f - 0.0f * m21()) * inverseDeterminant,
+  -(m01() * 1.0f - 0.0f * m21()) * inverseDeterminant,
+  -(m10() * 1.0f - 0.0f * m20()) * inverseDeterminant,
+   (m00() * 1.0f - 0.0f * m20()) * inverseDeterminant,
+   (m10() * m21() - m11() * m20()) * inverseDeterminant,
+  -(m00() * m21() - m01() * m20()) * inverseDeterminant
 };
 \end{codeblock}
 \end{itemdescr}
@@ -494,7 +491,7 @@ constexpr matrix_2d& operator*=(const matrix_2d& rhs) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: {*this = *this * rhs;}
+Equivalent to: \tcode{*this = *this * rhs;}
 
 \pnum
 \returns

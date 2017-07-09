@@ -19,9 +19,9 @@ namespace std::experimental::io2d::v1 {
     // \ref{\iotwod.strokeprops.cons}, constructors:
     constexpr stroke_props() noexcept;
     constexpr explicit stroke_props(float w,
-      experimental::io2d::line_cap lc = experimental::io2d::line_cap::none,
-      experimental::io2d::line_join lj = experimental::io2d::line_join::miter,
-      float ml = 10.0f) noexcept    
+      io2d::line_cap lc = io2d::line_cap::none,
+      io2d::line_join lj = io2d::line_join::miter,
+      float ml = 10.0f) noexcept;
 
     // \ref{\iotwod.strokeprops.modifiers}, modifiers:
     constexpr void line_width(float w) noexcept;

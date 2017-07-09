@@ -19,21 +19,21 @@ namespace std::experimental::io2d::v1 {
   public:
     // \ref{\iotwod.brushprops.cons}, constructors:
     constexpr brush_props(
-      experimental::io2d::filter fi = experimental::io2d::filter::good,
-      experimental::io2d::wrap_mode w = experimental::io2d::wrap_mode::none,
-      experimental::io2d::fill_rule fr = experimental::io2d::fill_rule::winding,
+      io2d::wrap_mode w = io2d::wrap_mode::none,
+      io2d::filter fi = io2d::filter::good,
+      io2d::fill_rule fr = io2d::fill_rule::winding,
       matrix_2d m = matrix_2d{}) noexcept;
 
     // \ref{\iotwod.brushprops.modifiers}, modifiers:
-    constexpr void filter(experimental::io2d::filter fi) noexcept;
-    constexpr void wrap_mode(experimental::io2d::wrap_mode w) noexcept;
-    constexpr void fill_rule(experimental::io2d::fill_rule fr) noexcept;
+    constexpr void filter(io2d::filter fi) noexcept;
+    constexpr void wrap_mode(io2d::wrap_mode w) noexcept;
+    constexpr void fill_rule(io2d::fill_rule fr) noexcept;
     constexpr void brush_matrix(const matrix_2d& m) noexcept;
 
     // \ref{\iotwod.brushprops.observers}, observers:
-    constexpr experimental::io2d::filter filter() const noexcept;
-    constexpr experimental::io2d::wrap_mode wrap_mode() const noexcept;
-    constexpr experimental::io2d::fill_rule fill_rule() const noexcept;
+    constexpr io2d::filter filter() const noexcept;
+    constexpr io2d::wrap_mode wrap_mode() const noexcept;
+    constexpr io2d::fill_rule fill_rule() const noexcept;
     constexpr matrix_2d brush_matrix() const noexcept;
   };
 }
@@ -43,14 +43,11 @@ namespace std::experimental::io2d::v1 {
 
 \indexlibrary{\idxcode{brush_props}!constructor}%
 \begin{itemdecl}
-constexpr brush_props(
-  experimental::io2d::wrap_mode w = experimental::io2d::wrap_mode::none,
-  experimental::io2d::filter fi = experimental::io2d::filter::good,
-  experimental::io2d::fill_rule fr = experimental::io2d::fill_rule::winding,
-  matrix_2d m = matrix_2d{}) noexcept    
+constexpr brush_props(io2d::wrap_mode w, io2d::filter fi, io2d::fill_rule fr,
+  matrix_2d m) noexcept
 \end{itemdecl}
 \begin{itemdescr}
-\onecolumn
+\pnum
 \requires
 \tcode{m.is_invertible() == true}.
 
@@ -64,9 +61,9 @@ The wrap mode is \tcode{w}. The filter is \tcode{fi}. The fill rule is \tcode{fr
 
 \rSec1 [\iotwod.brushprops.modifiers] {\tcode{brush_props} modifiers}
 
-\indexlibrarymember{brush_props}{wrap_mode}%
+\indexlibrarymember{wrap_mode}{brush_props}%
 \begin{itemdecl}
-constexpr void wrap_mode(experimental::io2d::wrap_mode w) noexcept;
+constexpr void wrap_mode(io2d::wrap_mode w) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -74,9 +71,9 @@ constexpr void wrap_mode(experimental::io2d::wrap_mode w) noexcept;
 The wrap mode is \tcode{w}.
 \end{itemdescr}
 
-\indexlibrarymember{brush_props}{filter}%
+\indexlibrarymember{filter}{brush_props}%
 \begin{itemdecl}
-constexpr void filter(experimental::io2d::filter fi) noexcept;
+constexpr void filter(io2d::filter fi) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -84,9 +81,9 @@ constexpr void filter(experimental::io2d::filter fi) noexcept;
 The filter is \tcode{fi}.
 \end{itemdescr}
 
-\indexlibrarymember{brush_props}{fill_rule}%
+\indexlibrarymember{fill_rule}{brush_props}%
 \begin{itemdecl}
-constexpr void fill_rule(experimental::io2d::fill_rule fr) noexcept;
+constexpr void fill_rule(io2d::fill_rule fr) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -94,7 +91,7 @@ constexpr void fill_rule(experimental::io2d::fill_rule fr) noexcept;
 The fill rule is \tcode{fr}.
 \end{itemdescr}
 
-\indexlibrarymember{brush_props}{brush_matrix}%
+\indexlibrarymember{brush_matrix}{brush_props}%
 \begin{itemdecl}
 constexpr void brush_matrix(const matrix_2d& m) noexcept;
 \end{itemdecl}
@@ -110,9 +107,9 @@ The brush matrix is \tcode{m}.
 
 \rSec1 [\iotwod.brushprops.observers] {\tcode{brush_props} observers}
 
-\indexlibrarymember{brush_props}{wrap_mode}%
+\indexlibrarymember{wrap_mode}{brush_props}%
 \begin{itemdecl}
-constexpr experimental::io2d::wrap_mode wrap_mode() const noexcept;
+constexpr io2d::wrap_mode wrap_mode() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -120,9 +117,9 @@ constexpr experimental::io2d::wrap_mode wrap_mode() const noexcept;
 The wrap mode.
 \end{itemdescr}
 
-\indexlibrarymember{brush_props}{filter}%
+\indexlibrarymember{filter}{brush_props}%
 \begin{itemdecl}
-constexpr experimental::io2d::filter filter() const noexcept;
+constexpr io2d::filter filter() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -130,9 +127,9 @@ constexpr experimental::io2d::filter filter() const noexcept;
 The filter.
 \end{itemdescr}
 
-\indexlibrarymember{brush_props}{fill_rule}%
+\indexlibrarymember{fill_rule}{brush_props}%
 \begin{itemdecl}
-constexpr experimental::io2d::fill_rule fill_rule() const noexcept;
+constexpr io2d::fill_rule fill_rule() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -140,7 +137,7 @@ constexpr experimental::io2d::fill_rule fill_rule() const noexcept;
 The fill rule.
 \end{itemdescr}
 
-\indexlibrarymember{brush_props}{brush_matrix}%
+\indexlibrarymember{brush_matrix}{brush_props}%
 \begin{itemdecl}
 constexpr matrix_2d brush_matrix() const noexcept;
 \end{itemdecl}

@@ -1,5 +1,5 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.colorstop]{Class \tcode{color_stop}}
+\rSec0 [\iotwod.colorstop] {Class \tcode{color_stop}}
 
 \rSec1 [\iotwod.colorstop.intro] {Overview}
 \pnum
@@ -27,10 +27,15 @@ namespace std::experimental::io2d::v1 {
 	constexpr float offset() const noexcept;
 	constexpr rgba_color color() const noexcept;
   };
+  // \ref{\iotwod.colorstop.ops}, operators:
+  constexpr bool operator==(const color_stop& lhs, const color_stop& rhs)
+    noexcept;
+  constexpr bool operator!=(const color_stop& lhs, const color_stop& rhs)
+    noexcept;
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.colorstop.cons]{\tcode{color_stop} constructors}
+\rSec1 [\iotwod.colorstop.cons] {\tcode{color_stop} constructors}
 
 \indexlibrary{\idxcode{color_stop}!constructor}%
 \begin{itemdecl}
@@ -59,7 +64,7 @@ Constructs a \tcode{color_stop} object.
 The offset is \tcode{o}. The color is \tcode{c}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.colorstop.modifiers]{\tcode{color_stop} modifiers}
+\rSec1 [\iotwod.colorstop.modifiers] {\tcode{color_stop} modifiers}
 
 \indexlibrarymember{offset}{color_stop}%
 \begin{itemdecl}
@@ -85,7 +90,7 @@ constexpr void color(const rgba_color& c) noexcept;
 The color is \tcode{c}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.colorstop.observers]{\tcode{color_stop} observers}
+\rSec1 [\iotwod.colorstop.observers] {\tcode{color_stop} observers}
 
 \indexlibrarymember{offset}{color_stop}%
 \begin{itemdecl}
@@ -105,4 +110,17 @@ constexpr rgba_color color() const noexcept;
 \pnum
 \returns
 The color.
+\end{itemdescr}
+
+\rSec1 [\iotwod.colorstop.ops] {\tcode{color_stop} operators}
+
+\indexlibrarymember{operator==}{color_stop}%
+\begin{itemdecl}
+constexpr bool operator==(const color_stop& lhs, const color_stop& rhs)
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{lhs.offset() == rhs.offset() \&\& lhs.color() == rhs.color();}
 \end{itemdescr}

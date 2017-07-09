@@ -37,7 +37,7 @@ namespace std::experimental::io2d::v1 {
         const noexcept;
     };
     
-    // \ref{\iotwod.arc.nonmember}, non-members
+    // \ref{\iotwod.arc.ops}, operators:
     constexpr bool operator==(const arc& lhs, const arc& rhs) noexcept;
     constexpr bool operator!=(const arc& lhs, const arc& rhs) noexcept;
   }
@@ -179,7 +179,7 @@ return cpt + pt * lmtx;
 \end{codeblock}
 \end{itemdescr}
 
-\rSec1 [\iotwod.arc.nonmember]{Non-member functions}
+\rSec1 [\iotwod.arc.ops]{\tcode{arc} operators}
 
 \indexlibrarymember{operator==}{arc}%
 \begin{itemdecl}
@@ -192,14 +192,4 @@ constexpr bool operator==(const arc& lhs, const arc& rhs) noexcept;
 lhs.radius() == rhs.radius() && lhs.rotation() == rhs.rotation() &&
 lhs.start_angle() && rhs.start_angle()
 \end{codeblock}
-\end{itemdescr}
-
-\indexlibrarymember{operator!=}{arc}%
-\begin{itemdecl}
-constexpr bool operator!=(const arc& lhs, const arc& rhs) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-\tcode{!(lhs == rhs)}.
 \end{itemdescr}

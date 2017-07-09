@@ -31,9 +31,11 @@ namespace std::experimental::io2d::v1 {
       constexpr vector_2d end_pt() const noexcept;
     };
     
-    \ref{\iotwod.relcubiccurve.nonmember}, non-members
-    constexpr bool operator==(const & lhs, const & rhs) noexcept;
-    constexpr bool operator!=(const & lhs, const & rhs) noexcept;
+    // \ref{\iotwod.relcubiccurve.ops}, operators:
+    constexpr bool operator==(const rel_cubic_curve& lhs,
+      const rel_cubic_curve& rhs) noexcept;
+    constexpr bool operator!=(const rel_cubic_curve& lhs,
+      const rel_cubic_curve& rhs) noexcept;
   }
 }
 \end{codeblock}
@@ -128,7 +130,7 @@ constexpr vector_2d end_pt() const noexcept;
 The end point.
 \end{itemdescr}
 
-\rSec1 [\iotwod.relcubiccurve.nonmember]{Non-member functions}
+\rSec1 [\iotwod.relcubiccurve.ops]{\tcode{rel_cubic_curve} operators}
 
 \indexlibrarymember{operator==}{rel_cubic_curve}%
 \begin{itemdecl}
@@ -143,15 +145,4 @@ lhs.control_pt1() == rhs.control_pt1() &&
 lhs.control_pt2() == rhs.control_2pt() &&
 lhs.end_pt() && rhs.end_pt()
 \end{codeblock}
-\end{itemdescr}
-
-\indexlibrarymember{operator!=}{rel_cubic_curve}%
-\begin{itemdecl}
-constexpr bool operator!=(const rel_cubic_curve& lhs,
-  const rel_cubic_curve& rhs) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-\tcode{!(lhs == rhs)}.
 \end{itemdescr}

@@ -18,7 +18,7 @@ namespace std::experimental::io2d::v1 {
   public:
     // \ref{\iotwod.circle.cons}, constructors:
     constexpr circle() noexcept;
-    contexpr circle(const vector_2d& ctr, float rad) noexcept;
+    constexpr circle(const vector_2d& ctr, float rad) noexcept;
 
     // \ref{\iotwod.circle.modifiers}, modifiers:
     constexpr void center(const vector_2d& ctr) noexcept;
@@ -28,6 +28,10 @@ namespace std::experimental::io2d::v1 {
     constexpr vector_2d center() const noexcept;
     constexpr float radius() const noexcept;
   };
+
+  // \ref{\iotwod.circle.ops}  
+  constexpr bool operator==(const circle& lhs, const circle& rhs) noexcept;
+  constexpr bool operator!=(const circle& lhs, const circle& rhs) noexcept;
 }
 \end{codeblock}
 
@@ -56,12 +60,12 @@ constexpr circle(const vector_2d& ctr, float r) noexcept;
 Constructs an object of type \tcode{circle}.
 
 \pnum
-The center is \tcode{ctr}. The fadius is \tcode{r}.
+The center is \tcode{ctr}. The radius is \tcode{r}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.circle.modifiers]{\tcode{circle} modifiers}
 
-\indexlibrary{\idxcode{circle}!\idxcode{center}}%
+\indexlibrarymember{center}{circle}%
 \begin{itemdecl}
 constexpr void center(const vector_2d& ctr) noexcept;
 \end{itemdecl}
@@ -72,7 +76,7 @@ constexpr void center(const vector_2d& ctr) noexcept;
 The center is \tcode{ctr}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{circle}!\idxcode{radius}}%
+\indexlibrarymember{radius}{circle}%
 \begin{itemdecl}
 constexpr void radius(float r) noexcept;
 \end{itemdecl}
@@ -87,7 +91,7 @@ The radius is \tcode{r}.
 
 \rSec1 [\iotwod.circle.observers]{\tcode{circle} observers}
 
-\indexlibrary{\idxcode{circle}!\idxcode{center}}%
+\indexlibrarymember{center}{circle}%
 \begin{itemdecl}
 constexpr float center() const noexcept;
 \end{itemdecl}
@@ -97,7 +101,7 @@ constexpr float center() const noexcept;
 The center.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{circle}!\idxcode{radius}}%
+\indexlibrarymember{radius}{circle}%
 \begin{itemdecl}
 constexpr float radius() const noexcept;
 \end{itemdecl}
@@ -105,4 +109,16 @@ constexpr float radius() const noexcept;
 \pnum
 \returns
 The radius.
+\end{itemdescr}
+
+\rSec1 [\iotwod.circle.ops] {\tcode{circle} operators}
+
+\indexlibrarymember{operator!=}{circle}%
+\begin{itemdecl}
+constexpr bool operator==(const circle& lhs, const circle& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{lhs.center() == rhs.center() \&\& lhs.radius() == rhs.radius();}
 \end{itemdescr}

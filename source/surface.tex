@@ -14,8 +14,8 @@ A \tcode{surface} object is a move-only object.
 \pnum
 The \tcode{surface} class provides two ways to modify its graphics resource:
 \begin{itemize}
-	\item Rendering and composing operations.
-	\item Mapping.
+\item Rendering and composing operations.
+\item Mapping.
 \end{itemize}
 
 \pnum
@@ -87,12 +87,12 @@ namespace std::experimental::io2d::v1 {
     void mask(const brush& b, const brush& mb,
       const optional<brush_props>& bp = nullopt,
       const optional<mask_props>& mp = nullopt,
-      const optional<render_props>&rp = nullopt,
+      const optional<render_props>& rp = nullopt,
       const optional<clip_props>& cl = nullopt);
     void mask(const brush& b, const brush& mb,
       const optional<brush_props>& bp = nullopt,
       const optional<mask_props>& mp = nullopt,
-      const optional<render_props>&rp = nullopt,
+      const optional<render_props>& rp = nullopt,
       const optional<clip_props>& cl = nullopt);
   };
 }
@@ -151,7 +151,7 @@ The masking operation uses a \term{mask brush} of type \tcode{brush}.
 \rSec2 [\iotwod.surface.rendering.sourcepath] {Rendering and composing source path}
 
 \pnum
-In addition to brushes (\ref{\iotwod.surface.rendering.brushes}), all rendering and composing operation except for painting use a \term{source path} of type \tcode{path_group}.
+In addition to brushes (\ref{\iotwod.surface.rendering.brushes}), all rendering and composing operation except for painting and masking use a \term{source path} of type \tcode{path_group}.
 
 \rSec2 [\iotwod.surface.rendering.commonstate] {Common state data}
 
@@ -217,6 +217,7 @@ In addition to the common state data (\ref{\iotwod.surface.rendering.commonstate
 \end{libiotwodtab3e}
 
 \rSec2 [\iotwod.surface.rendering.statedefaults] {State data default values}
+
 \pnum
 For all rendering and composing operations, the state data objects named above are provided using \tcode{optional<T>} class template arguments.
 
@@ -309,7 +310,7 @@ Given a point \tcode{pt}, a brush coordinate space transformation matrix \tcode{
 When a painting operation is initiated on a surface, the implementation shall produce results as-if the following steps were performed:
 
 \begin{enumerate}
-\item For each integral point $sp$ of the \underlyingsurface, determine if $sp$ is within the clip area (\tcode{clipprops.summary}); if so, proceed with the remaining steps.
+\item For each integral point $sp$ of the \underlyingsurface, determine if $sp$ is within the clip area (\tcode{\iotwod.clipprops.summary}); if so, proceed with the remaining steps.
 \item Transform $sp$ from the surface coordinate space (\ref{\iotwod.surface.coordinatespaces}) to the brush coordinate space (Table~\ref{tab:\iotwod.surface.pointtransforms.listing}), resulting in point $bp$.
 \item Sample from point $bp$ of the source brush (\ref{\iotwod.surface.rendering.brushes}), combine the resulting visual data with the visual data at point $sp$ in the \underlyingsurface in the manner specified by the surface's current \term{compositing operator} (\ref{\iotwod.renderprops.summary}), and modify the visual data of the \underlyingsurface at point $sp$ to reflect the result produced by application of the compositing operator.
 \end{enumerate}
@@ -375,8 +376,7 @@ When a masking operation is initiated on a surface, the implementation shall pro
 
 \rSec1 [\iotwod.surface.modifiers.state] {\tcode{surface} state modifiers}
 
-\indexlibrary{\idxcode{surface}!\idxcode{flush}}%
-\indexlibrary{\idxcode{flush}!\idxcode{surface}}%
+\indexlibrarymember{flush}{surface}%
 \begin{itemdecl}
 void flush();
 void flush(error_code& ec) noexcept;
@@ -428,8 +428,7 @@ Other uses of this pair of calls are also possible.
 \end{note}
 \end{itemdescr}
 
-\indexlibrary{\idxcode{surface}!\idxcode{mark_dirty}}
-\indexlibrary{\idxcode{mark_dirty}!\idxcode{surface}}
+\indexlibrarymember{mark_dirty}{surface}%
 \begin{itemdecl}
 void mark_dirty();
 void mark_dirty(error_code& ec) noexcept;
@@ -444,8 +443,8 @@ If the implementation does not provide a native handle to the \tcode{surface} ob
 \pnum
 If the implementation does provide a native handle to the \tcode{surface} object's \underlyingsurface, then:
 \begin{itemize}
-	\item If called without a \tcode{rect} argument, informs the implementation that external changes using a native handle were potentially made to the entire \underlyingsurface.
-	\item If called with a \tcode{rect} argument, informs the implementation that external changes using a native handle were potentially made to the \underlyingsurface within the bounds specified by the \term{bounding rectangle} \tcode{rectangle\{ round(extents.x()), round (extents.y()), round(extents.width()), round(extents.height())\}}. No part of the bounding rectangle shall be outside of the bounds of the \underlyingsurface; no diagnostic is required.
+\item If called without a \tcode{rect} argument, informs the implementation that external changes using a native handle were potentially made to the entire \underlyingsurface.
+\item If called with a \tcode{rect} argument, informs the implementation that external changes using a native handle were potentially made to the \underlyingsurface within the bounds specified by the \term{bounding rectangle} \tcode{rectangle\{ round(extents.x()), round (extents.y()), round(extents.width()), round(extents.height())\}}. No part of the bounding rectangle shall be outside of the bounds of the \underlyingsurface; no diagnostic is required.
 \end{itemize}
 
 \pnum
@@ -470,8 +469,7 @@ The errors, if any, produced by this function are \impldefplain{surface!mark_dir
 If the implementation does not provide a native handle to the \tcode{surface} object's \underlyingsurface, this function shall not produce any errors.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{surface}!\idxcode{map}}%
-\indexlibrary{\idxcode{map}!\idxcode{surface}}%
+\indexlibrarymember{map}{surface}%
 \begin{itemdecl}
 void map(const function<void(mapped_surface&)>& action);
 void map(const function<void(mapped_surface&, error_code&)>& action, error_code& ec);
@@ -510,12 +508,11 @@ Calling this function on a \tcode{surface} object and then calling any function 
 
 \rSec1 [\iotwod.surface.modifiers.render] {\tcode{surface} render modifiers}
 
-\indexlibrary{\idxcode{surface}!\idxcode{paint}}%
-\indexlibrary{\idxcode{paint}!\idxcode{surface}}%
+\indexlibrarymember{paint}{surface}%
 \begin{itemdecl}
-void paint(const brush& b, const optional<brush_props>& bp = nullopt,
-  const optional<render_props>& rp = nullopt,
-  const optional<clip_props>& cl = nullopt);
+void paint(const brush& b, const optional<brush_props>& bp,
+  const optional<render_props>& rp,
+  const optional<clip_props>& cl);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -534,22 +531,21 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 The errors, if any, produced by this function are \impldefplain{surface!paint}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{surface}!\idxcode{stroke}}%
-\indexlibrary{\idxcode{stroke}!\idxcode{surface}}%
+\indexlibrarymember{stroke}{surface}%
 \begin{itemdecl}
 template <class Allocator>
 void stroke(const brush& b, const path_builder<Allocator>& pb,
-  const optional<brush_props>& bp = nullopt,
-  const optional<stroke_props>& sp = nullopt,
-  const optional<dashes>& d = nullopt,
+  const optional<brush_props>& bp,
+  const optional<stroke_props>& sp,
+  const optional<dashes>& d,
   const optional<render_props>& rp = nullopt,
-  const optional<clip_props>& cl = nullopt);
+  const optional<clip_props>& cl);
 void stroke(const brush& b, const path_group& pg,
-  const optional<brush_props>& bp = nullopt,
-  const optional<stroke_props>& sp = nullopt,
-  const optional<dashes>& d = nullopt,
-  const optional<render_props>& rp = nullopt,
-  const optional<clip_props>& cl = nullopt);
+  const optional<brush_props>& bp,
+  const optional<stroke_props>& sp,
+  const optional<dashes>& d,
+  const optional<render_props>& rp,
+  const optional<clip_props>& cl);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -568,18 +564,17 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 The errors, if any, produced by this function are \impldefplain{surface!stroke}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{surface}!\idxcode{fill}}%
-\indexlibrary{\idxcode{fill}!\idxcode{surface}}%
+\indexlibrarymember{fill}{surface}%
 \begin{itemdecl}
 template <class Allocator>
 void fill(const brush& b, const path_builder<Allocator>& pb,
-  const optional<brush_props>& bp = nullopt,
-  const optional<render_props>& rp = nullopt,
-  const optional<clip_props>& cl = nullopt);
+  const optional<brush_props>& bp,
+  const optional<render_props>& rp,
+  const optional<clip_props>& cl);
 void fill(const brush& b, const path_group& pg,
-  const optional<brush_props>& bp = nullopt,
-  const optional<render_props>& rp = nullopt,
-  const optional<clip_props>& cl = nullopt);
+  const optional<brush_props>& bp,
+  const optional<render_props>& rp,
+  const optional<clip_props>& cl);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -598,21 +593,19 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 The errors, if any, produced by this function are \impldefplain{surface!fill}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{surface}!\idxcode{mask}}%
-\indexlibrary{\idxcode{mask}!\idxcode{surface}}%
+\indexlibrarymember{mask}{surface}%
 \begin{itemdecl}
 template <class Allocator>
 void mask(const brush& b, const brush& mb,
-  const path_builder<Allocator>& pb,
-  const optional<brush_props>& bp = nullopt,
-  const optional<mask_props>& mp = nullopt,
-  const optional<render_props>&rp = nullopt,
-  const optional<clip_props>& cl = nullopt);
-void mask(const brush& b, const brush& mb, const path_group& pg,
-  const optional<brush_props>& bp = nullopt,
-  const optional<mask_props>& mp = nullopt,
-  const optional<render_props>&rp = nullopt,
-  const optional<clip_props>& cl = nullopt);
+  const optional<brush_props>& bp,
+  const optional<mask_props>& mp,
+  const optional<render_props>& rp,
+  const optional<clip_props>& cl);
+void mask(const brush& b, const brush& mb,
+  const optional<brush_props>& bp,
+  const optional<mask_props>& mp,
+  const optional<render_props>& rp,
+  const optional<clip_props>& cl);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

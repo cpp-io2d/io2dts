@@ -1,0 +1,118 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.meshpatch] {Class \tcode{mesh_patch}}
+
+\rSec1 [\iotwod.meshpatch.intro] {Overview}
+
+\pnum
+\indexlibrary{\idxcode{mesh_patch}}%
+The \tcode{mesh_patch} class describes one of several types of patches used in creating \tcode{brush} object's with a brush type of \tcode{brush_type::mesh}. 
+
+\rSec1 [\iotwod.meshpatch.bicubic] {Bicubic tensor-product patch}
+
+\pnum
+The most general of the four types of patches is the bicubic tensor-product patch. It is used in creating \tcode{brush} objects of type \tcode{brush_type::mesh}.
+
+\pnum
+The patch is described by 16 points and four colors.
+
+\pnum
+For purposes of interpreting the formula that describes the patch, the points are arranged as follows: \\
+$
+~[~[~P03~P13~P23~P33~]~] \\
+~[~[~P02~P12~P22~P32~]~] \\
+~[~[~P01~P11~P12~P31~]~] \\
+~[~[~P00~P10~P20~P30~]~]$
+
+\pnum
+The colors are arranged as follows: \\
+$
+~[~[~C1~C2~]~] \\
+~[~[~C0~C3~]~]$
+
+\pnum
+The formula that describes the patch is: \\
+$
+\displaystyle q(u,v) = \sum_{i=0}^{3}\sum_{j=0}^{3}k_{ij}\times{}B_{i}(u)\times{}B_{j}(v)
+$ \\
+\\
+with $k_{ij}$ being the point P\textit{i}\textit{j} above and with $B_{i}(u)$ and $B_{j}(v)$ being Bernstein basis polynomials.
+
+\pnum
+\begin{note}
+For example, where \textit{i} is 0 and \textit{j} is 2, the point is P02.
+\end{note}
+
+\pnum
+The inputs $u$ and $v$ are each a value in the range \orange{0}{1}, with $u$ and $v$ representing horizontal and vertical variation, respectively, within a unit square. Unlike in the standard coordinate space, vertical variation here is oriented from bottom to top.
+
+\pnum
+When sampling from the patch, the point that results from evaluating the patch at point $(u,v)$ has the color $Cr$, which is determined as follows: \\
+$
+Cr=(C0\times{}((1 - u)\times{}(1-v)))+(C1\times{}((1-u)\times{}v))+(C2\times{}(u\times{}v))+(C3\times{}(u\times{}(1-v)))$
+
+\rSec1 [\iotwod.meshpatch.forms] {Other forms supported by \tcode{mesh_patch}}
+
+\pnum
+The \tcode{mesh_patch} class supports four types of patches. In addition to the 
+
+\rSec1 [\iotwod.meshpatch.synopsis] {\tcode{mesh_patch} synopsis}
+
+\begin{codeblock}
+namespace std::experimental::io2d::v1 {
+  class bicubic_patch {
+  public:
+  	// \ref{\iotwod.bicubicpatch.cons}, construct:
+    constexpr color_stop(float o, const rgba_color& c);
+    
+    // \ref{\iotwod.bicubicpatch.modifiers}, modifiers:
+    constexpr void offset(float val) noexcept;
+	constexpr void color(const rgba_color& val) noexcept;
+	
+    // \ref{\iotwod.bicubicpatch.observers}, observers:
+	constexpr float offset() const noexcept;
+	constexpr rgba_color color() const noexcept;
+  };
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.bicubicpatch.cons]{\tcode{bicubic_patch} constructors}
+
+\indexlibrary{\idxcode{bicubic_patch}!constructor}%
+\begin{itemdecl}
+constexpr bicubic_patch(float o, const rgba_color& c) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs a \tcode{color_stop} object.
+
+\pnum
+The offset shall be set to the value of \tcode{o}.
+
+\pnum
+The color shall be set to the value of \tcode{c}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.bicubicpatch.modifiers]{\tcode{bicubic_patch} modifiers}
+
+\indexlibrarymember{offset}{bicubic_patch}%
+\begin{itemdecl}
+constexpr void offset(float val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+The offset shall be set to the value of \tcode{val}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.bicubicpatch.observers]{\tcode{bicubic_patch} observers}
+
+\indexlibrarymember{offset}{bicubic_patch}%
+\begin{itemdecl}
+constexpr float offset() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+The value of the offset.
+\end{itemdescr}

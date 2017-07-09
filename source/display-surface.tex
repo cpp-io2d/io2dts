@@ -60,9 +60,8 @@ namespace std::experimental::io2d::v1 {
     ~display_surface();
     
     // \ref{\iotwod.displaysurface.modifiers}, modifiers:
-    void draw_callback(const function<void(display_surface& sfc)>& fn) noexcept;
-    void size_change_callback(const function<void(display_surface& sfc)>& fn)
-      noexcept;
+    void draw_callback(const function<void(display_surface& sfc)>& fn);
+    void size_change_callback(const function<void(display_surface& sfc)>& fn);
     void width(int w);
     void width(int w, error_code& ec) noexcept;
     void height(int h);
@@ -77,7 +76,7 @@ namespace std::experimental::io2d::v1 {
     void display_dimensions(int dw, int dh, error_code& ec) noexcept;
     void scaling(experimental::io2d::scaling scl) noexcept;
     void user_scaling_callback(const function<experimental::io2d::rectangle(
-      const display_surface&, bool&)>& fn) noexcept;
+      const display_surface&, bool&)>& fn);
     void letterbox_brush(const optional<brush>& b,
       const optional<brush_props> = nullopt) noexcept;
     void auto_clear(bool val) noexcept;
@@ -101,6 +100,7 @@ namespace std::experimental::io2d::v1 {
     function<experimental::io2d::rectangle(const display_surface&,
       bool&)> user_scaling_callback(error_code& ec) const noexcept;
     optional<brush> letterbox_brush() const noexcept;
+    optional<brush_props> letterbox_brush_props() const noexcept;
     bool auto_clear() const noexcept;
     experimental::io2d::refresh_rate refresh_rate() const noexcept;
     float desired_frame_rate() const noexcept;
@@ -109,7 +109,7 @@ namespace std::experimental::io2d::v1 {
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.displaysurface.misc] {\tcode{display_surface} miscellaneous behavior}%
+\rSec1 [\iotwod.displaysurface.misc] {\tcode{display_surface} miscellaneous behavior}
 
 \pnum
 What constitutes an output device is \impldefplain{output device}, with the sole constraint being that an output device must allow the user to see the dynamically-updated contents of the display buffer.
@@ -237,7 +237,7 @@ Table~\ref{tab:\iotwod.displaysurface.state.listing} specifies the name, type, f
 
 \rSec1 [\iotwod.displaysurface.cons] {\tcode{display_surface} constructors and assignment operators}
 
-\indexlibrary{\idxcode{display_surface}!constructor}
+\indexlibrary{\idxcode{display_surface}!constructor}%
 \begin{itemdecl}
 display_surface(int preferredWidth, int preferredHeight, 
   experimental::io2d::format preferredFormat,
@@ -294,7 +294,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 \tcode{errc::not_supported} if creating the \tcode{display_surface} object would exceed the maximum number of simultaneous \tcode{display_surface} objects the implementation supports.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!constructor}
+\indexlibrary{\idxcode{display_surface}!constructor}%
 \begin{itemdecl}
 display_surface(int preferredWidth, int preferredHeight, 
   experimental::io2d::format preferredFormat,
@@ -360,10 +360,9 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \rSec1 [\iotwod.displaysurface.modifiers]{\tcode{display_surface} modifiers}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{draw_callback}}
-\indexlibrary{\idxcode{draw_callback}!\idxcode{display_surface}}
+\indexlibrarymember{draw_callback}{display_surface}%
 \begin{itemdecl}
-void draw_callback(const function<void(display_surface& sfc)>& fn) noexcept;
+void draw_callback(const function<void(display_surface& sfc)>& fn);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -371,11 +370,9 @@ void draw_callback(const function<void(display_surface& sfc)>& fn) noexcept;
 Sets the draw callback to \tcode{fn}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{size_change_callback}}
-\indexlibrary{\idxcode{size_change_callback}!\idxcode{display_surface}}
+\indexlibrarymember{size_change_callback}{display_surface}%
 \begin{itemdecl}
-void size_change_callback(const function<void(display_surface& sfc)>& fn)
-  noexcept;
+void size_change_callback(const function<void(display_surface& sfc)>& fn);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -383,8 +380,7 @@ void size_change_callback(const function<void(display_surface& sfc)>& fn)
 Sets the size change callback to \tcode{fn}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{width}}
-\indexlibrary{\idxcode{width}!\idxcode{display_surface}}
+\indexlibrary{width}{display_surface}%
 \begin{itemdecl}
 void width(int w);
 void width(int w, error_code& ec) noexcept;
@@ -419,13 +415,14 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 \errors
 \tcode{errc::invalid_argument} if \tcode{w <= 0} or if the value of \tcode{w} is greater than the maximum value for draw width.
 
+\pnum
 \tcode{errc::not_enough_memory} if there is insufficient memory to create a back buffer with the updated dimensions.
 
+\pnum
 Other errors, if any, produced by this function are \impldefplain{display_surface!width}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{height}}
-\indexlibrary{\idxcode{height}!\idxcode{display_surface}}
+\indexlibrarymember{height}{display_surface}%
 \begin{itemdecl}
 void height(int h);
 void height(int h, error_code& ec) noexcept;
@@ -460,13 +457,14 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 \errors
 \tcode{errc::invalid_argument} if \tcode{h <= 0} or if the value of \tcode{h} is greater than the maximum value for draw height.
 
+\pnum
 \tcode{errc::not_enough_memory} if there is insufficient memory to create a back buffer with the updated dimensions.
 
+\pnum
 Other errors, if any, produced by this function are \impldefplain{display_surface!height}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{display_width}}
-\indexlibrary{\idxcode{display_width}!\idxcode{display_surface}}
+\indexlibrarymember{display_width}{display_surface}%
 \begin{itemdecl}
 void display_width(int w);
 void display_width(int w, error_code& ec) noexcept;
@@ -501,13 +499,14 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 \errors
 \tcode{errc::invalid_argument} if the value of \tcode{w} is less than the minimum value for display width or if the value of \tcode{w} is greater than the maximum value for display width.
 
+\pnum
 \tcode{errc::not_enough_memory} if there is insufficient memory to create a display buffer with the updated dimensions.
 
+\pnum
 Other errors, if any, produced by this function are \impldefplain{display_surface!display_width}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{display_height}}
-\indexlibrary{\idxcode{display_height}!\idxcode{display_surface}}
+\indexlibrarymember{display_height}{display_surface}%
 \begin{itemdecl}
 void display_height(int h);
 void display_height(int h, error_code& ec) noexcept;
@@ -542,13 +541,14 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 \errors
 \tcode{errc::invalid_argument} if the value of \tcode{h} is less than the minimum value for display height or if the value of \tcode{h} is greater than the maximum value for display height.
 
+\pnum
 \tcode{errc::not_enough_memory} if there is insufficient memory to create a display buffer with the updated dimensions.
 
+\pnum
 Other errors, if any, produced by this function are \impldefplain{display_surface!display_height}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{dimensions}}
-\indexlibrary{\idxcode{dimensions}!\idxcode{display_surface}}
+\indexlibrarymember{dimensions}{display_surface}%
 \begin{itemdecl}
 void dimensions(int w, int h);
 void dimensions(int w, int h, error_code& ec) noexcept;
@@ -583,13 +583,14 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 \errors
 \tcode{errc::invalid_argument} if \tcode{w <= 0}, if the value of \tcode{w} is greater than the maximum value for draw width, if \tcode{h <= 0} or if the value of \tcode{h} is greater than the maximum value for draw height.
 
+\pnum
 \tcode{errc::not_enough_memory} if there is insufficient memory to create a back buffer with the updated dimensions.
 
+\pnum
 Other errors, if any, produced by this function are \impldefplain{display_surface!dimensions}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{display_dimensions}}
-\indexlibrary{\idxcode{display_dimensions}!\idxcode{display_surface}}
+\indexlibrarymember{display_dimensions}{display_surface}%
 \begin{itemdecl}
 void display_dimensions(int dw, int dh);
 void display_dimensions(int dw, int dh, error_code& ec) noexcept;
@@ -627,13 +628,14 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 \errors
 \tcode{errc::invalid_argument} if the value of \tcode{w} is less than the minimum value for display width, if the value of \tcode{w} is greater than the maximum value for display width, if the value of \tcode{h} is less than the minimum value for display height, or if the value of \tcode{h} is greater than the maximum value for display height.
 
+\pnum
 \tcode{errc::not_enough_memory} if there is insufficient memory to create a display buffer with the updated dimensions.
 
+\pnum
 Other errors, if any, produced by this function are \impldefplain{display_surface!display_dimensions}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{scaling}}
-\indexlibrary{\idxcode{scaling}!\idxcode{display_surface}}
+\indexlibrarymember{scaling}{display_surface}%
 \begin{itemdecl}
 void scaling(experimental::io2d::scaling scl) noexcept;
 \end{itemdecl}
@@ -643,11 +645,10 @@ void scaling(experimental::io2d::scaling scl) noexcept;
 Sets scaling type to the value of \tcode{scl}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{user_scaling_callback}}
-\indexlibrary{\idxcode{user_scaling_callback}!\idxcode{display_surface}}
+\indexlibrarymember{user_scaling_callback}{display_surface}%
 \begin{itemdecl}
 void user_scaling_callback(const function<experimental::io2d::rectangle(
-  const display_surface&, bool&)>& fn) noexcept;
+  const display_surface&, bool&)>& fn);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -655,33 +656,21 @@ void user_scaling_callback(const function<experimental::io2d::rectangle(
 Sets the user scaling callback to \tcode{fn}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{letterbox_brush}}
-\indexlibrary{\idxcode{letterbox_brush}!\idxcode{display_surface}}
+\indexlibrarymember{letterbox_brush}{display_surface}%
 \begin{itemdecl}
 void letterbox_brush(const optional<brush&>b,
   const optional<brush_props>& bp = nullopt);
-void letterbox_brush(const optional<brush&>b, error_code& ec,
-  const optional<brush_props>& bp = nullopt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Sets the letterbox brush to the value contained in \tcode{b} if it contains a value, otherwise set letterbox brush to its default value.
+Sets the letterbox brush to the value contained in \tcode{b} if it contains a value, otherwise sets the letterbox brush to its default value.
 
 \pnum
-Sets the letterbox brush props to the value contained in \tcode{bp} if it contains a value, otherwise sets it letterbox brush props to its default value.
-
-\pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-\pnum
-\errors
-The errors, if any, produced by this function are \impldefplain{display_surface!letterbox_brush}.
+Sets the letterbox brush props to the value contained in \tcode{bp} if it contains a value, otherwise sets the letterbox brush props to its default value.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{auto_clear}}
-\indexlibrary{\idxcode{auto_clear}!\idxcode{display_surface}}
+\indexlibrarymember{auto_clear}{display_surface}%
 \begin{itemdecl}
 void auto_clear(bool val) noexcept;
 \end{itemdecl}
@@ -691,8 +680,7 @@ void auto_clear(bool val) noexcept;
 Sets auto clear to the value of \tcode{val}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{refresh_rate}}
-\indexlibrary{\idxcode{refresh_rate}!\idxcode{display_surface}}
+\indexlibrarymember{refresh_rate}{display_surface}%
 \begin{itemdecl}
 void refresh_rate(experimental::io2d::refresh_rate rr) noexcept;
 \end{itemdecl}
@@ -702,8 +690,7 @@ void refresh_rate(experimental::io2d::refresh_rate rr) noexcept;
 Sets the refresh rate to the value of \tcode{rr}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{desired_frame_rate}}
-\indexlibrary{\idxcode{desired_frame_rate}!\idxcode{display_surface}}
+\indexlibrarymember{desired_frame_rate}{display_surface}%
 \begin{itemdecl}
 bool desired_frame_rate(float fps) noexcept;
 \end{itemdecl}
@@ -720,8 +707,7 @@ Sets the desired frame rate to an \impldefplain{display_surface!minimum frame ra
 \tcode{false} if the desired frame rate was set to the value of \tcode{fps}; otherwise \tcode{true}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{redraw_required}}
-\indexlibrary{\idxcode{redraw_required}!\idxcode{display_surface}}
+\indexlibrarymember{redraw_required}{display_surface}%
 \begin{itemdecl}
 void redraw_required() noexcept;
 \end{itemdecl}
@@ -731,7 +717,7 @@ void redraw_required() noexcept;
 When \tcode{display_surface::begin_show} is executing, informs the implementation that the draw callback must be called as soon as possible.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{begin_show}}
+\indexlibrarymember{begin_show}{display_surface}%
 \begin{itemdecl}
 int begin_show();
 \end{itemdecl}
@@ -762,7 +748,7 @@ What the output device shall display when it is not displaying the contents of t
 
 \pnum
 \returns
-The possible values and meanings of the possible values returned are \impldefplain{display_surface!show return value}.
+The possible values and meanings of the possible values returned are \impldefplain{display_surface!begin_show return value}.
 
 \pnum
 \throws
@@ -774,14 +760,13 @@ Since this function calls the draw callback and can call the size change callbac
 
 \pnum
 \errors
-\pnum
 \tcode{errc::operation_would_block} if the value of draw callback is equivalent to its default value or if it becomes equivalent to its default value before this function returns.
 
 \pnum
-Other errors, if any, produced by this function are \impldefplain{display_surface!show}.
+Other errors, if any, produced by this function are \impldefplain{display_surface!begin_show}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{end_show}}
+\indexlibrarymember{end_show}{display_surface}%
 \begin{itemdecl}
 void end_show();
 \end{itemdecl}
@@ -802,8 +787,7 @@ The \tcode{display_surface::begin_show} function's loop continues execution unti
 
 \rSec1 [\iotwod.displaysurface.observers]{\tcode{display_surface} observers}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{format}}
-\indexlibrary{\idxcode{format}!\idxcode{display_surface}}
+\indexlibrarymember{format}{display_surface}%
 \begin{itemdecl}
 experimental::io2d::format format() const noexcept;
 \end{itemdecl}
@@ -813,8 +797,7 @@ experimental::io2d::format format() const noexcept;
 The value of draw format.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{width}}
-\indexlibrary{\idxcode{width}!\idxcode{display_surface}}
+\indexlibrarymember{width}{display_surface}%
 \begin{itemdecl}
 int width() const noexcept;
 \end{itemdecl}
@@ -824,8 +807,7 @@ int width() const noexcept;
 The draw width.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{height}}
-\indexlibrary{\idxcode{height}!\idxcode{display_surface}}
+\indexlibrarymember{height}{display_surface}%
 \begin{itemdecl}
 int height() const noexcept;
 \end{itemdecl}
@@ -835,8 +817,7 @@ int height() const noexcept;
 The draw height.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{display_width}}
-\indexlibrary{\idxcode{display_width}!\idxcode{display_surface}}
+\indexlibrarymember{display_width}{display_surface}%
 \begin{itemdecl}
 int display_width() const noexcept;
 \end{itemdecl}
@@ -846,8 +827,7 @@ int display_width() const noexcept;
 The display width.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{display_height}}
-\indexlibrary{\idxcode{display_height}!\idxcode{display_surface}}
+\indexlibrarymember{display_height}{display_surface}%
 \begin{itemdecl}
 int display_height() const noexcept;
 \end{itemdecl}
@@ -857,8 +837,7 @@ int display_height() const noexcept;
 The display height.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{dimensions}}
-\indexlibrary{\idxcode{dimensions}!\idxcode{display_surface}}
+\indexlibrarymember{dimensions}{display_surface}%
 \begin{itemdecl}
 vector_2d dimensions() const noexcept;
 \end{itemdecl}
@@ -868,8 +847,7 @@ vector_2d dimensions() const noexcept;
 A \tcode{vector_2d} constructed using the draw width as the first argument and the draw height as the second argument.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{display_dimensions}}
-\indexlibrary{\idxcode{display_dimensions}!\idxcode{display_surface}}
+\indexlibrarymember{display_dimensions}{display_surface}%
 \begin{itemdecl}
 vector_2d display_dimensions() const noexcept;
 \end{itemdecl}
@@ -879,8 +857,7 @@ vector_2d display_dimensions() const noexcept;
 A \tcode{vector_2d} constructed using the display width as the first argument and the display height as the second argument.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{scaling}}
-\indexlibrary{\idxcode{scaling}!\idxcode{display_surface}}
+\indexlibrarymember{scaling}{display_surface}%
 \begin{itemdecl}
 experimental::io2d::scaling scaling() const noexcept;
 \end{itemdecl}
@@ -890,8 +867,7 @@ experimental::io2d::scaling scaling() const noexcept;
 The scaling type.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{user_scaling_callback}}
-\indexlibrary{\idxcode{user_scaling_callback}!\idxcode{display_surface}}
+\indexlibrarymember{user_scaling_callback}{display_surface}%
 \begin{itemdecl}
 function<experimental::io2d::rectangle(const display_surface&, bool&)>
   user_scaling_callback() const;
@@ -912,19 +888,27 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 \tcode{errc::not_enough_memory} if a failure to allocate memory occurs.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{letterbox_brush}}
-\indexlibrary{\idxcode{letterbox_brush}!\idxcode{display_surface}}
+\indexlibrarymember{letterbox_brush}{display_surface}%
 \begin{itemdecl}
 optional<brush> letterbox_brush() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-A \tcode{optional<brush>} object constructed using the user-provided letterbox brush or, if no user-provided letterbox brush is set, an empty \tcode{optional<brush>} object.
+An \tcode{optional<brush>} object constructed using the user-provided letterbox brush or, if the letterbox brush is set to its default value, an empty \tcode{optional<brush>} object.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{auto_clear}}
-\indexlibrary{\idxcode{auto_clear}!\idxcode{display_surface}}
+\indexlibrarymember{letterbox_brush_props}{display_surface}%
+\begin{itemdecl}
+optional<brush_props> letterbox_brush_props() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+An \tcode{optional<brush_props>} object constructed using the user-provided letterbox brush props or, if the letterbox brush props is set to its default value, an empty \tcode{optional<brush_props>} object.
+\end{itemdescr}
+
+\indexlibrarymember{auto_clear}{display_surface}%
 \begin{itemdecl}
 bool auto_clear() const noexcept;
 \end{itemdecl}
@@ -934,8 +918,7 @@ bool auto_clear() const noexcept;
 The value of auto clear.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{display_width}}
-\indexlibrary{\idxcode{display_width}!\idxcode{display_surface}}
+\indexlibrarymember{display_width}{display_surface}%
 \begin{itemdecl}
 float desired_framerate() const noexcept;
 \end{itemdecl}
@@ -945,8 +928,7 @@ float desired_framerate() const noexcept;
 The value of desired framerate.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{display_surface}!\idxcode{elapsed_draw_time}}
-\indexlibrary{\idxcode{elapsed_draw_time}!\idxcode{display_surface}}
+\indexlibrarymember{elapsed_draw_time}{display_surface}%
 \begin{itemdecl}
 float elapsed_draw_time() const noexcept;
 \end{itemdecl}
