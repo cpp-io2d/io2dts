@@ -52,10 +52,6 @@ namespace std::experimental::io2d::v1 {
     void map(const function<void(mapped_surface&)>& action);
     void map(const function<void(mapped_surface&, error_code&)>& action,
       error_code& ec);
-    void map(const function<void(mapped_surface&)>& action,
-      const rectangle& extents);
-    void map(const function<void(mapped_surface&, error_code&)>& action,
-      const rectangle& extents, error_code& ec);
 
     // \ref{\iotwod.surface.modifiers.render}, render modifiers:
     void paint(const brush& b, const optional<brush_props>& bp = nullopt,
