@@ -469,9 +469,6 @@ If the implementation does not provide a native handle to the \tcode{surface} ob
 \begin{itemdecl}
 void map(const function<void(mapped_surface&)>& action);
 void map(const function<void(mapped_surface&, error_code&)>& action, error_code& ec);
-void map(const function<void(mapped_surface&)>& action, const rectangle& extents);
-void map(const function<void(mapped_surface&, error_code&)>& action,
-  const rectangle& extents, error_code& ec);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -480,11 +477,6 @@ Creates a \tcode{mapped_surface} object and calls \tcode{action} using it.
 
 \pnum
 The \tcode{mapped_surface} object is created using \tcode{*this}, which allows direct manipulation of the \underlyingsurface.
-
-\pnum
-If called with a \tcode{const rectangle\& extents} argument, the \tcode{mapped_surface} object shall only allow manipulation of the portion of \tcode{*this} specified by the \term{bounding rectangle} \\
-\tcode{rectangle\{ round(extents.x()), round(extents.y()), round(extents.width()), \\
-round(extents.height())\}}. If any part of the bounding rectangle is outside of the bounds of \tcode{*this}, the call shall result in undefined behavior; no diagnostic is required.
 
 \pnum
 \throws
