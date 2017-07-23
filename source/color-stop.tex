@@ -15,17 +15,17 @@ It has an offset of type \tcode{float} and a color of type \tcode{rgba_color}.
 namespace std::experimental::io2d::v1 {
   class color_stop {
   public:
-  	// \ref{\iotwod.colorstop.cons}, construct:
-  	constexpr color_stop() noexcept;
+    // \ref{\iotwod.colorstop.cons}, construct:
+    constexpr color_stop() noexcept;
     constexpr color_stop(float o, const rgba_color& c) noexcept;
     
     // \ref{\iotwod.colorstop.modifiers}, modifiers:
     constexpr void offset(float o) noexcept;
-	constexpr void color(const rgba_color& c) noexcept;
+    constexpr void color(const rgba_color& c) noexcept;
 	
     // \ref{\iotwod.colorstop.observers}, observers:
-	constexpr float offset() const noexcept;
-	constexpr rgba_color color() const noexcept;
+    constexpr float offset() const noexcept;
+    constexpr rgba_color color() const noexcept;
   };
   // \ref{\iotwod.colorstop.ops}, operators:
   constexpr bool operator==(const color_stop& lhs, const color_stop& rhs)
