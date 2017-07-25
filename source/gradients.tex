@@ -177,10 +177,4 @@ This includes any color stops with an offset value of \tcode{1.0f} provided that
 \end{enumeratea}
 
 \pnum
-It is unspecified whether the interpolation between the color values of two adjacent color stops is performed linearly on each color channel or is performed by a linear color interpolation algorithm implemented in hardware (typically in a graphics processing unit).
-
-\pnum
-Implementations shall interpolate between alpha channel values of adjacent color stops linearly except as provided in the following paragraph.
-
-\pnum
-A conforming implementation may use the alpha channel interpolation results from a linear color interpolation algorithm implemented in hardware even if those results differ from the results required by the previous paragraph.
+Interpolation between the color values of two adjacent color stops is performed linearly on each color channel.
