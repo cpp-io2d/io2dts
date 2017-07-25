@@ -35,6 +35,7 @@ namespace std::experimental::io2d::v1 {
     constexpr static matrix_2d init_translate(const vector_2d& value) noexcept;
     constexpr static matrix_2d init_scale(const vector_2d& value) noexcept;
     static matrix_2d init_rotate(float radians) noexcept;
+    static matric_2d init_rotate(float radians, vector_2d origin) noexcept;
     static matrix_2d init_reflect(float radians) noexcept;
     constexpr static matrix_2d init_shear_x(float factor) noexcept;
     constexpr static matrix_2d init_shear_y(float factor) noexcept;
@@ -49,6 +50,7 @@ namespace std::experimental::io2d::v1 {
     constexpr matrix_2d& translate(const vector_2d& v) noexcept;
     constexpr matrix_2d& scale(const vector_2d& v) noexcept;
     matrix_2d& rotate(float radians) noexcept;
+    matrix_2d& rotate(float radians, vector_2d origin) noexcept;
     matrix_2d& reflect(float radians) noexcept;
     constexpr matrix_2d& shear_x(float factor) noexcept;
     constexpr matrix_2d& shear_y(float factor) noexcept;
@@ -128,7 +130,7 @@ constexpr static matrix_2d init_translate(const vector_2d& value) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{matrix(1.0f, 0.0f, 0.0f, 1.0f, value.x(), value.y())}.
+\tcode{matrix_2d(1.0f, 0.0f, 0.0f, 1.0f, value.x(), value.y())}.
 \end{itemdescr}
 
 \indexlibrarymember{init_scale}{matrix_2d}%
@@ -138,7 +140,7 @@ constexpr static matrix_2d init_scale(const vector_2d& value) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{matrix(value.x(), 0.0f, 0.0f, value.y(), 0.0f, 0.0f)}.
+\tcode{matrix_2d(value.x(), 0.0f, 0.0f, value.y(), 0.0f, 0.0f)}.
 \end{itemdescr}
 
 \indexlibrarymember{init_rotate}{matrix_2d}%
@@ -148,8 +150,22 @@ static matrix_2d init_rotate(float radians) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{matrix(cos(radians), -sin(radians), sin(radians), cos(radians), 
+\tcode{matrix_2d(cos(radians), -sin(radians), sin(radians), cos(radians), 
 0.0f, 0.0f)}.
+\end{itemdescr}
+
+\indexlibrarymember{init_rotate}{matrix_2d}%
+\begin{itemdecl}
+static matrix_2d init_rotate(float radians, vector_2d origin) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to:
+\begin{codeblock}
+return matrix_2d(
+  matrix_2d::init_translate(origin).rotate(radians).translate(-origin));
+\end{codeblock}
 \end{itemdescr}
 
 \indexlibrarymember{init_reflect}{matrix_2d}%
@@ -161,7 +177,7 @@ static matrix_2d init_reflect(float radians) noexcept;
 \returns
 \begin{codeblock}
 \end{codeblock}
-matrix(cos(radians * 2.0f), sin(radians * 2.0f), sin(radians * 2.0f),
+matrix_2d(cos(radians * 2.0f), sin(radians * 2.0f), sin(radians * 2.0f),
   -cos(radians * 2.0f), 0.0f, 0.0f)
 \end{itemdescr}
 
@@ -172,7 +188,7 @@ constexpr static matrix_2d init_shear_x(float factor) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{matrix(1.0f, 0.0f, factor, 1.0f, 0.0f, 0.0f)}.
+\tcode{matrix_2d(1.0f, 0.0f, factor, 1.0f, 0.0f, 0.0f)}.
 \end{itemdescr}
 
 \indexlibrarymember{init_shear_y}{matrix_2d}%
@@ -182,7 +198,7 @@ constexpr static matrix_2d init_shear_y(float factor) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{matrix\{ 1.0f, factor, 0.0f, 1.0f, 0.0f, 0.0f \}}
+\tcode{matrix_2d(1.0f, factor, 0.0f, 1.0f, 0.0f, 0.0f)}
 \end{itemdescr}
 
 \rSec1 [\iotwod.\matrixtwod.modifiers] {\tcode{matrix_2d} modifiers}
@@ -283,6 +299,20 @@ matrix_2d& rotate(float radians) noexcept;
 \pnum
 \effects
 Equivalent to: \tcode{*this = *this * init_rotate(radians);}
+
+\pnum
+\returns
+\tcode{*this}.
+\end{itemdescr}
+
+\indexlibrarymember{rotate}{matrix_2d}%
+\begin{itemdecl}
+matrix_2d& rotate(float radians, vector_2d origin) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to: \tcode{*this = *this * init_rotate(radians, origin);}
 
 \pnum
 \returns
