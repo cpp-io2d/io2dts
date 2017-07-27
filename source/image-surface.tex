@@ -8,6 +8,9 @@
 The class \tcode{image_surface} derives from the \tcode{surface} class and provides an interface to a raster graphics data graphics resource.
 
 \pnum
+The \tcode{image_surface} class modifies its graphics resource through mapping.
+
+\pnum
 It has a \term{pixel format} of type \tcode{format}, a \term{width} of type \tcode{int}, and a \term{height} of type \tcode{int}.
 
 \pnum
@@ -33,6 +36,9 @@ namespace std::experimental::io2d::v1 {
     // \ref{\iotwod.imagesurface.members}, members:
     void save(filesystem::path p, image_file_format i);
     void save(filesystem::path p, image_file_format i, error_code& ec) noexcept;
+    void map(const function<void(mapped_surface&)>& action);
+    void map(const function<void(mapped_surface&, error_code&)>& action,
+      error_code& ec);
     
     // \ref{\iotwod.imagesurface.staticmembers}, static members:
     static int max_width() const noexcept;
@@ -166,6 +172,35 @@ Any error that could result from trying to create \tcode{f}, access \tcode{f}, o
 
 \pnum
 \tcode{errc::not_supported} if \tcode{image_file_format::unknown} is passed as an argument and the implementation is unable to determine the file format or does not support saving in the image file format it determined.
+\end{itemdescr}
+
+\indexlibrarymember{map}{image_surface}%
+\begin{itemdecl}
+void map(const function<void(mapped_surface&)>& action);
+void map(const function<void(mapped_surface&, error_code&)>& action, error_code& ec);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Creates a \tcode{mapped_surface} object and calls \tcode{action} using it.
+
+\pnum
+The \tcode{mapped_surface} object is created using \tcode{*this}, which allows direct manipulation of the \underlyingsurface.
+	
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+	
+\pnum
+\remarks
+Whether changes are committed to the \underlyingsurface immediately or only when the \tcode{mapped_surface} object is destroyed is \unspecnorm.
+	
+\pnum
+Calling this function on an \tcode{image_surface} object and then calling any function on the \tcode{image_surface} object or using the \tcode{image_surface} object before the call to this function has returned shall result in undefined behavior; no diagnostic is required.
+	
+\pnum
+\errors
+\tcode{errc::not_supported} if a \tcode{mapped_surface} object cannot be created for the \tcode{image_surface} object. The \tcode{image_surface} object is not modified if an error occurs.
 \end{itemdescr}
 
 \rSec1 [\iotwod.imagesurface.staticmembers] {\tcode{image_surface} static members}

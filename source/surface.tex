@@ -12,11 +12,7 @@ data graphics resource.
 A \tcode{surface} object is a move-only object.
 
 \pnum
-The \tcode{surface} class provides two ways to modify its graphics resource:
-\begin{itemize}
-\item Rendering and composing operations.
-\item Mapping.
-\end{itemize}
+The \tcode{surface} class modifies its graphics resource through rendering and composing operations.
 
 \pnum
 \begin{note}
@@ -49,9 +45,6 @@ namespace std::experimental::io2d::v1 {
     void mark_dirty(error_code& ec) noexcept;
     void mark_dirty(const rectangle& rect);
     void mark_dirty(const rectangle& rect, error_code& ec) noexcept;
-    void map(const function<void(mapped_surface&)>& action);
-    void map(const function<void(mapped_surface&, error_code&)>& action,
-      error_code& ec);
 
     // \ref{\iotwod.surface.modifiers.render}, render modifiers:
     void paint(const brush& b, const optional<brush_props>& bp = nullopt,
@@ -452,46 +445,11 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 After external changes are made to this \tcode{surface} object's \underlyingsurface using a native pointer, this function shall be called before using this \tcode{surface} object; no diagnostic is required.
 
 \pnum
-No call to this function shall be required solely as a result of changes made to a surface using the functionality provided by \tcode{surface::map}.
-\begin{note}
-The \tcode{mapped_surface} type, which is used by \tcode{surface::map}, provides its own functionality for managing any such changes.
-\end{note}
-
-\pnum
 \errors
 The errors, if any, produced by this function are \impldefplain{surface!mark_dirty}.
 
 \pnum
 If the implementation does not provide a native handle to the \tcode{surface} object's \underlyingsurface, this function shall not produce any errors.
-\end{itemdescr}
-
-\indexlibrarymember{map}{surface}%
-\begin{itemdecl}
-void map(const function<void(mapped_surface&)>& action);
-void map(const function<void(mapped_surface&, error_code&)>& action, error_code& ec);
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Creates a \tcode{mapped_surface} object and calls \tcode{action} using it.
-
-\pnum
-The \tcode{mapped_surface} object is created using \tcode{*this}, which allows direct manipulation of the \underlyingsurface.
-
-\pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-\pnum
-\remarks
-Whether changes are committed to the \underlyingsurface immediately or only when the \tcode{mapped_surface} object is destroyed is \unspecnorm.
-
-\pnum
-Calling this function on a \tcode{surface} object and then calling any function on the \tcode{surface} object or using the \tcode{surface} object before the call to this function has returned shall result in undefined behavior; no diagnostic is required.
-
-\pnum
-\errors
-\tcode{errc::not_supported} if a \tcode{mapped_surface} object cannot be created for the \tcode{surface} object. The \tcode{surface} object is not modified if an error occurs.
 \end{itemdescr}
 
 \rSec1 [\iotwod.surface.modifiers.render] {\tcode{surface} render modifiers}
