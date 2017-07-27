@@ -17,10 +17,10 @@ namespace std::experimental::io2d::v1 {
     public:
       // \ref{\iotwod.relline.cons}, construct:
       constexpr rel_line() noexcept;
-      constexpr explicit rel_line(const vector_2d& pt) noexcept;
+      constexpr explicit rel_line(vector_2d pt) noexcept;
 
       // \ref{\iotwod.relline.modifiers}, modifiers:
-      constexpr void to(const vector_2d& pt) noexcept;
+      constexpr void to(vector_2d pt) noexcept;
 
       // \ref{\iotwod.relline.observers}, observers:
       constexpr vector_2d to() const noexcept;
@@ -49,7 +49,7 @@ Equivalent to: \tcode{rel_line\{ vector_2d() \};}
 
 \indexlibrary{\idxcode{rel_line}!constructor}%
 \begin{itemdecl}
-constexpr explicit rel_line(const vector_2d& pt) noexcept;
+constexpr explicit rel_line(vector_2d pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -64,7 +64,7 @@ The end point is \tcode{pt}.
 
 \indexlibrarymember{rel_line}{to}
 \begin{itemdecl}
-constexpr void to(const vector_2d& pt) noexcept;
+constexpr void to(vector_2d pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

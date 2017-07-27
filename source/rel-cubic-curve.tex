@@ -17,13 +17,13 @@ namespace std::experimental::io2d::v1 {
     public:
       // \ref{\iotwod.relcubiccurve.cons}, construct
       constexpr rel_cubic_curve() noexcept;
-      constexpr rel_cubic_curve(const vector_2d& cpt1, const vector_2d& cpt2,
-        const vector_2d& ept) noexcept;
+      constexpr rel_cubic_curve(vector_2d cpt1, vector_2d cpt2,
+        vector_2d ept) noexcept;
 
       // \ref{\iotwod.relcubiccurve.modifiers}, modifiers:
-      constexpr void control_pt1(const vector_2d& cpt) noexcept;
-      constexpr void control_pt2(const vector_2d& cpt) noexcept;
-      constexpr void end_pt(const vector_2d& ept) noexcept;
+      constexpr void control_pt1(vector_2d cpt) noexcept;
+      constexpr void control_pt2(vector_2d cpt) noexcept;
+      constexpr void end_pt(vector_2d ept) noexcept;
 
       // \ref{\iotwod.relcubiccurve.observers}, observers:
       constexpr vector_2d control_pt1() const noexcept;
@@ -54,8 +54,8 @@ Equivalent to \tcode{rel_cubic_curve\{ vector_2d(), vector_2d(), vector_2d() \}}
 
 \indexlibrary{\idxcode{rel_cubic_curve}!constructor}%
 \begin{itemdecl}
-constexpr rel_cubic_curve(const vector_2d& cpt1, const vector_2d& cpt2,
-  const vector_2d& ept) noexcept;
+constexpr rel_cubic_curve(vector_2d cpt1, vector_2d cpt2,
+  vector_2d ept) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -70,7 +70,7 @@ The first control point is \tcode{cpt1}. The second control point is \tcode{cpt2
 
 \indexlibrarymember{control_pt2}{rel_cubic_curve}%
 \begin{itemdecl}
-constexpr void control_pt1(const vector_2d& cpt) noexcept;
+constexpr void control_pt1(vector_2d cpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -80,7 +80,7 @@ The first control point is \tcode{cpt}.
 
 \indexlibrarymember{control_pt2}{rel_cubic_curve}%
 \begin{itemdecl}
-constexpr void control_pt2(const vector_2d& cpt) noexcept;
+constexpr void control_pt2(vector_2d cpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -90,7 +90,7 @@ The second control point is \tcode{cpt}.
 
 \indexlibrarymember{end_pt}{rel_cubic_curve}%
 \begin{itemdecl}
-constexpr void end_pt(const vector_2d& ept) noexcept;
+constexpr void end_pt(vector_2d ept) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

@@ -20,15 +20,15 @@ namespace std::experimental::io2d::v1 {
     constexpr rectangle() noexcept;
     constexpr rectangle(float x, float y, float width, float height)
       noexcept;
-    constexpr rectangle(const vector_2d& tl, const vector_2d& br) noexcept;
+    constexpr rectangle(vector_2d tl, vector_2d br) noexcept;
 
     // \ref{\iotwod.rectangle.modifiers}, modifiers:
     constexpr void x(float val) noexcept;
     constexpr void y(float val) noexcept;
     constexpr void width(float val) noexcept;
     constexpr void height(float val) noexcept;
-    constexpr void top_left(const vector_2d& val) noexcept;
-    constexpr void bottom_right(const vector_2d& val) noexcept;
+    constexpr void top_left(vector_2d val) noexcept;
+    constexpr void bottom_right(vector_2d val) noexcept;
     
     // \ref{\iotwod.rectangle.observers}, observers:
     constexpr float x() const noexcept;
@@ -78,7 +78,7 @@ The x coordinate is \tcode{x}. The y coordinate is \tcode{y}. The width is \tcod
 
 \indexlibrary{\idxcode{rectangle}!constructor}%
 \begin{itemdecl}
-constexpr rectangle(const vector_2d& tl, const vector_2d& br) noexcept;
+constexpr rectangle(vector_2d tl, vector_2d br) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -134,7 +134,7 @@ The height is \tcode{val}.
 
 \indexlibrarymember{top_left}{rectangle}%
 \begin{itemdecl}
-constexpr void top_left(const vector_2d& val) noexcept;
+constexpr void top_left(vector_2d val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -147,7 +147,7 @@ The y coordinate is \tcode{val.y()}.
 
 \indexlibrarymember{bottom_right}{rectangle}%
 \begin{itemdecl}
-constexpr void bottom_right(const vector_2d& val) noexcept;
+constexpr void bottom_right(vector_2d val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

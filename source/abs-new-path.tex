@@ -17,10 +17,10 @@ namespace std::experimental::io2d::v1 {
     public:
       // \ref{\iotwod.absnewpath.cons}, construct:
       constexpr abs_new_path() noexcept;
-      constexpr explicit abs_new_path(const vector_2d& pt) noexcept;
+      constexpr explicit abs_new_path(vector_2d pt) noexcept;
 
       // \ref{\iotwod.absnewpath.modifiers}, modifiers:
-      constexpr void at(const vector_2d& pt) noexcept;
+      constexpr void at(vector_2d pt) noexcept;
 
       // \ref{\iotwod.absnewpath.observers}, observers:
       constexpr vector_2d at() const noexcept;
@@ -49,7 +49,7 @@ Equivalent to: \tcode{abs_new_path\{ vector_2d() \};}
 
 \indexlibrary{\idxcode{abs_new_path}!constructor}%
 \begin{itemdecl}
-constexpr explicit abs_new_path(const vector_2d& pt) noexcept;
+constexpr explicit abs_new_path(vector_2d pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -64,7 +64,7 @@ The at point is \tcode{pt}.
 
 \indexlibrarymember{at}{abs_new_path}%
 \begin{itemdecl}
-constexpr void at(const vector_2d& pt) noexcept;
+constexpr void at(vector_2d pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

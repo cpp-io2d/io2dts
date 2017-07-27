@@ -19,11 +19,11 @@ namespace std::experimental::io2d::v1 {
     public:
       // \ref{\iotwod.arc.cons}, construct/copy/move/destroy:
       constexpr arc() noexcept;
-      constexpr arc(const vector_2d& rad,
+      constexpr arc(vector_2d rad,
         float rot, float sang) noexcept;
 
       // \ref{\iotwod.arc.modifiers}, modifiers:
-      constexpr void radius(const vector_2d& rad) noexcept;
+      constexpr void radius(vector_2d rad) noexcept;
       constexpr void rotation(float rot) noexcept;
       constexpr void start_angle(float radians) noexcept;
 
@@ -31,9 +31,9 @@ namespace std::experimental::io2d::v1 {
       constexpr vector_2d radius() const noexcept;
       constexpr float rotation() const noexcept;
       constexpr float start_angle() const noexcept;
-      vector_2d center(const vector_2d& cpt, const matrix_2d& m = matrix_2d{}) 
+      vector_2d center(vector_2d cpt, const matrix_2d& m = matrix_2d{}) 
         const noexcept;
-      vector_2d end_pt(const vector_2d& cpt, const matrix_2d& m = matrix_2d{}) 
+      vector_2d end_pt(vector_2d cpt, const matrix_2d& m = matrix_2d{}) 
         const noexcept;
     };
     
@@ -58,7 +58,7 @@ Equivalent to: \tcode{arc\{ vector_2d(10.0f, 10.0f), pi<float>, pi<float> \};}.
 
 \indexlibrary{\idxcode{arc}!constructor}%
 \begin{itemdecl}
-constexpr arc(const vector_2d& rad, float rot,
+constexpr arc(vector_2d rad, float rot,
   float start_angle = pi<float>) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -80,7 +80,7 @@ The start angle is \tcode{sang}.
 
 \indexlibrarymember{radius}{arc}%
 \begin{itemdecl}
-constexpr void radius(const vector_2d& rad) noexcept;
+constexpr void radius(vector_2d rad) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -142,7 +142,7 @@ The start angle.
 
 \indexlibrarymember{center}{arc}%
 \begin{itemdecl}
-vector_2d center(const vector_2d& cpt, const matrix_2d& m = matrix_2d{})
+vector_2d center(vector_2d cpt, const matrix_2d& m = matrix_2d{})
   const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -161,7 +161,7 @@ return cpt - centerOffset * lmtx;
 
 \indexlibrarymember{start_angle}{arc}%
 \begin{itemdecl}
-vector_2d end_pt(const vector_2d& cpt, const matrix_2d& m = matrix_2d{})
+vector_2d end_pt(vector_2d cpt, const matrix_2d& m = matrix_2d{})
   const noexcept;
 \end{itemdecl}
 \begin{itemdescr}

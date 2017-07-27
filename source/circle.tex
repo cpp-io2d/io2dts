@@ -18,10 +18,10 @@ namespace std::experimental::io2d::v1 {
   public:
     // \ref{\iotwod.circle.cons}, constructors:
     constexpr circle() noexcept;
-    constexpr circle(const vector_2d& ctr, float rad) noexcept;
+    constexpr circle(vector_2d ctr, float rad) noexcept;
 
     // \ref{\iotwod.circle.modifiers}, modifiers:
-    constexpr void center(const vector_2d& ctr) noexcept;
+    constexpr void center(vector_2d ctr) noexcept;
     constexpr void radius(float r) noexcept;
     
     // \ref{\iotwod.circle.observers}, observers:
@@ -49,7 +49,7 @@ Equivalent to: \tcode{circle(\{ 0.0f, 0.0f \}, 0.0f)}.
 
 \indexlibrary{\idxcode{circle}!constructor}%
 \begin{itemdecl}
-constexpr circle(const vector_2d& ctr, float r) noexcept;
+constexpr circle(vector_2d ctr, float r) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \requires
@@ -67,7 +67,7 @@ The center is \tcode{ctr}. The radius is \tcode{r}.
 
 \indexlibrarymember{center}{circle}%
 \begin{itemdecl}
-constexpr void center(const vector_2d& ctr) noexcept;
+constexpr void center(vector_2d ctr) noexcept;
 \end{itemdecl}
 
 \begin{itemdescr}

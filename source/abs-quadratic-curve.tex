@@ -17,12 +17,12 @@ namespace std::experimental::io2d::v1 {
     public:
       // \ref{\iotwod.absquadraticcurve.cons}, construct:
       constexpr abs_quadratic_curve() noexcept;
-      constexpr abs_quadratic_curve(const vector_2d& cpt, const vector_2d& ept)
+      constexpr abs_quadratic_curve(vector_2d cpt, vector_2d ept)
         noexcept;
 
       // \ref{\iotwod.absquadraticcurve.modifiers}, modifiers:
-      constexpr void control_pt(const vector_2d& cpt) noexcept;
-      constexpr void end_pt(const vector_2d& ept) noexcept;
+      constexpr void control_pt(vector_2d cpt) noexcept;
+      constexpr void end_pt(vector_2d ept) noexcept;
 
       // \ref{\iotwod.absquadraticcurve.observers}, observers:
       constexpr vector_2d control_pt() const noexcept;
@@ -52,7 +52,7 @@ Equivalent to: \tcode{abs_quadratic_curve\{ vector_2d(), vector_2d() \};}
 
 \indexlibrary{\idxcode{abs_quadratic_curve}!constructor}%
 \begin{itemdecl}
-constexpr abs_quadratic_curve(const vector_2d& cpt, const vector_2d& ept)
+constexpr abs_quadratic_curve(vector_2d cpt, vector_2d ept)
   noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -71,7 +71,7 @@ The end point is \tcode{ept}.
 
 \indexlibrarymember{control_pt}{abs_quadratic_curve}%
 \begin{itemdecl}
-constexpr void control_pt(const vector_2d& cpt) noexcept;
+constexpr void control_pt(vector_2d cpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -81,7 +81,7 @@ The control point is \tcode{cpt}.
 
 \indexlibrarymember{end_pt}{abs_quadratic_curve}%
 \begin{itemdecl}
-constexpr void end_pt(const vector_2d& ept) noexcept;
+constexpr void end_pt(vector_2d ept) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

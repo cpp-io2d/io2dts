@@ -34,9 +34,9 @@ namespace std::experimental::io2d::v1 {
     // \ref{\iotwod.brush.cons}, construct/copy/move/destroy:
     explicit brush(const rgba_color& c);
     template <class InputIterator>
-    brush(const vector_2d& begin, const vector_2d& end,
+    brush(vector_2d begin, vector_2d end,
       InputIterator first, InputIterator last);
-    brush(const vector_2d& begin, const vector_2d& end,
+    brush(vector_2d begin, vector_2d end,
       initializer_list<color_stop> il);
     template <class InputIterator>
     brush(const circle& start, const circle& end,
@@ -107,7 +107,7 @@ Sampling from this produces the results specified in \ref{\iotwod.brush.sampling
 \indexlibrary{\idxcode{brush}!constructor}%
 \begin{itemdecl}
 template <class InputIterator>
-brush(const vector_2d& begin, const vector_2d& end,
+brush(vector_2d begin, vector_2d end,
   InputIterator first, InputIterator last);
 \end{itemdecl}
 \begin{itemdescr}
@@ -125,7 +125,7 @@ Sampling from this brush produces the results specified in \ref{\iotwod.brush.sa
 
 \indexlibrary{\idxcode{brush}!constructor}%
 \begin{itemdecl}
-brush(const vector_2d& begin, const vector_2d& end,
+brush(vector_2d begin, vector_2d end,
   initializer_list<color_stop> il);
 \end{itemdecl}
 \begin{itemdescr}

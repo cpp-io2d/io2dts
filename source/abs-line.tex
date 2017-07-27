@@ -17,10 +17,10 @@ namespace std::experimental::io2d::v1 {
     public:
       // \ref{\iotwod.absline.cons}, construct:
       constexpr abs_line() noexcept;
-      constexpr explicit abs_line(const vector_2d& pt) noexcept;
+      constexpr explicit abs_line(vector_2d pt) noexcept;
 
       // \ref{\iotwod.absline.modifiers}, modifiers:
-      constexpr void to(const vector_2d& pt) noexcept;
+      constexpr void to(vector_2d pt) noexcept;
 
       // \ref{\iotwod.absline.observers}, observers:
       constexpr vector_2d to() const noexcept;
@@ -49,7 +49,7 @@ Equivalent to: \tcode{abs_line\{ vector_2d() \};}
 
 \indexlibrary{\idxcode{abs_line}!constructor}%
 \begin{itemdecl}
-constexpr explicit abs_line(const vector_2d& pt) noexcept;
+constexpr explicit abs_line(vector_2d pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -64,7 +64,7 @@ The end point is \tcode{pt}.
 
 \indexlibrarymember{abs_line}{to}%
 \begin{itemdecl}
-constexpr void to(const vector_2d& pt) noexcept;
+constexpr void to(vector_2d pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
