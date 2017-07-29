@@ -1,76 +1,76 @@
 %!TEX root = io2d.tex
-
-\indexdefn{graphics subsystem}%
-\definition{graphics subsystem}{\iotwod.defns.graphicssubsystem}
-collection of unspecified operating system and library functionality used to render and display 2D computer graphics
-
-\indexdefn{graphics resource}%
-\definition{graphics resource}{\iotwod.defns.graphicsresource}
-\defncontext{graphics resource} object of unspecified type used by an implementation
-\begin{note}
-By its definition a graphics resource is an implementation detail. Often it will be a graphics subsystem object (e.g. a graphics device or a render target) or an aggregate composed of multiple graphics subsystem objects. However the only requirement placed upon a graphics resource is that the implementation is able to use it to provide the functionality required of the graphics resource.
-\end{note}
-
-\indexdefn{graphics resource}%
-\indexdefn{graphics resource!graphics data graphics resource}%
-\definition{graphics resource}{\iotwod.defns.graphicsresource.graphicsdata}
-\defncontext{graphics data graphics resource} object of unspecified type used by an implementation to provide access to and allow manipulation of visual data
-
-\indexdefn{\pixmap}%
-\definition{\pixmap}{\iotwod.defns.pixmap}
-raster graphics data graphics resource
-
-\indexdefn{filter}%
-\definition{filter}{\iotwod.defns.filter}
-mathematical function that determines the visual data value of a point for a graphics data graphics resource
-
-\indexdefn{composition algorithm}%
-\definition{composition algorithm}{\iotwod.defns.compositionalgorithm}
-an algorithm that combines a source visual data element and a destination visual data element producing a visual data element that has the same visual data format as the destination visual data element
-
-\indexdefn{compose}%
-\definition{compose}{\iotwod.defns.compose}
-to combine part or all of a source graphics data graphics resource with a destination graphics data graphics resource in the manner specified by a composition algorithm
-
-\indexdefn{composing operation}%
-\definition{composing operation}{\iotwod.defns.composingoperation}
-an operation that performs composing
-%an operation that uses a composition algorithm to combine part or all of a source of visual data capable of being treated as though it were a \pixmap with a \pixmap
-
-\indexdefn{artifact}%
-\definition{artifact}{\iotwod.defns.artifact}
-an error in the results of the application of a composing operation 
-
-\indexdefn{sample}%
-\definition{sample}{\iotwod.defns.sample}
-to use a filter to obtain the visual data for a given point from a graphics data graphics resource
-
-\indexdefn{aliasing}%
-\definition{aliasing}{\iotwod.defns.alias}
-the presence of visual artifacts in the results of rendering due to 
-sampling imperfections
-
-\indexdefn{anti-aliasing}%
-\definition{anti-aliasing}{\iotwod.defns.antialias}
-the application of a function or algorithm while composing to 
-reduce aliasing
-\begin{note}
-Certain algorithms can produce ``better'' results, i.e. results with less artifacts or with less pronounced artifacts, when rendering text with anti-aliasing due to the nature of text rendering. As such, it often makes sense to provide the ability to choose one type of anti-aliasing for text rendering and another for all other rendering and to provide different sets of anti-aliasing types to choose from for each of the two operations.
-\end{note}
-
-\indexdefn{graphics state data}%
-\definition{graphics state data}{\iotwod.defns.graphicsstatedata}
-data which specify how some part of the process of rendering or of a composing operation shall be performed in part or in whole
-
-\indexdefn{render}%
-\definition{render}{\iotwod.defns.render}
-to transform a path group into graphics data in the manner specified by a set of graphics state data
-
-\indexdefn{rendering operation}%
-\definition{rendering operation}{\iotwod.defns.renderingoperation}
-an operation that performs rendering
-
-\indexdefn{rendering and composing operation}%
-\definition{rendering and composing operation}{\iotwod.defns.renderingandcomposingop}
-an operation that is either a composing operation or a rendering operation followed by a composing operation
-
+%
+%\indexdefn{graphics subsystem}%
+%\definition{graphics subsystem}{\iotwod.defns.graphicssubsystem}
+%collection of unspecified operating system and library functionality used to render and display 2D computer graphics
+%
+%\indexdefn{graphics resource}%
+%\definition{graphics resource}{\iotwod.defns.graphicsresource}
+%\defncontext{graphics resource} object of unspecified type used by an implementation
+%\begin{note}
+%By its definition a graphics resource is an implementation detail. Often it will be a graphics subsystem object (e.g. a graphics device or a render target) or an aggregate composed of multiple graphics subsystem objects. However the only requirement placed upon a graphics resource is that the implementation is able to use it to provide the functionality required of the graphics resource.
+%\end{note}
+%
+%\indexdefn{graphics resource}%
+%\indexdefn{graphics resource!graphics data graphics resource}%
+%\definition{graphics resource}{\iotwod.defns.graphicsresource.graphicsdata}
+%\defncontext{graphics data graphics resource} object of unspecified type used by an implementation to provide access to and allow manipulation of visual data
+%
+%\indexdefn{\pixmap}%
+%\definition{\pixmap}{\iotwod.defns.pixmap}
+%raster graphics data graphics resource
+%
+%\indexdefn{filter}%
+%\definition{filter}{\iotwod.defns.filter}
+%mathematical function that determines the visual data value of a point for a graphics data graphics resource
+%
+%\indexdefn{composition algorithm}%
+%\definition{composition algorithm}{\iotwod.defns.compositionalgorithm}
+%an algorithm that combines a source visual data element and a destination visual data element producing a visual data element that has the same visual data format as the destination visual data element
+%
+%\indexdefn{compose}%
+%\definition{compose}{\iotwod.defns.compose}
+%to combine part or all of a source graphics data graphics resource with a destination graphics data graphics resource in the manner specified by a composition algorithm
+%
+%\indexdefn{composing operation}%
+%\definition{composing operation}{\iotwod.defns.composingoperation}
+%an operation that performs composing
+%%an operation that uses a composition algorithm to combine part or all of a source of visual data capable of being treated as though it were a \pixmap with a \pixmap
+%
+%\indexdefn{artifact}%
+%\definition{artifact}{\iotwod.defns.artifact}
+%an error in the results of the application of a composing operation 
+%
+%\indexdefn{sample}%
+%\definition{sample}{\iotwod.defns.sample}
+%to use a filter to obtain the visual data for a given point from a graphics data graphics resource
+%
+%\indexdefn{aliasing}%
+%\definition{aliasing}{\iotwod.defns.alias}
+%the presence of visual artifacts in the results of rendering due to 
+%sampling imperfections
+%
+%\indexdefn{anti-aliasing}%
+%\definition{anti-aliasing}{\iotwod.defns.antialias}
+%the application of a function or algorithm while composing to 
+%reduce aliasing
+%\begin{note}
+%Certain algorithms can produce ``better'' results, i.e. results with less artifacts or with less pronounced artifacts, when rendering text with anti-aliasing due to the nature of text rendering. As such, it often makes sense to provide the ability to choose one type of anti-aliasing for text rendering and another for all other rendering and to provide different sets of anti-aliasing types to choose from for each of the two operations.
+%\end{note}
+%
+%\indexdefn{graphics state data}%
+%\definition{graphics state data}{\iotwod.defns.graphicsstatedata}
+%data which specify how some part of the process of rendering or of a composing operation shall be performed in part or in whole
+%
+%\indexdefn{render}%
+%\definition{render}{\iotwod.defns.render}
+%to transform a path group into graphics data in the manner specified by a set of graphics state data
+%
+%\indexdefn{rendering operation}%
+%\definition{rendering operation}{\iotwod.defns.renderingoperation}
+%an operation that performs rendering
+%
+%\indexdefn{rendering and composing operation}%
+%\definition{rendering and composing operation}{\iotwod.defns.renderingandcomposingop}
+%an operation that is either a composing operation or a rendering operation followed by a composing operation
+%
