@@ -65,7 +65,7 @@ The effects of a path item contained in a \tcode{path_data::path_item} object wh
 Creates a new path. Sets \tcode{currPt} to \tcode{mtx.transform_pt(\{ 0.0f, 0.0f \}) + p.at()}. Sets \tcode{lnPt} to \tcode{currPt}. \\ \rowsep
 
 \tcode{path_data::rel_new_path p} &
-Let \tcode{mm} equal \tcode{mtx}. Evaluate \tcode{mm.m20(0.0f)} and \tcode{mm.m21(0.0f)}. Creates a new path. Sets \tcode{currPt} to \tcode{currPt + p.at() * mm}. Sets \tcode{lnPt} to \tcode{currPt}. \\ \rowsep
+Let \tcode{mm} equal \tcode{mtx}.  Let \tcode{mm.m20} equal {0.0f}. Let \tcode{mm.m21} equal \tcode{0.0f}. Creates a new path. Sets \tcode{currPt} to \tcode{currPt + p.at() * mm}. Sets \tcode{lnPt} to \tcode{currPt}. \\ \rowsep
 
 \tcode{path_data::close_path p} &
 Creates a line from \tcode{currPt} to \tcode{lnPt}. Makes the current path a closed path. Creates a new path. Sets \tcode{currPt} to \tcode{lnPt}. \\ \rowsep
@@ -83,22 +83,22 @@ If \tcode{mtxStk.empty()} is \tcode{false}, sets \tcode{mtx} to \tcode{mtxStk.to
 Let \tcode{pt} equal \tcode{mtx.transform_pt(p.to() - currPt) + currPt}. Creates a line from \tcode{currPt} to \tcode{pt}. Sets \tcode{currPt} to \tcode{pt}. \\ \rowsep
 
 \tcode{path_data::rel_line p} &
-Let \tcode{mm} equal \tcode{mtx}. Evaluate \tcode{mm.m20(0.0f)} and \tcode{mm.m21(0.0f)}. Let \tcode{pt} equal \tcode{currPt + p.to() * mm}. Creates a line from \tcode{currPt} to \tcode{pt}. Sets \tcode{currPt} to \tcode{pt}. \\ \rowsep
+Let \tcode{mm} equal \tcode{mtx}. Let \tcode{mm.m20} equal {0.0f}. Let \tcode{mm.m21} equal \tcode{0.0f}. Let \tcode{pt} equal \tcode{currPt + p.to() * mm}. Creates a line from \tcode{currPt} to \tcode{pt}. Sets \tcode{currPt} to \tcode{pt}. \\ \rowsep
 
 \tcode{path_data::abs_quadratic_curve p} &
 Let \tcode{cpt} equal \tcode{mtx.transform_pt(p.control_pt() - currPt) + currPt}. Let \tcode{ept} equal \tcode{mtx.transform_pt(p.end_pt() - currPt) + currPt}. Creates a quadratic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt} as the curve's control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
 
 \tcode{path_data::rel_quadratic_curve p} &
-Let \tcode{mm} equal \tcode{mtx}. Evaluate \tcode{mm.m20(0.0f)} and \tcode{mm.m21(0.0f)}. Let \tcode{cpt} equal \tcode{currPt + p.control_pt() * mm}. Let \tcode{ept} equal \tcode{currPt + p.control_pt() * mm + p.end_pt() * mm}. Creates a quadratic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt} as the curve's control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
+Let \tcode{mm} equal \tcode{mtx}. Let \tcode{mm.m20} equal {0.0f}. Let \tcode{mm.m21} equal \tcode{0.0f}. Let \tcode{cpt} equal \tcode{currPt + p.control_pt() * mm}. Let \tcode{ept} equal \tcode{currPt + p.control_pt() * mm + p.end_pt() * mm}. Creates a quadratic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt} as the curve's control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
 
 \tcode{path_data::abs_cubic_curve p} &
 Let \tcode{cpt1} equal \tcode{mtx.transform_pt(p.control_pt1() - currPt) + currPt}. Let \tcode{cpt2} equal \tcode{mtx.transform_pt(p.control_pt2() - currPt) + currPt}. Let \tcode{ept} equal \tcode{mtx.transform_pt(p.end_pt() - currPt) + currPt}. Creates a cubic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt1} as the curve's first control point and \tcode{cpt2} as the curve's second control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
 
 \tcode{path_data::rel_cubic_curve p} &
-Let \tcode{mm} equal \tcode{mtx}. Evaluate \tcode{mm.m20(0.0f)} and \tcode{mm.m21(0.0f)}. Let \tcode{cpt1} equal \tcode{currPt + p.control_pt1() * mm}. Let \tcode{cpt2} equal \tcode{currPt + p.control_pt1() * mm + p.control_pt2() * mm}. Let \tcode{ept} equal \tcode{currPt + p.control_pt1() * mm + p.control_pt2() * mm + p.end_pt() * mm}. Creates a cubic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt1} as the curve's first control point and \tcode{cpt2} as the curve's second control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
+Let \tcode{mm} equal \tcode{mtx}. Let \tcode{mm.m20} equal {0.0f}. Let \tcode{mm.m21} equal \tcode{0.0f}. Let \tcode{cpt1} equal \tcode{currPt + p.control_pt1() * mm}. Let \tcode{cpt2} equal \tcode{currPt + p.control_pt1() * mm + p.control_pt2() * mm}. Let \tcode{ept} equal \tcode{currPt + p.control_pt1() * mm + p.control_pt2() * mm + p.end_pt() * mm}. Creates a cubic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt1} as the curve's first control point and \tcode{cpt2} as the curve's second control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
 
 \tcode{path_data::arc p} &
-Let \tcode{mm} equal \tcode{mtx}. Evaluate \tcode{mm.m20(0.0f)} and \tcode{mm.m21(0.0f)}. Creates an arc. It begins at \tcode{currPt}, which is at \tcode{p.start_angle()} radians on the arc and rotates \tcode{p.rotation()} radians. If \tcode{p.rotation()} is positive, rotation is counterclockwise, otherwise it is clockwise. The center of the arc is located at \tcode{p.center(currPt, mm)}. The arc ends at \tcode{p.end_pt(currPt, mm)}. Sets \tcode{currPt} to \tcode{p.end_pt(currPt, mm)}.
+Let \tcode{mm} equal \tcode{mtx}. Let \tcode{mm.m20} equal {0.0f}. Let \tcode{mm.m21} equal \tcode{0.0f}. Creates an arc. It begins at \tcode{currPt}, which is at \tcode{p.start_angle()} radians on the arc and rotates \tcode{p.rotation()} radians. If \tcode{p.rotation()} is positive, rotation is counterclockwise, otherwise it is clockwise. The center of the arc is located at \tcode{p.center(currPt, mm)}. The arc ends at \tcode{p.end_pt(currPt, mm)}. Sets \tcode{currPt} to \tcode{p.end_pt(currPt, mm)}.
 
 \begin{note} \tcode{p.radius()}, which specifies the radius of the arc, is implicitly included in the above statement of effects by the specifications of the center of the arc and the end of the arcs. The use of the current point as the origin for the application of the path group transformation matrix is also implicitly included by the same specifications. \end{note} \\
 \end{libreqtab2a}
