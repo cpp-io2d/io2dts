@@ -23,10 +23,10 @@ namespace std { namespace experimental {
   enum class refresh_rate;
   enum class image_file_format;
 
-  class rectangle;
-  constexpr bool operator==(const rectangle& lhs, const rectangle& rhs) 
+  class bounding_box;
+  constexpr bool operator==(const bounding_box& lhs, const bounding_box& rhs) 
     noexcept;
-  constexpr bool operator!=(const rectangle& lhs, const rectangle& rhs) 
+  constexpr bool operator!=(const bounding_box& lhs, const bounding_box& rhs) 
     noexcept;
   class circle;
   constexpr bool operator==(const circle& lhs, const circle& rhs) noexcept;

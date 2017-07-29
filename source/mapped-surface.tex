@@ -14,8 +14,6 @@ namespace std::experimental::io2d::v1 {
     // \ref{\iotwod.mappedsurface.modifiers}, modifiers:
     void commit_changes();
     void commit_changes(error_code& ec) noexcept;
-    void commit_changes(const rectangle& area);
-    void commit_changes(const rectangle& area, error_code& ec) noexcept;
     unsigned char* data();
     unsigned char* data(error_code& ec) noexcept;
     

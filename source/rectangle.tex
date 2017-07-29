@@ -1,28 +1,28 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.rectangle] {Class \tcode{rectangle}}
+\rSec0 [\iotwod.bounding_box] {Class \tcode{bounding_box}}
 
-\rSec1 [\iotwod.rectangle.intro] {\tcode{rectangle} description}
+\rSec1 [\iotwod.bounding_box.intro] {\tcode{bounding_box} description}
 
-\indexlibrary{\idxcode{rectangle}}%
+\indexlibrary{\idxcode{bounding_box}}%
 \pnum
-The class \tcode{rectangle} describes a rectangle.
+The class \tcode{bounding_box} describes a bounding_box.
 
 \pnum
 It has an \term{x coordinate} of type \tcode{float}, a \term{y coordinate} of type \tcode{float}, a \term{width} of type \tcode{float}, and a \term{height} of type \tcode{float}.
 
-\rSec1 [\iotwod.rectangle.synopsis] {\tcode{rectangle} synopsis}
+\rSec1 [\iotwod.bounding_box.synopsis] {\tcode{bounding_box} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
-  class rectangle {
+  class bounding_box {
   public:
-    // \ref{\iotwod.rectangle.cons}, construct:
-    constexpr rectangle() noexcept;
-    constexpr rectangle(float x, float y, float width, float height)
+    // \ref{\iotwod.bounding_box.cons}, construct:
+    constexpr bounding_box() noexcept;
+    constexpr bounding_box(float x, float y, float width, float height)
       noexcept;
-    constexpr rectangle(point_2d tl, point_2d br) noexcept;
+    constexpr bounding_box(point_2d tl, point_2d br) noexcept;
 
-    // \ref{\iotwod.rectangle.modifiers}, modifiers:
+    // \ref{\iotwod.bounding_box.modifiers}, modifiers:
     constexpr void x(float val) noexcept;
     constexpr void y(float val) noexcept;
     constexpr void width(float val) noexcept;
@@ -30,7 +30,7 @@ namespace std::experimental::io2d::v1 {
     constexpr void top_left(point_2d val) noexcept;
     constexpr void bottom_right(point_2d val) noexcept;
     
-    // \ref{\iotwod.rectangle.observers}, observers:
+    // \ref{\iotwod.bounding_box.observers}, observers:
     constexpr float x() const noexcept;
     constexpr float y() const noexcept;
     constexpr float width() const noexcept;
@@ -39,29 +39,29 @@ namespace std::experimental::io2d::v1 {
     constexpr point_2d bottom_right() const noexcept;
   };
   
-  // \ref{\iotwod.rectangle.ops}, operators:
-  constexpr bool operator==(const rectangle& lhs, const rectangle& rhs) 
+  // \ref{\iotwod.bounding_box.ops}, operators:
+  constexpr bool operator==(const bounding_box& lhs, const bounding_box& rhs) 
     noexcept;
-  constexpr bool operator!=(const rectangle& lhs, const rectangle& rhs) 
+  constexpr bool operator!=(const bounding_box& lhs, const bounding_box& rhs) 
     noexcept;
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.rectangle.cons] {\tcode{rectangle} constructors}
+\rSec1 [\iotwod.bounding_box.cons] {\tcode{bounding_box} constructors}
 
-\indexlibrary{\idxcode{rectangle}!constructor}%
+\indexlibrary{\idxcode{bounding_box}!constructor}%
 \begin{itemdecl}
-constexpr rectangle() noexcept;
+constexpr bounding_box() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to \tcode{rectangle\{ 0.0f, 0.0f, 0.0f, 0.0f \}}.
+Equivalent to \tcode{bounding_box\{ 0.0f, 0.0f, 0.0f, 0.0f \}}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rectangle}!constructor}%
+\indexlibrary{\idxcode{bounding_box}!constructor}%
 \begin{itemdecl}
-constexpr rectangle(float x, float y, float w, float h) noexcept;
+constexpr bounding_box(float x, float y, float w, float h) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -70,28 +70,28 @@ constexpr rectangle(float x, float y, float w, float h) noexcept;
 
 \pnum
 \effects
-Constructs an object of type \tcode{rectangle}.
+Constructs an object of type \tcode{bounding_box}.
 
 \pnum
 The x coordinate is \tcode{x}. The y coordinate is \tcode{y}. The width is \tcode{w}. The height is \tcode{h}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rectangle}!constructor}%
+\indexlibrary{\idxcode{bounding_box}!constructor}%
 \begin{itemdecl}
-constexpr rectangle(point_2d tl, point_2d br) noexcept;
+constexpr bounding_box(point_2d tl, point_2d br) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs an object of type \tcode{rectangle}.
+Constructs an object of type \tcode{bounding_box}.
 
 \pnum
 The x coordinate is \tcode{tl.x()}. The y coordinate is \tcode{tl.y()}. The width is \tcode{max(0.0f, br.x() - tl.x())}. The height is \tcode{max(0.0f, br.y() - tl.y())}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.rectangle.modifiers]{\tcode{rectangle} modifiers}
+\rSec1 [\iotwod.bounding_box.modifiers]{\tcode{bounding_box} modifiers}
 
-\indexlibrarymember{x}{rectangle}%
+\indexlibrarymember{x}{bounding_box}%
 \begin{itemdecl}
 constexpr void x(float val) noexcept;
 \end{itemdecl}
@@ -102,7 +102,7 @@ constexpr void x(float val) noexcept;
 The x coordinate is \tcode{val}.
 \end{itemdescr}
 
-\indexlibrarymember{y}{rectangle}%
+\indexlibrarymember{y}{bounding_box}%
 \begin{itemdecl}
 constexpr void y(float val) noexcept;
 \end{itemdecl}
@@ -112,7 +112,7 @@ constexpr void y(float val) noexcept;
 The y coordinate is \tcode{val}.
 \end{itemdescr}
 
-\indexlibrarymember{width}{rectangle}%
+\indexlibrarymember{width}{bounding_box}%
 \begin{itemdecl}
 constexpr void width(float val) noexcept;
 \end{itemdecl}
@@ -122,7 +122,7 @@ constexpr void width(float val) noexcept;
 The width is \tcode{val}.
 \end{itemdescr}
 
-\indexlibrarymember{height}{rectangle}%
+\indexlibrarymember{height}{bounding_box}%
 \begin{itemdecl}
 constexpr void height(float val) noexcept;
 \end{itemdecl}
@@ -132,7 +132,7 @@ constexpr void height(float val) noexcept;
 The height is \tcode{val}.
 \end{itemdescr}
 
-\indexlibrarymember{top_left}{rectangle}%
+\indexlibrarymember{top_left}{bounding_box}%
 \begin{itemdecl}
 constexpr void top_left(point_2d val) noexcept;
 \end{itemdecl}
@@ -145,7 +145,7 @@ The x coordinate is \tcode{val.x()}.
 The y coordinate is \tcode{val.y()}.
 \end{itemdescr}
 
-\indexlibrarymember{bottom_right}{rectangle}%
+\indexlibrarymember{bottom_right}{bounding_box}%
 \begin{itemdecl}
 constexpr void bottom_right(point_2d val) noexcept;
 \end{itemdecl}
@@ -158,9 +158,9 @@ The width is \tcode{max(0.0f, val.x() - x())}.
 The height is \tcode{max(0.0f, value.y() - y())}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.rectangle.observers]{\tcode{rectangle} observers}
+\rSec1 [\iotwod.bounding_box.observers]{\tcode{bounding_box} observers}
 
-\indexlibrarymember{x}{rectangle}%
+\indexlibrarymember{x}{bounding_box}%
 \begin{itemdecl}
 constexpr float x() const noexcept;
 \end{itemdecl}
@@ -170,7 +170,7 @@ constexpr float x() const noexcept;
 The x coordinate.
 \end{itemdescr}
 
-\indexlibrarymember{y}{rectangle}%
+\indexlibrarymember{y}{bounding_box}%
 \begin{itemdecl}
 constexpr float y() const noexcept;
 \end{itemdecl}
@@ -180,7 +180,7 @@ constexpr float y() const noexcept;
 The y coordinate.
 \end{itemdescr}
 
-\indexlibrarymember{width}{rectangle}%
+\indexlibrarymember{width}{bounding_box}%
 \begin{itemdecl}
 constexpr float width() const noexcept;
 \end{itemdecl}
@@ -190,7 +190,7 @@ constexpr float width() const noexcept;
 The width.
 \end{itemdescr}
 
-\indexlibrarymember{height}{rectangle}%
+\indexlibrarymember{height}{bounding_box}%
 \begin{itemdecl}
 constexpr float height() const noexcept;
 \end{itemdecl}
@@ -200,7 +200,7 @@ constexpr float height() const noexcept;
 The height.
 \end{itemdescr}
 
-\indexlibrarymember{top_left}{rectangle}%
+\indexlibrarymember{top_left}{bounding_box}%
 \begin{itemdecl}
 constexpr point_2d top_left() const noexcept;
 \end{itemdecl}
@@ -210,7 +210,7 @@ constexpr point_2d top_left() const noexcept;
 A \tcode{point_2d} object constructed with the x coordinate as its first argument and the y coordinate as its second argument.
 \end{itemdescr}
 
-\indexlibrarymember{bottom_right}{rectangle}%
+\indexlibrarymember{bottom_right}{bounding_box}%
 \begin{itemdecl}
 constexpr point_2d bottom_right() const noexcept;
 \end{itemdecl}
@@ -220,11 +220,11 @@ constexpr point_2d bottom_right() const noexcept;
 A \tcode{point_2d} object constructed with the width added to the x coordinate as its first argument and the height added to the y coordinate as its second argument.
 \end{itemdescr}
 
-\rSec1 [\iotwod.rectangle.ops] {\tcode{rectangle} operators}
+\rSec1 [\iotwod.bounding_box.ops] {\tcode{bounding_box} operators}
 
-\indexlibrarymember{operator==}{rectangle}%
+\indexlibrarymember{operator==}{bounding_box}%
 \begin{itemdecl}
-constexpr bool operator==(const rectangle& lhs, const rectangle& rhs) noexcept;
+constexpr bool operator==(const bounding_box& lhs, const bounding_box& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -235,9 +235,9 @@ lhs.width() == rhs.width() && lhs.height() == rhs.height()
 \end{codeblock}
 \end{itemdescr}
 
-\indexlibrarymember{operator!=}{rectangle}%
+\indexlibrarymember{operator!=}{bounding_box}%
 \begin{itemdecl}
-constexpr bool operator!=(const rectangle& lhs, const rectangle& rhs) noexcept;
+constexpr bool operator!=(const bounding_box& lhs, const bounding_box& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

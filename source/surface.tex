@@ -43,8 +43,8 @@ namespace std::experimental::io2d::v1 {
     void flush(error_code& ec) noexcept;
     void mark_dirty();
     void mark_dirty(error_code& ec) noexcept;
-    void mark_dirty(const rectangle& rect);
-    void mark_dirty(const rectangle& rect, error_code& ec) noexcept;
+    void mark_dirty(const bounding_box& extents);
+    void mark_dirty(const bounding_box& extents, error_code& ec) noexcept;
 
     // \ref{\iotwod.surface.modifiers.render}, render modifiers:
     void paint(const brush& b, const optional<brush_props>& bp = nullopt,
@@ -421,8 +421,8 @@ Other uses of this pair of calls are also possible.
 \begin{itemdecl}
 void mark_dirty();
 void mark_dirty(error_code& ec) noexcept;
-void mark_dirty(const rectangle& extents);
-void mark_dirty(const rectangle& extents, error_code& ec) noexcept;
+void mark_dirty(const bounding_box& extents);
+void mark_dirty(const bounding_box& extents, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -433,7 +433,7 @@ If the implementation does not provide a native handle to the \tcode{surface} ob
 If the implementation does provide a native handle to the \tcode{surface} object's \underlyingsurface, then:
 \begin{itemize}
 \item If called without a \tcode{rect} argument, informs the implementation that external changes using a native handle were potentially made to the entire \underlyingsurface.
-\item If called with a \tcode{rect} argument, informs the implementation that external changes using a native handle were potentially made to the \underlyingsurface within the bounds specified by the \term{bounding rectangle} \tcode{rectangle\{ round(extents.x()), round (extents.y()), round(extents.width()), round(extents.height())\}}. No part of the bounding rectangle shall be outside of the bounds of the \underlyingsurface; no diagnostic is required.
+\item If called with a \tcode{bounding_box} argument, informs the implementation that external changes using a native handle were potentially made to the \underlyingsurface within the bounds specified by the \term{bounding rectangle} \tcode{bounding_box\{ round(extents.x()), round (extents.y()), round(extents.width()), round(extents.height())\}}. No part of the bounding rectangle shall be outside of the bounds of the \underlyingsurface; no diagnostic is required.
 \end{itemize}
 
 \pnum
