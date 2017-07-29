@@ -46,19 +46,19 @@ namespace std { namespace experimental {
   template <class U>
   constexpr rgba_color operator*(U lhs, const rgba_color& rhs) noexcept;
 
-  class vector_2d;
-  constexpr bool operator==(const vector_2d& lhs, const vector_2d& rhs) 
+  class point_2d;
+  constexpr bool operator==(const point_2d& lhs, const point_2d& rhs) 
     noexcept;
-  constexpr bool operator!=(const vector_2d& lhs, const vector_2d& rhs) 
+  constexpr bool operator!=(const point_2d& lhs, const point_2d& rhs) 
     noexcept;
-  constexpr vector_2d operator+(const vector_2d& lhs) noexcept;
-  constexpr vector_2d operator+(const vector_2d& lhs, const vector_2d& rhs) 
+  constexpr point_2d operator+(const point_2d& lhs) noexcept;
+  constexpr point_2d operator+(const point_2d& lhs, const point_2d& rhs) 
     noexcept;
-  constexpr vector_2d operator-(const vector_2d& lhs) noexcept;
-  constexpr vector_2d operator-(const vector_2d& lhs, const vector_2d& rhs) 
+  constexpr point_2d operator-(const point_2d& lhs) noexcept;
+  constexpr point_2d operator-(const point_2d& lhs, const point_2d& rhs) 
     noexcept;
-  constexpr vector_2d operator*(const vector_2d& lhs, float rhs) noexcept;
-  constexpr vector_2d operator*(float lhs, const vector_2d& rhs) noexcept;
+  constexpr point_2d operator*(const point_2d& lhs, float rhs) noexcept;
+  constexpr point_2d operator*(float lhs, const point_2d& rhs) noexcept;
 
   class matrix_2d;
   constexpr matrix_2d operator*(const matrix_2d& lhs, const matrix_2d& rhs) 
@@ -198,15 +198,15 @@ namespace std { namespace experimental {
   image_surface make_image_surface(format format, int width, int height, 
     error_code& ec) noexcept;
   image_surface copy_image_surface(image_surface& sfc) noexcept;
-  float angle_for_point(vector_2d ctr, vector_2d pt,
-    vector_2d scl = vector_2d{ 1.0f, 1.0f }) noexcept;
-  vector_2d point_for_angle(float ang, float rad = 1.0f) noexcept;
-  vector_2d point_for_angle(float ang, vector_2d rad) noexcept;
-  vector_2d arc_start(vector_2d ctr, float sang, vector_2d rad, 
+  float angle_for_point(point_2d ctr, point_2d pt,
+    point_2d scl = point_2d{ 1.0f, 1.0f }) noexcept;
+  point_2d point_for_angle(float ang, float rad = 1.0f) noexcept;
+  point_2d point_for_angle(float ang, point_2d rad) noexcept;
+  point_2d arc_start(point_2d ctr, float sang, point_2d rad, 
     const matrix_2d& m = matrix_2d{}) noexcept;
-  vector_2d arc_center(vector_2d cpt, float sang, vector_2d rad, 
+  point_2d arc_center(point_2d cpt, float sang, point_2d rad, 
     const matrix_2d& m = matrix_2d{}) noexcept;
-  vector_2d arc_end(vector_2d cpt, float eang, vector_2d rad, 
+  point_2d arc_end(point_2d cpt, float eang, point_2d rad, 
     const matrix_2d& m = matrix_2d{}) noexcept;
 } } } }
 

@@ -6,7 +6,7 @@
 The class \tcode{abs_line} describes a path item that is a path segment.
 
 \pnum
-It has an \term{end point} of type \tcode{vector_2d}.
+It has an \term{end point} of type \tcode{point_2d}.
 
 \rSec1 [\iotwod.absline.synopsis] {\tcode{abs_line} synopsis}
 
@@ -17,13 +17,13 @@ namespace std::experimental::io2d::v1 {
     public:
       // \ref{\iotwod.absline.cons}, construct:
       constexpr abs_line() noexcept;
-      constexpr explicit abs_line(vector_2d pt) noexcept;
+      constexpr explicit abs_line(point_2d pt) noexcept;
 
       // \ref{\iotwod.absline.modifiers}, modifiers:
-      constexpr void to(vector_2d pt) noexcept;
+      constexpr void to(point_2d pt) noexcept;
 
       // \ref{\iotwod.absline.observers}, observers:
-      constexpr vector_2d to() const noexcept;
+      constexpr point_2d to() const noexcept;
     };
     
     // \ref{\iotwod.absline.ops}, operators:
@@ -44,12 +44,12 @@ constexpr abs_line() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{abs_line\{ vector_2d() \};}
+Equivalent to: \tcode{abs_line\{ point_2d() \};}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{abs_line}!constructor}%
 \begin{itemdecl}
-constexpr explicit abs_line(vector_2d pt) noexcept;
+constexpr explicit abs_line(point_2d pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -64,7 +64,7 @@ The end point is \tcode{pt}.
 
 \indexlibrarymember{abs_line}{to}%
 \begin{itemdecl}
-constexpr void to(vector_2d pt) noexcept;
+constexpr void to(point_2d pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -76,7 +76,7 @@ The end point is \tcode{pt}.
 
 \indexlibrarymember{abs_line}{to}%
 \begin{itemdecl}
-constexpr vector_2d to() const noexcept;
+constexpr point_2d to() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

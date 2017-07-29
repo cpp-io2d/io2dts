@@ -14,7 +14,7 @@ The collection of \tcode{color_stop} objects contribute to defining a brush whic
 A linear gradient is a type of gradient.
 
 \pnum
-A linear gradient has a \term{begin point} and an \term{end point}, each of which are objects of type \tcode{vector_2d}.
+A linear gradient has a \term{begin point} and an \term{end point}, each of which are objects of type \tcode{point_2d}.
 
 \pnum
 A linear gradient for which the distance between its begin point and its end point is not greater than \tcode{numeric_limits<float>::epsilon()} is a \term{degenerate linear gradient}.
@@ -30,7 +30,7 @@ Color stop offset values in the range \crange{0.0f}{1.0f} linearly correspond to
 
 \pnum
 \begin{example}
-Given a linear gradient with a begin point of \tcode{vector_2d(0.0f, 0.0f)} and an end point of \tcode{vector_2d(10.0f, 5.0f)}, a color stop offset value of 0.6f would correspond to the point \tcode{vector_2d(6.0f, 3.0f)}.
+Given a linear gradient with a begin point of \tcode{point_2d(0.0f, 0.0f)} and an end point of \tcode{point_2d(10.0f, 5.0f)}, a color stop offset value of 0.6f would correspond to the point \tcode{point_2d(6.0f, 3.0f)}.
 \end{example}
 
 \pnum

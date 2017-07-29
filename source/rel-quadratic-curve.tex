@@ -6,7 +6,7 @@
 The class \tcode{rel_quadratic_curve} describes a path item that is a path segment.
 
 \pnum
-It has a \term{control point} of type \tcode{vector_2d} and an \term{end point} of type \tcode{vector_2d}.
+It has a \term{control point} of type \tcode{point_2d} and an \term{end point} of type \tcode{point_2d}.
 
 \rSec1 [\iotwod.relquadraticcurve.synopsis] {\tcode{rel_quadratic_curve} synopsis}
 
@@ -17,16 +17,16 @@ namespace std::experimental::io2d::v1 {
     public:
       // \ref{\iotwod.relquadraticcurve.cons}, construct:
       constexpr rel_quadratic_curve() noexcept;
-      constexpr rel_quadratic_curve(vector_2d cpt, vector_2d ept)
+      constexpr rel_quadratic_curve(point_2d cpt, point_2d ept)
         noexcept;
 
       // \ref{\iotwod.relquadraticcurve.modifiers}, modifiers:
-      constexpr void control_pt(vector_2d cpt) noexcept;
-      constexpr void end_pt(vector_2d ept) noexcept;
+      constexpr void control_pt(point_2d cpt) noexcept;
+      constexpr void end_pt(point_2d ept) noexcept;
 
       // \ref{\iotwod.relquadraticcurve.observers}, observers:
-      constexpr vector_2d control_pt() const noexcept;
-      constexpr vector_2d end_pt() const noexcept;
+      constexpr point_2d control_pt() const noexcept;
+      constexpr point_2d end_pt() const noexcept;
     };
     
     // \ref{\iotwod.relquadraticcurve.ops}, operators:
@@ -47,12 +47,12 @@ constexpr rel_quadratic_curve() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{rel_quadratic_curve\{ vector_2d(), vector_2d() \};}
+Equivalent to: \tcode{rel_quadratic_curve\{ point_2d(), point_2d() \};}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rel_quadratic_curve}!constructor}%
 \begin{itemdecl}
-constexpr rel_quadratic_curve(vector_2d cpt, vector_2d ept)
+constexpr rel_quadratic_curve(point_2d cpt, point_2d ept)
   noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -71,7 +71,7 @@ The end point is \tcode{ept}.
 
 \indexlibrarymember{control_pt}{rel_quadratic_curve}%
 \begin{itemdecl}
-constexpr void control_pt(vector_2d cpt) noexcept;
+constexpr void control_pt(point_2d cpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -81,7 +81,7 @@ The control point is \tcode{cp}.
 
 \indexlibrarymember{end_pt}{rel_quadratic_curve}%
 \begin{itemdecl}
-constexpr void end_pt(vector_2d ept) noexcept;
+constexpr void end_pt(point_2d ept) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -93,7 +93,7 @@ The end point is \tcode{ept}.
 
 \indexlibrarymember{control_pt}{rel_quadratic_curve}%
 \begin{itemdecl}
-constexpr vector_2d control_pt() const noexcept;
+constexpr point_2d control_pt() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -103,7 +103,7 @@ The control point.
 
 \indexlibrarymember{end_pt}{rel_quadratic_curve}%
 \begin{itemdecl}
-constexpr vector_2d end_pt() const noexcept;
+constexpr point_2d end_pt() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

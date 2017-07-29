@@ -6,7 +6,7 @@
 The class \tcode{rel_new_path} describes a path item that is a new path instruction.
 
 \pnum
-It has an \term{at point} of type \tcode{vector_2d}.
+It has an \term{at point} of type \tcode{point_2d}.
 
 \rSec1 [\iotwod.relnewpath.synopsis] {\tcode{rel_new_path} synopsis}%
 
@@ -17,13 +17,13 @@ namespace std::experimental::io2d::v1 {
     public:
       // \ref{\iotwod.relnewpath.cons}, construct:
       constexpr rel_new_path() noexcept;
-      constexpr explicit rel_new_path(vector_2d pt) noexcept;
+      constexpr explicit rel_new_path(point_2d pt) noexcept;
 
       // \ref{\iotwod.relnewpath.modifiers}, modifiers:
-      constexpr void at(vector_2d pt) noexcept;
+      constexpr void at(point_2d pt) noexcept;
 
       // \ref{\iotwod.relnewpath.observers}, observers:
-      constexpr vector_2d at() const noexcept;
+      constexpr point_2d at() const noexcept;
     };
     
   // \ref{\iotwod.relnewpath.ops}, operators:
@@ -44,12 +44,12 @@ constexpr rel_new_path() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{rel_new_path\{ vector_2d() \};}
+Equivalent to: \tcode{rel_new_path\{ point_2d() \};}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rel_new_path}!constructor}%
 \begin{itemdecl}
-constexpr explicit rel_new_path(vector_2d pt) noexcept;
+constexpr explicit rel_new_path(point_2d pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -64,7 +64,7 @@ The at point is \tcode{pt}.
 
 \indexlibrarymember{at}{rel_new_path}%
 \begin{itemdecl}
-constexpr void at(vector_2d pt) noexcept;
+constexpr void at(point_2d pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -76,7 +76,7 @@ The at point is \tcode{pt}.
 
 \indexlibrarymember{at}{rel_new_path}%
 \begin{itemdecl}
-constexpr vector_2d at() const noexcept;
+constexpr point_2d at() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

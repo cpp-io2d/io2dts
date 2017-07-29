@@ -8,7 +8,7 @@
 The class \tcode{arc} describes a path item that is a path segment.
 
 \pnum
-It has a \term{radius} of type \tcode{vector_2d}, a \term{rotation} of type \tcode{float}, and a \term{start angle} of type \tcode{float}.
+It has a \term{radius} of type \tcode{point_2d}, a \term{rotation} of type \tcode{float}, and a \term{start angle} of type \tcode{float}.
 
 \rSec1 [\iotwod.arc.synopsis] {\tcode{arc} synopsis}
 
@@ -19,21 +19,21 @@ namespace std::experimental::io2d::v1 {
     public:
       // \ref{\iotwod.arc.cons}, construct/copy/move/destroy:
       constexpr arc() noexcept;
-      constexpr arc(vector_2d rad,
+      constexpr arc(point_2d rad,
         float rot, float sang) noexcept;
 
       // \ref{\iotwod.arc.modifiers}, modifiers:
-      constexpr void radius(vector_2d rad) noexcept;
+      constexpr void radius(point_2d rad) noexcept;
       constexpr void rotation(float rot) noexcept;
       constexpr void start_angle(float radians) noexcept;
 
       // \ref{\iotwod.arc.observers}, observers:
-      constexpr vector_2d radius() const noexcept;
+      constexpr point_2d radius() const noexcept;
       constexpr float rotation() const noexcept;
       constexpr float start_angle() const noexcept;
-      vector_2d center(vector_2d cpt, const matrix_2d& m = matrix_2d{}) 
+      point_2d center(point_2d cpt, const matrix_2d& m = matrix_2d{}) 
         const noexcept;
-      vector_2d end_pt(vector_2d cpt, const matrix_2d& m = matrix_2d{}) 
+      point_2d end_pt(point_2d cpt, const matrix_2d& m = matrix_2d{}) 
         const noexcept;
     };
     
@@ -53,12 +53,12 @@ constexpr arc() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{arc\{ vector_2d(10.0f, 10.0f), pi<float>, pi<float> \};}.
+Equivalent to: \tcode{arc\{ point_2d(10.0f, 10.0f), pi<float>, pi<float> \};}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{arc}!constructor}%
 \begin{itemdecl}
-constexpr arc(vector_2d rad, float rot,
+constexpr arc(point_2d rad, float rot,
   float start_angle = pi<float>) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -80,7 +80,7 @@ The start angle is \tcode{sang}.
 
 \indexlibrarymember{radius}{arc}%
 \begin{itemdecl}
-constexpr void radius(vector_2d rad) noexcept;
+constexpr void radius(point_2d rad) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -112,7 +112,7 @@ The start angle is \tcode{sang}.
 
 \indexlibrarymember{radius}{arc}%
 \begin{itemdecl}
-constexpr vector_2d radius() const noexcept;
+constexpr point_2d radius() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -142,7 +142,7 @@ The start angle.
 
 \indexlibrarymember{center}{arc}%
 \begin{itemdecl}
-vector_2d center(vector_2d cpt, const matrix_2d& m = matrix_2d{})
+point_2d center(point_2d cpt, const matrix_2d& m = matrix_2d{})
   const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -161,7 +161,7 @@ return cpt - centerOffset * lmtx;
 
 \indexlibrarymember{start_angle}{arc}%
 \begin{itemdecl}
-vector_2d end_pt(vector_2d cpt, const matrix_2d& m = matrix_2d{})
+point_2d end_pt(point_2d cpt, const matrix_2d& m = matrix_2d{})
   const noexcept;
 \end{itemdecl}
 \begin{itemdescr}

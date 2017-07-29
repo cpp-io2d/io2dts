@@ -6,7 +6,7 @@
 The class \tcode{rel_line} describes a path item that is a path segment.
 
 \pnum
-It has an \term{end point} of type \tcode{vector_2d}.
+It has an \term{end point} of type \tcode{point_2d}.
 
 \rSec1 [\iotwod.relline.synopsis] {\tcode{rel_line} synopsis}
 
@@ -17,13 +17,13 @@ namespace std::experimental::io2d::v1 {
     public:
       // \ref{\iotwod.relline.cons}, construct:
       constexpr rel_line() noexcept;
-      constexpr explicit rel_line(vector_2d pt) noexcept;
+      constexpr explicit rel_line(point_2d pt) noexcept;
 
       // \ref{\iotwod.relline.modifiers}, modifiers:
-      constexpr void to(vector_2d pt) noexcept;
+      constexpr void to(point_2d pt) noexcept;
 
       // \ref{\iotwod.relline.observers}, observers:
-      constexpr vector_2d to() const noexcept;
+      constexpr point_2d to() const noexcept;
     };
     
     // \ref{\iotwod.relline.ops}, operators:
@@ -44,12 +44,12 @@ constexpr rel_line() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{rel_line\{ vector_2d() \};}
+Equivalent to: \tcode{rel_line\{ point_2d() \};}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rel_line}!constructor}%
 \begin{itemdecl}
-constexpr explicit rel_line(vector_2d pt) noexcept;
+constexpr explicit rel_line(point_2d pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -64,7 +64,7 @@ The end point is \tcode{pt}.
 
 \indexlibrarymember{rel_line}{to}
 \begin{itemdecl}
-constexpr void to(vector_2d pt) noexcept;
+constexpr void to(point_2d pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -76,7 +76,7 @@ The end point is \tcode{pt}.
 
 \indexlibrary{\idxcode{rel_line}!\idxcode{to}}%
 \begin{itemdecl}
-constexpr vector_2d to() const noexcept;
+constexpr point_2d to() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

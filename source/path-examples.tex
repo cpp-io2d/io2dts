@@ -95,7 +95,7 @@ The resulting image from example 2 shows the difference between an open path and
 That difference between rendering as a \tcode{line_join} versus rendering as two \tcode{line_cap}s is what causes the notch to appear in the open path segment. Path segments are rendered such that half of the stroke width is rendered on each side of the point being evaluated. With no line cap, each segment begins and ends exactly at the point specified.
 
 \pnum
-So for the open path, the first line begins at \tcode{vector_2d\{ 20.0f, 20.0f \}} and the last line ends there. Given the stroke width of \tcode{10.0f}, the visible result for the first line is a rectangle with an upper left corner of \tcode{vector_2d\{ 20.0f, 15.0f \}} and a lower right corner of \tcode{vector_2d\{ 120.0f, 25.0f \}}. The last line appears as a rectangle with an upper left corner of \tcode{vector_2d\{ 15.0f, 20.0f \}} and a lower right corner of \tcode{vector_2d\{ 25.0f, 180.0f \}}. This produces the appearance of a square gap between \tcode{vector_2d\{ 15.0f, 15.0f \}} and \tcode{vector_2d\{20.0f, 20.0f \}}.
+So for the open path, the first line begins at \tcode{point_2d\{ 20.0f, 20.0f \}} and the last line ends there. Given the stroke width of \tcode{10.0f}, the visible result for the first line is a rectangle with an upper left corner of \tcode{point_2d\{ 20.0f, 15.0f \}} and a lower right corner of \tcode{point_2d\{ 120.0f, 25.0f \}}. The last line appears as a rectangle with an upper left corner of \tcode{point_2d\{ 15.0f, 20.0f \}} and a lower right corner of \tcode{point_2d\{ 25.0f, 180.0f \}}. This produces the appearance of a square gap between \tcode{point_2d\{ 15.0f, 15.0f \}} and \tcode{point_2d\{20.0f, 20.0f \}}.
 
 \pnum
 For the closed path, adjusting for the coordinate differences, the rendering facts are the same as for the open path except for one key difference: the point where the first line and last line meet is rendered as a line join rather than two line caps, which, given the default value of \tcode{line_join::miter}, produces a miter, adding that square area to the rendering result.
@@ -140,7 +140,7 @@ imgSfc.stroke(foreBrush, pb, nullopt, nullopt, nullopt, aliased);
 Example 4 shows how to draw "C++" using paths.
 
 \pnum
-For the "C", it is created using an arc. A scaling matrix is used to make it  slightly elliptical. It is also desirable that the arc has a fixed center point, \tcode{vector_2d\{ 85.0f, 100.0f \}}. The inverse of the scaling matrix is used in combination with the \tcode{point_for_angle} function to determine the point at which the arc should begin in order to get achieve this fixed center point. The "C" is then stroked.
+For the "C", it is created using an arc. A scaling matrix is used to make it  slightly elliptical. It is also desirable that the arc has a fixed center point, \tcode{point_2d\{ 85.0f, 100.0f \}}. The inverse of the scaling matrix is used in combination with the \tcode{point_for_angle} function to determine the point at which the arc should begin in order to get achieve this fixed center point. The "C" is then stroked.
 
 \pnum
 Unlike the "C", which is created using an open path that is stroked, each "+" is created using a closed path that is filled. To avoid filling the "C", \tcode{pb.clear();} is called to empty the container. The first "+" is created using a series of lines and is then filled.

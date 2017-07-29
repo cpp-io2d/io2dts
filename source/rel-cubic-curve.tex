@@ -6,7 +6,7 @@
 The class \tcode{rel_cubic_curve} describes a path item that is a path segment.
 
 \pnum
-It has a \term{first control point} of type \tcode{vector_2d}, a \term{second control point} of type \tcode{vector_2d}, and an \tcode{end point} of type \tcode{vector_2d}.
+It has a \term{first control point} of type \tcode{point_2d}, a \term{second control point} of type \tcode{point_2d}, and an \tcode{end point} of type \tcode{point_2d}.
 
 \rSec1 [\iotwod.relcubiccurve.synopsis] {\tcode{rel_cubic_curve} synopsis}
 
@@ -17,18 +17,18 @@ namespace std::experimental::io2d::v1 {
     public:
       // \ref{\iotwod.relcubiccurve.cons}, construct
       constexpr rel_cubic_curve() noexcept;
-      constexpr rel_cubic_curve(vector_2d cpt1, vector_2d cpt2,
-        vector_2d ept) noexcept;
+      constexpr rel_cubic_curve(point_2d cpt1, point_2d cpt2,
+        point_2d ept) noexcept;
 
       // \ref{\iotwod.relcubiccurve.modifiers}, modifiers:
-      constexpr void control_pt1(vector_2d cpt) noexcept;
-      constexpr void control_pt2(vector_2d cpt) noexcept;
-      constexpr void end_pt(vector_2d ept) noexcept;
+      constexpr void control_pt1(point_2d cpt) noexcept;
+      constexpr void control_pt2(point_2d cpt) noexcept;
+      constexpr void end_pt(point_2d ept) noexcept;
 
       // \ref{\iotwod.relcubiccurve.observers}, observers:
-      constexpr vector_2d control_pt1() const noexcept;
-      constexpr vector_2d control_pt2() const noexcept;
-      constexpr vector_2d end_pt() const noexcept;
+      constexpr point_2d control_pt1() const noexcept;
+      constexpr point_2d control_pt2() const noexcept;
+      constexpr point_2d end_pt() const noexcept;
     };
     
     // \ref{\iotwod.relcubiccurve.ops}, operators:
@@ -49,13 +49,13 @@ constexpr rel_cubic_curve() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to \tcode{rel_cubic_curve\{ vector_2d(), vector_2d(), vector_2d() \}}
+Equivalent to \tcode{rel_cubic_curve\{ point_2d(), point_2d(), point_2d() \}}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rel_cubic_curve}!constructor}%
 \begin{itemdecl}
-constexpr rel_cubic_curve(vector_2d cpt1, vector_2d cpt2,
-  vector_2d ept) noexcept;
+constexpr rel_cubic_curve(point_2d cpt1, point_2d cpt2,
+  point_2d ept) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -70,7 +70,7 @@ The first control point is \tcode{cpt1}. The second control point is \tcode{cpt2
 
 \indexlibrarymember{control_pt2}{rel_cubic_curve}%
 \begin{itemdecl}
-constexpr void control_pt1(vector_2d cpt) noexcept;
+constexpr void control_pt1(point_2d cpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -80,7 +80,7 @@ The first control point is \tcode{cpt}.
 
 \indexlibrarymember{control_pt2}{rel_cubic_curve}%
 \begin{itemdecl}
-constexpr void control_pt2(vector_2d cpt) noexcept;
+constexpr void control_pt2(point_2d cpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -90,7 +90,7 @@ The second control point is \tcode{cpt}.
 
 \indexlibrarymember{end_pt}{rel_cubic_curve}%
 \begin{itemdecl}
-constexpr void end_pt(vector_2d ept) noexcept;
+constexpr void end_pt(point_2d ept) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -102,7 +102,7 @@ The end point is \tcode{ept}.
 
 \indexlibrarymember{control_pt1}{rel_cubic_curve}%
 \begin{itemdecl}
-constexpr vector_2d control_pt1() const noexcept;
+constexpr point_2d control_pt1() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -112,7 +112,7 @@ The first control point.
 
 \indexlibrarymember{control_pt2}{rel_cubic_curve}%
 \begin{itemdecl}
-constexpr vector_2d control_pt2() const noexcept;
+constexpr point_2d control_pt2() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -122,7 +122,7 @@ The second control point.
 
 \indexlibrarymember{end_pt}{rel_cubic_curve}%
 \begin{itemdecl}
-constexpr vector_2d end_pt() const noexcept;
+constexpr point_2d end_pt() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

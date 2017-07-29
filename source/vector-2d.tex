@@ -1,89 +1,89 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.\vectortwod] {Class \tcode{vector_2d}}
+\rSec0 [\iotwod.\pointtwod] {Class \tcode{point_2d}}
 
-\rSec1 [\iotwod.\vectortwod.intro] {\tcode{vector_2d} description}
+\rSec1 [\iotwod.\pointtwod.intro] {\tcode{point_2d} description}
 
-\indexlibrary{\idxcode{vector_2d}}%
+\indexlibrary{\idxcode{point_2d}}%
 \pnum
-The class \tcode{vector_2d} is used as both a point and as a two-dimensional Euclidian vector.
+The class \tcode{point_2d} is used as both a point and as a two-dimensional Euclidian vector.
 
 \pnum
 It has an \term{x coordinate} of type \tcode{float} and a \term{y coordinate} of type \tcode{float}.
 
-\rSec1 [\iotwod.\vectortwod.synopsis] {\tcode{vector_2d} synopsis}
+\rSec1 [\iotwod.\pointtwod.synopsis] {\tcode{point_2d} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
-  class vector_2d {
+  class point_2d {
   public:
-    // \ref{\iotwod.\vectortwod.cons}, constructors:
-    constexpr vector_2d() noexcept;
-    constexpr vector_2d(float x, float y) noexcept;
+    // \ref{\iotwod.\pointtwod.cons}, constructors:
+    constexpr point_2d() noexcept;
+    constexpr point_2d(float x, float y) noexcept;
 
-    // \ref{\iotwod.\vectortwod.modifiers}, modifiers:
+    // \ref{\iotwod.\pointtwod.modifiers}, modifiers:
     constexpr void x(float val) noexcept;
     constexpr void y(float val) noexcept;
     
-    // \ref{\iotwod.\vectortwod.observers}, observers:
+    // \ref{\iotwod.\pointtwod.observers}, observers:
     constexpr float x() const noexcept;
     constexpr float y() const noexcept;
-    constexpr float dot(const vector_2d& other) const noexcept;
+    constexpr float dot(const point_2d& other) const noexcept;
     float magnitude() const noexcept;
     constexpr float magnitude_squared() const noexcept;
-    float angular_direction(const vector_2d& to) const noexcept;
-    vector_2d to_unit() const noexcept;
+    float angular_direction(const point_2d& to) const noexcept;
+    point_2d to_unit() const noexcept;
     
-    // \ref{\iotwod.\vectortwod.member.ops}, member operators:
-    constexpr vector_2d& operator+=(const vector_2d& rhs) noexcept;
-    constexpr vector_2d& operator-=(const vector_2d& rhs) noexcept;
-    constexpr vector_2d& operator*=(float rhs) noexcept;
-    constexpr vector_2d& operator*=(const vector_2d& rhs) noexcept;
-    constexpr vector_2d& operator/=(float rhs) noexcept;
-    constexpr vector_2d& operator/=(const vector_2d& rhs) noexcept;
+    // \ref{\iotwod.\pointtwod.member.ops}, member operators:
+    constexpr point_2d& operator+=(const point_2d& rhs) noexcept;
+    constexpr point_2d& operator-=(const point_2d& rhs) noexcept;
+    constexpr point_2d& operator*=(float rhs) noexcept;
+    constexpr point_2d& operator*=(const point_2d& rhs) noexcept;
+    constexpr point_2d& operator/=(float rhs) noexcept;
+    constexpr point_2d& operator/=(const point_2d& rhs) noexcept;
   };
   
-  // \ref{\iotwod.\vectortwod.ops}, non-member operators:
-  constexpr bool operator==(const vector_2d& lhs, const vector_2d& rhs)
+  // \ref{\iotwod.\pointtwod.ops}, non-member operators:
+  constexpr bool operator==(const point_2d& lhs, const point_2d& rhs)
     noexcept;
-  constexpr bool operator!=(const vector_2d& lhs, const vector_2d& rhs)
+  constexpr bool operator!=(const point_2d& lhs, const point_2d& rhs)
     noexcept;
-  constexpr vector_2d operator+(const vector_2d& val) noexcept;
-  constexpr vector_2d operator+(const vector_2d& lhs, const vector_2d& rhs)
+  constexpr point_2d operator+(const point_2d& val) noexcept;
+  constexpr point_2d operator+(const point_2d& lhs, const point_2d& rhs)
     noexcept;
-  constexpr vector_2d operator-(const vector_2d& val) noexcept;
-  constexpr vector_2d operator-(const vector_2d& lhs, const vector_2d& rhs)
+  constexpr point_2d operator-(const point_2d& val) noexcept;
+  constexpr point_2d operator-(const point_2d& lhs, const point_2d& rhs)
     noexcept;
-  constexpr vector_2d operator*(const vector_2d& lhs, float rhs) noexcept;
-  constexpr vector_2d operator*(float lhs, const vector_2d& rhs) noexcept;
-  constexpr vector_2d operator*(const vector_2d& lhs, const vector_2d& rhs)
+  constexpr point_2d operator*(const point_2d& lhs, float rhs) noexcept;
+  constexpr point_2d operator*(float lhs, const point_2d& rhs) noexcept;
+  constexpr point_2d operator*(const point_2d& lhs, const point_2d& rhs)
     noexcept;
-  constexpr vector_2d operator/(const vector_2d& lhs, float rhs) noexcept;
-  constexpr vector_2d operator/(float lhs, const vector_2d& rhs) noexcept;
-  constexpr vector_2d operator/(const vector_2d& lhs, const vector_2d& rhs)
+  constexpr point_2d operator/(const point_2d& lhs, float rhs) noexcept;
+  constexpr point_2d operator/(float lhs, const point_2d& rhs) noexcept;
+  constexpr point_2d operator/(const point_2d& lhs, const point_2d& rhs)
     noexcept;
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.\vectortwod.cons] {\tcode{vector_2d} constructors}
+\rSec1 [\iotwod.\pointtwod.cons] {\tcode{point_2d} constructors}
 
-\indexlibrary{\idxcode{vector_2d}!constructor}%
+\indexlibrary{\idxcode{point_2d}!constructor}%
 \begin{itemdecl}
-constexpr vector_2d() noexcept;
+constexpr point_2d() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to \tcode{vector_2d\{ 0.0f, 0.0f \}}.
+Equivalent to \tcode{point_2d\{ 0.0f, 0.0f \}}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{vector_2d}!constructor}%
+\indexlibrary{\idxcode{point_2d}!constructor}%
 \begin{itemdecl}
-constexpr vector_2d(float x, float y) noexcept;
+constexpr point_2d(float x, float y) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs an object of type \tcode{vector_2d}.
+Constructs an object of type \tcode{point_2d}.
 
 \pnum
 The x coordinate is \tcode{x}.
@@ -92,9 +92,9 @@ The x coordinate is \tcode{x}.
 The y coordinate is \tcode{y}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.\vectortwod.modifiers]{\tcode{vector_2d} modifiers}
+\rSec1 [\iotwod.\pointtwod.modifiers]{\tcode{point_2d} modifiers}
 
-\indexlibrarymember{x}{vector_2d}%
+\indexlibrarymember{x}{point_2d}%
 \begin{itemdecl}
 constexpr void x(float val) noexcept;
 \end{itemdecl}
@@ -104,7 +104,7 @@ constexpr void x(float val) noexcept;
 The x coordinate is \tcode{val}.
 \end{itemdescr}
 
-\indexlibrarymember{y}{vector_2d}%
+\indexlibrarymember{y}{point_2d}%
 \begin{itemdecl}
 constexpr void y(float val) noexcept;
 \end{itemdecl}
@@ -114,9 +114,9 @@ constexpr void y(float val) noexcept;
 The y coordinate is \tcode{val}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.\vectortwod.observers]{\tcode{vector_2d} observers}
+\rSec1 [\iotwod.\pointtwod.observers]{\tcode{point_2d} observers}
 
-\indexlibrarymember{x}{vector_2d}%
+\indexlibrarymember{x}{point_2d}%
 \begin{itemdecl}
 constexpr float x() const noexcept;
 \end{itemdecl}
@@ -126,7 +126,7 @@ constexpr float x() const noexcept;
 The x coordinate.
 \end{itemdescr}
 
-\indexlibrarymember{y}{vector_2d}%
+\indexlibrarymember{y}{point_2d}%
 \begin{itemdecl}
 constexpr float y() const noexcept;
 \end{itemdecl}
@@ -136,9 +136,9 @@ constexpr float y() const noexcept;
 The y coordinate.
 \end{itemdescr}
 
-\indexlibrarymember{dot}{vector_2d}%
+\indexlibrarymember{dot}{point_2d}%
 \begin{itemdecl}
-constexpr float dot(const vector_2d& other) const noexcept;
+constexpr float dot(const point_2d& other) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -146,7 +146,7 @@ constexpr float dot(const vector_2d& other) const noexcept;
 \tcode{x() * other.x() + y() * other.y()}.
 \end{itemdescr}
 
-\indexlibrarymember{magnitude}{vector_2d}%
+\indexlibrarymember{magnitude}{point_2d}%
 \begin{itemdecl}
 float magnitude() const noexcept;
 \end{itemdecl}
@@ -156,7 +156,7 @@ float magnitude() const noexcept;
 Equivalent to: \tcode{sqrt(dot(*this));}
 \end{itemdescr}
 
-\indexlibrarymember{magnitude_squared}{vector_2d}%
+\indexlibrarymember{magnitude_squared}{point_2d}%
 \begin{itemdecl}
 constexpr float magnitude_squared() const noexcept;
 \end{itemdecl}
@@ -166,7 +166,7 @@ constexpr float magnitude_squared() const noexcept;
 Equivalent to: \tcode{dot(*this);}
 \end{itemdescr}
 
-\indexlibrarymember{angular_direction}{vector_2d}%
+\indexlibrarymember{angular_direction}{point_2d}%
 \begin{itemdecl}
 float angular_direction() const noexcept
 \end{itemdecl}
@@ -184,21 +184,21 @@ The purpose of adding \tcode{two_pi<float>} if the result is negative is to prod
 \end{note}
 \end{itemdescr}
 
-\indexlibrarymember{to_unit}{vector_2d}%
+\indexlibrarymember{to_unit}{point_2d}%
 \begin{itemdecl}
-vector_2d to_unit() const noexcept;
+point_2d to_unit() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{vector_2d\{ x() / magnitude(), y() / magnitude()\}}.
+\tcode{point_2d\{ x() / magnitude(), y() / magnitude()\}}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.\vectortwod.member.ops] {\tcode{vector_2d} member operators}
+\rSec1 [\iotwod.\pointtwod.member.ops] {\tcode{point_2d} member operators}
 
-\indexlibrarymember{operator+=}{vector_2d}%
+\indexlibrarymember{operator+=}{point_2d}%
 \begin{itemdecl}
-constexpr vector_2d& operator+=(const vector_2d& rhs) noexcept;
+constexpr point_2d& operator+=(const point_2d& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -210,9 +210,9 @@ constexpr vector_2d& operator+=(const vector_2d& rhs) noexcept;
 \tcode{*this}.
 \end{itemdescr}
 
-\indexlibrarymember{operator-=}{vector_2d}%
+\indexlibrarymember{operator-=}{point_2d}%
 \begin{itemdecl}
-constexpr vector_2d& operator-=(const vector_2d& rhs) noexcept;
+constexpr point_2d& operator-=(const point_2d& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -224,10 +224,10 @@ Equivalent to: \tcode{*this = *this - rhs;}.
 \tcode{*this}.
 \end{itemdescr}
 
-\indexlibrarymember{operator*=}{vector_2d}%
+\indexlibrarymember{operator*=}{point_2d}%
 \begin{itemdecl}
-constexpr vector_2d& operator*=(float rhs) noexcept;
-constexpr vector_2d& operator*=(const vector_2d& rhs) noexcept;
+constexpr point_2d& operator*=(float rhs) noexcept;
+constexpr point_2d& operator*=(const point_2d& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -239,10 +239,10 @@ Equivalent to: \tcode{*this = *this * rhs;}.
 \tcode{*this}.
 \end{itemdescr}
 
-\indexlibrarymember{operator/=}{vector_2d}%
+\indexlibrarymember{operator/=}{point_2d}%
 \begin{itemdecl}
-constexpr vector_2d& operator/=(float rhs) noexcept;
-constexpr vector_2d& operator/=(const vector_2d& rhs) noexcept;
+constexpr point_2d& operator/=(float rhs) noexcept;
+constexpr point_2d& operator/=(const point_2d& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -254,11 +254,11 @@ Equivalent to: \tcode{*this = *this / rhs;}.
 \tcode{*this}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.\vectortwod.ops] {\tcode{vector_2d} non-member operators}
+\rSec1 [\iotwod.\pointtwod.ops] {\tcode{point_2d} non-member operators}
 
-\indexlibrarymember{operator==}{vector_2d}%
+\indexlibrarymember{operator==}{point_2d}%
 \begin{itemdecl}
-constexpr bool operator==(const vector_2d& lhs, const vector_2d& rhs) noexcept;
+constexpr bool operator==(const point_2d& lhs, const point_2d& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -266,9 +266,9 @@ constexpr bool operator==(const vector_2d& lhs, const vector_2d& rhs) noexcept;
 \tcode{lhs.x() == rhs.x() \&\& lhs.y() == rhs.y()}.
 \end{itemdescr}
 
-\indexlibrarymember{operator!=}{vector_2d}%
+\indexlibrarymember{operator!=}{point_2d}%
 \begin{itemdecl}
-constexpr bool operator!=(const vector_2d& lhs, const vector_2d& rhs) noexcept;
+constexpr bool operator!=(const point_2d& lhs, const point_2d& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -276,9 +276,9 @@ constexpr bool operator!=(const vector_2d& lhs, const vector_2d& rhs) noexcept;
 \tcode{!(lhs == rhs)}.
 \end{itemdescr}
 
-\indexlibrarymember{operator+}{vector_2d}%
+\indexlibrarymember{operator+}{point_2d}%
 \begin{itemdecl}
-constexpr vector_2d operator+(const vector_2d& val) noexcept;
+constexpr point_2d operator+(const point_2d& val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -286,72 +286,72 @@ constexpr vector_2d operator+(const vector_2d& val) noexcept;
 \tcode{val}.
 \end{itemdescr}
 
-\indexlibrarymember{operator+}{vector_2d}%
+\indexlibrarymember{operator+}{point_2d}%
 \begin{itemdecl}
-constexpr vector_2d operator+(const vector_2d& lhs, const vector_2d& rhs) 
+constexpr point_2d operator+(const point_2d& lhs, const point_2d& rhs) 
   noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{vector_2d\{ lhs.x() + rhs.x(), lhs.y() + rhs.y() \}}.
+\tcode{point_2d\{ lhs.x() + rhs.x(), lhs.y() + rhs.y() \}}.
 \end{itemdescr}
 
-\indexlibrarymember{operator-}{vector_2d}%
+\indexlibrarymember{operator-}{point_2d}%
 \begin{itemdecl}
-constexpr vector_2d operator-(const vector_2d& val) noexcept;
+constexpr point_2d operator-(const point_2d& val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{vector_2d\{ -val.x(), -val.y() \}}.
+\tcode{point_2d\{ -val.x(), -val.y() \}}.
 \end{itemdescr}
 
-\indexlibrarymember{operator-}{vector_2d}%
+\indexlibrarymember{operator-}{point_2d}%
 \begin{itemdecl}
-constexpr vector_2d operator-(const vector_2d& lhs, const vector_2d& rhs) 
+constexpr point_2d operator-(const point_2d& lhs, const point_2d& rhs) 
   noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{vector_2d\{ lhs.x() - rhs.x(), lhs.y() - rhs.y() \}}.
+\tcode{point_2d\{ lhs.x() - rhs.x(), lhs.y() - rhs.y() \}}.
 \end{itemdescr}
 
-\indexlibrarymember{operator*}{vector_2d}%
+\indexlibrarymember{operator*}{point_2d}%
 \begin{itemdecl}
-constexpr vector_2d operator*(const vector_2d& lhs, const vector_2d& rhs) 
+constexpr point_2d operator*(const point_2d& lhs, const point_2d& rhs) 
   noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{vector_2d\{ lhs.x() * rhs.x(), lhs.y() * rhs.y() \}}.
+\tcode{point_2d\{ lhs.x() * rhs.x(), lhs.y() * rhs.y() \}}.
 \end{itemdescr}
 
-\indexlibrarymember{operator*}{vector_2d}%
+\indexlibrarymember{operator*}{point_2d}%
 \begin{itemdecl}
-constexpr vector_2d operator*(const vector_2d& lhs, float rhs) noexcept;
+constexpr point_2d operator*(const point_2d& lhs, float rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{vector_2d\{ lhs.x() * rhs, lhs.y() * rhs \}}.
+\tcode{point_2d\{ lhs.x() * rhs, lhs.y() * rhs \}}.
 \end{itemdescr}
 
-\indexlibrarymember{operator*}{vector_2d}%
+\indexlibrarymember{operator*}{point_2d}%
 \begin{itemdecl}
-constexpr vector_2d operator*(float lhs, const vector_2d& rhs) noexcept;
+constexpr point_2d operator*(float lhs, const point_2d& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{vector_2d\{ lhs * rhs.x(), lhs * rhs.y() \}}.
+\tcode{point_2d\{ lhs * rhs.x(), lhs * rhs.y() \}}.
 \end{itemdescr}
 
-\indexlibrarymember{operator/}{vector_2d}%
+\indexlibrarymember{operator/}{point_2d}%
 \begin{itemdecl}
-constexpr vector_2d operator/(const vector_2d& lhs, const vector_2d& rhs) 
+constexpr point_2d operator/(const point_2d& lhs, const point_2d& rhs) 
   noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -361,12 +361,12 @@ constexpr vector_2d operator/(const vector_2d& lhs, const vector_2d& rhs)
 
 \pnum
 \returns
-\tcode{vector_2d\{ lhs.x() / rhs.x(), lhs.y() / rhs.y() \}}.
+\tcode{point_2d\{ lhs.x() / rhs.x(), lhs.y() / rhs.y() \}}.
 \end{itemdescr}
 
-\indexlibrarymember{operator/}{vector_2d}%
+\indexlibrarymember{operator/}{point_2d}%
 \begin{itemdecl}
-constexpr vector_2d operator/(const vector_2d& lhs, float rhs) noexcept;
+constexpr point_2d operator/(const point_2d& lhs, float rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -375,12 +375,12 @@ constexpr vector_2d operator/(const vector_2d& lhs, float rhs) noexcept;
 
 \pnum
 \returns
-\tcode{vector_2d\{ lhs.x() / rhs, lhs.y() / rhs \}}.
+\tcode{point_2d\{ lhs.x() / rhs, lhs.y() / rhs \}}.
 \end{itemdescr}
 
-\indexlibrarymember{operator/}{vector_2d}%
+\indexlibrarymember{operator/}{point_2d}%
 \begin{itemdecl}
-constexpr vector_2d operator/(float lhs, const vector_2d& rhs) noexcept;
+constexpr point_2d operator/(float lhs, const point_2d& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -389,5 +389,5 @@ constexpr vector_2d operator/(float lhs, const vector_2d& rhs) noexcept;
 
 \pnum
 \returns
-\tcode{vector_2d\{ lhs / rhs.x(), lhs / rhs.y() \}}.
+\tcode{point_2d\{ lhs / rhs.x(), lhs / rhs.y() \}}.
 \end{itemdescr}

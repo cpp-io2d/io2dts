@@ -96,23 +96,23 @@ namespace std::experimental::io2d::v1 {
     const_reference back() const;
 
     // \ref{\iotwod.pathbuilder.modifiers}, modifiers:
-    void new_path(vector_2d pt) noexcept;
-    void rel_new_path(vector_2d pt) noexcept;
+    void new_path(point_2d pt) noexcept;
+    void rel_new_path(point_2d pt) noexcept;
     void close_path() noexcept;
     void matrix(const matrix_2d& m) noexcept;
     void rel_matrix(const matrix_2d& m) noexcept;
     void revert_matrix() noexcept;
-    void line(vector_2d pt) noexcept;
-    void rel_line(vector_2d dpt) noexcept;
-    void quadratic_curve(vector_2d pt0, vector_2d pt2)
+    void line(point_2d pt) noexcept;
+    void rel_line(point_2d dpt) noexcept;
+    void quadratic_curve(point_2d pt0, point_2d pt2)
       noexcept;
-    void rel_quadratic_curve(vector_2d pt0, vector_2d pt2)
+    void rel_quadratic_curve(point_2d pt0, point_2d pt2)
       noexcept;
-    void cubic_curve(vector_2d pt0, vector_2d pt1,
-      vector_2d pt2) noexcept;
-    void rel_cubic_curve(vector_2d dpt0, vector_2d dpt1,
-      vector_2d dpt2) noexcept;
-    void arc(vector_2d rad, float rot, float sang = pi<float>)
+    void cubic_curve(point_2d pt0, point_2d pt1,
+      point_2d pt2) noexcept;
+    void rel_cubic_curve(point_2d dpt0, point_2d dpt1,
+      point_2d dpt2) noexcept;
+    void arc(point_2d rad, float rot, float sang = pi<float>)
       noexcept;
     
     template <class... Args>
@@ -385,7 +385,7 @@ If an exception is thrown there are no effects.
 
 \indexlibrarymember{path_builder}{new_path}%
 \begin{itemdecl}
-void new_path(vector_2d pt) noexcept;
+void new_path(point_2d pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -395,7 +395,7 @@ Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::ab
 
 \indexlibrarymember{path_builder}{rel_new_path}%
 \begin{itemdecl}
-void rel_new_path(vector_2d pt) noexcept;
+void rel_new_path(point_2d pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -457,7 +457,7 @@ Adds a \tcode{path_data::path_item} object constructed from \tcode{(path_data::r
 
 \indexlibrarymember{path_builder}{line}%
 \begin{itemdecl}
-void line(vector_2d pt) noexcept;
+void line(point_2d pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -466,7 +466,7 @@ Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::ab
 
 \indexlibrarymember{path_builder}{rel_line}%
 \begin{itemdecl}
-void rel_line(vector_2d dpt) noexcept;
+void rel_line(point_2d dpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -476,7 +476,7 @@ Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::re
 
 \indexlibrarymember{path_builder}{quadratic_curve}%
 \begin{itemdecl}
-void quadratic_curve(vector_2d pt0, vector_2d pt1) noexcept;
+void quadratic_curve(point_2d pt0, point_2d pt1) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -486,7 +486,7 @@ Adds a \tcode{path_data::path_item} object constructed from\\ \tcode{path_data::
 
 \indexlibrarymember{path_builder}{rel_quadratic_curve}%
 \begin{itemdecl}
-void rel_quadratic_curve(vector_2d dpt0, vector_2d dpt1)
+void rel_quadratic_curve(point_2d dpt0, point_2d dpt1)
   noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -497,8 +497,8 @@ Adds a \tcode{path_data::path_item} object constructed from\\ \tcode{path_data::
 
 \indexlibrarymember{path_builder}{cubic_curve}%
 \begin{itemdecl}
-void cubic_curve(vector_2d pt0, vector_2d pt1,
-  vector_2d pt2) noexcept;
+void cubic_curve(point_2d pt0, point_2d pt1,
+  point_2d pt2) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -509,8 +509,8 @@ Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::ab
 
 \indexlibrarymember{path_builder}{rel_cubic_curve}%
 \begin{itemdecl}
-void rel_cubic_curve(vector_2d dpt0, vector_2d dpt1,
-  vector_2d dpt2) noexcept;
+void rel_cubic_curve(point_2d dpt0, point_2d dpt1,
+  point_2d dpt2) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -520,7 +520,7 @@ Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::re
 
 \indexlibrarymember{path_builder}{arc}%
 \begin{itemdecl}
-void arc(vector_2d rad, float rot, float sang) noexcept;
+void arc(point_2d rad, float rot, float sang) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

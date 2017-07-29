@@ -92,8 +92,8 @@ namespace std::experimental::io2d::v1 {
     int height() const noexcept;
     int display_width() const noexcept;
     int display_height() const noexcept;
-    vector_2d dimensions() const noexcept;
-    vector_2d display_dimensions() const noexcept;
+    point_2d dimensions() const noexcept;
+    point_2d display_dimensions() const noexcept;
     experimental::io2d::scaling scaling() const noexcept;
     function<experimental::io2d::rectangle(const display_surface&,
       bool&)> user_scaling_callback() const;
@@ -839,22 +839,22 @@ The display height.
 
 \indexlibrarymember{dimensions}{display_surface}%
 \begin{itemdecl}
-vector_2d dimensions() const noexcept;
+point_2d dimensions() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-A \tcode{vector_2d} constructed using the draw width as the first argument and the draw height as the second argument.
+A \tcode{point_2d} constructed using the draw width as the first argument and the draw height as the second argument.
 \end{itemdescr}
 
 \indexlibrarymember{display_dimensions}{display_surface}%
 \begin{itemdecl}
-vector_2d display_dimensions() const noexcept;
+point_2d display_dimensions() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-A \tcode{vector_2d} constructed using the display width as the first argument and the display height as the second argument.
+A \tcode{point_2d} constructed using the display width as the first argument and the display height as the second argument.
 \end{itemdescr}
 
 \indexlibrarymember{scaling}{display_surface}%
