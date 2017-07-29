@@ -179,7 +179,7 @@ vector_2d arc_start(vector_2d ctr, float sang, vector_2d rad,
 As-if:
 \begin{codeblock}
 auto lmtx = m;
-lmtx.m20(0.0f); lmtx.m21(0.0f);
+lmtx.m20 = 0.0f; lmtx.m21 = 0.0f;
 auto pt = point_for_angle(sang, rad);
 return ctr + pt * lmtx;
 \end{codeblock}
@@ -207,7 +207,7 @@ vector_2d arc_center(vector_2d cpt, float sang, vector_2d rad,
 As-if:
 \begin{codeblock}
 auto lmtx = m;
-lmtx.m20(0.0f); lmtx.m21(0.0f);
+lmtx.m20 = 0.0f; lmtx.m21 = 0.0f;
 auto centerOffset = point_for_angle(two_pi<float> - sang, rad);
 centerOffset.y(-centerOffset.y());
 return cpt - centerOffset * lmtx;
@@ -232,7 +232,7 @@ As-if:
 \begin{codeblock}
 auto lmtx = m;
 auto tfrm = matrix_2d::init_rotate(eang);
-lmtx.m20(0.0f); lmtx.m21(0.0f);
+lmtx.m20 = 0.0f; lmtx.m21 = 0.0f;
 auto pt = (rad * tfrm);
 pt.y(-pt.y());
 return cpt + pt * lmtx;

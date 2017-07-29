@@ -8,14 +8,19 @@
 The \tcode{matrix_2d} class represents a three row by three column matrix. Its purpose is to perform affine transformations.
 
 \pnum
-The layout of the matrix is: \\
-$
-~[~[~M00~M01~M02~]~] \\
-~[~[~M10~M11~M12~]~] \\
-~[~[~M20~M21~M22~]~]$
+The matrix is composed of nine \tcode{float} values: \tcode{m00}, \tcode{m01}, \tcode{m02}, \tcode{m10}, \tcode{m11}, \tcode{m12}, \tcode{m20}, \tcode{m21}, and \tcode{m22}. The ordering of these \tcode{float} values in the \tcode{matrix_2d} class is unspecified.
 
 \pnum
-The value of M02 is \tcode{0.0f}. The value of M12 is \tcode{0.0f}. The value of M22 is \tcode{1.0f}. None of the operations on a \tcode{matrix_2d} object can modify the values of M02, M12, and M22. As such they are not part of the observable state of a \tcode{matrix_2d} object.
+The specification of the \tcode{matrix_2d} class, as described in this subclause, uses the following ordering: \\
+$
+~[~[~m00~m01~m02~]~] \\
+~[~[~m10~m11~m12~]~] \\
+~[~[~m20~m21~m22~]~]$
+
+\pnum
+\begin{note}
+The naming convention and the layout shown above are consistent with a row-major layout. Though the naming convention is fixed, the unspecified layout allows for a column-major layout (or any other layout, though row-major and column-major are the only layouts typically used).
+\end{note}
 
 \pnum
 The performance of any mathematical operation upon a \tcode{matrix_2d} shall be carried out as-if the omitted third column data members were present with the values prescribed in the previous paragraph.
@@ -30,6 +35,17 @@ namespace std::experimental::io2d::v1 {
     constexpr matrix_2d() noexcept;
     constexpr matrix_2d(float v00, float v01, float v10, float v11,
       float v20, float v21) noexcept;
+
+    // member data (order is exposition only \ref{\iotwod.\matrixtwod.intro}):
+    float m00;
+    float m01;
+    float m02;
+    float m10;
+    float m11;
+    float m12;
+    float m20;
+    float m21;
+    float m22;
     
     // \ref{\iotwod.\matrixtwod.staticfactories}, static factory functions:
     constexpr static matrix_2d init_translate(vector_2d value) noexcept;
@@ -41,12 +57,6 @@ namespace std::experimental::io2d::v1 {
     constexpr static matrix_2d init_shear_y(float factor) noexcept;
     
     // \ref{\iotwod.\matrixtwod.modifiers}, modifiers:
-    constexpr void m00(float v) noexcept;
-    constexpr void m01(float v) noexcept;
-    constexpr void m10(float v) noexcept;
-    constexpr void m11(float v) noexcept;
-    constexpr void m20(float v) noexcept;
-    constexpr void m21(float v) noexcept;
     constexpr matrix_2d& translate(vector_2d v) noexcept;
     constexpr matrix_2d& scale(vector_2d v) noexcept;
     matrix_2d& rotate(float radians) noexcept;
@@ -56,12 +66,6 @@ namespace std::experimental::io2d::v1 {
     constexpr matrix_2d& shear_y(float factor) noexcept;
     
     // \ref{\iotwod.\matrixtwod.observers}, observers:
-    constexpr float m00() const noexcept;
-    constexpr float m01() const noexcept;
-    constexpr float m10() const noexcept;
-    constexpr float m11() const noexcept;
-    constexpr float m20() const noexcept;
-    constexpr float m21() const noexcept;
     constexpr bool is_finite() const noexcept;
     constexpr bool is_invertible() const noexcept;
     constexpr float determinant() const noexcept;
@@ -112,12 +116,7 @@ constexpr matrix_2d(float v00, float v01, float v10, float v11,
 Constructs an object of type \tcode{matrix_2d}.
 
 \pnum
-As-if the resulting matrix was: \\
-$
-~[~[~v00~v01~0.0f~]~] \\
-~[~[~v10~v11~0.0f~]~] \\
-~[~[~v20~v21~1.0f~]~]$
-
+\tcode{m00 == v00}, \tcode{m01 == v01}, \tcode{m02 == 0.0f}, \tcode{m10 == v10}, \tcode{m11 == v11}, \tcode{m12 == 0.0f}, \tcode{m20 == v20}, \tcode{m21 == v21}, \tcode{m22 == 1.0f}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.\matrixtwod.staticfactories] {\tcode{matrix_2d} static factory 
@@ -202,66 +201,6 @@ constexpr static matrix_2d init_shear_y(float factor) noexcept;
 \end{itemdescr}
 
 \rSec1 [\iotwod.\matrixtwod.modifiers] {\tcode{matrix_2d} modifiers}
-
-\indexlibrarymember{m00}{matrix_2d}%
-\begin{itemdecl}
-constexpr void m00(float val) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-M00 is \tcode{val}.
-\end{itemdescr}
-
-\indexlibrarymember{m01}{matrix_2d}%
-\begin{itemdecl}
-constexpr void m01(float val) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-M01 is \tcode{val}.
-\end{itemdescr}
-
-\indexlibrarymember{m10}{matrix_2d}%
-\begin{itemdecl}
-constexpr void m10(float val) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-M10 is \tcode{val}.
-\end{itemdescr}
-
-\indexlibrarymember{m11}{matrix_2d}%
-\begin{itemdecl}
-constexpr void m11(float val) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-M11 is \tcode{val}.
-\end{itemdescr}
-
-\indexlibrarymember{m20}{matrix_2d}%
-\begin{itemdecl}
-constexpr void m20(float val) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-M20 is \tcode{val}.
-\end{itemdescr}
-
-\indexlibrarymember{m21}{matrix_2d}%
-\begin{itemdecl}
-constexpr void m21(float val) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-M21 is \tcode{val}.
-\end{itemdescr}
 
 \indexlibrarymember{translate}{matrix_2d}%
 \begin{itemdecl}
@@ -363,66 +302,6 @@ Equivalent to: \tcode{*this = *this * init_shear_y(factor);}
 
 \rSec1 [\iotwod.\matrixtwod.observers] {\tcode{matrix_2d} observers}
 
-\indexlibrarymember{m00}{matrix_2d}%
-\begin{itemdecl}
-constexpr float m00() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-M00.
-\end{itemdescr}
-
-\indexlibrarymember{m01}{matrix_2d}%
-\begin{itemdecl}
-constexpr float m01() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-M01.
-\end{itemdescr}
-
-\indexlibrarymember{m10}{matrix_2d}%
-\begin{itemdecl}
-constexpr float m10() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-M10.
-\end{itemdescr}
-
-\indexlibrarymember{m11}{matrix_2d}%
-\begin{itemdecl}
-constexpr float m11() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-M11.
-\end{itemdescr}
-
-\indexlibrarymember{m20}{matrix_2d}%
-\begin{itemdecl}
-constexpr float m20() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-M20.
-\end{itemdescr}
-
-\indexlibrarymember{m21}{matrix_2d}%
-\begin{itemdecl}
-constexpr float m21() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-M21.
-\end{itemdescr}
-
 \indexlibrarymember{is_finite}{matrix_2d}%
 \begin{itemdecl}
 constexpr bool is_finite() const noexcept;
@@ -432,12 +311,12 @@ constexpr bool is_finite() const noexcept;
 \returns
 \tcode{true} if the observable behavior of all of the following expressions evaluates to true:
 \begin{itemize}
-\item \tcode{isfinite(m00());}
-\item \tcode{isfinite(m01());}
-\item \tcode{isfinite(m10());}
-\item \tcode{isfinite(m11());}
-\item \tcode{isfinite(m20());}
-\item \tcode{isfinite(m21());}
+\item \tcode{isfinite(m00);}
+\item \tcode{isfinite(m01);}
+\item \tcode{isfinite(m10);}
+\item \tcode{isfinite(m11);}
+\item \tcode{isfinite(m20);}
+\item \tcode{isfinite(m21);}
 \end{itemize}
 
 \pnum
@@ -478,12 +357,12 @@ Let \tcode{inverseDeterminant} be \tcode{1.0f / determinant()}.
 
 \begin{codeblock}
 return matrix_2d{
-   (m11() * 1.0f - 0.0f * m21()) * inverseDeterminant,
-  -(m01() * 1.0f - 0.0f * m21()) * inverseDeterminant,
-  -(m10() * 1.0f - 0.0f * m20()) * inverseDeterminant,
-   (m00() * 1.0f - 0.0f * m20()) * inverseDeterminant,
-   (m10() * m21() - m11() * m20()) * inverseDeterminant,
-  -(m00() * m21() - m01() * m20()) * inverseDeterminant
+   (m11 * 1.0f - 0.0f * m21) * inverseDeterminant,
+  -(m01 * 1.0f - 0.0f * m21) * inverseDeterminant,
+  -(m10 * 1.0f - 0.0f * m20) * inverseDeterminant,
+   (m00 * 1.0f - 0.0f * m20) * inverseDeterminant,
+   (m10 * m21 - m11 * m20) * inverseDeterminant,
+  -(m00 * m21 - m01 * m20) * inverseDeterminant
 };
 \end{codeblock}
 \end{itemdescr}
@@ -499,7 +378,7 @@ constexpr float determinant() const noexcept;
 
 \pnum
 \returns
-\tcode{m00() * m11() - m01() * m10()}.
+\tcode{m00 * m11 - m01 * m10}.
 \end{itemdescr}
 
 \indexlibrarymember{transform_pt}{matrix_2d}%
@@ -509,7 +388,7 @@ constexpr vector_2d transform_pt(vector_2d pt) const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{vector_2d((m00() * pt.x() + m10() * pt.y()) + m20(), (m01() * pt.x() + m11() * pt.y()) + m21())}.
+\tcode{vector_2d((m00 * pt.x() + m10 * pt.y()) + m20, (m01 * pt.x() + m11 * pt.y()) + m21)}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.\matrixtwod.member.ops] {\tcode{matrix_2d} member operators}
@@ -540,12 +419,12 @@ constexpr matrix_2d operator*(const matrix_2d& lhs, const matrix_2d& rhs)
 \returns
 \begin{codeblock}
 matrix_2d{
-  lhs.m00() * rhs.m00() + lhs.m01() * rhs.m10(),
-  lhs.m00() * rhs.m01() + lhs.m01() * rhs.m11(),
-  lhs.m10() * rhs.m00() + lhs.m11() * rhs.m10(),
-  lhs.m10() * rhs.m01() + lhs.m11() * rhs.m11(),
-  lhs.m20() * rhs.m00() + lhs.m21() * rhs.m10() + lhs.m20(),
-  lhs.m20() * rhs.m01() + lhs.m21() * rhs.m11() + lhs.m21()
+  lhs.m00 * rhs.m00 + lhs.m01 * rhs.m10,
+  lhs.m00 * rhs.m01 + lhs.m01 * rhs.m11,
+  lhs.m10 * rhs.m00 + lhs.m11 * rhs.m10,
+  lhs.m10 * rhs.m01 + lhs.m11 * rhs.m11,
+  lhs.m20 * rhs.m00 + lhs.m21 * rhs.m10 + lhs.m20,
+  lhs.m20 * rhs.m01 + lhs.m21 * rhs.m11 + lhs.m21
 }
 \end{codeblock}
 \end{itemdescr}
@@ -558,20 +437,10 @@ constexpr bool operator==(const matrix_2d& lhs, const matrix_2d& rhs) noexcept;
 \pnum
 \returns
 \begin{codeblock}
-lhs.m00() == rhs.m00() && lhs.m01() == rhs.m01() && 
-lhs.m10() == rhs.m10() && lhs.m11() == rhs.m11() &&
-lhs.m20() == rhs.m20() && lhs.m21() == rhs.m21()
+lhs.m00 == rhs.m00 && lhs.m01 == rhs.m01 && 
+lhs.m10 == rhs.m10 && lhs.m11 == rhs.m11 &&
+lhs.m20 == rhs.m20 && lhs.m21 == rhs.m21
 \end{codeblock}
-\end{itemdescr}
-
-\indexlibrarymember{operator!=}{matrix_2d}%
-\begin{itemdecl}
-constexpr bool operator!=(const matrix_2d& lhs, const matrix_2d& rhs) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-\tcode{!(lhs == rhs)}.
 \end{itemdescr}
 
 \indexlibrarymember{operator*}{matrix_2d}%
