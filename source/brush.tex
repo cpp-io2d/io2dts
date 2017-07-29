@@ -32,7 +32,7 @@ namespace std::experimental::io2d::v1 {
   class brush {
   public:
     // \ref{\iotwod.brush.cons}, construct/copy/move/destroy:
-    explicit brush(const rgba_color& c);
+    explicit brush(rgba_color c);
     template <class InputIterator>
     brush(vector_2d begin, vector_2d end,
       InputIterator first, InputIterator last);
@@ -86,7 +86,7 @@ When \tcode{b} is a surface brush, when sampling point \tcode{pt}, where \tcode{
 
 \indexlibrary{\idxcode{brush}!constructor}%
 \begin{itemdecl}
-explicit brush(const rgba_color& c);
+explicit brush(rgba_color c);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

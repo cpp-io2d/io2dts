@@ -17,11 +17,11 @@ namespace std::experimental::io2d::v1 {
   public:
     // \ref{\iotwod.colorstop.cons}, construct:
     constexpr color_stop() noexcept;
-    constexpr color_stop(float o, const rgba_color& c) noexcept;
+    constexpr color_stop(float o, rgba_color c) noexcept;
     
     // \ref{\iotwod.colorstop.modifiers}, modifiers:
     constexpr void offset(float o) noexcept;
-    constexpr void color(const rgba_color& c) noexcept;
+    constexpr void color(rgba_color c) noexcept;
 	
     // \ref{\iotwod.colorstop.observers}, observers:
     constexpr float offset() const noexcept;
@@ -49,7 +49,7 @@ Equivalent to: \tcode{color_stop(0.0f, rgba_color::transparent_black)}.
 
 \indexlibrary{\idxcode{color_stop}!constructor}%
 \begin{itemdecl}
-constexpr color_stop(float o, const rgba_color& c) noexcept;
+constexpr color_stop(float o, rgba_color c) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -82,7 +82,7 @@ The offset is \tcode{o}.
 
 \indexlibrarymember{color}{color_stop}%
 \begin{itemdecl}
-constexpr void color(const rgba_color& c) noexcept;
+constexpr void color(rgba_color c) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
