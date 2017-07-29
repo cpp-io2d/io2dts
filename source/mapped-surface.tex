@@ -37,7 +37,7 @@ namespace std::experimental::io2d::v1 {
 The \tcode{mapped_surface} class provides access to inspect and modify the pixel data of a \tcode{surface} object's \underlyingsurface or a subsection thereof.
 
 \pnum
-A \tcode{mapped_surface} object can only be created by the \tcode{surface::map} function. Creation of a \tcode{mapped_surface} object fails if the format of the pixel data would be \tcode{format::invalid} or \tcode{format::unknown}.
+A \tcode{mapped_surface} object can only be created by the \tcode{image_surface::map} function. Creation of a \tcode{mapped_surface} object fails if the format of the pixel data would be \tcode{format::invalid} or \tcode{format::unknown}.
 
 \pnum
 The pixel data is presented as an array in the form of a pointer to (possibly \tcode{const}) \tcode{unsigned char}.
