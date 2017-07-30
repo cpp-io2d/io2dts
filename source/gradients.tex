@@ -66,8 +66,8 @@ A radial gradient is a \term{degenerate radial gradient} if:
 \begin{itemize}
 \item its start circle has a negative radius; or,
 \item its end circle has a negative radius; or,
-\item the distance between the center point of its start circle and the center point of its end circle is not greater than \tcode{numeric_limits<float>::epsilon()} and the difference between the radius of its start circle and the radius of its end circle is not greater than \tcode{numeric_limits<float>::epsilon()}; or,
-\item its start circle has a radius of 0.0f and its end circle has a radius of 0.0f.
+\item the distance between the center point of its start circle and the center point of its end circle is \tcode{point_2d::zero()}; or,
+\item its start circle has a radius of \tcode{0.0f} and its end circle has a radius of \tcode{0.0f}.
 \end{itemize}
 
 \pnum
