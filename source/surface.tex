@@ -57,7 +57,7 @@ namespace std::experimental::io2d::v1 {
       const optional<dashes>& d = nullopt,
       const optional<render_props>& rp = nullopt,
       const optional<clip_props>& cl = nullopt);
-    void stroke(const brush& b, const path_group& pg,
+    void stroke(const brush& b, const interpreted_path& pg,
       const optional<brush_props>& bp = nullopt,
       const optional<stroke_props>& sp = nullopt,
       const optional<dashes>& d = nullopt,
@@ -68,7 +68,7 @@ namespace std::experimental::io2d::v1 {
       const optional<brush_props>& bp = nullopt,
       const optional<render_props>& rp = nullopt,
       const optional<clip_props>& cl = nullopt);
-    void fill(const brush& b, const path_group& pg,
+    void fill(const brush& b, const interpreted_path& pg,
       const optional<brush_props>& bp = nullopt,
       const optional<render_props>& rp = nullopt,
       const optional<clip_props>& cl = nullopt);
@@ -140,7 +140,7 @@ The masking operation uses a \term{mask brush} of type \tcode{brush}.
 \rSec2 [\iotwod.surface.rendering.sourcepath] {Rendering and composing source path}
 
 \pnum
-In addition to brushes (\ref{\iotwod.surface.rendering.brushes}), all rendering and composing operation except for painting and masking use a \term{source path} of type \tcode{path_group}.
+In addition to brushes (\ref{\iotwod.surface.rendering.brushes}), all rendering and composing operation except for painting and masking use a \term{source path}. The source path is either a \tcode{path_builder<Allocator>} object or an \tcode{interpreted_path} object. If it is a \tcode{path_builder<Allocator>} object, it is interpreted (\ref{\iotwod.paths.interpretation}) before it is used as the source path.
 
 \rSec2 [\iotwod.surface.rendering.commonstate] {Common state data}
 
@@ -231,7 +231,7 @@ The \term{brush coordinate space} is the standard coordinate space of the source
 The \term{mask coordinate space} is the standard coordinate space of the mask brush (\ref{\iotwod.surface.rendering.brushes}). Its transformation matrix is the mask properties' mask matrix (\ref{\iotwod.maskprops.summary}).
 
 \pnum
-The \term{user coordinate space} is the standard coordinate space of \tcode{path_group} objects. Its transformation matrix is a default-constructed \tcode{matrix_2d}.
+The \term{user coordinate space} is the standard coordinate space of \tcode{interpreted_path} objects. Its transformation matrix is a default-constructed \tcode{matrix_2d}.
 
 \pnum
 The \term{surface coordinate space} is the standard coordinate space of the \tcode{surface} object's \underlyingsurface. Its transformation matrix is the surface properties' surface matrix (\ref{\iotwod.renderprops.summary}).
@@ -320,32 +320,32 @@ When a filling operation is initiated on a surface, the implementation shall pro
 \rSec1 [\iotwod.surface.stroking] {\tcode{surface} stroking}
 
 \pnum
-When a stroking operation is initiated on a surface, it is carried out for each path in the source path (\ref{\iotwod.surface.rendering}).
+When a stroking operation is initiated on a surface, it is carried out for each figure in the source path (\ref{\iotwod.surface.rendering}).
 
 \pnum
-The following rules shall apply when a stroking operation is carried out on a path:
+The following rules shall apply when a stroking operation is carried out on a figure:
 \begin{enumerate}
 \item No part of the \underlyingsurface that is outside of the clip area shall be modified.
 
-\item If the path only contains a degenerate path segment, then if the \term{line cap} value (see: \ref{\iotwod.strokeprops.summary} and \ref{\iotwod.surface.rendering.specificstate}) is either \tcode{line_cap::round} or \tcode{line_cap::square}, the line caps shall be rendered, resulting in a circle or a square, respectively. The remaining rules shall not apply.
+\item If the figure only contains a degenerate segment, then if the \term{line cap} value (see: \ref{\iotwod.strokeprops.summary} and \ref{\iotwod.surface.rendering.specificstate}) is either \tcode{line_cap::round} or \tcode{line_cap::square}, the line caps shall be rendered, resulting in a circle or a square, respectively. The remaining rules shall not apply.
 
-\item If the path is a closed path, then the point where the end point of its final path segment meets the start point of the initial path segment shall be rendered as specified by the \term{line join} value (see: \ref{\iotwod.strokeprops.summary} and \ref{\iotwod.surface.rendering.specificstate}); otherwise the start point of the initial path segment and end point of the final path segment shall each by rendered as specified by the line cap value. The remaining meetings between successive end points and start points shall be rendered as specified by the line join value.
+\item If the figure is a closed figure, then the point where the end point of its final segment meets the start point of the initial segment shall be rendered as specified by the \term{line join} value (see: \ref{\iotwod.strokeprops.summary} and \ref{\iotwod.surface.rendering.specificstate}); otherwise the start point of the initial segment and end point of the final segment shall each by rendered as specified by the line cap value. The remaining meetings between successive end points and start points shall be rendered as specified by the line join value.
 
-\item If the dash pattern (Table~\ref{tab:\iotwod.surface.rendering.specificstate.listing}) has its default value or if its \tcode{vector<float>} member is empty, the path segments shall be rendered as a continuous path.
+\item If the dash pattern (Table~\ref{tab:\iotwod.surface.rendering.specificstate.listing}) has its default value or if its \tcode{vector<float>} member is empty, the segments shall be rendered as a continuous path.
 
 \item If the dash pattern's \tcode{vector<float>} member contains only one value, that value shall be used to define a repeating pattern in which the path is shown then hidden. The ends of each shown portion of the path shall be rendered as specified by the line cap value.
 
-\item If the dash pattern's \tcode{vector<float>} member contains two or more values, the values shall be used to define a pattern in which the path is alternatively rendered then not rendered for the length specified by the value. The ends of each rendered portion of the path shall be rendered as specified by the line cap value. If the dash pattern's \tcode{float} member, which specifies an offset value, is not \tcode{0.0f}, the meaning of its value is \impldefplain{dash pattern!offset value}. If a rendered portion of the path overlaps a not rendered portion of the path, the rendered portion shall be rendered.
+\item If the dash pattern's \tcode{vector<float>} member contains two or more values, the values shall be used to define a pattern in which the figure is alternatively rendered then not rendered for the length specified by the value. The ends of each rendered portion of the figure shall be rendered as specified by the line cap value. If the dash pattern's \tcode{float} member, which specifies an offset value, is not \tcode{0.0f}, the meaning of its value is \impldefplain{dash pattern!offset value}. If a rendered portion of the figure overlaps a not rendered portion of the figure, the rendered portion shall be rendered.
 \end{enumerate}
 
 \pnum
-When a stroking operation is carried out on a path, the width of each rendered portion shall be the \term{line width} (see: \ref{\iotwod.strokeprops.summary} and \ref{\iotwod.surface.rendering.specificstate}). Ideally this means that the diameter of the stroke at each rendered point should be equal to the line width. However, because there is an infinite number of points along each rendered portion, implementations may choose an \unspecnorm method of determining minimum distances between points along each rendered portion and the diameter of the stroke between those points shall be the same.
+When a stroking operation is carried out on a figure, the width of each rendered portion shall be the \term{line width} (see: \ref{\iotwod.strokeprops.summary} and \ref{\iotwod.surface.rendering.specificstate}). Ideally this means that the diameter of the stroke at each rendered point should be equal to the line width. However, because there are an infinite number of points along each rendered portion, implementations may choose an \unspecnorm method of determining minimum distances between points along each rendered portion and the diameter of the stroke between those points shall be the same.
 \begin{note}
 This concept is sometimes referred to as a tolerance. It allows for a balance between precision and performance, especially in situations where the end result is in a non-exact format such as raster graphics data.
 \end{note}
 
 \pnum
-After all paths in the path group have been rendered but before the rendered result is composed to the \underlyingsurface, the rendered result shall be transformed from the user coordinate space (\ref{\iotwod.surface.coordinatespaces}) to the surface coordinate space (\ref{\iotwod.surface.coordinatespaces}).
+After all figures in the path have been rendered but before the rendered result is composed to the \underlyingsurface, the rendered result shall be transformed from the user coordinate space (\ref{\iotwod.surface.coordinatespaces}) to the surface coordinate space (\ref{\iotwod.surface.coordinatespaces}).
 
 \rSec1 [\iotwod.surface.masking] {\tcode{surface} masking}
 
@@ -486,7 +486,7 @@ void stroke(const brush& b, const path_builder<Allocator>& pb,
   const optional<dashes>& d,
   const optional<render_props>& rp = nullopt,
   const optional<clip_props>& cl);
-void stroke(const brush& b, const path_group& pg,
+void stroke(const brush& b, const interpreted_path& pg,
   const optional<brush_props>& bp,
   const optional<stroke_props>& sp,
   const optional<dashes>& d,
@@ -517,7 +517,7 @@ void fill(const brush& b, const path_builder<Allocator>& pb,
   const optional<brush_props>& bp,
   const optional<render_props>& rp,
   const optional<clip_props>& cl);
-void fill(const brush& b, const path_group& pg,
+void fill(const brush& b, const interpreted_path& pg,
   const optional<brush_props>& bp,
   const optional<render_props>& rp,
   const optional<clip_props>& cl);

@@ -4,10 +4,10 @@
 \rSec1 [\iotwod.fillrule.summary] {\tcode{fill_rule} summary}
 
 \pnum
-The \tcode{fill_rule} enum class determines how the filling operation (\ref{\iotwod.surface.filling}) is performed on a path group.
+The \tcode{fill_rule} enum class determines how the filling operation (\ref{\iotwod.surface.filling}) is performed on a path.
 
 \pnum
-For each point, draw a ray from that point to infinity which does not pass through the start point or end point of any non-degenerate path segment in the path group, is not tangent to any non-degenerate path segment in the path group, and is not coincident with any non-degenerate path segment in the path group.
+For each point, draw a ray from that point to infinity which does not pass through the start point or end point of any non-degenerate segment in the path, is not tangent to any non-degenerate segment in the path, and is not coincident with any non-degenerate segment in the path.
 
 \pnum
 See Table~\ref{tab:\iotwod.fillrule.meanings} for the meaning of each \tcode{fill_rule} enumerator.
@@ -40,10 +40,10 @@ namespace std::experimental::io2d::v1 {
  \\ \capsep
  \endhead
  \tcode{winding}
- & If the \term{fill rule} (\ref{\iotwod.brushprops.summary}) is \tcode{fill_rule::winding}, then using the ray described above and beginning with a count of zero, add one to the count each time a non-degenerate path segment crosses the ray going left-to-right from its begin point to its end point, and subtract one each time a non-degenerate path segment crosses the ray going from right-to-left from its begin point to its end point. If the resulting count is zero after all non-degenerate path segments that cross the ray have been evaluated, the point shall not be filled; otherwise the point shall be filled.
+ & If the \term{fill rule} (\ref{\iotwod.brushprops.summary}) is \tcode{fill_rule::winding}, then using the ray described above and beginning with a count of zero, add one to the count each time a non-degenerate segment crosses the ray going left-to-right from its begin point to its end point, and subtract one each time a non-degenerate segment crosses the ray going from right-to-left from its begin point to its end point. If the resulting count is zero after all non-degenerate segments that cross the ray have been evaluated, the point shall not be filled; otherwise the point shall be filled.
  \\
  \tcode{even_odd}
- & If the fill rule is \tcode{fill_rule::even_odd}, then using the ray described above and beginning with a count of zero, add one to the count each time a non-degenerate path segment crosses the ray. If the resulting count is an odd number after all non-degenerate path segments that cross the ray have been evaluated, the point shall be filled; otherwise the point shall not be filled.
+ & If the fill rule is \tcode{fill_rule::even_odd}, then using the ray described above and beginning with a count of zero, add one to the count each time a non-degenerate segment crosses the ray. If the resulting count is an odd number after all non-degenerate segments that cross the ray have been evaluated, the point shall be filled; otherwise the point shall not be filled.
  \begin{note}
  Mathematically, zero is an even number, not an odd number.
  \end{note}

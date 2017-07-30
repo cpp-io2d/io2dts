@@ -3,22 +3,22 @@
 
 \pnum
 \indexlibrary{\idxcode{path_builder}}%
-The class \tcode{path_builder} is a container that stores and manipulates objects of type \tcode{path_data::path_item} from which \tcode{path_group} objects are created.
+The class \tcode{path_builder} is a container that stores and manipulates objects of type \tcode{figure_items::figure_item} from which \tcode{interpreted_path} objects are created.
 
 \pnum
 A \tcode{path_builder} is a contiguous container. (See [container.requirements.general] in \cppseventeen.)
 
 \pnum
-The collection of \tcode{path_data::path_item} objects in a path builder is referred to as its path group.
+The collection of \tcode{figure_items::figure_item} objects in a path builder is referred to as its path.
 
 \rSec1 [\iotwod.pathbuilder.synopsis] {\tcode{path_builder} synopsis}%
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
-  template <class Allocator = allocator<path_data::path_item>>
+  template <class Allocator = allocator<figure_items::figure_item>>
   class path_builder {
   public:
-    using value_type = path_data::path_item;
+    using value_type = figure_items::figure_item;
     using allocator_type = Allocator;
     using reference = value_type&;
     using const_reference = const value_type&;
@@ -96,9 +96,9 @@ namespace std::experimental::io2d::v1 {
     const_reference back() const;
 
     // \ref{\iotwod.pathbuilder.modifiers}, modifiers:
-    void new_path(point_2d pt) noexcept;
-    void rel_new_path(point_2d pt) noexcept;
-    void close_path() noexcept;
+    void new_figure(point_2d pt) noexcept;
+    void rel_new_figure(point_2d pt) noexcept;
+    void close_figure() noexcept;
     void matrix(const matrix_2d& m) noexcept;
     void rel_matrix(const matrix_2d& m) noexcept;
     void revert_matrix() noexcept;
@@ -383,29 +383,29 @@ If an exception is thrown there are no effects.
 
 \rSec1 [\iotwod.pathbuilder.modifiers] {\tcode{path_builder} modifiers}
 
-\indexlibrarymember{path_builder}{new_path}%
+\indexlibrarymember{path_builder}{new_figure}%
 \begin{itemdecl}
-void new_path(point_2d pt) noexcept;
+void new_figure(point_2d pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::abs_new_path(pt)} to the end of the path group.
+Adds a \tcode{figure_items::figure_item} object constructed from \tcode{figure_items::abs_new_figure(pt)} to the end of the path.
 \end{itemdescr}
 
-\indexlibrarymember{path_builder}{rel_new_path}%
+\indexlibrarymember{path_builder}{rel_new_figure}%
 \begin{itemdecl}
-void rel_new_path(point_2d pt) noexcept;
+void rel_new_figure(point_2d pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::rel_new_path(pt)} to the end of the path group.
+Adds a \tcode{figure_items::figure_item} object constructed from \tcode{figure_items::rel_new_figure(pt)} to the end of the path.
 \end{itemdescr}
 
-\indexlibrarymember{path_builder}{close_path}%
+\indexlibrarymember{path_builder}{close_figure}%
 \begin{itemdecl}
-void close_path() noexcept;
+void close_figure() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -414,7 +414,7 @@ The current point contains a value.
 
 \pnum
 \effects
-Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::close_path()} to the end of the path group.
+Adds a \tcode{figure_items::figure_item} object constructed from \tcode{figure_items::close_figure()} to the end of the path.
 \end{itemdescr}
 
 \indexlibrarymember{path_builder}{set_matrix}%
@@ -428,7 +428,7 @@ The matrix \tcode{m} shall be invertible.
 
 \pnum
 \effects
-Adds a \tcode{path_data::path_item} object constructed from \tcode{(path_data::abs_matrix(m)} to the end of the path group.
+Adds a \tcode{figure_items::figure_item} object constructed from \tcode{(figure_items::abs_matrix(m)} to the end of the path.
 \end{itemdescr}
 
 \indexlibrarymember{path_builder}{modify_matrix}%
@@ -442,7 +442,7 @@ The matrix \tcode{m} shall be invertible.
 
 \pnum
 \effects
-Adds a \tcode{path_data::path_item} object constructed from \tcode{(path_data::rel_matrix(m)} to the end of the path group.
+Adds a \tcode{figure_items::figure_item} object constructed from \tcode{(figure_items::rel_matrix(m)} to the end of the path.
 \end{itemdescr}
 
 \indexlibrarymember{path_builder}{revert_matrix}%
@@ -452,7 +452,7 @@ void revert_matrix() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Adds a \tcode{path_data::path_item} object constructed from \tcode{(path_data::revert_matrix()} to the end of the path group.
+Adds a \tcode{figure_items::figure_item} object constructed from \tcode{(figure_items::revert_matrix()} to the end of the path.
 \end{itemdescr}
 
 \indexlibrarymember{path_builder}{line}%
@@ -461,7 +461,7 @@ void line(point_2d pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::abs_line(pt)} to the end of the path group.
+Adds a \tcode{figure_items::figure_item} object constructed from \tcode{figure_items::abs_line(pt)} to the end of the path.
 \end{itemdescr}
 
 \indexlibrarymember{path_builder}{rel_line}%
@@ -471,7 +471,7 @@ void rel_line(point_2d dpt) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::rel_line(pt)} to the end of the path group.
+Adds a \tcode{figure_items::figure_item} object constructed from \tcode{figure_items::rel_line(pt)} to the end of the path.
 \end{itemdescr}
 
 \indexlibrarymember{path_builder}{quadratic_curve}%
@@ -481,7 +481,7 @@ void quadratic_curve(point_2d pt0, point_2d pt1) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Adds a \tcode{path_data::path_item} object constructed from\\ \tcode{path_data::abs_quadratic_curve(pt0, pt1)} to the end of the path group.
+Adds a \tcode{figure_items::figure_item} object constructed from\\ \tcode{figure_items::abs_quadratic_curve(pt0, pt1)} to the end of the path.
 \end{itemdescr}
 
 \indexlibrarymember{path_builder}{rel_quadratic_curve}%
@@ -492,7 +492,7 @@ void rel_quadratic_curve(point_2d dpt0, point_2d dpt1)
 \begin{itemdescr}
 \pnum
 \effects
-Adds a \tcode{path_data::path_item} object constructed from\\ \tcode{path_data::rel_quadratic_curve(dpt0, dpt1)} to the end of the path group.
+Adds a \tcode{figure_items::figure_item} object constructed from\\ \tcode{figure_items::rel_quadratic_curve(dpt0, dpt1)} to the end of the path.
 \end{itemdescr}
 
 \indexlibrarymember{path_builder}{cubic_curve}%
@@ -504,7 +504,7 @@ void cubic_curve(point_2d pt0, point_2d pt1,
 \pnum
 \effects
 \pnum
-Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::abs_cubic_curve(pt0, pt1, pt2)} to the end of the path group.
+Adds a \tcode{figure_items::figure_item} object constructed from \tcode{figure_items::abs_cubic_curve(pt0, pt1, pt2)} to the end of the path.
 \end{itemdescr}
 
 \indexlibrarymember{path_builder}{rel_cubic_curve}%
@@ -515,7 +515,7 @@ void rel_cubic_curve(point_2d dpt0, point_2d dpt1,
 \begin{itemdescr}
 \pnum
 \effects
-Adds a \tcode{path_data::path_item} object constructed from \tcode{path_data::rel_cubic_curve(dpt0, dpt1, dpt2)} to the end of the path group.
+Adds a \tcode{figure_items::figure_item} object constructed from \tcode{figure_items::rel_cubic_curve(dpt0, dpt1, dpt2)} to the end of the path.
 \end{itemdescr}
 
 \indexlibrarymember{path_builder}{arc}%
@@ -525,7 +525,7 @@ void arc(point_2d rad, float rot, float sang) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Adds a \tcode{path_data::path_item} object constructed from \\ \tcode{path_data::arc(rad, rot, sang)} to the end of the path group.
+Adds a \tcode{figure_items::figure_item} object constructed from \\ \tcode{figure_items::arc(rad, rot, sang)} to the end of the path.
 \end{itemdescr}
 
 \indexlibrarymember{path_builder}{insert}%
@@ -610,11 +610,11 @@ const_iterator cbegin() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-An iterator referring to the first \tcode{path_data::path_item} item in the path group.
+An iterator referring to the first \tcode{figure_items::figure_item} item in the path.
 
 \pnum
 \remarks
-Changing a \tcode{path_data::path_item} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_item} object or of any subsequent \tcode{path_data::path_item} object in the path group produces undefined behavior when the path group is interpreted as described in \ref{\iotwod.paths.interpretation} unless all of the violations are fixed prior to such interpretation.
+Changing a \tcode{figure_items::figure_item} object or otherwise modifying the path in a way that violates the preconditions of that \tcode{figure_items::figure_item} object or of any subsequent \tcode{figure_items::figure_item} object in the path produces undefined behavior when the path is interpreted as described in \ref{\iotwod.paths.interpretation} unless all of the violations are fixed prior to such interpretation.
 \end{itemdescr}
 
 \indexlibrarymember{end}{path_builder}%
@@ -631,7 +631,7 @@ An iterator which is the past-the-end value.
 
 \pnum
 \remarks
-Changing a \tcode{path_data::path_item} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_item} object or of any subsequent \tcode{path_data::path_item} object in the path group produces undefined behavior when the path group is interpreted as described in \ref{\iotwod.paths.interpretation} unless all of the violations are fixed prior to such interpretation.
+Changing a \tcode{figure_items::figure_item} object or otherwise modifying the path in a way that violates the preconditions of that \tcode{figure_items::figure_item} object or of any subsequent \tcode{figure_items::figure_item} object in the path produces undefined behavior when the path is interpreted as described in \ref{\iotwod.paths.interpretation} unless all of the violations are fixed prior to such interpretation.
 \end{itemdescr}
 
 \indexlibrarymember{rbegin}{path_builder}%
@@ -648,7 +648,7 @@ An iterator which is semantically equivalent to \tcode{reverse_iterator(end)}.
 
 \pnum
 \remarks
-Changing a \tcode{path_data::path_item} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_item} object or of any subsequent \tcode{path_data::path_item} object in the path group produces undefined behavior when the path group is interpreted as described in \ref{\iotwod.paths.interpretation} all of the violations are fixed prior to such interpretation.
+Changing a \tcode{figure_items::figure_item} object or otherwise modifying the path in a way that violates the preconditions of that \tcode{figure_items::figure_item} object or of any subsequent \tcode{figure_items::figure_item} object in the path produces undefined behavior when the path is interpreted as described in \ref{\iotwod.paths.interpretation} all of the violations are fixed prior to such interpretation.
 \end{itemdescr}
 
 \indexlibrarymember{rend}{path_builder}%
@@ -665,7 +665,7 @@ An iterator which is semantically equivalent to \tcode{reverse_iterator(begin)}.
 
 \pnum
 \remarks
-Changing a \tcode{path_data::path_item} object or otherwise modifying the path group in a way that violates the preconditions of that \tcode{path_data::path_item} object or of any subsequent \tcode{path_data::path_item} object in the path group produces undefined behavior when the path group is interpreted as described in \ref{\iotwod.paths.interpretation} unless all of the violations are fixed prior to such interpretation.
+Changing a \tcode{figure_items::figure_item} object or otherwise modifying the path in a way that violates the preconditions of that \tcode{figure_items::figure_item} object or of any subsequent \tcode{figure_items::figure_item} object in the path produces undefined behavior when the path is interpreted as described in \ref{\iotwod.paths.interpretation} unless all of the violations are fixed prior to such interpretation.
 \end{itemdescr}
 
 \rSec1[\iotwod.pathbuilder.special] {\tcode{path_builder} specialized algorithms}

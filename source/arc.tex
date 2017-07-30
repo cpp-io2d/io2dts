@@ -5,7 +5,7 @@
 
 \pnum
 \indexlibrary{\idxcode{arc}}%
-The class \tcode{arc} describes a path item that is a path segment.
+The class \tcode{arc} describes a figure item that is a segment.
 
 \pnum
 It has a \term{radius} of type \tcode{point_2d}, a \term{rotation} of type \tcode{float}, and a \term{start angle} of type \tcode{float}.
@@ -17,7 +17,7 @@ It forms a portion of the circumference of a circle. The centre of the circle is
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
-  namespace path_data {
+  namespace figure_items {
     class arc {
     public:
       // \ref{\iotwod.arc.cons}, construct/copy/move/destroy:

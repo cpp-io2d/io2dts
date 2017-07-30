@@ -1,68 +1,68 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.absnewpath] {Class \tcode{abs_new_path}}
+\rSec0 [\iotwod.absnewfigure] {Class \tcode{abs_new_figure}}
 
 \pnum
-\indexlibrary{\idxcode{abs_new_path}}%
-The class \tcode{abs_new_path} describes a path item that is a new path instruction.
+\indexlibrary{\idxcode{abs_new_figure}}%
+The class \tcode{abs_new_figure} describes a figure item that is a new figure command.
 
 \pnum
 It has an \term{at point} of type \tcode{point_2d}.
 
-\rSec1 [\iotwod.absnewpath.synopsis] {\tcode{abs_new_path} synopsis}%
+\rSec1 [\iotwod.absnewfigure.synopsis] {\tcode{abs_new_figure} synopsis}%
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
-  namespace path_data {
-    class abs_new_path {
+  namespace figure_items {
+    class abs_new_figure {
     public:
-      // \ref{\iotwod.absnewpath.cons}, construct:
-      constexpr abs_new_path() noexcept;
-      constexpr explicit abs_new_path(point_2d pt) noexcept;
+      // \ref{\iotwod.absnewfigure.cons}, construct:
+      constexpr abs_new_figure() noexcept;
+      constexpr explicit abs_new_figure(point_2d pt) noexcept;
 
-      // \ref{\iotwod.absnewpath.modifiers}, modifiers:
+      // \ref{\iotwod.absnewfigure.modifiers}, modifiers:
       constexpr void at(point_2d pt) noexcept;
 
-      // \ref{\iotwod.absnewpath.observers}, observers:
+      // \ref{\iotwod.absnewfigure.observers}, observers:
       constexpr point_2d at() const noexcept;
     };
     
-    // \ref{\iotwod.absnewpath.ops}, operators:
-    constexpr bool operator==(const abs_new_path& lhs, const abs_new_path& rhs) 
+    // \ref{\iotwod.absnewfigure.ops}, operators:
+    constexpr bool operator==(const abs_new_figure& lhs, const abs_new_figure& rhs) 
       noexcept;
-    constexpr bool operator!=(const abs_new_path& lhs, const abs_new_path& rhs) 
+    constexpr bool operator!=(const abs_new_figure& lhs, const abs_new_figure& rhs) 
       noexcept;
   }
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.absnewpath.cons] {\tcode{abs_new_path} constructors}%
+\rSec1 [\iotwod.absnewfigure.cons] {\tcode{abs_new_figure} constructors}%
 
-\indexlibrary{\idxcode{abs_new_path}!constructor}%
+\indexlibrary{\idxcode{abs_new_figure}!constructor}%
 \begin{itemdecl}
-constexpr abs_new_path() noexcept;
+constexpr abs_new_figure() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{abs_new_path\{ point_2d() \};}
+Equivalent to: \tcode{abs_new_figure\{ point_2d() \};}
 \end{itemdescr}
 
-\indexlibrary{\idxcode{abs_new_path}!constructor}%
+\indexlibrary{\idxcode{abs_new_figure}!constructor}%
 \begin{itemdecl}
-constexpr explicit abs_new_path(point_2d pt) noexcept;
+constexpr explicit abs_new_figure(point_2d pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs an object of type \tcode{abs_new_path}.
+Constructs an object of type \tcode{abs_new_figure}.
 
 \pnum
 The at point is \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.absnewpath.modifiers]{\tcode{abs_new_path} modifiers}%
+\rSec1 [\iotwod.absnewfigure.modifiers]{\tcode{abs_new_figure} modifiers}%
 
-\indexlibrarymember{at}{abs_new_path}%
+\indexlibrarymember{at}{abs_new_figure}%
 \begin{itemdecl}
 constexpr void at(point_2d pt) noexcept;
 \end{itemdecl}
@@ -72,9 +72,9 @@ constexpr void at(point_2d pt) noexcept;
 The at point is \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.absnewpath.observers]{\tcode{abs_new_path} observers}%
+\rSec1 [\iotwod.absnewfigure.observers]{\tcode{abs_new_figure} observers}%
 
-\indexlibrarymember{at}{abs_new_path}%
+\indexlibrarymember{at}{abs_new_figure}%
 \begin{itemdecl}
 constexpr point_2d at() const noexcept;
 \end{itemdecl}
@@ -84,11 +84,11 @@ constexpr point_2d at() const noexcept;
 The at point.
 \end{itemdescr}
 
-\rSec1 [\iotwod.absnewpath.ops]{\tcode{abs_new_path} operators}%
+\rSec1 [\iotwod.absnewfigure.ops]{\tcode{abs_new_figure} operators}%
 
-\indexlibrarymember{operator==}{abs_new_path}%
+\indexlibrarymember{operator==}{abs_new_figure}%
 \begin{itemdecl}
-constexpr bool operator==(const abs_new_path& lhs, const abs_new_path& rhs) 
+constexpr bool operator==(const abs_new_figure& lhs, const abs_new_figure& rhs) 
   noexcept;
 \end{itemdecl}
 \begin{itemdescr}

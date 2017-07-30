@@ -3,17 +3,16 @@
 \rSec0 [\iotwod.paths.items.intro] {Introduction}
 
 \pnum
-The classes in the \tcode{path_data} namespace describe path items.
-%When used to define a path, the path items are interpreted sequentially starting with the first item.
+The classes in the \tcode{figure_items} namespace describe figure items.
 
 \pnum
-A path begins with an \tcode{abs_new_path} or \tcode{rel_new_path} object. A path ends when:
+A figure begins with an \tcode{abs_new_figure} or \tcode{rel_new_figure} object. A figure ends when:
 
 \begin{itemize}
-\item a \tcode{close_path} object is encountered;
-\item a \tcode{abs_new_path} or \tcode{rel_new_path} object is encountered; or
-\item there are no more path items in the path's path group.
+\item a \tcode{close_figure} object is encountered;
+\item a \tcode{abs_new_figure} or \tcode{rel_new_figure} object is encountered; or
+\item there are no more figure items in the path.
 \end{itemize}
 
 \pnum
-The \tcode{path_builder} class is a sequential container that contains a path group. It provides a simple interface for building a path group but a path group can be created using any container that stores \tcode{path_data::path_item} objects.
+The \tcode{path_builder} class is a sequential container that contains a path. It provides a simple interface for building a path but a path can be created using any container that stores \tcode{figure_items::figure_item} objects.

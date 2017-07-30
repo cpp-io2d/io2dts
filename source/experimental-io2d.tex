@@ -68,20 +68,20 @@ namespace std { namespace experimental {
   constexpr bool operator!=(const matrix_2d& lhs, const matrix_2d& rhs) 
     noexcept;
 
-  namespace path_data {
-    class abs_new_path;
-    constexpr bool operator==(const abs_new_path&, const abs_new_path&) 
+  namespace figure_items {
+    class abs_new_figure;
+    constexpr bool operator==(const abs_new_figure&, const abs_new_figure&) 
       noexcept;
-    constexpr bool operator!=(const abs_new_path&, const abs_new_path&) 
+    constexpr bool operator!=(const abs_new_figure&, const abs_new_figure&) 
       noexcept;
-    class rel_new_path;
-    constexpr bool operator==(const rel_new_path&, const rel_new_path&) 
+    class rel_new_figure;
+    constexpr bool operator==(const rel_new_figure&, const rel_new_figure&) 
       noexcept;
-    constexpr bool operator!=(const rel_new_path&, const rel_new_path&) 
+    constexpr bool operator!=(const rel_new_figure&, const rel_new_figure&) 
       noexcept;
-    class close_path;
-    constexpr bool operator==(const close_path&, const close_path&) noexcept;
-    constexpr bool operator!=(const close_path&, const close_path&) noexcept;
+    class close_figure;
+    constexpr bool operator==(const close_figure&, const close_figure&) noexcept;
+    constexpr bool operator!=(const close_figure&, const close_figure&) noexcept;
     class abs_matrix;
     constexpr bool operator==(const abs_matrix&, const abs_matrix&) noexcept;
     constexpr bool operator!=(const abs_matrix&, const abs_matrix&) noexcept;
@@ -122,15 +122,15 @@ namespace std { namespace experimental {
       const rel_quadratic_curve&) noexcept;
     constexpr bool operator!=(const rel_quadratic_curve&,
       const rel_quadratic_curve&) noexcept;
-    using path_item = variant<abs_cubic_curve, abs_line, abs_matrix, 
-      abs_new_path, abs_quadratic_curve, arc, close_path,
-      rel_cubic_curve, rel_line, rel_matrix, rel_new_path, rel_quadratic_curve, 
+    using figure_item = variant<abs_cubic_curve, abs_line, abs_matrix, 
+      abs_new_figure, abs_quadratic_curve, arc, close_figure,
+      rel_cubic_curve, rel_line, rel_matrix, rel_new_figure, rel_quadratic_curve, 
       revert_matrix>;
   }
   
-  class path_group;
+  class interpreted_path;
 
-  template <class Allocator = allocator<path_data::path_data_types>>
+  template <class Allocator = allocator<figure_items::figure_items_types>>
   class path_builder;
 
   template <class Allocator>

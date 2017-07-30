@@ -3,7 +3,7 @@
 
 \pnum
 \indexlibrary{\idxcode{rel_cubic_curve}}%
-The class \tcode{rel_cubic_curve} describes a path item that is a path segment.
+The class \tcode{rel_cubic_curve} describes a figure item that is a segment.
 
 \pnum
 It has a \term{first control point} of type \tcode{point_2d}, a \term{second control point} of type \tcode{point_2d}, and an \tcode{end point} of type \tcode{point_2d}.
@@ -12,7 +12,7 @@ It has a \term{first control point} of type \tcode{point_2d}, a \term{second con
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
-  namespace path_data {
+  namespace figure_items {
     class rel_cubic_curve {
     public:
       // \ref{\iotwod.relcubiccurve.cons}, construct

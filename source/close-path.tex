@@ -1,32 +1,32 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.closepath] {Class \tcode{close_path}}%
+\rSec0 [\iotwod.closefigure] {Class \tcode{close_figure}}%
 
 \pnum
-\indexlibrary{\idxcode{close_path}}
-The class \tcode{close_path} describes a path item that is a close path instruction.
+\indexlibrary{\idxcode{close_figure}}
+The class \tcode{close_figure} describes a figure item that is a close figure command.
 
-\rSec1 [\iotwod.closepath.synopsis] {\tcode{close_path} synopsis}%
+\rSec1 [\iotwod.closefigure.synopsis] {\tcode{close_figure} synopsis}%
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
-  namespace path_data {
-    class close_path {
+  namespace figure_items {
+    class close_figure {
     public:
-      constexpr close_path() noexcept;
+      constexpr close_figure() noexcept;
     };
     
-    // \ref{\iotwod.closepath.ops}, operators:
-    constexpr bool operator==(const close_path&, const close_path&) noexcept;
-    constexpr bool operator!=(const close_path&, const close_path&) noexcept;
+    // \ref{\iotwod.closefigure.ops}, operators:
+    constexpr bool operator==(const close_figure&, const close_figure&) noexcept;
+    constexpr bool operator!=(const close_figure&, const close_figure&) noexcept;
   }
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.closepath.ops]{\tcode{close_path} operators}%
+\rSec1 [\iotwod.closefigure.ops]{\tcode{close_figure} operators}%
 
-\indexlibrarymember{operator==}{close_path}%
+\indexlibrarymember{operator==}{close_figure}%
 \begin{itemdecl}
-constexpr bool operator==(const close_path&, const close_path&) noexcept;
+constexpr bool operator==(const close_figure&, const close_figure&) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

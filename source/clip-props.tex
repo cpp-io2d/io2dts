@@ -8,7 +8,7 @@
 The \tcode{clip_props} class provides general state information that is applicable to all rendering and composing operations (\ref{\iotwod.surface.rendering}).
 
 \pnum
-It has a \term{clip area} of type \tcode{path_group} and a \term{fill rule} of type \tcode{fill_rule}.
+It has a \term{clip area} of type \tcode{interpreted_path} and a \term{fill rule} of type \tcode{fill_rule}.
 
 \rSec1 [\iotwod.clipprops.synopsis] {\tcode{clip_props} synopsis}
 
@@ -22,17 +22,17 @@ namespace std::experimental::io2d::v1 {
     explicit clip_props(const path_builder<Allocator>& pb,
       experimental::io2d::fill_rule fr = 
       experimental::io2d::fill_rule::winding);
-    explicit clip_props(const path_group& pg, experimental::io2d::fill_rule fr =
+    explicit clip_props(const interpreted_path& pg, experimental::io2d::fill_rule fr =
       experimental::io2d::fill_rule::winding) noexcept;
 
     // \ref{\iotwod.clipprops.modifiers}, modifiers:
     template <class Allocator>
     void clip(const path_builder<Allocator>& pb);
-    void clip(const path_group& pg) noexcept;
+    void clip(const interpreted_path& pg) noexcept;
     void fill_rule(experimental::io2d::fill_rule fr) noexcept;
     
     // \ref{\iotwod.clipprops.observers}, observers:
-    path_group clip() const noexcept;
+    interpreted_path clip() const noexcept;
     experimental::io2d::fill_rule fill_rule() const noexcept;
   };
 }
@@ -55,7 +55,7 @@ Equivalent to: \tcode{clip_props(path_builder<>\{ \})}.
 template <class Allocator>
 explicit clip_props(const path_builder<Allocator>& pb,
   experimental::io2d::fill_rule fr);
-explicit clip_props(const path_group& pg, experimental::io2d::fill_rule fr) 
+explicit clip_props(const interpreted_path& pg, experimental::io2d::fill_rule fr) 
   noexcept;
 \end{itemdecl}
 \begin{itemdescr}
@@ -66,7 +66,7 @@ Constructs an object of type \tcode{clip_props}.
 \pnum
 The clip area is:
 \begin{itemize}
-\item \tcode{path_group\{pb\}}; or
+\item \tcode{interpreted_path\{pb\}}; or
 \item \tcode{pg}.
 \end{itemize}
 
@@ -80,14 +80,14 @@ The fill rule is \tcode{fr}.
 \begin{itemdecl}
 template <class Allocator>
 void clip(const path_builder<Allocator>& pb, experimental::io2d::fill_rule fr);
-void clip(const path_group& pg, experimental::io2d::fill_rule fr) noexcept;
+void clip(const interpreted_path& pg, experimental::io2d::fill_rule fr) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
 The clip area is:
 \begin{itemize}
-\item \tcode{path_group\{pb\}}; or
+\item \tcode{interpreted_path\{pb\}}; or
 \item \tcode{pg}.
 \end{itemize}
 \end{itemdescr}
@@ -106,7 +106,7 @@ The fill rule is \tcode{fr}.
 
 \indexlibrarymember{clip}{clip_props}%
 \begin{itemdecl}
-path_group clip() const noexcept;
+interpreted_path clip() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

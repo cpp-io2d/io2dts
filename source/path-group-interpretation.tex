@@ -1,33 +1,33 @@
 %!TEX root = io2d.tex
 
-\rSec0 [\iotwod.paths.interpretation]{Path group interpretation}
+\rSec0 [\iotwod.paths.interpretation]{Path interpretation}
 
 \pnum
-This subclause describes how to interpret a path group for use in a rendering and composing operation.
+This subclause describes how to interpret a path for use in a rendering and composing operation.
 
 \pnum
-Interpreting a path group consists of sequentially evaluating the \tcode{path_data::path_item} objects in a path group and transforming them into zero or more paths as-if in the manner specified in this subclause.
+Interpreting a path consists of sequentially evaluating the figure items contained in the figures in the path and transforming them into zero or more figures as-if in the manner specified in this subclause.
 
 \pnum
-The interpretation of a path group requires the state data specified in Table~\ref{tab:\iotwod.paths.interpretation.state}.
+The interpretation of a path requires the state data specified in Table~\ref{tab:\iotwod.paths.interpretation.state}.
 
 \begin{floattable}
-{Path group interpretation state data}{tab:\iotwod.paths.interpretation.state}{llll}
+{Path interpretation state data}{tab:\iotwod.paths.interpretation.state}{llll}
 \hline
 \hdstyle{Name} &
 \hdstyle{Description} &
 \hdstyle{Type} &
 \hdstyle{Initial value} \\ \hline
 \tcode{mtx} &
-Path group transformation matrix &
+Path transformation matrix &
 \tcode{matrix_2d} &
 \tcode{matrix_2d\{ \}} \\
 \tcode{currPt} &
 Current point &
 \tcode{point_2d} &
 \unspec \\
-\tcode{lnPt} &
-Last new point &
+\tcode{lnfPt} &
+Last new figure point &
 \tcode{point_2d} &
 \unspec \\
 \tcode{mtxStk} &
@@ -39,66 +39,62 @@ Matrix stack &
 \FloatBarrier
 
 \pnum
-When interpreting a path group, until a \tcode{path_data::abs_new_path} path item is reached, a path shall only contain path group instruction path items; no diagnostic is required. If a path is a degenerate path, none of its path items have any effects, with two exceptions:
+When interpreting a path, until a \tcode{figure_items::abs_new_figure} figure item is reached, a path shall only contain path command figure items; no diagnostic is required. If a figure is a degenerate figure, none of its figure items have any effects, with two exceptions:
 \begin{itemize}
-\item the path's \tcode{path_data::abs_new_path} or \tcode{path_data::rel_new_path} path item sets the value of \tcode{currPt} as-if the path item was interpreted; and,
-\item any path group instruction path items are evaluated with full effect.
+\item the path's \tcode{figure_items::abs_new_figure} or \tcode{figure_items::rel_new_figure} figure item sets the value of \tcode{currPt} as-if the figure item was interpreted; and,
+\item any path command figure items are evaluated with full effect.
 \end{itemize}.
 
-%\pnum
-%\begin{note}
-%The requirement above stating "until a \tcode{path_data::abs_new_path} path item is reached..." uses the word "reached" to make it clear that whether the first path is a degenerate path is irrelevant to that requirement.
-%\end{note}
 \pnum
-The effects of a path item contained in a \tcode{path_data::path_item} object when that object is being evaluated during path group interpretation are described in Table~\ref{tab:\iotwod.paths.interpretation.effects}.
+The effects of a figure item contained in a \tcode{figure_items::figure_item} object when that object is being evaluated during path interpretation are described in Table~\ref{tab:\iotwod.paths.interpretation.effects}.
 
-\begin{libreqtab2a} {Path item interpretation effects} {tab:\iotwod.paths.interpretation.effects}
+\begin{libreqtab2a} {Figure item interpretation effects} {tab:\iotwod.paths.interpretation.effects}
 \\ \topline
-\lhdr{Path item} & \rhdr{Effects} \\ \capsep
+\lhdr{Figure item} & \rhdr{Effects} \\ \capsep
 \endfirsthead
 \continuedcaption\\
 \topline
-\lhdr{Path item} & \rhdr{Effects} \\ \capsep
+\lhdr{Figure item} & \rhdr{Effects} \\ \capsep
 \endhead
 
-\tcode{path_data::abs_new_path p} &
-Creates a new path. Sets \tcode{currPt} to \tcode{mtx.transform_pt(\{ 0.0f, 0.0f \}) + p.at()}. Sets \tcode{lnPt} to \tcode{currPt}. \\ \rowsep
+\tcode{figure_items::abs_new_figure p} &
+Creates a new figure. Sets \tcode{currPt} to \tcode{mtx.transform_pt(\{ 0.0f, 0.0f \}) + p.at()}. Sets \tcode{lnfPt} to \tcode{currPt}. \\ \rowsep
 
-\tcode{path_data::rel_new_path p} &
-Let \tcode{mm} equal \tcode{mtx}.  Let \tcode{mm.m20} equal {0.0f}. Let \tcode{mm.m21} equal \tcode{0.0f}. Creates a new path. Sets \tcode{currPt} to \tcode{currPt + p.at() * mm}. Sets \tcode{lnPt} to \tcode{currPt}. \\ \rowsep
+\tcode{figure_items::rel_new_figure p} &
+Let \tcode{mm} equal \tcode{mtx}.  Let \tcode{mm.m20} equal {0.0f}. Let \tcode{mm.m21} equal \tcode{0.0f}. Creates a new figure. Sets \tcode{currPt} to \tcode{currPt + p.at() * mm}. Sets \tcode{lnfPt} to \tcode{currPt}. \\ \rowsep
 
-\tcode{path_data::close_path p} &
-Creates a line from \tcode{currPt} to \tcode{lnPt}. Makes the current path a closed path. Creates a new path. Sets \tcode{currPt} to \tcode{lnPt}. \\ \rowsep
+\tcode{figure_items::close_figure p} &
+Creates a line from \tcode{currPt} to \tcode{lnfPt}. Makes the current figure a closed figure. Creates a new figure. Sets \tcode{currPt} to \tcode{lnfPt}. \\ \rowsep
 
-\tcode{path_data::abs_matrix p} &
+\tcode{figure_items::abs_matrix p} &
 Calls \tcode{mtxStk.push(mtx)}. Sets \tcode{mtx} to \tcode{p.matrix()}. \\ \rowsep
 
-\tcode{path_data::rel_matrix p} &
+\tcode{figure_items::rel_matrix p} &
 Calls \tcode{mtxStk.push(mtx)}. Sets \tcode{mtx} to \tcode{mtx * p.matrix()}. \\ \rowsep
 
-\tcode{path_data::revert_matrix p} &
+\tcode{figure_items::revert_matrix p} &
 If \tcode{mtxStk.empty()} is \tcode{false}, sets \tcode{mtx} to \tcode{mtxStk.top()} then calls \tcode{mtxStk.pop()}. Otherwise sets \tcode{mtx} to its initial value as specified in Table~\ref{tab:\iotwod.paths.interpretation.state}. \\ \rowsep
 
-\tcode{path_data::abs_line p} &
+\tcode{figure_items::abs_line p} &
 Let \tcode{pt} equal \tcode{mtx.transform_pt(p.to() - currPt) + currPt}. Creates a line from \tcode{currPt} to \tcode{pt}. Sets \tcode{currPt} to \tcode{pt}. \\ \rowsep
 
-\tcode{path_data::rel_line p} &
+\tcode{figure_items::rel_line p} &
 Let \tcode{mm} equal \tcode{mtx}. Let \tcode{mm.m20} equal {0.0f}. Let \tcode{mm.m21} equal \tcode{0.0f}. Let \tcode{pt} equal \tcode{currPt + p.to() * mm}. Creates a line from \tcode{currPt} to \tcode{pt}. Sets \tcode{currPt} to \tcode{pt}. \\ \rowsep
 
-\tcode{path_data::abs_quadratic_curve p} &
+\tcode{figure_items::abs_quadratic_curve p} &
 Let \tcode{cpt} equal \tcode{mtx.transform_pt(p.control_pt() - currPt) + currPt}. Let \tcode{ept} equal \tcode{mtx.transform_pt(p.end_pt() - currPt) + currPt}. Creates a quadratic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt} as the curve's control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
 
-\tcode{path_data::rel_quadratic_curve p} &
+\tcode{figure_items::rel_quadratic_curve p} &
 Let \tcode{mm} equal \tcode{mtx}. Let \tcode{mm.m20} equal {0.0f}. Let \tcode{mm.m21} equal \tcode{0.0f}. Let \tcode{cpt} equal \tcode{currPt + p.control_pt() * mm}. Let \tcode{ept} equal \tcode{currPt + p.control_pt() * mm + p.end_pt() * mm}. Creates a quadratic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt} as the curve's control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
 
-\tcode{path_data::abs_cubic_curve p} &
+\tcode{figure_items::abs_cubic_curve p} &
 Let \tcode{cpt1} equal \tcode{mtx.transform_pt(p.control_pt1() - currPt) + currPt}. Let \tcode{cpt2} equal \tcode{mtx.transform_pt(p.control_pt2() - currPt) + currPt}. Let \tcode{ept} equal \tcode{mtx.transform_pt(p.end_pt() - currPt) + currPt}. Creates a cubic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt1} as the curve's first control point and \tcode{cpt2} as the curve's second control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
 
-\tcode{path_data::rel_cubic_curve p} &
+\tcode{figure_items::rel_cubic_curve p} &
 Let \tcode{mm} equal \tcode{mtx}. Let \tcode{mm.m20} equal {0.0f}. Let \tcode{mm.m21} equal \tcode{0.0f}. Let \tcode{cpt1} equal \tcode{currPt + p.control_pt1() * mm}. Let \tcode{cpt2} equal \tcode{currPt + p.control_pt1() * mm + p.control_pt2() * mm}. Let \tcode{ept} equal \tcode{currPt + p.control_pt1() * mm + p.control_pt2() * mm + p.end_pt() * mm}. Creates a cubic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt1} as the curve's first control point and \tcode{cpt2} as the curve's second control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
 
-\tcode{path_data::arc p} &
+\tcode{figure_items::arc p} &
 Let \tcode{mm} equal \tcode{mtx}. Let \tcode{mm.m20} equal {0.0f}. Let \tcode{mm.m21} equal \tcode{0.0f}. Creates an arc. It begins at \tcode{currPt}, which is at \tcode{p.start_angle()} radians on the arc and rotates \tcode{p.rotation()} radians. If \tcode{p.rotation()} is positive, rotation is counterclockwise, otherwise it is clockwise. The center of the arc is located at \tcode{p.center(currPt, mm)}. The arc ends at \tcode{p.end_pt(currPt, mm)}. Sets \tcode{currPt} to \tcode{p.end_pt(currPt, mm)}.
 
-\begin{note} \tcode{p.radius()}, which specifies the radius of the arc, is implicitly included in the above statement of effects by the specifications of the center of the arc and the end of the arcs. The use of the current point as the origin for the application of the path group transformation matrix is also implicitly included by the same specifications. \end{note} \\
+\begin{note} \tcode{p.radius()}, which specifies the radius of the arc, is implicitly included in the above statement of effects by the specifications of the center of the arc and the end of the arcs. The use of the current point as the origin for the application of the path transformation matrix is also implicitly included by the same specifications. \end{note} \\
 \end{libreqtab2a}

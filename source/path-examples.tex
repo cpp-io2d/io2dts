@@ -1,13 +1,11 @@
 %!TEX root = io2d.tex
 
-% Note: The rSec is included in paths.tex. If added here instead, it would be:
-
-\rSec1 [\iotwod.paths.example]{Path group examples (Informative)}
+\rSec1 [\iotwod.paths.example]{Path examples (Informative)}
 
 \rSec2 [\iotwod.paths.example.intro] {Overview}
 
 \pnum
-Path groups are composed of zero or more paths. The following examples show the basics of how path groups work in practice.
+Paths are composed of zero or more figures. The following examples show the basics of how paths work in practice.
 
 \pnum
 Every example is placed within the following code at the indicated spot. This code is shown here once to avoid repetition:
@@ -38,17 +36,17 @@ int main() {
 \rSec2 [\iotwod.paths.examples.one] {Example 1}
 
 \pnum
-Example 1 consists of a single path, forming a trapezoid:
+Example 1 consists of a single figure, forming a trapezoid:
 
 \begin{codeblock}
-  pb.new_path({ 80.0f, 20.0f }); // Begins the path.
+  pb.new_figure({ 80.0f, 20.0f }); // Begins the figure.
   pb.line({ 220.0f, 20.0f }); // Creates a line from the [80, 20] to [220, 20].
   pb.rel_line({ 60.0f, 160.0f }); // Line from [220, 20] to
     // [220 + 60, 160 + 20]. The "to" point is relative to the starting point.
   pb.rel_line({ -260.0f, 0.0f }); // Line from [280, 180] to 
     // [280 - 260, 180 + 0].
-  pb.close_path(); // Creates a line from [20, 180] to [80, 20] 
-    // (the new path point), which makes this a closed path.
+  pb.close_figure(); // Creates a line from [20, 180] to [80, 20] 
+    // (the new figure point), which makes this a closed figure.
   imgSfc.stroke(foreBrush, pb, nullopt, nullopt, nullopt, aliased);
 \end{codeblock}
 
@@ -63,20 +61,21 @@ Example 1 consists of a single path, forming a trapezoid:
 \rSec2 [\iotwod.paths.examples.two] {Example 2}
 
 \pnum
-Example 2 consists of two paths. The first is a rectangular open path (on the left) and the second is a rectangular closed path (on the right):
+Example 2 consists of two figures. The first is a rectangular open figure (on the left) and the second is a rectangular closed figure (on the right):
 
 \begin{codeblock}
-  pb.new_path({ 20.0f, 20.0f }); // Begin the first path.
+  pb.new_figure({ 20.0f, 20.0f }); // Begin the first figure.
   pb.rel_line({ 100.0f, 0.0f });
   pb.rel_line({ 0.0f, 160.0f });
   pb.rel_line({ -100.0f, 0.0f });
   pb.rel_line({ 0.0f, -160.0f });
   
-  pb.new_path({ 180.0f, 20.0f }); // End the first path and begin the second path.
+  pb.new_figure({ 180.0f, 20.0f }); // End the first figure and begin the 
+                                    // second figure.
   pb.rel_line({ 100.0f, 0.0f });
   pb.rel_line({ 0.0f, 160.0f });
   pb.rel_line({ -100.0f, 0.0f });
-  pb.close_path(); // End the second path.
+  pb.close_figure(); // End the second figure.
   imgSfc.stroke(foreBrush, pb, nullopt, stroke_props{ 10.0f }, nullopt, alised);
 \end{codeblock}
 
@@ -89,35 +88,35 @@ Example 2 consists of two paths. The first is a rectangular open path (on the le
 \FloatBarrier
 
 \pnum
-The resulting image from example 2 shows the difference between an open path and a closed path. Each path begins and ends at the same point. The difference is that with the closed path, that the rendering of the point where the initial path segment and final path segment meet is controlled by the \tcode{line_join} value in the \tcode{stroke_props} class, which in this case is the default value of \tcode{line_join::miter}. In the open path, the rendering of that point receives no special treatment such that each path segment at that point is rendered using the \tcode{line_cap} value in the \tcode{stroke_props} class, which in this case is the default value of \tcode{line_cap::none}.
+The resulting image from example 2 shows the difference between an open figure and a closed figure. Each figure begins and ends at the same point. The difference is that with the closed figure, that the rendering of the point where the initial segment and final segment meet is controlled by the \tcode{line_join} value in the \tcode{stroke_props} class, which in this case is the default value of \tcode{line_join::miter}. In the open figure, the rendering of that point receives no special treatment such that each segment at that point is rendered using the \tcode{line_cap} value in the \tcode{stroke_props} class, which in this case is the default value of \tcode{line_cap::none}.
 
 \pnum
-That difference between rendering as a \tcode{line_join} versus rendering as two \tcode{line_cap}s is what causes the notch to appear in the open path segment. Path segments are rendered such that half of the stroke width is rendered on each side of the point being evaluated. With no line cap, each segment begins and ends exactly at the point specified.
+That difference between rendering as a \tcode{line_join} versus rendering as two \tcode{line_cap}s is what causes the notch to appear in the open segment. Segments are rendered such that half of the stroke width is rendered on each side of the point being evaluated. With no line cap, each segment begins and ends exactly at the point specified.
 
 \pnum
-So for the open path, the first line begins at \tcode{point_2d\{ 20.0f, 20.0f \}} and the last line ends there. Given the stroke width of \tcode{10.0f}, the visible result for the first line is a rectangle with an upper left corner of \tcode{point_2d\{ 20.0f, 15.0f \}} and a lower right corner of \tcode{point_2d\{ 120.0f, 25.0f \}}. The last line appears as a rectangle with an upper left corner of \tcode{point_2d\{ 15.0f, 20.0f \}} and a lower right corner of \tcode{point_2d\{ 25.0f, 180.0f \}}. This produces the appearance of a square gap between \tcode{point_2d\{ 15.0f, 15.0f \}} and \tcode{point_2d\{20.0f, 20.0f \}}.
+So for the open figure, the first line begins at \tcode{point_2d\{ 20.0f, 20.0f \}} and the last line ends there. Given the stroke width of \tcode{10.0f}, the visible result for the first line is a rectangle with an upper left corner of \tcode{point_2d\{ 20.0f, 15.0f \}} and a lower right corner of \tcode{point_2d\{ 120.0f, 25.0f \}}. The last line appears as a rectangle with an upper left corner of \tcode{point_2d\{ 15.0f, 20.0f \}} and a lower right corner of \tcode{point_2d\{ 25.0f, 180.0f \}}. This produces the appearance of a square gap between \tcode{point_2d\{ 15.0f, 15.0f \}} and \tcode{point_2d\{20.0f, 20.0f \}}.
 
 \pnum
-For the closed path, adjusting for the coordinate differences, the rendering facts are the same as for the open path except for one key difference: the point where the first line and last line meet is rendered as a line join rather than two line caps, which, given the default value of \tcode{line_join::miter}, produces a miter, adding that square area to the rendering result.
+For the closed figure, adjusting for the coordinate differences, the rendering facts are the same as for the open figure except for one key difference: the point where the first line and last line meet is rendered as a line join rather than two line caps, which, given the default value of \tcode{line_join::miter}, produces a miter, adding that square area to the rendering result.
 
 \rSec2 [\iotwod.paths.examples.three] {Example 3}
 
 \pnum
-Example 3 demonstrates open and closed paths each containing either a quadratic curve or a cubic curve.
+Example 3 demonstrates open and closed figures each containing either a quadratic curve or a cubic curve.
 
 \begin{codeblock}
-pb.new_path({ 20.0f, 20.0f });
+pb.new_figure({ 20.0f, 20.0f });
 pb.rel_quadratic_curve({ 60.0f, 120.0f }, { 60.0f, -120.0f });
-pb.rel_new_path({ 20.0f, 0.0f });
+pb.rel_new_figure({ 20.0f, 0.0f });
 pb.rel_quadratic_curve({ 60.0f, 120.0f }, { 60.0f, -120.0f });
-pb.close_path();
-pb.new_path({ 20.0f, 150.0f });
+pb.close_figure();
+pb.new_figure({ 20.0f, 150.0f });
 pb.rel_cubic_curve({ 40.0f, -120.0f }, { 40.0f, 120.0f * 2.0f },
   { 40.0f, -120.0f });
-pb.rel_new_path({ 20.0f, 0.0f });
+pb.rel_new_figure({ 20.0f, 0.0f });
 pb.rel_cubic_curve({ 40.0f, -120.0f }, { 40.0f, 120.0f * 2.0f },
   { 40.0f, -120.0f });
-pb.close_path();
+pb.close_figure();
 imgSfc.stroke(foreBrush, pb, nullopt, nullopt, nullopt, aliased);
 \end{codeblock}
 
@@ -137,16 +136,16 @@ imgSfc.stroke(foreBrush, pb, nullopt, nullopt, nullopt, aliased);
 \rSec2 [\iotwod.paths.examples.four] {Example 4}
 
 \pnum
-Example 4 shows how to draw "C++" using paths.
+Example 4 shows how to draw "C++" using figures.
 
 \pnum
 For the "C", it is created using an arc. A scaling matrix is used to make it  slightly elliptical. It is also desirable that the arc has a fixed center point, \tcode{point_2d\{ 85.0f, 100.0f \}}. The inverse of the scaling matrix is used in combination with the \tcode{point_for_angle} function to determine the point at which the arc should begin in order to get achieve this fixed center point. The "C" is then stroked.
 
 \pnum
-Unlike the "C", which is created using an open path that is stroked, each "+" is created using a closed path that is filled. To avoid filling the "C", \tcode{pb.clear();} is called to empty the container. The first "+" is created using a series of lines and is then filled.
+Unlike the "C", which is created using an open figure that is stroked, each "+" is created using a closed figure that is filled. To avoid filling the "C", \tcode{pb.clear();} is called to empty the container. The first "+" is created using a series of lines and is then filled.
 
 \pnum
-Taking advantage of the fact that \tcode{path_builder} is a container, rather than create a brand new path for the second "+", a translation matrix is applied by inserting a \tcode{path_data::change_matrix} path item before the \tcode{path_data::new_path} object in the existing plus, reverting back to the old matrix immediately after the  and then filling it again.
+Taking advantage of the fact that \tcode{path_builder} is a container, rather than create a brand new figure for the second "+", a translation matrix is applied by inserting a \tcode{figure_items::change_matrix} figure item before the \tcode{figure_items::new_figure} object in the existing plus, reverting back to the old matrix immediately after the  and then filling it again.
 
 \begin{codeblock}
 // Create the "C".
@@ -154,12 +153,12 @@ const matrix_2d scl = matrix_2d::init_scale({ 0.9f, 1.1f });
 auto pt = scl.inverse().transform_pt({ 85.0f, 100.0f }) +
   point_for_angle(half_pi<float> / 2.0f, 50.0f);
 pb.matrix(scl);
-pb.new_path(pt);
+pb.new_figure(pt);
 pb.arc({ 50.0f, 50.0f }, three_pi_over_two<float>, half_pi<float> / 2.0f);
 imgSfc.stroke(foreBrush, pb, nullopt, stroke_props{ 10.0f });
 // Create the first "+".
 pb.clear();
-pb.new_path({ 130.0f, 105.0f });
+pb.new_figure({ 130.0f, 105.0f });
 pb.rel_line({ 0.0f, -10.0f });
 pb.rel_line({ 25.0f, 0.0f });
 pb.rel_line({ 0.0f, -25.0f });
@@ -171,10 +170,10 @@ pb.rel_line({ -25.0f, 0.0f });
 pb.rel_line({ 0.0f, 25.0f });
 pb.rel_line({ -10.0f, 0.0f });
 pb.rel_line({ 0.0f, -25.0f });
-pb.close_path();
+pb.close_figure();
 imgSfc.fill(foreBrush, pb);
 // Create the second "+".
-pb.insert(pb.begin(), path_data::change_matrix(
+pb.insert(pb.begin(), figure_items::change_matrix(
   matrix_2d::init_translate({ 80.0f, 0.0f })));
 imgSfc.fill(foreBrush, pb);
 \end{codeblock}
@@ -190,20 +189,20 @@ imgSfc.fill(foreBrush, pb);
 %\rSec2 [\iotwod.paths.examples.five] {Example 5}
 %
 %\pnum
-%Example 5 shows the difference between filling a path and then stroking it versus stroking that path then filling it.
+%Example 5 shows the difference between filling a figure and then stroking it versus stroking that figure then filling it.
 %
 %\begin{codeblock}
 %brush blueBrush{ rgba_color::blue };
 %stroke_props ten{ 10.0f };
-%pb.new_path({ 30.0f, 30.0f });
+%pb.new_figure({ 30.0f, 30.0f });
 %pb.rel_line({ 105.0f, 0.0f });
 %pb.rel_line({ 0.0f, 140.0f });
 %pb.rel_line({ -105.0f, 0.0f });
-%pb.close_path();
+%pb.close_figure();
 %imgSfc.stroke(foreBrush, pb, nullopt, ten);
 %imgSfc.fill(blueBrush, pb);
 %pb.insert(pb.begin(),
-%  path_data::change_matrix(matrix_2d::init_translate({ 135.0f, 0.0f })));
+%  figure_items::change_matrix(matrix_2d::init_translate({ 135.0f, 0.0f })));
 %imgSfc.fill(blueBrush, pb);
 %imgSfc.stroke(foreBrush, pb, nullopt, ten);
 %\end{codeblock}
@@ -217,4 +216,4 @@ imgSfc.fill(foreBrush, pb);
 %\FloatBarrier
 %
 %\pnum
-%As can be seen, a path is filled exactly to the lines of the path.
+%As can be seen, a figure is filled exactly to the lines of the figure.
