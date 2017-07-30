@@ -69,11 +69,11 @@ namespace std::experimental::io2d::v1 {
  \end{note}
  \\
  \tcode{nearest}
- & Nearest-neighbor interpolation filtering shall be used.
+ & Nearest-neighbor interpolation filtering
 % The color of the pixel whose coordinates are nearest to the requested coordinates shall be produced. When two or more pixels are equally near to the requested coordinates, it is unspecified which of the equally near pixels shall be the pixel whose color shall be produced.
  \\
  \tcode{bilinear}
- & Bilinear interpolation filtering shall be used.
+ & Bilinear interpolation filtering
 % The distance-weighted average of the four nearest pixels is used to create an interpolated color for the destination pixel. If some source pixel values do not exist (e.g. because an edge or corner of the source has been reached) then the current \tcode{wrap_mode} should be considered in order to determine the values for the missing source pixels. If a hardware sampler is available and offers bilinear filtering, implementations may use it even if its results do not conform to those produced by the description of bilinear filtering provided by this standard.% Whether mipmapping is used and whether mipmaps are generated for sources that do not have them is \impldefplain{filter!bilinear mipmapping}.
  \\
 \end{libreqtab2}

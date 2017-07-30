@@ -54,7 +54,16 @@ namespace std::experimental::io2d::v1 {
 \rSec1 [\iotwod.brush.sampling] {Sampling from a \tcode{brush} object}
 
 \pnum
-When sampling from a \tcode{brush} object \tcode{b}, the \tcode{brush_type} returned by calling \tcode{b.type()} shall determine how the results of sampling shall be determined:
+A \tcode{brush} object is sampled from either as a source brush (\ref{\iotwod.surface.rendering.brushes}) or a mask brush (\ref{\iotwod.surface.rendering.brushes}).
+
+\pnum
+If it is being sampled from as a source brush, its \term{wrap mode}, \term{filter}, and \term{brush matrix} are defined by a \tcode{brush_props} object (\ref{\iotwod.surface.rendering.commonstate} and \ref{\iotwod.surface.rendering.statedefaults}).
+
+\pnum
+If it is being sampled from as a mask brush, its wrap mode, filter, and \term{mask matrix} are defined by a \tcode{mask_props} object (\ref{\iotwod.surface.rendering.specificstate} and \ref{\iotwod.surface.rendering.statedefaults}).
+
+\pnum
+When sampling from a \tcode{brush} object \tcode{b}, the \tcode{brush_type} returned by calling \tcode{b.type()} determines how the results of sampling are determined:
 \begin{enumerate}
 \item If the result of \tcode{b.type()} is \tcode{brush_type::solid_color} then \tcode{b} is a \term{solid color brush}.
 \item If the result of \tcode{b.type()} is \tcode{brush_type::surface} then \tcode{b} is a \term{surface brush}.
@@ -80,7 +89,7 @@ When \tcode{b} is a radial gradient brush, when sampling point \tcode{pt}, where
 \rSec2 [\iotwod.brush.sampling.surface] {Sampling from a surface brush}
 
 \pnum
-When \tcode{b} is a surface brush, when sampling point \tcode{pt}, where \tcode{pt} is the return value of calling the \tcode{transform_pt} member function of brush matrix or mask matrix using the requested point, from \tcode{b}, the visual data returned are from the point \tcode{pt} in the graphics data of the brush, taking into account the values of wrap mode and filter.
+When \tcode{b} is a surface brush, when sampling point \tcode{pt} from \tcode{b}, where \tcode{pt} is the return value of calling the \tcode{transform_pt} member function of the brush matrix or mask matrix using the requested point, the visual data returned are from the point \tcode{pt} in the graphics data of the brush, as modified by the values of wrap mode (\ref{\iotwod.wrapmode}) and filter (\ref{\iotwod.filter}).
 
 \rSec1 [\iotwod.brush.cons] {\tcode{brush} constructors and assignment operators}
 
