@@ -37,12 +37,12 @@ namespace std::experimental::io2d::v1 {
     brush(point_2d begin, point_2d end,
       InputIterator first, InputIterator last);
     brush(point_2d begin, point_2d end,
-      initializer_list<color_stop> il);
+      initializer_list<gradient_stop> il);
     template <class InputIterator>
     brush(const circle& start, const circle& end,
       InputIterator first, InputIterator last);
     brush(const circle& start, const circle& end,
-      initializer_list<color_stop> il);
+      initializer_list<gradient_stop> il);
     explicit brush(image_surface&& img);
 
     // \ref{\iotwod.brush.observers}, observers:
@@ -113,7 +113,7 @@ brush(point_2d begin, point_2d end,
 \begin{itemdescr}
 \pnum
 \effects
-Constructs a linear gradient \tcode{brush} object with a begin point of \tcode{begin}, an end point of \tcode{end}, and a sequential series of \tcode{color stop} values beginning at {first} and ending at {last - 1}.
+Constructs a linear gradient \tcode{brush} object with a begin point of \tcode{begin}, an end point of \tcode{end}, and a sequential series of \tcode{gradient stop} values beginning at {first} and ending at {last - 1}.
 
 \pnum
 The brush's brush type is \tcode{brush_type::linear}.
@@ -126,12 +126,12 @@ Sampling from this brush produces the results specified in \ref{\iotwod.brush.sa
 \indexlibrary{\idxcode{brush}!constructor}%
 \begin{itemdecl}
 brush(point_2d begin, point_2d end,
-  initializer_list<color_stop> il);
+  initializer_list<gradient_stop> il);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs a linear gradient \tcode{brush} object with a begin point of \tcode{begin}, an end point of \tcode{end}, and the sequential series of \tcode{color stop} values in \tcode{il}.
+Constructs a linear gradient \tcode{brush} object with a begin point of \tcode{begin}, an end point of \tcode{end}, and the sequential series of \tcode{gradient stop} values in \tcode{il}.
 
 \pnum
 The brush's brush type is \tcode{brush_type::linear}.
@@ -150,7 +150,7 @@ brush(const circle& start, const circle& end,
 \begin{itemdescr}
 \pnum
 \effects
-Constructs a radial gradient \tcode{brush} object with a start circle of \tcode{start}, an end circle of \tcode{end},  and a sequential series of \tcode{color stop} values beginning at {first} and ending at {last - 1}.
+Constructs a radial gradient \tcode{brush} object with a start circle of \tcode{start}, an end circle of \tcode{end},  and a sequential series of \tcode{gradient stop} values beginning at {first} and ending at {last - 1}.
 
 \pnum
 The brush's brush type is \tcode{brush_type::radial}.
@@ -163,12 +163,12 @@ Sampling from this brush produces the results specified in \ref{\iotwod.brush.sa
 \indexlibrary{\idxcode{brush}!constructor}%
 \begin{itemdecl}
 brush(const circle& start, const circle& end,
-  initializer_list<color_stop> il);
+  initializer_list<gradient_stop> il);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs a radial gradient \tcode{brush} object with a start circle of \tcode{start}, an end circle of \tcode{end}, and the sequential series of \tcode{color stop} values in \tcode{il}.
+Constructs a radial gradient \tcode{brush} object with a start circle of \tcode{start}, an end circle of \tcode{end}, and the sequential series of \tcode{gradient_stop} values in \tcode{il}.
 
 \pnum
 The brush's brush type is \tcode{brush_type::radial}.

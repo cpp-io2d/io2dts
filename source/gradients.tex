@@ -3,10 +3,10 @@
 
 \rSec1 [\iotwod.gradients.common] {Common properties of gradients}
 \pnum
-Gradients are formed, in part, from a collection of \tcode{color_stop} objects.
+Gradients are formed, in part, from a collection of \tcode{gradient_stop} objects.
 
 \pnum
-The collection of \tcode{color_stop} objects contribute to defining a brush which, when sampled from, returns a value that is interpolated based on those color stops.
+The collection of \tcode{gradient_stop} objects contribute to defining a brush which, when sampled from, returns a value that is interpolated based on those gradient stops.
 
 \rSec1 [\iotwod.gradients.linear] {Linear gradients}
 
@@ -23,14 +23,14 @@ A linear gradient for which the distance between its begin point and its end poi
 All attempts to sample from a a degenerate linear gradient return the color \tcode{rgba_color::transparent_black}. The remainder of \ref{\iotwod.gradients} is inapplicable to degenerate linear gradients.
 
 \pnum
-The begin point and end point of a linear gradient define a line segment, with a color stop offset value of 0.0f corresponding to the begin point and a color stop offset value of 1.0f corresponding to the end point.
+The begin point and end point of a linear gradient define a line segment, with a gradient stop offset value of 0.0f corresponding to the begin point and a gradient stop offset value of 1.0f corresponding to the end point.
 
 \pnum
-Color stop offset values in the range \crange{0.0f}{1.0f} linearly correspond to points on the line segment.
+Gradient stop offset values in the range \crange{0.0f}{1.0f} linearly correspond to points on the line segment.
 
 \pnum
 \begin{example}
-Given a linear gradient with a begin point of \tcode{point_2d(0.0f, 0.0f)} and an end point of \tcode{point_2d(10.0f, 5.0f)}, a color stop offset value of 0.6f would correspond to the point \tcode{point_2d(6.0f, 3.0f)}.
+Given a linear gradient with a begin point of \tcode{point_2d(0.0f, 0.0f)} and an end point of \tcode{point_2d(10.0f, 5.0f)}, a gradient stop offset value of 0.6f would correspond to the point \tcode{point_2d(6.0f, 3.0f)}.
 \end{example}
 
 \pnum
@@ -71,10 +71,10 @@ A radial gradient is a \term{degenerate radial gradient} if:
 All attempts to sample from a \tcode{brush} object created using a degenerate radial gradient return the color \tcode{rgba_color::transparent_black}. The remainder of \ref{\iotwod.gradients} is inapplicable to degenerate radial gradients.
 
 \pnum
-A color stop offset of 0.0f corresponds to all points along the diameter of the start circle or to its center point if it has a radius value of 0.0f.
+A gradient stop offset of 0.0f corresponds to all points along the diameter of the start circle or to its center point if it has a radius value of 0.0f.
 
 \pnum
-A color stop offset of 1.0f corresponds to all points along the diameter of the end circle or to its center point if it has a radius value of 0.0f.
+A gradient stop offset of 1.0f corresponds to all points along the diameter of the end circle or to its center point if it has a radius value of 0.0f.
 
 \pnum
 A radial gradient shall be rendered as a continuous series of interpolated circles defined by the following equations:
@@ -83,7 +83,7 @@ A radial gradient shall be rendered as a continuous series of interpolated circl
 \item $y(o) = y_{start} + o \times (y_{end} - y_{start})$
 \item $radius(o) = radius_{start} + o \times (radius_{end} - radius_{start})$
 \end{enumeratea}
-where $o$ is a color stop offset value.
+where $o$ is a gradient stop offset value.
 
 \pnum
 The range of potential values for $o$ shall be determined by the \term{wrap mode} (\ref{\iotwod.brushes.intro}):
@@ -104,51 +104,51 @@ An interpolated circle shall not be rendered if its value for $o$ results in $ra
 For any offset value $o$, its color value shall be determined according to the following rules:
 
 \begin{enumeratea}
-\item If there are less than two color stops or if all color stops have the same offset value, then the color value of every offset value shall be \tcode{rgba_color::transparent_black} and the remainder of these rules are inapplicable.
+\item If there are less than two gradient stops or if all gradient stops have the same offset value, then the color value of every offset value shall be \tcode{rgba_color::transparent_black} and the remainder of these rules are inapplicable.
 
-\item If exactly one color stop has an offset value equal to $o$, $o$'s color value shall be the color value of that color stop and the remainder of these rules are inapplicable.
+\item If exactly one gradient stop has an offset value equal to $o$, $o$'s color value shall be the color value of that gradient stop and the remainder of these rules are inapplicable.
 
-\item If two or more color stops have an offset value equal to $o$, $o$'s color value shall be the color value of the color stop which has the lowest index value among the set of color stops that have an offset value equal to $o$ and the remainder of \ref{\iotwod.gradients.sampling} is inapplicable.
+\item If two or more gradient stops have an offset value equal to $o$, $o$'s color value shall be the color value of the gradient stop which has the lowest index value among the set of gradient stops that have an offset value equal to $o$ and the remainder of \ref{\iotwod.gradients.sampling} is inapplicable.
 
-\item When no color stop has the offset value of \tcode{0.0f}, then, defining $n$ to be the offset value that is nearest to \tcode{0.0f} among the offset values in the set of all color stops, if $o$ is in the offset range $[0, n)$, $o$'s color value shall be \tcode{rgba_color::transparent_black} and the remainder of these rules are inapplicable.
+\item When no gradient stop has the offset value of \tcode{0.0f}, then, defining $n$ to be the offset value that is nearest to \tcode{0.0f} among the offset values in the set of all gradient stops, if $o$ is in the offset range $[0, n)$, $o$'s color value shall be \tcode{rgba_color::transparent_black} and the remainder of these rules are inapplicable.
 \begin{note}
-Since the range described does not include $n$, it does not matter how many color stops have $n$ as their offset value for purposes of this rule.
+Since the range described does not include $n$, it does not matter how many gradient stops have $n$ as their offset value for purposes of this rule.
 \end{note}
 
-\item When no color stop has the offset value of \tcode{1.0f}, then, defining $n$ to be the offset value that is nearest to \tcode{1.0f} among the offset values in the set of all color stops, if $o$ is in the offset range $(n, 1]$, $o$'s color value shall be \tcode{rgba_color::transparent_black} and the remainder of these rules are inapplicable.
+\item When no gradient stop has the offset value of \tcode{1.0f}, then, defining $n$ to be the offset value that is nearest to \tcode{1.0f} among the offset values in the set of all gradient stops, if $o$ is in the offset range $(n, 1]$, $o$'s color value shall be \tcode{rgba_color::transparent_black} and the remainder of these rules are inapplicable.
 \begin{note}
-Since the range described does not include $n$, it does not matter how many color stops have $n$ as their offset value for purposes of this rule.
+Since the range described does not include $n$, it does not matter how many gradient stops have $n$ as their offset value for purposes of this rule.
 \end{note}
 
-\item Each color stop has, at most, two adjacent color stops: one to its left and one to its right.
+\item Each gradient stop has, at most, two adjacent gradient stops: one to its left and one to its right.
 
-\item Adjacency of color stops is initially determined by offset values. If two or more color stops have the same offset value then index values are used to determine adjacency as described below.
+\item Adjacency of gradient stops is initially determined by offset values. If two or more gradient stops have the same offset value then index values are used to determine adjacency as described below.
 
-\item For each color stop \textit{a}, the \term{set of color stops to its left} are those color stops which have an offset value which is closer to \tcode{0.0f} than \textit{a}'s offset value.
+\item For each gradient stop \textit{a}, the \term{set of gradient stops to its left} are those gradient stops which have an offset value which is closer to \tcode{0.0f} than \textit{a}'s offset value.
 \begin{note}
-This includes any color stops with an offset value of \tcode{0.0f} provided that \textit{a}'s offset value is not \tcode{0.0f}.
+This includes any gradient stops with an offset value of \tcode{0.0f} provided that \textit{a}'s offset value is not \tcode{0.0f}.
 \end{note}
 
-\item For each color stop \textit{b}, the \term{set of color stops to its right} are those color stops which have an offset value which is closer to \tcode{1.0f} than \textit{b}'s offset value.
+\item For each gradient stop \textit{b}, the \term{set of gradient stops to its right} are those gradient stops which have an offset value which is closer to \tcode{1.0f} than \textit{b}'s offset value.
 \begin{note}
-This includes any color stops with an offset value of \tcode{1.0f} provided that \textit{b}'s offset value is not \tcode{1.0f}.
+This includes any gradient stops with an offset value of \tcode{1.0f} provided that \textit{b}'s offset value is not \tcode{1.0f}.
 \end{note}
 
-\item A color stop which has an offset value of \tcode{0.0f} does not have an adjacent color stop to its left.
+\item A gradient stop which has an offset value of \tcode{0.0f} does not have an adjacent gradient stop to its left.
 
-\item A color stop which has an offset value of \tcode{1.0f} does not have an adjacent color stop to its right.
+\item A gradient stop which has an offset value of \tcode{1.0f} does not have an adjacent gradient stop to its right.
 
-\item If a color stop \textit{a}'s set of color stops to its left consists of exactly one color stop, that color stop is the color stop that is adjacent to \textit{a} on its left.
+\item If a gradient stop \textit{a}'s set of gradient stops to its left consists of exactly one gradient stop, that gradient stop is the gradient stop that is adjacent to \textit{a} on its left.
 
-\item If a color stop \textit{b}'s set of color stops to its right consists of exactly one color stop, that color stop is the color stop that is adjacent to \textit{b} on its right.
+\item If a gradient stop \textit{b}'s set of gradient stops to its right consists of exactly one gradient stop, that gradient stop is the gradient stop that is adjacent to \textit{b} on its right.
 
-\item If two or more color stops have the same offset value then the color stop with the lowest index value is the only color stop from that set of color stops which can have a color stop that is adjacent to it on its left and the color stop with the highest index value is the only color stop from that set of color stops which can have a color stop that is adjacent to it on its right. This rule takes precedence over all of the remaining rules.
+\item If two or more gradient stops have the same offset value then the gradient stop with the lowest index value is the only gradient stop from that set of gradient stops which can have a gradient stop that is adjacent to it on its left and the gradient stop with the highest index value is the only gradient stop from that set of gradient stops which can have a gradient stop that is adjacent to it on its right. This rule takes precedence over all of the remaining rules.
 
-\item If a color stop can have an adjacent color stop to its left, then the color stop which is adjacent to it to its left is the color stop from the set of color stops to its left which has an offset value which is closest to its offset value. If two or more color stops meet that criteria, then the color stop which is adjacent to it to its left is the color stop which has the highest index value from the set of color stops to its left which are tied for being closest to its offset value.
+\item If a gradient stop can have an adjacent gradient stop to its left, then the gradient stop which is adjacent to it to its left is the gradient stop from the set of gradient stops to its left which has an offset value which is closest to its offset value. If two or more gradient stops meet that criteria, then the gradient stop which is adjacent to it to its left is the gradient stop which has the highest index value from the set of gradient stops to its left which are tied for being closest to its offset value.
 
-\item If a color stop can have an adjacent color stop to its right, then the color stop which is adjacent to it to its right is the color stop from the set of color stops to its right which has an offset value which is closest to its offset value. If two or more color stops meet that criteria, then the color stop which is adjacent to it to its right is the color stop which has the lowest index value from the set of color stops to its right which are tied for being closest to its offset value.
+\item If a gradient stop can have an adjacent gradient stop to its right, then the gradient stop which is adjacent to it to its right is the gradient stop from the set of gradient stops to its right which has an offset value which is closest to its offset value. If two or more gradient stops meet that criteria, then the gradient stop which is adjacent to it to its right is the gradient stop which has the lowest index value from the set of gradient stops to its right which are tied for being closest to its offset value.
 
-\item Where the value of $o$ is in the range $[0,1]$, its color value shall be determined by interpolating between the color stop, $r$, which is the color stop whose offset value is closest to $o$ without being less than $o$ and which can have an adjacent color stop to its left, and the color stop that is adjacent to $r$ on $r$'s left. The acceptable forms of interpolating between color values is set forth later in this section.
+\item Where the value of $o$ is in the range $[0,1]$, its color value shall be determined by interpolating between the gradient stop, $r$, which is the gradient stop whose offset value is closest to $o$ without being less than $o$ and which can have an adjacent gradient stop to its left, and the gradient stop that is adjacent to $r$ on $r$'s left. The acceptable forms of interpolating between color values is set forth later in this section.
 
 \item Where the value of $o$ is outside the range $[0,1]$, its color value depends on the value of wrap mode:
 	\begin{itemize}
@@ -177,4 +177,4 @@ This includes any color stops with an offset value of \tcode{1.0f} provided that
 \end{enumeratea}
 
 \pnum
-Interpolation between the color values of two adjacent color stops is performed linearly on each color channel.
+Interpolation between the color values of two adjacent gradient stops is performed linearly on each color channel.

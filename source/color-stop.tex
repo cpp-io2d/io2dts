@@ -1,55 +1,55 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.colorstop] {Class \tcode{color_stop}}
+\rSec0 [\iotwod.gradientstop] {Class \tcode{gradient_stop}}
 
-\rSec1 [\iotwod.colorstop.intro] {Overview}
+\rSec1 [\iotwod.gradientstop.intro] {Overview}
 \pnum
-\indexlibrary{\idxcode{color_stop}}%
-The class \tcode{color_stop} describes a color stop that is used by gradient brushes.
+\indexlibrary{\idxcode{gradient_stop}}%
+The class \tcode{gradient_stop} describes a gradient stop that is used by gradient brushes.
 
 \pnum
 It has an offset of type \tcode{float} and a color of type \tcode{rgba_color}.
 
-\rSec1 [\iotwod.colorstop.synopsis] {\tcode{color_stop} synopsis}
+\rSec1 [\iotwod.gradientstop.synopsis] {\tcode{gradient_stop} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
-  class color_stop {
+  class gradient_stop {
   public:
-    // \ref{\iotwod.colorstop.cons}, construct:
-    constexpr color_stop() noexcept;
-    constexpr color_stop(float o, rgba_color c) noexcept;
+    // \ref{\iotwod.gradientstop.cons}, construct:
+    constexpr gradient_stop() noexcept;
+    constexpr gradient_stop(float o, rgba_color c) noexcept;
     
-    // \ref{\iotwod.colorstop.modifiers}, modifiers:
+    // \ref{\iotwod.gradientstop.modifiers}, modifiers:
     constexpr void offset(float o) noexcept;
     constexpr void color(rgba_color c) noexcept;
 	
-    // \ref{\iotwod.colorstop.observers}, observers:
+    // \ref{\iotwod.gradientstop.observers}, observers:
     constexpr float offset() const noexcept;
     constexpr rgba_color color() const noexcept;
   };
-  // \ref{\iotwod.colorstop.ops}, operators:
-  constexpr bool operator==(const color_stop& lhs, const color_stop& rhs)
+  // \ref{\iotwod.gradientstop.ops}, operators:
+  constexpr bool operator==(const gradient_stop& lhs, const gradient_stop& rhs)
     noexcept;
-  constexpr bool operator!=(const color_stop& lhs, const color_stop& rhs)
+  constexpr bool operator!=(const gradient_stop& lhs, const gradient_stop& rhs)
     noexcept;
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.colorstop.cons] {\tcode{color_stop} constructors}
+\rSec1 [\iotwod.gradientstop.cons] {\tcode{gradient_stop} constructors}
 
-\indexlibrary{\idxcode{color_stop}!constructor}%
+\indexlibrary{\idxcode{gradient_stop}!constructor}%
 \begin{itemdecl}
-constexpr color_stop() noexcept;
+constexpr gradient_stop() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{color_stop(0.0f, rgba_color::transparent_black)}.
+Equivalent to: \tcode{gradient_stop(0.0f, rgba_color::transparent_black)}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{color_stop}!constructor}%
+\indexlibrary{\idxcode{gradient_stop}!constructor}%
 \begin{itemdecl}
-constexpr color_stop(float o, rgba_color c) noexcept;
+constexpr gradient_stop(float o, rgba_color c) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -58,15 +58,15 @@ constexpr color_stop(float o, rgba_color c) noexcept;
 
 \pnum
 \effects
-Constructs a \tcode{color_stop} object.
+Constructs a \tcode{gradient_stop} object.
 
 \pnum
 The offset is \tcode{o}. The color is \tcode{c}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.colorstop.modifiers] {\tcode{color_stop} modifiers}
+\rSec1 [\iotwod.gradientstop.modifiers] {\tcode{gradient_stop} modifiers}
 
-\indexlibrarymember{offset}{color_stop}%
+\indexlibrarymember{offset}{gradient_stop}%
 \begin{itemdecl}
 constexpr void offset(float o) noexcept;
 \end{itemdecl}
@@ -80,7 +80,7 @@ constexpr void offset(float o) noexcept;
 The offset is \tcode{o}.
 \end{itemdescr}
 
-\indexlibrarymember{color}{color_stop}%
+\indexlibrarymember{color}{gradient_stop}%
 \begin{itemdecl}
 constexpr void color(rgba_color c) noexcept;
 \end{itemdecl}
@@ -90,9 +90,9 @@ constexpr void color(rgba_color c) noexcept;
 The color is \tcode{c}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.colorstop.observers] {\tcode{color_stop} observers}
+\rSec1 [\iotwod.gradientstop.observers] {\tcode{gradient_stop} observers}
 
-\indexlibrarymember{offset}{color_stop}%
+\indexlibrarymember{offset}{gradient_stop}%
 \begin{itemdecl}
 constexpr float offset() const noexcept;
 \end{itemdecl}
@@ -102,7 +102,7 @@ constexpr float offset() const noexcept;
 The offset.
 \end{itemdescr}
 
-\indexlibrarymember{color}{color_stop}%
+\indexlibrarymember{color}{gradient_stop}%
 \begin{itemdecl}
 constexpr rgba_color color() const noexcept;
 \end{itemdecl}
@@ -112,11 +112,11 @@ constexpr rgba_color color() const noexcept;
 The color.
 \end{itemdescr}
 
-\rSec1 [\iotwod.colorstop.ops] {\tcode{color_stop} operators}
+\rSec1 [\iotwod.gradientstop.ops] {\tcode{gradient_stop} operators}
 
-\indexlibrarymember{operator==}{color_stop}%
+\indexlibrarymember{operator==}{gradient_stop}%
 \begin{itemdecl}
-constexpr bool operator==(const color_stop& lhs, const color_stop& rhs)
+constexpr bool operator==(const gradient_stop& lhs, const gradient_stop& rhs)
   noexcept;
 \end{itemdecl}
 \begin{itemdescr}
