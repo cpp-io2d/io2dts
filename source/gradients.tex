@@ -17,10 +17,13 @@ A linear gradient is a type of gradient.
 A linear gradient has a \term{begin point} and an \term{end point}, each of which are objects of type \tcode{point_2d}.
 
 \pnum
-A linear gradient for which the distance between its begin point and its end point is not greater than \tcode{numeric_limits<float>::epsilon()} is a \term{degenerate linear gradient}.
+A linear gradient for which the distance between its begin point and its end point is \tcode{point_2d::zero()} is a \term{degenerate linear gradient}.
 
 \pnum
 All attempts to sample from a a degenerate linear gradient return the color \tcode{rgba_color::transparent_black}. The remainder of \ref{\iotwod.gradients} is inapplicable to degenerate linear gradients.
+\begin{note}
+Because a point has no width and this case is only met when the distance is between the begin point and the end point is zero (such that it collapses to a single point), the existence of one or more gradient stops is irrelevant. A linear gradient requires a line segment to define its color(s). Without a line segment, it is not a linear gradient.
+\end{note}
 
 \pnum
 The begin point and end point of a linear gradient define a line segment, with a gradient stop offset value of 0.0f corresponding to the begin point and a gradient stop offset value of 1.0f corresponding to the end point.

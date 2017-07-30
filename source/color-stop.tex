@@ -61,7 +61,7 @@ constexpr gradient_stop(float o, rgba_color c) noexcept;
 Constructs a \tcode{gradient_stop} object.
 
 \pnum
-The offset is \tcode{o}. The offset color is \tcode{c}.
+The offset is \tcode{o} rounded to the nearest multiple of \tcode{0.00001f}. The offset color is \tcode{c}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.gradientstop.modifiers] {\tcode{gradient_stop} modifiers}
@@ -77,7 +77,7 @@ constexpr void offset(float o) noexcept;
 
 \pnum
 \effects
-The offset is \tcode{o}.
+The offset is \tcode{o} rounded to the nearest multiple of \tcode{0.00001f}.
 \end{itemdescr}
 
 \indexlibrarymember{color}{gradient_stop}%

@@ -32,6 +32,7 @@ namespace std::experimental::io2d::v1 {
     constexpr float magnitude_squared() const noexcept;
     float angular_direction(const point_2d& to) const noexcept;
     point_2d to_unit() const noexcept;
+    constexpr static point_2d zero() const noexcept;
     
     // \ref{\iotwod.\pointtwod.member.ops}, member operators:
     constexpr point_2d& operator+=(const point_2d& rhs) noexcept;
@@ -192,6 +193,16 @@ point_2d to_unit() const noexcept;
 \pnum
 \returns
 \tcode{point_2d\{ x() / magnitude(), y() / magnitude()\}}.
+\end{itemdescr}
+
+\indexlibrarymember{zero}{point_2d}%
+\begin{itemdecl}
+constexpr static point_2d zero() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{point_2d\{ 0.0f, 0.0f \}}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.\pointtwod.member.ops] {\tcode{point_2d} member operators}
