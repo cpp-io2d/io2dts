@@ -22,17 +22,17 @@ a Euclidean plane described by a Cartesian coordinate system where the first coo
 
 \indexdefn{point}%
 \definition{point}{\iotwod.defns.point}
-\defncontext{point} coordinate designated by a floating point \xaxis{} value and a floating point \yaxis{} value within the standard coordinate space
+\defncontext{point} a coordinate designated by a floating point \xaxis{} value and a floating point \yaxis{} value within the \term{standard coordinate space} (\ref{\iotwod.defns.stndcrdspace})
 
 \indexdefn{point}%
 \definition{point}{\iotwod.defns.point.integral}
-\defncontext{integral point} coordinate designated by an integral \xaxis{} value and an integral \yaxis{} value within the standard coordinate space
+\defncontext{integral point} a coordinate designated by an integral \xaxis{} value and an integral \yaxis{} value within the \term{standard coordinate space} (\ref{\iotwod.defns.stndcrdspace})
 
 \indexdefn{normalize}%
 \definition{normalize}{\iotwod.defns.normalize}
 to map a closed set of evenly spaced values in the range $[0, x]$ to an evenly spaced sequence of floating point values in the range $[0, 1]$
 \begin{note}
-The definition of normalize given is the definition for normalizing unsigned input. Signed normalization, i.e. the mapping of a closed set of evenly spaced values in the range $[-x, x)$ to an evenly spaced sequence of floating point values in the range $[-1, 1]$, also exists but is not used in this \documenttypename{}.
+The definition of normalize given is the definition for normalizing unsigned input. Signed normalization, i.e. the mapping of a closed set of evenly spaced values in the range $[-x, x)$ to an evenly spaced sequence of floating point values in the range $[-1, 1]$ is not used in this \documenttypename{}.
 \end{note}
 
 % The following may not be needed. Already defined in IEC 60050 723-05-05.
@@ -42,7 +42,7 @@ the ratio of the width to the height of a rectangular area
 
 \indexdefn{color space}%
 \definition{color space}{\iotwod.defns.colorspace}
-unambiguous mapping of values to colorimetric colors
+an unambiguous mapping of values to colorimetric colors
 
 \indexdefn{color stop}%
 \definition{color stop}{\iotwod.defns.colorstop}
@@ -52,175 +52,175 @@ a tuple composed of a floating point offset value in the range $[0, 1]$ and a co
 \definition{visual data}{\iotwod.defns.visdata}
 data representing color, transparency, or some combination thereof
 
-\indexdefn{alpha}%
-\definition{alpha}{\iotwod.defns.alpha}
-visual data representing transparency
+\indexdefn{graphics data}%
+\definition{graphics data}{\iotwod.defns.graphicsdata}
+\defncontext{graphics data} \term{visual data} (\ref{\iotwod.defns.visdata}) stored in an unspecified form
 
 \indexdefn{channel}%
 \definition{channel}{\iotwod.defns.channel}
 %a bounded set of homogeneously-spaced real numbers in the range $[0,1]$
-a component of visual data, usually color or transparency, with a defined bit size
+a component of \term{visual data} (\ref{\iotwod.defns.visdata}) with a defined bit size
 
-\indexdefn{additive color}%
-\definition{additive color}{\iotwod.defns.additivecolor}
-a color defined by the emissive intensity of its color channels
+\indexdefn{color channel}%
+\definition{color channel}{\iotwod.defns.colorchannel}
+a component of \term{visual data} (\ref{\iotwod.defns.visdata}) representing color
 
-\indexdefn{color model}%
-\definition{color model}{\iotwod.defns.colormodel}
-an ideal, mathematical representation of colors which often uses color channels
-
-\indexdefn{color model}%
-\indexdefn{color model!RGB}%
-\definition{RGB color model}{\iotwod.defns.rgbcolormodel}
-\defncontext{RGB} additive color model using red, green, and blue color channels
-
-\indexdefn{color model}%
-\indexdefn{color model!RGBA}%
-\definition{RGBA color model}{\iotwod.defns.rgbacolormodel}
-\defncontext{RGBA} RGB color model with an alpha channel
-
-\indexdefn{color space}%
-\indexdefn{color space!sRGB}%
-\definition{sRGB color space}{\iotwod.defns.srgbcolorspace}
-\defncontext{sRGB} additive color space defined in IEC 61966-2-1 that is based on the RGB color model
-
-\indexdefn{premultiplied format}%
-\definition{premultiplied format}{\iotwod.defns.premultipliedformat}
-format with color and alpha where each color channel is normalized and then multiplied by the normalized alpha channel value
-\begin{example}
-Given the 32-bit non-premultiplied RGBA pixel with 8 bits per channel \{255, 0, 
-0, 127\} (half-transparent red), when normalized it would become \{1.0f, 0.0f, 
-0.0f, 0.5f\}. As such, in premultiplied, normalized format it would become 
-\{0.5f, 0.0f, 0.0f, 0.5f\} as a result of multiplying each of the three color channels by the alpha channel value.
-\end{example}
+\indexdefn{alpha channel}%
+\definition{alpha channel}{\iotwod.defns.alphachannel}
+a component of \term{visual data} (\ref{\iotwod.defns.visdata}) representing transparency
 
 \indexdefn{visual data format}%
 \definition{visual data format}{\iotwod.defns.visdatafmt}
-a specification that defines a total bit size, a set of one or more channels, and each channel's role, bit size, and location relative to the upper (high-order) bit
+a specification that defines a total bit size, a set of one or more \term{channels} (\ref{\iotwod.defns.channel}), and each \term{channel}'s role, bit size, and location relative to the upper (high-order) bit
 %a specification of visual data channels which defines a total bit size for the format and each channel's role, bit size, and location relative to the upper (high-order) bit
 %\begin{note}
 %The total bit size may be larger than the sum of the bit sizes of the channels of the format.
 %\end{note}
 
+\indexdefn{premultiplied format}%
+\definition{premultiplied format}{\iotwod.defns.premultipliedformat}
+a format with \term{color channels} (\ref{\iotwod.defns.colorchannel}) and an \term{alpha channel} (\ref{\iotwod.defns.alphachannel}) where each \term{color channel} is \term{normalized} (\ref{\iotwod.defns.normalize}) and then multiplied by the \term{normalized} \term{alpha channel} value
+\begin{example}
+Given the 32-bit non-premultiplied RGBA pixel with 8 bits per channel \{255, 0, 0, 127\} (half-transparent red), when normalized it would become \{1.0f, 0.0f, 0.0f, 0.5f\}. As such, in premultiplied, normalized format it would become \{0.5f, 0.0f, 0.0f, 0.5f\} as a result of multiplying each of the three color channels by the alpha channel value.
+\end{example}
+
 \indexdefn{visual data element}%
 \definition{visual data element}{\iotwod.defns.visdataelem}
-an item of visual data with a defined visual data format
+an item of \term{visual data} (\ref{\iotwod.defns.visdata}) with a defined \term{visual data format} (\ref{\iotwod.defns.visdatafmt})
 
 % The following may not be needed. Already defined in IEC 60050 723-05-31
 \indexdefn{pixel}
 \definition{pixel}{\iotwod.defns.pixel}
-a discrete, rectangular visual data element
-
-\indexdefn{graphics data}%
-\definition{graphics data}{\iotwod.defns.graphicsdata}
-\defncontext{graphics data} visual data stored in an unspecified form
+a discrete, rectangular \term{visual data element} (\ref{\iotwod.defns.visdataelem})
 
 \indexdefn{graphics data}%
 \indexdefn{graphics data!raster}%
 \definition{graphics data}{\iotwod.defns.graphics.raster}
-\defncontext{raster graphics data} visual data stored as pixels that is accessible as-if it was an array of rows of pixels beginning with the pixel at the integral point $(0,0)$
+\defncontext{raster graphics data} \term{visual data} (\ref{\iotwod.defns.visdata}) stored as \term{pixels} (\ref{\iotwod.defns.pixel}) that is accessible as-if it was an array of rows of pixels beginning with the pixel at the \term{integral point} $(0,0)$ (\ref{\iotwod.defns.point.integral})
+
+\indexdefn{additive color}%
+\definition{additive color}{\iotwod.defns.additivecolor}
+a color defined by the emissive intensity of its \term{color channels} (\ref{\iotwod.defns.colorchannel})
+
+\indexdefn{color model}%
+\definition{color model}{\iotwod.defns.colormodel}
+an ideal, mathematical representation of colors which often uses \term{color channels} (\ref{\iotwod.defns.colorchannel})
+
+\indexdefn{color model}%
+\indexdefn{color model!RGB}%
+\definition{RGB color model}{\iotwod.defns.rgbcolormodel}
+\defncontext{RGB} an \term{additive} (\ref{\iotwod.defns.additivecolor}) \term{color model} (\ref{\iotwod.defns.colormodel}) using red, green, and blue \term{color channels} (\ref{\iotwod.defns.colorchannel})
+
+\indexdefn{color model}%
+\indexdefn{color model!RGBA}%
+\definition{RGBA color model}{\iotwod.defns.rgbacolormodel}
+\defncontext{RGBA} an \term{RGB color model} (\ref{\iotwod.defns.rgbcolormodel}) with an \term{alpha channel} (\ref{\iotwod.defns.alphachannel})
+
+\indexdefn{color space}%
+\indexdefn{color space!sRGB}%
+\definition{sRGB color space}{\iotwod.defns.srgbcolorspace}
+\defncontext{sRGB} the \term{additive} (\ref{\iotwod.defns.additivecolor}) \term{color space} (\ref{\iotwod.defns.colorspace}) defined in IEC 61966-2-1 that is based on an \term{RGB color model} (\ref{\iotwod.defns.rgbcolormodel})
+
+\indexdefn{control point}%
+\definition{control point}{\iotwod.defns.controlpt}
+the point other than the start point and the end point that is used in defining a curve
 
 \indexdefn{\bezierlocal curve}%
 \indexdefn{\bezierlocal curve!quadratic}%
 \definition{\bezierlocal curve}{\iotwod.defns.bezier.quadratic}
-\defncontext{quadratic} curve defined by the 
+\defncontext{quadratic} a curve defined by the 
 equation $f(t) = (1 - t)^{2} \times P_{0} + 2 \times t \times (1 - t) 
 \times P_{1} + t^{2} \times t \times P_{2}$ where t is in the range \crange{0}{1}, $P_{0}$ is the starting point, $P_{1}$ is the 
-control point, and $P_{2}$ is end point
+\term{control point} (\ref{\iotwod.defns.controlpt}), and $P_{2}$ is end point
 
 \indexdefn{\bezierlocal curve}
 \indexdefn{\bezierlocal curve!cubic}
 \definition{\bezierlocal curve}{\iotwod.defns.bezier.cubic}
-\defncontext{cubic} curve defined by the 
+\defncontext{cubic} a curve defined by the 
 equation $f(t) = (1 - t)^{3} \times P_{0} + 3 \times t \times (1 - t)^{2} 
 \times P_{1} + 3 \times t^{2} \times (1 - t) \times P_{2} + t^{3} \times t 
-\times P_{3}$ where t is in the range \crange{0}{1}, $P_{0}$ is the starting point, $P_{1}$ is the first control point, $P_{2}$ is the second control point, and $P_{3}$ is the ending point
+\times P_{3}$ where t is in the range \crange{0}{1}, $P_{0}$ is the starting point, $P_{1}$ is the first \term{control point} (\ref{\iotwod.defns.controlpt}), $P_{2}$ is the second \term{control point}, and $P_{3}$ is the ending point
 
 \indexdefn{path segment}%
 \definition{path segment}{\iotwod.defns.pathseg}
-line, \bezierlocal curve, or arc, each of which has a start point and an end point
+a line, \term{\bezierlocal curve} (\ref{\iotwod.defns.bezier.quadratic}, \ref{\iotwod.defns.bezier.cubic}), or arc, each of which has a start point and an end point
 
 \indexdefn{initial path segment}%
 \definition{initial path segment}{\iotwod.defns.initialpathseg}
-path segment whose start point is not defined as being the end point of another path segment
+the \term{path segment} (\ref{\iotwod.defns.pathseg}) whose start point is not defined as being the end point of another \term{path segment}
 \begin{note}
 It is possible for the initial path segment and final path segment to be the same path segment.
 \end{note}
 
 \indexdefn{new path point}%
 \definition{new path point}{\iotwod.defns.newpathpt}
-point in a path that is the start point of the initial path segment
+the point in a path that is the start point of the \term{initial path segment} (\ref{\iotwod.defns.initialpathseg})
 
 \indexdefn{final path segment}%
 \definition{final path segment}{\iotwod.defns.finalpathseg}
-path segment whose end point does not define the start point of any other path segment
+the \term{path segment} (\ref{\iotwod.defns.pathseg}) whose end point does not define the start point of any other \term{path segment}
 \begin{note}
 It is possible for the initial path segment and final path segment to be the same path segment.
 \end{note}
 
 \indexdefn{current point}%
 \definition{current point}{\iotwod.defns.currentpoint}
-point used as the start point of a path segment
-
-\indexdefn{control point}%
-\definition{control point}{\iotwod.defns.controlpt}
-point other than the start point and end point that is used in defining a \bezierlocal curve
+the point used as the start point of a \term{path segment} (\ref{\iotwod.defns.pathseg})
 
 \indexdefn{open path}%
 \definition{open path}{\iotwod.defns.openpath}
-path with one or more path segments where the new path point is not used to define the end point of the path's final path segment
+a path with one or more \term{path segments} (\ref{\iotwod.defns.pathseg}) where the \term{new path point} (\ref{\iotwod.defns.newpathpt}) is not used to define the end point of the path's \term{final path segment} (\ref{\iotwod.defns.finalpathseg})
 \begin{note}
 Even if the start point of the initial path segment and the end point of the final path segment are assigned the same coordinates, the path is still an open path since the final path segment's end point is not defined as being the start point of the initial segment but instead merely happens to have the same value as that point.
 \end{note}
 
 \indexdefn{closed path}%
 \definition{closed path}{\iotwod.defns.closedpath}
-path with one or more path segments where the new path point is used to define the end point of the path's final path segment
+a path with one or more \term{path segments} (\ref{\iotwod.defns.pathseg}) where the \term{new path point} (\ref{\iotwod.defns.newpathpt}) is used to define the end point of the path's \term{final path segment} (\ref{\iotwod.defns.finalpathseg})
 
 \indexdefn{degenerate path segment}%
 \definition{degenerate path segment}{\iotwod.defns.degenepathseg}
-path segment that has the same values for its start point, end point, and, if any, control points
-
-\indexdefn{path instruction}%
-\definition{path instruction}{\iotwod.defns.newpathinstruction}
-\defncontext{new path instruction} instruction that creates a new path
+a \term{path segment} (\ref{\iotwod.defns.pathseg}) that has the same values for its start point, end point, and, if any, \term{control points} (\ref{\iotwod.defns.controlpt})
 
 \indexdefn{path instruction}%
 \definition{path instruction}{\iotwod.defns.closepathinstruction}
-\defncontext{close path instruction} instruction that creates a line path segment from the current point to the new path point
+\defncontext{close path instruction} an instruction that creates a line \term{path segment} (\ref{\iotwod.defns.pathseg}) from the current point to the \term{new path point} (\ref{\iotwod.defns.newpathpt})
 
 \indexdefn{path item}%
 \definition{path item}{\iotwod.defns.pathitem}
-path segment, new path instruction, close path instruction, or path group instruction
+a \term{path segment} (\ref{\iotwod.defns.pathseg}), \term{new path instruction} (\ref{\iotwod.defns.newpathinstruction}), \term{close path instruction} (\ref{\iotwod.defns.closepathinstruction}), or \term{path group instruction} (\ref{\iotwod.defns.pathgrpinstruction})
 
 \indexdefn{path}%
 \definition{path}{\iotwod.defns.path}
-collection of path items where the end point of each path segment, except the final path segment, defines the start point of exactly one other path segment in the collection
+a collection of \term{path items} (\ref{\iotwod.defns.pathitem}) where the end point of each \term{path segment} (\ref{\iotwod.defns.pathseg}), except the \term{final path segment} (\ref{\iotwod.defns.finalpathseg}), defines the start point of exactly one other \term{path segment} in the collection
+
+\indexdefn{path instruction}%
+\definition{path instruction}{\iotwod.defns.newpathinstruction}
+\defncontext{new path instruction} an instruction that creates a new \term{path} (\ref{\iotwod.defns.path})
 
 \indexdefn{path group}%
 \definition{path group}{\iotwod.defns.pathgroup}
-collection of paths
+a collection of \term{paths} (\ref{\iotwod.defns.path})
 
 \indexdefn{path group transformation matrix}%
 \definition{path group transformation matrix}{\iotwod.defns.pathgrptransform}
-affine transformation matrix used to apply affine transformations to the points in a path group
+an affine transformation matrix used to apply affine transformations to the points in a \term{path group} (\ref{\iotwod.defns.pathgroup})
 
 \indexdefn{path group instruction}%
 \definition{path group instruction}{\iotwod.defns.pathgrpinstruction}
-instruction that modifies the path group transformation matrix
+an instruction that modifies the \term{path group transformation matrix} (\ref{\iotwod.defns.pathgrptransform})
 
 \indexdefn{degenerate path}%
 \definition{degenerate path}{\iotwod.defns.degenpath}
-path composed entirely of a new path instruction, zero or more degenerate path segments, zero or more path group items, and, optionally, a close path instruction
-
+a \term{path} (\ref{\iotwod.defns.path}) composed entirely of a \term{new path instruction} (\ref{\iotwod.defns.newpathinstruction}), zero or more \term{degenerate path segments} (\ref{\iotwod.defns.degenepathseg}), zero or more \term{path group items} (\ref{\iotwod.defns.pathgroup}), and, optionally, a \term{close path instruction} (\ref{\iotwod.defns.closepathinstruction})
 
 \indexdefn{graphics subsystem}%
 \definition{graphics subsystem}{\iotwod.defns.graphicssubsystem}
-collection of unspecified operating system and library functionality used to render and display 2D computer graphics
+a collection of unspecified operating system and library functionality used to render and display 2D computer graphics
 
 \indexdefn{graphics resource}%
 \definition{graphics resource}{\iotwod.defns.graphicsresource}
-\defncontext{graphics resource} object of unspecified type used by an implementation
+\defncontext{graphics resource} an object of unspecified type used by an implementation
 \begin{note}
 By its definition a graphics resource is an implementation detail. Often it will be a graphics subsystem object (e.g. a graphics device or a render target) or an aggregate composed of multiple graphics subsystem objects. However the only requirement placed upon a graphics resource is that the implementation is able to use it to provide the functionality required of the graphics resource.
 \end{note}
@@ -228,65 +228,63 @@ By its definition a graphics resource is an implementation detail. Often it will
 \indexdefn{graphics resource}%
 \indexdefn{graphics resource!graphics data graphics resource}%
 \definition{graphics resource}{\iotwod.defns.graphicsresource.graphicsdata}
-\defncontext{graphics data graphics resource} object of unspecified type used by an implementation to provide access to and allow manipulation of visual data
+\defncontext{graphics data graphics resource} an object of unspecified type used by an implementation to provide access to, and allow manipulation of, \term{visual data} (\ref{\iotwod.defns.visdata})
 
 \indexdefn{\pixmap}%
 \definition{\pixmap}{\iotwod.defns.pixmap}
-raster graphics data graphics resource
+a raster \term{graphics data graphics resource} (\ref{\iotwod.defns.graphicsresource.graphicsdata})
 
 \indexdefn{filter}%
 \definition{filter}{\iotwod.defns.filter}
-mathematical function that determines the visual data value of a point for a graphics data graphics resource
+a mathematical function that determines the \term{visual data} (\ref{\iotwod.defns.visdata}) value of a point for a \term{graphics data graphics resource} (\ref{\iotwod.defns.graphicsresource.graphicsdata})
 
 \indexdefn{composition algorithm}%
 \definition{composition algorithm}{\iotwod.defns.compositionalgorithm}
-an algorithm that combines a source visual data element and a destination visual data element producing a visual data element that has the same visual data format as the destination visual data element
+an algorithm that combines a source \term{visual data element} (\ref{\iotwod.defns.visdataelem}) and a destination \term{visual data element} producing a \term{visual data element} that has the same \term{visual data format} (\ref{\iotwod.defns.visdatafmt}) as the destination \term{visual data element}
 
 \indexdefn{compose}%
 \definition{compose}{\iotwod.defns.compose}
-to combine part or all of a source graphics data graphics resource with a destination graphics data graphics resource in the manner specified by a composition algorithm
+to combine part or all of a source \term{graphics data graphics resource} (\ref{\iotwod.defns.graphicsresource.graphicsdata}) with a destination \term{graphics data graphics resource} in the manner specified by a \term{composition algorithm} (\ref{\iotwod.defns.compositionalgorithm})
 
 \indexdefn{composing operation}%
 \definition{composing operation}{\iotwod.defns.composingoperation}
-an operation that performs composing
+an operation that performs \term{composing} (\ref{\iotwod.defns.compose})
 %an operation that uses a composition algorithm to combine part or all of a source of visual data capable of being treated as though it were a \pixmap with a \pixmap
 
 \indexdefn{artifact}%
 \definition{artifact}{\iotwod.defns.artifact}
-an error in the results of the application of a composing operation 
+an error in the results of the application of a \term{composing operation} (\ref{\iotwod.defns.composingoperation})
 
 \indexdefn{sample}%
 \definition{sample}{\iotwod.defns.sample}
-to use a filter to obtain the visual data for a given point from a graphics data graphics resource
+to use a \term{filter} (\ref{\iotwod.defns.filter}) to obtain the \term{visual data} (\ref{\iotwod.defns.visdata}) for a given point from a \term{graphics data graphics resource} (\ref{\iotwod.defns.graphicsresource.graphicsdata})
 
 \indexdefn{aliasing}%
 \definition{aliasing}{\iotwod.defns.alias}
-the presence of visual artifacts in the results of rendering due to 
-sampling imperfections
+the presence of visual \term{artifacts} (\ref{\iotwod.defns.artifact}) in the results of rendering due to \term{sampling} (\ref{\iotwod.defns.sample}) imperfections
 
 \indexdefn{anti-aliasing}%
 \definition{anti-aliasing}{\iotwod.defns.antialias}
-the application of a function or algorithm while composing to 
-reduce aliasing
+the application of a function or algorithm while \term{composing} (\ref{\iotwod.defns.compose}) to reduce \term{aliasing} (\ref{\iotwod.defns.alias})
 \begin{note}
-Certain algorithms can produce ``better'' results, i.e. results with less artifacts or with less pronounced artifacts, when rendering text with anti-aliasing due to the nature of text rendering. As such, it often makes sense to provide the ability to choose one type of anti-aliasing for text rendering and another for all other rendering and to provide different sets of anti-aliasing types to choose from for each of the two operations.
+Certain algorithms can produce ``better'' results, i.e. results with fewer artifacts or with less pronounced artifacts, when rendering text with anti-aliasing due to the nature of text rendering. As such, it often makes sense to provide the ability to choose one type of anti-aliasing for text rendering and another for all other rendering and to provide different sets of anti-aliasing types to choose from for each of the two operations.
 \end{note}
 
 \indexdefn{graphics state data}%
 \definition{graphics state data}{\iotwod.defns.graphicsstatedata}
-data which specify how some part of the process of rendering or of a composing operation shall be performed in part or in whole
+data which specify how some part of the process of rendering, or of a \term{composing operation} (\ref{\iotwod.defns.composingoperation}), shall be performed in part or in whole
 
 \indexdefn{render}%
 \definition{render}{\iotwod.defns.render}
-to transform a path group into graphics data in the manner specified by a set of graphics state data
+to transform a \term{path group} (\ref{\iotwod.defns.pathgroup}) into graphics data in the manner specified by a set of \term{graphics state data} (\ref{\iotwod.defns.graphicsstatedata})
 
 \indexdefn{rendering operation}%
 \definition{rendering operation}{\iotwod.defns.renderingoperation}
-an operation that performs rendering
+an operation that performs \term{rendering} (\ref{\iotwod.defns.render})
 
 \indexdefn{rendering and composing operation}%
 \definition{rendering and composing operation}{\iotwod.defns.renderingandcomposingop}
-an operation that is either a composing operation or a rendering operation followed by a composing operation
+an operation that is either a \term{composing operation} (\ref{\iotwod.defns.composingoperation}), or a \term{rendering operation} (\ref{\iotwod.defns.renderingoperation}) followed by a \term{composing operation}
 
 %\input{definitions-paths}
 
