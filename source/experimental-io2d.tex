@@ -144,10 +144,10 @@ namespace std { namespace experimental {
   void swap(path_builder<Allocator>& lhs, path_builder<Allocator>& rhs)
     noexcept(noexcept(lhs.swap(rhs)));
 
-  class color_stop;
-  constexpr bool operator==(const color_stop& lhs, const color_stop& rhs)
+  class gradient_stop;
+  constexpr bool operator==(const gradient_stop& lhs, const gradient_stop& rhs)
     noexcept;
-  constexpr bool operator!=(const color_stop& lhs, const color_stop& rhs)
+  constexpr bool operator!=(const gradient_stop& lhs, const gradient_stop& rhs)
     noexcept;
   class brush;
 
