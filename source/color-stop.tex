@@ -7,7 +7,7 @@
 The class \tcode{gradient_stop} describes a gradient stop that is used by gradient brushes.
 
 \pnum
-It has an offset of type \tcode{float} and a color of type \tcode{rgba_color}.
+It has an \term{offset} of type \tcode{float} and an \term{offset color} of type \tcode{rgba_color}.
 
 \rSec1 [\iotwod.gradientstop.synopsis] {\tcode{gradient_stop} synopsis}
 
@@ -61,7 +61,7 @@ constexpr gradient_stop(float o, rgba_color c) noexcept;
 Constructs a \tcode{gradient_stop} object.
 
 \pnum
-The offset is \tcode{o}. The color is \tcode{c}.
+The offset is \tcode{o}. The offset color is \tcode{c}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.gradientstop.modifiers] {\tcode{gradient_stop} modifiers}
@@ -87,7 +87,7 @@ constexpr void color(rgba_color c) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-The color is \tcode{c}.
+The offset color is \tcode{c}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.gradientstop.observers] {\tcode{gradient_stop} observers}
@@ -109,7 +109,7 @@ constexpr rgba_color color() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-The color.
+The offset color.
 \end{itemdescr}
 
 \rSec1 [\iotwod.gradientstop.ops] {\tcode{gradient_stop} operators}
