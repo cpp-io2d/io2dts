@@ -121,98 +121,105 @@ an ideal, mathematical representation of colors which often uses \term{color cha
 \definition{sRGB color space}{\iotwod.defns.srgbcolorspace}
 \defncontext{sRGB} the \term{additive} (\ref{\iotwod.defns.additivecolor}) \term{color space} (\ref{\iotwod.defns.colorspace}) defined in IEC 61966-2-1 that is based on an \term{RGB color model} (\ref{\iotwod.defns.rgbcolormodel})
 
+\indexdefn{start point}%
+\definition{start point}{\iotwod.defns.startpt}
+point that begins a \term{segment} (\ref{\iotwod.defns.seg})
+
+\indexdefn{end point}%
+\definition{end point}{\iotwod.defns.endpt}
+point that ends a \term{segment} (\ref{\iotwod.defns.seg})
+
 \indexdefn{control point}%
 \definition{control point}{\iotwod.defns.controlpt}
-the point other than the start point and the end point that is used in defining a curve
+point, other than the start point and the end point, that is used in defining a curve
 
 \indexdefn{\bezierlocal curve}%
 \indexdefn{\bezierlocal curve!quadratic}%
 \definition{\bezierlocal curve}{\iotwod.defns.bezier.quadratic}
-\defncontext{quadratic} a curve defined by the 
+\defncontext{quadratic} curve defined by the 
 equation $f(t) = (1 - t)^{2} \times P_{0} + 2 \times t \times (1 - t) 
-\times P_{1} + t^{2} \times t \times P_{2}$ where t is in the range \crange{0}{1}, $P_{0}$ is the starting point, $P_{1}$ is the 
-\term{control point} (\ref{\iotwod.defns.controlpt}), and $P_{2}$ is end point
+\times P_{1} + t^{2} \times t \times P_{2}$ where t is in the range \crange{0}{1}, $P_{0}$ is the \term{start point} (\ref{\iotwod.defns.startpt}), $P_{1}$ is the \term{control point} (\ref{\iotwod.defns.controlpt}), and $P_{2}$ is end point (\ref{\iotwod.defns.endpt})
 
 \indexdefn{\bezierlocal curve}
 \indexdefn{\bezierlocal curve!cubic}
 \definition{\bezierlocal curve}{\iotwod.defns.bezier.cubic}
-\defncontext{cubic} a curve defined by the 
+\defncontext{cubic} curve defined by the 
 equation $f(t) = (1 - t)^{3} \times P_{0} + 3 \times t \times (1 - t)^{2} 
 \times P_{1} + 3 \times t^{2} \times (1 - t) \times P_{2} + t^{3} \times t 
-\times P_{3}$ where t is in the range \crange{0}{1}, $P_{0}$ is the starting point, $P_{1}$ is the first \term{control point} (\ref{\iotwod.defns.controlpt}), $P_{2}$ is the second \term{control point}, and $P_{3}$ is the ending point
+\times P_{3}$ where t is in the range \crange{0}{1}, $P_{0}$ is the \term{start point} (\ref{\iotwod.defns.startpt}), $P_{1}$ is the first \term{control point} (\ref{\iotwod.defns.controlpt}), $P_{2}$ is the second \term{control point}, and $P_{3}$ is the end point (\ref{\iotwod.defns.endpt})
 
-\indexdefn{path segment}%
-\definition{path segment}{\iotwod.defns.pathseg}
-a line, \term{\bezierlocal curve} (\ref{\iotwod.defns.bezier.quadratic}, \ref{\iotwod.defns.bezier.cubic}), or arc, each of which has a start point and an end point
+\indexdefn{segment}%
+\definition{segment}{\iotwod.defns.seg}
+line, \term{\bezierlocal curve} (\ref{\iotwod.defns.bezier.quadratic}, \ref{\iotwod.defns.bezier.cubic}), or arc
 
-\indexdefn{initial path segment}%
-\definition{initial path segment}{\iotwod.defns.initialpathseg}
-the \term{path segment} (\ref{\iotwod.defns.pathseg}) whose start point is not defined as being the end point of another \term{path segment}
+\indexdefn{initial segment}%
+\definition{initial segment}{\iotwod.defns.initialseg}
+\term{segment} (\ref{\iotwod.defns.seg}) in a \term{figure} (\ref{\iotwod.defns.figure}) whose \term{start point} (\ref{\iotwod.defns.startpt}) is not defined as being the \term{end point} (\ref{\iotwod.defns.endpt}) of another segment in the figure
 \begin{note}
-It is possible for the initial path segment and final path segment to be the same path segment.
+It is possible for the initial segment and final segment to be the same segment.
 \end{note}
 
-\indexdefn{new path point}%
-\definition{new path point}{\iotwod.defns.newpathpt}
-the point in a path that is the start point of the \term{initial path segment} (\ref{\iotwod.defns.initialpathseg})
+\indexdefn{new figure point}%
+\definition{new figure point}{\iotwod.defns.newfigpt}
+point that is the \term{start point} (\ref{\iotwod.defns.startpt}) of the \term{initial segment} (\ref{\iotwod.defns.initialseg})
 
-\indexdefn{final path segment}%
-\definition{final path segment}{\iotwod.defns.finalpathseg}
-the \term{path segment} (\ref{\iotwod.defns.pathseg}) whose end point does not define the start point of any other \term{path segment}
+\indexdefn{final segment}%
+\definition{final segment}{\iotwod.defns.finalseg}
+\term{segment} (\ref{\iotwod.defns.seg}) in a \term{figure} (\ref{\iotwod.defns.figure}) whose \term{end point} (\ref{\iotwod.defns.endpt}) does not define the \term{start point} (\ref{\iotwod.defns.startpt}) of any other \term{segment}
 \begin{note}
-It is possible for the initial path segment and final path segment to be the same path segment.
+It is possible for the initial segment and final path segment to be the same path segment.
 \end{note}
 
 \indexdefn{current point}%
-\definition{current point}{\iotwod.defns.currentpoint}
-the point used as the start point of a \term{path segment} (\ref{\iotwod.defns.pathseg})
+\definition{current point}{\iotwod.defns.currentpt}
+point used as the \term{start point} (\ref{\iotwod.defns.startpt}) of a \term{segment} (\ref{\iotwod.defns.seg})
 
-\indexdefn{open path}%
-\definition{open path}{\iotwod.defns.openpath}
-a path with one or more \term{path segments} (\ref{\iotwod.defns.pathseg}) where the \term{new path point} (\ref{\iotwod.defns.newpathpt}) is not used to define the end point of the path's \term{final path segment} (\ref{\iotwod.defns.finalpathseg})
+\indexdefn{open figure}%
+\definition{open figure}{\iotwod.defns.openfigure}
+figure (\ref{\iotwod.defns.figure}) with one or more \term{segments} (\ref{\iotwod.defns.seg}) where the \term{new figure point} (\ref{\iotwod.defns.newfigpt}) is not used to define the \term{end point} (\ref{\iotwod.defns.endpt}) of the figure's \term{final segment} (\ref{\iotwod.defns.finalseg})
 \begin{note}
-Even if the start point of the initial path segment and the end point of the final path segment are assigned the same coordinates, the path is still an open path since the final path segment's end point is not defined as being the start point of the initial segment but instead merely happens to have the same value as that point.
+Even if the start point of the initial segment and the end point of the final segment are assigned the same coordinates, the figure is still an open figure. This is because the final segment's end point is not defined as being the new figure point but instead merely happens to have the same value as that point.
 \end{note}
 
-\indexdefn{closed path}%
-\definition{closed path}{\iotwod.defns.closedpath}
-a path with one or more \term{path segments} (\ref{\iotwod.defns.pathseg}) where the \term{new path point} (\ref{\iotwod.defns.newpathpt}) is used to define the end point of the path's \term{final path segment} (\ref{\iotwod.defns.finalpathseg})
+\indexdefn{closed figure}%
+\definition{closed figure}{\iotwod.defns.closedfigure}
+\term{figure} (\ref{\iotwod.defns.figure}) with one or more \term{segments} (\ref{\iotwod.defns.seg}) where the \term{new figure point} (\ref{\iotwod.defns.newfigpt}) is used to define the \term{end point} (\ref{\iotwod.defns.endpt}) of the figure's \term{final segment} (\ref{\iotwod.defns.finalseg})
 
-\indexdefn{degenerate path segment}%
-\definition{degenerate path segment}{\iotwod.defns.degenepathseg}
-a \term{path segment} (\ref{\iotwod.defns.pathseg}) that has the same values for its start point, end point, and, if any, \term{control points} (\ref{\iotwod.defns.controlpt})
+\indexdefn{degenerate segment}%
+\definition{degenerate segment}{\iotwod.defns.degenerateseg}
+\term{segment} (\ref{\iotwod.defns.seg}) that has the same values for its \term{start point} (\ref{\iotwod.defns.startpt}), end point, and, if any, \term{control points} (\ref{\iotwod.defns.controlpt})
 
-\indexdefn{path instruction}%
-\definition{path instruction}{\iotwod.defns.closepathinstruction}
-\defncontext{close path instruction} an instruction that creates a line \term{path segment} (\ref{\iotwod.defns.pathseg}) from the current point to the \term{new path point} (\ref{\iotwod.defns.newpathpt})
+\indexdefn{command}%
+\definition{command}{\iotwod.defns.command.closefig}
+\defncontext{close figure command} instruction that creates a line \term{segment} (\ref{\iotwod.defns.seg}) with a \term{start point} (\ref{\iotwod.defns.startpt}) of \term{current point} (\ref{\iotwod.defns.currentpt}) and an \term{end point} (\ref{\iotwod.defns.endpt}) of \term{new figure point} (\ref{\iotwod.defns.newfigpt})
 
-\indexdefn{path item}%
-\definition{path item}{\iotwod.defns.pathitem}
-a \term{path segment} (\ref{\iotwod.defns.pathseg}), \term{new path instruction} (\ref{\iotwod.defns.newpathinstruction}), \term{close path instruction} (\ref{\iotwod.defns.closepathinstruction}), or \term{path group instruction} (\ref{\iotwod.defns.pathgrpinstruction})
+\indexdefn{command}%
+\definition{command}{\iotwod.defns.command.newfig}
+\defncontext{new path instruction} an instruction that creates a new \term{path} (\ref{\iotwod.defns.path})
+
+\indexdefn{figure item}%
+\definition{figure item}{\iotwod.defns.figitem}
+\term{segment} (\ref{\iotwod.defns.seg}), \term{new figure command} (\ref{\iotwod.defns.command.newfig}), \term{close figure command} (\ref{\iotwod.defns.command.closefig}), or \term{path instruction} (\ref{\iotwod.defns.pathcommand})
+
+\indexdefn{figure}%
+\definition{figure}{\iotwod.defns.figure}
+collection of \term{figure items} (\ref{\iotwod.defns.figitem}) where the \term{end point} (\ref{\iotwod.defns.endpt}) of each \term{segment} (\ref{\iotwod.defns.seg}) in the collection, except the \term{final segment} (\ref{\iotwod.defns.finalseg}), defines the \term{start point} (\ref{\iotwod.defns.startpt}) of exactly one other segment in the collection
 
 \indexdefn{path}%
 \definition{path}{\iotwod.defns.path}
-a collection of \term{path items} (\ref{\iotwod.defns.pathitem}) where the end point of each \term{path segment} (\ref{\iotwod.defns.pathseg}), except the \term{final path segment} (\ref{\iotwod.defns.finalpathseg}), defines the start point of exactly one other \term{path segment} in the collection
+collection of \term{figures} (\ref{\iotwod.defns.figure})
 
-\indexdefn{path instruction}%
-\definition{path instruction}{\iotwod.defns.newpathinstruction}
-\defncontext{new path instruction} an instruction that creates a new \term{path} (\ref{\iotwod.defns.path})
+\indexdefn{path transformation matrix}%
+\definition{path transformation matrix}{\iotwod.defns.pathtransform}
+affine transformation matrix used to apply affine transformations to the points in a \term{path} (\ref{\iotwod.defns.path})
 
-\indexdefn{path group}%
-\definition{path group}{\iotwod.defns.pathgroup}
-a collection of \term{paths} (\ref{\iotwod.defns.path})
+\indexdefn{path command}%
+\definition{path command}{\iotwod.defns.pathcommand}
+instruction that modifies the \term{path transformation matrix} (\ref{\iotwod.defns.pathtransform})
 
-\indexdefn{path group transformation matrix}%
-\definition{path group transformation matrix}{\iotwod.defns.pathgrptransform}
-an affine transformation matrix used to apply affine transformations to the points in a \term{path group} (\ref{\iotwod.defns.pathgroup})
-
-\indexdefn{path group instruction}%
-\definition{path group instruction}{\iotwod.defns.pathgrpinstruction}
-an instruction that modifies the \term{path group transformation matrix} (\ref{\iotwod.defns.pathgrptransform})
-
-\indexdefn{degenerate path}%
-\definition{degenerate path}{\iotwod.defns.degenpath}
-a \term{path} (\ref{\iotwod.defns.path}) composed entirely of a \term{new path instruction} (\ref{\iotwod.defns.newpathinstruction}), zero or more \term{degenerate path segments} (\ref{\iotwod.defns.degenepathseg}), zero or more \term{path group items} (\ref{\iotwod.defns.pathgroup}), and, optionally, a \term{close path instruction} (\ref{\iotwod.defns.closepathinstruction})
+\indexdefn{degenerate figure}%
+\definition{degenerate figure}{\iotwod.defns.degenfigure}
+\term{figure} (\ref{\iotwod.defns.figure}) containing a \term{new figure command} (\ref{\iotwod.defns.command.newfig}), zero or more \term{degenerate segments} (\ref{\iotwod.defns.degenerateseg}), zero or more \term{path commands} (\ref{\iotwod.defns.pathcommand}), and, optionally, a \term{close figure command} (\ref{\iotwod.defns.command.closefig})
 
 \indexdefn{graphics subsystem}%
 \definition{graphics subsystem}{\iotwod.defns.graphicssubsystem}
@@ -276,7 +283,7 @@ data which specify how some part of the process of rendering, or of a \term{comp
 
 \indexdefn{render}%
 \definition{render}{\iotwod.defns.render}
-to transform a \term{path group} (\ref{\iotwod.defns.pathgroup}) into graphics data in the manner specified by a set of \term{graphics state data} (\ref{\iotwod.defns.graphicsstatedata})
+transform a \term{path} (\ref{\iotwod.defns.path}) into graphics data in the manner specified by a set of \term{graphics state data} (\ref{\iotwod.defns.graphicsstatedata})
 
 \indexdefn{rendering operation}%
 \definition{rendering operation}{\iotwod.defns.renderingoperation}
