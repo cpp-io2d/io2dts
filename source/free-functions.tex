@@ -155,7 +155,7 @@ point_2d point_for_angle(float ang, point_2d rad) noexcept;
 \begin{itemdescr}
 \pnum
 \requires
-If it is a \tcode{float}, \tcode{rad} is greater than \tcode{0.0f}. If it is a \tcode{point_2d}, \tcode{rad.x()} or \tcode{rad.y()} is greater than \tcode{0.0f} and neither is less than \tcode{0.0f}.
+If it is a \tcode{float}, \tcode{rad} is greater than \tcode{0.0f}. If it is a \tcode{point_2d}, \tcode{rad.x} or \tcode{rad.y} is greater than \tcode{0.0f} and neither is less than \tcode{0.0f}.
 
 \pnum
 \returns
@@ -172,7 +172,7 @@ point_2d arc_start(point_2d ctr, float sang, point_2d rad,
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{rad.x()} and \tcode{rad.y()} are both greater than \tcode{0.0f}.
+\tcode{rad.x} and \tcode{rad.y} are both greater than \tcode{0.0f}.
 
 \pnum
 \returns
@@ -200,7 +200,7 @@ point_2d arc_center(point_2d cpt, float sang, point_2d rad,
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{rad.x()} and \tcode{rad.y()} are both greater than \tcode{0.0f}.
+\tcode{rad.x} and \tcode{rad.y} are both greater than \tcode{0.0f}.
 
 \pnum
 \returns
@@ -209,7 +209,7 @@ As-if:
 auto lmtx = m;
 lmtx.m20 = 0.0f; lmtx.m21 = 0.0f;
 auto centerOffset = point_for_angle(two_pi<float> - sang, rad);
-centerOffset.y(-centerOffset.y());
+centerOffset.y = -centerOffset.y;
 return cpt - centerOffset * lmtx;
 \end{codeblock}
 \end{itemdescr}
@@ -224,7 +224,7 @@ point_2d arc_end(point_2d cpt, float eang, point_2d rad,
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{rad.x()} and \tcode{rad.y()} are both greater than \tcode{0.0f}.
+\tcode{rad.x} and \tcode{rad.y} are both greater than \tcode{0.0f}.
 
 \pnum
 \returns
@@ -234,7 +234,7 @@ auto lmtx = m;
 auto tfrm = matrix_2d::init_rotate(eang);
 lmtx.m20 = 0.0f; lmtx.m21 = 0.0f;
 auto pt = (rad * tfrm);
-pt.y(-pt.y());
+pt.y = -pt.y;
 return cpt + pt * lmtx;
 \end{codeblock}
 \end{itemdescr}

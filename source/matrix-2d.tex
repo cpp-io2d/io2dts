@@ -129,7 +129,7 @@ constexpr static matrix_2d init_translate(point_2d value) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{matrix_2d(1.0f, 0.0f, 0.0f, 1.0f, value.x(), value.y())}.
+\tcode{matrix_2d(1.0f, 0.0f, 0.0f, 1.0f, value.x, value.y)}.
 \end{itemdescr}
 
 \indexlibrarymember{init_scale}{matrix_2d}%
@@ -139,7 +139,7 @@ constexpr static matrix_2d init_scale(point_2d value) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{matrix_2d(value.x(), 0.0f, 0.0f, value.y(), 0.0f, 0.0f)}.
+\tcode{matrix_2d(value.x, 0.0f, 0.0f, value.y, 0.0f, 0.0f)}.
 \end{itemdescr}
 
 \indexlibrarymember{init_rotate}{matrix_2d}%
@@ -388,7 +388,7 @@ constexpr point_2d transform_pt(point_2d pt) const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{point_2d((m00 * pt.x() + m10 * pt.y()) + m20, (m01 * pt.x() + m11 * pt.y()) + m21)}.
+\tcode{point_2d((m00 * pt.x + m10 * pt.y) + m20, (m01 * pt.x + m11 * pt.y) + m21)}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.\matrixtwod.member.ops] {\tcode{matrix_2d} member operators}

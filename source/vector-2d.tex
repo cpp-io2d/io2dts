@@ -20,13 +20,11 @@ namespace std::experimental::io2d::v1 {
     constexpr point_2d() noexcept;
     constexpr point_2d(float x, float y) noexcept;
 
-    // \ref{\iotwod.\pointtwod.modifiers}, modifiers:
-    constexpr void x(float val) noexcept;
-    constexpr void y(float val) noexcept;
+    // member data:
+    float x;
+    float y;
     
     // \ref{\iotwod.\pointtwod.observers}, observers:
-    constexpr float x() const noexcept;
-    constexpr float y() const noexcept;
     constexpr float dot(const point_2d& other) const noexcept;
     float magnitude() const noexcept;
     constexpr float magnitude_squared() const noexcept;
@@ -93,49 +91,7 @@ The x coordinate is \tcode{x}.
 The y coordinate is \tcode{y}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.\pointtwod.modifiers]{\tcode{point_2d} modifiers}
-
-\indexlibrarymember{x}{point_2d}%
-\begin{itemdecl}
-constexpr void x(float val) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-The x coordinate is \tcode{val}.
-\end{itemdescr}
-
-\indexlibrarymember{y}{point_2d}%
-\begin{itemdecl}
-constexpr void y(float val) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-The y coordinate is \tcode{val}.
-\end{itemdescr}
-
 \rSec1 [\iotwod.\pointtwod.observers]{\tcode{point_2d} observers}
-
-\indexlibrarymember{x}{point_2d}%
-\begin{itemdecl}
-constexpr float x() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-The x coordinate.
-\end{itemdescr}
-
-\indexlibrarymember{y}{point_2d}%
-\begin{itemdecl}
-constexpr float y() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-The y coordinate.
-\end{itemdescr}
 
 \indexlibrarymember{dot}{point_2d}%
 \begin{itemdecl}
@@ -144,7 +100,7 @@ constexpr float dot(const point_2d& other) const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{x() * other.x() + y() * other.y()}.
+\tcode{x * other.x + y * other.y}.
 \end{itemdescr}
 
 \indexlibrarymember{magnitude}{point_2d}%
@@ -174,10 +130,10 @@ float angular_direction() const noexcept
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{atan2(y(), x())} if it is greater than or equal to \tcode{0.0f}.
+\tcode{atan2(y, x)} if it is greater than or equal to \tcode{0.0f}.
 
 \pnum
-Otherwise, \tcode{atan2(y(), x()) + two_pi<float>}. 
+Otherwise, \tcode{atan2(y, x) + two_pi<float>}. 
 
 \pnum
 \begin{note}
@@ -192,7 +148,7 @@ point_2d to_unit() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{point_2d\{ x() / magnitude(), y() / magnitude()\}}.
+\tcode{point_2d\{ x / magnitude(), y / magnitude()\}}.
 \end{itemdescr}
 
 \indexlibrarymember{zero}{point_2d}%
@@ -274,7 +230,7 @@ constexpr bool operator==(const point_2d& lhs, const point_2d& rhs) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{lhs.x() == rhs.x() \&\& lhs.y() == rhs.y()}.
+\tcode{lhs.x == rhs.x \&\& lhs.y == rhs.y}.
 \end{itemdescr}
 
 \indexlibrarymember{operator!=}{point_2d}%
@@ -305,7 +261,7 @@ constexpr point_2d operator+(const point_2d& lhs, const point_2d& rhs)
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{point_2d\{ lhs.x() + rhs.x(), lhs.y() + rhs.y() \}}.
+\tcode{point_2d\{ lhs.x + rhs.x, lhs.y + rhs.y \}}.
 \end{itemdescr}
 
 \indexlibrarymember{operator-}{point_2d}%
@@ -315,7 +271,7 @@ constexpr point_2d operator-(const point_2d& val) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{point_2d\{ -val.x(), -val.y() \}}.
+\tcode{point_2d\{ -val.x, -val.y \}}.
 \end{itemdescr}
 
 \indexlibrarymember{operator-}{point_2d}%
@@ -326,7 +282,7 @@ constexpr point_2d operator-(const point_2d& lhs, const point_2d& rhs)
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{point_2d\{ lhs.x() - rhs.x(), lhs.y() - rhs.y() \}}.
+\tcode{point_2d\{ lhs.x - rhs.x, lhs.y - rhs.y \}}.
 \end{itemdescr}
 
 \indexlibrarymember{operator*}{point_2d}%
@@ -337,7 +293,7 @@ constexpr point_2d operator*(const point_2d& lhs, const point_2d& rhs)
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{point_2d\{ lhs.x() * rhs.x(), lhs.y() * rhs.y() \}}.
+\tcode{point_2d\{ lhs.x * rhs.x, lhs.y * rhs.y \}}.
 \end{itemdescr}
 
 \indexlibrarymember{operator*}{point_2d}%
@@ -347,7 +303,7 @@ constexpr point_2d operator*(const point_2d& lhs, float rhs) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{point_2d\{ lhs.x() * rhs, lhs.y() * rhs \}}.
+\tcode{point_2d\{ lhs.x * rhs, lhs.y * rhs \}}.
 \end{itemdescr}
 
 \indexlibrarymember{operator*}{point_2d}%
@@ -357,7 +313,7 @@ constexpr point_2d operator*(float lhs, const point_2d& rhs) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{point_2d\{ lhs * rhs.x(), lhs * rhs.y() \}}.
+\tcode{point_2d\{ lhs * rhs.x, lhs * rhs.y \}}.
 \end{itemdescr}
 
 \indexlibrarymember{operator/}{point_2d}%
@@ -368,11 +324,11 @@ constexpr point_2d operator/(const point_2d& lhs, const point_2d& rhs)
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{rhs.x()} is not \tcode{0.0f} and \tcode{rhs.y()} is not \tcode{0.0f}.
+\tcode{rhs.x} is not \tcode{0.0f} and \tcode{rhs.y} is not \tcode{0.0f}.
 
 \pnum
 \returns
-\tcode{point_2d\{ lhs.x() / rhs.x(), lhs.y() / rhs.y() \}}.
+\tcode{point_2d\{ lhs.x / rhs.x, lhs.y / rhs.y \}}.
 \end{itemdescr}
 
 \indexlibrarymember{operator/}{point_2d}%
@@ -386,7 +342,7 @@ constexpr point_2d operator/(const point_2d& lhs, float rhs) noexcept;
 
 \pnum
 \returns
-\tcode{point_2d\{ lhs.x() / rhs, lhs.y() / rhs \}}.
+\tcode{point_2d\{ lhs.x / rhs, lhs.y / rhs \}}.
 \end{itemdescr}
 
 \indexlibrarymember{operator/}{point_2d}%
@@ -396,9 +352,9 @@ constexpr point_2d operator/(float lhs, const point_2d& rhs) noexcept;
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{rhs.x()} is not \tcode{0.0f} and \tcode{rhs.y()} is not \tcode{0.0f}.
+\tcode{rhs.x} is not \tcode{0.0f} and \tcode{rhs.y} is not \tcode{0.0f}.
 
 \pnum
 \returns
-\tcode{point_2d\{ lhs / rhs.x(), lhs / rhs.y() \}}.
+\tcode{point_2d\{ lhs / rhs.x, lhs / rhs.y \}}.
 \end{itemdescr}

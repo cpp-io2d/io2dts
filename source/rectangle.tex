@@ -86,7 +86,7 @@ constexpr bounding_box(point_2d tl, point_2d br) noexcept;
 Constructs an object of type \tcode{bounding_box}.
 
 \pnum
-The x coordinate is \tcode{tl.x()}. The y coordinate is \tcode{tl.y()}. The width is \tcode{max(0.0f, br.x() - tl.x())}. The height is \tcode{max(0.0f, br.y() - tl.y())}.
+The x coordinate is \tcode{tl.x}. The y coordinate is \tcode{tl.y}. The width is \tcode{max(0.0f, br.x - tl.x)}. The height is \tcode{max(0.0f, br.y - tl.y)}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.bounding_box.modifiers]{\tcode{bounding_box} modifiers}
@@ -139,10 +139,10 @@ constexpr void top_left(point_2d val) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-The x coordinate is \tcode{val.x()}.
+The x coordinate is \tcode{val.x}.
 
 \effects
-The y coordinate is \tcode{val.y()}.
+The y coordinate is \tcode{val.y}.
 \end{itemdescr}
 
 \indexlibrarymember{bottom_right}{bounding_box}%
@@ -152,10 +152,10 @@ constexpr void bottom_right(point_2d val) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-The width is \tcode{max(0.0f, val.x() - x())}.
+The width is \tcode{max(0.0f, val.x - x())}.
 
 \pnum
-The height is \tcode{max(0.0f, value.y() - y())}.
+The height is \tcode{max(0.0f, value.y - y())}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.bounding_box.observers]{\tcode{bounding_box} observers}
@@ -233,14 +233,4 @@ constexpr bool operator==(const bounding_box& lhs, const bounding_box& rhs) noex
 lhs.x() == rhs.x() && lhs.y() == rhs.y() &&
 lhs.width() == rhs.width() && lhs.height() == rhs.height()
 \end{codeblock}
-\end{itemdescr}
-
-\indexlibrarymember{operator!=}{bounding_box}%
-\begin{itemdecl}
-constexpr bool operator!=(const bounding_box& lhs, const bounding_box& rhs) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-\tcode{!(lhs == rhs)}.
 \end{itemdescr}
