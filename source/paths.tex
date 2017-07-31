@@ -14,10 +14,10 @@ A path contains zero or more figures.
 A figure is composed of at least one segment.
 
 \pnum
-A figure may contain degenerate segments. When a path is rendered in certain rendering and composing operations, degenerate segments can produce observable behavior.
-\begin{example}
-When a degenerate segment is rendered in a stroke rendering and composing operation (see \ref{\iotwod.surface.stroking}), the \tcode{line_cap} value contained in its \tcode{stroke_props} argument can result in a degenerate segment producing observable behavior in the form of a circle or square, or some variation thereof.
-\end{example}
+A figure may contain degenerate segments. When a path is interpreted (\ref{\iotwod.paths.interpretation}), degenerate segments are removed from figures.
+\begin{note}
+If a path command exists or is inserted between segments, it's possible that points which might have compared equal will no longer compare equal as a result of interpretation (\ref{\iotwod.paths.interpretation}).
+\end{note}
 
 \pnum
 Paths provide vector graphics functionality. As such they are particularly useful in situations where an application is intended to run on a variety of platforms whose output devices (\ref{\iotwod.displaysurface.intro}) span a large gamut of sizes, both in terms of measurement units and in terms of a horizontal and vertical pixel count, in that order.

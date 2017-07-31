@@ -327,8 +327,6 @@ The following rules shall apply when a stroking operation is carried out on a fi
 \begin{enumerate}
 \item No part of the \underlyingsurface that is outside of the clip area shall be modified.
 
-\item If the figure only contains a degenerate segment, then if the \term{line cap} value (see: \ref{\iotwod.strokeprops.summary} and \ref{\iotwod.surface.rendering.specificstate}) is either \tcode{line_cap::round} or \tcode{line_cap::square}, the line caps shall be rendered, resulting in a circle or a square, respectively. The remaining rules shall not apply.
-
 \item If the figure is a closed figure, then the point where the end point of its final segment meets the start point of the initial segment shall be rendered as specified by the \term{line join} value (see: \ref{\iotwod.strokeprops.summary} and \ref{\iotwod.surface.rendering.specificstate}); otherwise the start point of the initial segment and end point of the final segment shall each by rendered as specified by the line cap value. The remaining meetings between successive end points and start points shall be rendered as specified by the line join value.
 
 \item If the dash pattern (Table~\ref{tab:\iotwod.surface.rendering.specificstate.listing}) has its default value or if its \tcode{vector<float>} member is empty, the segments shall be rendered as a continuous path.
