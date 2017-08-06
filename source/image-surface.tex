@@ -41,8 +41,8 @@ namespace std::experimental::io2d::v1 {
       error_code& ec);
     
     // \ref{\iotwod.imagesurface.staticmembers}, static members:
-    static int max_width() const noexcept;
-    static int max_height() const noexcept;
+    static int max_width() noexcept;
+    static int max_height() noexcept;
     
     // \ref{\iotwod.imagesurface.observers}, observers:
     io2d::format format() const noexcept;
@@ -207,7 +207,7 @@ Calling this function on an \tcode{image_surface} object and then calling any fu
 
 \indexlibrarymember{max_width}{image_surface}%
 \begin{itemdecl}
-static int max_width() const noexcept;
+static int max_width() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -217,7 +217,7 @@ The maximum width for an \tcode{image_surface} object.
 
 \indexlibrarymember{max_height}{image_surface}%
 \begin{itemdecl}
-static int max_height() const noexcept;
+static int max_height() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
