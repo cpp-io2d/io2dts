@@ -124,8 +124,8 @@ namespace std { namespace experimental {
       const rel_quadratic_curve&) noexcept;
     using figure_item = variant<abs_cubic_curve, abs_line, abs_matrix, 
       abs_new_figure, abs_quadratic_curve, arc, close_figure,
-      rel_cubic_curve, rel_line, rel_matrix, rel_new_figure, rel_quadratic_curve, 
-      revert_matrix>;
+      rel_cubic_curve, rel_line, rel_matrix, rel_new_figure, 
+      rel_quadratic_curve, revert_matrix>;
   }
   
   class interpreted_path;
@@ -183,17 +183,21 @@ namespace std { namespace experimental {
   int format_stride_for_width(format format, int width) noexcept;
   display_surface make_display_surface(int preferredWidth,
     int preferredHeight, format preferredFormat,
-    scaling scl = scaling::letterbox);
+    scaling scl = scaling::letterbox,
+    refresh_rate rr = refresh_rate::as_fast_as_possible, float fps = 30.0f);
   display_surface make_display_surface(int preferredWidth,
     int preferredHeight, format preferredFormat, error_code& ec,
-    scaling scl = scaling::letterbox) noexcept;
+    scaling scl = scaling::letterbox,
+    refresh_rate rr = refresh_rate::as_fast_as_possible, float fps = 30.0f) noexcept;
   display_surface make_display_surface(int preferredWidth,
     int preferredHeight, format preferredFormat, int preferredDisplayWidth, 
-    int preferredDisplayHeight, scaling scl = scaling::letterbox);
+    int preferredDisplayHeight, scaling scl = scaling::letterbox,
+    refresh_rate rr = refresh_rate::as_fast_as_possible, float fps = 30.0f);
   display_surface make_display_surface(int preferredWidth,
     int preferredHeight, format preferredFormat, int preferredDisplayWidth, 
-    int preferredDisplayHeight, error_code& ec,
-    scaling scl = scaling::letterbox) noexcept;
+    int preferredDisplayHeight, ::std::error_code& ec,
+    scaling scl = scaling::letterbox,
+    refresh_rate rr = refresh_rate::as_fast_as_possible, float fps = 30.0f) noexcept;
   image_surface make_image_surface(format format, int width, int height);
   image_surface make_image_surface(format format, int width, int height, 
     error_code& ec) noexcept;
