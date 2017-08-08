@@ -29,7 +29,8 @@ namespace std::experimental::io2d::v1 {
   class interpreted_path {
     public:
     // \ref{\iotwod.pathgroup.cons}, construct/copy/destroy:
-    explicit interpreted_path(const path_builder& pb);
+    template <class Allocator>
+    explicit interpreted_path(const path_builder<Allocator>& pb);
     template <class ForwardIterator>
     interpreted_path(ForwardIterator first, ForwardIterator last);
   };
@@ -40,7 +41,8 @@ namespace std::experimental::io2d::v1 {
 
 \indexlibrary{\idxcode{interpreted_path}!constructor}%
 \begin{itemdecl}
-explicit interpreted_path(const path_builder& pb);
+template <class Allocator>
+explicit interpreted_path(const path_builder<Allocator>& pb);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
