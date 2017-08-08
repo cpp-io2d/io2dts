@@ -140,10 +140,10 @@ namespace std::experimental::io2d::v1 {
   
   template <class Allocator>
   bool operator==(const path_builder<Allocator>& lhs, 
-    const path_builder<Allocator>& rhs);
+    const path_builder<Allocator>& rhs) noexcept;
   template <class Allocator>
   bool operator!=(const path_builder<Allocator>& lhs, 
-    const path_builder<Allocator>& rhs);
+    const path_builder<Allocator>& rhs) noexcept;
   
   // \ref{\iotwod.pathbuilder.special}, specialized algorithms:
   template <class Allocator>
