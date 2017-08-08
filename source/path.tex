@@ -29,6 +29,7 @@ namespace std::experimental::io2d::v1 {
   class interpreted_path {
     public:
     // \ref{\iotwod.pathgroup.cons}, construct/copy/destroy:
+    constexpr interpreted_path() noexcept;
     template <class Allocator>
     explicit interpreted_path(const path_builder<Allocator>& pb);
     template <class ForwardIterator>
@@ -38,6 +39,16 @@ namespace std::experimental::io2d::v1 {
 \end{codeblock}
 
 \rSec1 [\iotwod.pathgroup.cons] {\tcode{interpreted_path} constructors}
+
+\indexlibrary{\idxcode{interpreted_path}!constructor}%
+\begin{itemdecl}
+constexpr interpreted_path();
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an \tcode{interpreted_path} that contains an empty path.
+\end{itemdescr}
 
 \indexlibrary{\idxcode{interpreted_path}!constructor}%
 \begin{itemdecl}
@@ -59,6 +70,9 @@ interpreted_path(ForwardIterator first, ForwardIterator last);
 \pnum
 \effects
 Constructs an object of type \tcode{interpreted_path}.
+
+\pnum
+The contained path is as-if it was the result of interpreting a path containing the values of the elements from \tcode{first} to the last element before \tcode{last}.
 %When a \tcode{interpreted_path} object is used by a \tcode{surface}-derived object, it produces the same result as-if its contents were constructed by processing the \tcode{path_builder} object as specified at \ref{\iotwod.paths.interpretion}.
 %
 %\pnum
