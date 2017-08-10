@@ -202,8 +202,7 @@ namespace std { namespace experimental {
   image_surface make_image_surface(format format, int width, int height, 
     error_code& ec) noexcept;
   image_surface copy_image_surface(image_surface& sfc) noexcept;
-  float angle_for_point(point_2d ctr, point_2d pt,
-    point_2d scl = point_2d{ 1.0f, 1.0f }) noexcept;
+  float angle_for_point(point_2d ctr, point_2d pt) noexcept;
   point_2d point_for_angle(float ang, float rad = 1.0f) noexcept;
   point_2d point_for_angle(float ang, point_2d rad) noexcept;
   point_2d arc_start(point_2d ctr, float sang, point_2d rad, 
