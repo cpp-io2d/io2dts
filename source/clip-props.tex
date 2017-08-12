@@ -18,6 +18,8 @@ namespace std::experimental::io2d::v1 {
   public:
     // \ref{\iotwod.clipprops.cons}, constructors:
     clip_props() noexcept;
+    explicit clip_props(const bounding_box& r,
+      io2d::fill_rule fr = io2d::fill_rule::winding);
     template <class Allocator>
     explicit clip_props(const path_builder<Allocator>& pb,
       experimental::io2d::fill_rule fr = 
@@ -48,6 +50,26 @@ clip_props() noexcept;
 \pnum
 \effects
 Equivalent to: \tcode{clip_props(path_builder<>\{ \})}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{clip_props}!constructor}%
+\begin{itemdecl}
+explicit clip_props(const bounding_box& r,
+  io2d::fill_rule fr = io2d::fill_rule::winding);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to:
+\begin{codeblock}
+path_builder<> pb;
+pb.new_figure(r.top_left());
+pb.rel_line({ r.width(), 0.0f });
+pb.rel_line({ 0.0f, r.height() });
+pb.rel_line({ -r.width(), 0.0f });
+pb.close_figure();
+*this = clip_props(pb, fr);
+\end{codeblock}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{clip_props}!constructor}%
