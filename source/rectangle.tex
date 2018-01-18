@@ -1,67 +1,71 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.bounding_box] {Class \tcode{bounding_box}}
+\rSec0 [\iotwod.bounding_box] {Class \tcode{basic_bounding_box}}
 
-\rSec1 [\iotwod.bounding_box.intro] {\tcode{bounding_box} description}
+\rSec1 [\iotwod.bounding_box.intro] {\tcode{basic_bounding_box} description}
 
-\indexlibrary{\idxcode{bounding_box}}%
+\indexlibrary{\idxcode{basic_bounding_box}}%
 \pnum
-The class \tcode{bounding_box} describes a bounding_box.
+The class \tcode{basic_bounding_box} describes a bounding_box.
 
 \pnum
 It has an \term{x coordinate} of type \tcode{float}, a \term{y coordinate} of type \tcode{float}, a \term{width} of type \tcode{float}, and a \term{height} of type \tcode{float}.
 
-\rSec1 [\iotwod.bounding_box.synopsis] {\tcode{bounding_box} synopsis}
+\rSec1 [\iotwod.bounding_box.synopsis] {\tcode{basic_bounding_box} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
-  class bounding_box {
+  template <class GraphicsMath>
+  class basic_bounding_box {
   public:
-    // \ref{\iotwod.bounding_box.cons}, construct:
-    constexpr bounding_box() noexcept;
-    constexpr bounding_box(float x, float y, float width, float height)
-      noexcept;
-    constexpr bounding_box(point_2d tl, point_2d br) noexcept;
+    // \ref{\iotwod.bounding_box.cons}, constructors:
+    basic_bounding_box() noexcept;
+    basic_bounding_box(float x, float y, float width, float height) noexcept;
+    basic_bounding_box(const basic_point_2d<GraphicsMath>& tl,
+      const basic_point_2d<GraphicsMath>& br) noexcept;
+    basic_bounding_box(const typename GraphicsMath::bounding_box_data_type& val) noexcept;
 
     // \ref{\iotwod.bounding_box.modifiers}, modifiers:
-    constexpr void x(float val) noexcept;
-    constexpr void y(float val) noexcept;
-    constexpr void width(float val) noexcept;
-    constexpr void height(float val) noexcept;
-    constexpr void top_left(point_2d val) noexcept;
-    constexpr void bottom_right(point_2d val) noexcept;
-    
+    void x(float val) noexcept;
+    void y(float val) noexcept;
+    void width(float val) noexcept;
+    void height(float val) noexcept;
+    void top_left(const basic_point_2d<GraphicsMath>& val) noexcept;
+    void bottom_right(const basic_point_2d<GraphicsMath>& val) noexcept;
+
     // \ref{\iotwod.bounding_box.observers}, observers:
-    constexpr float x() const noexcept;
-    constexpr float y() const noexcept;
-    constexpr float width() const noexcept;
-    constexpr float height() const noexcept;
-    constexpr point_2d top_left() const noexcept;
-    constexpr point_2d bottom_right() const noexcept;
+    float x() const noexcept;
+    float y() const noexcept;
+    float width() const noexcept;
+    float height() const noexcept;
+    basic_point_2d<GraphicsMath> top_left() const noexcept;
+    basic_point_2d<GraphicsMath> bottom_right() const noexcept;
   };
-  
+
   // \ref{\iotwod.bounding_box.ops}, operators:
-  constexpr bool operator==(const bounding_box& lhs, const bounding_box& rhs) 
-    noexcept;
-  constexpr bool operator!=(const bounding_box& lhs, const bounding_box& rhs) 
-    noexcept;
+  template <class GraphicsMath>
+  bool operator==(const basic_bounding_box<GraphicsMath>& lhs,
+    const basic_bounding_box<GraphicsMath>& rhs) noexcept;
+  template <class GraphicsMath>
+  bool operator!=(const basic_bounding_box<GraphicsMath>& lhs,
+    const basic_bounding_box<GraphicsMath>& rhs) noexcept;
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.bounding_box.cons] {\tcode{bounding_box} constructors}
+\rSec1 [\iotwod.bounding_box.cons] {\tcode{basic_bounding_box} constructors}
 
-\indexlibrary{\idxcode{bounding_box}!constructor}%
+\indexlibrary{\idxcode{basic_bounding_box}!constructor}%
 \begin{itemdecl}
-constexpr bounding_box() noexcept;
+basic_bounding_box() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to \tcode{bounding_box\{ 0.0f, 0.0f, 0.0f, 0.0f \}}.
+Equivalent to \tcode{basic_bounding_box\{ 0.0f, 0.0f, 0.0f, 0.0f \}}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{bounding_box}!constructor}%
+\indexlibrary{\idxcode{basic_bounding_box}!constructor}%
 \begin{itemdecl}
-constexpr bounding_box(float x, float y, float w, float h) noexcept;
+basic_bounding_box(float x, float y, float w, float h) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -70,30 +74,31 @@ constexpr bounding_box(float x, float y, float w, float h) noexcept;
 
 \pnum
 \effects
-Constructs an object of type \tcode{bounding_box}.
+Constructs an object of type \tcode{basic_bounding_box}.
 
 \pnum
 The x coordinate is \tcode{x}. The y coordinate is \tcode{y}. The width is \tcode{w}. The height is \tcode{h}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{bounding_box}!constructor}%
+\indexlibrary{\idxcode{basic_bounding_box}!constructor}%
 \begin{itemdecl}
-constexpr bounding_box(point_2d tl, point_2d br) noexcept;
+basic_bounding_box(const basic_point_2d<GraphicsMath>& tl,
+  const basic_point_2d<GraphicsMath>& br) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs an object of type \tcode{bounding_box}.
+Constructs an object of type \tcode{basic_bounding_box}.
 
 \pnum
-The x coordinate is \tcode{tl.x}. The y coordinate is \tcode{tl.y}. The width is \tcode{max(0.0f, br.x - tl.x)}. The height is \tcode{max(0.0f, br.y - tl.y)}.
+<TODO>The x coordinate is \tcode{tl.x}. The y coordinate is \tcode{tl.y}. The width is \tcode{max(0.0f, br.x - tl.x)}. The height is \tcode{max(0.0f, br.y - tl.y)}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.bounding_box.modifiers]{\tcode{bounding_box} modifiers}
+\rSec1 [\iotwod.bounding_box.modifiers]{\tcode{basic_bounding_box} modifiers}
 
-\indexlibrarymember{x}{bounding_box}%
+\indexlibrarymember{x}{basic_bounding_box}%
 \begin{itemdecl}
-constexpr void x(float val) noexcept;
+void x(float val) noexcept;
 \end{itemdecl}
 
 \begin{itemdescr}
@@ -102,9 +107,9 @@ constexpr void x(float val) noexcept;
 The x coordinate is \tcode{val}.
 \end{itemdescr}
 
-\indexlibrarymember{y}{bounding_box}%
+\indexlibrarymember{y}{basic_bounding_box}%
 \begin{itemdecl}
-constexpr void y(float val) noexcept;
+void y(float val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -112,9 +117,9 @@ constexpr void y(float val) noexcept;
 The y coordinate is \tcode{val}.
 \end{itemdescr}
 
-\indexlibrarymember{width}{bounding_box}%
+\indexlibrarymember{width}{basic_bounding_box}%
 \begin{itemdecl}
-constexpr void width(float val) noexcept;
+void width(float val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -122,9 +127,9 @@ constexpr void width(float val) noexcept;
 The width is \tcode{val}.
 \end{itemdescr}
 
-\indexlibrarymember{height}{bounding_box}%
+\indexlibrarymember{height}{basic_bounding_box}%
 \begin{itemdecl}
-constexpr void height(float val) noexcept;
+void height(float val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -132,37 +137,37 @@ constexpr void height(float val) noexcept;
 The height is \tcode{val}.
 \end{itemdescr}
 
-\indexlibrarymember{top_left}{bounding_box}%
+\indexlibrarymember{top_left}{basic_bounding_box}%
 \begin{itemdecl}
-constexpr void top_left(point_2d val) noexcept;
+void top_left(const basic_point_2d<GraphicsMath>& val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-The x coordinate is \tcode{val.x}.
+<TODO>The x coordinate is \tcode{val.x}.
 
-\effects
-The y coordinate is \tcode{val.y}.
+\pnum
+<TODO>The y coordinate is \tcode{val.y}.
 \end{itemdescr}
 
-\indexlibrarymember{bottom_right}{bounding_box}%
+\indexlibrarymember{bottom_right}{basic_bounding_box}%
 \begin{itemdecl}
-constexpr void bottom_right(point_2d val) noexcept;
+void bottom_right(const basic_point_2d<GraphicsMath>& val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-The width is \tcode{max(0.0f, val.x - x())}.
+<TODO>The width is \tcode{max(0.0f, val.x - x())}.
 
 \pnum
-The height is \tcode{max(0.0f, value.y - y())}.
+<TODO>The height is \tcode{max(0.0f, value.y - y())}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.bounding_box.observers]{\tcode{bounding_box} observers}
+\rSec1 [\iotwod.bounding_box.observers]{\tcode{basic_bounding_box} observers}
 
-\indexlibrarymember{x}{bounding_box}%
+\indexlibrarymember{x}{basic_bounding_box}%
 \begin{itemdecl}
-constexpr float x() const noexcept;
+float x() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -170,9 +175,9 @@ constexpr float x() const noexcept;
 The x coordinate.
 \end{itemdescr}
 
-\indexlibrarymember{y}{bounding_box}%
+\indexlibrarymember{y}{basic_bounding_box}%
 \begin{itemdecl}
-constexpr float y() const noexcept;
+float y() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -180,9 +185,9 @@ constexpr float y() const noexcept;
 The y coordinate.
 \end{itemdescr}
 
-\indexlibrarymember{width}{bounding_box}%
+\indexlibrarymember{width}{basic_bounding_box}%
 \begin{itemdecl}
-constexpr float width() const noexcept;
+float width() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -190,9 +195,9 @@ constexpr float width() const noexcept;
 The width.
 \end{itemdescr}
 
-\indexlibrarymember{height}{bounding_box}%
+\indexlibrarymember{height}{basic_bounding_box}%
 \begin{itemdecl}
-constexpr float height() const noexcept;
+float height() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -200,35 +205,37 @@ constexpr float height() const noexcept;
 The height.
 \end{itemdescr}
 
-\indexlibrarymember{top_left}{bounding_box}%
+\indexlibrarymember{top_left}{basic_bounding_box}%
 \begin{itemdecl}
-constexpr point_2d top_left() const noexcept;
+basic_point_2d<GraphicsMath> top_left() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-A \tcode{point_2d} object constructed with the x coordinate as its first argument and the y coordinate as its second argument.
+A \tcode{basic_point_2d<GraphicsMath>} object constructed with the x coordinate as its first argument and the y coordinate as its second argument.
 \end{itemdescr}
 
-\indexlibrarymember{bottom_right}{bounding_box}%
+\indexlibrarymember{bottom_right}{basic_bounding_box}%
 \begin{itemdecl}
-constexpr point_2d bottom_right() const noexcept;
+basic_point_2d<GraphicsMath> bottom_right() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-A \tcode{point_2d} object constructed with the width added to the x coordinate as its first argument and the height added to the y coordinate as its second argument.
+A \tcode{basic_point_2d<GraphicsMath>} object constructed with the width added to the x coordinate as its first argument and the height added to the y coordinate as its second argument.
 \end{itemdescr}
 
-\rSec1 [\iotwod.bounding_box.ops] {\tcode{bounding_box} operators}
+\rSec1 [\iotwod.bounding_box.ops] {\tcode{basic_bounding_box} operators}
 
-\indexlibrarymember{operator==}{bounding_box}%
+\indexlibrarymember{operator==}{basic_bounding_box}%
 \begin{itemdecl}
-constexpr bool operator==(const bounding_box& lhs, const bounding_box& rhs) noexcept;
+bool operator==(const basic_bounding_box<GraphicsMath>& lhs,
+  const basic_bounding_box<GraphicsMath>& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
+<TODO>
 \begin{codeblock}
 lhs.x() == rhs.x() && lhs.y() == rhs.y() &&
 lhs.width() == rhs.width() && lhs.height() == rhs.height()

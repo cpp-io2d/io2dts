@@ -1,55 +1,61 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.circle] {Class \tcode{circle}}
+\rSec0 [\iotwod.circle] {Class \tcode{basic_circle}}
 
-\rSec1 [\iotwod.circle.intro] {\tcode{circle} description}
+\rSec1 [\iotwod.circle.intro] {\tcode{basic_circle} description}
 
 \pnum
 \indexlibrary{\idxcode{circle}}%
-The class \tcode{circle} describes a circle.
+The class \tcode{basic_circle} describes a circle.
 
 \pnum
-It has a \term{center} of type \tcode{point_2d} and a \term{radius} of type \tcode{float}.
+It has a \term{center} of type \tcode{basic_point_2d<GraphicsMath>} and a \term{radius} of type \tcode{float}.
 
-\rSec1 [\iotwod.circle.synopsis] {\tcode{circle} synopsis}
+\rSec1 [\iotwod.circle.synopsis] {\tcode{basic_circle} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
-  class circle {
+  template <class GraphicsMath>
+  class basic_circle {
   public:
     // \ref{\iotwod.circle.cons}, constructors:
-    constexpr circle() noexcept;
-    constexpr circle(point_2d ctr, float rad) noexcept;
+    basic_circle() noexcept;
+    basic_circle(const basic_point_2d<GraphicsMath>& ctr, float rad) noexcept;
+    basic_circle(const typename GraphicsMath::circle_data_type& val) noexcept;
 
     // \ref{\iotwod.circle.modifiers}, modifiers:
-    constexpr void center(point_2d ctr) noexcept;
-    constexpr void radius(float r) noexcept;
-    
+    void center(const basic_point_2d<GraphicsMath>& ctr) noexcept;
+    void radius(float r) noexcept;
+
     // \ref{\iotwod.circle.observers}, observers:
-    constexpr point_2d center() const noexcept;
-    constexpr float radius() const noexcept;
+    basic_point_2d<GraphicsMath> center() const noexcept;
+    float radius() const noexcept;
   };
 
-  // \ref{\iotwod.circle.ops}  
-  constexpr bool operator==(const circle& lhs, const circle& rhs) noexcept;
-  constexpr bool operator!=(const circle& lhs, const circle& rhs) noexcept;
+  // \ref{\iotwod.circle.ops}, operators:
+  template <class GraphicsMath>
+  bool operator==(const basic_circle<GraphicsMath>& lhs,
+    const basic_circle<GraphicsMath>& rhs) noexcept;
+  template <class GraphicsMath>
+  bool operator!=(const basic_circle<GraphicsMath>& lhs,
+    const basic_circle<GraphicsMath>& rhs) noexcept;
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.circle.cons] {\tcode{circle} constructors}
+\rSec1 [\iotwod.circle.cons] {\tcode{basic_circle} constructors}
 
-\indexlibrary{\idxcode{circle}!constructor}%
+\indexlibrary{\idxcode{basic_circle}!constructor}%
 \begin{itemdecl}
-constexpr circle() noexcept;
+basic_circle() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{circle(\{ 0.0f, 0.0f \}, 0.0f)}.
+Equivalent to: \tcode{basic_circle(\{ 0.0f, 0.0f \}, 0.0f)}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{circle}!constructor}%
+\indexlibrary{\idxcode{basic_circle}!constructor}%
 \begin{itemdecl}
-constexpr circle(point_2d ctr, float r) noexcept;
+basic_circle(const basic_point_2d<GraphicsMath>& ctr, float r) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \requires
@@ -57,17 +63,17 @@ constexpr circle(point_2d ctr, float r) noexcept;
 
 \pnum
 \effects
-Constructs an object of type \tcode{circle}.
+Constructs an object of type \tcode{basic_circle}.
 
 \pnum
 The center is \tcode{ctr}. The radius is \tcode{r}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.circle.modifiers]{\tcode{circle} modifiers}
+\rSec1 [\iotwod.circle.modifiers]{\tcode{basic_circle} modifiers}
 
-\indexlibrarymember{center}{circle}%
+\indexlibrarymember{center}{basic_circle}%
 \begin{itemdecl}
-constexpr void center(point_2d ctr) noexcept;
+void center(const basic_point_2d<GraphicsMath>& ctr) noexcept;
 \end{itemdecl}
 
 \begin{itemdescr}
@@ -76,9 +82,9 @@ constexpr void center(point_2d ctr) noexcept;
 The center is \tcode{ctr}.
 \end{itemdescr}
 
-\indexlibrarymember{radius}{circle}%
+\indexlibrarymember{radius}{basic_circle}%
 \begin{itemdecl}
-constexpr void radius(float r) noexcept;
+void radius(float r) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \requires
@@ -89,11 +95,11 @@ constexpr void radius(float r) noexcept;
 The radius is \tcode{r}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.circle.observers]{\tcode{circle} observers}
+\rSec1 [\iotwod.circle.observers]{\tcode{basic_circle} observers}
 
-\indexlibrarymember{center}{circle}%
+\indexlibrarymember{center}{basic_circle}%
 \begin{itemdecl}
-constexpr float center() const noexcept;
+basic_point_2d<GraphicsMath> center() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -101,9 +107,9 @@ constexpr float center() const noexcept;
 The center.
 \end{itemdescr}
 
-\indexlibrarymember{radius}{circle}%
+\indexlibrarymember{radius}{basic_circle}%
 \begin{itemdecl}
-constexpr float radius() const noexcept;
+float radius() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -111,11 +117,12 @@ constexpr float radius() const noexcept;
 The radius.
 \end{itemdescr}
 
-\rSec1 [\iotwod.circle.ops] {\tcode{circle} operators}
+\rSec1 [\iotwod.circle.ops] {\tcode{basic_circle} operators}
 
-\indexlibrarymember{operator!=}{circle}%
+\indexlibrarymember{operator==}{basic_circle}%
 \begin{itemdecl}
-constexpr bool operator==(const circle& lhs, const circle& rhs) noexcept;
+bool operator==(const basic_circle<GraphicsMath>& lhs,
+  const basic_circle<GraphicsMath>& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
