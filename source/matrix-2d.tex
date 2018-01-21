@@ -5,7 +5,7 @@
 
 \indexlibrary{\idxcode{basic_matrix_2d}}%
 \pnum
-The \tcode{basic_matrix_2d} class represents a three row by three column matrix. Its purpose is to perform affine transformations.
+The class template \tcode{basic_matrix_2d} represents a three row by three column matrix. Its purpose is to perform affine transformations.
 
 \pnum
 The matrix is composed of nine \tcode{float} values: \tcode{m00}, \tcode{m01}, \tcode{m02}, \tcode{m10}, \tcode{m11}, \tcode{m12}, \tcode{m20}, \tcode{m21}, and \tcode{m22}. The ordering of these \tcode{float} values in the \tcode{basic_matrix_2d} class is unspecified.
@@ -195,8 +195,9 @@ static basic_matrix_2d init_reflect(float radians) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcodebasic_matrix_2d(cos(radians * 2.0f), sin(radians * 2.0f), sin(radians * 2.0f),
-  -cos(radians * 2.0f), 0.0f, 0.0f)
+\tcode
+{basic_matrix_2d(cos(radians * 2.0f), sin(radians * 2.0f), sin(radians * 2.0f),
+  -cos(radians * 2.0f), 0.0f, 0.0f)}
 \end{itemdescr}
 
 \indexlibrarymember{init_shear_y}{basic_matrix_2d}%
@@ -343,7 +344,7 @@ Otherwise returns \tcode{false}.
 
 \pnum
 \begin{note}
-<TODO>The specification of \tcode{isfinite} in \cppseventeen does not include the \tcode{constexpr} specifier. Regardless, the requirements stated in [library.c] and [c.math.fpclass] in \cppseventeen make it possible to implement a constexpr function that produces the observable behavior of \tcode{isfinite}. As a result, this function can be implemented as a constexpr function.
+The specification of \tcode{isfinite} in \cppseventeen does not include the \tcode{constexpr} specifier. Regardless, the requirements stated in [library.c] and [c.math.fpclass] in \cppseventeen make it possible to implement a constexpr function that produces the observable behavior of \tcode{isfinite}. As a result, this function can be implemented as a constexpr function.
 \end{note}
 \end{itemdescr}
 
