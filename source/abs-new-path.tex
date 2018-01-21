@@ -22,7 +22,8 @@ Equivalent to: \tcode{abs_new_figure\{basic_point_2d<typename GraphicsSurfaces::
 
 \indexlibrary{\idxcode{abs_new_figure}!constructor}%
 \begin{itemdecl}
-explicit abs_new_figure(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& pt);
+explicit abs_new_figure(const basic_point_2d<typename
+  GraphicsSurfaces::graphics_math_type>& pt);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -106,7 +107,7 @@ The at point.
 
 \indexlibrarymember{operator==}{abs_new_figure}%
 \begin{itemdecl}
-constexpr bool operator==(const abs_new_figure& lhs, const abs_new_figure& rhs) noexcept;
+bool operator==(const abs_new_figure& lhs, const abs_new_figure& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
