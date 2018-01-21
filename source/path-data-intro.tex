@@ -73,6 +73,12 @@ namespace std::experimental::io2d::v1 {
       basic_point_2d<typename GraphicsSurfaces::graphics_math_type> at() const noexcept;
     };
 
+    class close_figure {
+    public:
+      // \ref{\iotwod.closefigure.cons}, construct:
+      constexpr close_figure() noexcept;
+    };
+
     using figure_item = variant<abs_cubic_curve, abs_line, abs_matrix, abs_new_figure,
       abs_quadratic_curve, arc, close_figure, rel_cubic_curve, rel_line, rel_matrix,
       rel_new_figure, rel_quadratic_curve, revert_matrix>;
@@ -94,12 +100,14 @@ namespace std::experimental::io2d::v1 {
   bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::rel_new_figure& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::rel_new_figure& rhs) noexcept;
 
+  // \ref{\iotwod.closefigure.ops}, close_figure operators:
   template <class GraphicsSurfaces>
   bool operator==(const typename basic_figure_items<GraphicsSurfaces>::close_figure& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::close_figure& rhs) noexcept;
   template <class GraphicsSurfaces>
   bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::close_figure& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::close_figure& rhs) noexcept;
+
   template <class GraphicsSurfaces>
   bool operator==(const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& rhs) noexcept;

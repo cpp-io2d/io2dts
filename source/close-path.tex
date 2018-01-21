@@ -5,28 +5,23 @@
 \indexlibrary{\idxcode{close_figure}}
 The class \tcode{close_figure} describes a figure item that is a close figure command.
 
-\rSec1 [\iotwod.closefigure.synopsis] {\tcode{close_figure} synopsis}%
+\rSec1 [\iotwod.closefigure.cons] {\tcode{close_figure} constructor}%
 
-\begin{codeblock}
-namespace std::experimental::io2d::v1 {
-  namespace figure_items {
-    class close_figure {
-    public:
-      constexpr close_figure() noexcept;
-    };
-    
-    // \ref{\iotwod.closefigure.ops}, operators:
-    constexpr bool operator==(const close_figure&, const close_figure&) noexcept;
-    constexpr bool operator!=(const close_figure&, const close_figure&) noexcept;
-  }
-}
-\end{codeblock}
+\indexlibrary{\idxcode{close_figure}!constructor}%
+\begin{itemdecl}
+close_figure();
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{close_figure}.
+\end{itemdescr}
 
 \rSec1 [\iotwod.closefigure.ops]{\tcode{close_figure} operators}%
 
 \indexlibrarymember{operator==}{close_figure}%
 \begin{itemdecl}
-constexpr bool operator==(const close_figure&, const close_figure&) noexcept;
+bool operator==(const close_figure& lhs, const close_figure& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
