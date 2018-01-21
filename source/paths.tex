@@ -23,9 +23,9 @@ If a path command exists or is inserted between segments, it's possible that poi
 Paths provide vector graphics functionality. As such they are particularly useful in situations where an application is intended to run on a variety of platforms whose output devices (\ref{\iotwod.displaysurface.intro}) span a large gamut of sizes, both in terms of measurement units and in terms of a horizontal and vertical pixel count, in that order.
 
 \pnum
-An \tcode{interpreted_path} object is an immutable resource wrapper containing a path (\ref{\iotwod.pathgroup}). An \tcode{interpreted_path} object is created by interpreting the path contained in a \tcode{path_builder} object. It can also be default constructed, in which case the \tcode{interpreted_path} object contains no figures.
+A \tcode{basic_interpreted_path} object is an immutable resource wrapper containing a path (\ref{\iotwod.pathgroup}). A \tcode{basic_interpreted_path} object is created by interpreting the path contained in a \tcode{basic_path_builder} object. It can also be default constructed, in which case the \tcode{basic_interpreted_path} object contains no figures.
 \begin{note}
-\tcode{interpreted_path} objects provide significant optimization opportunities for implementations. Because they are immutable and opaque, they are intended to be used to store a path in the most efficient representation available.
+\tcode{basic_interpreted_path} objects provide significant optimization opportunities for implementations. Because they are immutable and opaque, they are intended to be used to store a path in the most efficient representation available.
 \end{note}
 
 \input{path-examples}
