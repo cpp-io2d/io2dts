@@ -8,48 +8,21 @@ The class \tcode{abs_new_figure} describes a figure item that is a new figure co
 \pnum
 It has an \term{at point} of type \tcode{point_2d}.
 
-\rSec1 [\iotwod.absnewfigure.synopsis] {\tcode{abs_new_figure} synopsis}%
-
-\begin{codeblock}
-namespace std::experimental::io2d::v1 {
-  namespace figure_items {
-    class abs_new_figure {
-    public:
-      // \ref{\iotwod.absnewfigure.cons}, construct:
-      constexpr abs_new_figure() noexcept;
-      constexpr explicit abs_new_figure(point_2d pt) noexcept;
-
-      // \ref{\iotwod.absnewfigure.modifiers}, modifiers:
-      constexpr void at(point_2d pt) noexcept;
-
-      // \ref{\iotwod.absnewfigure.observers}, observers:
-      constexpr point_2d at() const noexcept;
-    };
-    
-    // \ref{\iotwod.absnewfigure.ops}, operators:
-    constexpr bool operator==(const abs_new_figure& lhs, const abs_new_figure& rhs) 
-      noexcept;
-    constexpr bool operator!=(const abs_new_figure& lhs, const abs_new_figure& rhs) 
-      noexcept;
-  }
-}
-\end{codeblock}
-
-\rSec1 [\iotwod.absnewfigure.cons] {\tcode{abs_new_figure} constructors}%
+\rSec1 [\iotwod.absnewfigure.cons] {\tcode{abs_new_figure} constructors and assignment operators}%
 
 \indexlibrary{\idxcode{abs_new_figure}!constructor}%
 \begin{itemdecl}
-constexpr abs_new_figure() noexcept;
+abs_new_figure();
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{abs_new_figure\{ point_2d() \};}
+Equivalent to: \tcode{abs_new_figure\{basic_point_2d<typename GraphicsSurfaces::graphics_math_type>()\};}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{abs_new_figure}!constructor}%
 \begin{itemdecl}
-constexpr explicit abs_new_figure(point_2d pt) noexcept;
+explicit abs_new_figure(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& pt);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -60,11 +33,56 @@ Constructs an object of type \tcode{abs_new_figure}.
 The at point is \tcode{pt}.
 \end{itemdescr}
 
+\indexlibrary{\idxcode{abs_new_figure}!constructor}%
+\begin{itemdecl}
+abs_new_figure(const abs_new_figure& other);
+abs_new_figure(abs_new_figure&& other) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{abs_new_figure}. In the second form, other is left in a valid state with an unspecified value.
+	
+\pnum
+The at point is \tcode{other.at()}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{abs_new_figure}!assignment}%
+\begin{itemdecl}
+abs_new_figure& operator=(const abs_new_figure& other);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+If \tcode{*this} and \tcode{other} are not the same object, modifies \tcode{*this} such that \tcode{*this.at()} is \tcode{other.at()}
+
+\pnum
+If \tcode{*this} and \tcode{other} are the same object, the member has no effect.
+	
+\pnum
+\returns
+\tcode{*this}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{abs_new_figure}!assignment}%
+\begin{itemdecl}
+abs_new_figure& operator=(abs_new_figure&& other) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+<TODO>
+
+\pnum
+\returns
+\tcode{*this}
+\end{itemdescr}
+
 \rSec1 [\iotwod.absnewfigure.modifiers]{\tcode{abs_new_figure} modifiers}%
 
 \indexlibrarymember{at}{abs_new_figure}%
 \begin{itemdecl}
-constexpr void at(point_2d pt) noexcept;
+void at(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -76,7 +94,7 @@ The at point is \tcode{pt}.
 
 \indexlibrarymember{at}{abs_new_figure}%
 \begin{itemdecl}
-constexpr point_2d at() const noexcept;
+basic_point_2d<typename GraphicsSurfaces::graphics_math_type> at() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -88,8 +106,7 @@ The at point.
 
 \indexlibrarymember{operator==}{abs_new_figure}%
 \begin{itemdecl}
-constexpr bool operator==(const abs_new_figure& lhs, const abs_new_figure& rhs) 
-  noexcept;
+constexpr bool operator==(const abs_new_figure& lhs, const abs_new_figure& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

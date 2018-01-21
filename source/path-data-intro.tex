@@ -3,7 +3,7 @@
 \rSec0 [\iotwod.paths.items.intro] {Introduction}
 
 \pnum
-The classes in the \tcode{figure_items} namespace describe figure items.
+The member classes of the class template \tcode{basic_figure_items} describe figure items.
 
 \pnum
 A figure begins with an \tcode{abs_new_figure} or \tcode{rel_new_figure} object. A figure ends when:
@@ -15,4 +15,131 @@ A figure begins with an \tcode{abs_new_figure} or \tcode{rel_new_figure} object.
 \end{itemize}
 
 \pnum
-The \tcode{path_builder} class is a sequential container that contains a path. It provides a simple interface for building a path but a path can be created using any container that stores \tcode{figure_items::figure_item} objects.
+The \tcode{basic_path_builder} class is a sequential container that contains a path. It provides a simple interface for building a path but a path can be created using any container that stores \tcode{basic_figure_items::figure_item} objects.
+
+\rSec0 [\iotwod.paths.items.synopsis] {\tcode{basic_figure_items} synopsis}
+
+\begin{codeblock}
+namespace std::experimental::io2d::v1 {
+  template <class GraphicsSurfaces>
+  class basic_figure_items {
+  public:
+    class abs_new_figure;
+    class rel_new_figure;
+    class close_figure;
+    class abs_matrix;
+    class rel_matrix;
+    class revert_matrix;
+    class abs_cubic_curve;
+    class abs_line;
+    class abs_quadratic_curve;
+    class arc;
+    class rel_cubic_curve;
+    class rel_line;
+    class rel_quadratic_curve;
+
+    class abs_new_figure {
+    public:
+      // \ref{\iotwod.absnewfigure.cons}, construct:
+      abs_new_figure();
+      explicit abs_new_figure(const basic_point_2d<typename
+      GraphicsSurfaces::graphics_math_type>& pt);
+      abs_new_figure(const abs_new_figure& other);
+      abs_new_figure(abs_new_figure&& other) noexcept;
+      abs_new_figure& operator=(const abs_new_figure& other);
+      abs_new_figure& operator=(abs_new_figure&& other) noexcept;
+
+      // \ref{\iotwod.absnewfigure.modifiers}, modifiers:
+      void at(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& pt) noexcept;
+
+      // \ref{\iotwod.absnewfigure.observers}, observers:
+      basic_point_2d<typename GraphicsSurfaces::graphics_math_type> at() const noexcept;
+    };
+
+    using figure_item = variant<abs_cubic_curve, abs_line, abs_matrix, abs_new_figure,
+      abs_quadratic_curve, arc, close_figure, rel_cubic_curve, rel_line, rel_matrix,
+      rel_new_figure, rel_quadratic_curve, revert_matrix>;
+  };
+
+  // \ref{\iotwod.absnewfigure.ops}, abs_new_figure operators:
+  template <class GraphicsSurfaces>
+  bool operator==(const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& rhs) noexcept;
+  
+  template <class GraphicsSurfaces>
+  bool operator==(const typename basic_figure_items<GraphicsSurfaces>::rel_new_figure& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::rel_new_figure& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::rel_new_figure& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::rel_new_figure& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator==(const typename basic_figure_items<GraphicsSurfaces>::close_figure& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::close_figure& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::close_figure& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::close_figure& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator==(const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator==(const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator==(const typename basic_figure_items<GraphicsSurfaces>::revert_matrix& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::revert_matrix& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::revert_matrix& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::revert_matrix& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator==(const typename basic_figure_items<GraphicsSurfaces>::abs_line& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_line& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::abs_line& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_line& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator==(const typename basic_figure_items<GraphicsSurfaces>::rel_line& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::rel_line& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::rel_line& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::rel_line& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator==(const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator==(const typename basic_figure_items<GraphicsSurfaces>::rel_quadratic_curve& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::rel_quadratic_curve& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::rel_quadratic_curve& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::rel_quadratic_curve& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator==(const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator==(const typename basic_figure_items<GraphicsSurfaces>::rel_cubic_curve& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::rel_cubic_curve& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::rel_cubic_curve& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::rel_cubic_curve& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator==(const typename basic_figure_items<GraphicsSurfaces>::arc& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::arc& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::arc& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::arc& rhs) noexcept;
+}
+\end{codeblock}
