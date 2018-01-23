@@ -1,55 +1,29 @@
 %!TEX root = io2d.tex
 \rSec0 [\iotwod.relmatrix] {Class \tcode{rel_matrix}}%
 
-\rSec1 [\iotwod.relmatrix.synopsis] {\tcode{rel_matrix} synopsis}%
-
 \pnum
 \indexlibrary{\idxcode{rel_matrix}}%
 The class \tcode{rel_matrix} describes a figure item that is a path command.
 
 \pnum
-It has a transform matrix of type \tcode{matrix_2d}.
+It has a transform matrix of type \tcode{basic_matrix_2d}.
 
-\begin{codeblock}
-namespace std::experimental::io2d::v1 {
-  namespace figure_items {
-    class rel_matrix {
-    public:
-      // \ref{\iotwod.relmatrix.cons}, construct:
-      constexpr rel_matrix() noexcept;
-      constexpr explicit rel_matrix(const matrix_2d& m) noexcept;
-
-      // \ref{\iotwod.relmatrix.modifiers}, modifiers:
-      constexpr void matrix(const matrix_2d& m) noexcept;
-
-      // \ref{\iotwod.relmatrix.observers}, observers:
-      constexpr matrix_2d matrix() const noexcept;
-    };
-    
-    // \ref{\iotwod.relmatrix.ops}, operators:
-    constexpr bool operator==(const rel_matrix& lhs, const rel_matrix& rhs) 
-      noexcept;
-    constexpr bool operator!=(const rel_matrix& lhs, const rel_matrix& rhs) 
-      noexcept;
-  }
-}
-\end{codeblock}
-
-\rSec1 [\iotwod.relmatrix.cons] {\tcode{rel_matrix} constructors}
+\rSec1 [\iotwod.relmatrix.cons] {\tcode{rel_matrix} constructors and assignment operators}
 
 \indexlibrary{\idxcode{rel_matrix}!constructor}%
 \begin{itemdecl}
-constexpr rel_matrix() noexcept;
+rel_matrix() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{rel_matrix\{ matrix_2d() \};}
+Equivalent to: \tcode{rel_matrix\{ basic_matrix_2d() \};}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rel_matrix}!constructor}%
 \begin{itemdecl}
-constexpr explicit rel_matrix(const matrix_2d& m) noexcept;
+explicit rel_matrix(const basic_matrix_2d<typename
+  GraphicsSurfaces::graphics_math_type>& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -64,11 +38,53 @@ Constructs an object of type \tcode{rel_matrix}.
 The transform matrix is \tcode{m}.
 \end{itemdescr}
 
+\indexlibrary{\idxcode{rel_matrix}!constructor}%
+\begin{itemdecl}
+rel_matrix(const rel_matrix& other);
+rel_matrix(rel_matrix&& other) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{rel_matrix}. In the second form, other is left in a valid state with an unspecified value.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rel_matrix}!assignment}%
+\begin{itemdecl}
+rel_matrix& operator=(const rel_matrix& other);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+If \tcode{*this} and \tcode{other} are not the same object, modifies \tcode{*this} such that \tcode{*this.matrix()} is \tcode{other.matrix()}
+
+\pnum
+If \tcode{*this} and \tcode{other} are the same object, the member has no effect.
+
+\pnum
+\returns
+\tcode{*this}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rel_matrix}!assignment}%
+\begin{itemdecl}
+rel_matrix& operator=(rel_matrix&& other) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+<TODO>
+
+\pnum
+\returns
+\tcode{*this}
+\end{itemdescr}
+
 \rSec1 [\iotwod.relmatrix.modifiers]{\tcode{rel_matrix} modifiers}
 
 \indexlibrarymember{matrix}{rel_matrix}%
 \begin{itemdecl}
-constexpr void matrix(const matrix_2d& m) noexcept;
+void matrix(const basic_matrix_2d<typename GraphicsSurfaces::graphics_math_type>& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -84,7 +100,7 @@ The transform matrix is \tcode{m}.
 
 \indexlibrarymember{matrix}{rel_matrix}%
 \begin{itemdecl}
-constexpr matrix_2d matrix() const noexcept;
+basic_matrix_2d<typename GraphicsSurfaces::graphics_math_type> matrix() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -96,8 +112,9 @@ The transform matrix.
 
 \indexlibrarymember{operator==}{rel_matrix}%
 \begin{itemdecl}
-constexpr bool operator==(const rel_matrix& lhs, const rel_matrix& rhs) 
-  noexcept;
+template <class GraphicsSurfaces>
+bool operator==(const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

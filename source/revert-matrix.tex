@@ -1,35 +1,15 @@
 %!TEX root = io2d.tex
 \rSec0 [\iotwod.revertmatrix] {Class \tcode{revert_matrix}}
 
-\rSec1 [\iotwod.revertmatrix.synopsis] {\tcode{revert_matrix} synopsis}
-
 \pnum
 \indexlibrary{\idxcode{revert_matrix}}%
 The class \tcode{revert_matrix} describes a figure item that is a path command.
 
-\begin{codeblock}
-namespace std::experimental::io2d::v1 {
-  namespace figure_items {
-    class revert_matrix {
-    public:
-      // \ref{\iotwod.revertmatrix.cons}, construct:
-      constexpr revert_matrix() noexcept;
-    };
-    
-    // \ref{\iotwod.revertmatrix.ops}, operators:
-    constexpr bool operator==(const revert_matrix& lhs,
-      const revert_matrix& rhs) noexcept;
-    constexpr bool operator!=(const revert_matrix& lhs,
-      const revert_matrix& rhs) noexcept;
-  }
-}
-\end{codeblock}
-
-\rSec1 [\iotwod.revertmatrix.cons] {\tcode{revert_matrix} constructors}
+\rSec1 [\iotwod.revertmatrix.cons] {\tcode{revert_matrix} constructors and assignment operators}
 
 \indexlibrary{\idxcode{revert_matrix}!constructor}%
 \begin{itemdecl}
-constexpr revert_matrix() noexcept;
+revert_matrix() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -41,8 +21,9 @@ Constructs an object of type \tcode{revert_matrix}.
 
 \indexlibrarymember{operator==}{revert_matrix}%
 \begin{itemdecl}
-constexpr bool operator==(const revert_matrix& lhs, const revert_matrix& rhs) 
-  noexcept;
+template <class GraphicsSurfaces>
+bool operator==(const typename basic_figure_items<GraphicsSurfaces>::revert_matrix& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::revert_matrix& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

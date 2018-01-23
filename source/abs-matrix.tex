@@ -1,55 +1,29 @@
 %!TEX root = io2d.tex
 \rSec0 [\iotwod.absmatrix] {Class \tcode{abs_matrix}}%
 
-\rSec1 [\iotwod.absmatrix.synopsis] {\tcode{abs_matrix} synopsis}%
-
 \pnum
 \indexlibrary{\idxcode{abs_matrix}}%
 The class \tcode{abs_matrix} describes a figure item that is a path command.
 
 \pnum
-It has a transform matrix of type \tcode{matrix_2d}.
+It has a transform matrix of type \tcode{basic_matrix_2d}.
 
-\begin{codeblock}
-namespace std::experimental::io2d::v1 {
-  namespace figure_items {
-    class abs_matrix {
-    public:
-      // \ref{\iotwod.absmatrix.cons}, construct:
-      constexpr abs_matrix() noexcept;
-      constexpr explicit abs_matrix(const matrix_2d& m) noexcept;
-
-      // \ref{\iotwod.absmatrix.modifiers}, modifiers:
-      constexpr void matrix(const matrix_2d& m) noexcept;
-
-      // \ref{\iotwod.absmatrix.observers}, observers:
-      constexpr matrix_2d matrix() const noexcept;
-    };
-    
-    // \ref{\iotwod.absmatrix.ops}, operators:
-    constexpr bool operator==(const abs_matrix& lhs, const abs_matrix& rhs) 
-      noexcept;
-    constexpr bool operator!=(const abs_matrix& lhs, const abs_matrix& rhs) 
-      noexcept;
-  }
-}
-\end{codeblock}
-
-\rSec1 [\iotwod.absmatrix.cons] {\tcode{abs_matrix} constructors}
+\rSec1 [\iotwod.absmatrix.cons] {\tcode{abs_matrix} constructors and assignment operators}
 
 \indexlibrary{\idxcode{abs_matrix}!constructor}%
 \begin{itemdecl}
-constexpr abs_matrix() noexcept;
+abs_matrix() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{abs_matrix\{ matrix_2d() \};}
+Equivalent to: \tcode{abs_matrix\{ basic_matrix_2d() \};}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{abs_matrix}!constructor}%
 \begin{itemdecl}
-constexpr explicit abs_matrix(const matrix_2d& m) noexcept;
+explicit abs_matrix(const basic_matrix_2d<typename
+  GraphicsSurfaces::graphics_math_type>& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -64,11 +38,53 @@ Constructs an object of type \tcode{abs_matrix}.
 The transform matrix is \tcode{m}.
 \end{itemdescr}
 
+\indexlibrary{\idxcode{abs_matrix}!constructor}%
+\begin{itemdecl}
+abs_matrix(const abs_matrix& other);
+abs_matrix(abs_matrix&& other) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{abs_matrix}. In the second form, other is left in a valid state with an unspecified value.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{abs_matrix}!assignment}%
+\begin{itemdecl}
+abs_matrix& operator=(const abs_matrix& other);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+If \tcode{*this} and \tcode{other} are not the same object, modifies \tcode{*this} such that \tcode{*this.matrix()} is \tcode{other.matrix()}
+
+\pnum
+If \tcode{*this} and \tcode{other} are the same object, the member has no effect.
+
+\pnum
+\returns
+\tcode{*this}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{abs_matrix}!assignment}%
+\begin{itemdecl}
+abs_matrix& operator=(abs_matrix&& other) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+<TODO>
+
+\pnum
+\returns
+\tcode{*this}
+\end{itemdescr}
+
 \rSec1 [\iotwod.absmatrix.modifiers]{\tcode{abs_matrix} modifiers}
 
 \indexlibrarymember{matrix}{abs_matrix}%
 \begin{itemdecl}
-constexpr void matrix(const matrix_2d& m) noexcept;
+void matrix(const basic_matrix_2d<typename GraphicsSurfaces::graphics_math_type>& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -84,7 +100,7 @@ The transform matrix is \tcode{m}.
 
 \indexlibrarymember{matrix}{abs_matrix}%
 \begin{itemdecl}
-constexpr matrix_2d matrix() const noexcept;
+basic_matrix_2d<typename GraphicsSurfaces::graphics_math_type> matrix() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -96,8 +112,9 @@ The transform matrix.
 
 \indexlibrarymember{operator==}{abs_matrix}%
 \begin{itemdecl}
-constexpr bool operator==(const abs_matrix& lhs, const abs_matrix& rhs) 
-  noexcept;
+template <class GraphicsSurfaces>
+bool operator==(const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

@@ -107,7 +107,9 @@ The at point.
 
 \indexlibrarymember{operator==}{rel_new_figure}%
 \begin{itemdecl}
-bool operator==(const rel_new_figure& lhs, const rel_new_figure& rhs) noexcept;
+template <class GraphicsSurfaces>
+bool operator==(const typename basic_figure_items<GraphicsSurfaces>::rel_new_figure& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::rel_new_figure& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

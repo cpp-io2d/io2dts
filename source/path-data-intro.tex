@@ -60,7 +60,8 @@ namespace std::experimental::io2d::v1 {
     public:
       // \ref{\iotwod.relnewfigure.cons}, construct:
       rel_new_figure() noexcept;
-      explicit rel_new_figure(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& pt) noexcept;
+      explicit rel_new_figure(const basic_point_2d<typename
+        GraphicsSurfaces::graphics_math_type>& pt) noexcept;
       rel_new_figure(const rel_new_figure& other);
       rel_new_figure& operator=(const rel_new_figure& other);
       rel_new_figure(rel_new_figure&& other) noexcept;
@@ -77,6 +78,48 @@ namespace std::experimental::io2d::v1 {
     public:
       // \ref{\iotwod.closefigure.cons}, construct:
       constexpr close_figure() noexcept;
+    };
+
+    class abs_matrix {
+	public:
+      // \ref{\iotwod.absmatrix.cons}, construct:
+      abs_matrix() noexcept;
+      explicit abs_matrix(const matrix_2d& m);
+      abs_matrix& operator=(const abs_matrix& other);
+      abs_matrix(abs_matrix&& other) noexcept;
+      abs_matrix& operator=(abs_matrix&& other) noexcept;
+	
+      // \ref{\iotwod.absmatrix.modifiers}, modifiers:
+      void matrix(const basic_matrix_2d<typename
+        GraphicsSurfaces::graphics_math_type>& m) noexcept;
+	
+      // \ref{\iotwod.absmatrix.observers}, observers:
+      basic_matrix_2d<typename GraphicsSurfaces::graphics_math_type> matrix() const noexcept;
+    };
+
+    class rel_matrix {
+    public:
+      // \ref{\iotwod.relmatrix.cons}, construct:
+      rel_matrix() noexcept;
+      explicit rel_matrix(const basic_matrix_2d<typename
+        GraphicsSurfaces::graphics_math_type>& m) noexcept;
+      rel_matrix(const rel_matrix& other);
+      rel_matrix& operator=(const rel_matrix& other);
+      rel_matrix(rel_matrix&& other) noexcept;
+      rel_matrix& operator=(rel_matrix&& other) noexcept;
+
+      // \ref{\iotwod.relmatrix.modifiers}, modifiers:
+      void matrix(const basic_matrix_2d<typename
+        GraphicsSurfaces::graphics_math_type>& m) noexcept;
+	
+      // \ref{\iotwod.relmatrix.observers}, observers:
+      basic_matrix_2d<typename GraphicsSurfaces::graphics_math_type> matrix() const noexcept;
+    };
+
+    class revert_matrix {
+    public:
+      // \ref{\iotwod.revertmatrix.cons}, construct:
+      revert_matrix() noexcept;
     };
 
     using figure_item = variant<abs_cubic_curve, abs_line, abs_matrix, abs_new_figure,
@@ -108,24 +151,30 @@ namespace std::experimental::io2d::v1 {
   bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::close_figure& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::close_figure& rhs) noexcept;
 
+  // \ref{\iotwod.absmatrix.ops}, abs_matrix operators:
   template <class GraphicsSurfaces>
   bool operator==(const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& rhs) noexcept;
   template <class GraphicsSurfaces>
   bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& rhs) noexcept;
+
+  // \ref{\iotwod.relmatrix.ops}, rel_matrix operators:
   template <class GraphicsSurfaces>
   bool operator==(const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& rhs) noexcept;
   template <class GraphicsSurfaces>
   bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& rhs) noexcept;
+
+  // \ref{\iotwod.revertmatrix.ops}, revert_matrix operators:
   template <class GraphicsSurfaces>
   bool operator==(const typename basic_figure_items<GraphicsSurfaces>::revert_matrix& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::revert_matrix& rhs) noexcept;
   template <class GraphicsSurfaces>
   bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::revert_matrix& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::revert_matrix& rhs) noexcept;
+
   template <class GraphicsSurfaces>
   bool operator==(const typename basic_figure_items<GraphicsSurfaces>::abs_line& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::abs_line& rhs) noexcept;

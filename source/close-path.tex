@@ -5,7 +5,7 @@
 \indexlibrary{\idxcode{close_figure}}
 The class \tcode{close_figure} describes a figure item that is a close figure command.
 
-\rSec1 [\iotwod.closefigure.cons] {\tcode{close_figure} constructor}%
+\rSec1 [\iotwod.closefigure.cons] {\tcode{close_figure} constructors and assignment operators}%
 
 \indexlibrary{\idxcode{close_figure}!constructor}%
 \begin{itemdecl}
@@ -21,7 +21,9 @@ Constructs an object of type \tcode{close_figure}.
 
 \indexlibrarymember{operator==}{close_figure}%
 \begin{itemdecl}
-bool operator==(const close_figure& lhs, const close_figure& rhs) noexcept;
+template <class GraphicsSurfaces>
+bool operator==(const typename basic_figure_items<GraphicsSurfaces>::close_figure& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::close_figure& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
