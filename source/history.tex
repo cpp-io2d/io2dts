@@ -1,0 +1,24 @@
+%!TEX root = io2d.tex
+\rSec0[\iotwod.revisionhistory]{Revision history}
+
+\rSec1 [\iotwod.revisionhistory.r7] {Revision 7}
+
+\pnum
+The significant difference between R7 and R6 is the abstraction of the implementation into separate classes. These classes provide math and rendering support. The linear algebra and geometry classes are templated over any appropriate math support class, while the path, brush and surface classes are templated over any appropriate rendering support class.
+
+\pnum
+The reference implementation of this paper provides a software implementation of the math and rendering support classes. This is based on the Cairo library; indeed, so far the reference implementation has been based on Cairo. However, it is now possible to provide an implementation more appropriate to the target platform.
+
+\pnum
+For example, a Windows implementation could provide support classes based on DirectX, while a Linux implementation could provide support classes based on OpenGL. In fact, any hardware vendor could provide a support library, targeting a specific implementation and their particular silicon if they wanted to exploit particular features of their hardware.
+
+\pnum
+Additionally, the surface classes have been modified: now there are simply managed and unmanaged output surfaces, the latter of which offers developers the opportunity to take finer control of the drawing surface
+
+\pnum
+The reference implementation, including a software-only implementation of math and rendering support classes, is available at https://github.com/mikebmcl/P0267_RefImpl
+
+\rSec1 [\iotwod.revisionhistory.r6] {Revision 6}
+
+\pnum
+Presented to LEWG in Toronto, July 2017

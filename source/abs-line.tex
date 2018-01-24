@@ -6,50 +6,24 @@
 The class \tcode{abs_line} describes a figure item that is a segment.
 
 \pnum
-It has an \term{end point} of type \tcode{point_2d}.
-
-\rSec1 [\iotwod.absline.synopsis] {\tcode{abs_line} synopsis}
-
-\begin{codeblock}
-namespace std::experimental::io2d::v1 {
-  namespace figure_items {
-    class abs_line {
-    public:
-      // \ref{\iotwod.absline.cons}, construct:
-      constexpr abs_line() noexcept;
-      constexpr explicit abs_line(point_2d pt) noexcept;
-
-      // \ref{\iotwod.absline.modifiers}, modifiers:
-      constexpr void to(point_2d pt) noexcept;
-
-      // \ref{\iotwod.absline.observers}, observers:
-      constexpr point_2d to() const noexcept;
-    };
-    
-    // \ref{\iotwod.absline.ops}, operators:
-    constexpr bool operator==(const abs_line& lhs, const abs_line& rhs) 
-      noexcept;
-    constexpr bool operator!=(const abs_line& lhs, const abs_line& rhs) 
-      noexcept;
-  }
-}
-\end{codeblock}
+It has an \term{end point} of type \tcode{basic_point_2d}.
 
 \rSec1 [\iotwod.absline.cons] {\tcode{abs_line} constructors}
 
 \indexlibrary{\idxcode{abs_line}!constructor}%
 \begin{itemdecl}
-constexpr abs_line() noexcept;
+abs_line() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{abs_line\{ point_2d() \};}
+Equivalent to: \tcode{abs_line\{ basic_point_2d() \};}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{abs_line}!constructor}%
 \begin{itemdecl}
-constexpr explicit abs_line(point_2d pt) noexcept;
+explicit abs_line(const basic_point_2d<typename
+  GraphicsSurfaces::graphics_math_type>& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -60,11 +34,58 @@ Constructs an object of type \tcode{abs_line}.
 The end point is \tcode{pt}.
 \end{itemdescr}
 
+\indexlibrary{\idxcode{abs_line}!constructor}%
+\begin{itemdecl}
+abs_line(const abs_line& other);
+abs_line(abs_line&& other) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{abs_line}. In the second form, other is left in a valid state with an unspecified value.
+
+\pnum
+The end point is \tcode{other.to()}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.absline.assign] {\tcode{abs_line} assignment operators}
+
+\indexlibrary{\idxcode{abs_line}!assignment}%
+\begin{itemdecl}
+abs_line& operator=(const abs_line& other);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+If \tcode{*this} and \tcode{other} are not the same object, modifies \tcode{*this} such that \tcode{*this.to()} is \tcode{other.to()}
+
+\pnum
+If \tcode{*this} and \tcode{other} are the same object, the member has no effect.
+
+\pnum
+\returns
+\tcode{*this}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{abs_line}!assignment}%
+\begin{itemdecl}
+abs_line& operator=(abs_line&& other) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+<TODO>
+
+\pnum
+\returns
+\tcode{*this}
+\end{itemdescr}
+
 \rSec1 [\iotwod.absline.modifiers]{\tcode{abs_line} modifiers}
 
 \indexlibrarymember{abs_line}{to}%
 \begin{itemdecl}
-constexpr void to(point_2d pt) noexcept;
+void to(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -76,7 +97,7 @@ The end point is \tcode{pt}.
 
 \indexlibrarymember{abs_line}{to}%
 \begin{itemdecl}
-constexpr point_2d to() const noexcept;
+basic_point_2d<typename GraphicsSurfaces::graphics_math_type> to() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -88,7 +109,9 @@ The end point.
 
 \indexlibrarymember{operator==}{abs_line}%
 \begin{itemdecl}
-constexpr bool operator==(const abs_line& lhs, const abs_line& rhs) noexcept;
+template <class GraphicsSurfaces>
+bool operator==(const typename basic_figure_items<GraphicsSurfaces>::abs_line& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::abs_line& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

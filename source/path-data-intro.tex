@@ -46,6 +46,8 @@ namespace std::experimental::io2d::v1 {
       GraphicsSurfaces::graphics_math_type>& pt);
       abs_new_figure(const abs_new_figure& other);
       abs_new_figure(abs_new_figure&& other) noexcept;
+
+      // \ref{\iotwod.absnewfigure.assign}, assign:
       abs_new_figure& operator=(const abs_new_figure& other);
       abs_new_figure& operator=(abs_new_figure&& other) noexcept;
 
@@ -63,8 +65,10 @@ namespace std::experimental::io2d::v1 {
       explicit rel_new_figure(const basic_point_2d<typename
         GraphicsSurfaces::graphics_math_type>& pt) noexcept;
       rel_new_figure(const rel_new_figure& other);
-      rel_new_figure& operator=(const rel_new_figure& other);
       rel_new_figure(rel_new_figure&& other) noexcept;
+
+      // \ref{\iotwod.relnewfigure.assign}, assign:
+      rel_new_figure& operator=(const rel_new_figure& other);
       rel_new_figure& operator=(rel_new_figure&& other) noexcept;
 
       // \ref{\iotwod.relnewfigure.modifiers}, modifiers:
@@ -85,8 +89,10 @@ namespace std::experimental::io2d::v1 {
       // \ref{\iotwod.absmatrix.cons}, construct:
       abs_matrix() noexcept;
       explicit abs_matrix(const matrix_2d& m);
-      abs_matrix& operator=(const abs_matrix& other);
       abs_matrix(abs_matrix&& other) noexcept;
+
+      // \ref{\iotwod.absmatrix.assign}, assign:
+      abs_matrix& operator=(const abs_matrix& other);
       abs_matrix& operator=(abs_matrix&& other) noexcept;
 	
       // \ref{\iotwod.absmatrix.modifiers}, modifiers:
@@ -104,8 +110,10 @@ namespace std::experimental::io2d::v1 {
       explicit rel_matrix(const basic_matrix_2d<typename
         GraphicsSurfaces::graphics_math_type>& m) noexcept;
       rel_matrix(const rel_matrix& other);
-      rel_matrix& operator=(const rel_matrix& other);
       rel_matrix(rel_matrix&& other) noexcept;
+
+      // \ref{\iotwod.relmatrix.assign}, assign:
+      rel_matrix& operator=(const rel_matrix& other);
       rel_matrix& operator=(rel_matrix&& other) noexcept;
 
       // \ref{\iotwod.relmatrix.modifiers}, modifiers:
@@ -120,6 +128,183 @@ namespace std::experimental::io2d::v1 {
     public:
       // \ref{\iotwod.revertmatrix.cons}, construct:
       revert_matrix() noexcept;
+    };
+
+    class abs_line {
+    public:
+      // \ref{\iotwod.absline.cons}, construct:
+      abs_line() noexcept;
+      explicit abs_line(const basic_point_2d<typename
+        GraphicsSurfaces::graphics_math_type>& pt) noexcept;
+      abs_line(const abs_line& other);
+      abs_line(abs_line&& other) noexcept;
+
+      // \ref{\iotwod.absline.assign}, assign:
+      abs_line& operator=(const abs_line& other);
+      abs_line& operator=(abs_line&& other) noexcept;
+
+      // \ref{\iotwod.absline.modifiers}, modifiers:
+      void to(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& pt) noexcept;
+
+      // \ref{\iotwod.absline.observers}, observers:
+      basic_point_2d<typename GraphicsSurfaces::graphics_math_type> to() const noexcept;
+    };
+
+    class rel_line {
+    public:
+      // \ref{\iotwod.relline.cons}, construct:
+      rel_line() noexcept;
+      explicit rel_line(const basic_point_2d<typename
+        GraphicsSurfaces::graphics_math_type>& pt) noexcept;
+      rel_line(const rel_line& other);
+      rel_line(rel_line&& other) noexcept;
+
+      // \ref{\iotwod.relline.assign}, assign:
+      rel_line& operator=(rel_line&& other) noexcept;
+      rel_line& operator=(const rel_line& other);
+
+      // \ref{\iotwod.relline.modifiers}, modifiers:
+      void to(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& pt) noexcept;
+
+      // \ref{\iotwod.relline.observers}, observers:
+      basic_point_2d<typename GraphicsSurfaces::graphics_math_type> to() const noexcept;
+    };
+
+    class abs_quadratic_curve {
+    public:
+      // \ref{\iotwod.absquadraticcurve.cons}, construct:
+      abs_quadratic_curve() noexcept;
+      abs_quadratic_curve(const basic_point_2d<typename
+        GraphicsSurfaces::graphics_math_type>& cpt, const basic_point_2d<typename
+        GraphicsSurfaces::graphics_math_type>& ept) noexcept;
+      abs_quadratic_curve(const abs_quadratic_curve& other);
+      abs_quadratic_curve(abs_quadratic_curve&& other) noexcept;
+
+      // \ref{\iotwod.absquadraticcurve.assign}, assign:
+      abs_quadratic_curve& operator=(abs_quadratic_curve&& other) noexcept;
+      abs_quadratic_curve& operator=(const abs_quadratic_curve& other);
+
+      // \ref{\iotwod.absquadraticcurve.modifiers}, modifiers:
+      void control_pt(const basic_point_2d<typename
+        GraphicsSurfaces::graphics_math_type>& cpt) noexcept;
+      void end_pt(const basic_point_2d<typename
+        GraphicsSurfaces::graphics_math_type>& ept) noexcept;
+
+      // \ref{\iotwod.absquadraticcurve.observers}, observers:
+      basic_point_2d<typename GraphicsSurfaces::graphics_math_type> control_pt() const noexcept;
+      basic_point_2d<typename GraphicsSurfaces::graphics_math_type> end_pt() const noexcept;
+    };
+
+    class rel_quadratic_curve {
+    public:
+      // \ref{\iotwod.relquadraticcurve.cons}, construct:
+      rel_quadratic_curve() noexcept;
+      rel_quadratic_curve(const basic_point_2d<typename
+        GraphicsSurfaces::graphics_math_type>& cpt, const basic_point_2d<typename
+        GraphicsSurfaces::graphics_math_type>& ept) noexcept;
+      rel_quadratic_curve(const rel_quadratic_curve& other);
+      rel_quadratic_curve(rel_quadratic_curve&& other) noexcept;
+
+      // \ref{\iotwod.relquadraticcurve.assign}, assign:
+      rel_quadratic_curve& operator=(rel_quadratic_curve&& other) noexcept;
+      rel_quadratic_curve& operator=(const rel_quadratic_curve& other);
+
+      // \ref{\iotwod.relquadraticcurve.modifiers}, modifiers:
+      void control_pt(const basic_point_2d<typename
+        GraphicsSurfaces::graphics_math_type>& cpt) noexcept;
+      void end_pt(const basic_point_2d<typename
+        GraphicsSurfaces::graphics_math_type>& ept) noexcept;
+
+      // \ref{\iotwod.relquadraticcurve.observers}, observers:
+      basic_point_2d<typename GraphicsSurfaces::graphics_math_type> control_pt() const noexcept;
+      basic_point_2d<typename GraphicsSurfaces::graphics_math_type> end_pt() const noexcept;
+    };
+
+    class abs_cubic_curve {
+    public:
+      // \ref{\iotwod.abscubiccurve.cons}, construct:
+      abs_cubic_curve() noexcept;
+      abs_cubic_curve(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& cpt1,
+        const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& cpt2,
+        const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& ept) noexcept;
+      abs_cubic_curve(const abs_cubic_curve& other);
+      abs_cubic_curve(abs_cubic_curve&& other) noexcept;
+
+      // \ref{\iotwod.abscubiccurve.assign}, assign:
+      abs_cubic_curve& operator=(const abs_cubic_curve& other);
+      abs_cubic_curve& operator=(abs_cubic_curve&& other) noexcept;
+
+      // \ref{\iotwod.abscubiccurve.modifiers}, modifiers:
+      void control_pt1(const basic_point_2d<typename
+        GraphicsSurfaces::graphics_math_type>& cpt) noexcept;
+      void control_pt2(const basic_point_2d<typename
+        GraphicsSurfaces::graphics_math_type>& cpt) noexcept;
+      void end_pt(const basic_point_2d<typename
+        GraphicsSurfaces::graphics_math_type>& ept) noexcept;
+
+      // \ref{\iotwod.abscubiccurve.observers}, observers:
+      basic_point_2d<typename GraphicsSurfaces::graphics_math_type> control_pt1() const noexcept;
+      basic_point_2d<typename GraphicsSurfaces::graphics_math_type> control_pt2() const noexcept;
+      basic_point_2d<typename GraphicsSurfaces::graphics_math_type> end_pt() const noexcept;
+    };
+
+    class rel_cubic_curve {
+    public:
+      // \ref{\iotwod.relcubiccurve.cons}, construct:
+      rel_cubic_curve() noexcept;
+      rel_cubic_curve(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& cpt1,
+      const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& cpt2,
+      const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& ept) noexcept;
+      rel_cubic_curve(const rel_cubic_curve& other);
+      rel_cubic_curve(rel_cubic_curve&& other) noexcept;
+
+      // \ref{\iotwod.relcubiccurve.assign}, assign:
+      rel_cubic_curve& operator=(const rel_cubic_curve& other);
+      rel_cubic_curve& operator=(rel_cubic_curve&& other) noexcept;
+
+      // \ref{\iotwod.relcubiccurve.modifiers}, modifiers:
+      void control_pt1(const basic_point_2d<typename
+        GraphicsSurfaces::graphics_math_type>& cpt) noexcept;
+      void control_pt2(const basic_point_2d<typename
+        GraphicsSurfaces::graphics_math_type>& cpt) noexcept;
+      void end_pt(const basic_point_2d<typename
+        GraphicsSurfaces::graphics_math_type>& ept) noexcept;
+
+      // \ref{\iotwod.relcubiccurve.observers}, observers:
+      basic_point_2d<typename GraphicsSurfaces::graphics_math_type> control_pt1() const noexcept;
+      basic_point_2d<typename GraphicsSurfaces::graphics_math_type> control_pt2() const noexcept;
+      basic_point_2d<typename GraphicsSurfaces::graphics_math_type> end_pt() const noexcept;
+    };
+
+    class arc {
+    public:
+      // \ref{\iotwod.arc.cons}, construct:
+      arc() noexcept;
+      arc(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& rad, float rot, float sang) noexcept;
+      arc(const arc& other);
+      arc(arc&& other) noexcept;
+
+      // \ref{\iotwod.arc.assign}, assign:
+      arc& operator=(const arc& other);
+      arc& operator=(arc&& other) noexcept;
+
+      // \ref{\iotwod.arc.modifiers}, modifiers:
+      void radius(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& rad) noexcept;
+      void rotation(float rot) noexcept;
+      void start_angle(float sang) noexcept;
+
+      // \ref{\iotwod.arc.observers}, observers:
+      basic_point_2d<typename GraphicsSurfaces::graphics_math_type> radius() const noexcept;
+      float rotation() const noexcept;
+      float start_angle() const noexcept;
+      basic_point_2d<typename GraphicsSurfaces::graphics_math_type> center(const basic_point_2d<typename
+        GraphicsSurfaces::graphics_math_type>& cpt, const basic_matrix_2d<typename
+        GraphicsSurfaces::graphics_math_type>& m = basic_matrix_2d<typename
+        GraphicsSurfaces::graphics_math_type>{}) const noexcept;
+      basic_point_2d<typename GraphicsSurfaces::graphics_math_type> end_pt(const basic_point_2d<typename
+        GraphicsSurfaces::graphics_math_type>& cpt, const basic_matrix_2d<typename
+        GraphicsSurfaces::graphics_math_type>& m = basic_matrix_2d<typename
+        GraphicsSurfaces::graphics_math_type>{}) const noexcept;
     };
 
     using figure_item = variant<abs_cubic_curve, abs_line, abs_matrix, abs_new_figure,
@@ -175,42 +360,55 @@ namespace std::experimental::io2d::v1 {
   bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::revert_matrix& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::revert_matrix& rhs) noexcept;
 
+  // \ref{\iotwod.absline.ops}, abs_line operators:
   template <class GraphicsSurfaces>
   bool operator==(const typename basic_figure_items<GraphicsSurfaces>::abs_line& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::abs_line& rhs) noexcept;
   template <class GraphicsSurfaces>
   bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::abs_line& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::abs_line& rhs) noexcept;
+
+  // \ref{\iotwod.relline.ops}, rel_line operators:
   template <class GraphicsSurfaces>
   bool operator==(const typename basic_figure_items<GraphicsSurfaces>::rel_line& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::rel_line& rhs) noexcept;
   template <class GraphicsSurfaces>
   bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::rel_line& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::rel_line& rhs) noexcept;
+
+  // \ref{\iotwod.absquadraticcurve.ops}, abs_quadratic_curve operators:
   template <class GraphicsSurfaces>
   bool operator==(const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& rhs) noexcept;
   template <class GraphicsSurfaces>
   bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& rhs) noexcept;
+
+  // \ref{\iotwod.relquadraticcurve.ops}, rel_quadratic_curve operators:
   template <class GraphicsSurfaces>
   bool operator==(const typename basic_figure_items<GraphicsSurfaces>::rel_quadratic_curve& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::rel_quadratic_curve& rhs) noexcept;
   template <class GraphicsSurfaces>
   bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::rel_quadratic_curve& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::rel_quadratic_curve& rhs) noexcept;
+
+  // \ref{\iotwod.abscubiccurve.ops}, abs_cubic_curve operators:
   template <class GraphicsSurfaces>
   bool operator==(const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& rhs) noexcept;
   template <class GraphicsSurfaces>
   bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& rhs) noexcept;
+
+  // \ref{\iotwod.relcubiccurve.ops}, rel_cubic_curve operators:
   template <class GraphicsSurfaces>
   bool operator==(const typename basic_figure_items<GraphicsSurfaces>::rel_cubic_curve& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::rel_cubic_curve& rhs) noexcept;
   template <class GraphicsSurfaces>
   bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::rel_cubic_curve& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::rel_cubic_curve& rhs) noexcept;
+
+  // \ref{\iotwod.arc.ops}, arc operators:
   template <class GraphicsSurfaces>
   bool operator==(const typename basic_figure_items<GraphicsSurfaces>::arc& lhs,
     const typename basic_figure_items<GraphicsSurfaces>::arc& rhs) noexcept;

@@ -8,61 +8,27 @@
 The class \tcode{arc} describes a figure item that is a segment.
 
 \pnum
-It has a \term{radius} of type \tcode{point_2d}, a \term{rotation} of type \tcode{float}, and a \term{start angle} of type \tcode{float}.
+It has a \term{radius} of type \tcode{basic_point_2d}, a \term{rotation} of type \tcode{float}, and a \term{start angle} of type \tcode{float}.
 
 \pnum
 It forms a portion of the circumference of a circle. The centre of the circle is implied by the start point, the radius and the start angle of the arc.
-
-\rSec1 [\iotwod.arc.synopsis] {\tcode{arc} synopsis}
-
-\begin{codeblock}
-namespace std::experimental::io2d::v1 {
-  namespace figure_items {
-    class arc {
-    public:
-      // \ref{\iotwod.arc.cons}, construct/copy/move/destroy:
-      constexpr arc() noexcept;
-      constexpr arc(point_2d rad,
-        float rot, float sang) noexcept;
-
-      // \ref{\iotwod.arc.modifiers}, modifiers:
-      constexpr void radius(point_2d rad) noexcept;
-      constexpr void rotation(float rot) noexcept;
-      constexpr void start_angle(float radians) noexcept;
-
-      // \ref{\iotwod.arc.observers}, observers:
-      constexpr point_2d radius() const noexcept;
-      constexpr float rotation() const noexcept;
-      constexpr float start_angle() const noexcept;
-      point_2d center(point_2d cpt, const matrix_2d& m = matrix_2d{}) 
-        const noexcept;
-      point_2d end_pt(point_2d cpt, const matrix_2d& m = matrix_2d{}) 
-        const noexcept;
-    };
-    
-    // \ref{\iotwod.arc.ops}, operators:
-    constexpr bool operator==(const arc& lhs, const arc& rhs) noexcept;
-    constexpr bool operator!=(const arc& lhs, const arc& rhs) noexcept;
-  }
-}
-\end{codeblock}
 
 \rSec1 [\iotwod.arc.cons] {\tcode{arc} constructors}
 
 \indexlibrary{\idxcode{arc}!constructor}%
 \begin{itemdecl}
-constexpr arc() noexcept;
+arc() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{arc\{ point_2d(10.0f, 10.0f), pi<float>, pi<float> \};}.
+Equivalent to: \tcode{arc\{ basic_point_2d(10.0f, 10.0f), pi<float>, pi<float> \};}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{arc}!constructor}%
 \begin{itemdecl}
-constexpr arc(point_2d rad, float rot,
-  float start_angle = pi<float>) noexcept;
+arc(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& rad,
+  float rot, float sang) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -79,11 +45,64 @@ The rotation is \tcode{rot}.
 The start angle is \tcode{sang}.
 \end{itemdescr}
 
+\indexlibrary{\idxcode{arc}!constructor}%
+\begin{itemdecl}
+arc(const arc& other);
+arc(arc&& other) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{arc}. In the second form, other is left in a valid state with an unspecified value.
+
+\pnum
+The radius is \tcode{other.radius()}.
+
+\pnum
+The rotation is \tcode{other.rotation()}.
+
+\pnum
+The start angle is \tcode{other.start_angle()}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.arc.assign] {\tcode{arc} assignment operators}
+
+\indexlibrary{\idxcode{arc}!assignment}%
+\begin{itemdecl}
+arc& operator=(const arc& other);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+If \tcode{*this} and \tcode{other} are not the same object, modifies \tcode{*this} such that \tcode{*this.radius()} is \tcode{other.radius()}, \tcode{*this.rotation()} is \tcode{other.rotation()} and \tcode{*this.start_angle()} is \tcode{other.start_angle()}
+
+\pnum
+If \tcode{*this} and \tcode{other} are the same object, the member has no effect.
+
+\pnum
+\returns
+\tcode{*this}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{arc}!assignment}%
+\begin{itemdecl}
+arc& operator=(arc&& other) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+<TODO>
+
+\pnum
+\returns
+\tcode{*this}
+\end{itemdescr}
+
 \rSec1 [\iotwod.arc.modifiers]{\tcode{arc} modifiers}
 
 \indexlibrarymember{radius}{arc}%
 \begin{itemdecl}
-constexpr void radius(point_2d rad) noexcept;
+void radius(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& rad) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -103,7 +122,7 @@ The rotation is \tcode{rot}.
 
 \indexlibrarymember{start_angle}{arc}%
 \begin{itemdecl}
-constexpr void start_angle(float sang) noexcept;
+void start_angle(float sang) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -115,7 +134,7 @@ The start angle is \tcode{sang}.
 
 \indexlibrarymember{radius}{arc}%
 \begin{itemdecl}
-constexpr point_2d radius() const noexcept;
+basic_point_2d<typename GraphicsSurfaces::graphics_math_type> radius() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -125,7 +144,7 @@ The radius.
 
 \indexlibrarymember{rotation}{arc}%
 \begin{itemdecl}
-constexpr float rotation() const noexcept;
+float rotation() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -135,7 +154,7 @@ The rotation.
 
 \indexlibrarymember{start_angle}{arc}%
 \begin{itemdecl}
-constexpr float start_angle() const noexcept;
+float start_angle() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -145,8 +164,10 @@ The start angle.
 
 \indexlibrarymember{center}{arc}%
 \begin{itemdecl}
-point_2d center(point_2d cpt, const matrix_2d& m = matrix_2d{})
-  const noexcept;
+basic_point_2d<typename GraphicsSurfaces::graphics_math_type> center(const basic_point_2d<typename
+  GraphicsSurfaces::graphics_math_type>& cpt, const basic_matrix_2d<typename
+  GraphicsSurfaces::graphics_math_type>& m = basic_matrix_2d<typename
+  GraphicsSurfaces::graphics_math_type>{}) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -156,7 +177,7 @@ As-if:
 auto lmtx = m;
 lmtx.m20 = 0.0f;
 lmtx.m21 = 0.0f;
-auto centerOffset = point_for_angle(two_pi<float> - _Start_angle, _Radius);
+auto centerOffset = point_for_angle(two_pi<float> - start_angle(), radius());
 centerOffset.y = -centerOffset.y;
 return cpt - centerOffset * lmtx;
 \end{codeblock}
@@ -164,8 +185,10 @@ return cpt - centerOffset * lmtx;
 
 \indexlibrarymember{start_angle}{arc}%
 \begin{itemdecl}
-point_2d end_pt(point_2d cpt, const matrix_2d& m = matrix_2d{})
-  const noexcept;
+basic_point_2d<typename GraphicsSurfaces::graphics_math_type> end_pt(const basic_point_2d<typename
+  GraphicsSurfaces::graphics_math_type>& cpt, const basic_matrix_2d<typename
+  GraphicsSurfaces::graphics_math_type>& m = basic_matrix_2d<typename
+  GraphicsSurfaces::graphics_math_type>{}) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -173,10 +196,10 @@ point_2d end_pt(point_2d cpt, const matrix_2d& m = matrix_2d{})
 As-if:
 \begin{codeblock}
 auto lmtx = m;
-auto tfrm = matrix_2d::init_rotate(_Start_angle + _Rotation);
+auto tfrm = matrix_2d::init_rotate(start_angle() + rotation());
 lmtx.m20 = 0.0f;
 lmtx.m21 = 0.0f;
-auto pt = (_Radius * tfrm);
+auto pt = (radius() * tfrm);
 pt.y = -pt.y;
 return cpt + pt * lmtx;
 \end{codeblock}
@@ -186,7 +209,9 @@ return cpt + pt * lmtx;
 
 \indexlibrarymember{operator==}{arc}%
 \begin{itemdecl}
-constexpr bool operator==(const arc& lhs, const arc& rhs) noexcept;
+template <class GraphicsSurfaces>
+bool operator==(const typename basic_figure_items<GraphicsSurfaces>::arc& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::arc& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

@@ -1,12 +1,12 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.pathgroup] {Class \tcode{interpreted_path}}
+\rSec0 [\iotwod.pathgroup] {Class \tcode{basic_interpreted_path}}
 
 \pnum
-\indexlibrary{\idxcode{interpreted_path}}%
-The class \tcode{interpreted_path} contains the data that result from interpreting (\ref{\iotwod.paths.interpretation}) a sequence of \tcode{figure_items::figure_item} objects. %%in a \tcode{path_builder} object or in another container of figure items.
+\indexlibrary{\idxcode{basic_interpreted_path}}%
+The class \tcode{basic_interpreted_path} contains the data that result from interpreting (\ref{\iotwod.paths.interpretation}) a sequence of \tcode{figure_items::figure_item} objects. %%in a \tcode{path_builder} object or in another container of figure items.
 
 \pnum
-A \tcode{interpreted_path} object is used by most rendering and composing operations.
+A \tcode{basic_interpreted_path} object is used by most rendering and composing operations.
 
 %\pnum
 %The contents of a \tcode{interpreted_path} object are immutable, however the contents it contains are changeable using copy assignment or move assignment.
@@ -22,49 +22,52 @@ A \tcode{interpreted_path} object is used by most rendering and composing operat
 %\pnum
 %A \tcode{interpreted_path} object shall be usable with any \tcode{surface} or \tcode{surface}-derived object.
 %
-\rSec1 [\iotwod.pathgroup.synopsis] {\tcode{interpreted_path} synopsis}
+\rSec1 [\iotwod.pathgroup.synopsis] {\tcode{basic_interpreted_path} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
-  class interpreted_path {
-    public:
-    // \ref{\iotwod.pathgroup.cons}, construct/copy/destroy:
-    constexpr interpreted_path() noexcept;
+  template <class GraphicsSurfaces>
+  class basic_interpreted_path {
+  public:
+    // \ref{\iotwod.pathgroup.cons}, construct:
+    basic_interpreted_path() noexcept;
     template <class Allocator>
-    explicit interpreted_path(const path_builder<Allocator>& pb);
+    explicit basic_interpreted_path(const basic_path_builder<GraphicsSurfaces, Allocator>& pb);
     template <class ForwardIterator>
-    interpreted_path(ForwardIterator first, ForwardIterator last);
+    basic_interpreted_path(ForwardIterator first, ForwardIterator last);
+    explicit basic_interpreted_path(initializer_list<typename
+      basic_figure_items<GraphicsSurfaces>::figure_item> il);
   };
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.pathgroup.cons] {\tcode{interpreted_path} constructors}
+\rSec1 [\iotwod.pathgroup.cons] {\tcode{basic_interpreted_path} constructors}
 
-\indexlibrary{\idxcode{interpreted_path}!constructor}%
+\indexlibrary{\idxcode{basic_interpreted_path}!constructor}%
 \begin{itemdecl}
-constexpr interpreted_path();
+basic_interpreted_path() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs an \tcode{interpreted_path} that contains an empty path.
+Constructs a \tcode{basic_interpreted_path} that contains an empty path.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{interpreted_path}!constructor}%
+\indexlibrary{\idxcode{basic_interpreted_path}!constructor}%
 \begin{itemdecl}
 template <class Allocator>
-explicit interpreted_path(const path_builder<Allocator>& pb);
+explicit basic_interpreted_path(const basic_path_builder<GraphicsSurfaces, Allocator>& pb);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{interpreted_path\{ begin(pb), end(pb) \};}.	
+Equivalent to: \tcode{basic_interpreted_path\{ begin(pb), end(pb) \};}.	
 \end{itemdescr}
 
 \indexlibrary{\idxcode{interpreted_path}!constructor}%
 \begin{itemdecl}
 template <class ForwardIterator>
-interpreted_path(ForwardIterator first, ForwardIterator last);
+basic_interpreted_path(ForwardIterator first, ForwardIterator last);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -82,3 +85,15 @@ The contained path is as-if it was the result of interpreting a path containing 
 %\pnum
 %Implementations should avoid or minimize the need for further processing of a \tcode{interpreted_path} object after it has been constructed.
 \end{itemdescr}
+
+\indexlibrary{\idxcode{basic_interpreted_path}!constructor}%
+\begin{itemdecl}
+explicit basic_interpreted_path(initializer_list<typename
+  basic_figure_items<GraphicsSurfaces>::figure_item> il);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+<TODO>
+\end{itemdescr}
+

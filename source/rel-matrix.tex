@@ -8,7 +8,7 @@ The class \tcode{rel_matrix} describes a figure item that is a path command.
 \pnum
 It has a transform matrix of type \tcode{basic_matrix_2d}.
 
-\rSec1 [\iotwod.relmatrix.cons] {\tcode{rel_matrix} constructors and assignment operators}
+\rSec1 [\iotwod.relmatrix.cons] {\tcode{rel_matrix} constructors}
 
 \indexlibrary{\idxcode{rel_matrix}!constructor}%
 \begin{itemdecl}
@@ -48,6 +48,8 @@ rel_matrix(rel_matrix&& other) noexcept;
 \effects
 Constructs an object of type \tcode{rel_matrix}. In the second form, other is left in a valid state with an unspecified value.
 \end{itemdescr}
+
+\rSec1 [\iotwod.relmatrix.assign] {\tcode{rel_matrix} assignment operators}
 
 \indexlibrary{\idxcode{rel_matrix}!assignment}%
 \begin{itemdecl}

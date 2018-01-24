@@ -8,7 +8,7 @@ The class \tcode{abs_matrix} describes a figure item that is a path command.
 \pnum
 It has a transform matrix of type \tcode{basic_matrix_2d}.
 
-\rSec1 [\iotwod.absmatrix.cons] {\tcode{abs_matrix} constructors and assignment operators}
+\rSec1 [\iotwod.absmatrix.cons] {\tcode{abs_matrix} constructors}
 
 \indexlibrary{\idxcode{abs_matrix}!constructor}%
 \begin{itemdecl}
@@ -48,6 +48,8 @@ abs_matrix(abs_matrix&& other) noexcept;
 \effects
 Constructs an object of type \tcode{abs_matrix}. In the second form, other is left in a valid state with an unspecified value.
 \end{itemdescr}
+
+\rSec1 [\iotwod.absmatrix.assign] {\tcode{abs_matrix} assignment operators}
 
 \indexlibrary{\idxcode{abs_matrix}!assignment}%
 \begin{itemdecl}

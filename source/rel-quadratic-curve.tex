@@ -6,54 +6,24 @@
 The class \tcode{rel_quadratic_curve} describes a figure item that is a segment.
 
 \pnum
-It has a \term{control point} of type \tcode{point_2d} and an \term{end point} of type \tcode{point_2d}.
-
-\rSec1 [\iotwod.relquadraticcurve.synopsis] {\tcode{rel_quadratic_curve} synopsis}
-
-\begin{codeblock}
-namespace std::experimental::io2d::v1 {
-  namespace figure_items {
-    class rel_quadratic_curve {
-    public:
-      // \ref{\iotwod.relquadraticcurve.cons}, construct:
-      constexpr rel_quadratic_curve() noexcept;
-      constexpr rel_quadratic_curve(point_2d cpt, point_2d ept)
-        noexcept;
-
-      // \ref{\iotwod.relquadraticcurve.modifiers}, modifiers:
-      constexpr void control_pt(point_2d cpt) noexcept;
-      constexpr void end_pt(point_2d ept) noexcept;
-
-      // \ref{\iotwod.relquadraticcurve.observers}, observers:
-      constexpr point_2d control_pt() const noexcept;
-      constexpr point_2d end_pt() const noexcept;
-    };
-    
-    // \ref{\iotwod.relquadraticcurve.ops}, operators:
-    constexpr bool operator==(const rel_quadratic_curve& lhs,
-      const rel_quadratic_curve& rhs) noexcept;
-    constexpr bool operator!=(const rel_quadratic_curve& lhs,
-      const rel_quadratic_curve& rhs) noexcept;
-  }
-}
-\end{codeblock}
+It has a \term{control point} of type \tcode{basic_point_2d} and an \term{end point} of type \tcode{basic_point_2d}.
 
 \rSec1 [\iotwod.relquadraticcurve.cons] {\tcode{rel_quadratic_curve} constructors}
 
 \indexlibrary{\idxcode{rel_quadratic_curve}!constructor}%
 \begin{itemdecl}
-constexpr rel_quadratic_curve() noexcept;
+rel_quadratic_curve() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{rel_quadratic_curve\{ point_2d(), point_2d() \};}
+Equivalent to: \tcode{rel_quadratic_curve\{ basic_point_2d(), basic_point_2d() \};}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rel_quadratic_curve}!constructor}%
 \begin{itemdecl}
-constexpr rel_quadratic_curve(point_2d cpt, point_2d ept)
-  noexcept;
+rel_quadratic_curve(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& cpt,
+  const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& ept) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -67,21 +37,71 @@ The control point is \tcode{cpt}.
 The end point is \tcode{ept}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.relquadraticcurve.modifiers]{\tcode{rel_quadratic_curve} modifiers}
-
-\indexlibrarymember{control_pt}{rel_quadratic_curve}%
+\indexlibrary{\idxcode{rel_quadratic_curve}!constructor}%
 \begin{itemdecl}
-constexpr void control_pt(point_2d cpt) noexcept;
+rel_quadratic_curve(const rel_quadratic_curve& other);
+rel_quadratic_curve(rel_quadratic_curve&& other) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-The control point is \tcode{cp}.
+Constructs an object of type \tcode{rel_quadratic_curve}. In the second form, other is left in a valid state with an unspecified value.
+
+\pnum
+The control point is \tcode{other.control_pt()}.
+
+\pnum
+The end point is \tcode{other.end_pt()}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.relquadraticcurve.assign] {\tcode{rel_quadratic_curve} assignment operators}
+
+\indexlibrary{\idxcode{rel_quadratic_curve}!assignment}%
+\begin{itemdecl}
+rel_quadratic_curve& operator=(const rel_quadratic_curve& other);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+If \tcode{*this} and \tcode{other} are not the same object, modifies \tcode{*this} such that \tcode{*this.control_pt()} is \tcode{other.control_pt()} and \tcode{*this.end_pt()} is \tcode{other.end_pt()}
+
+\pnum
+If \tcode{*this} and \tcode{other} are the same object, the member has no effect.
+
+\pnum
+\returns
+\tcode{*this}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{rel_quadratic_curve}!assignment}%
+\begin{itemdecl}
+rel_quadratic_curve& operator=(rel_quadratic_curve&& other) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+<TODO>
+
+\pnum
+\returns
+\tcode{*this}
+\end{itemdescr}
+
+\rSec1 [\iotwod.relquadraticcurve.modifiers]{\tcode{rel_quadratic_curve} modifiers}
+
+\indexlibrarymember{control_pt}{rel_quadratic_curve}%
+\begin{itemdecl}
+void control_pt(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& cpt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+The control point is \tcode{cpt}.
 \end{itemdescr}
 
 \indexlibrarymember{end_pt}{rel_quadratic_curve}%
 \begin{itemdecl}
-constexpr void end_pt(point_2d ept) noexcept;
+void end_pt(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& ept) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -93,7 +113,7 @@ The end point is \tcode{ept}.
 
 \indexlibrarymember{control_pt}{rel_quadratic_curve}%
 \begin{itemdecl}
-constexpr point_2d control_pt() const noexcept;
+basic_point_2d<typename GraphicsSurfaces::graphics_math_type> control_pt() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -103,7 +123,7 @@ The control point.
 
 \indexlibrarymember{end_pt}{rel_quadratic_curve}%
 \begin{itemdecl}
-constexpr point_2d end_pt() const noexcept;
+basic_point_2d<typename GraphicsSurfaces::graphics_math_type> end_pt() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -115,8 +135,9 @@ The end point.
 
 \indexlibrarymember{operator==}{rel_quadratic_curve}%
 \begin{itemdecl}
-constexpr bool operator==(const rel_quadratic_curve& lhs,
-  const rel_quadratic_curve& rhs) noexcept;
+template <class GraphicsSurfaces>
+bool operator==(const typename basic_figure_items<GraphicsSurfaces>::rel_quadratic_curve& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::rel_quadratic_curve& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
