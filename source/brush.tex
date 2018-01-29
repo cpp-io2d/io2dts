@@ -1,69 +1,77 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.brush] {Class \tcode{brush}}
+\rSec0 [\iotwod.brush] {Class \tcode{basic_brush}}
 
-\rSec1 [\iotwod.brush.intro] {\tcode{brush} summary}
-
-\pnum
-\indexlibrary{\idxcode{brush}}%
-The class \tcode{brush} describes an opaque wrapper for graphics data.
+\rSec1 [\iotwod.brush.intro] {\tcode{basic_brush} summary}
 
 \pnum
-A \tcode{brush} object is usable with any \tcode{surface} or \tcode{surface}-derived object.
+\indexlibrary{\idxcode{basic_brush}}%
+The class \tcode{basic_brush} describes an opaque wrapper for graphics data.
 
 \pnum
-A \tcode{brush} object's graphics data is immutable. It is observable only by the effect that it produces when the brush is used as a \term{
-source brush} or as a \term{mask brush} (\ref{\iotwod.surface.rendering.brushes}).
+A \tcode{basic_brush} object is usable with any \tcode{surface} or \tcode{surface}-derived object.<TODO>
 
 \pnum
-A \tcode{brush} object has a brush type of \tcode{brush_type}, which indicates which type of brush it is (Table~\ref{tab:\iotwod.brushtype.meanings}).
+A \tcode{basic_brush} object's graphics data is immutable. It is observable only by the effect that it produces when the brush is used as a \term{source brush} or as a \term{mask brush} (\ref{\iotwod.surface.rendering.brushes}).
 
 \pnum
-As a result of technological limitations and considerations, a \tcode{brush} object's graphics data may have less precision than the data from which it was created.
+A \tcode{basic_brush} object has a brush type of \tcode{brush_type}, which indicates which type of brush it is (Table~\ref{tab:\iotwod.brushtype.meanings}).
+
+\pnum
+As a result of technological limitations and considerations, a \tcode{basic_brush} object's graphics data may have less precision than the data from which it was created.
 
 %\pnum
 %\begin{example}
 %Several graphics and rendering technologies that are currently widely used typically store individual color and alpha channel data as 8-bit unsigned normalized integer values while the \tcode{float} type that is used by the \tcode{rgba_color} class for individual color and alpha is often a 64-bit value. As such, it is possible for a loss of precision when transforming the 64-bit channel data of an \tcode{rgba_color} object to the 8-bit channel data that is commonly used internally in such graphics and rendering technologies.
 %\end{example}
 %
-\rSec1 [\iotwod.brush.synopsis] {\tcode{brush} synopsis}
+\rSec1 [\iotwod.brush.synopsis] {\tcode{basic_brush} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
-  class brush {
+template <class GraphicsSurfaces>
+class basic_brush {
   public:
-    // \ref{\iotwod.brush.cons}, construct/copy/move/destroy:
-    explicit brush(rgba_color c);
-    template <class InputIterator>
-    brush(point_2d begin, point_2d end,
-      InputIterator first, InputIterator last);
-    brush(point_2d begin, point_2d end,
-      initializer_list<gradient_stop> il);
-    template <class InputIterator>
-    brush(const circle& start, const circle& end,
-      InputIterator first, InputIterator last);
-    brush(const circle& start, const circle& end,
-      initializer_list<gradient_stop> il);
-    explicit brush(image_surface&& img);
+    using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+    explicit basic_brush(const rgba_color& c);
 
-    // \ref{\iotwod.brush.observers}, observers:
+    template <class InputIterator>
+    basic_brush(const basic_point_2d<graphics_math_type>& begin,
+      const basic_point_2d<graphics_math_type>& end,
+      InputIterator first, InputIterator last);
+
+    basic_brush(const basic_point_2d<graphics_math_type>& begin,
+      const basic_point_2d<graphics_math_type>& end,
+      ::std::initializer_list<gradient_stop> il);
+
+    template <class InputIterator>
+    basic_brush(const basic_circle<graphics_math_type>& start,
+      const basic_circle<graphics_math_type>& end,
+      InputIterator first, InputIterator last);
+
+    basic_brush(const basic_circle<graphics_math_type>& start,
+      const basic_circle<graphics_math_type>& end,
+      ::std::initializer_list<gradient_stop> il);
+
+    basic_brush(basic_image_surface<GraphicsSurfaces>&& img);
+
     brush_type type() const noexcept;
   };
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.brush.sampling] {Sampling from a \tcode{brush} object}
+\rSec1 [\iotwod.brush.sampling] {Sampling from a \tcode{basic_brush} object}
 
 \pnum
-A \tcode{brush} object is sampled from either as a source brush (\ref{\iotwod.surface.rendering.brushes}) or a mask brush (\ref{\iotwod.surface.rendering.brushes}).
+A \tcode{basic_brush} object is sampled from either as a source brush (\ref{\iotwod.surface.rendering.brushes}) or a mask brush (\ref{\iotwod.surface.rendering.brushes}).
 
 \pnum
-If it is being sampled from as a source brush, its \term{wrap mode}, \term{filter}, and \term{brush matrix} are defined by a \tcode{brush_props} object (\ref{\iotwod.surface.rendering.commonstate} and \ref{\iotwod.surface.rendering.statedefaults}).
+If it is being sampled from as a source brush, its \term{wrap mode}, \term{filter}, and \term{brush matrix} are defined by a \tcode{basic_brush_props} object (\ref{\iotwod.surface.rendering.commonstate} and \ref{\iotwod.surface.rendering.statedefaults}).
 
 \pnum
-If it is being sampled from as a mask brush, its wrap mode, filter, and \term{mask matrix} are defined by a \tcode{mask_props} object (\ref{\iotwod.surface.rendering.specificstate} and \ref{\iotwod.surface.rendering.statedefaults}).
+If it is being sampled from as a mask brush, its wrap mode, filter, and \term{mask matrix} are defined by a \tcode{basic_mask_props} object (\ref{\iotwod.surface.rendering.specificstate} and \ref{\iotwod.surface.rendering.statedefaults}).
 
 \pnum
-When sampling from a \tcode{brush} object \tcode{b}, the \tcode{brush_type} returned by calling \tcode{b.type()} determines how the results of sampling are determined:
+When sampling from a \tcode{basic_brush} object \tcode{b}, the \tcode{brush_type} returned by calling \tcode{b.type()} determines how the results of sampling are determined:
 \begin{enumerate}
 \item If the result of \tcode{b.type()} is \tcode{brush_type::solid_color} then \tcode{b} is a \term{solid color brush}.
 \item If the result of \tcode{b.type()} is \tcode{brush_type::surface} then \tcode{b} is a \term{surface brush}.
@@ -91,16 +99,16 @@ When \tcode{b} is a radial gradient brush, when sampling point \tcode{pt}, where
 \pnum
 When \tcode{b} is a surface brush, when sampling point \tcode{pt} from \tcode{b}, where \tcode{pt} is the return value of calling the \tcode{transform_pt} member function of the brush matrix or mask matrix using the requested point, the visual data returned are from the point \tcode{pt} in the graphics data of the brush, as modified by the values of wrap mode (\ref{\iotwod.wrapmode}) and filter (\ref{\iotwod.filter}).
 
-\rSec1 [\iotwod.brush.cons] {\tcode{brush} constructors and assignment operators}
+\rSec1 [\iotwod.brush.cons] {\tcode{basic_brush} constructors and assignment operators}
 
-\indexlibrary{\idxcode{brush}!constructor}%
+\indexlibrary{\idxcode{basic_brush}!constructor}%
 \begin{itemdecl}
-explicit brush(rgba_color c);
+explicit basic_brush(const rgba_color& c);<TODO><Implementation mismatch>
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs an object of type \tcode{brush}.
+Constructs an object of type \tcode{basic_brush}.
 
 \pnum
 The brush's brush type shall be set to the value \tcode{brush_type::solid_color}.
@@ -113,16 +121,17 @@ The graphics data of the brush are created from the value of \tcode{c}. The visu
 Sampling from this produces the results specified in \ref{\iotwod.brush.sampling.color}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{brush}!constructor}%
+\indexlibrary{\idxcode{basic_brush}!constructor}%
 \begin{itemdecl}
 template <class InputIterator>
-brush(point_2d begin, point_2d end,
+basic_brush(const basic_point_2d<graphics_math_type>& begin,
+  const basic_point_2d<graphics_math_type>& end,
   InputIterator first, InputIterator last);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs a linear gradient \tcode{brush} object with a begin point of \tcode{begin}, an end point of \tcode{end}, and a sequential series of \tcode{gradient stop} values beginning at {first} and ending at {last - 1}.
+Constructs a linear gradient \tcode{basic_brush} object with a begin point of \tcode{begin}, an end point of \tcode{end}, and a sequential series of \tcode{gradient_stop} values beginning at \tcode{first} and ending at \tcode{last - 1}.
 
 \pnum
 The brush's brush type is \tcode{brush_type::linear}.
@@ -132,15 +141,16 @@ The brush's brush type is \tcode{brush_type::linear}.
 Sampling from this brush produces the results specified in \ref{\iotwod.brush.sampling.linear}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{brush}!constructor}%
+\indexlibrary{\idxcode{basic_brush}!constructor}%
 \begin{itemdecl}
-brush(point_2d begin, point_2d end,
-  initializer_list<gradient_stop> il);
+basic_brush(const basic_point_2d<graphics_math_type>& begin,
+  const basic_point_2d<graphics_math_type>& end,
+  ::std::initializer_list<gradient_stop> il);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs a linear gradient \tcode{brush} object with a begin point of \tcode{begin}, an end point of \tcode{end}, and the sequential series of \tcode{gradient stop} values in \tcode{il}.
+Constructs a linear gradient \tcode{basic_brush} object with a begin point of \tcode{begin}, an end point of \tcode{end}, and the sequential series of \tcode{gradient_stop} values in \tcode{il}.
 
 \pnum
 The brush's brush type is \tcode{brush_type::linear}.
@@ -150,16 +160,17 @@ The brush's brush type is \tcode{brush_type::linear}.
 Sampling from this brush produces the results specified in \ref{\iotwod.brush.sampling.linear}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{brush}!constructor}%
+\indexlibrary{\idxcode{basic_brush}!constructor}%
 \begin{itemdecl}
 template <class InputIterator>
-brush(const circle& start, const circle& end,
+basic_brush(const basic_circle<graphics_math_type>& start,
+  const basic_circle<graphics_math_type>& end,
   InputIterator first, InputIterator last);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs a radial gradient \tcode{brush} object with a start circle of \tcode{start}, an end circle of \tcode{end},  and a sequential series of \tcode{gradient stop} values beginning at {first} and ending at {last - 1}.
+Constructs a radial gradient \tcode{basic_brush} object with a start circle of \tcode{start}, an end circle of \tcode{end},  and a sequential series of \tcode{gradient_stop} values beginning at {first} and ending at {last - 1}.
 
 \pnum
 The brush's brush type is \tcode{brush_type::radial}.
@@ -169,15 +180,16 @@ The brush's brush type is \tcode{brush_type::radial}.
 Sampling from this brush produces the results specified in \ref{\iotwod.brush.sampling.radial}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{brush}!constructor}%
+\indexlibrary{\idxcode{basic_brush}!constructor}%
 \begin{itemdecl}
-brush(const circle& start, const circle& end,
-  initializer_list<gradient_stop> il);
+basic_brush(const basic_circle<graphics_math_type>& start,
+  const basic_circle<graphics_math_type>& end,
+  ::std::initializer_list<gradient_stop> il);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs a radial gradient \tcode{brush} object with a start circle of \tcode{start}, an end circle of \tcode{end}, and the sequential series of \tcode{gradient_stop} values in \tcode{il}.
+Constructs a radial gradient \tcode{basic_brush} object with a start circle of \tcode{start}, an end circle of \tcode{end}, and the sequential series of \tcode{gradient_stop} values in \tcode{il}.
 
 \pnum
 The brush's brush type is \tcode{brush_type::radial}.
@@ -187,14 +199,14 @@ The brush's brush type is \tcode{brush_type::radial}.
 Sampling from this brush produces the results specified in \ref{\iotwod.brush.sampling.radial}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{brush}!constructor}%
+\indexlibrary{\idxcode{basic_brush}!constructor}%
 \begin{itemdecl}
-explicit brush(image_surface&& img);
+basic_brush(basic_image_surface<GraphicsSurfaces>&& img);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs an object of type \tcode{brush}.
+Constructs an object of type \tcode{basic_brush}.
 
 \pnum
 The brush's brush type is \tcode{brush_type::surface}.
@@ -207,9 +219,9 @@ The graphics data of the brush is as-if it is the raster graphics data of \tcode
 Sampling from this brush produces the results specified in \ref{\iotwod.brush.sampling.surface}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.brush.observers]{\tcode{brush} observers}
+\rSec1 [\iotwod.brush.observers]{\tcode{basic_brush} observers}
 
-\indexlibrary{\idxcode{brush}!\idxcode{type}}%
+\indexlibrary{\idxcode{basic_brush}!\idxcode{type}}%
 \begin{itemdecl}
 brush_type type() const noexcept;
 \end{itemdecl}
