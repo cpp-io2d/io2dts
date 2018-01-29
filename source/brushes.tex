@@ -31,7 +31,7 @@ A brush is used either as a \term{source brush} or a \term{mask brush} (\ref{\io
 When a brush is used in a rendering and composing operation, if it is used as a source brush, it has a \tcode{brush_props} object that describes how the brush is interpreted for purposes of sampling. If it is used as a mask brush, it has a \tcode{mask_props} object that describes how the brush is interpreted for purposes of sampling.
 
 \pnum
-The \tcode{brush_props} (\ref{\iotwod.brushprops.summary}) and \tcode{mask_props} (\ref{\iotwod.maskprops.summary}) classes each have a \term{wrap mode} and a \term{filter}. The \tcode{brush_props} class also has a \term{brush matrix} and a \term{fill rule}. The \tcode{mask_props} class also has a \tcode{mask matrix}. Where possible, the terms that are common between the two classes are referenced without regard to whether the brush is being used as a source brush or a mask brush.
+The \tcode{basic_brush_props} (\ref{\iotwod.brushprops.summary}) and \tcode{basic_mask_props} (\ref{\iotwod.maskprops.summary}) classes each have a \term{wrap mode} and a \term{filter}. The \tcode{basic_brush_props} class also has a \term{brush matrix} and a \term{fill rule}. The \tcode{basic_mask_props} class also has a \term{mask matrix}. Where possible, the terms that are common between the two classes are referenced without regard to whether the brush is being used as a source brush or a mask brush.
 
 %\pnum
 %A brush has its own coordinate space.
@@ -58,7 +58,7 @@ Solid color brushes are unbounded and as such always produce the same visual dat
 Linear gradient and radial gradient brushes share similarities with each other that are not shared by the other types of brushes. This is discussed in more detail elsewhere (\ref{\iotwod.gradients}).
 
 \pnum
-Surface brushes are constructed from an \tcode{image_surface} object. Their visual data is a pixmap, which has implications on sampling from the brush that are not present in the other brush types.
+Surface brushes are constructed from a \tcode{basic_image_surface} object. Their visual data is a pixmap, which has implications on sampling from the brush that are not present in the other brush types.
 
 \addtocounter{SectionDepthBase}{1}
 \input{gradients}
