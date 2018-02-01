@@ -1,8 +1,8 @@
 %!TEX root = io2d.tex
 
-\rSec0 [\iotwod.renderprops] {Class \tcode{render_props}}
+\rSec0 [\iotwod.renderprops] {Class \tcode{basic_render_props}}
 
-\rSec1 [\iotwod.renderprops.summary] {\tcode{render_props} summary}
+\rSec1 [\iotwod.renderprops.summary] {\tcode{basic_render_props} summary}
 
 \pnum
 The \tcode{basic_render_props} class provides general state information that is applicable to all rendering and composing operations (\ref{\iotwod.surface.rendering}).
@@ -10,7 +10,7 @@ The \tcode{basic_render_props} class provides general state information that is 
 \pnum
 It has an \term{antialias} of type \tcode{antialias} with a default value of \tcode{antialias::good}, a \term{surface matrix} of type \tcode{basic_matrix_2d} with a default constructed value, and a \term{compositing operator} of type \tcode{compositing_op} with a default value of \tcode{compositing_op::over}.
 
-\rSec1 [\iotwod.renderprops.synopsis] {\tcode{render_props} synopsis}
+\rSec1 [\iotwod.renderprops.synopsis] {\tcode{basic_render_props} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
@@ -38,7 +38,7 @@ namespace std::experimental::io2d::v1 {
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.renderprops.cons] {\tcode{render_props} constructors}
+\rSec1 [\iotwod.renderprops.cons] {\tcode{basic_render_props} constructors}
 
 \indexlibrary{\idxcode{render_props}!constructor}
 \begin{itemdecl}
@@ -66,7 +66,7 @@ explicit basic_render_props(antialias a,
 The antialias is \tcode{a}. The surface matrix is \tcode{m}. The compositing operator is \tcode{co}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.renderprops.modifiers] {\tcode{render_props} modifiers}
+\rSec1 [\iotwod.renderprops.modifiers] {\tcode{basic_render_props} modifiers}
 
 \indexlibrarymember{antialiasing}{render_props}%
 \begin{itemdecl}
@@ -102,7 +102,7 @@ void surface_matrix(const basic_matrix_2d<graphics_math_type>& m) noexcept;
 The surface matrix is \tcode{m}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.renderprops.observers] {\tcode{render_props} observers}
+\rSec1 [\iotwod.renderprops.observers] {\tcode{basic_render_props} observers}
 
 \indexlibrarymember{antialiasing}{render_props}%
 \begin{itemdecl}
