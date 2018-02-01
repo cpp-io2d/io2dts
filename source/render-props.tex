@@ -5,31 +5,35 @@
 \rSec1 [\iotwod.renderprops.summary] {\tcode{render_props} summary}
 
 \pnum
-The \tcode{render_props} class provides general state information that is applicable to all rendering and composing operations (\ref{\iotwod.surface.rendering}).
+The \tcode{basic_render_props} class provides general state information that is applicable to all rendering and composing operations (\ref{\iotwod.surface.rendering}).
 
 \pnum
-It has an \term{antialias} of type \tcode{antialias} with a default value of \tcode{antialias::good}, a \term{surface matrix} of type \tcode{matrix_2d} with a default constructed value, and a \term{compositing operator} of type \tcode{compositing_op} with a default value of \tcode{compositing_op::over}.
+It has an \term{antialias} of type \tcode{antialias} with a default value of \tcode{antialias::good}, a \term{surface matrix} of type \tcode{basic_matrix_2d} with a default constructed value, and a \term{compositing operator} of type \tcode{compositing_op} with a default value of \tcode{compositing_op::over}.
 
 \rSec1 [\iotwod.renderprops.synopsis] {\tcode{render_props} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
-  class render_props {
+  template <class GraphicsSurfaces>
+  class basic_render_props {
   public:
+    using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+
     // \ref{\iotwod.renderprops.cons}, constructors:
-    constexpr render_props() noexcept;
-    constexpr explicit render_props(antialias a, const matrix_2d& m = 
-      matrix_2d{ }, compositing_op co = compositing_op::over) noexcept;
-    
+    basic_render_props() noexcept;
+    explicit basic_render_props(antialias a,
+      const basic_matrix_2d<graphics_math_type>& m = basic_matrix_2d<graphics_math_type>{},
+      compositing_op co = compositing_op::over) noexcept;
+
     // \ref{\iotwod.renderprops.modifiers}, modifiers:
-    constexpr void antialiasing(antialias a) noexcept;
-    constexpr void compositing(compositing_op co) noexcept;
-    constexpr void surface_matrix(const matrix_2d& m) noexcept;
-    
+    void antialiasing(antialias a) noexcept;
+    void compositing(compositing_op co) noexcept;
+    void surface_matrix(const basic_matrix_2d<graphics_math_type>& m) noexcept;
+
     // \ref{\iotwod.renderprops.observers}, observers:
-    constexpr antialias antialiasing() const noexcept;
-    constexpr compositing_op compositing() const noexcept;
-    constexpr matrix_2d surface_matrix() const noexcept;
+    antialias antialiasing() const noexcept;
+    compositing_op compositing() const noexcept;
+    basic_matrix_2d<graphics_math_type> surface_matrix() const noexcept;
   };
 }
 \end{codeblock}
@@ -38,18 +42,19 @@ namespace std::experimental::io2d::v1 {
 
 \indexlibrary{\idxcode{render_props}!constructor}
 \begin{itemdecl}
-constexpr render_props() noexcept;
+basic_render_props() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{render_props(antialias::good)}.
+Equivalent to: \tcode{basic_render_props(antialias::good)}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{render_props}!constructor}%
 \begin{itemdecl}
-constexpr explicit render_props(antialias a, const matrix_2d& m,
-  compositing_op co) noexcept;
+explicit basic_render_props(antialias a,
+  const basic_matrix_2d<graphics_math_type>& m = basic_matrix_2d<graphics_math_type>{},
+  compositing_op co = compositing_op::over) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -65,7 +70,7 @@ The antialias is \tcode{a}. The surface matrix is \tcode{m}. The compositing ope
 
 \indexlibrarymember{antialiasing}{render_props}%
 \begin{itemdecl}
-constexpr void antialiasing(antialias a) noexcept;
+void antialiasing(antialias a) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -75,7 +80,7 @@ The antialias is \tcode{a}.
 
 \indexlibrarymember{compositing}{render_props}%
 \begin{itemdecl}
-constexpr void compositing(compositing_op co) noexcept;
+void compositing(compositing_op co) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -85,7 +90,7 @@ The compositing operator is \tcode{co}.
 
 \indexlibrarymember{surface_member}{render_props}%
 \begin{itemdecl}
-constexpr void surface_matrix(const matrix_2d& m) noexcept;
+void surface_matrix(const basic_matrix_2d<graphics_math_type>& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -101,7 +106,7 @@ The surface matrix is \tcode{m}.
 
 \indexlibrarymember{antialiasing}{render_props}%
 \begin{itemdecl}
-constexpr antialias antialiasing() const noexcept;
+antialias antialiasing() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -111,7 +116,7 @@ The antialias.
 
 \indexlibrarymember{compositing}{render_props}%
 \begin{itemdecl}
-constexpr compositing_op compositing() const noexcept;
+compositing_op compositing() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -121,7 +126,7 @@ The compositing operator.
 
 \indexlibrarymember{surface_matrix}{render_props}%
 \begin{itemdecl}
-constexpr matrix_2d surface_matrix() const noexcept;
+basic_matrix_2d<graphics_math_type> surface_matrix() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
