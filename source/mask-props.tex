@@ -1,46 +1,50 @@
 %!TEX root = io2d.tex
 
-\rSec0 [\iotwod.maskprops] {Class \tcode{mask_props}}
+\rSec0 [\iotwod.maskprops] {Class \tcode{basic_mask_props}}
 
-\rSec1 [\iotwod.maskprops.summary] {\tcode{mask_props} summary}
+\rSec1 [\iotwod.maskprops.summary] {\tcode{basic_mask_props} summary}
 
 \pnum
-The \tcode{mask_props} class provides state information that is applicable to the mask rendering and composing operation (\ref{\iotwod.surface.rendering}).
+The \tcode{basic_mask_props} class provides state information that is applicable to the mask rendering and composing operation (\ref{\iotwod.surface.rendering}).
 
 \pnum
 It has a \term{wrap mode} of type \tcode{wrap_mode}, a \term{filter} of type \tcode{filter}, and a \term{mask matrix} of type \tcode{matrix_2d}.
 
-\rSec1 [\iotwod.maskprops.synopsis] {\tcode{mask_props} synopsis}
+\rSec1 [\iotwod.maskprops.synopsis] {\tcode{basic_mask_props} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
-  class mask_props {
-  public:
-    // \ref{\iotwod.maskprops.cons}, constructors:
-    constexpr mask_props(
-      experimental::io2d::wrap_mode w = experimental::io2d::wrap_mode::repeat,
-      experimental::io2d::filter fi = experimental::io2d::filter::good,
-      matrix_2d m = matrix_2d{}) noexcept;
+  template <class GraphicsSurfaces>
+  class basic_mask_props {
+    public:
+    using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+
+    // \ref{\iotwod.maskprops.cons}, constructor:
+    basic_mask_props(io2d::wrap_mode w = io2d::wrap_mode::repeat,
+      io2d::filter fi = io2d::filter::good,
+      const basic_matrix_2d<graphics_math_type>& m = basic_matrix_2d<graphics_math_type>{})
+      noexcept;
 
     // \ref{\iotwod.maskprops.modifiers}, modifiers:
-    constexpr void wrap_mode(experimental::io2d::wrap_mode w) noexcept;
-    constexpr void filter(experimental::io2d::filter fi) noexcept;
-    constexpr void mask_matrix(const matrix_2d& m) noexcept;
+    void wrap_mode(io2d::wrap_mode w) noexcept;
+    void filter(io2d::filter fi) noexcept;
+    void mask_matrix(const basic_matrix_2d<graphics_math_type>& m) noexcept;
 
     // \ref{\iotwod.maskprops.observers}, observers:
-    constexpr experimental::io2d::wrap_mode wrap_mode() const noexcept;
-    constexpr experimental::io2d::filter filter() const noexcept;
-    constexpr matrix_2d mask_matrix() const noexcept;
+    io2d::wrap_mode wrap_mode() const noexcept;
+    io2d::filter filter() const noexcept;
+    basic_matrix_2d<graphics_math_type> mask_matrix() const noexcept;
   };
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.maskprops.cons] {\tcode{mask_props} constructors}
+\rSec1 [\iotwod.maskprops.cons] {\tcode{basic_mask_props} constructor}
 
-\indexlibrary{\idxcode{mask_props}!constructor}%
+\indexlibrary{\idxcode{basic_mask_props}!constructor}%
 \begin{itemdecl}
-constexpr mask_props (experimental::io2d::wrap_mode w, 
-  experimental::io2d::filter fi, matrix_2d m) noexcept;
+basic_mask_props(io2d::wrap_mode w = io2d::wrap_mode::repeat,
+  io2d::filter fi = io2d::filter::good,
+  const basic_matrix_2d<graphics_math_type>& m = basic_matrix_2d<graphics_math_type>{}) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \requires
@@ -51,11 +55,11 @@ constexpr mask_props (experimental::io2d::wrap_mode w,
 The wrap mode is \tcode{w}. The filter is \tcode{fi}. The mask matrix is \tcode{m}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.maskprops.modifiers] {\tcode{mask_props} modifiers}
+\rSec1 [\iotwod.maskprops.modifiers] {\tcode{basic_mask_props} modifiers}
 
-\indexlibrarymember{wrap_mode}{mask_props}%
+\indexlibrarymember{wrap_mode}{basic_mask_props}%
 \begin{itemdecl}
-constexpr void wrap_mode(experimental::io2d::wrap_mode w) noexcept;
+void wrap_mode(io2d::wrap_mode w) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -63,9 +67,9 @@ constexpr void wrap_mode(experimental::io2d::wrap_mode w) noexcept;
 The wrap mode is \tcode{w}.
 \end{itemdescr}
 
-\indexlibrarymember{filter}{mask_props}%
+\indexlibrarymember{filter}{basic_mask_props}%
 \begin{itemdecl}
-constexpr void filter(experimental::io2d::filter fi) noexcept;
+void filter(io2d::filter fi) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -73,9 +77,9 @@ constexpr void filter(experimental::io2d::filter fi) noexcept;
 The filter is \tcode{fi}.
 \end{itemdescr}
 
-\indexlibrarymember{mask_matrix}{mask_props}%
+\indexlibrarymember{mask_matrix}{basic_mask_props}%
 \begin{itemdecl}
-constexpr void mask_matrix(const matrix_2d& m) noexcept;
+void mask_matrix(const basic_matrix_2d<graphics_math_type>& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -87,11 +91,11 @@ constexpr void mask_matrix(const matrix_2d& m) noexcept;
 The mask matrix is \tcode{m}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.maskprops.observers] {\tcode{mask_props} observers}
+\rSec1 [\iotwod.maskprops.observers] {\tcode{basic_mask_props} observers}
 
-\indexlibrarymember{wrap_mode}{mask_props}%
+\indexlibrarymember{wrap_mode}{basic_mask_props}%
 \begin{itemdecl}
-constexpr experimental::io2d::wrap_mode wrap_mode() const noexcept;
+io2d::wrap_mode wrap_mode() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -99,9 +103,9 @@ constexpr experimental::io2d::wrap_mode wrap_mode() const noexcept;
 The wrap mode.
 \end{itemdescr}
 
-\indexlibrarymember{filter}{mask_props}%
+\indexlibrarymember{filter}{basic_mask_props}%
 \begin{itemdecl}
-constexpr experimental::io2d::filter filter() const noexcept;
+io2d::filter filter() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -109,9 +113,9 @@ constexpr experimental::io2d::filter filter() const noexcept;
 The filter.
 \end{itemdescr}
 
-\indexlibrarymember{mask_matrix}{mask_props}%
+\indexlibrarymember{mask_matrix}{basic_mask_props}%
 \begin{itemdecl}
-constexpr matrix_2d mask_matrix() const noexcept;
+basic_matrix_2d<graphics_math_type> mask_matrix() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

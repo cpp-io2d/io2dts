@@ -1,62 +1,62 @@
 %!TEX root = io2d.tex
 
-\rSec0 [\iotwod.strokeprops] {Class \tcode{stroke_props}}
+\rSec0 [\iotwod.strokeprops] {Class \tcode{basic_stroke_props}}
 
-\rSec1 [\iotwod.strokeprops.summary] {\tcode{stroke_props} summary}
+\rSec1 [\iotwod.strokeprops.summary] {\tcode{basic_stroke_props} summary}
 
 \pnum
-The \tcode{stroke_props} class provides state information that is applicable to the stroking operation (see: \ref{\iotwod.surface.rendering} and \ref{\iotwod.surface.stroking}).
+The \tcode{basic_stroke_props} class provides state information that is applicable to the stroking operation (see: \ref{\iotwod.surface.rendering} and \ref{\iotwod.surface.stroking}).
 
 \pnum
 It has a \term{line width} of type \tcode{float}, a \term{line cap} of type \tcode{line_cap}, a \term{line join} of type \tcode{line_join}, and a \term{miter limit} of type \tcode{float}.
 
-\rSec1 [\iotwod.strokeprops.synopsis] {\tcode{stroke_props} synopsis}
+\rSec1 [\iotwod.strokeprops.synopsis] {\tcode{basic_stroke_props} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
-  class stroke_props {
+  template <class GraphicsSurfaces>
+  class basic_stroke_props {
   public:
+	using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+
     // \ref{\iotwod.strokeprops.cons}, constructors:
-    constexpr stroke_props() noexcept;
-    constexpr explicit stroke_props(float w,
-      io2d::line_cap lc = io2d::line_cap::none,
-      io2d::line_join lj = io2d::line_join::miter,
-      float ml = 10.0f) noexcept;
+    basic_stroke_props() noexcept;
+    explicit basic_stroke_props(float w, io2d::line_cap lc = io2d::line_cap::none,
+      io2d::line_join lj = io2d::line_join::miter, float ml = 10.0f) noexcept;
 
     // \ref{\iotwod.strokeprops.modifiers}, modifiers:
-    constexpr void line_width(float w) noexcept;
-    constexpr void line_cap(experimental::io2d::line_cap lc) noexcept;
-    constexpr void line_join(experimental::io2d::line_join lj) noexcept;
-    constexpr void miter_limit(float ml) noexcept;
-    
+    void line_width(float w) noexcept;
+    void line_cap(io2d::line_cap lc) noexcept;
+    void line_join(io2d::line_join lj) noexcept;
+    void miter_limit(float ml) noexcept;
+
     // \ref{\iotwod.strokeprops.observers}, observers:
-    constexpr float line_width() const noexcept;
-    constexpr experimental::io2d::line_cap line_cap() const noexcept;
-    constexpr experimental::io2d::line_join line_join() const noexcept;
-    constexpr float miter_limit() const noexcept;
-    constexpr float max_miter_limit() const noexcept;
+    float line_width() const noexcept;
+    io2d::line_cap line_cap() const noexcept;
+    io2d::line_join line_join() const noexcept;
+    float miter_limit() const noexcept;
+    float max_miter_limit() const noexcept;
   };
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.strokeprops.cons] {\tcode{stroke_props} constructors}
+\rSec1 [\iotwod.strokeprops.cons] {\tcode{basic_stroke_props} constructors}
 
-\indexlibrary{\idxcode{stroke_props}!constructor}%
+\indexlibrary{\idxcode{basic_stroke_props}!constructor}%
 \begin{itemdecl}
-constexpr stroke_props() noexcept;
+basic_stroke_props() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{stroke_props(2.0f)}.
+Equivalent to: \tcode{basic_stroke_props(2.0f)}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{stroke_props}!constructor}%
+\indexlibrary{\idxcode{basic_stroke_props}!constructor}%
 \begin{itemdecl}
-constexpr explicit stroke_props(float w,
-  experimental::io2d::line_cap lc = experimental::io2d::line_cap::none,
-  experimental::io2d::line_join lj = experimental::io2d::line_join::miter,
-  float ml = 10.0f) noexcept
+explicit basic_stroke_props(float w, io2d::line_cap lc = io2d::line_cap::none,
+  io2d::line_join lj = io2d::line_join::miter,
+  float ml = 10.0f) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -68,11 +68,11 @@ constexpr explicit stroke_props(float w,
 The line width is \tcode{w}. The line cap is \tcode{lc}. The line join is \tcode{lj}. The miter limit is \tcode{ml}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.strokeprops.modifiers] {\tcode{stroke_props} modifiers}
+\rSec1 [\iotwod.strokeprops.modifiers] {\tcode{basic_stroke_props} modifiers}
 
-\indexlibrarymember{line_width}{stroke_props}%
+\indexlibrarymember{line_width}{basic_stroke_props}%
 \begin{itemdecl}
-constexpr void line_width(float w) noexcept;
+void line_width(float w) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -84,9 +84,9 @@ constexpr void line_width(float w) noexcept;
 The line width is \tcode{w}.
 \end{itemdescr}
 
-\indexlibrarymember{line_cap}{stroke_props}%
+\indexlibrarymember{line_cap}{basic_stroke_props}%
 \begin{itemdecl}
-constexpr void line_cap(experimental::io2d::line_cap lc) noexcept;
+void line_cap(io2d::line_cap lc) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -94,9 +94,9 @@ constexpr void line_cap(experimental::io2d::line_cap lc) noexcept;
 The line cap is \tcode{lc}.
 \end{itemdescr}
 
-\indexlibrarymember{line_join}{stroke_props}%
+\indexlibrarymember{line_join}{basic_stroke_props}%
 \begin{itemdecl}
-constexpr void line_join(experimental::io2d::line_join lj) noexcept;
+void line_join(io2d::line_join lj) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -104,9 +104,9 @@ constexpr void line_join(experimental::io2d::line_join lj) noexcept;
 The line join is \tcode{lj}.
 \end{itemdescr}
 
-\indexlibrarymember{miter_limit}{stroke_props}%
+\indexlibrarymember{miter_limit}{basic_stroke_props}%
 \begin{itemdecl}
-constexpr void miter_limit(float ml) noexcept;
+void miter_limit(float ml) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -118,11 +118,11 @@ constexpr void miter_limit(float ml) noexcept;
 The miter limit is \tcode{ml}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.strokeprops.observers] {\tcode{stroke_props} observers}
+\rSec1 [\iotwod.strokeprops.observers] {\tcode{basic_stroke_props} observers}
 
-\indexlibrarymember{line_width}{stroke_props}%
+\indexlibrarymember{line_width}{basic_stroke_props}%
 \begin{itemdecl}
-constexpr float line_width() const noexcept;
+float line_width() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -130,9 +130,9 @@ constexpr float line_width() const noexcept;
 The line width.
 \end{itemdescr}
 
-\indexlibrarymember{line_cap}{stroke_props}%
+\indexlibrarymember{line_cap}{basic_stroke_props}%
 \begin{itemdecl}
-constexpr experimental::io2d::line_cap line_cap() const noexcept;
+io2d::line_cap line_cap() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -140,9 +140,9 @@ constexpr experimental::io2d::line_cap line_cap() const noexcept;
 The line cap.
 \end{itemdescr}
 
-\indexlibrarymember{line_join}{stroke_props}%
+\indexlibrarymember{line_join}{basic_stroke_props}%
 \begin{itemdecl}
-constexpr experimental::io2d::line_join line_join() const noexcept;
+io2d::line_join line_join() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -150,9 +150,9 @@ constexpr experimental::io2d::line_join line_join() const noexcept;
 The line join.
 \end{itemdescr}
 
-\indexlibrarymember{miter_limit}{stroke_props}%
+\indexlibrarymember{miter_limit}{basic_stroke_props}%
 \begin{itemdecl}
-constexpr float miter_limit() const noexcept;
+float miter_limit() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -160,9 +160,9 @@ constexpr float miter_limit() const noexcept;
 The miter limit.
 \end{itemdescr}
 
-\indexlibrarymember{max_miter_limit}{stroke_props}%
+\indexlibrarymember{max_miter_limit}{basic_stroke_props}%
 \begin{itemdecl}
-constexpr float max_miter_limit() const noexcept;
+float max_miter_limit() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -171,5 +171,5 @@ This value shall be finite and greater than \tcode{10.0f}.
 
 \pnum
 \returns
-The \impldef{\idxcode{stroke_props}!\idxcode{max_miter_limit}} maximum value of miter limit.
+The \impldef{\idxcode{basic_stroke_props}!\idxcode{max_miter_limit}} maximum value of miter limit.
 \end{itemdescr}

@@ -1,86 +1,93 @@
 %!TEX root = io2d.tex
 
-\rSec0 [\iotwod.clipprops] {Class \tcode{clip_props}}
+\rSec0 [\iotwod.clipprops] {Class \tcode{basic_clip_props}}
 
-\rSec1 [\iotwod.clipprops.summary] {\tcode{clip_props} summary}
+\rSec1 [\iotwod.clipprops.summary] {\tcode{basic_clip_props} summary}
 
 \pnum
-The \tcode{clip_props} class provides general state information that is applicable to all rendering and composing operations (\ref{\iotwod.surface.rendering}).
+The \tcode{basic_clip_props} class provides general state information that is applicable to all rendering and composing operations (\ref{\iotwod.surface.rendering}).
 
 \pnum
 It has a \term{clip area} of type \tcode{interpreted_path} and a \term{fill rule} of type \tcode{fill_rule}.
 
-\rSec1 [\iotwod.clipprops.synopsis] {\tcode{clip_props} synopsis}
+\rSec1 [\iotwod.clipprops.synopsis] {\tcode{basic_clip_props} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
-  class clip_props {
+  template <class GraphicsSurfaces>
+  class basic_clip_props {
   public:
+    using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+
     // \ref{\iotwod.clipprops.cons}, constructors:
-    clip_props() noexcept;
+    basic_clip_props() noexcept;
     template <class Allocator>
-    explicit clip_props(const path_builder<Allocator>& pb,
-      experimental::io2d::fill_rule fr = 
-      experimental::io2d::fill_rule::winding);
-    explicit clip_props(const interpreted_path& pg, experimental::io2d::fill_rule fr =
-      experimental::io2d::fill_rule::winding) noexcept;
+    explicit basic_clip_props(const basic_path_builder<GraphicsSurfaces, Allocator>& pb,
+      io2d::fill_rule fr = io2d::fill_rule::winding);
+    explicit basic_clip_props(const basic_interpreted_path<GraphicsSurfaces>& ip,
+      io2d::fill_rule fr = io2d::fill_rule::winding) noexcept;
+    explicit basic_clip_props(const basic_bounding_box<graphics_math_type>& r,
+      io2d::fill_rule fr = io2d::fill_rule::winding);
 
     // \ref{\iotwod.clipprops.modifiers}, modifiers:
     template <class Allocator>
-    void clip(const path_builder<Allocator>& pb);
-    void clip(const interpreted_path& pg) noexcept;
-    void fill_rule(experimental::io2d::fill_rule fr) noexcept;
-    
+    void clip(const basic_path_builder<GraphicsSurfaces, Allocator>& pb);
+    void clip(const basic_interpreted_path<GraphicsSurfaces>& ip) noexcept;
+    void fill_rule(io2d::fill_rule fr) noexcept;
+
     // \ref{\iotwod.clipprops.observers}, observers:
-    interpreted_path clip() const noexcept;
-    experimental::io2d::fill_rule fill_rule() const noexcept;
+    basic_interpreted_path<GraphicsSurfaces> clip() const noexcept;
+    io2d::fill_rule fill_rule() const noexcept;
   };
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.clipprops.cons] {\tcode{clip_props} constructors}
+\rSec1 [\iotwod.clipprops.cons] {\tcode{basic_clip_props} constructors}
 
-\indexlibrary{\idxcode{clip_props}!constructor}%
+\indexlibrary{\idxcode{basic_clip_props}!constructor}%
 \begin{itemdecl}
-clip_props() noexcept;
+basic_clip_props() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{clip_props(path_builder<>\{ \})}.
+Equivalent to: \tcode{basic_clip_props(basic_path_builder<>\{ \})}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{clip_props}!constructor}%
+\indexlibrary{\idxcode{basic_clip_props}!constructor}%
 \begin{itemdecl}
 template <class Allocator>
-explicit clip_props(const path_builder<Allocator>& pb,
-  experimental::io2d::fill_rule fr);
-explicit clip_props(const interpreted_path& pg, experimental::io2d::fill_rule fr) 
-  noexcept;
+explicit basic_clip_props(const basic_path_builder<GraphicsSurfaces, Allocator>& pb,
+  io2d::fill_rule fr = io2d::fill_rule::winding);
+explicit basic_clip_props(const basic_interpreted_path<GraphicsSurfaces>& ip,
+  io2d::fill_rule fr = io2d::fill_rule::winding) noexcept;
+explicit basic_clip_props(const basic_bounding_box<graphics_math_type>& r,
+  io2d::fill_rule fr = io2d::fill_rule::winding)
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Constructs an object of type \tcode{clip_props}.
+Constructs an object of type \tcode{basic_clip_props}.
 
 \pnum
 The clip area is:
 \begin{itemize}
 \item \tcode{interpreted_path\{pb\}}; or
-\item \tcode{pg}.
+\item \tcode{ip}; or
+\item \tcode{interpreted_path\{r\}};<TODO>
 \end{itemize}
 
 \pnum
 The fill rule is \tcode{fr}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.clipprops.modifiers] {\tcode{clip_props} modifiers}
+\rSec1 [\iotwod.clipprops.modifiers] {\tcode{basic_clip_props} modifiers}
 
-\indexlibrarymember{clip}{clip_props}%
+\indexlibrarymember{clip}{basic_clip_props}%
 \begin{itemdecl}
 template <class Allocator>
-void clip(const path_builder<Allocator>& pb, experimental::io2d::fill_rule fr);
-void clip(const interpreted_path& pg, experimental::io2d::fill_rule fr) noexcept;
+void clip(const basic_path_builder<GraphicsSurfaces, Allocator>& pb);
+void clip(const basic_interpreted_path<GraphicsSurfaces>& ip) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -88,11 +95,11 @@ void clip(const interpreted_path& pg, experimental::io2d::fill_rule fr) noexcept
 The clip area is:
 \begin{itemize}
 \item \tcode{interpreted_path\{pb\}}; or
-\item \tcode{pg}.
+\item \tcode{ip}.
 \end{itemize}
 \end{itemdescr}
 
-\indexlibrarymember{fill_rule}{clip_props}%
+\indexlibrarymember{fill_rule}{basic_clip_props}%
 \begin{itemdecl}
 void fill_rule(experimental::io2d::fill_rule fr) noexcept;
 \end{itemdecl}
@@ -102,11 +109,11 @@ void fill_rule(experimental::io2d::fill_rule fr) noexcept;
 The fill rule is \tcode{fr}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.clipprops.observers] {\tcode{clip_props} observers}
+\rSec1 [\iotwod.clipprops.observers] {\tcode{basic_clip_props} observers}
 
-\indexlibrarymember{clip}{clip_props}%
+\indexlibrarymember{clip}{basic_clip_props}%
 \begin{itemdecl}
-interpreted_path clip() const noexcept;
+basic_interpreted_path<GraphicsSurfaces> clip() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -114,9 +121,9 @@ interpreted_path clip() const noexcept;
 The clip area.
 \end{itemdescr}
 
-\indexlibrarymember{fill_rule}{clip_props}%
+\indexlibrarymember{fill_rule}{basic_clip_props}%
 \begin{itemdecl}
-experimental::io2d::fill_rule fill_rule() const noexcept;
+io2d::fill_rule fill_rule() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

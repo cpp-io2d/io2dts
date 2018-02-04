@@ -1,50 +1,56 @@
 %!TEX root = io2d.tex
 
-\rSec0 [\iotwod.brushprops] {Class \tcode{brush_props}}
+\rSec0 [\iotwod.brushprops] {Class \tcode{basic_brush_props}}
 
-\rSec1 [\iotwod.brushprops.summary] {\tcode{brush_props} summary}
-
-\pnum
-\indexlibrary{\idxcode{brush_props}}%
-The \tcode{brush_props} class provides general state information that is applicable to all rendering and composing operations (\ref{\iotwod.surface.rendering}).
+\rSec1 [\iotwod.brushprops.summary] {\tcode{basic_brush_props} summary}
 
 \pnum
-It has a \term{wrap mode} of type \tcode{wrap_mode}, a \term{filter} of type \tcode{filter}, a \term{fill rule} of type \tcode{fill_rule}, and a \term{brush matrix} of type \tcode{matrix_2d}.
+\indexlibrary{\idxcode{basic_brush_props}}%
+The \tcode{basic_brush_props} class provides general state information that is applicable to all rendering and composing operations (\ref{\iotwod.surface.rendering}).
 
-\rSec1 [\iotwod.brushprops.synopsis] {\tcode{brush_props} synopsis}
+\pnum
+It has a \term{wrap mode} of type \tcode{wrap_mode}, a \term{filter} of type \tcode{filter}, a \term{fill rule} of type \tcode{fill_rule}, and a \term{brush matrix} of type \tcode{basic_matrix_2d}.
+
+\rSec1 [\iotwod.brushprops.synopsis] {\tcode{basic_brush_props} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
-  class brush_props {
-  public:
-    // \ref{\iotwod.brushprops.cons}, constructors:
-    constexpr brush_props(
-      io2d::wrap_mode w = io2d::wrap_mode::none,
+  template <class GraphicsSurfaces>
+  class basic_brush_props {
+    public:
+    using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+
+    // \ref{\iotwod.brushprops.cons}, constructor:
+    basic_brush_props(io2d::wrap_mode w = io2d::wrap_mode::none,
       io2d::filter fi = io2d::filter::good,
       io2d::fill_rule fr = io2d::fill_rule::winding,
-      matrix_2d m = matrix_2d{}) noexcept;
+      const basic_matrix_2d<graphics_math_type>& m = basic_matrix_2d<graphics_math_type>{})
+      noexcept;
 
     // \ref{\iotwod.brushprops.modifiers}, modifiers:
-    constexpr void filter(io2d::filter fi) noexcept;
-    constexpr void wrap_mode(io2d::wrap_mode w) noexcept;
-    constexpr void fill_rule(io2d::fill_rule fr) noexcept;
-    constexpr void brush_matrix(const matrix_2d& m) noexcept;
+    void wrap_mode(io2d::wrap_mode w) noexcept;
+    void filter(io2d::filter fi) noexcept;
+    void fill_rule(io2d::fill_rule fr) noexcept;
+    void brush_matrix(const basic_matrix_2d<graphics_math_type>& m) noexcept;
 
     // \ref{\iotwod.brushprops.observers}, observers:
-    constexpr io2d::filter filter() const noexcept;
-    constexpr io2d::wrap_mode wrap_mode() const noexcept;
-    constexpr io2d::fill_rule fill_rule() const noexcept;
-    constexpr matrix_2d brush_matrix() const noexcept;
+    io2d::wrap_mode wrap_mode() const noexcept;
+    io2d::filter filter() const noexcept;
+    io2d::fill_rule fill_rule() const noexcept;
+    basic_matrix_2d<graphics_math_type> brush_matrix() const noexcept;
   };
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.brushprops.cons] {\tcode{brush_props} constructors}
+\rSec1 [\iotwod.brushprops.cons] {\tcode{basic_brush_props} constructor}
 
-\indexlibrary{\idxcode{brush_props}!constructor}%
+\indexlibrary{\idxcode{basic_brush_props}!constructor}%
 \begin{itemdecl}
-constexpr brush_props(io2d::wrap_mode w, io2d::filter fi, io2d::fill_rule fr,
-  matrix_2d m) noexcept
+basic_brush_props(io2d::wrap_mode w = io2d::wrap_mode::none,
+  io2d::filter fi = io2d::filter::good,
+  io2d::fill_rule fr = io2d::fill_rule::winding,
+  const basic_matrix_2d<graphics_math_type>& m = basic_matrix_2d<graphics_math_type>{})
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -53,17 +59,17 @@ constexpr brush_props(io2d::wrap_mode w, io2d::filter fi, io2d::fill_rule fr,
 
 \pnum
 \effects
-Constructs an object of type \tcode{brush_props}.
+Constructs an object of type \tcode{basic_brush_props}.
 
 \pnum
 The wrap mode is \tcode{w}. The filter is \tcode{fi}. The fill rule is \tcode{fr}. The brush matrix is \tcode{m}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.brushprops.modifiers] {\tcode{brush_props} modifiers}
+\rSec1 [\iotwod.brushprops.modifiers] {\tcode{basic_brush_props} modifiers}
 
-\indexlibrarymember{wrap_mode}{brush_props}%
+\indexlibrarymember{wrap_mode}{basic_brush_props}%
 \begin{itemdecl}
-constexpr void wrap_mode(io2d::wrap_mode w) noexcept;
+void wrap_mode(io2d::wrap_mode w) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -71,9 +77,9 @@ constexpr void wrap_mode(io2d::wrap_mode w) noexcept;
 The wrap mode is \tcode{w}.
 \end{itemdescr}
 
-\indexlibrarymember{filter}{brush_props}%
+\indexlibrarymember{filter}{basic_brush_props}%
 \begin{itemdecl}
-constexpr void filter(io2d::filter fi) noexcept;
+void filter(io2d::filter fi) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -81,9 +87,9 @@ constexpr void filter(io2d::filter fi) noexcept;
 The filter is \tcode{fi}.
 \end{itemdescr}
 
-\indexlibrarymember{fill_rule}{brush_props}%
+\indexlibrarymember{fill_rule}{basic_brush_props}%
 \begin{itemdecl}
-constexpr void fill_rule(io2d::fill_rule fr) noexcept;
+void fill_rule(io2d::fill_rule fr) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -91,9 +97,9 @@ constexpr void fill_rule(io2d::fill_rule fr) noexcept;
 The fill rule is \tcode{fr}.
 \end{itemdescr}
 
-\indexlibrarymember{brush_matrix}{brush_props}%
+\indexlibrarymember{brush_matrix}{basic_brush_props}%
 \begin{itemdecl}
-constexpr void brush_matrix(const matrix_2d& m) noexcept;
+void brush_matrix(const basic_matrix_2d<graphics_math_type>& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -105,11 +111,11 @@ constexpr void brush_matrix(const matrix_2d& m) noexcept;
 The brush matrix is \tcode{m}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.brushprops.observers] {\tcode{brush_props} observers}
+\rSec1 [\iotwod.brushprops.observers] {\tcode{basic_brush_props} observers}
 
-\indexlibrarymember{wrap_mode}{brush_props}%
+\indexlibrarymember{wrap_mode}{basic_brush_props}%
 \begin{itemdecl}
-constexpr io2d::wrap_mode wrap_mode() const noexcept;
+io2d::wrap_mode wrap_mode() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -117,9 +123,9 @@ constexpr io2d::wrap_mode wrap_mode() const noexcept;
 The wrap mode.
 \end{itemdescr}
 
-\indexlibrarymember{filter}{brush_props}%
+\indexlibrarymember{filter}{basic_brush_props}%
 \begin{itemdecl}
-constexpr io2d::filter filter() const noexcept;
+io2d::filter filter() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -127,9 +133,9 @@ constexpr io2d::filter filter() const noexcept;
 The filter.
 \end{itemdescr}
 
-\indexlibrarymember{fill_rule}{brush_props}%
+\indexlibrarymember{fill_rule}{basic_brush_props}%
 \begin{itemdecl}
-constexpr io2d::fill_rule fill_rule() const noexcept;
+io2d::fill_rule fill_rule() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -137,9 +143,9 @@ constexpr io2d::fill_rule fill_rule() const noexcept;
 The fill rule.
 \end{itemdescr}
 
-\indexlibrarymember{brush_matrix}{brush_props}%
+\indexlibrarymember{brush_matrix}{basic_brush_props}%
 \begin{itemdecl}
-constexpr matrix_2d brush_matrix() const noexcept;
+basic_matrix_2d<graphics_math_type> brush_matrix() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
