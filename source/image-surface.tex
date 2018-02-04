@@ -1,100 +1,143 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.imagesurface] {Class \tcode{image_surface}}
+\rSec0 [\iotwod.imagesurface] {Class \tcode{basic_image_surface}}
 
-\rSec1 [\iotwod.imagesurface.summary] {\tcode{image_surface} summary}
-
-\pnum
-\indexlibrary{\idxcode{image_surface}}%
-The class \tcode{image_surface} derives from the \tcode{surface} class and provides an interface to a raster graphics data graphics resource.
+\rSec1 [\iotwod.imagesurface.summary] {\tcode{basic_image_surface} summary}
 
 \pnum
-The \tcode{image_surface} class modifies its graphics resource using the rendering and composing operations inherited from the \tcode{surface} class or through the \tcode{image_surface::map} function.
+\indexlibrary{\idxcode{basic_image_surface}}%
+The class \tcode{basic_image_surface} provides an interface to a raster graphics data graphics resource.
 
 \pnum
 It has a \term{pixel format} of type \tcode{format}, a \term{width} of type \tcode{int}, and a \term{height} of type \tcode{int}.
 
 \pnum
 \begin{note}
-Because of the functionality it provides and what it can be used for, it is expected that developers familiar with other graphics technologies will think of the \tcode{image_surface} class as being a form of \term{render target}. This is intentional, though this \documenttypename{} does not formally define or use that term to avoid any minor ambiguities and differences in its meaning between the various graphics technologies that do use the term render target.
+Because of the functionality it provides and what it can be used for, it is expected that developers familiar with other graphics technologies will think of the \tcode{basic_image_surface} class as being a form of \term{render target}. This is intentional, though this \documenttypename{} does not formally define or use that term to avoid any minor ambiguities and differences in its meaning between the various graphics technologies that do use the term render target.
 \end{note}
 
-\rSec1 [\iotwod.imagesurface.synopsis] {\tcode{image_surface} synopsis}
+\rSec1 [\iotwod.imagesurface.synopsis] {\tcode{basic_image_surface} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
-  class image_surface : public surface {
+  template <class GraphicsSurfaces>
+  class basic_image_surface {
   public:
+    using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+
     // \ref{\iotwod.imagesurface.cons}, construct/copy/move/destroy:
-    image_surface(io2d::format fmt, int width, int height);
-    image_surface(filesystem::path f, image_file_format i, 
-      io2d::format fmt);
-    image_surface(filesystem::path f, image_file_format i, 
-      io2d::format fmt, error_code& ec) noexcept;
-    image_surface(image_surface&&);
-    image_surface& operator=(image_surface&&);
-    
+    basic_image_surface(io2d::format fmt, int width, int height);
+    basic_image_surface(filesystem::path f, io2d::image_file_format iff, io2d::format fmt);
+    basic_image_surface(filesystem::path f, io2d::image_file_format iff, io2d::format fmt,
+      error_code& ec) noexcept;
+    basic_image_surface(basic_image_surface&&) noexcept;
+    basic_image_surface& operator=(basic_image_surface&&) noexcept;
+
     // \ref{\iotwod.imagesurface.members}, members:
     void save(filesystem::path p, image_file_format i);
     void save(filesystem::path p, image_file_format i, error_code& ec) noexcept;
-    void map(const function<void(mapped_surface&)>& action);
-    void map(const function<void(mapped_surface&, error_code&)>& action,
-      error_code& ec);
-    
+
     // \ref{\iotwod.imagesurface.staticmembers}, static members:
-    static int max_width() noexcept;
-    static int max_height() noexcept;
-    
+    static basic_display_point<graphics_math_type> max_dimensions() noexcept;
+
     // \ref{\iotwod.imagesurface.observers}, observers:
     io2d::format format() const noexcept;
-    int width() const noexcept;
-    int height() const noexcept;
+    basic_display_point<graphics_math_type> dimensions() const noexcept;
+	
+    // \ref{\iotwod.imagesurface.mofifiers}, modifiers:
+    void clear();
+    void flush();
+    void flush(error_code& ec) noexcept;
+    void mark_dirty();
+    void mark_dirty(error_code& ec) noexcept;
+    void mark_dirty(const basic_bounding_box<graphics_math_type>& extents);
+    void mark_dirty(const basic_bounding_box<graphics_math_type>& extents,
+      error_code& ec) noexcept;
+    void paint(const basic_brush<GraphicsSurfaces>& b,
+      const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+      const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
+      const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+    template <class Allocator>
+    void stroke(const basic_brush<GraphicsSurfaces>& b,
+      const basic_path_builder<GraphicsSurfaces, Allocator>& pb,
+      const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+      const optional<basic_stroke_props<GraphicsSurfaces>>& sp = nullopt,
+      const optional<basic_dashes<GraphicsSurfaces>>& d = nullopt,
+      const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
+      const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+    void stroke(const basic_brush<GraphicsSurfaces>& b,
+      const basic_interpreted_path<GraphicsSurfaces>& ip,
+      const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+      const optional<basic_stroke_props<GraphicsSurfaces>>& sp = nullopt,
+      const optional<basic_dashes<GraphicsSurfaces>>& d = nullopt,
+      const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
+      const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+    template <class Allocator>
+    void fill(const basic_brush<GraphicsSurfaces>& b,
+      const basic_path_builder<GraphicsSurfaces, Allocator>& pb,
+      const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+      const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
+      const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+    void fill(const basic_brush<GraphicsSurfaces>& b,
+      const basic_interpreted_path<GraphicsSurfaces>& ip,
+      const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+      const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
+      const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+    void mask(const basic_brush<GraphicsSurfaces>& b,
+      const basic_brush<GraphicsSurfaces>& mb,
+      const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+      const optional<basic_mask_props<GraphicsSurfaces>>& mp = nullopt,
+      const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
+      const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
   };
+
+  template <class GraphicsSurfaces>
+  basic_image_surface<GraphicsSurfaces> copy_image_surface(
+    basic_image_surface<GraphicsSurfaces>& sfc) noexcept;
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.imagesurface.cons] {\tcode{image_surface} constructors and assignment operators}
+\rSec1 [\iotwod.imagesurface.cons] {\tcode{basic_image_surface} constructors and assignment operators}
 
-\indexlibrary{\idxcode{image_surface}!constructor}%
+\indexlibrary{\idxcode{basic_image_surface}!constructor}%
 \begin{itemdecl}
-image_surface(io2d::format fmt, int w, int h);
+basic_image_surface(io2d::format fmt, int w, int h);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{w} is greater than \tcode{0} and not greater than \tcode{image_surface::max_width()}.
+\tcode{w} is greater than \tcode{0} and not greater than \tcode{basic_image_surface::max_width()}.
 
 \pnum
-\tcode{h} is greater than \tcode{0} and not greater than \tcode{image_surface::max_height()}.
+\tcode{h} is greater than \tcode{0} and not greater than \tcode{basic_image_surface::max_height()}.
 
 \pnum
 \tcode{fmt} is not \tcode{io2d::format::invalid}.
 
 \pnum
 \effects
-Constructs an object of type \tcode{image_surface}.
+Constructs an object of type \tcode{basic_image_surface}.
 
 \pnum
 The pixel format is \tcode{fmt}, the width is \tcode{w}, and the height is \tcode{h}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{image_surface}!constructor}%
+\indexlibrary{\idxcode{basic_image_surface}!constructor}%
 \begin{itemdecl}
-image_surface(filesystem::path f, image_file_format i,
-  io2d::format fmt);
-image_surface(filesystem::path f, image_file_format i,
-  io2d::format fmt, error_code& ec) noexcept;
+basic_image_surface(filesystem::path f, io2d::image_file_format i, io2d::format fmt);
+basic_image_surface(filesystem::path f, io2d::image_file_format i, io2d::format fmt,
+  error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{f} is a file and its contents are data in either JPEG format or PNG format.
+\tcode{f} is a file and its contents are data in either JPEG format, TIFF format or PNG format.
 
 \pnum
 \tcode{fmt} is not \tcode{io2d::format::invalid}.
 
 \pnum
 \effects
-Constructs an object of type \tcode{image_surface}.
+Constructs an object of type \tcode{basic_image_surface}.
 
 \pnum
 The data of the \underlyingimagesurface is the raster graphics data that results from processing \tcode{f} into uncompressed raster graphics in the manner specified by the standard that specifies how to transform the contents of data contained in \tcode{f} into raster graphics data and then transforming that raster graphics data into the format specified by \tcode{fmt}.
@@ -111,7 +154,7 @@ The intent of \tcode{image_file_format::unknown} is to allow implementations to 
 \end{note}
 
 \pnum
-If the width of the uncompressed raster graphics data would be less than \tcode{1} or greater than \tcode{image_surface::max_width()} or if the height of the uncompressed raster graphics data would be less than \tcode{1} or greater than \tcode{image_surface::max_height()}, the error specified below occurs.
+If the width of the uncompressed raster graphics data would be less than \tcode{1} or greater than \tcode{basic_image_surface::max_width()} or if the height of the uncompressed raster graphics data would be less than \tcode{1} or greater than \tcode{basic_image_surface::max_height()}, the error specified below occurs.
 
 \pnum
 The resulting uncompressed raster graphics data is then transformed into the data format specified by \tcode{fmt}. If the format specified by \tcode{fmt} only contains an alpha channel, the values of the color channels, if any, of the \underlyingimagesurface are \unspecnorm. If the format specified by \tcode{fmt} only contains color channels and the resulting uncompressed raster graphics data is in a premultiplied format, then the value of each color channel for each pixel is be divided by the value of the alpha channel for that pixel. The visual data is then set as the visual data of the \underlyingimagesurface.
@@ -134,12 +177,12 @@ Any error that could result from trying to access \tcode{f}, open \tcode{f} for 
 \tcode{errc::invalid_argument} if \tcode{fmt} is \tcode{io2d::format::invalid}.
 
 \pnum
-\tcode{errc::argument_out_of_domain} if the width would be less than \tcode{1}, the width would be greater than \tcode{image_surface::max_width()}, the height would be less than \tcode{1}, or the height would be greater than \tcode{image_surface::max_height()}.
+\tcode{errc::argument_out_of_domain} if the width would be less than \tcode{1}, the width would be greater than \tcode{basic_image_surface::max_width()}, the height would be less than \tcode{1}, or the height would be greater than \tcode{basic_image_surface::max_height()}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.imagesurface.members] {\tcode{image_surface} members}
+\rSec1 [\iotwod.imagesurface.members] {\tcode{basic_image_surface} members}
 
-\indexlibrarymember{save}{image_surface}%
+\indexlibrarymember{save}{basic_image_surface}%
 \begin{itemdecl}
 void save(filesystem::path p, image_file_format i);
 void save(filesystem::path p, image_file_format i, error_code& ec) noexcept;
@@ -160,7 +203,7 @@ Any pending rendering and composing operations (\ref{\iotwod.surface.rendering})
 The visual data of the \underlyingimagesurface is written to \tcode{p} in the data format specified by \tcode{i}.
 
 \pnum
-If \tcode{i} is \tcode{image_file_format::unknown}, it is \impldefplain{image_surface!save} whether the surface is saved in the image file format, if any, that the implementation associates with \tcode{p.extension()} provided that \tcode{p.has_extension() == true}. If \tcode{p.has_extension() == false}, the implementation does not associate an image file format with \tcode{p.extension()}, or the implementation does not support saving in that image file format, the error specified below occurs.
+If \tcode{i} is \tcode{image_file_format::unknown}, it is \impldefplain{basic_image_surface!save} whether the surface is saved in the image file format, if any, that the implementation associates with \tcode{p.extension()} provided that \tcode{p.has_extension() == true}. If \tcode{p.has_extension() == false}, the implementation does not associate an image file format with \tcode{p.extension()}, or the implementation does not support saving in that image file format, the error specified below occurs.
 
 \pnum
 \throws
@@ -174,61 +217,21 @@ Any error that could result from trying to create \tcode{f}, access \tcode{f}, o
 \tcode{errc::not_supported} if \tcode{image_file_format::unknown} is passed as an argument and the implementation is unable to determine the file format or does not support saving in the image file format it determined.
 \end{itemdescr}
 
-\indexlibrarymember{map}{image_surface}%
+\rSec1 [\iotwod.imagesurface.staticmembers] {\tcode{basic_image_surface} static members}
+
+\indexlibrarymember{max_dimensions}{basic_image_surface}%
 \begin{itemdecl}
-void map(const function<void(mapped_surface&)>& action);
-void map(const function<void(mapped_surface&, error_code&)>& action, error_code& ec);
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Creates a \tcode{mapped_surface} object and calls \tcode{action} using it.
-
-\pnum
-The \tcode{mapped_surface} object is created using \tcode{*this}, which allows direct manipulation of the \underlyingsurface.
-	
-\pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-	
-\pnum
-\remarks
-Whether changes are committed to the \underlyingsurface immediately or only when the \tcode{mapped_surface} object is destroyed is \unspecnorm.
-	
-\pnum
-Calling this function on an \tcode{image_surface} object and then calling any function on the \tcode{image_surface} object or using the \tcode{image_surface} object before the call to this function has returned shall result in undefined behavior; no diagnostic is required.
-	
-\pnum
-\errors
-\tcode{errc::not_supported} if a \tcode{mapped_surface} object cannot be created for the \tcode{image_surface} object. The \tcode{image_surface} object is not modified if an error occurs.
-\end{itemdescr}
-
-\rSec1 [\iotwod.imagesurface.staticmembers] {\tcode{image_surface} static members}
-
-\indexlibrarymember{max_width}{image_surface}%
-\begin{itemdecl}
-static int max_width() noexcept;
+static basic_display_point<graphics_math_type> max_dimensions() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The maximum width for an \tcode{image_surface} object.
+<TODO>The maximum height and width for a \tcode{basic_image_surface} object.
 \end{itemdescr}
 
-\indexlibrarymember{max_height}{image_surface}%
-\begin{itemdecl}
-static int max_height() noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-The maximum height for an \tcode{image_surface} object.
-\end{itemdescr}
-    
+\rSec1 [\iotwod.imagesurface.observers] {\tcode{basic_image_surface} observers}
 
-\rSec1 [\iotwod.imagesurface.observers] {\tcode{image_surface} observers}
-
-\indexlibrarymember{format}{image_surface}%
+\indexlibrarymember{format}{basic_image_surface}%
 \begin{itemdecl}
 io2d::format format() const noexcept;
 \end{itemdecl}
@@ -238,22 +241,147 @@ io2d::format format() const noexcept;
 The pixel format.
 \end{itemdescr}
 
-\indexlibrarymember{width}{image_surface}%
+\indexlibrarymember{dimensions}{basic_image_surface}%
 \begin{itemdecl}
-int width() const noexcept;
+basic_display_point<graphics_math_type> dimensions() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The width.
+<TODO>The height and width.
 \end{itemdescr}
 
-\indexlibrarymember{height}{image_surface}%
+\rSec1 [\iotwod.imagesurface.mofifiers] {\tcode{basic_image_surface} modifiers}
+
+\indexlibrarymember{clear}{basic_image_surface}%
 \begin{itemdecl}
-int height() const noexcept;
+void clear();
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-The height.
+\effects
+<TODO>
+\end{itemdescr}
+
+\indexlibrarymember{flush}{basic_image_surface}%
+\begin{itemdecl}
+void flush();
+void flush(error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+<TODO>
+\end{itemdescr}
+
+\indexlibrarymember{mark_dirty}{basic_image_surface}%
+\begin{itemdecl}
+void mark_dirty();
+void mark_dirty(error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+<TODO>
+\end{itemdescr}
+
+\indexlibrarymember{mark_dirty}{basic_image_surface}%
+\begin{itemdecl}
+void mark_dirty(const basic_bounding_box<graphics_math_type>& extents);
+void mark_dirty(const basic_bounding_box<graphics_math_type>& extents, error_code& ec) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+<TODO>
+\end{itemdescr}
+
+\indexlibrarymember{paint}{basic_image_surface}%
+\begin{itemdecl}
+void paint(const basic_brush<GraphicsSurfaces>& b,
+  const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+  const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
+  const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+<TODO>
+\end{itemdescr}
+
+\indexlibrarymember{stroke}{basic_image_surface}%
+\begin{itemdecl}
+template <class Allocator>
+void stroke(const basic_brush<GraphicsSurfaces>& b,
+  const basic_path_builder<GraphicsSurfaces, Allocator>& pb,
+  const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+  const optional<basic_stroke_props<GraphicsSurfaces>>& sp = nullopt,
+  const optional<basic_dashes<GraphicsSurfaces>>& d = nullopt,
+  const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
+  const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+<TODO>
+\end{itemdescr}
+
+\indexlibrarymember{stroke}{basic_image_surface}%
+\begin{itemdecl}
+void stroke(const basic_brush<GraphicsSurfaces>& b,
+  const basic_interpreted_path<GraphicsSurfaces>& ip,
+  const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+  const optional<basic_stroke_props<GraphicsSurfaces>>& sp = nullopt,
+  const optional<basic_dashes<GraphicsSurfaces>>& d = nullopt,
+  const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
+  const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+<TODO>
+\end{itemdescr}
+
+\indexlibrarymember{fill}{basic_image_surface}%
+\begin{itemdecl}
+template <class Allocator>
+void fill(const basic_brush<GraphicsSurfaces>& b,
+  const basic_path_builder<GraphicsSurfaces, Allocator>& pb,
+  const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+  const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
+  const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+<TODO>
+\end{itemdescr}
+
+\indexlibrarymember{fill}{basic_image_surface}%
+\begin{itemdecl}
+void fill(const basic_brush<GraphicsSurfaces>& b,
+  const basic_interpreted_path<GraphicsSurfaces>& ip,
+  const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+  const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
+  const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+<TODO>
+\end{itemdescr}
+
+\indexlibrarymember{mask}{basic_image_surface}%
+\begin{itemdecl}
+void mask(const basic_brush<GraphicsSurfaces>& b,
+  const basic_brush<GraphicsSurfaces>& mb,
+  const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+  const optional<basic_mask_props<GraphicsSurfaces>>& mp = nullopt,
+  const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
+  const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+<TODO>
 \end{itemdescr}
