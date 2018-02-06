@@ -276,29 +276,83 @@ void flush(error_code& ec) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-<TODO>
+If the implementation does not provide a native handle to the surface's \underlyingsurface, this function does nothing.
+
+\pnum
+If the implementation does provide a native handle to the surface's \underlyingsurface, then the implementation performs every action necessary to ensure that all operations on the surface that produce observable effects occur.
+
+\pnum
+The implementation performs any other actions necessary to ensure that the surface will be usable again after a call to \tcode{basic_output_surface::mark_dirty}.
+
+\pnum
+Once a call to \tcode{basic_output_surface::flush} is made, \tcode{basic_output_surface::mark_dirty} shall be called before any other member function of the surface is called or the surface is used as an argument to any other function.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\remarks
+This function exists to allow the user to take control of the underlying surface using an implementation-provided native handle without introducing a race condition. The implementation's responsibility is to ensure that the user can safely use the underlying surface.
+
+\pnum
+\errors
+The potential errors are \impldefplain{basic_output_surface::flush errors}.
+
+\pnum
+Implementations should avoid producing errors here.
+
+\pnum
+If the implementation does not provide a native handle to the \tcode{basic_output_surface} object's \underlyingsurface, this function shall not produce any errors.
+
+\pnum
+\begin{note}
+There are several purposes for \tcode{basic_output_surface::flush} and \tcode{basic_output_surface::mark_dirty}.
+
+\pnum
+One is to allow implementation wide latitude in how they implement the rendering and composing operations (\ref{\iotwod.surface.rendering}), such as batching calls and then sending them to the \underlyingrendandpresenttechs at appropriate times.
+
+\pnum
+Another is to give implementations the chance during the call to \tcode{basic_output_surface::flush} to save any internal state that might be modified by the user and then restore it during the call to \tcode{basic_output_surface::mark_dirty}.
+
+\pnum
+Other uses of this pair of calls are also possible.
+\end{note}
 \end{itemdescr}
 
 \indexlibrarymember{mark_dirty}{basic_output_surface}%
 \begin{itemdecl}
 void mark_dirty();
 void mark_dirty(error_code& ec) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-<TODO>
-\end{itemdescr}
-
-\indexlibrarymember{mark_dirty}{basic_output_surface}%
-\begin{itemdecl}
 void mark_dirty(const basic_bounding_box<graphics_math_type>& extents);
 void mark_dirty(const basic_bounding_box<graphics_math_type>& extents, error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-<TODO>
+If the implementation does not provide a native handle to the \tcode{basic_output_surface} object's \underlyingsurface, this function shall do nothing.
+
+\pnum
+If the implementation does provide a native handle to the \tcode{basic_output_surface} object's \underlyingsurface, then:
+\begin{itemize}
+\item If called without a \tcode{basic_bounding_box} argument, informs the implementation that external changes using a native handle were potentially made to the entire \underlyingsurface.
+\item If called with a \tcode{basic_bounding_box} argument, informs the implementation that external changes using a native handle were potentially made to the \underlyingsurface within the bounds specified by the \term{bounding rectangle} \tcode{basic_bounding_box\{ round(extents.x()), round (extents.y()), round(extents.width()), round(extents.height())\}}. No part of the bounding rectangle shall be outside of the bounds of the \underlyingsurface; no diagnostic is required.
+\end{itemize}
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\remarks
+After external changes are made to this \tcode{basic_output_surface} object's \underlyingsurface using a native pointer, this function shall be called before using this \tcode{basic_output_surface} object; no diagnostic is required.
+
+\pnum
+\errors
+The errors, if any, produced by this function are \impldefplain{basic_output_surface!mark_dirty}.
+
+\pnum
+If the implementation does not provide a native handle to the \tcode{basic_output_surface} object's \underlyingsurface, this function shall not produce any errors.
 \end{itemdescr}
 
 \indexlibrarymember{paint}{basic_output_surface}%
@@ -311,7 +365,18 @@ void paint(const basic_brush<GraphicsSurfaces>& b,
 \begin{itemdescr}
 \pnum
 \effects
-<TODO>
+Performs the painting rendering and composing operation as specified by \ref{\iotwod.surface.painting}.
+
+\pnum
+The meanings of the parameters are specified by \ref{\iotwod.surface.rendering}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+The errors, if any, produced by this function are \impldefplain{basic_output_surface!paint}.
 \end{itemdescr}
 
 \indexlibrarymember{stroke}{basic_output_surface}%
@@ -324,15 +389,6 @@ void stroke(const basic_brush<GraphicsSurfaces>& b,
   const optional<basic_dashes<GraphicsSurfaces>>& d = nullopt,
   const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
   const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-<TODO>
-\end{itemdescr}
-
-\indexlibrarymember{stroke}{basic_output_surface}%
-\begin{itemdecl}
 void stroke(const basic_brush<GraphicsSurfaces>& b,
   const basic_interpreted_path<GraphicsSurfaces>& ip,
   const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
@@ -344,7 +400,18 @@ void stroke(const basic_brush<GraphicsSurfaces>& b,
 \begin{itemdescr}
 \pnum
 \effects
-<TODO>
+Performs the stroking rendering and composing operation as specified by \ref{\iotwod.surface.stroking}.
+
+\pnum
+The meanings of the parameters are specified by \ref{\iotwod.surface.rendering}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+The errors, if any, produced by this function are \impldefplain{basic_output_surface!stroke}.
 \end{itemdescr}
 
 \indexlibrarymember{fill}{basic_output_surface}%
@@ -355,15 +422,6 @@ void fill(const basic_brush<GraphicsSurfaces>& b,
   const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
   const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
   const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-<TODO>
-\end{itemdescr}
-
-\indexlibrarymember{fill}{basic_output_surface}%
-\begin{itemdecl}
 void fill(const basic_brush<GraphicsSurfaces>& b,
   const basic_interpreted_path<GraphicsSurfaces>& ip,
   const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
@@ -373,7 +431,18 @@ void fill(const basic_brush<GraphicsSurfaces>& b,
 \begin{itemdescr}
 \pnum
 \effects
-<TODO>
+Performs the filling rendering and composing operation as specified by \ref{\iotwod.surface.filling}.
+
+\pnum
+The meanings of the parameters are specified by \ref{\iotwod.surface.rendering}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+The errors, if any, produced by this function are \impldefplain{basic_output_surface!fill}.
 \end{itemdescr}
 
 \indexlibrarymember{mask}{basic_output_surface}%
@@ -388,7 +457,19 @@ void mask(const basic_brush<GraphicsSurfaces>& b,
 \begin{itemdescr}
 \pnum
 \effects
-<TODO>
+Performs the masking rendering and composing operation as specified by \ref{\iotwod.surface.masking}.
+
+\pnum
+The meanings of the parameters are specified by \ref{\iotwod.surface.rendering}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+
+The errors, if any, produced by this function are \impldefplain{surface!mask}.
 \end{itemdescr}
 
 \indexlibrarymember{draw_callback}{basic_output_surface}%
