@@ -297,3 +297,104 @@ When a masking operation is initiated on a surface, the implementation shall pro
 \item Transform $sp$ from the surface coordinate space to the brush coordinate space, resulting in point $bp$.
 \item Sample from point $bp$ of the source brush (\ref{\iotwod.surface.rendering.brushes}), combine the resulting visual data with the visual data at point $sp$ in the \underlyingsurface in the manner specified by the surface's current compositing operator (\ref{\iotwod.renderprops.summary}), multiply each channel of the result produced by application of the compositing operator by $map$ if the visual data format of the \underlyingsurface is a premultiplied format and if not then just multiply the alpha channel of the result by $map$, and modify the visual data of the \underlyingsurface at point $sp$ to reflect the multiplied result.
 \end{enumerate}
+
+\rSec1 [\iotwod.outputsurface.misc] {output surface miscellaneous behavior}
+
+\pnum
+What constitutes an output device is \impldefplain{output device}, with the sole constraint being that an output device must allow the user to see the dynamically-updated contents of the display buffer.
+\begin{example}
+An output device might be a window in a windowing system environment or the usable screen area of a smart phone or tablet.
+\end{example}
+
+\pnum
+Implementations do not need to support the simultaneous existence of multiple \tcode{display_surface} objects.
+
+\pnum
+All functions inherited from \tcode{surface} that affect its \underlyingsurface shall operate on the back buffer.
+
+\rSec1 [\iotwod.outputsurface.state] {output surface state}
+
+\pnum
+Table~\ref{tab:\iotwod.outputsurface.state.listing} specifies the name, type, function, and default value for each item of a display surface's observable state.
+
+\begin{libreqtab4b}
+	{Output surface observable state}
+	{tab:\iotwod.outputsurface.state.listing}
+	\\ \topline
+	\lhdr{Name}   &   \chdr{Type}  &   \chdr{Function}  &   \rhdr{Default value}       \\ \capsep
+	\endfirsthead
+	\continuedcaption\\
+	\hline
+	\lhdr{Name}   &   \chdr{Type}  &   \chdr{Function}  &   \rhdr{Default value}       \\ \capsep
+	\endhead
+	
+	\term{Letterbox brush} &
+	\tcode{brush} &
+	This is the brush that shall be used as specified by \tcode{scaling::letterbox} (Table~\ref{tab:\iotwod.scaling.meanings}) &
+	\tcode{brush\{ \{ rgba_color::black \} \}} \\ \rowsep
+	
+	\term{Letterbox brush props} &
+	\tcode{brush_props} &
+	This is the brush properties for the letterbox brush &
+	\tcode{brush_props\{ \}} \\ \rowsep
+	
+	\term{Scaling type} &
+	\tcode{scaling} &
+	When the user scaling callback is equal to its default value, this is the type of scaling that shall be used when transferring the back buffer to the display buffer &
+	\tcode{scaling::letterbox}\\ \rowsep
+	
+	\term{Draw width} &
+	\tcode{int} &
+	The width in pixels of the back buffer. The minimum value is \tcode{1}. The maximum value is \unspecnorm. Because users can only request a preferred value for the draw width when setting and altering it, the maximum value may be a run-time determined value. If the preferred draw width exceeds the maximum value, then if a preferred draw height has also been supplied then implementations should provide a back buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the preferred draw width and the preferred draw height otherwise implementations should provide a back buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the preferred draw width and the current draw height &
+	\textit{N/A}
+	\begin{note}
+	It is impossible to create an output surface object without providing a preferred draw width value; as such a default value cannot exist.
+	\end{note} \\ \rowsep
+	
+	\term{Draw height} &
+	\tcode{int} &
+	The height in pixels of the back buffer. The minimum value is \tcode{1}. The maximum value is \unspecnorm. Because users can only request a preferred value for the draw height when setting and altering it, the maximum value may be a run-time determined value. If the preferred draw height exceeds the maximum value, then if a preferred draw width has also been supplied then implementations should provide a back buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the preferred draw width and the preferred draw height otherwise implementations should provide a back buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the current draw width and the preferred draw height &
+	\textit{N/A}
+	\begin{note}
+	It is impossible to create an output surface object without providing a preferred draw height value; as such a default value cannot exist.
+	\end{note} \\ \rowsep
+	
+	\term{Draw format} &
+	\tcode{format} &
+	The pixel format of the back buffer. When an output surface object is created, a preferred pixel format value is provided. If the implementation does not support the preferred pixel format value as the value of draw format, the resulting value of draw format is \impldefplain{display_surface!unsupported draw format} &
+	\textit{N/A}
+	\begin{note}
+	It is impossible to create an output surface object without providing a preferred draw format value; as such a default value cannot exist.
+	\end{note} \\ \rowsep
+	
+	\term{Display width} &
+	\tcode{int} &
+	The width in pixels of the display buffer. The minimum value is \unspecnorm. The maximum value is \unspecnorm. Because users can only request a preferred value for the display width when setting and altering it, both the minimum value and the maximum value may be run-time determined values. If the preferred display width is not within the range between the minimum value and the maximum value, inclusive, then if a preferred display height has also been supplied then implementations should provide a display buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the preferred display width and the preferred display height otherwise implementations should provide a display buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the preferred display width and the current display height &
+	\textit{N/A}
+	\begin{note}
+	It is impossible to create an output surface object without providing a preferred display width value since in the absence of an explicit display width argument the mandatory preferred draw width argument is used as the preferred display width; as such a default value cannot exist.
+	\end{note} \\ \rowsep
+	
+	\term{Display height} &
+	\tcode{int} &
+	The height in pixels of the display buffer. The minimum value is \unspecnorm. The maximum value is \unspecnorm. Because users can only request a preferred value for the display height when setting and altering it, both the minimum value and the maximum value may be run-time determined values. If the preferred display height is not within the range between the minimum value and the maximum value, inclusive, then if a preferred display width has also been supplied then implementations should provide a display buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the preferred display width and the preferred display height otherwise implementations should provide a display buffer with the largest dimensions possible that maintain as nearly as possible the aspect ratio between the current display width and the preferred display height &
+	\textit{N/A}
+	\begin{note}
+	It is impossible to create an output surface object without providing a preferred display height value since in the absence of an explicit display height argument the mandatory preferred draw height argument is used as the preferred display height; as such a default value cannot exist.
+	\end{note} \\ \rowsep
+	
+	\term{Auto clear} &
+	\tcode{bool} &
+	If \tcode{true} the implementation shall call \tcode{clear}, which shall clear the back buffer, immediately before it executes the draw callback &
+	\tcode{false} \\ \rowsep
+	
+	\term{Refresh rate} &
+	\tcode{refresh_rate} &
+	The \tcode{refresh_rate} value that determines when the draw callback shall be called while output surface\tcode{::show} is being executed &
+	\tcode{refresh_rate::as_fast_as_possible} \\ \rowsep
+	
+	\term{Desired frame rate} &
+	\tcode{float} &
+	This value is the number of times the draw callback shall be called per second while output surface\tcode{::show} is being executed when the value of refresh rate is \tcode{refresh_rate::fixed}, subject to the additional requirements documented in the meaning of \tcode{refresh_rate::fixed} (Table~\ref{tab:\iotwod.refreshrate.meanings}) \\ \rowsep
+	
+\end{libreqtab4b}

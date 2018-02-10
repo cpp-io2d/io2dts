@@ -153,7 +153,7 @@ io2d::format format() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-<TODO>
+The pixel format.
 \end{itemdescr}
 
 \indexlibrarymember{dimensions}{basic_output_surface}%
@@ -163,7 +163,7 @@ basic_display_point<graphics_math_type> dimensions() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-<TODO>
+<TODO>The height and width.
 \end{itemdescr}
 
 \indexlibrarymember{max_dimensions}{basic_output_surface}%
@@ -173,7 +173,7 @@ basic_display_point<graphics_math_type> max_dimensions() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-<TODO>
+<TODO>The maximum available height and width of a \tcode{basic_output_surcace} for the device.
 \end{itemdescr}
 
 \indexlibrarymember{display_dimensions}{basic_output_surface}%
@@ -203,7 +203,7 @@ io2d::scaling scaling() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-<TODO>
+The scaling type.
 \end{itemdescr}
 
 \indexlibrarymember{letterbox_brush}{basic_output_surface}%
@@ -213,7 +213,7 @@ optional<basic_brush<GraphicsSurfaces>> letterbox_brush() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-<TODO>
+An \tcode{optional<basic_brush<GraphicsSurfaces>>} object constructed using the user-provided letterbox brush or, if the letterbox brush is set to its default value, an empty \tcode{optional<basic_brush<GraphicsSurfaces>>} object.
 \end{itemdescr}
 
 \indexlibrarymember{letterbox_brush_props}{basic_output_surface}%
@@ -223,17 +223,17 @@ optional<basic_brush_props<GraphicsSurfaces>> letterbox_brush_props() const noex
 \begin{itemdescr}
 \pnum
 \returns
-<TODO>
+An \tcode{optional<basic_brush_props<GraphicsSurfaces>>} object constructed using the user-provided letterbox brush props or, if the letterbox brush props is set to its default value, an empty \tcode{optional<basic_brush_props<GraphicsSurfaces>>} object.
 \end{itemdescr}
 
-\indexlibrarymember{auto}{basic_output_surface}%
+\indexlibrarymember{auto_clear}{basic_output_surface}%
 \begin{itemdecl}
 bool auto_clear() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-<TODO>
+The value of auto clear.
 \end{itemdescr}
 
 \rSec1 [\iotwod.outputsurface.mofifiers] {\tcode{basic_output_surface} modifiers}
@@ -245,7 +245,46 @@ int begin_show();
 \begin{itemdescr}
 \pnum
 \effects
-<TODO>
+Performs the following actions in a continuous loop:
+\begin{enumerate}
+\item Handle any implementation and host environment matters. If there are no pending implementation or host environment matters to handle, proceed immediately to the next action.
+\item Run the size change callback if doing so is required by its specification and it does not have a value equivalent to its default value.
+\item If the refresh rate requires that the draw callback be called then:
+\begin{enumeratea}
+\item Evaluate auto clear and perform the actions required by its specification, if any.
+\item Run the draw callback.
+\item Ensure that all operations from the draw callback that can effect the back buffer have completed.
+\item Transfer the contents of the back buffer to the display buffer using sampling with an \unspecnorm filter. If the user scaling callback does not have a value equivalent to its default value, use it to determine the position where the contents of the back buffer shall be transferred to and whether or not the letterbox brush should be used. Otherwise use the value of scaling type to determine the position and whether the letterbox brush should be used.
+\end{enumeratea}
+\end{enumerate}
+
+\pnum
+If \tcode{basic_output_surface::end_show} is called from the draw callback, the implementation shall finish executing the draw callback and shall immediately cease to perform any actions in the continuous loop other than handling any implementation and host environment matters needed to exit the loop properly.
+
+\pnum
+No later than when this function returns, the output device shall cease to display the contents of the display buffer.
+
+\pnum
+What the output device shall display when it is not displaying the contents of the display buffer is \unspecnorm.
+
+\pnum
+\returns
+The possible values and meanings of the possible values returned are \impldefplain{basic_output_surface!begin_show return value}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\remarks
+Since this function calls the draw callback and can call the size change callback and the user scaling callback, in addition to the errors documented below, any errors that the callback functions produce can also occur.
+
+\pnum
+\errors
+\tcode{errc::operation_would_block} if the value of draw callback is equivalent to its default value or if it becomes equivalent to its default value before this function returns.
+
+\pnum
+Other errors, if any, produced by this function are \impldefplain{basic_output_surface!begin_show}.
 \end{itemdescr}
 
 \indexlibrarymember{end_show}{basic_output_surface}%
@@ -255,7 +294,16 @@ void end_show();
 \begin{itemdescr}
 \pnum
 \effects
-<TODO>
+If this function is called outside of the draw callback while it is being executed in the \tcode{basic_output_surface::begin_show} function's continuous loop, it does nothing.
+
+\pnum
+Otherwise, the implementation initiates the process of exiting the \tcode{basic_output_surface::begin_show} function's continuous loop.
+
+\pnum
+If possible, any procedures that the host environment requires in order to cause the \tcode{basic_output_surface::show} function's continuous loop to stop executing without error should be followed.
+
+\pnum
+The \tcode{basic_output_surface::begin_show} function's loop continues execution until it returns.
 \end{itemdescr}
 
 \indexlibrarymember{clear}{basic_output_surface}%

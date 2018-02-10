@@ -16,6 +16,72 @@ For example, a Windows implementation could provide support classes based on Dir
 Additionally, the surface classes have been modified: now there are simply managed and unmanaged output surfaces, the latter of which offers developers the opportunity to take finer control of the drawing surface
 
 \pnum
+The modified classes are as follows
+
+\begin{libreqtab2}
+	{Class identifiers modified since R6}
+	{tab:\iotwod.revisionhistory.changedclasses}
+	\\ \topline
+	\lhdr{R6 identifier}
+	& \rhdr{R7 identifier}
+	\\ \capsep
+	\endfirsthead
+	\hline
+	\lhdr{R6 identifier}
+	& \rhdr{R7 identifier}
+	\\ \capsep
+	\endhead
+	\tcode{vector_2d}
+	& \tcode{basic_point_2d}
+	\\
+	\tcode{matrix_2d}
+	& \tcode{basic_matrix_2d}
+	\\
+	\tcode{rectangle}
+	& \tcode{basic_bounding_box}
+	\\
+	\tcode{circle}
+	& \tcode{basic_circle}
+	\\
+	\tcode{path_group}
+	& \tcode{basic_interpreted_path}
+	\\
+	\tcode{path_builder}
+	& \tcode{basic_path_builder}
+	\\
+	\tcode{color_stop}
+	& \tcode{gradient_stop}
+	\\
+	\tcode{brush}
+	& \tcode{basic_brush}
+	\\
+	\tcode{render_props}
+	& \tcode{basic_render_props}
+	\\
+	\tcode{brush_props}
+	& \tcode{basic_brush_props}
+	\\
+	\tcode{clip_props}
+	& \tcode{basic_clip_props}
+	\\
+	\tcode{stroke_props}
+	& \tcode{basic_stroke_props}
+	\\
+	\tcode{mask_props}
+	& \tcode{basic_mask_props}
+	\\
+	\tcode{image_surface}
+	& \tcode{basic_image_surface}
+	\\
+	\tcode{display_surface}
+	& \tcode{basic_output_surface}
+	\\
+\end{libreqtab2}
+
+\pnum
+The \tcode{surface} class and the \tcode{mapped_surface} class have been withdrawn, while the \tcode{basic_unmanaged_output_surface} class has been introduced.
+
+\pnum
 The reference implementation, including a software-only implementation of math and rendering support classes, is available at https://github.com/mikebmcl/P0267_RefImpl
 
 \rSec1 [\iotwod.revisionhistory.r6] {Revision 6}
