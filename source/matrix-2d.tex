@@ -114,12 +114,16 @@ basic_matrix_2d() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{basic_matrix_2d\{ 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f \}}.
+Constructs an object of type \tcode{basic_matrix_2d}.
 
 \pnum
 \begin{note}
 The resulting matrix is the identity matrix.
 \end{note}
+
+\pnum
+\postconditions
+\tcode{data() == GraphicsMath::create_matrix_2d()}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{basic_matrix_2d}!constructor}%
@@ -244,7 +248,7 @@ void m00(float v) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{GraphicsMath::m00(data(), v);}
+Equivalent to \tcode{GraphicsMath::m00(data(), v);}
 \end{itemdescr}
 
 \indexlibrarymember{m01}{basic_matrix_2d}%
@@ -254,7 +258,7 @@ void m01(float v) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{GraphicsMath::m01(data(), v);}
+Equivalent to \tcode{GraphicsMath::m01(data(), v);}
 \end{itemdescr}
 
 \indexlibrarymember{m10}{basic_matrix_2d}%
@@ -264,7 +268,7 @@ void m10(float v) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{GraphicsMath::m10(data(), v);}
+Equivalent to \tcode{GraphicsMath::m10(data(), v);}
 \end{itemdescr}
 
 \indexlibrarymember{m11}{basic_matrix_2d}%
@@ -274,7 +278,7 @@ void m11(float v) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{GraphicsMath::m11(data(), v);}
+Equivalent to \tcode{GraphicsMath::m11(data(), v);}
 \end{itemdescr}
 
 \indexlibrarymember{m20}{basic_matrix_2d}%
@@ -284,7 +288,7 @@ void m20(float v) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{GraphicsMath::m20(data(), v);}
+Equivalent to \tcode{GraphicsMath::m20(data(), v);}
 \end{itemdescr}
 
 \indexlibrarymember{m21}{basic_matrix_2d}%
@@ -294,7 +298,7 @@ void m21(float v) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{GraphicsMath::m21(data(), v);}
+Equivalent to \tcode{GraphicsMath::m21(data(), v);}
 \end{itemdescr}
 
 \indexlibrarymember{translate}{basic_matrix_2d}%
@@ -304,7 +308,7 @@ basic_matrix_2d& translate(basic_point_2d<GraphicsMath> v) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{data() = GraphicsMath::translate(data(), v.data());}
+Equivalent to \tcode{data() = GraphicsMath::translate(data(), v.data());}
 
 \pnum
 \returns
@@ -318,7 +322,7 @@ basic_matrix_2d& scale(basic_point_2d<GraphicsMath> v) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{data() = GraphicsMath::scale(data(), v.data());}
+Equivalent to \tcode{data() = GraphicsMath::scale(data(), v.data());}
 
 \pnum
 \returns
@@ -332,7 +336,7 @@ basic_matrix_2d& rotate(float radians) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{data() = GraphicsMath::rotate(data(), radians);}
+Equivalent to \tcode{data() = GraphicsMath::rotate(data(), radians);}
 
 \pnum
 \returns
@@ -346,7 +350,7 @@ basic_matrix_2d& rotate(float radians, basic_point_2d<GraphicsMath> origin) noex
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{data() = GraphicsMath::rotate(data(), radians, origin.data());}
+Equivalent to \tcode{data() = GraphicsMath::rotate(data(), radians, origin.data());}
 
 \pnum
 \returns
@@ -360,7 +364,7 @@ basic_matrix_2d& reflect(float radians) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{data() = GraphicsMath::reflect(data(), radians);}
+Equivalent to \tcode{data() = GraphicsMath::reflect(data(), radians);}
 
 \pnum
 \returns
@@ -374,7 +378,7 @@ basic_matrix_2d& shear_x(float factor) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{data() = GraphicsMath::shear_x(data(), factor);}
+Equivalent to \tcode{data() = GraphicsMath::shear_x(data(), factor);}
 
 \pnum
 \returns
@@ -388,7 +392,7 @@ basic_matrix_2d& shear_y(float factor) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{data() = GraphicsMath::shear_y(factor);}
+Equivalent to \tcode{data() = GraphicsMath::shear_y(factor);}
 
 \pnum
 \returns
@@ -528,7 +532,7 @@ basic_matrix_2d& operator*=(const basic_matrix_2d& rhs) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{data() = GraphicsMath::multiply(data(), rhs.data());}
+Equivalent to \tcode{data() = GraphicsMath::multiply(data(), rhs.data());}
 
 \pnum
 \returns
@@ -555,7 +559,7 @@ basic_point_2d<GraphicsMath> operator*(basic_point_2d<GraphicsMath> v, const bas
 \begin{itemdescr}
 \pnum
 \returns
-Equivalent to: \tcode{m.transform_pt(v)}.
+Equivalent to \tcode{m.transform_pt(v)}.
 \end{itemdescr}
 
 \indexlibrarymember{operator==}{basic_matrix_2d}%
@@ -575,5 +579,5 @@ bool operator!=(const basic_matrix_2d& lhs, const basic_matrix_2d& rhs) noexcept
 \begin{itemdescr}
 \pnum
 \returns
-Equivalent to: \tcode{GraphicsMath::not_equal(lhs.data(), rhs.data())}.
+Equivalent to \tcode{GraphicsMath::not_equal(lhs.data(), rhs.data())}.
 \end{itemdescr}
