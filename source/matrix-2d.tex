@@ -25,6 +25,9 @@ The naming convention and the layout shown above are consistent with a row-major
 \pnum
 The performance of any mathematical operation upon a \tcode{basic_matrix_2d} shall be carried out as-if the omitted third column data members were present with the values prescribed in the previous paragraph.
 
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsMath::matrix_2d_data_type}. It is accessible using the \tcode{data} member functions.
+
 \rSec1 [\iotwod.\matrixtwod.synopsis] {\tcode{basic_matrix_2d} synopsis}
 
 \begin{codeblock}
@@ -32,14 +35,20 @@ namespace std::experimental::io2d::v1 {
   template <class GraphicsMath>
   class basic_matrix_2d {
   public:
+    using data_type = typename GraphicsMath::matrix_2d_data_type;
+    
     // \ref{\iotwod.\matrixtwod.cons}, constructors:
     basic_matrix_2d() noexcept;
     basic_matrix_2d(float v00, float v01, float v10, float v11, float v20, float v21) noexcept;
-    basic_matrix_2d(const typename GraphicsMath::matrix_2d_data_type& val) noexcept;
+    basic_matrix_2d(const typename GraphicsMath::matrix_2d_data_type& v) noexcept;
+
+    // \ref{\iotwod.\matrixtwod.accessors}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
 
     // \ref{\iotwod.\matrixtwod.staticfactories}, static factory functions:
-    static basic_matrix_2d init_translate(const basic_point_2d<GraphicsMath>& val) noexcept;
-    static basic_matrix_2d init_scale(const basic_point_2d<GraphicsMath>& val) noexcept;
+    static basic_matrix_2d init_translate(const basic_point_2d<GraphicsMath>& v) noexcept;
+    static basic_matrix_2d init_scale(const basic_point_2d<GraphicsMath>& v) noexcept;
     static basic_matrix_2d init_rotate(float radians) noexcept;
     static basic_matrix_2d init_rotate(float radians,
       const basic_point_2d<GraphicsMath>& origin) noexcept;
@@ -48,12 +57,12 @@ namespace std::experimental::io2d::v1 {
     static basic_matrix_2d init_shear_y(float factor) noexcept;
 
     // \ref{\iotwod.\matrixtwod.modifiers}, modifiers:
-    void m00(float val) noexcept;
-    void m01(float val) noexcept;
-    void m10(float val) noexcept;
-    void m11(float val) noexcept;
-    void m20(float val) noexcept;
-    void m21(float val) noexcept;
+    void m00(float v) noexcept;
+    void m01(float v) noexcept;
+    void m10(float v) noexcept;
+    void m11(float v) noexcept;
+    void m20(float v) noexcept;
+    void m21(float v) noexcept;
     basic_matrix_2d& translate(const basic_point_2d<GraphicsMath>& v) noexcept;
     basic_matrix_2d& scale(const basic_point_2d<GraphicsMath>& v) noexcept;
     basic_matrix_2d& rotate(float radians) noexcept;
@@ -115,8 +124,8 @@ The resulting matrix is the identity matrix.
 
 \indexlibrary{\idxcode{basic_matrix_2d}!constructor}%
 \begin{itemdecl}
-basic_matrix_2d(float v00, float v01, float v10, float v11,
-  float v20, float v21) noexcept;
+basic_matrix_2d(float m00, float m01, float m10, float m11,
+  float m20, float m21) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -124,12 +133,12 @@ basic_matrix_2d(float v00, float v01, float v10, float v11,
 Constructs an object of type \tcode{basic_matrix_2d}.
 
 \pnum
-<TODO>\tcode{m00 == v00}, \tcode{m01 == v01}, \tcode{m02 == 0.0f}, \tcode{m10 == v10}, \tcode{m11 == v11}, \tcode{m12 == 0.0f}, \tcode{m20 == v20}, \tcode{m21 == v21}, \tcode{m22 == 1.0f}.
+\postconditions{} \tcode{data() == GraphicsMath::create_matrix_2d(m00, m01, m10, m11, m20, m21)}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{basic_matrix_2d}!constructor}%
 \begin{itemdecl}
-basic_matrix_2d(const typename GraphicsMath::matrix_2d_data_type& val) noexcept;
+basic_matrix_2d(const data_type& v) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -137,7 +146,20 @@ basic_matrix_2d(const typename GraphicsMath::matrix_2d_data_type& val) noexcept;
 Constructs an object of type \tcode{basic_matrix_2d}.
 	
 \pnum
-<TODO>
+\postconditions{} \tcode{data() == v}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.\matrixtwod.accessors] {\tcode{basic_matrix_2d} accessors}
+
+\indexlibrarymember{data}{basic_matrix_2d}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+A reference to the \tcode{basic_matrix_2d} object's data object (See: \ref{\iotwod.\matrixtwod.intro}).
 \end{itemdescr}
 
 \rSec1 [\iotwod.\matrixtwod.staticfactories] {\tcode{basic_matrix_2d} static factory 
@@ -145,22 +167,22 @@ functions}
 
 \indexlibrarymember{init_translate}{basic_matrix_2d}%
 \begin{itemdecl}
-static basic_matrix_2d init_translate(basic_point_2d<GraphicsMath> value) noexcept;
+static basic_matrix_2d init_translate(basic_point_2d<GraphicsMath> v) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-<TODO>\tcode{basic_matrix_2d(1.0f, 0.0f, 0.0f, 1.0f, value.x, value.y)}.
+\tcode{basic_matrix_2d(GraphicsMath::create_translate(v.data()))}.
 \end{itemdescr}
 
 \indexlibrarymember{init_scale}{basic_matrix_2d}%
 \begin{itemdecl}
-static basic_matrix_2d init_scale(basic_point_2d<GraphicsMath> value) noexcept;
+static basic_matrix_2d init_scale(basic_point_2d<GraphicsMath> v) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-<TODO>\tcode{basic_matrix_2d(value.x, 0.0f, 0.0f, value.y, 0.0f, 0.0f)}.
+\tcode{basic_matrix_2d(GraphicsMath::create_scale(v.data())}.
 \end{itemdescr}
 
 \indexlibrarymember{init_rotate}{basic_matrix_2d}%
@@ -170,8 +192,7 @@ static basic_matrix_2d init_rotate(float radians) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{basic_matrix_2d(cos(radians), -sin(radians), sin(radians), cos(radians), 
-  0.0f, 0.0f)}.
+\tcode{basic_matrix_2d(GraphicsMath::create_rotate(radians))}.
 \end{itemdescr}
 
 \indexlibrarymember{init_rotate}{basic_matrix_2d}%
@@ -180,12 +201,8 @@ static basic_matrix_2d init_rotate(float radians, basic_point_2d<GraphicsMath> o
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-Equivalent to:
-\begin{codeblock}
-return basic_matrix_2d(
-  basic_matrix_2d::init_translate(origin).rotate(radians).translate(-origin));
-\end{codeblock}
+\returns
+\tcode{basic_matrix_2d(GraphicsMath::create_rotate(radians, origin.data()))}.
 \end{itemdescr}
 
 \indexlibrarymember{init_reflect}{basic_matrix_2d}%
@@ -195,9 +212,7 @@ static basic_matrix_2d init_reflect(float radians) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode
-{basic_matrix_2d(cos(radians * 2.0f), sin(radians * 2.0f), sin(radians * 2.0f),
-  -cos(radians * 2.0f), 0.0f, 0.0f)}
+\tcode{basic_matrix_2d(GraphicsMath::create_reflect(radians))}
 \end{itemdescr}
 
 \indexlibrarymember{init_shear_y}{basic_matrix_2d}%
@@ -207,7 +222,7 @@ static basic_matrix_2d init_shear_x(float factor) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{basic_matrix_2d(1.0f, 0.0f, factor, 1.0f, 0.0f, 0.0f)}.
+\tcode{basic_matrix_2d(GraphicsMath::create_shear_x(factor))}.
 \end{itemdescr}
 
 \indexlibrarymember{init_shear_y}{basic_matrix_2d}%
@@ -217,19 +232,79 @@ static basic_matrix_2d init_shear_y(float factor) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{basic_matrix_2d(1.0f, factor, 0.0f, 1.0f, 0.0f, 0.0f)}
+\tcode{basic_matrix_2d(GraphicsMath::create_shear_y(factor))}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.\matrixtwod.modifiers] {\tcode{basic_matrix_2d} modifiers}
 
-\indexlibrarymember{translate}{basic_matrix_2d}%
+\indexlibrarymember{m00}{basic_matrix_2d}%
 \begin{itemdecl}
-basic_matrix_2d& translate(basic_point_2d<GraphicsMath> val) noexcept;
+void m00(float v) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{*this = *this * init_translate(val);}
+Equivalent to: \tcode{GraphicsMath::m00(data(), v);}
+\end{itemdescr}
+
+\indexlibrarymember{m01}{basic_matrix_2d}%
+\begin{itemdecl}
+void m01(float v) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to: \tcode{GraphicsMath::m01(data(), v);}
+\end{itemdescr}
+
+\indexlibrarymember{m10}{basic_matrix_2d}%
+\begin{itemdecl}
+void m10(float v) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to: \tcode{GraphicsMath::m10(data(), v);}
+\end{itemdescr}
+
+\indexlibrarymember{m11}{basic_matrix_2d}%
+\begin{itemdecl}
+void m11(float v) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to: \tcode{GraphicsMath::m11(data(), v);}
+\end{itemdescr}
+
+\indexlibrarymember{m20}{basic_matrix_2d}%
+\begin{itemdecl}
+void m20(float v) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to: \tcode{GraphicsMath::m20(data(), v);}
+\end{itemdescr}
+
+\indexlibrarymember{m21}{basic_matrix_2d}%
+\begin{itemdecl}
+void m21(float v) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to: \tcode{GraphicsMath::m21(data(), v);}
+\end{itemdescr}
+
+\indexlibrarymember{translate}{basic_matrix_2d}%
+\begin{itemdecl}
+basic_matrix_2d& translate(basic_point_2d<GraphicsMath> v) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to: \tcode{data() = GraphicsMath::translate(data(), v.data());}
 
 \pnum
 \returns
@@ -238,12 +313,12 @@ Equivalent to: \tcode{*this = *this * init_translate(val);}
 
 \indexlibrarymember{scale}{basic_matrix_2d}%
 \begin{itemdecl}
-basic_matrix_2d& scale(basic_point_2d<GraphicsMath> val) noexcept;
+basic_matrix_2d& scale(basic_point_2d<GraphicsMath> v) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{*this = *this * init_scale(val);}
+Equivalent to: \tcode{data() = GraphicsMath::scale(data(), v.data());}
 
 \pnum
 \returns
@@ -257,7 +332,7 @@ basic_matrix_2d& rotate(float radians) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{*this = *this * init_rotate(radians);}
+Equivalent to: \tcode{data() = GraphicsMath::rotate(data(), radians);}
 
 \pnum
 \returns
@@ -271,7 +346,7 @@ basic_matrix_2d& rotate(float radians, basic_point_2d<GraphicsMath> origin) noex
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{*this = *this * init_rotate(radians, origin);}
+Equivalent to: \tcode{data() = GraphicsMath::rotate(data(), radians, origin.data());}
 
 \pnum
 \returns
@@ -285,7 +360,7 @@ basic_matrix_2d& reflect(float radians) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{*this = *this * init_reflect(radians);}
+Equivalent to: \tcode{data() = GraphicsMath::reflect(data(), radians);}
 
 \pnum
 \returns
@@ -299,7 +374,7 @@ basic_matrix_2d& shear_x(float factor) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{*this = *this * init_shear_x(factor);}
+Equivalent to: \tcode{data() = GraphicsMath::shear_x(data(), factor);}
 
 \pnum
 \returns
@@ -313,7 +388,7 @@ basic_matrix_2d& shear_y(float factor) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{*this = *this * init_shear_y(factor);}
+Equivalent to: \tcode{data() = GraphicsMath::shear_y(factor);}
 
 \pnum
 \returns
@@ -322,6 +397,66 @@ Equivalent to: \tcode{*this = *this * init_shear_y(factor);}
 
 \rSec1 [\iotwod.\matrixtwod.observers] {\tcode{basic_matrix_2d} observers}
 
+\indexlibrarymember{m00}{basic_matrix_2d}%
+\begin{itemdecl}
+float m00() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{GraphicsMath::m00(data())}.
+\end{itemdescr}
+
+\indexlibrarymember{m01}{basic_matrix_2d}%
+\begin{itemdecl}
+float m01() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{GraphicsMath::m01(data())}.
+\end{itemdescr}
+
+\indexlibrarymember{m10}{basic_matrix_2d}%
+\begin{itemdecl}
+float m10() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{GraphicsMath::m10(data())}.
+\end{itemdescr}
+
+\indexlibrarymember{m11}{basic_matrix_2d}%
+\begin{itemdecl}
+float m11() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{GraphicsMath::m11(data())}.
+\end{itemdescr}
+
+\indexlibrarymember{m20}{basic_matrix_2d}%
+\begin{itemdecl}
+float m20() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{GraphicsMath::m20(data())}.
+\end{itemdescr}
+
+\indexlibrarymember{m21}{basic_matrix_2d}%
+\begin{itemdecl}
+float m21() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{GraphicsMath::m21(data())}.
+\end{itemdescr}
+
 \indexlibrarymember{is_finite}{basic_matrix_2d}%
 \begin{itemdecl}
 bool is_finite() const noexcept;
@@ -329,23 +464,7 @@ bool is_finite() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{true} if the observable behavior of all of the following expressions evaluates to true:
-\begin{itemize}
-\item \tcode{isfinite(m00);}
-\item \tcode{isfinite(m01);}
-\item \tcode{isfinite(m10);}
-\item \tcode{isfinite(m11);}
-\item \tcode{isfinite(m20);}
-\item \tcode{isfinite(m21);}
-\end{itemize}
-
-\pnum
-Otherwise returns \tcode{false}.
-
-\pnum
-\begin{note}
-The specification of \tcode{isfinite} in \cppseventeen does not include the \tcode{constexpr} specifier. Regardless, the requirements stated in [library.c] and [c.math.fpclass] in \cppseventeen make it possible to implement a constexpr function that produces the observable behavior of \tcode{isfinite}. As a result, this function can be implemented as a constexpr function.
-\end{note}
+\tcode{GraphicsMath::is_finite(data())}.
 \end{itemdescr}
 
 \indexlibrarymember{is_invertible}{basic_matrix_2d}%
@@ -355,11 +474,11 @@ bool is_invertible() const noexcept;
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{is_finite()} is \tcode{true}.
+\tcode{is_finite() == true}.
 
 \pnum
 \returns
-\tcode{determinant() != 0.0f}.
+\tcode{GraphicsMath::is_invertible(data())}.
 \end{itemdescr}
 
 \indexlibrarymember{inverse}{basic_matrix_2d}%
@@ -369,22 +488,11 @@ basic_matrix_2d inverse() const noexcept;
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{is_invertible()} is \tcode{true}.
+\tcode{is_invertible() == true}.
 
 \pnum
 \returns
-Let \tcode{inverseDeterminant} be \tcode{1.0f / determinant()}.
-
-<TODO>\begin{codeblock}
-return basic_matrix_2d{
-   (m11 * 1.0f - 0.0f * m21) * inverseDeterminant,
-  -(m01 * 1.0f - 0.0f * m21) * inverseDeterminant,
-  -(m10 * 1.0f - 0.0f * m20) * inverseDeterminant,
-   (m00 * 1.0f - 0.0f * m20) * inverseDeterminant,
-   (m10 * m21 - m11 * m20) * inverseDeterminant,
-  -(m00 * m21 - m01 * m20) * inverseDeterminant
-};
-\end{codeblock}
+\tcode{basic_matrix_2d(GraphicsMath::inverse(data()))}.
 \end{itemdescr}
 
 \indexlibrarymember{determinant}{basic_matrix_2d}%
@@ -394,11 +502,11 @@ float determinant() const noexcept;
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{is_finite()} is \tcode{true}.
+\tcode{is_finite() == true}.
 
 \pnum
 \returns
-<TODO>\tcode{m00 * m11 - m01 * m10}.
+\tcode{GraphicsMath::determinant(data())}.
 \end{itemdescr}
 
 \indexlibrarymember{transform_pt}{basic_matrix_2d}%
@@ -408,7 +516,7 @@ basic_point_2d<GraphicsMath> transform_pt(basic_point_2d<GraphicsMath> pt) const
 \begin{itemdescr}
 \pnum
 \returns
-<TODO>\tcode{basic_point_2d<GraphicsMath>((m00 * pt.x + m10 * pt.y) + m20, (m01 * pt.x + m11 * pt.y) + m21)}.
+\tcode{basic_point_2d<GraphicsMath>(GraphicsMath::transform_pt(data(), pt.data()))}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.\matrixtwod.member.ops] {\tcode{basic_matrix_2d} member operators}
@@ -420,7 +528,7 @@ basic_matrix_2d& operator*=(const basic_matrix_2d& rhs) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{*this = *this * rhs;}
+Equivalent to: \tcode{data() = GraphicsMath::multiply(data(), rhs.data());}
 
 \pnum
 \returns
@@ -437,16 +545,7 @@ basic_matrix_2d operator*(const basic_matrix_2d& lhs, const basic_matrix_2d& rhs
 \begin{itemdescr}
 \pnum
 \returns
-<TODO>\begin{codeblock}
-basic_matrix_2d{
-  lhs.m00 * rhs.m00 + lhs.m01 * rhs.m10,
-  lhs.m00 * rhs.m01 + lhs.m01 * rhs.m11,
-  lhs.m10 * rhs.m00 + lhs.m11 * rhs.m10,
-  lhs.m10 * rhs.m01 + lhs.m11 * rhs.m11,
-  lhs.m20 * rhs.m00 + lhs.m21 * rhs.m10 + lhs.m20,
-  lhs.m20 * rhs.m01 + lhs.m21 * rhs.m11 + lhs.m21
-}
-\end{codeblock}
+\tcode{basic_matrix_2d(GraphicsMath::multiply(lhs.data(), rhs.data())}.
 \end{itemdescr}
 
 \indexlibrarymember{operator*}{basic_matrix_2d}%
@@ -466,11 +565,7 @@ bool operator==(const basic_matrix_2d& lhs, const basic_matrix_2d& rhs) noexcept
 \begin{itemdescr}
 \pnum
 \returns
-<TODO>\begin{codeblock}
-lhs.m00 == rhs.m00 && lhs.m01 == rhs.m01 && 
-lhs.m10 == rhs.m10 && lhs.m11 == rhs.m11 &&
-lhs.m20 == rhs.m20 && lhs.m21 == rhs.m21
-\end{codeblock}
+\tcode{GraphicsMath::equal(lhs.data(), rhs.data())}.
 \end{itemdescr}
 
 \indexlibrarymember{operator!=}{basic_matrix_2d}%
@@ -480,5 +575,5 @@ bool operator!=(const basic_matrix_2d& lhs, const basic_matrix_2d& rhs) noexcept
 \begin{itemdescr}
 \pnum
 \returns
-Equivalent to: \tcode{!(lhs == rhs)}.
+Equivalent to: \tcode{GraphicsMath::not_equal(lhs.data(), rhs.data())}.
 \end{itemdescr}
