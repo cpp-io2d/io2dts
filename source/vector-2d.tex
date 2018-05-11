@@ -10,6 +10,9 @@ The class template \tcode{basic_point_2d} is used as both a point and as a two-d
 \pnum
 It has an \term{x coordinate} of type \tcode{float} and a \term{y coordinate} of type \tcode{float}.
 
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsMath::point_2d_data_type}. The name of the object is \unspec. It is represented below in the expository \tcode{_Data} variable.
+
 \rSec1 [\iotwod.\pointtwod.synopsis] {\tcode{basic_point_2d} synopsis}
 
 \begin{codeblock}
@@ -17,11 +20,17 @@ namespace std::experimental::io2d::v1 {
   template <class GraphicsMath>
   class basic_point_2d {
   public:
+    using data_type = typename GraphicsMath::point_2d_data_type;
+
     // \ref{\iotwod.\pointtwod.cons}, constructors:
     basic_point_2d() noexcept;
     basic_point_2d(float x, float y) noexcept;
     basic_point_2d(const typename GraphicsMath::point_2d_data_type& data) noexcept;
 
+    // \ref{\iotwod.\pointtwod.accessors}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+    
     // \ref{\iotwod.\pointtwod.modifiers}, modifiers:
     void x(float val) noexcept;
     void y(float val) noexcept;
@@ -93,7 +102,11 @@ basic_point_2d() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to \tcode{basic_point_2d\{ 0.0f, 0.0f \}}.
+Constructs an object of type \tcode{basic_point_2d}.
+
+\postconditions
+\pnum
+\tcode{data() == GraphicsMath::create_point_2d()}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{basic_point_2d}!constructor}%
@@ -101,20 +114,18 @@ Equivalent to \tcode{basic_point_2d\{ 0.0f, 0.0f \}}.
 basic_point_2d(float x, float y) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-\pnum
 \effects
+\pnum
 Constructs an object of type \tcode{basic_point_2d}.
 
+\postconditions
 \pnum
-The x coordinate is \tcode{x}.
-
-\pnum
-The y coordinate is \tcode{y}.
+\tcode{data() == GraphicsMath::create_point_2d(x, y)}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{basic_point_2d}!constructor}%
 \begin{itemdecl}
-basic_point_2d(const typename GraphicsMath::point_2d_data_type& data) noexcept;
+basic_point_2d(const typename GraphicsMath::point_2d_data_type& d) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -122,7 +133,29 @@ basic_point_2d(const typename GraphicsMath::point_2d_data_type& data) noexcept;
 Constructs an object of type \tcode{basic_point_2d}.
 
 \pnum
-<TODO>The coordinates are \tcode{data}.
+\postconditions
+\tcode{data() == d}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.\pointtwod.accessors]{\tcode{basic_point_2d} accessors}
+
+\indexlibrarymember{data}{basic_point_2d}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+Returns a const reference to the data stored within the \tcode{basic_point_2d} object.
+\end{itemdescr}
+
+\begin{itemdecl}
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+Returns a reference to the data stored within the \tcode{basic_point_2d} object.
 \end{itemdescr}
 
 \rSec1 [\iotwod.\pointtwod.modifiers]{\tcode{basic_point_2d} modifiers}
@@ -134,7 +167,7 @@ void x(float val) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-<TODO>
+Equivalent to \tcode{GraphicsMath::x(data(), val);}
 \end{itemdescr}
 
 \indexlibrarymember{y}{basic_point_2d}%
@@ -144,7 +177,7 @@ void y(float val) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-<TODO>
+Equivalent to \tcode{GraphicsMath::y(data(), val);}
 \end{itemdescr}
 
 \rSec1 [\iotwod.\pointtwod.observers]{\tcode{basic_point_2d} observers}
@@ -154,9 +187,7 @@ void y(float val) noexcept;
 float x() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-\pnum
-\returns
-<TODO>
+\pnum \returns \tcode{GraphicsMath::x(data())}.
 \end{itemdescr}
 
 \indexlibrarymember{y}{basic_point_2d}%
@@ -164,9 +195,7 @@ float x() const noexcept;
 float y() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-\pnum
-\returns
-<TODO>
+\pnum \returns \tcode{GraphicsMath::y(data())}.
 \end{itemdescr}
 
 \indexlibrarymember{dot}{basic_point_2d}%
@@ -174,9 +203,7 @@ float y() const noexcept;
 float dot(const basic_point_2d& other) const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-\pnum
-\returns
-<TODO>\tcode{x * other.x + y * other.y}.
+\pnum \returns \tcode{GraphicsMath::dot(data(), other)}.
 \end{itemdescr}
 
 \indexlibrarymember{magnitude}{basic_point_2d}%
@@ -184,9 +211,7 @@ float dot(const basic_point_2d& other) const noexcept;
 float magnitude() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-\pnum
-\returns
-Equivalent to: \tcode{sqrt(dot(*this));}
+\pnum \returns \tcode{GraphicsMath::magnitude(data())}.
 \end{itemdescr}
 
 \indexlibrarymember{magnitude_squared}{basic_point_2d}%
@@ -194,27 +219,15 @@ Equivalent to: \tcode{sqrt(dot(*this));}
 float magnitude_squared() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-\pnum
-\returns
-Equivalent to: \tcode{dot(*this);}
+\pnum \returns \tcode{GraphicsMath::magnitude_square(data())}.
 \end{itemdescr}
 
 \indexlibrarymember{angular_direction}{basic_point_2d}%
 \begin{itemdecl}
-float angular_direction() const noexcept
+float angular_direction() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-\pnum
-\returns
-<TODO>\tcode{atan2(y, x)} if it is greater than or equal to \tcode{0.0f}.
-
-\pnum
-<TODO>Otherwise, \tcode{atan2(y, x) + two_pi<float>}. 
-
-\pnum
-\begin{note}
-The purpose of adding \tcode{two_pi<float>} if the result is negative is to produce values in the range \range{0.0f}{two_pi<float>}.
-\end{note}
+\pnum \returns \tcode{GraphicsMath::angular_direction(data())}.
 \end{itemdescr}
 
 \indexlibrarymember{to_unit}{basic_point_2d}%
@@ -222,9 +235,7 @@ The purpose of adding \tcode{two_pi<float>} if the result is negative is to prod
 basic_point_2d to_unit() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-\pnum
-\returns
-<TODO>\tcode{basic_point_2d\{ x / magnitude(), y / magnitude()\}}.
+\pnum \returns \tcode{GraphicsMath::to_unit(data())}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.\pointtwod.member.ops] {\tcode{basic_point_2d} member operators}
@@ -234,13 +245,9 @@ basic_point_2d to_unit() const noexcept;
 basic_point_2d& operator+=(const basic_point_2d& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-\pnum
-\effects
-\tcode{*this = *this + rhs}.
+\pnum \effects Equivalent to \tcode{data() = GraphicsMath::add(data(), rhs.data());}
 	
-\pnum
-\returns
-\tcode{*this}.
+\pnum \returns \tcode{*this}.
 \end{itemdescr}
 
 \indexlibrarymember{operator-=}{basic_point_2d}%
@@ -248,9 +255,19 @@ basic_point_2d& operator+=(const basic_point_2d& rhs) noexcept;
 basic_point_2d& operator-=(const basic_point_2d& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
+\pnum \effects Equivalent to \tcode{data() = GraphicsMath::subtract(data(), rhs.data());}
+
+\pnum \returns \tcode{*this}.
+\end{itemdescr}
+
+\indexlibrarymember{operator*=}{basic_point_2d}%
+\begin{itemdecl}
+basic_point_2d& operator*=(float rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{*this = *this - rhs;}.
+Equivalent to \tcode{data() = GraphicsMath::multiply(data(), rhs);}
 
 \pnum
 \returns
@@ -259,13 +276,12 @@ Equivalent to: \tcode{*this = *this - rhs;}.
 
 \indexlibrarymember{operator*=}{basic_point_2d}%
 \begin{itemdecl}
-basic_point_2d& operator*=(float rhs) noexcept;
 basic_point_2d& operator*=(const basic_point_2d& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{*this = *this * rhs;}.
+Equivalent to \tcode{data() = GraphicsMath::multiply(data(), rhs.data());}
 
 \pnum
 \returns
@@ -275,12 +291,25 @@ Equivalent to: \tcode{*this = *this * rhs;}.
 \indexlibrarymember{operator/=}{basic_point_2d}%
 \begin{itemdecl}
 basic_point_2d& operator/=(float rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to: \tcode{data() = GraphicsMath::divide(data(), rhs);}
+
+\pnum
+\returns
+\tcode{*this}.
+\end{itemdescr}
+
+\indexlibrarymember{operator/=}{basic_point_2d}%
+\begin{itemdecl}
 basic_point_2d& operator/=(const basic_point_2d& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{*this = *this / rhs;}.
+Equivalent to: \tcode{data() = GraphicsMath::divide(data(), rhs.data());}
 
 \pnum
 \returns
@@ -294,9 +323,7 @@ Equivalent to: \tcode{*this = *this / rhs;}.
 bool operator==(const basic_point_2d& lhs, const basic_point_2d& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-\pnum
-\returns
-<TODO>\tcode{lhs.x == rhs.x \&\& lhs.y == rhs.y}.
+\pnum \returns \tcode{GraphicsMath::equal(lhs.data(), rhs.data())}.
 \end{itemdescr}
 
 \indexlibrarymember{operator!=}{basic_point_2d}%
@@ -304,9 +331,7 @@ bool operator==(const basic_point_2d& lhs, const basic_point_2d& rhs) noexcept;
 bool operator!=(const basic_point_2d& lhs, const basic_point_2d& rhs) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-\pnum
-\returns
-\tcode{!(lhs == rhs)}.
+\pnum \returns \tcode{GraphicsMath::not_equal(lhs.data(), rhs.data())}.
 \end{itemdescr}
 
 \indexlibrarymember{operator+}{basic_point_2d}%
@@ -326,7 +351,7 @@ basic_point_2d operator+(const basic_point_2d& lhs, const basic_point_2d& rhs) n
 \begin{itemdescr}
 \pnum
 \returns
-<TODO>\tcode{basic_point_2d\{ lhs.x + rhs.x, lhs.y + rhs.y \}}.
+\tcode{GraphicsMath::add(lhs.data(), rhs.data())}.
 \end{itemdescr}
 
 \indexlibrarymember{operator-}{basic_point_2d}%
@@ -336,7 +361,7 @@ basic_point_2d operator-(const basic_point_2d& val) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-<TODO>\tcode{basic_point_2d\{ -val.x, -val.y \}}.
+\tcode{GraphicsMath::negate(val.data())}.
 \end{itemdescr}
 
 \indexlibrarymember{operator-}{basic_point_2d}%
@@ -346,7 +371,7 @@ basic_point_2d operator-(const basic_point_2d& lhs, const basic_point_2d& rhs) n
 \begin{itemdescr}
 \pnum
 \returns
-<TODO>\tcode{basic_point_2d\{ lhs.x - rhs.x, lhs.y - rhs.y \}}.
+\tcode{GraphicsMath::subtract(lhs.data(), rhs.data())}.
 \end{itemdescr}
 
 \indexlibrarymember{operator*}{basic_point_2d}%
@@ -356,7 +381,7 @@ basic_point_2d operator*(const basic_point_2d& lhs, const basic_point_2d& rhs) n
 \begin{itemdescr}
 \pnum
 \returns
-<TODO>\tcode{basic_point_2d\{ lhs.x * rhs.x, lhs.y * rhs.y \}}.
+\tcode{GraphicsMath::multiply(lhs.data(), rhs.data())}.
 \end{itemdescr}
 
 \indexlibrarymember{operator*}{basic_point_2d}%
@@ -366,7 +391,7 @@ basic_point_2d operator*(const basic_point_2d& lhs, float rhs) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-<TODO>\tcode{basic_point_2d\{ lhs.x * rhs, lhs.y * rhs \}}.
+\tcode{GraphicsMath::multiply(lhs.data(), rhs)}.
 \end{itemdescr}
 
 \indexlibrarymember{operator*}{basic_point_2d}%
@@ -376,7 +401,7 @@ basic_point_2d operator*(float lhs, const basic_point_2d& rhs) noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-<TODO>\tcode{basic_point_2d\{ lhs * rhs.x, lhs * rhs.y \}}.
+\tcode{GraphicsMath::multiply(lhs, rhs.data())}.
 \end{itemdescr}
 
 \indexlibrarymember{operator/}{basic_point_2d}%
@@ -385,12 +410,11 @@ basic_point_2d operator/(const basic_point_2d& lhs, const basic_point_2d& rhs) n
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\requires
-<TODO>\tcode{rhs.x} is not \tcode{0.0f} and \tcode{rhs.y} is not \tcode{0.0f}.
+\requires \tcode{rhs.x() != 0.0f} and \tcode{rhs.y() != 0.0f}.
 
 \pnum
 \returns
-<TODO>\tcode{basic_point_2d\{ lhs.x / rhs.x, lhs.y / rhs.y \}}.
+\tcode{GraphicsMath::divide(lhs.data(), rhs.data())}.
 \end{itemdescr}
 
 \indexlibrarymember{operator/}{basic_point_2d}%
@@ -400,11 +424,11 @@ basic_point_2d operator/(const basic_point_2d& lhs, float rhs) noexcept;
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{rhs} is not \tcode{0.0f}.
+\tcode{rhs != 0.0f}.
 
 \pnum
 \returns
-<TODO>\tcode{basic_point_2d\{ lhs.x / rhs, lhs.y / rhs \}}.
+\tcode{GraphicsMath::divide(lhs.data(), rhs)}.
 \end{itemdescr}
 
 \indexlibrarymember{operator/}{basic_point_2d}%
@@ -414,9 +438,9 @@ basic_point_2d operator/(float lhs, const basic_point_2d& rhs) noexcept;
 \begin{itemdescr}
 \pnum
 \requires
-<TODO>\tcode{rhs.x} is not \tcode{0.0f} and \tcode{rhs.y} is not \tcode{0.0f}.
+\tcode{rhs.x() != 0.0f} and \tcode{rhs.y() != 0.0f}.
 
 \pnum
 \returns
-<TODO>\tcode{basic_point_2d\{ lhs / rhs.x, lhs / rhs.y \}}.
+\tcode{GraphicsMath::divide(lhs, rhs.data())}.
 \end{itemdescr}

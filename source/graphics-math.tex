@@ -1,0 +1,560 @@
+%!TEX root = io2d.tex
+
+\rSec0 [\iotwod.graphicsmath] {Graphics math}
+
+\rSec1 [\iotwod.graphicsmath.general]{General}
+
+\pnum
+This \clause describes components that are used to describe certain geometric types and to perform certain linear algebra operations. \begin{note}These types are intended for use in 2D graphics input/output operations. They are not meant to provide a full set of linear algebra and are thus limited in the feature set they provide.\end{note}
+
+\pnum
+The following subclauses describe graphics math requirements and components for linear algebra classes and geometry classes, as summarized in Table~\ref{tab:\iotwod.graphicsmath.summary}.
+
+\begin{libsumtab}{Graphics math summary}{tab:\iotwod.graphicsmath.summary}
+\ref{\iotwod.graphicsmath.traits} & \graphicsmathtemplparam traits     &                           \\ \rowsep
+\ref{\iotwod.linearalgebra}              & Linear algebra classes              & \tcode{<\iotwodheader>}         \\ \rowsep
+\ref{\iotwod.geometry}            & Geometry classes           & \tcode{<\iotwodheader>}           \\ \rowsep
+\end{libsumtab}
+
+\rSec1 [\iotwod.graphicsmath.traits]{\graphicsmathtemplparam traits}
+
+\pnum
+This subsection defines requirements on \term{\graphicsmathtemplparam} types.
+
+\pnum
+Most classes specified in \clause{}{s} \ref{\iotwod.linearalgebra} through \ref{\iotwod.surfaces} need a set of related types and functions to complete the definition of their semantics. These types and functions are provided as a set of member \grammarterm{typedef-name}{s} and functions in the template parameter \tcode{\graphicsmathtemplparam} used by each such template. This subclause defines the semantics of these members.
+
+%\pnum
+%The functions of a \graphicssurfacestemplparam class create, modify, and perform operations using these types.
+%
+\rSec1 [\iotwod.graphicsmath.require] {\graphicsmathtemplparam requirements}
+
+\pnum
+In Table~\ref{tab:\iotwod.graphicsmath.graphicsmath.requirements}, \tcode{X} denotes a \tcode{\graphicsmathtemplparam} class, \tcode{B} denotes the type \tcode{X::bounding_box_data_type}, \tcode{C} denotes the type \tcode{X::circle_data_type}, \tcode{D} denotes the type \tcode{X::display_point_data_type}, \tcode{M} denotes the type \tcode{X::matrix_2d_data_type}, and \tcode{P} denotes the type \tcode{X::point_2d_data_type}.%%,
+%%\tcode{b} is a value of type \tcode{B}, \tcode{b2} is a value of type \tcode{B},
+%%\tcode{c} is a value of type \tcode{C}, \tcode{c2} is a value of type \tcode{C},
+%%\tcode{d} is a value of type \tcode{D}, \tcode{d2} is a value of type \tcode{D},
+%%\tcode{m} is a value of type \tcode{M}, \tcode{m2} is a value of type \tcode{M},
+%%\tcode{p} is a value of type \tcode{P}, and \tcode{p2} is a value of type \tcode{P}.
+
+\pnum
+In order to describe the observable effects of functions contained in Table~\ref{tab:\iotwod.graphicsmath.graphicsmath.requirements}, Table~\ref{tab:\iotwod.graphicsmath.typememberdata} describes the types contained in \tcode{X} as-if they possessed certain member data. 
+
+\begin{libreqtab3f}{\graphicsmathtemplparam type member data}{tab:\iotwod.graphicsmath.typememberdata}
+\\ \topline
+\lhdr{Type}		&	\chdr{Member data}	&	\rhdr{Member data type} \\ \capsep
+\endfirsthead
+\topline
+\lhdr{Type}		&	\chdr{Member data}	&	\rhdr{Member data type} \\ \capsep
+\endhead
+%% bounding_box
+\tcode{X::bounding_box_data_type} &
+\tcode{x} &
+\tcode{float} \\ \rowsep
+\tcode{X::bounding_box_data_type} &
+\tcode{y} &
+\tcode{float} \\ \rowsep
+\tcode{X::bounding_box_data_type} &
+\tcode{w} &
+\tcode{float} \\ \rowsep
+\tcode{X::bounding_box_data_type} &
+\tcode{h} &
+\tcode{float} \\ \rowsep
+
+%% circle
+\tcode{X::circle_data_type} &
+\tcode{x} &
+\tcode{float} \\ \rowsep
+\tcode{X::circle_data_type} &
+\tcode{y} &
+\tcode{float} \\ \rowsep
+\tcode{X::circle_data_type} &
+\tcode{r} &
+\tcode{float} \\ \rowsep
+
+%% display_point
+\tcode{X::display_point_data_type} &
+\tcode{x} &
+\tcode{int} \\ \rowsep
+\tcode{X::display_point_data_type} &
+\tcode{y} &
+\tcode{int} \\ \rowsep
+
+%% matrix_2d
+\tcode{X::matrix_2d_data_type} &
+\tcode{m00} &
+\tcode{float} \\ \rowsep
+\tcode{X::matrix_2d_data_type} &
+\tcode{m01} &
+\tcode{float} \\ \rowsep
+\tcode{X::matrix_2d_data_type} &
+\tcode{m02} &
+\tcode{float} \\ \rowsep
+
+\tcode{X::matrix_2d_data_type} &
+\tcode{m10} &
+\tcode{float} \\ \rowsep
+\tcode{X::matrix_2d_data_type} &
+\tcode{m11} &
+\tcode{float} \\ \rowsep
+\tcode{X::matrix_2d_data_type} &
+\tcode{m12} &
+\tcode{float} \\ \rowsep
+\tcode{X::matrix_2d_data_type} &
+\tcode{m20} &
+\tcode{float} \\ \rowsep
+\tcode{X::matrix_2d_data_type} &
+\tcode{m21} &
+\tcode{float} \\ \rowsep
+\tcode{X::matrix_2d_data_type} &
+\tcode{m22} &
+\tcode{float} \\ \rowsep
+
+%% point_2d
+\tcode{X::point_2d_data_type} &
+\tcode{x} &
+\tcode{float} \\ \rowsep
+\tcode{X::point_2d_data_type} &
+\tcode{y} &
+\tcode{float} \\
+\end{libreqtab3f}
+
+\pnum
+All expressions in Table~\ref{tab:\iotwod.graphicsmath.graphicsmath.requirements} are \tcode{noexcept}. For purposes of brevity, \tcode{noexcept} is omitted in the table.
+
+\begin{libreqtab4d}
+{Graphics math requirements}
+{tab:\iotwod.graphicsmath.graphicsmath.requirements}
+\\ \topline
+\lhdr{Expression}       &   \chdr{Return type}  &   \chdr{Operational}  &
+\rhdr{Assertion/note}   \\
+    &   &   \chdr{semantics}    &   \rhdr{pre-/post-condition}   \\ \capsep
+\endfirsthead
+\continuedcaption\\
+\topline
+\lhdr{Expression}       &   \chdr{Return type}  &   \chdr{Operational}  &
+\rhdr{Assertion/note}   \\
+    &   &   \chdr{semantics}    &   \rhdr{pre-/post-condition}   \\ \capsep
+\endhead
+\tcode{X::create_point_2d()}	&
+\tcode{P}	&
+Equivalent to: \tcode{create_point_2d(0.0f, 0.0f);}	&
+	\\ \rowsep
+\tcode{X::create_point_2d(float x, float y)}	&
+\tcode{P}	&
+Returns an object \tcode{p}.	&
+\postconditions{} \tcode{p.x == x} and \tcode{p.y == y}.	\\ \rowsep
+\tcode{X::x(P\& p, float x)}	&
+\tcode{void}	&
+	&
+\postconditions{} \tcode{p.x == x}.	\\ \rowsep
+\tcode{X::y(P\& p, float y)}	&
+\tcode{void}	&
+	&
+\postconditions{} \tcode{p.y == y}.	\\ \rowsep
+\tcode{X::x(const P\& p)}	&
+\tcode{float}	&
+Returns \tcode{p.x}.	&
+	\\ \rowsep
+\tcode{X::y(const P\& p)}	&
+\tcode{float}	&
+Returns \tcode{p.y}.	&
+	\\ \rowsep
+\tcode{X::dot(const P\& p1, const P\& p2)}	&
+\tcode{float}	&
+Returns \tcode{p1.x * p2.x + p1.y * p2.y}.	&
+	\\ \rowsep
+\tcode{X::magnitude(const P\& p)}	&
+\tcode{float}	&
+Returns \tcode{sqrt(p.x * p.x + p.y * p.y)}.	&
+	\\ \rowsep
+\tcode{X::magnitude_squared(const P\& p)}	&
+\tcode{float}	&
+Returns \tcode{p.x * p.x + p.y * p.y}.	&
+	\\ \rowsep
+\tcode{X::angular_direction(const P\& p)}	&
+\tcode{float}	&
+Returns \tcode{atan2(p.y, p.x) < 0.0f ? atan2(p.y, p.x) + two_pi<float> : atan2(p.y, p.x)}.	&
+\remarks The purpose of adding \tcode{two_pi<float>} if the result is negative is to produce values in the range \range{0.0f}{two_pi<float>}	\\ \rowsep
+\tcode{X::to_unit(const P\& p)}	&
+\tcode{P}	&
+Returns an object \tcode{r}.	&
+\postconditions{} \tcode{r.x == p.x / magnitude(p)} and \tcode{r.y == p.y / magnitude(p)}.	\\ \rowsep
+\tcode{X::add(const P\& p1, const P\& p2)}	&
+\tcode{P}	&
+Returns an object \tcode{r}.	&
+\postconditions{} \tcode{r.x == p1.x + p2.x} and \tcode{r.y == p1.y + p2.y}.	\\ \rowsep
+\tcode{X::add(const P\& p, float f)}	&
+\tcode{P}	&
+Returns an object \tcode{r}.	&
+\postconditions{} \tcode{r.x == p.x + f} and \tcode{r.y == p.y + f}.	\\ \rowsep
+\tcode{X::add(float f, const P\& p)}	&
+\tcode{P}	&
+Returns an object \tcode{r}.	&
+\postconditions{} \tcode{r.x == f + p.x} and \tcode{r.y == f + p.y}.	\\ \rowsep
+\tcode{X::subtract(const P\& p1, const P\& p2)}	&
+\tcode{P}	&
+Returns an object \tcode{r}.	&
+\postconditions{} \tcode{r.x == p1.x - p2.x} and \tcode{r.y == p1.y - p2.y}.	\\ \rowsep
+\tcode{X::subtract(const P\& p, float f)}	&
+\tcode{P}	&
+Returns an object \tcode{r}.	&
+\postconditions{} \tcode{r.x == p.x - f} and \tcode{r.y == p.y - f}.	\\ \rowsep
+\tcode{X::subtract(float f, const P\& p)}	&
+\tcode{P}	&
+Returns an object \tcode{r}.	&
+\postconditions{} \tcode{r.x == f - p.x} and \tcode{r.y == f - p.y}.	\\ \rowsep
+\tcode{X::multiply(const P\& p1, const P\& p2)}	&
+\tcode{P}	&
+Returns an object \tcode{r}.	&
+\postconditions{} \tcode{r.x == p1.x * p2.x} and \tcode{r.y == p1.y * p2.y}.	\\ \rowsep
+\tcode{X::multiply(const P\& p, float f)}	&
+\tcode{P}	&
+Returns an object \tcode{r}.	&
+\postconditions{} \tcode{r.x == p.x * f} and \tcode{r.y == p.y * f}.	\\ \rowsep
+\tcode{X::multiply(float f, const P\& p)}	&
+\tcode{P}	&
+Returns an object \tcode{r}.	&
+\postconditions{} \tcode{r.x == f * p.x} and \tcode{r.y == f * p.y}.	\\ \rowsep
+\tcode{X::divide(const P\& p1, const P\& p2)}	&
+\tcode{P}	&
+Returns an object \tcode{r}.	&
+\postconditions{} \tcode{r.x == p1.x / p2.x} and \tcode{r.y == p1.y / p2.y}.	\\ \rowsep
+\tcode{X::divide(const P\& p, float f)}	&
+\tcode{P}	&
+Returns an object \tcode{r}.	&
+\postconditions{} \tcode{r.x == p.x / f} and \tcode{r.y == p.y / f}.	\\ \rowsep
+\tcode{X::divide(float f, const P\& p)}	&
+\tcode{P}	&
+Returns an object \tcode{r}.	&
+\postconditions{} \tcode{r.x == f / p.x} and \tcode{r.y == f / p.y}.	\\ \rowsep
+\tcode{X::equal(const P\& l, const P\& r)}	&
+\tcode{bool}	&
+Returns \tcode{l.x == r.x \&\& l.y == r.y}	&
+	\\ \rowsep
+\tcode{X::not_equal(const P\& l, const P\& r)}	&
+\tcode{bool}	&
+Equivalent to \tcode{return !equal(l, r);}	&
+	\\ \rowsep
+\tcode{X::negate(const P\& p)}	&
+\tcode{P}	&
+Returns	\tcode{r}, where \tcode{r.x == -p.x} and \tcode{r.y == -p.y}	&
+	\\ \rowsep
+%%
+%% matrix_2d
+%%
+\tcode{X::create_matrix_2d()}	&
+\tcode{M}	&
+Equivalent to \tcode{return create_matrix_2d(1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);}	&
+	\\ \rowsep
+\tcode{X::create_matrix_2d(float m00, float m01, float m10, float m11, float m20, float m21)}	&
+\tcode{M}	&
+Returns an object \tcode{m}	&
+\postconditions{} \tcode{m.m00 == m00}, \tcode{m.m01 == m01}, \tcode{m.m02 == 0.0f} \tcode{m.m10 == m10}, \tcode{m.m11 == m11}, \tcode{m.m12 == 0.0f} \tcode{m.m20 == m20}, \tcode{m.m21 == m21}, \tcode{m.m22 == 1.0f}	\\ \rowsep
+\tcode{X::create_translate(const P\& p)}	&
+\tcode{M}	&
+Equivalent to \tcode{return X::create_matrix_2d(1.0f, 0.0f, 0.0f, 1.0f, p.x, p.y);}	&
+	\\ \rowsep
+\tcode{X::create_scale(const P\& p)}	&
+\tcode{M}	&
+Equivalent to \tcode{return X::create_matrix_2d(p.x, 0.0f, 0.0f, p.y, 0.0f, 0.0f);}	&
+	\\ \rowsep
+\tcode{X::create_rotate(float r)}	&
+\tcode{M}	&
+Equivalent to \tcode{return X::create_matrix_2d(cos(r), sin(r), sin(r), -cos(r), 0.0f, 0.0f);}	&
+	\\ \rowsep
+\tcode{X::create_rotate(float r, const P\& p)}	&
+\tcode{M}	&
+Equivalent to \tcode{return multiply(multiply(create_translate(p), create_rotate(r)), create_translate(negate(p)));}	&
+	\\ \rowsep
+\tcode{X::create_reflect(float r)}	&
+\tcode{M}	&
+Equivalent to \tcode{return X::create_matrix_2d(cos(r * 2.0f), sin(r * 2.0f), sin(r * 2.0f), -cos(r * 2.0f), 0.0f, 0.0f;}	&
+	\\ \rowsep
+\tcode{X::create_shear_x(float f)}	&
+\tcode{M}	&
+Equivalent to \tcode{return create_matrix_2d(1.0f, 0.0f, f, 1.0f, 0.0f, 0.0f);}	&
+	\\ \rowsep
+\tcode{X::create_shear_y(float f)}	&
+\tcode{M}	&
+Equivalent to \tcode{return create_matrix_2d(1.0f, f, 0.0f, 1.0f, 0.0f, 0.0f);}	&
+	\\ \rowsep
+\tcode{X::multiply(const M\& l, const M\& r)}	&
+\tcode{M}	&
+Equivalent to \tcode{return create_matrix_2d(%
+l.m00 * r.m00 + l.m01 * r.m10,
+l.m00 * r.m01 + l.m01 * r.m11,
+l.m10 * r.m00 + l.m11 * r.m10,
+l.m10 * r.m01 + l.m11 * r.m11,
+l.m20 * r.m00 + l.m21 * r.m10 + r.m20,
+l.m20 * r.m01 + l.m21 * r.m11 + r.m21
+);}	&
+	\\ \rowsep
+\tcode{X::translate(M\& m, const P\& p)}	&
+\tcode{void}	&
+Equivalent to \tcode{m = multiply(m, create_translate(p));}	&
+	\\ \rowsep
+\tcode{X::scale(M\& m, const P\& p)}	&
+\tcode{void}	&
+Equivalent to \tcode{m = multiply(m, create_scale(p));}	&
+	\\ \rowsep
+\tcode{X::rotate(M\& m, float r)}	&
+\tcode{void}	&
+Equivalent to \tcode{m = multiply(m, create_rotate(r));}	&
+	\\ \rowsep
+\tcode{X::rotate(M\& m, float r, const P\& p)}	&
+\tcode{void}	&
+Equivalent to \tcode{m = multiply(m, create_rotate(r, p));}	&
+	\\ \rowsep
+\tcode{X::reflect(M\& m, float r)}	&
+\tcode{void}	&
+Equivalent to \tcode{m = multiply(m, create_reflect(r));}	&
+	\\ \rowsep
+\tcode{X::shear_x(M\& m, float f)}	&
+\tcode{void}	&
+Equivalent to \tcode{m = multiply(m, create_shear_x(f));}	&
+	\\ \rowsep
+\tcode{X::shear_y(M\& m, float f)}	&
+\tcode{void}	&
+Equivalent to \tcode{m = multiply(m, create_shear_y(f));}	&
+	\\ \rowsep
+\tcode{X::is_finite(const M\& m)}	&
+\tcode{bool}	&
+Equivalent to \tcode{return isfinite(m.m00) \&\& isfinite(m.m01) \&\& isfinite(m.m10) \&\& isfinite(m.m10) \&\& isfinite(m.11) \&\& isfinite(m.20) \&\& isfinite(m.21);}	&
+	\\ \rowsep
+\tcode{X::is_invertible(const M\& m)}	&
+\tcode{bool}	&
+Equivalent to \tcode{return (m.m00 * m.11 - m.m01 * m.10) != 0.0f;}	&
+	\\ \rowsep
+\tcode{X::determinant(const M\& m)}	&
+\tcode{float}	&
+Equivalent to \tcode{return m.m00 * m.11 - m.01 * m.10;}	&
+	\\ \rowsep
+\tcode{X::inverse(const M\& m)}	&
+\tcode{M}	&
+Equivalent to: \tcode{float id = 1.0f / determinant(m);\newline
+return create_matrix_2d((m.m11 * 1.0f - 0.0f * m.m21) * id,
+-(m.m01 * 1.0f - 0.0f * m.m21) * id,
+-(m.m10 * 1.0f - 0.0f * m.m20) * id,
+(m.m00 * 1.0f - 0.0f * m.m20) * id,
+(m.m10 * m.m21 - m.m11 * m.m20) * id,
+-(m.m00 * m.21 - m.m01 * m.m20) * id)}	&
+	\\ \rowsep
+\tcode{X::transform_pt(const M\& m, const P\& p)}	&
+\tcode{P}	&
+\tcode{return create_point_2d(m.m00 * p.x + m10 * p.y + m.m20, m.01 * p.x + m.m11 * p.y + m.21);}	&
+	\\ \rowsep
+\tcode{X::equal(const M\& l, const M\& r)}	&
+\tcode{bool}	&
+Returns \tcode{l.m00 == r.m00 \&\& l.m01 == r.m01 \&\& l.m11 == r.m11 \&\& l.m20 == r.m20 \&\& l.m21 == r.m21}.	&
+	\\ \rowsep
+\tcode{X::not_equal(const M\& l, const M\& r)}	&
+\tcode{bool}	&
+Equivalent to \tcode{return !equal(l, r);}	&
+	\\ \rowsep
+%%
+%% display_point
+%%
+\tcode{create_display_point()}	&
+\tcode{D}	&
+Equivalent to \tcode{return create_display_point(0, 0);}	&
+	\\ \rowsep
+\tcode{create_display_point(int x, int y)}	&
+\tcode{D}	&
+Returns an object \tcode{d}.	&
+\postconditions{} \tcode{d.x == x} and \tcode{d.y == y}.	\\ \rowsep
+\tcode{X::x(D\& d, int x)}	&
+\tcode{void}	&
+	&
+\postconditions{} \tcode{d.x == x}.	\\ \rowsep
+\tcode{X::y(D\& d, int y)}	&
+\tcode{void}	&
+	&
+\postconditions{} \tcode{d.y == y}.	\\ \rowsep
+\tcode{X::x(const D\&d)}	&
+\tcode{int}	&
+Returns \tcode{d.x}.	&
+	\\ \rowsep
+\tcode{X::y(const D\&d)}	&
+\tcode{int}	&
+Returns \tcode{d.y}.	&
+	\\ \rowsep
+\tcode{X::equal(const D\& l, const D\& r)}	&
+\tcode{bool}	&
+Returns \tcode{l.x == r.x \&\& l.y == r.y}.	&
+	\\ \rowsep
+\tcode{X::not_equal(const D\& l, const D\& r)}	&
+\tcode{bool}	&
+Equivalent to \tcode{return !equal(l, r);}	&
+	\\ \rowsep
+%%
+%% bounding_box
+%%
+\tcode{X::create_bounding_box()}	&
+\tcode{B}	&
+Equivalent to \tcode{return create_bounding_box(0.0f, 0.0f, 0.0f, 0.0f);}	&
+	\\ \rowsep
+\tcode{X::create_bounding_box(float x, float y, float w, float h)}	&
+\tcode{B}	&
+Returns an object \tcode{b}.	&
+\postconditions{} \tcode{b.x == x}, \tcode{b.y == y}, \tcode{b.w == w}, and \tcode{b.h == h}.	\\ \rowsep
+\tcode{X::x(B\& b, float x)}	&
+\tcode{void}	&
+	&
+\postconditions{} \tcode{b.x == x}.	\\ \rowsep
+\tcode{X::y(B\& b, float y)}	&
+\tcode{void}	&
+	&
+\postconditions{} \tcode{b.y == y}.	\\ \rowsep
+\tcode{X::width(B\& b, float w)}	&
+\tcode{void}	&
+	&
+\postconditions{} \tcode{b.w == w}.	\\ \rowsep
+\tcode{X::height(B\& b, float h)}	&
+\tcode{void}	&
+	&
+\postconditions{} \tcode{b.h == h}.	\\ \rowsep
+\tcode{X::top_left(B\& b, const P\& p)}	&
+\tcode{void}	&
+	&
+\postconditions{} \tcode{b.x == p.x} and \tcode{b.y == p.y}.	\\ \rowsep
+\tcode{X::bottom_right(B\& b, const P\& p)}	&
+\tcode{void}	&
+	&
+\postconditions{} \tcode{b.w == max(p.x - b.x, 0.0f)} and \tcode{b.h == max(p.y - b.y, 0.0f)}.	\\ \rowsep
+\tcode{X::x(const B\& b)}	&
+\tcode{float}	&
+Returns \tcode{b.x}.	&
+	\\ \rowsep
+\tcode{X::y(const B\& b)}	&
+\tcode{float}	&
+Returns \tcode{b.y}.	&
+	\\ \rowsep
+\tcode{X::width(const B\& b)}	&
+\tcode{float}	&
+Returns \tcode{b.w}.	&
+	\\ \rowsep
+\tcode{X::height(const B\& b)}	&
+\tcode{float}	&
+Returns \tcode{b.h}.	&
+	\\ \rowsep
+\tcode{X::top_left(const B\& b)}	&
+\tcode{P}	&
+Returns an object \tcode{p}.	&
+\postconditions{} \tcode{p.x == b.x} and \tcode{p.y == b.y}.	\\ \rowsep
+\tcode{X::bottom_right(const B\& b)}	&
+\tcode{P}	&
+Returns an object \tcode{p}.	&
+\postconditions{} \tcode{p.x == b.x + b.w} and \tcode{p.y == b.y + b.h}.	\\ \rowsep
+\tcode{X::equal(const B\& l, const B\& r)}	&
+\tcode{bool}	&
+Returns \tcode{l.x == r.x \&\& l.y == r.y \&\& l.w == r.w \&\& l.h == r.h}.	&
+	\\ \rowsep
+\tcode{X::not_equal(const B\& l, const B\& r)}	&
+\tcode{bool}	&
+Equivalent to \tcode{return !equal(l, r);}	&
+	\\ \rowsep
+%%
+%% circle
+%%
+\tcode{X::create_circle()}	&
+\tcode{C}	&
+Equivalent to \tcode{return create_circle(create_point_2d(0.0f, 0.0f), 0.0f);}	&
+	\\ \rowsep
+\tcode{X::create_circle(const P\& p, float r)}	&
+\tcode{C}	&
+Returns an object \tcode{c}.	&
+\requires{} \tcode{r >= 0.0f}.\newline
+\postconditions{} \tcode{c.x == p.x}, \tcode{c.y == p.y}, and \tcode{c.r == r}.	\\ \rowsep
+\tcode{X::center(C\& c, const P\&p)}	&
+\tcode{void}	&
+	&
+\postconditions{} \tcode{c.x == p.x} and \tcode{c.y == p.y}.	\\ \rowsep
+\tcode{X::radius(C\& c, float r)}	&
+\tcode{void}	&
+	&
+\requires{} \tcode{r >= 0.0f}.\newline%
+\postconditions{} \tcode{c.r == r}.	\\ \rowsep
+\tcode{X::center(const C\& c)}	&
+\tcode{P}	&
+Returns an object \tcode{p}.	&
+\postconditions{} \tcode{p.x == c.x} and \tcode{p.y == c.y}.	\\ \rowsep
+\tcode{X::radius(const C\& c)}	&
+\tcode{float}	&
+Returns \tcode{c.r}.	&
+	\\ \rowsep
+\tcode{X::equal(const C\& l, const C\& r)}	&
+\tcode{bool}	&
+Returns \tcode{l.x == r.x \&\& l.y == r.y \&\& l.r == r.r}.	&
+	\\ \rowsep
+\tcode{X::not_equal(const C\& l, const C\& r)}	&
+\tcode{bool}	&
+Equivalent to \tcode{return !equal(l, r);}	&
+	\\ \rowsep
+%%
+%% utility functions
+%%
+\tcode{X::point_for_angle(float a, float m)}	&
+\tcode{P}	&
+Returns \tcode{transform_pt(create_rotate(a), create_point_2d(m, 0.0f))}.	&
+	\\ \rowsep
+\tcode{X::point_for_angle(float a, const P\& r)}	&
+\tcode{P}	&
+Returns \tcode{multiply(transform_pt(create_rotate(a), create_point_2d(1.0f, 0.0f)), r)}.	&
+	\\ \rowsep
+\tcode{X::angle_for_point(const P\& c, const P\& p)}	&
+\tcode{float}	&
+Equivalent to: \tcode{%
+const float co = pi<float> / 180'000.0f;\newline%
+auto a = atan2(-(p.y - c.y), p.x - c.x);\newline%
+if (abs(a) < co || abs(a - two_pi<float>) < co) \{\newline%
+\hspace*{1em}return 0.0f;\newline{}%
+\}\newline{}%
+if (a < 0.0f) \{\newline%
+\hspace*{1em}return \newline%
+\hspace*{2em}a + two_pi<float>;\newline%
+\}\newline%
+return a;}	&
+	\\ \rowsep
+\tcode{X::arc_start(const P\& c, float sa, const P\& r, const M\& m)}	&
+\tcode{P}	&
+Equivalent to: \tcode{%
+auto lm = m;\newline%
+lm.m20 = 0.0f;\newline%
+lm.m21 = 0.0f;\newline%
+return add(c, transform_pt(lm, point_for_angle(sa, r)));%
+}	&
+	\\ \rowsep
+\tcode{X::arc_center(const P\& c, float sa, const P\& r, const M\& m)}	&
+\tcode{P}	&
+Equivalent to: \tcode{%
+auto lm = m;\newline%
+lm.m20 = 0.0f;\newline%
+lm.m21 = 0.0f;\newline%
+auto o = point_for_angle(two_pi<float> - sa, r);
+o.y = -o.y;\newline%
+return subtract(c, transform_pt(lm, o));%
+}	&
+	\\ \rowsep
+\tcode{X::arc_end(const P\& c, float ea, const P\& r, const M\& m)}	&
+\tcode{P}	&
+Equivalent to: \tcode{%
+auto lm = m;\newline%
+lm.m20 = 0.0f;\newline%
+lm.m21 = 0.0f;\newline%
+auto pt = transform_pt(create_rotate(ea), r);\newline%
+pt.y = -pt.y;\newline%
+return add(c, transform_pt(lm, pt));%
+}	&
+	\\
+\end{libreqtab4d}
+
+%\rSec1 [\iotwod.linearalgebra]{Linear algebra}
+%
+%\pnum
+%FIXME
+%
+%\rSec1 [\iotwod.geometry]{Geometry}
+%
+%\pnum
+%FIXME
