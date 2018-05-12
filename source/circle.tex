@@ -10,6 +10,9 @@ The class template \tcode{basic_circle} describes a circle.
 \pnum
 It has a \term{center} of type \tcode{basic_point_2d<GraphicsMath>} and a \term{radius} of type \tcode{float}.
 
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsMath::circle_data_type}. It is accessible using the \tcode{data} member functions.
+
 \rSec1 [\iotwod.circle.synopsis] {\tcode{basic_circle} synopsis}
 
 \begin{codeblock}
@@ -17,10 +20,16 @@ namespace std::experimental::io2d::v1 {
   template <class GraphicsMath>
   class basic_circle {
   public:
+    using data_type = typename GraphicsMath::circle_data_type;
+    
     // \ref{\iotwod.circle.cons}, constructors:
     basic_circle() noexcept;
     basic_circle(const basic_point_2d<GraphicsMath>& ctr, float rad) noexcept;
     basic_circle(const typename GraphicsMath::circle_data_type& val) noexcept;
+
+    // \ref{\iotwod.circle.accessors}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
 
     // \ref{\iotwod.circle.modifiers}, modifiers:
     void center(const basic_point_2d<GraphicsMath>& ctr) noexcept;
@@ -50,7 +59,11 @@ basic_circle() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{basic_circle(\{ 0.0f, 0.0f \}, 0.0f)}.
+Constructs an object of type \tcode{basic_circle}.
+
+\pnum
+\postconditions
+\tcode{data() == GraphicsMath::create_circle()}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{basic_circle}!constructor}%
@@ -66,7 +79,21 @@ basic_circle(const basic_point_2d<GraphicsMath>& ctr, float r) noexcept;
 Constructs an object of type \tcode{basic_circle}.
 
 \pnum
-The center is \tcode{ctr}. The radius is \tcode{r}.
+\postconditions
+\tcode{data() == GraphicsMath::create_circle(ctr, r)}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.circle.accessors]{\tcode{basic_circle} accessors}
+
+\indexlibrarymember{data}{basic_circle}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+A reference to the \tcode{basic_circle} object's data object (See: \ref{\iotwod.circle.intro}).
 \end{itemdescr}
 
 \rSec1 [\iotwod.circle.modifiers]{\tcode{basic_circle} modifiers}
@@ -79,7 +106,7 @@ void center(const basic_point_2d<GraphicsMath>& ctr) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-The center is \tcode{ctr}.
+Equivalent to \tcode{GraphicsMath::center(data(), ctr.data());}
 \end{itemdescr}
 
 \indexlibrarymember{radius}{basic_circle}%
@@ -92,7 +119,7 @@ void radius(float r) noexcept;
 
 \pnum
 \effects
-The radius is \tcode{r}.
+Equivalent to \tcode{GraphicsMath::radius(data(), r);}
 \end{itemdescr}
 
 \rSec1 [\iotwod.circle.observers]{\tcode{basic_circle} observers}
@@ -104,7 +131,7 @@ basic_point_2d<GraphicsMath> center() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-The center.
+\tcode{(basic_point_2d<GraphicsMath>(GraphicsMath::center(data()))}.
 \end{itemdescr}
 
 \indexlibrarymember{radius}{basic_circle}%
@@ -114,7 +141,7 @@ float radius() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-The radius.
+\tcode{GraphicsMath::radius(data())}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.circle.ops] {\tcode{basic_circle} operators}
@@ -127,5 +154,16 @@ bool operator==(const basic_circle<GraphicsMath>& lhs,
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{lhs.center() == rhs.center() \&\& lhs.radius() == rhs.radius();}
+\tcode{GraphicsMath::equal(lhs.data(), rhs.data())}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{basic_circle}%
+\begin{itemdecl}
+bool operator!=(const basic_circle<GraphicsMath>& lhs,
+  const basic_circle<GraphicsMath>& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{GraphicsMath::not_equal(lhs.data(), rhs.data())}.
 \end{itemdescr}
