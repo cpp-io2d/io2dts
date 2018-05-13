@@ -6,7 +6,7 @@
 The class \tcode{basic_path_builder} is a container that stores and manipulates objects of type \tcode{figure_items::figure_item} from which \tcode{interpreted_path} objects are created.
 
 \pnum
-A \tcode{basic_path_builder} is a contiguous container. (See [container.requirements.general] in \cppseventeen.)
+A \tcode{basic_path_builder} is a contiguous container. (See [container.requirements.general] in \CppXVII.)
 
 \pnum
 The collection of \tcode{figure_items::figure_item} objects in a path builder is referred to as its path.
@@ -24,10 +24,10 @@ namespace std::experimental::io2d::v1 {
     using allocator_type         = Allocator;
     using reference              = value_type&;
     using const_reference        = const value_type&;
-    using size_type              = @\impdefx{type of \tcode{basic_path_builder::size_type}}@. // See [container.requirements] in \cppseventeen.
-    using difference_type        = @\impdefx{type of \tcode{basic_path_builder::size_type}}@. // See [container.requirements] in \cppseventeen.
-    using iterator               = @\impdefx{type of \tcode{basic_path_builder::iterator}}@. // See [container.requirements] in \cppseventeen.
-    using const_iterator         = @\impdefx{type of \tcode{basic_path_builder::const_iterator}}@. // See [container.requirements] in \cppseventeen.
+    using size_type              = @\impdefx{type of \tcode{basic_path_builder::size_type}}@. // See [container.requirements] in \CppXVII.
+    using difference_type        = @\impdefx{type of \tcode{basic_path_builder::size_type}}@. // See [container.requirements] in \CppXVII.
+    using iterator               = @\impdefx{type of \tcode{basic_path_builder::iterator}}@. // See [container.requirements] in \CppXVII.
+    using const_iterator         = @\impdefx{type of \tcode{basic_path_builder::const_iterator}}@. // See [container.requirements] in \CppXVII.
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
@@ -156,7 +156,7 @@ namespace std::experimental::io2d::v1 {
 \rSec1 [\iotwod.pathbuilder.containerrequirements] {\tcode{basic_path_builder} container requirements}
 
 \pnum
-This class is a sequence container, as defined in [containers] in \cppseventeen, and all sequence container requirements that apply specifically to \tcode{vector} shall also apply to this class.
+This class is a sequence container, as defined in [containers] in \CppXVII, and all sequence container requirements that apply specifically to \tcode{vector} shall also apply to this class.
 
 \rSec1 [\iotwod.pathbuilder.cons] {\tcode{basic_path_builder} constructors, copy, and assignment}
 
