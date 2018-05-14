@@ -1,5 +1,23 @@
 %!TEX root = io2d.tex
+\addtocounter{chapter}{-1} % Make this Clause 0 instead of 1
 \rSec0[\iotwod.revisionhistory]{Revision history}
+
+\rSec1 [\iotwod.revisionhistory.r8] {Revision 8}
+
+\pnum
+Modified the revision 7 notes (\ref{\iotwod.revisionhistory.r7}) to denote trademarks where applicable, and to use the correct capitalization for the cairo graphics library. The contents of those notes is otherwise unchanged.
+
+\pnum
+Changed the Revision history \clause, to be \clause 0.
+
+\pnum
+Added a new \clause, Graphics math (\ref{\iotwod.graphmath}), which defines the requirements of a type that conforms to the \graphicsmathtemplparam template parameter used by various classes.
+
+\pnum
+Updated the relevant class member functions in this proposal to define their effects to include calls to the appropriate \graphicsmathtemplparam functions. This completes the work, begun in P0267R7, of abstracting the implementation of the linear algebra and geometry classes, thereby allowing users to specify a preferred implementation of the mathematical functionality used in this proposal rather.
+
+\pnum
+Michael G. Kazakov has written an implementation of this proposal using the Core Graphics framework of Cocoa\textregistered, thus providing a native implementation for iOS\textregistered and OS X\textregistered. It is available as part of the reference implementation (See \ref{\iotwod.revisionhistory.r7}).
 
 \rSec1 [\iotwod.revisionhistory.r7] {Revision 7}
 
@@ -7,10 +25,10 @@
 The significant difference between R7 and R6 is the abstraction of the implementation into separate classes. These classes provide math and rendering support. The linear algebra and geometry classes are templated over any appropriate math support class, while the path, brush and surface classes are templated over any appropriate rendering support class.
 
 \pnum
-The reference implementation of this paper provides a software implementation of the math and rendering support classes. This is based on the Cairo library; indeed, so far the reference implementation has been based on Cairo. However, it is now possible to provide an implementation more appropriate to the target platform.
+The reference implementation of this paper provides a software implementation of the math and rendering support classes. This is based on cairo; indeed, so far the reference implementation has been based on cairo. However, it is now possible to provide an implementation more appropriate to the target platform.
 
 \pnum
-For example, a Windows implementation could provide support classes based on DirectX, while a Linux implementation could provide support classes based on OpenGL. In fact, any hardware vendor could provide a support library, targeting a specific implementation and their particular silicon if they wanted to exploit particular features of their hardware.
+For example, a Windows\textregistered implementation could provide support classes based on DirectX\textregistered, while a Linux\textregistered implementation could provide support classes based on OpenGL\textregistered. In fact, any hardware vendor could provide a support library, targeting a specific implementation and their particular silicon if they wanted to exploit particular features of their hardware.
 
 \pnum
 Additionally, the surface classes have been modified: now there are simply managed and unmanaged output surfaces, the latter of which offers developers the opportunity to take finer control of the drawing surface
