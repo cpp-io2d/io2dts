@@ -1,22 +1,22 @@
 %!TEX root = io2d.tex
 
-\rSec0 [\iotwod.graphicsmath] {Graphics math}
+\rSec0 [\iotwod.graphmath] {Graphics math}
 
-\rSec1 [\iotwod.graphicsmath.general]{General}
-
-\pnum
-This \clause describes components that are used to describe certain geometric types and to perform certain linear algebra operations. \begin{note}These types are intended for use in 2D graphics input/output operations. They are not meant to provide a full set of linear algebra and are thus limited in the feature set they provide.\end{note}
+\rSec1 [\iotwod.graphmath.general]{General}
 
 \pnum
-The following subclauses describe graphics math requirements and components for linear algebra classes and geometry classes, as summarized in Table~\ref{tab:\iotwod.graphicsmath.summary}.
+This \clause describes components that are used to describe certain geometric types and to perform certain linear algebra operations. \begin{note}These types are intended for use in 2D graphics input/output operations. They are not meant to provide a full set of linear algebra types and operations.\end{note}
 
-\begin{libsumtab}{Graphics math summary}{tab:\iotwod.graphicsmath.summary}
-\ref{\iotwod.graphicsmath.traits} & \graphicsmathtemplparam traits     &                           \\ \rowsep
+\pnum
+The following subclauses describe graphics math requirements and components for linear algebra classes and geometry classes, as summarized in Table~\ref{tab:\iotwod.graphmath.summary}.
+
+\begin{libsumtab}{Graphics math summary}{tab:\iotwod.graphmath.summary}
+\ref{\iotwod.graphmath.reqs} & \graphicsmathtemplparam traits     &                           \\ \rowsep
 \ref{\iotwod.linearalgebra}              & Linear algebra classes              & \tcode{<\iotwodheader>}         \\ \rowsep
 \ref{\iotwod.geometry}            & Geometry classes           & \tcode{<\iotwodheader>}           \\ \rowsep
 \end{libsumtab}
 
-\rSec1 [\iotwod.graphicsmath.traits]{\graphicsmathtemplparam traits}
+\rSec1 [\iotwod.graphmath.reqs] {Requirements}
 
 \pnum
 This subsection defines requirements on \term{\graphicsmathtemplparam} types.
@@ -24,23 +24,13 @@ This subsection defines requirements on \term{\graphicsmathtemplparam} types.
 \pnum
 Most classes specified in \clause{}{s} \ref{\iotwod.linearalgebra} through \ref{\iotwod.surfaces} need a set of related types and functions to complete the definition of their semantics. These types and functions are provided as a set of member \grammarterm{typedef-name}{s} and functions in the template parameter \tcode{\graphicsmathtemplparam} used by each such template. This subclause defines the semantics of these members.
 
-%\pnum
-%The functions of a \graphicssurfacestemplparam class create, modify, and perform operations using these types.
-%
-\rSec1 [\iotwod.graphicsmath.require] {\graphicsmathtemplparam requirements}
+\pnum
+In Table~\ref{tab:\iotwod.graphmath.requirementstab}, \tcode{X} denotes a \tcode{\graphicsmathtemplparam} class, \tcode{B} denotes the type \tcode{X::bounding_box_data_type}, \tcode{C} denotes the type \tcode{X::circle_data_type}, \tcode{D} denotes the type \tcode{X::display_point_data_type}, \tcode{M} denotes the type \tcode{X::matrix_2d_data_type}, and \tcode{P} denotes the type \tcode{X::point_2d_data_type}.
 
 \pnum
-In Table~\ref{tab:\iotwod.graphicsmath.graphicsmath.requirements}, \tcode{X} denotes a \tcode{\graphicsmathtemplparam} class, \tcode{B} denotes the type \tcode{X::bounding_box_data_type}, \tcode{C} denotes the type \tcode{X::circle_data_type}, \tcode{D} denotes the type \tcode{X::display_point_data_type}, \tcode{M} denotes the type \tcode{X::matrix_2d_data_type}, and \tcode{P} denotes the type \tcode{X::point_2d_data_type}.%%,
-%%\tcode{b} is a value of type \tcode{B}, \tcode{b2} is a value of type \tcode{B},
-%%\tcode{c} is a value of type \tcode{C}, \tcode{c2} is a value of type \tcode{C},
-%%\tcode{d} is a value of type \tcode{D}, \tcode{d2} is a value of type \tcode{D},
-%%\tcode{m} is a value of type \tcode{M}, \tcode{m2} is a value of type \tcode{M},
-%%\tcode{p} is a value of type \tcode{P}, and \tcode{p2} is a value of type \tcode{P}.
+In order to describe the observable effects of functions contained in Table~\ref{tab:\iotwod.graphmath.requirementstab}, Table~\ref{tab:\iotwod.graphmath.typememberdata} describes the types contained in \tcode{X} as-if they possessed certain member data. 
 
-\pnum
-In order to describe the observable effects of functions contained in Table~\ref{tab:\iotwod.graphicsmath.graphicsmath.requirements}, Table~\ref{tab:\iotwod.graphicsmath.typememberdata} describes the types contained in \tcode{X} as-if they possessed certain member data. 
-
-\begin{libreqtab3f}{\graphicsmathtemplparam type member data}{tab:\iotwod.graphicsmath.typememberdata}
+\begin{libreqtab3f}{\graphicsmathtemplparam{} type member data}{tab:\iotwod.graphmath.typememberdata}
 \\ \topline
 \lhdr{Type}		&	\chdr{Member data}	&	\rhdr{Member data type} \\ \capsep
 \endfirsthead
@@ -120,11 +110,11 @@ In order to describe the observable effects of functions contained in Table~\ref
 \end{libreqtab3f}
 
 \pnum
-All expressions in Table~\ref{tab:\iotwod.graphicsmath.graphicsmath.requirements} are \tcode{noexcept}. For purposes of brevity, \tcode{noexcept} is omitted in the table.
+All expressions in Table~\ref{tab:\iotwod.graphmath.requirementstab} are \tcode{noexcept}. For purposes of brevity, \tcode{noexcept} is omitted in the table.
 
 \begin{libreqtab4d}
-{Graphics math requirements}
-{tab:\iotwod.graphicsmath.graphicsmath.requirements}
+{\tcode{\graphicsmathtemplparam} requirements}
+{tab:\iotwod.graphmath.requirementstab}
 \\ \topline
 \lhdr{Expression}       &   \chdr{Return type}  &   \chdr{Operational}  &
 \rhdr{Assertion/note}   \\
@@ -552,13 +542,3 @@ return add(c, transform_pt(lm, pt));%
 }	&
 	\\
 \end{libreqtab4d}
-
-%\rSec1 [\iotwod.linearalgebra]{Linear algebra}
-%
-%\pnum
-%FIXME
-%
-%\rSec1 [\iotwod.geometry]{Geometry}
-%
-%\pnum
-%FIXME
