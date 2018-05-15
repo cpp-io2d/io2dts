@@ -19,10 +19,10 @@ The following subclauses describe graphics math requirements and components for 
 \rSec1 [\iotwod.graphmath.reqs] {Requirements}
 
 \pnum
-This subsection defines requirements on \term{\graphicsmathtemplparam} types.
+This subsection defines requirements on \term{\graphicsmathtemplparamnospace} types.
 
 \pnum
-Most classes specified in \clause{}{s} \ref{\iotwod.linearalgebra} through \ref{\iotwod.surfaces} need a set of related types and functions to complete the definition of their semantics. These types and functions are provided as a set of member \grammarterm{typedef-name}{s} and functions in the template parameter \tcode{\graphicsmathtemplparam} used by each such template. This subclause defines the semantics of these members.
+Most classes specified in \clause{}{s} \ref{\iotwod.linearalgebra} through \ref{\iotwod.surfaces} need a set of related types and functions to complete the definition of their semantics. These types and functions are provided as a set of member \grammarterm{typedef-name}{s} and functions in the template parameter \tcode{\graphicsmathtemplparamnospace} used by each such template. This subclause defines the semantics of these members.
 
 \pnum
 In Table~\ref{tab:\iotwod.graphmath.requirementstab}, \tcode{X} denotes a \tcode{\graphicsmathtemplparam} class, \tcode{B} denotes the type \tcode{X::bounding_box_data_type}, \tcode{C} denotes the type \tcode{X::circle_data_type}, \tcode{D} denotes the type \tcode{X::display_point_data_type}, \tcode{M} denotes the type \tcode{X::matrix_2d_data_type}, and \tcode{P} denotes the type \tcode{X::point_2d_data_type}.
@@ -30,7 +30,7 @@ In Table~\ref{tab:\iotwod.graphmath.requirementstab}, \tcode{X} denotes a \tcode
 \pnum
 In order to describe the observable effects of functions contained in Table~\ref{tab:\iotwod.graphmath.requirementstab}, Table~\ref{tab:\iotwod.graphmath.typememberdata} describes the types contained in \tcode{X} as-if they possessed certain member data. 
 
-\begin{libreqtab3f}{\graphicsmathtemplparam{} type member data}{tab:\iotwod.graphmath.typememberdata}
+\begin{libreqtab3f}{\graphicsmathtemplparam type member data}{tab:\iotwod.graphmath.typememberdata}
 \\ \topline
 \lhdr{Type}		&	\chdr{Member data}	&	\rhdr{Member data type} \\ \capsep
 \endfirsthead
@@ -113,7 +113,7 @@ In order to describe the observable effects of functions contained in Table~\ref
 All expressions in Table~\ref{tab:\iotwod.graphmath.requirementstab} are \tcode{noexcept}. For purposes of brevity, \tcode{noexcept} is omitted in the table.
 
 \begin{libreqtab4d}
-{\tcode{\graphicsmathtemplparam} requirements}
+{\tcode{\graphicsmathtemplparamnospace} requirements}
 {tab:\iotwod.graphmath.requirementstab}
 \\ \topline
 \lhdr{Expression}       &   \chdr{Return type}  &   \chdr{Operational}  &
