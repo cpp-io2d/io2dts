@@ -1,0 +1,32 @@
+%!TEX root = io2d.tex
+
+\rSec2 [\iotwod.graphsurf.reqs.addform]{\tcode{additional_image_file_formats} requirements}
+
+\pnum
+Let \tcode{X} be a \graphicssurfacestemplparam type.
+
+\pnum
+The \tcode{X::additional_image_file_formats} class contains zero or more \tcode{image_file_format} enumerators that represent \impldefplain{additional data formats} additional data formats that the implementation can both construct an \tcode{image_surface} object from using the appropriate constructor and save an \tcode{image_surface} object to using \tcode{image_surface::save}. These are called \term{read/write image format enumerators}.
+
+\pnum
+The values of read/write image format enumerators shall be in the range \crange{10000}{19999}.
+
+\pnum
+The \tcode{X::additional_image_file_formats} class also contains the following nested classes:
+
+\begin{enumerate}
+\item \tcode{read_only}
+\item \tcode{write_only}
+\end{enumerate}
+
+\pnum
+The \tcode{additional_image_file_formats} class contains zero or more \tcode{image_file_format} enumerators that represent \impldefplain{additional read only data formats} additional data formats that the implementation can construct an \tcode{image_surface} object from using the appropriate constructor but cannot save an \tcode{image_surface} object to using \tcode{image_surface::save}. These are called \term{read only image format enumerators}.
+
+\pnum
+The values of read only image format enumerators shall be in the range \crange{20000}{29999}.
+
+\pnum
+The \tcode{additional_image_file_formats::write_only} class contains zero or more \tcode{image_file_format} enumerators that represent \impldefplain{additional write only data formats} additional data formats that the implementation can construct an \tcode{image_surface} object from using the appropriate constructor and save an \tcode{image_surface} object to using \tcode{image_surface::save} but cannot construct an \tcode{image_surface} object from using any constructor. These are called \term{write only image format enumerators}.
+
+\pnum
+The values of write only image format enumerators shall be in the range \crange{30000}{39999}.

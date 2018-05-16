@@ -1,0 +1,32 @@
+%!TEX root = io2d.tex
+
+\rSec2 [\iotwod.graphsurf.reqs.classes] {Classes}
+
+\pnum
+A \graphicssurfacestemplparam type is a class template with one type parameter. The template type argument of an instantiation of a \graphicssurfacestemplparam specialization shall meet the requirements of a \graphicsmathtemplparam type (See: \ref{\iotwod.graphmath}).
+
+\pnum
+A \graphicssurfacestemplparam type contains a \grammarterm{typedef-name} \tcode{graphics_math_type}, which is an identifier for the template argument. It also contains a \grammarterm{typedef-name} \tcode{graphics_surfaces_type}, which is an identifier for the \graphicssurfacestemplparam type.
+
+\pnum
+\begin{example}
+\begin{codeblock}
+template <class GraphMath>
+struct GraphSurf {
+  using graphics_math_type = GraphMath;
+  using graphics_surfaces_type = GraphSurf;
+  // ...
+};
+\end{codeblock}
+\end{example}
+
+\pnum
+A \graphicssurfacestemplparam is required to have the following \tcode{public} nested classes:
+
+\begin{enumerate}
+\item \tcode{additional_image_file_formats}
+\item \tcode{brushes}
+\item \tcode{paths}
+\item \tcode{surface_states}
+\item \tcode{surfaces}
+\end{enumerate}

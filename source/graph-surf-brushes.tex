@@ -1,0 +1,90 @@
+%!TEX root = io2d.tex
+
+\rSec2 [\iotwod.graphsurf.reqs.brushes]{\tcode{brushes} requirements}
+
+\pnum
+Brushes are described in \ref{\iotwod.brushes}.
+
+\pnum
+Let \tcode{X} be a \graphicssurfacestemplparam type.
+
+\pnum
+Let \tcode{M} be \tcode{X::graphics_math_type}.
+
+\pnum
+Table~\ref{tab:\iotwod.graphsurf.brushes.requirementstab} describes the observable effects of a member functions of \tcode{X::brushes}.
+
+\pnum
+\tcode{X::brushes} contains a \grammarterm{typedef-name}, 
+\tcode{brush_data_type}, which is an identifier for a class type capable of
+storing all data required to support a brush of any type described in
+\ref{\iotwod.brushes}. \begin{note}
+The information in \ref{\iotwod.brush.sampling} is particularly important.
+\end{note}
+
+\pnum
+\begin{note}
+Brushes are immutable objects. As such, the contents of the class type for which \tcode{X::brushes::brush_data_type} is an identifier are thus capable of being highly tailored to the \underlyingrendandpresenttechs which are used by \tcode{X}. Indeed, while it is required to report its \tcode{brush_type} by one of the member functions below, it need not even store a variable of that type so long as it can correctly provide it when that member function is called.
+\end{note}
+
+\begin{libreqtab4d}
+{\tcode{X::brushes} requirements}
+{tab:\iotwod.graphsurf.brushes.requirementstab}
+\\ \topline
+\lhdr{Expression}       &   \chdr{Return type}  &   \chdr{Operational}  &
+\rhdr{Assertion/note}   \\
+    &   &   \chdr{semantics}    &   \rhdr{pre-/post-condition}   \\ \capsep
+\endfirsthead
+\continuedcaption\\
+\topline
+\lhdr{Expression}       &   \chdr{Return type}  &   \chdr{Operational}  &
+\rhdr{Assertion/note}   \\
+    &   &   \chdr{semantics}    &   \rhdr{pre-/post-condition}   \\ \capsep
+\endhead
+\tcode{X::brushes::create_brush(const rgba_color\& c)}	&
+\tcode{brush_data_type}	&
+Returns an object \tcode{b}.	&
+\postconditions
+\tcode{b} is a solid color brush,
+its visual data is \tcode{c} (See: \ref{\iotwod.brush.sampling.color}),
+and \tcode{X::brushes::get_brush_type(b) == brush_type::solid_color}.
+\begin{note}
+Solid color does not imply opaque. The color may be translucent or even transparent.
+\end{note}	\\ \rowsep
+\tcode{template <class InputIterator>\newline%
+create_brush(const basic_point_2d<M>\& be, const basic_point_2d<M>\& en, InputIterator first, InputIterator last)}	&
+\tcode{brush_data_type}	&
+Returns an object \tcode{b}.	&
+\postconditions
+\tcode{b} is a linear gradient brush, its begin point is \tcode{be}, its end point is \tcode{en}, its gradient stops are formed using the sequential series of \tcode{gradient_stop} objects beginning at \tcode{first} and ending at \tcode{last - 1} (See \ref{\iotwod.gradients.linear} and \ref{\iotwod.gradients.sampling}),
+and \tcode{X::brushes::get_brush_type(b) == brush_type::linear}.	\\ \rowsep
+\tcode{create_brush(const basic_point_2d<M>\& be, const basic_point_2d<M>\& en, initializer_list<gradient_stop> il)}	&
+\tcode{brush_data_type}	&
+Returns an object \tcode{b}.	&
+\postconditions
+\tcode{b} is a linear gradient brush, its begin point is \tcode{be}, its end point is \tcode{en}, its gradient stops are formed using the sequential series of \tcode{gradient_stop} objects in \tcode{il} (See \ref{\iotwod.gradients.linear} and \ref{\iotwod.gradients.sampling}),
+and \tcode{X::brushes::get_brush_type(b) == brush_type::linear}.	\\ \rowsep
+\tcode{template <class InputIterator>\newline%
+create_brush(const basic_circle<M>\& be, const basic_circle<M>\& en, InputIterator first, InputIterator last)}	&
+\tcode{brush_data_type}	&
+Returns an object \tcode{b}.	&
+\postconditions
+\tcode{b} is a radial gradient brush, its start circle is \tcode{be}, its end circle is \tcode{en}, its gradient stops are formed using the sequential series of \tcode{gradient_stop} objects beginning at \tcode{first} and ending at \tcode{last - 1} (See \ref{\iotwod.gradients.radial} and \ref{\iotwod.gradients.sampling}),
+and \tcode{X::brushes::get_brush_type(b) == brush_type::radial}.	\\ \rowsep
+\tcode{create_brush(const basic_circle<M>\& be, const basic_circle<M>\& en, initializer_list<gradient_stop> il)}	&
+\tcode{brush_data_type}	&
+Returns an object \tcode{b}.	&
+\postconditions
+\tcode{b} is a radial gradient brush, its start circle is \tcode{be}, its end circle is \tcode{en}, its gradient stops are formed using the sequential series of \tcode{gradient_stop} objects in \tcode{il} (See \ref{\iotwod.gradients.radial} and \ref{\iotwod.gradients.sampling}),
+and \tcode{X::brushes::get_brush_type(b) == brush_type::radial}.	\\ \rowsep
+\tcode{create_brush(basic_image_surface<graphics_surfaces_type>\&\& i)}	&
+\tcode{brush_data_type}	&
+Returns an object \tcode{b}.	&
+\postconditions
+\tcode{b} is a surface brush, its visual data is the pixmap from \tcode{i},
+and \tcode{X::brushes::get_brush_type(b) == brush_type::surface}	\\ \rowsep
+\tcode{get_brush_type(const brush_data_type\& data)}	&
+\tcode{brush_type}	&
+Returns the brush type of \tcode{data}.	&
+	\\
+\end{libreqtab4d}
