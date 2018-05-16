@@ -43,7 +43,7 @@ A \graphicssurfacestemplparam is required to have the following \tcode{public} n
 \item \tcode{surfaces}
 \end{enumerate}
 
-\rSec2 [\iotwod.graphsurf.reqs.addform]{\tcode{additional_image_file_formats}}
+\rSec2 [\iotwod.graphsurf.reqs.addform]{\tcode{additional_image_file_formats} requirements}
 
 \pnum
 Let \tcode{X} be a \graphicssurfacestemplparam type.
@@ -74,7 +74,7 @@ The \tcode{additional_image_file_formats::write_only} class contains zero or mor
 \pnum
 The values of write only image format enumerators shall be in the range \crange{30000}{39999}.
 
-\rSec2 [\iotwod.graphsurf.reqs.brushes]{\tcode{brushes} reqs}
+\rSec2 [\iotwod.graphsurf.reqs.brushes]{\tcode{brushes} requirements}
 
 \pnum
 Brushes are described in \ref{\iotwod.brushes}.
@@ -157,20 +157,6 @@ Returns an object \tcode{b}.	&
 \postconditions
 \tcode{b} is a surface brush, its visual data is the pixmap from \tcode{i},
 and \tcode{X::brushes::get_brush_type(b) == brush_type::surface}	\\ \rowsep
-%\tcode{static brush_data_type copy_brush(const brush_data_type& data)}	&
-%\tcode{brush_data_type}	&
-%Returns a copy of \tcode{data}. It is \unspecnorm whether the visual data of the brush is copied.	&
-%	\\ \rowsep
-%\tcode{X::brushes::move_brush(brush_data_type&& data)}	&
-%Returns \tcode{data}.	&
-%\begin{note}
-%This function allows implementations to perform additional work when moving
-%\end{note}	&
-%	\\ \rowsep
-%	&
-%	&
-%	&
-%	\\ \rowsep
 \tcode{get_brush_type(const brush_data_type\& data)}	&
 \tcode{brush_type}	&
 Returns the brush type of \tcode{data}.	&
@@ -178,7 +164,7 @@ Returns the brush type of \tcode{data}.	&
 \end{libreqtab4d}
 
 
-\rSec2 [\iotwod.graphsurf.reqs.paths]{\tcode{paths} reqs}
+\rSec2 [\iotwod.graphsurf.reqs.paths]{\tcode{paths} requirements}
 
 \pnum
 Let \tcode{X} be a \graphicssurfacestemplparam type.
@@ -214,7 +200,7 @@ Let \tcode{X} be a \graphicssurfacestemplparam type.
 %	\\
 %\end{libreqtab4d}
 
-\rSec2 [\iotwod.graphsurf.reqs.surfstate]{\tcode{surface_state_props} reqs}
+\rSec2 [\iotwod.graphsurf.reqs.surfstate]{\tcode{surface_state_props} requirements}
 
 \pnum
 Let \tcode{X} be a \graphicssurfacestemplparam type.
@@ -250,7 +236,7 @@ Let \tcode{X} be a \graphicssurfacestemplparam type.
 %	\\
 %\end{libreqtab4d}
 
-\rSec2 [\iotwod.graphsurf.reqs.surfaces]{\tcode{surfaces} reqs}
+\rSec2 [\iotwod.graphsurf.reqs.surfaces]{\tcode{surfaces} requirements}
 
 \pnum
 Let \tcode{X} be a \graphicssurfacestemplparam type.
