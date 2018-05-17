@@ -22,7 +22,35 @@ The following subclauses describe graphics math requirements and components for 
 This subsection defines requirements on \term{\graphicsmathtemplparamnospace} types.
 
 \pnum
-Most classes specified in \clause{}{s} \ref{\iotwod.linearalgebra} through \ref{\iotwod.surfaces} need a set of related types and functions to complete the definition of their semantics. These types and functions are provided as a set of member \grammarterm{typedef-name}{s} and functions in the template parameter \tcode{\graphicsmathtemplparamnospace} used by each such template. This subclause defines the semantics of these members.
+Most classes specified in \ref{\iotwod.linearalgebra} through \ref{\iotwod.surfaces} need a set of related types and functions to complete the definition of their semantics. These types and functions are provided as a set of member \grammarterm{typedef-name}{s} and functions in the template parameter \tcode{\graphicsmathtemplparamnospace} used by each such template. This subclause defines the semantics of these members.
+
+\pnum
+Let \tcode{X} be a \graphicsmathtemplparam type.
+
+\pnum
+Table~\ref{tab:\iotwod.graphsurf.reqs.paths.typedefnamestab} defines required \grammarterm{typedef-name}{s} in \tcode{X}, which are identifiers for class types capable of storing all data required to support the corresponding class template.
+
+\begin{libreqtab2}{\tcode{X} typedef-names}{tab:\iotwod.graphmath.reqs.typedefnamestab}
+\\ \topline
+\lhdr{\grammarterm{typedef-name}}       &
+\rhdr{Class data}   \\ \capsep
+\endfirsthead
+\continuedcaption\\
+\topline
+\lhdr{\grammarterm{typedef-name}}       &
+\rhdr{Class template}   \\ \capsep
+\endhead
+\tcode{bounding_box_data_type}	&
+\tcode{basic_bounding_box<X>}	\\ \rowsep
+\tcode{circle_data_type}	&
+\tcode{basic_circle<X>}	\\ \rowsep
+\tcode{display_point_data_type}	&
+\tcode{basic_display_point<X>}	\\ \rowsep
+\tcode{matrix_2d_data_type}	&
+\tcode{basic_matrix_2d<X>}	\\ \rowsep
+\tcode{point_2d_data_type}	&
+\tcode{basic_point_2d<X>}	\\
+\end{libreqtab2}
 
 \pnum
 In Table~\ref{tab:\iotwod.graphmath.requirementstab}, \tcode{X} denotes a \tcode{\graphicsmathtemplparam} class, \tcode{B} denotes the type \tcode{X::bounding_box_data_type}, \tcode{C} denotes the type \tcode{X::circle_data_type}, \tcode{D} denotes the type \tcode{X::display_point_data_type}, \tcode{M} denotes the type \tcode{X::matrix_2d_data_type}, and \tcode{P} denotes the type \tcode{X::point_2d_data_type}.
@@ -30,7 +58,7 @@ In Table~\ref{tab:\iotwod.graphmath.requirementstab}, \tcode{X} denotes a \tcode
 \pnum
 In order to describe the observable effects of functions contained in Table~\ref{tab:\iotwod.graphmath.requirementstab}, Table~\ref{tab:\iotwod.graphmath.typememberdata} describes the types contained in \tcode{X} as-if they possessed certain member data. 
 
-\begin{libreqtab3f}{\graphicsmathtemplparam type member data}{tab:\iotwod.graphmath.typememberdata}
+\begin{libiotwodreqtab3f}{\graphicsmathtemplparam type member data}{tab:\iotwod.graphmath.typememberdata}
 \\ \topline
 \lhdr{Type}		&	\chdr{Member data}	&	\rhdr{Member data type} \\ \capsep
 \endfirsthead
@@ -38,76 +66,75 @@ In order to describe the observable effects of functions contained in Table~\ref
 \lhdr{Type}		&	\chdr{Member data}	&	\rhdr{Member data type} \\ \capsep
 \endhead
 %% bounding_box
-\tcode{X::bounding_box_data_type} &
+\tcode{bounding_box_data_type} &
 \tcode{x} &
 \tcode{float} \\ \rowsep
-\tcode{X::bounding_box_data_type} &
+\tcode{bounding_box_data_type} &
 \tcode{y} &
 \tcode{float} \\ \rowsep
-\tcode{X::bounding_box_data_type} &
+\tcode{bounding_box_data_type} &
 \tcode{w} &
 \tcode{float} \\ \rowsep
-\tcode{X::bounding_box_data_type} &
+\tcode{bounding_box_data_type} &
 \tcode{h} &
 \tcode{float} \\ \rowsep
 
 %% circle
-\tcode{X::circle_data_type} &
+\tcode{circle_data_type} &
 \tcode{x} &
 \tcode{float} \\ \rowsep
-\tcode{X::circle_data_type} &
+\tcode{circle_data_type} &
 \tcode{y} &
 \tcode{float} \\ \rowsep
-\tcode{X::circle_data_type} &
+\tcode{circle_data_type} &
 \tcode{r} &
 \tcode{float} \\ \rowsep
 
 %% display_point
-\tcode{X::display_point_data_type} &
+\tcode{display_point_data_type} &
 \tcode{x} &
 \tcode{int} \\ \rowsep
-\tcode{X::display_point_data_type} &
+\tcode{display_point_data_type} &
 \tcode{y} &
 \tcode{int} \\ \rowsep
 
 %% matrix_2d
-\tcode{X::matrix_2d_data_type} &
+\tcode{matrix_2d_data_type} &
 \tcode{m00} &
 \tcode{float} \\ \rowsep
-\tcode{X::matrix_2d_data_type} &
+\tcode{matrix_2d_data_type} &
 \tcode{m01} &
 \tcode{float} \\ \rowsep
-\tcode{X::matrix_2d_data_type} &
+\tcode{matrix_2d_data_type} &
 \tcode{m02} &
 \tcode{float} \\ \rowsep
-
-\tcode{X::matrix_2d_data_type} &
+\tcode{matrix_2d_data_type} &
 \tcode{m10} &
 \tcode{float} \\ \rowsep
-\tcode{X::matrix_2d_data_type} &
+\tcode{matrix_2d_data_type} &
 \tcode{m11} &
 \tcode{float} \\ \rowsep
-\tcode{X::matrix_2d_data_type} &
+\tcode{matrix_2d_data_type} &
 \tcode{m12} &
 \tcode{float} \\ \rowsep
-\tcode{X::matrix_2d_data_type} &
+\tcode{matrix_2d_data_type} &
 \tcode{m20} &
 \tcode{float} \\ \rowsep
-\tcode{X::matrix_2d_data_type} &
+\tcode{matrix_2d_data_type} &
 \tcode{m21} &
 \tcode{float} \\ \rowsep
-\tcode{X::matrix_2d_data_type} &
+\tcode{matrix_2d_data_type} &
 \tcode{m22} &
 \tcode{float} \\ \rowsep
 
 %% point_2d
-\tcode{X::point_2d_data_type} &
+\tcode{point_2d_data_type} &
 \tcode{x} &
 \tcode{float} \\ \rowsep
-\tcode{X::point_2d_data_type} &
+\tcode{point_2d_data_type} &
 \tcode{y} &
 \tcode{float} \\
-\end{libreqtab3f}
+\end{libiotwodreqtab3f}
 
 \pnum
 All expressions in Table~\ref{tab:\iotwod.graphmath.requirementstab} are \tcode{noexcept}. For purposes of brevity, \tcode{noexcept} is omitted in the table.
