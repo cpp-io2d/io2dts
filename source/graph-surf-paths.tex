@@ -65,23 +65,76 @@ An object of type \tcode{basic_interpreted_path<X>} is an immutable object. As s
 \pnum
 In order to describe the observable effects of functions contained in Table~\ref{tab:\iotwod.graphsurf.paths.requirementstab}, Table~\ref{tab:\iotwod.graphsurf.paths.typememberdata} describes the types contained in \tcode{X} as-if they possessed certain member data. 
 
-\begin{libreqtab3f}{\tcode{\graphicssurfacestemplparamnospace::paths} type member data}{tab:\iotwod.graphsurf.paths.typememberdata}
+\pnum
+\begin{note}
+Certain types do not require any member data to describe the observable effects of the functions they are used by and thus do not appear in Table~(\ref{tab:\iotwod.graphsurf.paths.typememberdata}).
+\end{note}
+
+\begin{libiotwodreqtab3f}{\tcode{X::paths} type member data}{tab:\iotwod.graphsurf.paths.typememberdata}
 \\ \topline
 \lhdr{Type}		&	\chdr{Member data}	&	\rhdr{Member data type} \\ \capsep
 \endfirsthead
 \topline
 \lhdr{Type}		&	\chdr{Member data}	&	\rhdr{Member data type} \\ \capsep
 \endhead
-	&
-	&
-	\\ \rowsep
-	&
-	&
-	\\ \rowsep
-	&
-	&
-	\\
-\end{libreqtab3f}
+\tcode{abs_cubic_curve_data_type}	&
+\tcode{cpt1}	&
+\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{abs_cubic_curve_data_type}	&
+\tcode{cpt2}	&
+\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{abs_cubic_curve_data_type}	&
+\tcode{ept}	&
+\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{abs_line_data_type}	&
+\tcode{pt}	&
+\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{abs_matrix_data_type}	&
+\tcode{m}	&
+\tcode{basic_matrix_2d<graphics_math_type>}	\\ \rowsep
+\tcode{abs_new_figure_data_type}	&
+\tcode{pt}	&
+\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{abs_quadratic_curve_data_type}	&
+\tcode{cpt}	&
+\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{abs_quadratic_curve_data_type}	&
+\tcode{ept}	&
+\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{arc_data_type}	&
+\tcode{rad}	&
+\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{arc_data_type}	&
+\tcode{rot}	&
+\tcode{float}	\\ \rowsep
+\tcode{arc_data_type}	&
+\tcode{sa}	&
+\tcode{float}	\\ \rowsep
+\tcode{rel_cubic_curve_data_type}	&
+\tcode{cpt1}	&
+\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{rel_cubic_curve_data_type}	&
+\tcode{cpt2}	&
+\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{rel_cubic_curve_data_type}	&
+\tcode{ept}	&
+\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{rel_line_data_type}	&
+\tcode{pt}	&
+\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{rel_matrix_data_type}	&
+\tcode{m}	&
+\tcode{basic_matrix_2d<graphics_math_type>}	\\ \rowsep
+\tcode{rel_new_figure_data_type}	&
+\tcode{pt}	&
+\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{rel_quadratic_curve_data_type}	&
+\tcode{cpt}	&
+\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{rel_quadratic_curve_data_type}	&
+\tcode{ept}	&
+\tcode{basic_point_2d<graphics_math_type>}	\\
+\end{libiotwodreqtab3f}
 
 \begin{libreqtab4d}
 {\tcode{X::paths} requirements}
