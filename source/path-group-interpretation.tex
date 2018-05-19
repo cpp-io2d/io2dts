@@ -61,7 +61,7 @@ If evaluation of a figure item contained in a \tcode{figure_items::figure_item} 
 \endhead
 
 \tcode{figure_items::abs_new_figure p} &
-Creates a new figure. Sets \tcode{currPt} to \tcode{mtx.transform_pt(\{ 0.0f, 0.0f \}) + p.at()}. Sets \tcode{lnfPt} to \tcode{currPt}. \\ \rowsep
+Creates a new figure. Sets \tcode{currPt} to \tcode{p.at() * mtx}. Sets \tcode{lnfPt} to \tcode{currPt}. \\ \rowsep 
 
 \tcode{figure_items::rel_new_figure p} &
 Let \tcode{mm} equal \tcode{mtx}.  Let \tcode{mm.m20} equal {0.0f}. Let \tcode{mm.m21} equal \tcode{0.0f}. Creates a new figure. Sets \tcode{currPt} to \tcode{currPt + p.at() * mm}. Sets \tcode{lnfPt} to \tcode{currPt}. \\ \rowsep
@@ -73,25 +73,25 @@ Creates a line from \tcode{currPt} to \tcode{lnfPt}. Makes the current figure a 
 Calls \tcode{mtxStk.push(mtx)}. Sets \tcode{mtx} to \tcode{p.matrix()}. \\ \rowsep
 
 \tcode{figure_items::rel_matrix p} &
-Calls \tcode{mtxStk.push(mtx)}. Sets \tcode{mtx} to \tcode{mtx * p.matrix()}. \\ \rowsep
+Calls \tcode{mtxStk.push(mtx)}. Sets \tcode{mtx} to \tcode{p.matrix() * mtx}.	\\ \rowsep
 
 \tcode{figure_items::revert_matrix p} &
 If \tcode{mtxStk.empty()} is \tcode{false}, sets \tcode{mtx} to \tcode{mtxStk.top()} then calls \tcode{mtxStk.pop()}. Otherwise sets \tcode{mtx} to its initial value as specified in Table~\ref{tab:\iotwod.paths.interpretation.state}. \\ \rowsep
 
 \tcode{figure_items::abs_line p} &
-Let \tcode{pt} equal \tcode{mtx.transform_pt(p.to() - currPt) + currPt}. Creates a line from \tcode{currPt} to \tcode{pt}. Sets \tcode{currPt} to \tcode{pt}. \\ \rowsep
+Let \tcode{pt} equal \tcode{p.to() * mtx}. Creates a line from \tcode{currPt} to \tcode{pt}. Sets \tcode{currPt} to \tcode{pt}. \\ \rowsep
 
 \tcode{figure_items::rel_line p} &
 Let \tcode{mm} equal \tcode{mtx}. Let \tcode{mm.m20} equal {0.0f}. Let \tcode{mm.m21} equal \tcode{0.0f}. Let \tcode{pt} equal \tcode{currPt + p.to() * mm}. Creates a line from \tcode{currPt} to \tcode{pt}. Sets \tcode{currPt} to \tcode{pt}. \\ \rowsep
 
 \tcode{figure_items::abs_quadratic_curve p} &
-Let \tcode{cpt} equal \tcode{mtx.transform_pt(p.control_pt() - currPt) + currPt}. Let \tcode{ept} equal \tcode{mtx.transform_pt(p.end_pt() - currPt) + currPt}. Creates a quadratic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt} as the curve's control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
+Let \tcode{cpt} equal \tcode{p.control_pt() * mtx}. Let \tcode{ept} equal \tcode{p.end_pt() * mtx}. Creates a quadratic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt} as the curve's control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
 
 \tcode{figure_items::rel_quadratic_curve p} &
 Let \tcode{mm} equal \tcode{mtx}. Let \tcode{mm.m20} equal {0.0f}. Let \tcode{mm.m21} equal \tcode{0.0f}. Let \tcode{cpt} equal \tcode{currPt + p.control_pt() * mm}. Let \tcode{ept} equal \tcode{currPt + p.control_pt() * mm + p.end_pt() * mm}. Creates a quadratic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt} as the curve's control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
 
 \tcode{figure_items::abs_cubic_curve p} &
-Let \tcode{cpt1} equal \tcode{mtx.transform_pt(p.control_pt1() - currPt) + currPt}. Let \tcode{cpt2} equal \tcode{mtx.transform_pt(p.control_pt2() - currPt) + currPt}. Let \tcode{ept} equal \tcode{mtx.transform_pt(p.end_pt() - currPt) + currPt}. Creates a cubic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt1} as the curve's first control point and \tcode{cpt2} as the curve's second control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
+Let \tcode{cpt1} equal \tcode{p.control_pt1() * mtx}. Let \tcode{cpt2} equal \tcode{p.control_pt2() * mtx}. Let \tcode{ept} equal \tcode{p.end_pt() * mtx}. Creates a cubic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt1} as the curve's first control point and \tcode{cpt2} as the curve's second control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
 
 \tcode{figure_items::rel_cubic_curve p} &
 Let \tcode{mm} equal \tcode{mtx}. Let \tcode{mm.m20} equal {0.0f}. Let \tcode{mm.m21} equal \tcode{0.0f}. Let \tcode{cpt1} equal \tcode{currPt + p.control_pt1() * mm}. Let \tcode{cpt2} equal \tcode{currPt + p.control_pt1() * mm + p.control_pt2() * mm}. Let \tcode{ept} equal \tcode{currPt + p.control_pt1() * mm + p.control_pt2() * mm + p.end_pt() * mm}. Creates a cubic \bezierlocal curve from \tcode{currPt} to \tcode{ept} using \tcode{cpt1} as the curve's first control point and \tcode{cpt2} as the curve's second control point. Sets \tcode{currPt} to \tcode{ept}. \\ \rowsep
