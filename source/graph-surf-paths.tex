@@ -378,19 +378,31 @@ return spt + pt * lmtx;
 \tcode{spt} is the starting point of the arc. \tcode{m} is the transformation matrix being used.
 \end{note}	\\ \rowsep
 %%
-%% 
+%% close_figure
 %%
-\tcode{X::paths::}	&
-\tcode{}	&
-	&
+\tcode{X::paths::create_close_figure()}	&
+\tcode{CF}	&
+\returns
+An object \tcode{cf}.	&
 	\\ \rowsep
 %%
-%% 
+%% interpreted_path
 %%
-\tcode{X::paths::}	&
-\tcode{}	&
-	&
-	\\ \rowsep
+\tcode{X::paths::create_interpreted_path()}	&
+\tcode{IP}	&
+\returns
+An object \tcode{ip}.	&
+\postconditions
+\tcode{ip} has zero figures (See: \ref{\iotwod.paths.interpretation})	\\ \rowsep
+\tcode{template <class ForwardIterator>\newline
+X::paths::create_interpreted_path<ForwardIterator first, ForwardIterator last}	&
+\tcode{IP}	&
+\returns
+An object \tcode{ip}.	&
+\postconditions
+\tcode{ip} contains a zero or more figure items as determined by evaluating the sequence of \tcode{figure_items::figure_item} objects beginning with \tcode{first} and ending with \tcode{last} in the manner described in \ref{\iotwod.paths.interpretation}.\newline
+\remarks
+The internal data of the interpreted path should be in a form that is best suited to take advantage of the \underlyingrendandpresenttechs used by \tcode{X}.	\\ \rowsep
 %%
 %% 
 %%
