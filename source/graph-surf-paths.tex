@@ -341,9 +341,9 @@ An object \tcode{arc}.	&
 	\\ \rowsep
 \tcode{X::paths::start_angle(const ARC\& arc)}	&
 \tcode{float}	&
-	&
 \returns
-\tcode{arc.sa}.	\\ \rowsep
+\tcode{arc.sa}.	&
+	\\ \rowsep
 \tcode{X::paths::center(const ARC\& arc, const P\& spt, const M\& m)}	&
 \tcode{P}	&
 \returns
@@ -356,8 +356,11 @@ auto ctrOffset =\newline
 \hspace*{1em}two_pi<float> - arc.sa,\newline
 \hspace*{1em}arc.rad);\newline
 ctrOffset.y(-ctrOffset.y);\newline
-return spt - ctrOffset * lmtx;}	&
-	\\ \rowsep
+return spt - ctrOffset *\newline
+\hspace*{1em}lmtx;}	&
+\begin{note}
+\tcode{spt} is the starting point of the arc. \tcode{m} is the transformation matrix being used.
+\end{note}	\\ \rowsep
 \tcode{X::paths::end_pt(const ARC\& arc, const P\& spt, const M\& m)}	&
 \tcode{P}	&
 \returns
@@ -368,10 +371,12 @@ lmtx.m21 = 0.0f;\newline
 auto tfrm = M::create_rotate(arc.sa +\newline
 \hspace*{1em}arc.rot);\newline
 auto pt = arc.rad * tfrm;\newline
-pt.y(-pt.y());
+pt.y(-pt.y());\newline
 return spt + pt * lmtx;
 }	&
-	\\ \rowsep
+\begin{note}
+\tcode{spt} is the starting point of the arc. \tcode{m} is the transformation matrix being used.
+\end{note}	\\ \rowsep
 %%
 %% 
 %%
