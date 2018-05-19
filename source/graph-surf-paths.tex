@@ -9,7 +9,7 @@ Paths are described in \ref{\iotwod.paths}.
 Let \tcode{X} be a \graphicssurfacestemplparam type.
 
 \pnum
-Let \tcode{M} be \tcode{X::graphics_math_type}.
+Let \tcode{G} be \tcode{X::graphics_math_type}.
 
 \pnum
 Table~\ref{tab:\iotwod.graphsurf.paths.requirementstab} describes the observable effects of a member functions of \tcode{X::paths}.
@@ -59,8 +59,11 @@ Table~\ref{tab:\iotwod.graphsurf.reqs.paths.typedefnamestab} defines the require
 
 \pnum
 \begin{note}
-An object of type \tcode{basic_interpreted_path<X>} is an immutable object. As such, the contents of the class type for which \tcode{X::paths::interpreted_path_data_type} is an identifier are thus capable of being highly tailored to the \underlyingrendandpresenttechs which are used by \tcode{X}.
+An object of type \tcode{basic_interpreted_path<X>} is an immutable object. As such, the contents of the class type for which \tcode{X::paths::interpreted_path_data_type} is an identifier are able to be highly tailored to the \underlyingrendandpresenttechs which are used by \tcode{X}.
 \end{note}
+
+\pnum
+In Table~\ref{tab:\iotwod.graphsurf.paths.requirementstab}, \tcode{AC} denotes the type \tcode{X::paths::abs_cubic_curve_data_type}, \tcode{AL} denotes the type \tcode{X::paths::abs_line_data_type}, \tcode{AM} denotes the type \tcode{X::paths::abs_matrix_data_type}, \tcode{AN} denotes the type \tcode{X::paths::abs_new_figure_data_type}, \tcode{AQ} denotes the type \tcode{X::paths::abs_quadratic_curve_data_type}, \tcode{ARC} denotes the type \tcode{X::paths::arc_data_type}, \tcode{CF} denotes the type \tcode{X::paths::close_figure_data_type}, \tcode{IP} denotes the type \tcode{X::paths::interpreted_path_data_type}, \tcode{RC} denotes the type \tcode{X::paths::rel_cubic_curve_data_type}, \tcode{RL} denotes the type \tcode{X::paths::rel_line_data_type}, \tcode{RM} denotes the type \tcode{X::paths::rel_matrix_data_type}, \tcode{RN} denotes the type \tcode{X::paths::rel_new_figure_data_type}, \tcode{RQ} denotes the type \tcode{X::paths::rel_quadratic_curve_data_type}, \tcode{RV} denotes the type \tcode{X::paths::revert_matrix_data_type}, \tcode{M} denotes the type \tcode{basic_matrix_2d<X::graphics_math_type}, and \tcode{P} denotes the type \tcode{basic_point_2d<X::graphics_math_type>}.
 
 \pnum
 In order to describe the observable effects of functions contained in Table~\ref{tab:\iotwod.graphsurf.paths.requirementstab}, Table~\ref{tab:\iotwod.graphsurf.paths.typememberdata} describes the types contained in \tcode{X} as-if they possessed certain member data. 
@@ -79,31 +82,31 @@ Certain types do not require any member data to describe the observable effects 
 \endhead
 \tcode{abs_cubic_curve_data_type}	&
 \tcode{cpt1}	&
-\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{basic_point_2d<G>}	\\ \rowsep
 \tcode{abs_cubic_curve_data_type}	&
 \tcode{cpt2}	&
-\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{basic_point_2d<G>}	\\ \rowsep
 \tcode{abs_cubic_curve_data_type}	&
 \tcode{ept}	&
-\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{basic_point_2d<G>}	\\ \rowsep
 \tcode{abs_line_data_type}	&
 \tcode{pt}	&
-\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{basic_point_2d<G>}	\\ \rowsep
 \tcode{abs_matrix_data_type}	&
 \tcode{m}	&
-\tcode{basic_matrix_2d<graphics_math_type>}	\\ \rowsep
+\tcode{basic_matrix_2d<G>}	\\ \rowsep
 \tcode{abs_new_figure_data_type}	&
 \tcode{pt}	&
-\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{basic_point_2d<G>}	\\ \rowsep
 \tcode{abs_quadratic_curve_data_type}	&
 \tcode{cpt}	&
-\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{basic_point_2d<G>}	\\ \rowsep
 \tcode{abs_quadratic_curve_data_type}	&
 \tcode{ept}	&
-\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{basic_point_2d<G>}	\\ \rowsep
 \tcode{arc_data_type}	&
 \tcode{rad}	&
-\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{basic_point_2d<G>}	\\ \rowsep
 \tcode{arc_data_type}	&
 \tcode{rot}	&
 \tcode{float}	\\ \rowsep
@@ -112,28 +115,28 @@ Certain types do not require any member data to describe the observable effects 
 \tcode{float}	\\ \rowsep
 \tcode{rel_cubic_curve_data_type}	&
 \tcode{cpt1}	&
-\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{basic_point_2d<G>}	\\ \rowsep
 \tcode{rel_cubic_curve_data_type}	&
 \tcode{cpt2}	&
-\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{basic_point_2d<G>}	\\ \rowsep
 \tcode{rel_cubic_curve_data_type}	&
 \tcode{ept}	&
-\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{basic_point_2d<G>}	\\ \rowsep
 \tcode{rel_line_data_type}	&
 \tcode{pt}	&
-\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{basic_point_2d<G>}	\\ \rowsep
 \tcode{rel_matrix_data_type}	&
 \tcode{m}	&
-\tcode{basic_matrix_2d<graphics_math_type>}	\\ \rowsep
+\tcode{basic_matrix_2d<G>}	\\ \rowsep
 \tcode{rel_new_figure_data_type}	&
 \tcode{pt}	&
-\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{basic_point_2d<G>}	\\ \rowsep
 \tcode{rel_quadratic_curve_data_type}	&
 \tcode{cpt}	&
-\tcode{basic_point_2d<graphics_math_type>}	\\ \rowsep
+\tcode{basic_point_2d<G>}	\\ \rowsep
 \tcode{rel_quadratic_curve_data_type}	&
 \tcode{ept}	&
-\tcode{basic_point_2d<graphics_math_type>}	\\
+\tcode{basic_point_2d<G>}	\\
 \end{libiotwodreqtab3f}
 
 \begin{libreqtab4d}
@@ -150,16 +153,283 @@ Certain types do not require any member data to describe the observable effects 
 \rhdr{Assertion/note}   \\
     &   &   \chdr{semantics}    &   \rhdr{pre-/post-condition}   \\ \capsep
 \endhead
+%%
+%% abs_cubic_curve
+%%
+\tcode{X::paths::create_abs_cubic_curve()}	&
+\tcode{abs_cubic_curve_data_type}	&
+\effects
+Equivalent to \tcode{return create_abs_cubic_curve(P\{\}, P\{\}, P\{\});}	&
+	\\ \rowsep
+\tcode{X::paths::create_abs_cubic_curve(const P\& cpt1, const P\& cpt2, const P\& ept)}	&
+\tcode{abs_cubic_curve_data_type}	&
+\returns
+An object \tcode{a}.	&
+\postconditions
+\tcode{a.cpt1 == cpt1}, \tcode{a.cpt2 == cpt2}, and \tcode{a.ept == ept}.	\\ \rowsep
+\tcode{X::paths::control_pt1(AC\& a, const P\& pt)}	&
+\tcode{void}	&
 	&
+\postconditions
+\tcode{a.cpt1 == pt}.	\\ \rowsep
+\tcode{X::paths::control_pt2(AC\& a, const P\& pt)}	&
+\tcode{void}	&
 	&
+\postconditions
+\tcode{a.cpt2 == pt}.	\\ \rowsep
+\tcode{X::paths::end_pt(AC\& a, const P\& pt)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{a.ept == pt}.	\\ \rowsep
+\tcode{X::paths::control_pt1(const AC\& a)}	&
+\tcode{P}	&
+\returns
+\tcode{a.cpt1}.	&
+	\\ \rowsep
+\tcode{X::paths::control_pt2(const AC\& a)}	&
+\tcode{P}	&
+\returns
+\tcode{a.cpt2}.	&
+	\\ \rowsep
+\tcode{X::paths::end_pt(const AC\& a)}	&
+\tcode{P}	&
+\returns
+\tcode{a.ept}.	&
+	\\ \rowsep
+%%
+%% abs_line
+%%
+\tcode{X::paths::create_abs_line()}	&
+\tcode{AL}	&
+\effects
+Equivalent to \tcode{return create_abs_line(P{});}	&
+	\\ \rowsep
+\tcode{X::paths::create_abs_line(const P\& p)}	&
+\tcode{AL}	&
+\returns
+An object \tcode{al}.	&
+\postconditions
+\tcode{al.pt == p}.	\\ \rowsep
+\tcode{X::paths::to(AL\& al, const P\& p)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{al.pt == p}.	\\ \rowsep
+\tcode{X::paths::to(const AL\& al)}	&
+\tcode{P}	&
+\returns
+\tcode{al.pt}.	&
+	\\ \rowsep
+%%
+%% abs_matrix
+%%
+\tcode{X::paths::create_abs_matrix()}	&
+\tcode{AM}	&
+Equivalent to \tcode{return create_abs_matrix(M\{\});}	&
+	\\ \rowsep
+\tcode{X::paths::create_abs_matrix(const M\& m)}	&
+\tcode{AM}	&
+\returns
+An object \tcode{am}.	&
+\postconditions
+\tcode{am.m == m}.	\\ \rowsep
+\tcode{X::paths::matrix(AM\& am, const M\& m)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{am.m == m}.	\\ \rowsep
+\tcode{X::paths::matrix(const AM\& am)}	&
+\tcode{M}	&
+\returns
+\tcode{am.m}.	&
+	\\ \rowsep
+%%
+%% abs_new_figure
+%%
+\tcode{X::paths::create_abs_new_figure()}	&
+\tcode{AN}	&
+\effects Equivalent to \tcode{return create_abs_new_figure(P\{\});}	&
+	\\ \rowsep
+\tcode{X::paths::create_abs_new_figure(const P\& p)}	&
+\tcode{AN}	&
+\returns
+An object \tcode{an}.	&
+\postconditions
+\tcode{an.pt == p}.	\\ \rowsep
+\tcode{X::paths::at(AN\& an, const P\& p)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{an.pt == p}.	\\ \rowsep
+\tcode{X::paths::at(const AN\& an)}	&
+\tcode{P}	&
+\returns
+\tcode{an.pt}.	&
+	\\ \rowsep
+%%
+%% abs_quadratic_curve
+%%
+\tcode{X::paths::create_abs_quadratic_curve()}	&
+\tcode{AQ}	&
+Equivalent to \tcode{return create_abs_quadratic_curve(P\{\}, P\{\});}	&
+	\\ \rowsep
+\tcode{X::paths::create_abs_quadratic_curve(const P\& cpt, const P\& ept)}	&
+\tcode{AQ}	&
+\returns
+An object \tcode{aq}.	&
+\postconditions
+\tcode{aq.cpt == cpt} and \tcode{aq.ept == ept}.	\\ \rowsep
+\tcode{X::paths::control_pt(AQ\& aq, const P\& p)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{aq.cpt == p}.	\\ \rowsep
+\tcode{X::paths::end_pt(AQ\& aq, const P\& p)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{aq.ept == p}.	\\ \rowsep
+\tcode{X::paths::control_pt(const AQ\& aq)}	&
+\tcode{P}	&
+\returns
+\tcode{aq.cpt}.	&
+	\\ \rowsep
+\tcode{X::paths::end_pt(const AQ\& aq)}	&
+\tcode{P}	&
+\returns
+\tcode{aq.ept}.	&
+	\\ \rowsep
+%%
+%% arc
+%%
+\tcode{X::paths::create_arc()}	&
+\tcode{ARC}	&
+\effects
+Equivalent to \tcode{return create_arc(P\{\}, 0.0f, 0.0f);}	&
+	\\ \rowsep
+\tcode{X::paths::create_arc(const P\& rad, float rot, float sa)}	&
+\tcode{ARC}	&
+\returns
+An object \tcode{arc}.	&
+\postconditions
+\tcode{arc.rad == rad}, \tcode{arc.rot == rot}, and \tcode{arc.sa == sa}.	\\ \rowsep
+\tcode{X::paths::radius(ARC\& arc, const P\& rad)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{arc.rad == rad}.	\\ \rowsep
+\tcode{X::paths::rotation(ARC\& arc, float rot)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{arc.rot == rot}.	\\ \rowsep
+\tcode{X::paths::start_angle(ARC\& arc, float sa)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{arc.sa == sa}.	\\ \rowsep
+\tcode{X::paths::radius(const ARC\& arc)}	&
+\tcode{P}	&
+\returns
+\tcode{arc.rad}.	&
+	\\ \rowsep
+\tcode{X::paths::rotation(const ARC\& arc)}	&
+\tcode{float}	&
+\returns
+\tcode{arc.rot}.	&
+	\\ \rowsep
+\tcode{X::paths::start_angle(const ARC\& arc)}	&
+\tcode{float}	&
+	&
+\returns
+\tcode{arc.sa}.	\\ \rowsep
+\tcode{X::paths::center(const ARC\& arc, const P\& spt, const M\& m)}	&
+\tcode{P}	&
+\returns
+As-if: \tcode{\newline
+auto lmtx = m;\newline
+lmtx.m20 = 0.0f;\newline
+lmtx.m21 = 0.0f;\newline
+auto ctrOffset =\newline
+\hspace*{1em}point_for_angle<G>(\newline
+\hspace*{1em}two_pi<float> - arc.sa,\newline
+\hspace*{1em}arc.rad);\newline
+ctrOffset.y(-ctrOffset.y);\newline
+return spt - ctrOffset * lmtx;}	&
+	\\ \rowsep
+\tcode{X::paths::end_pt(const ARC\& arc, const P\& spt, const M\& m)}	&
+\tcode{P}	&
+\returns
+As-if: \tcode{\newline
+auto lmtx = m;\newline
+lmtx.m20 = 0.0f;\newline
+lmtx.m21 = 0.0f;\newline
+auto tfrm = M::create_rotate(arc.sa +\newline
+\hspace*{1em}arc.rot);\newline
+auto pt = arc.rad * tfrm;\newline
+pt.y(-pt.y());
+return spt + pt * lmtx;
+}	&
+	\\ \rowsep
+%%
+%% 
+%%
+\tcode{X::paths::}	&
+\tcode{}	&
 	&
 	\\ \rowsep
-	&
-	&
+%%
+%% 
+%%
+\tcode{X::paths::}	&
+\tcode{}	&
 	&
 	\\ \rowsep
+%%
+%% 
+%%
+\tcode{X::paths::}	&
+\tcode{}	&
 	&
+	\\ \rowsep
+%%
+%% 
+%%
+\tcode{X::paths::}	&
+\tcode{}	&
 	&
+	\\ \rowsep
+%%
+%% 
+%%
+\tcode{X::paths::}	&
+\tcode{}	&
+	&
+	\\ \rowsep
+%%
+%% 
+%%
+\tcode{X::paths::}	&
+\tcode{}	&
+	&
+	\\ \rowsep
+%%
+%% 
+%%
+\tcode{X::paths::}	&
+\tcode{}	&
+	&
+	\\ \rowsep
+%%
+%% 
+%%
+\tcode{X::paths::}	&
+\tcode{}	&
+	&
+	\\ \rowsep
+\tcode{X::paths::}	&
+\tcode{}	&
 	&
 	\\
 \end{libreqtab4d}
