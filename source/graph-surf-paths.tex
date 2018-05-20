@@ -157,45 +157,45 @@ Certain types do not require any member data to describe the observable effects 
 %% abs_cubic_curve
 %%
 \tcode{X::paths::create_abs_cubic_curve()}	&
-\tcode{abs_cubic_curve_data_type}	&
+\tcode{AC}	&
 \effects
 Equivalent to \tcode{return create_abs_cubic_curve(P\{\}, P\{\}, P\{\});}	&
 	\\ \rowsep
 \tcode{X::paths::create_abs_cubic_curve(const P\& cpt1, const P\& cpt2, const P\& ept)}	&
 \tcode{abs_cubic_curve_data_type}	&
 \returns
-An object \tcode{a}.	&
+An object \tcode{ac}.	&
 \postconditions
-\tcode{a.cpt1 == cpt1}, \tcode{a.cpt2 == cpt2}, and \tcode{a.ept == ept}.	\\ \rowsep
-\tcode{X::paths::control_pt1(AC\& a, const P\& pt)}	&
+\tcode{ac.cpt1 == cpt1}, \tcode{ac.cpt2 == cpt2}, and \tcode{ac.ept == ept}.	\\ \rowsep
+\tcode{X::paths::control_pt1(AC\& ac, const P\& pt)}	&
 \tcode{void}	&
 	&
 \postconditions
-\tcode{a.cpt1 == pt}.	\\ \rowsep
-\tcode{X::paths::control_pt2(AC\& a, const P\& pt)}	&
+\tcode{ac.cpt1 == pt}.	\\ \rowsep
+\tcode{X::paths::control_pt2(AC\& ac, const P\& pt)}	&
 \tcode{void}	&
 	&
 \postconditions
-\tcode{a.cpt2 == pt}.	\\ \rowsep
-\tcode{X::paths::end_pt(AC\& a, const P\& pt)}	&
+\tcode{ac.cpt2 == pt}.	\\ \rowsep
+\tcode{X::paths::end_pt(AC\& ac, const P\& pt)}	&
 \tcode{void}	&
 	&
 \postconditions
-\tcode{a.ept == pt}.	\\ \rowsep
-\tcode{X::paths::control_pt1(const AC\& a)}	&
+\tcode{ac.ept == pt}.	\\ \rowsep
+\tcode{X::paths::control_pt1(const AC\& ac)}	&
 \tcode{P}	&
 \returns
-\tcode{a.cpt1}.	&
+\tcode{ac.cpt1}.	&
 	\\ \rowsep
-\tcode{X::paths::control_pt2(const AC\& a)}	&
+\tcode{X::paths::control_pt2(const AC\& ac)}	&
 \tcode{P}	&
 \returns
-\tcode{a.cpt2}.	&
+\tcode{ac.cpt2}.	&
 	\\ \rowsep
-\tcode{X::paths::end_pt(const AC\& a)}	&
+\tcode{X::paths::end_pt(const AC\& ac)}	&
 \tcode{P}	&
 \returns
-\tcode{a.ept}.	&
+\tcode{ac.ept}.	&
 	\\ \rowsep
 %%
 %% abs_line
@@ -404,49 +404,158 @@ An object \tcode{ip}.	&
 \remarks
 The internal data of the interpreted path should be in a form that is best suited to take advantage of the \underlyingrendandpresenttechs used by \tcode{X}.	\\ \rowsep
 %%
-%% 
+%% rel_cubic_curve
 %%
-\tcode{X::paths::}	&
-\tcode{}	&
+\tcode{X::paths::create_rel_cubic_curve()}	&
+\tcode{RC}	&
+\effects
+Equivalent to \tcode{return create_rel_cubic_curve(P\{\}, P\{\}, P\{\});}	&
+	\\ \rowsep
+\tcode{X::paths::create_rel_cubic_curve(const P\& cpt1, const P\& cpt2, const P\& ept)}	&
+\tcode{RC}	&
+\returns
+An object \tcode{rc}.	&
+\postconditions
+\tcode{rc.cpt1 == cpt1}, \tcode{rc.cpt2 == cpt2}, and \tcode{rc.ept == ept}.	\\ \rowsep
+\tcode{X::paths::control_pt1(RC\& rc, const P\& pt)}	&
+\tcode{void}	&
 	&
+\postconditions
+\tcode{rc.cpt1 == pt}.	\\ \rowsep
+\tcode{X::paths::control_pt2(RC\& rc, const P\& pt)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{rc.cpt2 == pt}.	\\ \rowsep
+\tcode{X::paths::end_pt(RC\& rc, const P\& pt)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{rc.ept == pt}.	\\ \rowsep
+\tcode{X::paths::control_pt1(const RC\& a)}	&
+\tcode{P}	&
+\returns
+\tcode{rc.cpt1}.	&
+	\\ \rowsep
+\tcode{X::paths::control_pt2(const RC\& rc)}	&
+\tcode{P}	&
+\returns
+\tcode{rc.cpt2}.	&
+	\\ \rowsep
+\tcode{X::paths::end_pt(const RC\& rc)}	&
+\tcode{P}	&
+\returns
+\tcode{rc.ept}.	&
 	\\ \rowsep
 %%
-%% 
+%% rel_line
 %%
-\tcode{X::paths::}	&
-\tcode{}	&
+\tcode{X::paths::create_rel_line()}	&
+\tcode{RL}	&
+\effects
+Equivalent to \tcode{return create_rel_line(P{});}	&
+	\\ \rowsep
+\tcode{X::paths::create_rel_line(const P\& p)}	&
+\tcode{RL}	&
+\returns
+An object \tcode{rl}.	&
+\postconditions
+\tcode{rl.pt == p}.	\\ \rowsep
+\tcode{X::paths::to(RL\& al, const P\& p)}	&
+\tcode{void}	&
 	&
+\postconditions
+\tcode{rl.pt == p}.	\\ \rowsep
+\tcode{X::paths::to(const RL\& rl)}	&
+\tcode{P}	&
+\returns
+\tcode{rl.pt}.	&
 	\\ \rowsep
 %%
-%% 
+%% rel_matrix
 %%
-\tcode{X::paths::}	&
-\tcode{}	&
+\tcode{X::paths::create_rel_matrix()}	&
+\tcode{RM}	&
+Equivalent to \tcode{return create_rel_matrix(M\{\});}	&
+	\\ \rowsep
+\tcode{X::paths::create_rel_matrix(const M\& m)}	&
+\tcode{RM}	&
+\returns
+An object \tcode{rm}.	&
+\postconditions
+\tcode{rm.m == m}.	\\ \rowsep
+\tcode{X::paths::matrix(RM\& am, const M\& m)}	&
+\tcode{void}	&
 	&
+\postconditions
+\tcode{rm.m == m}.	\\ \rowsep
+\tcode{X::paths::matrix(const RM\& rm)}	&
+\tcode{M}	&
+\returns
+\tcode{am.m}.	&
 	\\ \rowsep
 %%
-%% 
+%% rel_new_figure
 %%
-\tcode{X::paths::}	&
-\tcode{}	&
+\tcode{X::paths::create_rel_new_figure()}	&
+\tcode{RN}	&
+\effects Equivalent to \tcode{return create_rel_new_figure(P\{\});}	&
+	\\ \rowsep
+\tcode{X::paths::create_rel_new_figure(const P\& p)}	&
+\tcode{RN}	&
+\returns
+An object \tcode{rn}.	&
+\postconditions
+\tcode{rn.pt == p}.	\\ \rowsep
+\tcode{X::paths::at(RN\& rn, const P\& p)}	&
+\tcode{void}	&
 	&
+\postconditions
+\tcode{rn.pt == p}.	\\ \rowsep
+\tcode{X::paths::at(const RN\& rn)}	&
+\tcode{P}	&
+\returns
+\tcode{rn.pt}.	&
 	\\ \rowsep
 %%
-%% 
+%% rel_quadratic_curve
 %%
-\tcode{X::paths::}	&
-\tcode{}	&
+\tcode{X::paths::create_rel_quadratic_curve()}	&
+\tcode{RQ}	&
+Equivalent to \tcode{return create_rel_quadratic_curve(P\{\}, P\{\});}	&
+	\\ \rowsep
+\tcode{X::paths::create_rel_quadratic_curve(const P\& cpt, const P\& ept)}	&
+\tcode{RQ}	&
+\returns
+An object \tcode{rq}.	&
+\postconditions
+\tcode{rq.cpt == cpt} and \tcode{rq.ept == ept}.	\\ \rowsep
+\tcode{X::paths::control_pt(RQ\& rq, const P\& p)}	&
+\tcode{void}	&
 	&
+\postconditions
+\tcode{rq.cpt == p}.	\\ \rowsep
+\tcode{X::paths::end_pt(RQ\& rq, const P\& p)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{rq.ept == p}.	\\ \rowsep
+\tcode{X::paths::control_pt(const RQ\& rq)}	&
+\tcode{P}	&
+\returns
+\tcode{rq.cpt}.	&
+	\\ \rowsep
+\tcode{X::paths::end_pt(const RQ\& rq)}	&
+\tcode{P}	&
+\returns
+\tcode{rq.ept}.	&
 	\\ \rowsep
 %%
-%% 
+%% revert_matrix
 %%
-\tcode{X::paths::}	&
-\tcode{}	&
-	&
-	\\ \rowsep
-\tcode{X::paths::}	&
-\tcode{}	&
-	&
+\tcode{X::paths::revert_matrix}	&
+\tcode{RV}	&
+\returns
+An object \tcode{rv}.	&
 	\\
 \end{libreqtab4d}
