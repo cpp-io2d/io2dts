@@ -1,0 +1,30 @@
+%!TEX root = io2d
+
+\rSec0 [\iotwod.surfacestate] {Surface state props}
+
+\rSec1 [\iotwod.surfacestate.general] {Overview}
+
+\pnum
+In order to produce effects beyond simply drawing an pixmap or path to a surface, graphics state data is supplied when performing rendering and composing operations (\ref{\iotwod.surface.rendering}) on surfaces.
+
+\pnum
+\term{Surface state} types group together related graphics state data. Objects of those types are then supplied as arguments to the functions that carry out rendering and composing operations on surfaces. \begin{note}This allows surfaces to be stateless, which typically provides significant performance gains on modern graphics acceleration hardware.\end{note}
+
+\pnum
+The \tcode{enum class} types and surface state class templates that define and provide the graphics state data are described below.
+
+\addtocounter{SectionDepthBase}{1}
+\input{antialias}
+\input{fill-rule}
+\input{line-cap}
+\input{line-join}
+\input{compositing-op}
+\input{format}
+\input{scaling}
+\input{render-props}
+\input{brush-props}
+\input{clip-props}
+\input{stroke-props}
+\input{mask-props}
+\input{dashes}
+\addtocounter{SectionDepthBase}{-1}
