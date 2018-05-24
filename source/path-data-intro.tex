@@ -38,6 +38,10 @@ namespace std::experimental::io2d::v1 {
     class rel_line;
     class rel_quadratic_curve;
 
+    using figure_item = variant<abs_cubic_curve, abs_line, abs_matrix,
+      abs_new_figure, abs_quadratic_curve, arc, close_figure, rel_cubic_curve, 
+      rel_line, rel_matrix, rel_new_figure, rel_quadratic_curve, revert_matrix>;
+
     class abs_new_figure {
     public:
       // \ref{\iotwod.absnewfigure.cons}, construct:
