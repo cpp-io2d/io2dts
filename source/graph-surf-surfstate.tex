@@ -3,35 +3,271 @@
 \rSec2 [\iotwod.graphsurf.reqs.surfstate]{\tcode{surface_state_props} requirements}
 
 \pnum
+Surface state data are described in \ref{\iotwod.surfacestate}.
+
+\pnum
 Let \tcode{X} be a \graphicssurfacestemplparam type.
 
 \pnum
-<TODO>
+Let \tcode{G} be \tcode{X::graphics_math_type}.
 
-%\begin{libreqtab4d}
-%{Graphics surfaces requirements}
-%{tab:\iotwod.graphicssurfaces.graphicssurfaces.requirements}
-%\\ \topline
-%\lhdr{Expression}       &   \chdr{Return type}  &   \chdr{Operational}  &
-%\rhdr{Assertion/note}   \\
-%    &   &   \chdr{semantics}    &   \rhdr{pre-/post-condition}   \\ \capsep
-%\endfirsthead
-%\continuedcaption\\
-%\topline
-%\lhdr{Expression}       &   \chdr{Return type}  &   \chdr{Operational}  &
-%\rhdr{Assertion/note}   \\
-%    &   &   \chdr{semantics}    &   \rhdr{pre-/post-condition}   \\ \capsep
-%\endhead
-%	&
-%	&
-%	&
-%	\\ \rowsep
-%	&
-%	&
-%	&
-%	\\ \rowsep
-%	&
-%	&
-%	&
-%	\\
-%\end{libreqtab4d}
+\pnum
+Table~\ref{tab:\iotwod.graphsurf.surfstateprops.requirementstab} describes the observable effects of a member functions of \tcode{X::surface_state_props}.
+
+\pnum
+Table~\ref{tab:\iotwod.graphsurf.surfstateprops.typedefnamestab} defines the required \grammarterm{typedef-name}{s} in \tcode{X::surface_state_props}, which are identifiers for class types capable of storing all data required to support the corresponding class template.
+
+\begin{libreqtab2}{\tcode{X::surface_state_props} typedef-names}{tab:\iotwod.graphsurf.surfstateprops.typedefnamestab}
+\\ \topline
+\lhdr{\grammarterm{typedef-name}}       &
+\rhdr{Class data}   \\ \capsep
+\endfirsthead
+\continuedcaption\\
+\topline
+\lhdr{\grammarterm{typedef-name}}       &
+\rhdr{Class template}   \\ \capsep
+\endhead
+\tcode{render_props_data_type}	&
+\tcode{basic_render_props}	\\ \rowsep
+\tcode{brush_props_data_type}	&
+\tcode{basic_brush_props}	\\ \rowsep
+\tcode{clip_props_data_type}	&
+\tcode{basic_clip_props}	\\ \rowsep
+\tcode{stroke_props_data_type}	&
+\tcode{basic_stroke_props}	\\ \rowsep
+\tcode{mask_props_data_type}	&
+\tcode{basic_mask_props}	\\ \rowsep
+\tcode{basic_dashes}	&
+\tcode{dashes_data_type}	\\
+\end{libreqtab2}
+
+\pnum
+In Table~\ref{tab:\iotwod.graphsurf.surfstateprops.requirementstab}, \tcode{RE} denotes the type \tcode{X::surface_state_props::render_props_data_type}, \tcode{BR} denotes the type \tcode{X::surface_state_props::brush_props_data_type}, \tcode{CL} denotes the type \tcode{X::surface_state_props::clip_props_data_type}, \tcode{ST} denotes the type \tcode{X::surface_state_props::stroke_props_data_type}, \tcode{MA} denotes the type \tcode{X::surface_state_props::mask_props_data_type}, \tcode{DA} denotes the type \tcode{X::surface_state_props::dashes_data_type}, \tcode{BB} denotes the type \tcode{basic_bounding_box<G>}, \tcode{IP} denotes the type \tcode{basic_interpreted_path<X>}, \tcode{FI} denotes the type \tcode{basic_figure_items<X>::figure_item}, \tcode{M} denotes the type \tcode{basic_matrix_2d<G>}, and \tcode{P} denotes the type \tcode{basic_point_2d<G>}.
+
+\pnum
+In order to describe the observable effects of functions contained in Table~\ref{tab:\iotwod.graphsurf.surfstateprops.requirementstab}, Table~\ref{tab:\iotwod.graphsurf.surfstateprops.typememberdata} describes the types contained in \tcode{X} as-if they possessed certain member data. 
+
+\begin{libiotwodreqtab3f}{\tcode{X::surface_state_props} type member data}{tab:\iotwod.graphsurf.surfstateprops.typememberdata}
+\\ \topline
+\lhdr{Type}		&	\chdr{Member data}	&	\rhdr{Member data type} \\ \capsep
+\endfirsthead
+\topline
+\lhdr{Type}		&	\chdr{Member data}	&	\rhdr{Member data type} \\ \capsep
+\endhead
+\tcode{render_props_data_type}	&
+\tcode{a}	&
+\tcode{antialias}	\\ \rowsep
+\tcode{render_props_data_type}	&
+\tcode{m}	&
+\tcode{M}	\\ \rowsep
+\tcode{render_props_data_type}	&
+\tcode{c}	&
+\tcode{compositing_op}	\\ \rowsep
+\tcode{brush_props_data_type}	&
+\tcode{w}	&
+\tcode{wrap_mode}	\\ \rowsep
+\tcode{brush_props_data_type}	&
+\tcode{fi}	&
+\tcode{filter}	\\ \rowsep
+\tcode{brush_props_data_type}	&
+\tcode{fr}	&
+\tcode{fill_rule}	\\ \rowsep
+\tcode{brush_props_data_type}	&
+\tcode{m}	&
+\tcode{M}	\\ \rowsep
+\tcode{clip_props_data_type}	&
+\tcode{optional<IP>}	&
+\tcode{c}	\\ \rowsep
+\tcode{clip_props_data_type}	&
+\tcode{fr}	&
+\tcode{fill_rule}	\\ \rowsep
+\tcode{stroke_props_data_type}	&
+\tcode{lw}	&
+\tcode{float}	\\ \rowsep
+\tcode{stroke_props_data_type}	&
+\tcode{ml}	&
+\tcode{float}	\\ \rowsep
+\tcode{stroke_props_data_type}	&
+\tcode{lc}	&
+\tcode{line_cap}	\\ \rowsep
+\tcode{stroke_props_data_type}	&
+\tcode{lj}	&
+\tcode{line_join}	\\ \rowsep
+\tcode{mask_props_data_type}	&
+\tcode{wm}	&
+\tcode{wrap_mode}	\\ \rowsep
+\tcode{mask_props_data_type}	&
+\tcode{fi}	&
+\tcode{filter}	\\ \rowsep
+\tcode{mask_props_data_type}	&
+\tcode{m}	&
+\tcode{M}	\\ \rowsep
+\tcode{dashes_data_type}	&
+\tcode{o}	&
+\tcode{float}	\\ \rowsep
+\tcode{dashes_data_type}	&
+\tcode{vector<float>}	&
+\tcode{p}	\\
+\end{libiotwodreqtab3f}
+
+\begin{libreqtab4d}
+{\tcode{X::surface_state_props} requirements}
+{tab:\iotwod.graphsurf.surfstateprops.requirementstab}
+\\ \topline
+\lhdr{Expression}       &   \chdr{Return type}  &   \chdr{Operational}  &
+\rhdr{Assertion/note}   \\
+    &   &   \chdr{semantics}    &   \rhdr{pre-/post-condition}   \\ \capsep
+\endfirsthead
+\continuedcaption\\
+\topline
+\lhdr{Expression}       &   \chdr{Return type}  &   \chdr{Operational}  &
+\rhdr{Assertion/note}   \\
+    &   &   \chdr{semantics}    &   \rhdr{pre-/post-condition}   \\ \capsep
+\endhead
+\tcode{X::surface_state_props::create_render_props(antialias a = antialias::good, M m = M\{\}, compositing op c = compositing_op::over)}	&
+\tcode{RE}	&
+\returns
+An object \tcode{r}.	&
+\postconditions
+\tcode{r.a == a}, \tcode{r.m == m}, and \tcode{r.c == c}.	\\ \rowsep
+\tcode{X::surface_state_props::antialiasing(RA\& r, antialias a)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{r.a == a}.	\\ \rowsep
+\tcode{X::surface_state_props::surface_matrix(RA\& r, const M\& m)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{ra.m == m}.	\\ \rowsep
+\tcode{X::surface_state_props::compositing(RA\& r, compositing_op c)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{ra.c == c}.	\\ \rowsep
+\tcode{X::surface_state_props::antialiasing(const RA\& r)}	&
+\tcode{antialias}	&
+\returns
+\tcode{r.a}.	&
+	\\ \rowsep
+\tcode{X::surface_state_props::surface_matrix(const RA\& r)}	&
+\tcode{M}	&
+\returns
+\tcode{r.m}.	&
+	\\ \rowsep
+\tcode{X::surface_state_props::compositing(const RA\& r)}	&
+\tcode{compositing_op}	&
+\returns
+\tcode{r.c}.	&
+	\\ \rowsep
+\tcode{X::surface_state_props::create_brush_props(wrap_mode w = wrap_mode::none, filter fi = filter::good, fill_rule fr = fill_rule::winding, const M\& m = M\{\})}	&
+\tcode{BR}	&
+\returns
+An object \tcode{b}.	&
+\postconditions
+\tcode{b.w == w}, \tcode{b.fi == fi}, \tcode{b.fr == fr}, and \tcode{b.m == m}.	\\ \rowsep
+\tcode{X::surface_state_props::brush_wrap_mode(BR\& b, wrap_mode w)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{b.w == w}.	\\ \rowsep
+\tcode{X::surface_state_props::brush_filter(BR\& b, filter fi)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{b.fi == fi}.	\\ \rowsep
+\tcode{X::surface_state_props::brush_fill_rule(BR\& b, fill_rule fr)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{b.fr == fr}.	\\ \rowsep
+\tcode{X::surface_state_props::brush_matrix(BR\& b, const M\& m)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{b.m == m}.	\\ \rowsep
+\tcode{X::surface_state_props::brush_wrap_mode(const BR\& b)}	&
+\tcode{wrap_mode}	&
+\returns
+\tcode{b.w}.	&
+	\\ \rowsep
+\tcode{X::surface_state_props::brush_filter(const BR\& b)}	&
+\tcode{filter}	&
+\returns
+\tcode{b.fi}.	&
+	\\ \rowsep
+\tcode{X::surface_state_props::brush_fill_rule(const BR\& b)}	&
+\tcode{fill_rule}	&
+\returns
+\tcode{b.fr}.	&
+	\\ \rowsep
+\tcode{X::surface_state_props::brush_matrix(const BR\& b)}	&
+\tcode{M}	&
+\returns
+\tcode{b.m}.	&
+	\\ \rowsep
+\tcode{X::surface_state_props::create_clip_props()}	&
+\tcode{CL}	&
+\returns
+An object \tcode{c}.	&
+\postconditions
+\tcode{c.c == nullopt} and \tcode{c.fr == fill_rule::winding}.	\\ \rowsep
+\tcode{X::surface_state_props::create_clip_props(const BB\& b, fill_rule fr)}	&
+\tcode{CL}	&
+\returns
+An object \tcode{c}.	&
+\postconditions
+\tcode{c.c == clip(c, b)} and \tcode{c.fr == fr}.	\\ \rowsep
+\tcode{%
+template <class Allocator>\newline%
+X::surface_state_props::create_clip_props(const basic_path_builder<X, Allocator>\& pb, fill_rule fr)}	&
+\tcode{CL}	&
+\returns
+An object \tcode{c}.	&
+\postconditions
+\tcode{c.c == IP(pb)} and \tcode{c.fr == fr}.	\\ \rowsep
+\tcode{%
+template <class InputIterator>\newline%
+X::surface_state_props::create_clip_props(InputIterator first, InputIterator last, fill_rule fr)}	&
+\tcode{CL}	&
+\returns
+An object \tcode{c}.	&
+\postconditions
+\tcode{c.c == IP(first, last)} and \tcode{c.fr == fr}.	\\ \rowsep
+\tcode{X::surface_state_props::create_clip_props(initializer_list<FI> il, fill_rule fr)}	&
+\tcode{CL}	&
+\returns
+An object \tcode{c}.	&
+\postconditions
+\tcode{c.c == IP(il)} and \tcode{c.fr == fr}.	\\ \rowsep
+\tcode{X::surface_state_props::create_clip_props(const IP\& ip, fill_rule fr)}	&
+\tcode{CL}	&
+\returns
+An object \tcode{c}.	&
+\postconditions
+\tcode{c.c == ip} and \tcode{c.fr == fr}.	\\ \rowsep
+\tcode{X::surface_state_props::}	&
+	&
+	&
+	\\ \rowsep
+\tcode{X::surface_state_props::}	&
+	&
+	&
+	\\ \rowsep
+\tcode{X::surface_state_props::}	&
+	&
+	&
+	\\ \rowsep
+\tcode{X::surface_state_props::}	&
+	&
+	&
+	\\ \rowsep
+\tcode{X::surface_state_props::}	&
+	&
+	&
+	\\ \rowsep
+\tcode{X::surface_state_props::}	&
+	&
+	&
+	\\
+\end{libreqtab4d}
