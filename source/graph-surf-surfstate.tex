@@ -106,8 +106,8 @@ In order to describe the observable effects of functions contained in Table~\ref
 \tcode{o}	&
 \tcode{float}	\\ \rowsep
 \tcode{dashes_data_type}	&
-\tcode{vector<float>}	&
-\tcode{p}	\\
+\tcode{p}	&
+\tcode{vector<float>}	\\
 \end{libiotwodreqtab3f}
 
 \begin{libreqtab4d}
@@ -124,6 +124,9 @@ In order to describe the observable effects of functions contained in Table~\ref
 \rhdr{Assertion/note}   \\
     &   &   \chdr{semantics}    &   \rhdr{pre-/post-condition}   \\ \capsep
 \endhead
+%
+% render props
+%
 \tcode{X::surface_state_props::create_render_props(antialias a = antialias::good, M m = M\{\}, compositing op c = compositing_op::over)}	&
 \tcode{RE}	&
 \returns
@@ -160,6 +163,9 @@ An object \tcode{r}.	&
 \returns
 \tcode{r.c}.	&
 	\\ \rowsep
+%
+% brush props
+%
 \tcode{X::surface_state_props::create_brush_props(wrap_mode w = wrap_mode::none, filter fi = filter::good, fill_rule fr = fill_rule::winding, const M\& m = M\{\})}	&
 \tcode{BR}	&
 \returns
@@ -206,6 +212,9 @@ An object \tcode{b}.	&
 \returns
 \tcode{b.m}.	&
 	\\ \rowsep
+%
+% clip props
+%
 \tcode{X::surface_state_props::create_clip_props()}	&
 \tcode{CL}	&
 \returns
@@ -246,28 +255,171 @@ An object \tcode{c}.	&
 An object \tcode{c}.	&
 \postconditions
 \tcode{c.c == ip} and \tcode{c.fr == fr}.	\\ \rowsep
-\tcode{X::surface_state_props::}	&
+\tcode{X::surface_state_props::clip(CL\& c, nullopt_t)}	&
+\tcode{void}	&
 	&
+\postconditions
+\tcode{c.c == nullopt}.	\\ \rowsep
+\tcode{X::surface_state_props::clip(CL\& c, const BB\& b)}	&
+\tcode{void}	&
 	&
+\postconditions
+\tcode{c.c == IP(b)}.	\\ \rowsep
+\tcode{%
+template <class Allocator>\newline%
+X::surface_state_props::clip(CL\& c, const basic_path_builder<X, Allocator>\& pb)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{c.c == IP(pb)}.	\\ \rowsep
+\tcode{%
+template <class InputIterator>\newline%
+X::surface_state_props::clip(CL\& c, InputIterator first, InputIterator last)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{c.c == IP(first, last)}.	\\ \rowsep
+\tcode{X::surface_state_props::clip(CL\& c, initializer_list<FI> il)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{c.c == IP(il)}.	\\ \rowsep
+\tcode{X::surface_state_props::clip(CL\& c, const IP\& ip)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{c.c == ip}.	\\ \rowsep
+\tcode{X::surface_state_props::clip_fill_rule(CL\&c, fill_rule fr)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{c.fr == fr}.	\\ \rowsep
+\tcode{X::surface_state_props::clip(const CL\& c)}	&
+\tcode{IP}	&
+\returns
+\tcode{c.c}.	&
 	\\ \rowsep
-\tcode{X::surface_state_props::}	&
-	&
-	&
+\tcode{X::surface_state_props::clip_fill_rule(const CL\& c)}	&
+\tcode{fill_rule}	&
+\returns
+\tcode{c.fr}.	&
 	\\ \rowsep
-\tcode{X::surface_state_props::}	&
+%
+% stroke props
+%
+\tcode{X::surface_state_props::create_stroke_props(float lw = 2.0f, line_cap lc = line_cap::none, line_join lj = line_join::miter, float ml = 10.0f)}	&
+\tcode{ST}	&
+\returns
+An object \tcode{s}.	&
+\requires
+\tcode{lw >= 0.0f}, \tcode{ml >= 1.0f}, and \tcode{ml <= max_miter_limit()}.
+\postconditions
+\tcode{s.lw == lw}, \tcode{s.lc == lc}, \tcode{s.lj == lj}, and \tcode{s.ml == ml}.	\\ \rowsep
+\tcode{X::surface_state_props::line_width(ST\& s, float lw)}	&
+\tcode{void}	&
 	&
+\postconditions
+\tcode{s.lw == lw}.	\\ \rowsep
+\tcode{X::surface_state_props::stroke_line_cap(ST\& s, line_cap lc)}	&
+\tcode{void}	&
 	&
+\postconditions
+\tcode{s.lc == lc}.	\\ \rowsep
+\tcode{X::surface_state_props::stroke_line_join(ST\& s, line_join lj)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{s.lj == lj}.	\\ \rowsep
+\tcode{X::surface_state_props::miter_limit(ST\& s, float ml)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{s.ml == ml}.	\\ \rowsep
+\tcode{X::surface_state_props::line_width(const ST\& s)}	&
+\tcode{float}	&
+\returns
+\tcode{s.lw}.	&
 	\\ \rowsep
-\tcode{X::surface_state_props::}	&
-	&
-	&
+\tcode{X::surface_state_props::stroke_line_cap(const ST\& s)}	&
+\tcode{line_cap}	&
+\returns
+\tcode{s.lc}.	&
 	\\ \rowsep
-\tcode{X::surface_state_props::}	&
-	&
-	&
+\tcode{X::surface_state_props::stroke_line_join(const ST\& s)}	&
+\tcode{line_join}	&
+\returns
+\tcode{s.lj}.	&
 	\\ \rowsep
-\tcode{X::surface_state_props::}	&
+\tcode{X::surface_state_props::miter_limit(const ST\& s)}	&
+\tcode{float}	&
+\returns
+\tcode{s.ml}.	&
+	\\ \rowsep
+\tcode{X::surface_state_props::max_miter_limit()}	&
+\tcode{float}	&
+\returns
+An \impldefplain{max miter limit} maximum value for \tcode{ST::ml}.	&
+	\\ \rowsep
+%
+% mask props
+%
+\tcode{X::surface_state_props::create_mask_props(wrap_mode wm == wrap_mode::none, filter fi == filter::good, const M\& m == M\{\})}	&
+\tcode{MA}	&
+\returns
+An object \tcode{ma}.	&
+\postconditions
+\tcode{ma.wm == wm}, \tcode{ma.fi == fi}, and \tcode{ma.m == m}.	\\ \rowsep
+\tcode{X::surface_state_props::mask_wrap_mode(MA\& ma, wrap_mode wm)}	&
+\tcode{void}	&
 	&
+\postconditions
+\tcode{ma.wm == wm}.	\\ \rowsep
+\tcode{X::surface_state_props::mask_filter(MA\& ma, filter fi)}	&
+\tcode{void}	&
 	&
-	\\
+\postconditions
+\tcode{ma.fi == fi}.	\\ \rowsep
+\tcode{X::surface_state_props::mask_matrix(MA\& ma, const M\& m)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{ma.m == m}.	\\ \rowsep
+\tcode{X::surface_state_props::mask_wrap_mode(const MA\& ma)}	&
+\tcode{wrap_mode}	&
+\returns
+\tcode{ma.wm}.	&
+	\\ \rowsep
+\tcode{X::surface_state_props::mask_filter(const MA\& ma)}	&
+\tcode{filter}	&
+\returns
+\tcode{ma.fi}.	&
+	\\ \rowsep
+\tcode{X::surface_state_props::mask_matrix(const MA\& ma)}	&
+\tcode{M}	&
+\returns
+\tcode{ma.m}.	&
+	\\ \rowsep
+%
+% dashes
+%
+\tcode{X::surface_state_props::create_dashes()}	&
+\tcode{DA}	&
+\returns
+An object \tcode{d}.	&
+\postconditions
+\tcode{d.o == 0.0f} and \tcode{d.p == vector<float>\{\}}.	\\ \rowsep
+\tcode{%
+template <class InputIterator>\newline%
+X::surface_state_props::create_dashes(float o, InputIterator first, InputIterator last)}	&
+\tcode{DA}	&
+\returns
+An object \tcode{d}.	&
+\postconditions
+\tcode{d.o == o} and \tcode{d.p == vector<float>(first, last)}.	\\ \rowsep
+\tcode{X::surface_state_props::create_dashes(float o, initializer_list<float> il)}	&
+\tcode{DA}	&
+\returns
+An object \tcode{d}.	&
+\postconditions
+\tcode{d.o == o} and \tcode{d.p == vector<float>(il)}.	\\
 \end{libreqtab4d}
