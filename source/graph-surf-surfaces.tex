@@ -6,34 +6,137 @@
 Let \tcode{X} be a \graphicssurfacestemplparam type.
 
 \pnum
-<TODO>
+Let \tcode{G} be a \graphicsmathtemplparam type.
 
-%All expressions in Table~\ref{tab:\iotwod.graphicssurfaces.graphicssurfaces.requirements} are \tcode{noexcept}. For purposes of brevity, \tcode{noexcept} is omitted in the table.
-%
-%\begin{libreqtab4d}
-%{Graphics surfaces requirements}
-%{tab:\iotwod.graphicssurfaces.graphicssurfaces.requirements}
-%\\ \topline
-%\lhdr{Expression}       &   \chdr{Return type}  &   \chdr{Operational}  &
-%\rhdr{Assertion/note}   \\
-%    &   &   \chdr{semantics}    &   \rhdr{pre-/post-condition}   \\ \capsep
-%\endfirsthead
-%\continuedcaption\\
-%\topline
-%\lhdr{Expression}       &   \chdr{Return type}  &   \chdr{Operational}  &
-%\rhdr{Assertion/note}   \\
-%    &   &   \chdr{semantics}    &   \rhdr{pre-/post-condition}   \\ \capsep
-%\endhead
-%	&
-%	&
-%	&
-%	\\ \rowsep
-%	&
-%	&
-%	&
-%	\\ \rowsep
-%	&
-%	&
-%	&
-%	\\
-%\end{libreqtab4d}
+\pnum
+Let \tcode{IR} be a pixmap.% of \unspec type.
+
+\pnum
+Let \tcode{OR} be an output surface of \unspec type.
+
+\pnum
+Let \tcode{UR} be an unmanaged output <TODO> ??? \underlyingrendandpresenttechs
+
+\pnum
+Table~\ref{tab:\iotwod.graphsurf.surfs.requirementstab} describes the observable effects of the member functions of \tcode{X::surfaces}.
+
+\pnum
+Table~\ref{tab:\iotwod.graphsurf.surfs.typedefnamestab} defines the required \grammarterm{typedef-name}{s} in \tcode{X::surfaces}, which are identifiers for class types capable of storing all data required to support the corresponding class template.
+
+\begin{libreqtab2}{\tcode{X::surfaces} typedef-names}{tab:\iotwod.graphsurf.surfs.typedefnamestab}
+\\ \topline
+\lhdr{\grammarterm{typedef-name}}       &
+\rhdr{Class data}   \\ \capsep
+\endfirsthead
+\continuedcaption\\
+\topline
+\lhdr{\grammarterm{typedef-name}}       &
+\rhdr{Class template}   \\ \capsep
+\endhead
+\tcode{image_surface_data_type}	&
+\tcode{basic_image_surface}	\\ \rowsep
+\tcode{output_surface_data_type}	&
+\tcode{basic_output_surface}	\\ \rowsep
+\tcode{unmanaged_output_surface_data_type}	&
+\tcode{basic_unmanaged_output_surface}	\\
+\end{libreqtab2}
+
+\pnum
+In Table~\ref{tab:\iotwod.graphsurf.surfs.requirementstab}, \tcode{IM} denotes the type \tcode{X::surfaces::image_surface_data_type}, \tcode{OU} denotes the type \tcode{X::surfaces::output_surface_data_type}, \tcode{UN} denotes the type \tcode{X::surfaces::unmanaged_output_data_type},
+\tcode{BB} denotes the type \tcode{basic_bounding_box<G>}, \tcode{IP} denotes the type \tcode{basic_interpreted_path<X>}, \tcode{FI} denotes the type \tcode{basic_figure_items<X>::figure_item}, \tcode{M} denotes the type \tcode{basic_matrix_2d<G>}, and \tcode{P} denotes the type \tcode{basic_point_2d<G>}.
+
+\pnum
+In order to describe the observable effects of functions contained in Table~\ref{tab:\iotwod.graphsurf.surfs.requirementstab}, Table~\ref{tab:\iotwod.graphsurf.surfs.typememberdata} describes the types contained in \tcode{X} as-if they possessed certain member data. 
+
+\begin{libiotwodreqtab3f}{\tcode{X::surfaces} type member data}{tab:\iotwod.graphsurf.surfs.typememberdata}
+\\ \topline
+\lhdr{Type}		&	\chdr{Member data}	&	\rhdr{Member data type} \\ \capsep
+\endfirsthead
+\topline
+\lhdr{Type}		&	\chdr{Member data}	&	\rhdr{Member data type} \\ \capsep
+\endhead
+\tcode{render_props_data_type}	&
+\tcode{a}	&
+\tcode{antialias}	\\ \rowsep
+\tcode{render_props_data_type}	&
+\tcode{m}	&
+\tcode{M}	\\ \rowsep
+\tcode{render_props_data_type}	&
+\tcode{c}	&
+\tcode{compositing_op}	\\ \rowsep
+\tcode{brush_props_data_type}	&
+\tcode{w}	&
+\tcode{wrap_mode}	\\ \rowsep
+\tcode{brush_props_data_type}	&
+\tcode{fi}	&
+\tcode{filter}	\\ \rowsep
+\tcode{brush_props_data_type}	&
+\tcode{fr}	&
+\tcode{fill_rule}	\\ \rowsep
+\tcode{brush_props_data_type}	&
+\tcode{m}	&
+\tcode{M}	\\ \rowsep
+\tcode{clip_props_data_type}	&
+\tcode{optional<IP>}	&
+\tcode{c}	\\ \rowsep
+\tcode{clip_props_data_type}	&
+\tcode{fr}	&
+\tcode{fill_rule}	\\ \rowsep
+\tcode{stroke_props_data_type}	&
+\tcode{lw}	&
+\tcode{float}	\\ \rowsep
+\tcode{stroke_props_data_type}	&
+\tcode{ml}	&
+\tcode{float}	\\ \rowsep
+\tcode{stroke_props_data_type}	&
+\tcode{lc}	&
+\tcode{line_cap}	\\ \rowsep
+\tcode{stroke_props_data_type}	&
+\tcode{lj}	&
+\tcode{line_join}	\\ \rowsep
+\tcode{mask_props_data_type}	&
+\tcode{wm}	&
+\tcode{wrap_mode}	\\ \rowsep
+\tcode{mask_props_data_type}	&
+\tcode{fi}	&
+\tcode{filter}	\\ \rowsep
+\tcode{mask_props_data_type}	&
+\tcode{m}	&
+\tcode{M}	\\ \rowsep
+\tcode{dashes_data_type}	&
+\tcode{o}	&
+\tcode{float}	\\ \rowsep
+\tcode{dashes_data_type}	&
+\tcode{p}	&
+\tcode{vector<float>}	\\
+\end{libiotwodreqtab3f}
+
+All expressions in Table~\ref{tab:\iotwod.graphsurf.surfs.requirementstab} are \tcode{noexcept}. For purposes of brevity, \tcode{noexcept} is omitted in the table.
+
+\begin{libreqtab4d}
+{Graphics surfaces requirements}
+{tab:\iotwod.graphsurf.surfs.requirementstab}
+\\ \topline
+\lhdr{Expression}       &   \chdr{Return type}  &   \chdr{Operational}  &
+\rhdr{Assertion/note}   \\
+    &   &   \chdr{semantics}    &   \rhdr{pre-/post-condition}   \\ \capsep
+\endfirsthead
+\continuedcaption\\
+\topline
+\lhdr{Expression}       &   \chdr{Return type}  &   \chdr{Operational}  &
+\rhdr{Assertion/note}   \\
+    &   &   \chdr{semantics}    &   \rhdr{pre-/post-condition}   \\ \capsep
+\endhead
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\
+\end{libreqtab4d}
