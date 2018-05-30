@@ -19,23 +19,27 @@ Terms that are used only in a small portion of this document are defined where t
 
 %%\def\definition{\definitionx{\section}}%
 
-\indexdefn{standard coordinate space}%
-\definition{standard coordinate space}{\iotwod.defns.stndcrdspace}
-Euclidean plane described by a Cartesian coordinate system where the first coordinate is measured along a horizontal axis, called the \xaxis, oriented from left to right, the second coordinate is measured along a vertical axis, called the \yaxis, oriented from top to bottom, and rotation of a point around the origin by a positive value expressed in radians is counterclockwise
-
 \indexdefn{point}%
 \definition{point}{\iotwod.defns.point}
-\defncontext{point} coordinate designated by a floating point \xaxis{} value and a floating point \yaxis{} value within the \term{standard coordinate space} (\ref{\iotwod.defns.stndcrdspace})
+coordinate designated by a floating-point \xaxis{} value and a floating-point \yaxis{} value
 
-\indexdefn{point}%
-\definition{point}{\iotwod.defns.point.integral}
-\defncontext{integral point} coordinate designated by an integral \xaxis{} value and an integral \yaxis{} value within the \term{standard coordinate space} (\ref{\iotwod.defns.stndcrdspace})
+\indexdefn{origin}%
+\definition{origin}{\iotwod.defns.origin}
+point with an \xaxis{} value of $0$ and a \yaxis{} value of $0$
+
+\indexdefn{standard coordinate space}%
+\definition{standard coordinate space}{\iotwod.defns.stndcrdspace}
+Euclidean plane described by a Cartesian coordinate system where the \xaxis{} is a horizontal axis oriented from left to right, the \yaxis{} is a vertical axis oriented from top to bottom, and rotation of a point, excluding the origin, around the origin by a positive value in radians is counterclockwise
+
+\indexdefn{integral point}%
+\definition{integral point}{\iotwod.defns.point.integral}
+point where the \xaxis{} value and the \yaxis{} value are integers
 
 \indexdefn{normalize}%
 \definition{normalize}{\iotwod.defns.normalize}
-map a closed set of evenly spaced values in the range $[0, x]$ to an evenly spaced sequence of floating point values in the range $[0, 1]$
+map a closed set of evenly spaced values in the range $[0, x]$ to an evenly spaced sequence of floating-point values in the range $[0, 1]$
 \begin{note}
-The definition of normalize given is the definition for normalizing unsigned input. Signed normalization, i.e. the mapping of a closed set of evenly spaced values in the range $[-x, x)$ to an evenly spaced sequence of floating point values in the range $[-1, 1]$ is not used in this \documenttypename{}.
+The definition of normalize given is the definition for normalizing unsigned input. Signed normalization, i.e. the mapping of a closed set of evenly spaced values in the range $[-x, x)$ to an evenly spaced sequence of floating-point values in the range $[-1, 1]$ is not used in this \documenttypename{}.
 \end{note}
 
 % The following may not be needed. Already defined in IEC 60050 723-05-05.
@@ -57,72 +61,72 @@ data representing color, transparency, or some combination thereof
 
 \indexdefn{graphics data}%
 \definition{graphics data}{\iotwod.defns.graphicsdata}
-\defncontext{graphics data} \term{visual data} (\ref{\iotwod.defns.visdata}) stored in an unspecified form
+visual data stored in an unspecified form
+
+\indexdefn{color}%
+\definition{color}{\iotwod.defns.colorchannel}
+\defncontext{channel} component of visual data representing color
+
+\indexdefn{alpha}%
+\definition{alpha}{\iotwod.defns.alphachannel}
+\defncontext{channel} component of visual data representing transparency
 
 \indexdefn{channel}%
 \definition{channel}{\iotwod.defns.channel}
-%a bounded set of homogeneously-spaced real numbers in the range $[0,1]$
-component of \term{visual data} (\ref{\iotwod.defns.visdata}) with a defined bit size
-
-\indexdefn{color channel}%
-\definition{color channel}{\iotwod.defns.colorchannel}
-component of \term{visual data} (\ref{\iotwod.defns.visdata}) representing color
-
-\indexdefn{alpha channel}%
-\definition{alpha channel}{\iotwod.defns.alphachannel}
-component of \term{visual data} (\ref{\iotwod.defns.visdata}) representing transparency
+color or alpha channel
 
 \indexdefn{visual data format}%
 \definition{visual data format}{\iotwod.defns.visdatafmt}
-specification that defines a total bit size, a set of one or more \term{channels} (\ref{\iotwod.defns.channel}), and each \term{channel}'s role, bit size, and location relative to the upper (high-order) bit
-%a specification of visual data channels which defines a total bit size for the format and each channel's role, bit size, and location relative to the upper (high-order) bit
-%\begin{note}
-%The total bit size may be larger than the sum of the bit sizes of the channels of the format.
-%\end{note}
+specification of zero or more color channels and zero or one alpha channels that defines each channel's role, bit size, location relative to the high-order bit, and the total bit size of all channels including unused bits
 
 \indexdefn{premultiplied format}%
 \definition{premultiplied format}{\iotwod.defns.premultipliedformat}
-format with \term{color channels} (\ref{\iotwod.defns.colorchannel}) and an \term{alpha channel} (\ref{\iotwod.defns.alphachannel}) where each \term{color channel} is \term{normalized} (\ref{\iotwod.defns.normalize}) and then multiplied by the \term{normalized} \term{alpha channel} value
+visual data format with one or more color channels and an alpha channel where each color channel is normalized and then multiplied by the normalized alpha channel value
 \begin{example}
 Given the 32-bit non-premultiplied RGBA pixel with 8 bits per channel \{255, 0, 0, 127\} (half-transparent red), when normalized it would become \{1.0f, 0.0f, 0.0f, 0.5f\}. As such, in premultiplied, normalized format it would become \{0.5f, 0.0f, 0.0f, 0.5f\} as a result of multiplying each of the three color channels by the alpha channel value.
 \end{example}
 
 \indexdefn{visual data element}%
 \definition{visual data element}{\iotwod.defns.visdataelem}
-item of \term{visual data} (\ref{\iotwod.defns.visdata}) with a defined \term{visual data format} (\ref{\iotwod.defns.visdatafmt})
+visual data with a defined visual data format
 
 % The following may not be needed. Already defined in IEC 60050 723-05-31
-\indexdefn{pixel}
+\indexdefn{pixel}%
 \definition{pixel}{\iotwod.defns.pixel}
-discrete, rectangular \term{visual data element} (\ref{\iotwod.defns.visdataelem})
+discrete visual data element
 
-\indexdefn{graphics data}%
-\indexdefn{graphics data!raster}%
-\definition{graphics data}{\iotwod.defns.graphics.raster}
-\defncontext{raster graphics data} \term{visual data} (\ref{\iotwod.defns.visdata}) stored as \term{pixels} (\ref{\iotwod.defns.pixel}) that is accessible as-if it was an array of rows of pixels beginning with the pixel at the \term{integral point} $(0,0)$ (\ref{\iotwod.defns.point.integral})
-
-\indexdefn{additive color}%
-\definition{additive color}{\iotwod.defns.additivecolor}
-color defined by the emissive intensity of its \term{color channels} (\ref{\iotwod.defns.colorchannel})
+\indexdefn{raster graphics data}%
+%\indexdefn{graphics data!raster}%
+%\definition{graphics data}{\iotwod.defns.graphics.raster}
+%\defncontext{raster graphics data} \term{visual data} (\ref{\iotwod.defns.visdata}) stored as \term{pixels} (\ref{\iotwod.defns.pixel}) that is accessible as-if it was an array of rows of pixels beginning with the pixel at the \term{integral point} $(0,0)$ (\ref{\iotwod.defns.point.integral})
+data comprised of a rectangular array of pixels where the top-left pixel is located at the origin and additional pixels are located as consecutive integral points of increasing value
 
 \indexdefn{color model}%
 \definition{color model}{\iotwod.defns.colormodel}
-ideal, mathematical representation of colors which often uses \term{color channels} (\ref{\iotwod.defns.colorchannel})
+ideal, mathematical representation of color
+
+\indexdefn{additive color}%
+\definition{additive color}{\iotwod.defns.additivecolor}
+color defined by the emissive intensity of its color channels
 
 \indexdefn{color model}%
 \indexdefn{color model!RGB}%
 \definition{RGB color model}{\iotwod.defns.rgbcolormodel}
-\defncontext{RGB} \term{additive} (\ref{\iotwod.defns.additivecolor}) \term{color model} (\ref{\iotwod.defns.colormodel}) using red, green, and blue \term{color channels} (\ref{\iotwod.defns.colorchannel})
+color model using additive color comprised of red, green, and blue color channels
 
 \indexdefn{color model}%
 \indexdefn{color model!RGBA}%
 \definition{RGBA color model}{\iotwod.defns.rgbacolormodel}
-\defncontext{RGBA} \term{RGB color model} (\ref{\iotwod.defns.rgbcolormodel}) with an \term{alpha channel} (\ref{\iotwod.defns.alphachannel})
+RGB color model with an alpha channel
+
+\indexdefn{color space}%
+\definition{color space}{\iotwod.defns.colorspace}
+systematic mapping of values to specific colors
 
 \indexdefn{color space}%
 \indexdefn{color space!sRGB}%
 \definition{sRGB color space}{\iotwod.defns.srgbcolorspace}
-\defncontext{sRGB} \term{additive} (\ref{\iotwod.defns.additivecolor}) \term{color space} (\ref{\iotwod.defns.colorspace}) defined in IEC 61966-2-1 that is based on an \term{RGB color model} (\ref{\iotwod.defns.rgbcolormodel})
+color space defined in IEC 61966-2-1 that is based on the RGB color model
 
 \indexdefn{start point}%
 \definition{start point}{\iotwod.defns.startpt}
