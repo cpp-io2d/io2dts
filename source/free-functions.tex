@@ -5,6 +5,15 @@
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
+  template <class GraphicsSurfaces>
+  basic_image_surface<GraphicsSurfaces> copy_surface(
+    basic_image_surface<GraphicsSurfaces>& sfc) noexcept;
+  template <class GraphicsSurfaces>
+  basic_image_surface<GraphicsSurfaces> copy_surface(
+    basic_output_surface<GraphicsSurfaces>& sfc) noexcept;
+  template <class GraphicsSurfaces>
+  basic_image_surface<GraphicsSurfaces> copy_surface(
+    basic_unmanaged_output_surface<GraphicsSurfaces>& sfc) noexcept;
   int format_stride_for_width(format format, int width) noexcept;
   float angle_for_point(point_2d ctr, point_2d pt) noexcept;
   point_2d point_for_angle(float ang, float rad = 1.0f) noexcept;
@@ -17,6 +26,26 @@ namespace std::experimental::io2d::v1 {
     const matrix_2d& m = matrix_2d{}) noexcept;
 }
 \end{codeblock}
+
+\rSec1 [\iotwod.standalone.copysurface] {\tcode{copy_surface}}
+
+\indexlibrary{\idxcode{copy_surface}}%
+\begin{itemdecl}
+template <class GraphicsSurfaces>
+basic_image_surface<GraphicsSurfaces> copy_surface(
+  basic_image_surface<GraphicsSurfaces>& sfc) noexcept;
+template <class GraphicsSurfaces>
+basic_image_surface<GraphicsSurfaces> copy_surface(
+  basic_output_surface<GraphicsSurfaces>& sfc) noexcept;
+template <class GraphicsSurfaces>
+basic_image_surface<GraphicsSurfaces> copy_surface(
+  basic_unmanaged_output_surface<GraphicsSurfaces>& sfc) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{GraphicsSurfaces::surfaces::copy_surface(sfc)}.
+\end{itemdescr}
 
 \rSec1 [\iotwod.standalone.formatstrideforwidth] {\tcode{format_stride_for_width}}
 

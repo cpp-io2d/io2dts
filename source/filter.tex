@@ -4,7 +4,7 @@
 \rSec1 [\iotwod.filter.summary] {\tcode{filter} summary}
 
 \pnum
-The \tcode{filter} enum class specifies the type of filter to use when sampling from a \pixmap.
+The \tcode{filter} enum class specifies the type of filter to use when sampling from raster graphics data.
 
 \pnum
 Three of the \tcode{filter} enumerators, \tcode{filter::fast}, \tcode{filter::good}, and \tcode{filter::best}, specify desired characteristics of the filter, leaving the choice of a specific filter to the implementation. 
@@ -13,7 +13,7 @@ The other two, \tcode{filter::nearest} and \tcode{filter::bilinear}, each specif
 
 \pnum
 \begin{note}
-The only type of brush that has a \pixmap as its \underlyingsurface is a brush with a brush type of \tcode{brush_type::surface}.
+The only type of brush that has raster graphics data as its visual data is a brush with a brush type of \tcode{brush_type::surface}.
 \end{note}
 
 \pnum

@@ -3,25 +3,11 @@
 
 \pnum
 \indexlibrary{\idxcode{basic_interpreted_path}}%
-The class \tcode{basic_interpreted_path} contains the data that result from interpreting (\ref{\iotwod.paths.interpretation}) a sequence of \tcode{figure_items::figure_item} objects. %%in a \tcode{path_builder} object or in another container of figure items.
+The class \tcode{basic_interpreted_path} contains the data that result from interpreting (\ref{\iotwod.paths.interpretation}) a sequence of \tcode{figure_items::figure_item} objects.
 
 \pnum
 A \tcode{basic_interpreted_path} object is used by most rendering and composing operations.
 
-%\pnum
-%The contents of a \tcode{interpreted_path} object are immutable, however the contents it contains are changeable using copy assignment or move assignment.
-%
-%\pnum
-%A \tcode{interpreted_path} object can be default constructed. Default construction of a \tcode{interpreted_path} object produces the same result as constructing it from an empty \tcode{path_builder} object.
-%
-%\pnum
-%When a \tcode{interpreted_path} object is set on a \tcode{surface} object using 
-%\tcode{surface::path}, the geometric paths represented by it can be 
-%stroked or filled.
-%
-%\pnum
-%A \tcode{interpreted_path} object shall be usable with any \tcode{surface} or \tcode{surface}-derived object.
-%
 \rSec1 [\iotwod.pathgroup.synopsis] {\tcode{basic_interpreted_path} synopsis}
 
 \begin{codeblock}
@@ -76,14 +62,6 @@ Constructs an object of type \tcode{interpreted_path}.
 
 \pnum
 The contained path is as-if it was the result of interpreting a path containing the values of the elements from \tcode{first} to the last element before \tcode{last}.
-%When a \tcode{interpreted_path} object is used by a \tcode{surface}-derived object, it produces the same result as-if its contents were constructed by processing the \tcode{path_builder} object as specified at \ref{\iotwod.paths.interpretion}.
-%
-%\pnum
-%\remarks
-%A \tcode{interpreted_path} object may require further processing by the graphics subsystem when it is passed as an argument to a \tcode{surface} or \tcode{surface}-derived object.
-%	
-%\pnum
-%Implementations should avoid or minimize the need for further processing of a \tcode{interpreted_path} object after it has been constructed.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{basic_interpreted_path}!constructor}%

@@ -5,7 +5,7 @@
 
 \pnum
 \indexlibrary{\idxcode{basic_image_surface}}%
-The class \tcode{basic_image_surface} provides an interface to a raster graphics data graphics resource.
+The class \tcode{basic_image_surface} provides an interface to raster graphics data.
 
 \pnum
 It has a \term{pixel format} of type \tcode{format}, a \term{width} of type \tcode{int}, and a \term{height} of type \tcode{int}.
@@ -89,10 +89,6 @@ namespace std::experimental::io2d::v1 {
       const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
       const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
   };
-
-  template <class GraphicsSurfaces>
-  basic_image_surface<GraphicsSurfaces> copy_image_surface(
-    basic_image_surface<GraphicsSurfaces>& sfc) noexcept;
 }
 \end{codeblock}
 
@@ -140,7 +136,7 @@ basic_image_surface(filesystem::path f, io2d::image_file_format i, io2d::format 
 Constructs an object of type \tcode{basic_image_surface}.
 
 \pnum
-The data of the \underlyingimagesurface is the raster graphics data that results from processing \tcode{f} into uncompressed raster graphics in the manner specified by the standard that specifies how to transform the contents of data contained in \tcode{f} into raster graphics data and then transforming that raster graphics data into the format specified by \tcode{fmt}.
+The raster graphics data is the result of processing \tcode{f} into uncompressed raster graphics in the manner specified by the standard that describes how to transform the contents of data contained in \tcode{f} into raster graphics data and then transforming that transformed raster graphics data into the format specified by \tcode{fmt}.
 
 \pnum
 The data of \tcode{f} is processed into uncompressed raster graphics data as specified by the value of \tcode{i}.
@@ -157,7 +153,7 @@ The intent of \tcode{image_file_format::unknown} is to allow implementations to 
 If the width of the uncompressed raster graphics data would be less than \tcode{1} or greater than \tcode{basic_image_surface::max_width()} or if the height of the uncompressed raster graphics data would be less than \tcode{1} or greater than \tcode{basic_image_surface::max_height()}, the error specified below occurs.
 
 \pnum
-The resulting uncompressed raster graphics data is then transformed into the data format specified by \tcode{fmt}. If the format specified by \tcode{fmt} only contains an alpha channel, the values of the color channels, if any, of the \underlyingimagesurface are \unspecnorm. If the format specified by \tcode{fmt} only contains color channels and the resulting uncompressed raster graphics data is in a premultiplied format, then the value of each color channel for each pixel is be divided by the value of the alpha channel for that pixel. The visual data is then set as the visual data of the \underlyingimagesurface.
+The resulting uncompressed raster graphics data is then transformed into the data format specified by \tcode{fmt}. If the format specified by \tcode{fmt} only contains an alpha channel, the values of the color channels, if any, of the surface's visual data are \unspecnorm. If the format specified by \tcode{fmt} only contains color channels and the resulting uncompressed raster graphics data is in a premultiplied format, then the value of each color channel for each pixel is be divided by the value of the alpha channel for that pixel. The visual data is then set as the visual data of the surface.
 
 \pnum
 The width is the width of the uncompressed raster graphics data. The height is the height of the uncompressed raster graphics data.
@@ -200,7 +196,7 @@ If the file exists, it shall be writable. If the file does not exist, it shall b
 Any pending rendering and composing operations (\ref{\iotwod.surface.rendering}) are performed.
 
 \pnum
-The visual data of the \underlyingimagesurface is written to \tcode{p} in the data format specified by \tcode{i}.
+The surface's visual data is written to \tcode{p} in the data format specified by \tcode{i}.
 
 \pnum
 If \tcode{i} is \tcode{image_file_format::unknown}, it is \impldefplain{basic_image_surface!save} whether the surface is saved in the image file format, if any, that the implementation associates with \tcode{p.extension()} provided that \tcode{p.has_extension() == true}. If \tcode{p.has_extension() == false}, the implementation does not associate an image file format with \tcode{p.extension()}, or the implementation does not support saving in that image file format, the error specified below occurs.
@@ -271,10 +267,10 @@ void flush(error_code& ec) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-If the implementation does not provide a native handle to the surface's \underlyingsurface, this function does nothing.
+If the implementation does not provide a native handle to the surface's visual data, this function does nothing.
 
 \pnum
-If the implementation does provide a native handle to the surface's \underlyingsurface, then the implementation performs every action necessary to ensure that all operations on the surface that produce observable effects occur.
+If the implementation does provide a native handle to the surface's visual data, then the implementation performs every action necessary to ensure that all operations on the surface that produce observable effects occur.
 
 \pnum
 The implementation performs any other actions necessary to ensure that the surface will be usable again after a call to \tcode{basic_image_surface::mark_dirty}.
@@ -298,14 +294,14 @@ The potential errors are \impldefplain{basic_image_surface::flush errors}.
 Implementations should avoid producing errors here.
 
 \pnum
-If the implementation does not provide a native handle to the \tcode{basic_image_surface} object's \underlyingsurface, this function shall not produce any errors.
+If the implementation does not provide a native handle to the \tcode{basic_image_surface} object's visual data, this function shall not produce any errors.
 
 \pnum
 \begin{note}
 There are several purposes for \tcode{basic_image_surface::flush} and \tcode{basic_image_surface::mark_dirty}.
 
 \pnum
-One is to allow implementation wide latitude in how they implement the rendering and composing operations (\ref{\iotwod.surface.rendering}), such as batching calls and then sending them to the \underlyingrendandpresenttechs at appropriate times.
+One is to allow implementation wide latitude in how they implement the rendering and composing operations (\ref{\iotwod.surface.rendering}), such as batching calls and then sending them to graphics acceleration hardware at appropriate times.
 
 \pnum
 Another is to give implementations the chance during the call to \tcode{basic_image_surface::flush} to save any internal state that might be modified by the user and then restore it during the call to \tcode{basic_image_surface::mark_dirty}.
@@ -325,13 +321,13 @@ void mark_dirty(const basic_bounding_box<graphics_math_type>& extents, error_cod
 \begin{itemdescr}
 \pnum
 \effects
-If the implementation does not provide a native handle to the \tcode{basic_image_surface} object's \underlyingsurface, this function shall do nothing.
+If the implementation does not provide a native handle to the \tcode{basic_image_surface} object's visual data, this function shall do nothing.
 
 \pnum
-If the implementation does provide a native handle to the \tcode{basic_image_surface} object's \underlyingsurface, then:
+If the implementation does provide a native handle to the \tcode{basic_image_surface} object's visual data, then:
 \begin{itemize}
-\item If called without a \tcode{basic_bounding_box} argument, informs the implementation that external changes using a native handle were potentially made to the entire \underlyingsurface.
-\item If called with a \tcode{basic_bounding_box} argument, informs the implementation that external changes using a native handle were potentially made to the \underlyingsurface within the bounds specified by the \term{bounding rectangle} \tcode{basic_bounding_box\{ round(extents.x()), round (extents.y()), round(extents.width()), round(extents.height())\}}. No part of the bounding rectangle shall be outside of the bounds of the \underlyingsurface; no diagnostic is required.
+\item If called without a \tcode{basic_bounding_box} argument, informs the implementation that external changes using a native handle potentially modified all of the surface's visual data.
+\item If called with a \tcode{basic_bounding_box} argument, informs the implementation that external changes using a native handle potentially modified the surface's visual data only within the bounds specified by the \term{bounding rectangle} \tcode{basic_bounding_box\{ round(extents.x()), round (extents.y()), round(extents.width()), round(extents.height())\}}. No part of the bounding rectangle shall be outside of the bounds of the surface's visual data; no diagnostic is required.
 \end{itemize}
 
 \pnum
@@ -340,14 +336,14 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \pnum
 \remarks
-After external changes are made to this \tcode{basic_image_surface} object's \underlyingsurface using a native pointer, this function shall be called before using this \tcode{basic_image_surface} object; no diagnostic is required.
+After external changes are made to this \tcode{basic_image_surface} object's visual data using a native pointer, this function shall be called before using this \tcode{basic_image_surface} object; no diagnostic is required.
 
 \pnum
 \errors
 The errors, if any, produced by this function are \impldefplain{basic_image_surface!mark_dirty}.
 
 \pnum
-If the implementation does not provide a native handle to the \tcode{basic_image_surface} object's \underlyingsurface, this function shall not produce any errors.
+If the implementation does not provide a native handle to the \tcode{basic_image_surface} object's visual data, this function shall not produce any errors.
 \end{itemdescr}
 
 \indexlibrarymember{paint}{basic_image_surface}%

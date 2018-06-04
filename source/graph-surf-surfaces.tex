@@ -9,13 +9,22 @@ Let \tcode{X} be a \graphicssurfacestemplparam type.
 Let \tcode{G} be a \graphicsmathtemplparam type.
 
 \pnum
-Let \tcode{IR} be a pixmap.% of \unspec type.
+Let \tcode{IM} be an object of unspecified type that contains raster graphics data.% of \unspec type.
 
 \pnum
-Let \tcode{OR} be an output surface of \unspec type.
+Let \tcode{OU} be an output surface of \unspec type that provides all functionality needed to display visual data.
 
 \pnum
-Let \tcode{UR} be an unmanaged output <TODO> ??? \underlyingrendandpresenttechs
+Let \tcode{UN} be an output surface of \unspec type that provides all functionality needed to display visual data.
+
+\pnum
+The types \tcode{OU} and \tcode{UN} may be the same type.
+
+\pnum
+What constitutes an output surface is \impldef{output surface}.
+\begin{note}
+The implementer in this case is the provider of a type that meets the requirements of a \graphicssurfacestemplparam type.
+\end{note}
 
 \pnum
 Table~\ref{tab:\iotwod.graphsurf.surfs.requirementstab} describes the observable effects of the member functions of \tcode{X::surfaces}.
@@ -42,8 +51,7 @@ Table~\ref{tab:\iotwod.graphsurf.surfs.typedefnamestab} defines the required \gr
 \end{libreqtab2}
 
 \pnum
-In Table~\ref{tab:\iotwod.graphsurf.surfs.requirementstab}, \tcode{IM} denotes the type \tcode{X::surfaces::image_surface_data_type}, \tcode{OU} denotes the type \tcode{X::surfaces::output_surface_data_type}, \tcode{UN} denotes the type \tcode{X::surfaces::unmanaged_output_data_type},
-\tcode{BB} denotes the type \tcode{basic_bounding_box<G>}, \tcode{IP} denotes the type \tcode{basic_interpreted_path<X>}, \tcode{FI} denotes the type \tcode{basic_figure_items<X>::figure_item}, \tcode{M} denotes the type \tcode{basic_matrix_2d<G>}, and \tcode{P} denotes the type \tcode{basic_point_2d<G>}.
+In Table~\ref{tab:\iotwod.graphsurf.surfs.requirementstab}, \tcode{I} denotes the type \tcode{image_surface_data_type}, \tcode{O} denotes the type \tcode{output_surface_data_type}, \tcode{U} denotes the type \tcode{unmanaged_output_surface_data_type}, \tcode{BB} denotes the type \tcode{basic_bounding_box<G>}, \tcode{IP} denotes the type \tcode{basic_interpreted_path<X>}, \tcode{FI} denotes the type \tcode{basic_figure_items<X>::figure_item}, \tcode{M} denotes the type \tcode{basic_matrix_2d<G>}, and \tcode{P} denotes the type \tcode{basic_point_2d<G>}.
 
 \pnum
 In order to describe the observable effects of functions contained in Table~\ref{tab:\iotwod.graphsurf.surfs.requirementstab}, Table~\ref{tab:\iotwod.graphsurf.surfs.typememberdata} describes the types contained in \tcode{X} as-if they possessed certain member data. 
@@ -55,63 +63,21 @@ In order to describe the observable effects of functions contained in Table~\ref
 \topline
 \lhdr{Type}		&	\chdr{Member data}	&	\rhdr{Member data type} \\ \capsep
 \endhead
-\tcode{render_props_data_type}	&
-\tcode{a}	&
-\tcode{antialias}	\\ \rowsep
-\tcode{render_props_data_type}	&
-\tcode{m}	&
-\tcode{M}	\\ \rowsep
-\tcode{render_props_data_type}	&
-\tcode{c}	&
-\tcode{compositing_op}	\\ \rowsep
-\tcode{brush_props_data_type}	&
-\tcode{w}	&
-\tcode{wrap_mode}	\\ \rowsep
-\tcode{brush_props_data_type}	&
-\tcode{fi}	&
-\tcode{filter}	\\ \rowsep
-\tcode{brush_props_data_type}	&
-\tcode{fr}	&
-\tcode{fill_rule}	\\ \rowsep
-\tcode{brush_props_data_type}	&
-\tcode{m}	&
-\tcode{M}	\\ \rowsep
-\tcode{clip_props_data_type}	&
-\tcode{optional<IP>}	&
-\tcode{c}	\\ \rowsep
-\tcode{clip_props_data_type}	&
-\tcode{fr}	&
-\tcode{fill_rule}	\\ \rowsep
-\tcode{stroke_props_data_type}	&
-\tcode{lw}	&
-\tcode{float}	\\ \rowsep
-\tcode{stroke_props_data_type}	&
-\tcode{ml}	&
-\tcode{float}	\\ \rowsep
-\tcode{stroke_props_data_type}	&
-\tcode{lc}	&
-\tcode{line_cap}	\\ \rowsep
-\tcode{stroke_props_data_type}	&
-\tcode{lj}	&
-\tcode{line_join}	\\ \rowsep
-\tcode{mask_props_data_type}	&
-\tcode{wm}	&
-\tcode{wrap_mode}	\\ \rowsep
-\tcode{mask_props_data_type}	&
-\tcode{fi}	&
-\tcode{filter}	\\ \rowsep
-\tcode{mask_props_data_type}	&
-\tcode{m}	&
-\tcode{M}	\\ \rowsep
-\tcode{dashes_data_type}	&
-\tcode{o}	&
-\tcode{float}	\\ \rowsep
-\tcode{dashes_data_type}	&
-\tcode{p}	&
-\tcode{vector<float>}	\\
+\tcode{image_surface_data_type}	&
+\tcode{im}	&
+\tcode{IM}	\\ \rowsep
+\tcode{output_surface_data_type}	&
+\tcode{ou}	&
+\tcode{OU}	\\ \rowsep
+\tcode{unmanaged_output_surface_data_type}	&
+\tcode{un}	&
+\tcode{UN}	\\
 \end{libiotwodreqtab3f}
 
-All expressions in Table~\ref{tab:\iotwod.graphsurf.surfs.requirementstab} are \tcode{noexcept}. For purposes of brevity, \tcode{noexcept} is omitted in the table.
+\pnum
+\begin{note}
+In the same way that \tcode{stdin}, \tcode{stdout}, and \tcode{stderr} do not specify how they meet the requirements placed on them, the requirements set forth in Table~\ref{tab:\iotwod.graphsurf.surfs.requirementstab} also do not specify such details.
+\end{note}
 
 \begin{libreqtab4d}
 {Graphics surfaces requirements}
@@ -127,6 +93,380 @@ All expressions in Table~\ref{tab:\iotwod.graphsurf.surfs.requirementstab} are \
 \rhdr{Assertion/note}   \\
     &   &   \chdr{semantics}    &   \rhdr{pre-/post-condition}   \\ \capsep
 \endhead
+%
+% image_surface
+%
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+%
+% max_display_dimensions
+%
+\tcode{max_display_dimensions()}	&
+	&
+	&
+	\\ \rowsep
+%
+% output_surface
+%
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+%
+% unmanaged_output_surface
+%
+\tcode{X::surfaces::create_unmanaged_output_surface(/* \impdef */)}	&
+\tcode{UN}	&
+All details of this function other than its name and return type are \impldef{create_unmanaged_output_surface}. This function need not be provided by an implementation. This function may be overloaded.	&
+\begin{note}
+This function exists to allow users to take an existing output device, such as a window or a smart phone display, and draw to it using this library via the \tcode{basic_unmanaged_output_surface} class template. Implementers are not required to support this functionality and it may be impossible to provide on certain platforms. If this function is not provided, it is impossible for the \tcode{basic_unmanaged_output_surface} class template to be instantiated.
+\end{note}	\\ \rowsep
+\tcode{%
+template <class F>\newline%
+X::surfaces::draw_callback(UN\& un, F\&\& f)}	&
+\tcode{void}	&
+<TODO>	&
+\requires
+\tcode{f} shall be \tcode{CopyConstructible}.
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
+	&
+	&
+	&
+	\\ \rowsep
 	&
 	&
 	&

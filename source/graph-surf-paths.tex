@@ -59,7 +59,7 @@ Table~\ref{tab:\iotwod.graphsurf.reqs.paths.typedefnamestab} defines the require
 
 \pnum
 \begin{note}
-An object of type \tcode{basic_interpreted_path<X>} is an immutable object. As such, the contents of the class type for which \tcode{X::paths::interpreted_path_data_type} is an identifier are able to be highly tailored to the \underlyingrendandpresenttechs which are used by \tcode{X}.
+An object of type \tcode{basic_interpreted_path<X>} is an immutable object. As such, the contents of the class type for which \tcode{X::paths::interpreted_path_data_type} is an identifier are able to be highly tailored to the platform and environment targeted by \tcode{X}.
 \end{note}
 
 \pnum
@@ -402,7 +402,7 @@ An object \tcode{ip}.	&
 \postconditions
 \tcode{ip} contains a zero or more figure items as determined by evaluating the sequence of \tcode{figure_items::figure_item} objects beginning with \tcode{first} and ending with \tcode{last} in the manner described in \ref{\iotwod.paths.interpretation}.\newline
 \remarks
-The internal data of the interpreted path should be in a form that is best suited to take advantage of the \underlyingrendandpresenttechs used by \tcode{X}.	\\ \rowsep
+The internal data of the interpreted path should be in a form that is best suited to take advantage of the platform and environment targeted by \tcode{X}.	\\ \rowsep
 %%
 %% rel_cubic_curve
 %%

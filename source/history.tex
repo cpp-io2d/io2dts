@@ -14,10 +14,31 @@ Changed the Revision history \clause, to be \clause 0.
 Added a new \clause, Graphics math (\ref{\iotwod.graphmath}), which defines the requirements of a type that conforms to the \graphicsmathtemplparam template parameter used by various classes.
 
 \pnum
-Updated the relevant class member functions in this proposal to define their effects to include calls to the appropriate \graphicsmathtemplparam functions. This completes the work, begun in P0267R7, of abstracting the implementation of the linear algebra and geometry classes, thereby allowing users to specify a preferred implementation of the mathematical functionality used in this proposal rather.
+Updated the relevant class member functions in this proposal to define their effects to include calls to the appropriate \graphicsmathtemplparam functions. This completes the work, begun in P0267R7, of abstracting the implementation of the linear algebra and geometry classes, thereby allowing users to specify a preferred implementation of the mathematical functionality used in this proposal.
 
 \pnum
-Michael G. Kazakov has written an implementation of this proposal using the Core Graphics framework of Cocoa\textregistered, thus providing a native implementation for iOS\textregistered and OS X\textregistered. It is available as part of the reference implementation (See \ref{\iotwod.revisionhistory.r7}).
+Added a new \clause, Graphics surfaces (\ref{\iotwod.graphsurf}), which defines the requirements of a type that conforms to the \graphicssurfacestemplparam template parameter used by various classes.
+
+\pnum
+Updated the relevant class member functions in this proposal to define their effects to include calls to the appropriate \graphicssurfacestemplparam functions. This completes the work, begun in P0267R7, of abstracting the implementation of the brush, paths, surface state, and surface classes, thereby allowing users to specify a preferred implementation of the functionality specified in this proposal.
+
+\pnum
+Added a new \clause, Surface state props (\ref{\iotwod.surfacestate}) and moved the relevant \tcode{enum class} types and the \tcode{basic_render_props}, \tcode{basic_brush_props}, \tcode{basic_clip_props}, \tcode{basic_stroke_props}, and \tcode{basic_mask_props} class templates to it. 
+
+\pnum
+Added Michael Kazakov as a co-author. He has written an implementation of this proposal using the Core Graphics framework of Cocoa\textregistered, thus providing a native implementation for iOS\textregistered and OS X\textregistered. It is available as part of the reference implementation (See \ref{\iotwod.revisionhistory.r7}).
+
+\pnum
+He has also written a series of tests for compliance. This has drawn attention to several issues that have require some revision.
+
+\pnum
+Eliminated \tcode{format::rgb16_565} and \tcode{format::rgb30}.
+
+\pnum
+Eliminated \tcode{compositing_op::dest} since it is a no-op.
+
+\pnum
+Significant cleanup of terms and definitions.
 
 \rSec1 [\iotwod.revisionhistory.r7] {Revision 7}
 

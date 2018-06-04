@@ -22,11 +22,6 @@ storing all data required to support a brush of any type described in
 The information in \ref{\iotwod.brush.sampling} is particularly important.
 \end{note}
 
-\pnum
-\begin{note}
-Brushes are immutable objects. As such, the contents of the class type for which \tcode{X::brushes::brush_data_type} is an identifier are able to be highly tailored to the \underlyingrendandpresenttechs which are used by \tcode{X}. Indeed, while it is required to report its \tcode{brush_type} by one of the member functions below, it need not even store a variable of that type so long as it can correctly provide it when that member function is called.
-\end{note}
-
 \begin{libreqtab4d}
 {\tcode{X::brushes} requirements}
 {tab:\iotwod.graphsurf.brushes.requirementstab}
@@ -81,8 +76,8 @@ and \tcode{X::brushes::get_brush_type(b) == brush_type::radial}.	\\ \rowsep
 \tcode{brush_data_type}	&
 Returns an object \tcode{b}.	&
 \postconditions
-\tcode{b} is a surface brush, its visual data is the pixmap from \tcode{i},
-and \tcode{X::brushes::get_brush_type(b) == brush_type::surface}	\\ \rowsep
+\tcode{b} is a surface brush, its visual data is the raster graphics data from 
+\tcode{i}, and \tcode{X::brushes::get_brush_type(b) == brush_type::surface}	\\ \rowsep
 \tcode{get_brush_type(const brush_data_type\& data)}	&
 \tcode{brush_type}	&
 Returns the brush type of \tcode{data}.	&

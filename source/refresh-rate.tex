@@ -41,7 +41,7 @@ namespace std::experimental::io2d::v1 {
  \end{note}
  \\
  \tcode{as_fast_as_possible}
- & The draw callback shall be called as frequently as possible, subject to any limits of the execution environment and the \underlyingrendandpresenttechs.
+ & The draw callback shall be called as frequently as possible, subject to any limits of the execution environment.
  \\
  \tcode{fixed}
  & The draw callback shall be called as frequently as needed to maintain the \term{desired frame rate} (Table~\ref{tab:\iotwod.displaysurface.state.listing}) as closely as possible. If more time has passed between two successive calls to the draw callback than is required, it shall be called \term{excess time} and it shall count towards the \term{required time}, which is the time that is required to pass after a call to the draw callback before the next successive call to the draw callback shall be made. If the excess time is greater than the required time, implementations shall call the draw callback and then repeatedly subtract the required time from the excess time until the excess time is less than the required time. If the implementation needs to call the draw callback for some other reason, it shall use that call as the new starting point for maintaining the desired frame rate.

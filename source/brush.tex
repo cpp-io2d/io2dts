@@ -5,27 +5,23 @@
 
 \pnum
 \indexlibrary{\idxcode{basic_brush}}%
-The class template \tcode{basic_brush} describes an opaque wrapper for graphics data. It takes one type parameter, which is a \graphicssurfacestemplparamnospace.
+The class template \tcode{basic_brush} describes an opaque wrapper for visual data. It takes one type parameter, which is a \graphicssurfacestemplparamnospace.
 
 \pnum
-A \tcode{basic_brush} object is usable with any \tcode{basic_image_surface} \tcode{basic_output_surface}, and \tcode{basic_unmanaged_output_surface} object provided that they have the \graphicssurfacestemplparam as the \tcode{basic_brush} object.
+A \tcode{basic_brush} object is usable with any \tcode{basic_image_surface} \tcode{basic_output_surface}, and \tcode{basic_unmanaged_output_surface} object provided that they have the same \graphicssurfacestemplparam as the \tcode{basic_brush} object.
 
 \pnum
-A \tcode{basic_brush} object's graphics data is immutable. It is observable only by the effect that it produces when the brush is used as a \term{source brush} or as a \term{mask brush} (\ref{\iotwod.surface.rendering.brushes}).
+A \tcode{basic_brush} object's visual data is immutable. It is observable only by the effect that it produces when the brush is used as a \term{source brush} or as a \term{mask brush} (\ref{\iotwod.surface.rendering.brushes}).
 
 \pnum
 A \tcode{basic_brush} object has a brush type of \tcode{brush_type}, which indicates which type of brush it is (Table~\ref{tab:\iotwod.brushtype.meanings}).
 
 \pnum
-As a result of technological limitations and considerations, a \tcode{basic_brush} object's graphics data may have less precision than the data from which it was created.
+As a result of technological limitations, a \tcode{basic_brush} object's visual data may have less precision than the data from which it was created.
 
 \pnum
 The data are stored in an object of type \tcode{typename GraphicsMath::brushes::brush_data_type}.
-%\pnum
-%\begin{example}
-%Several graphics and rendering technologies that are currently widely used typically store individual color and alpha channel data as 8-bit unsigned normalized integer values while the \tcode{float} type that is used by the \tcode{rgba_color} class for individual color and alpha is often a 64-bit value. As such, it is possible for a loss of precision when transforming the 64-bit channel data of an \tcode{rgba_color} object to the 8-bit channel data that is commonly used internally in such graphics and rendering technologies.
-%\end{example}
-%
+
 \rSec1 [\iotwod.brush.synopsis] {\tcode{basic_brush} synopsis}
 
 \begin{codeblock}
@@ -101,13 +97,13 @@ When \tcode{b} is a radial gradient brush, when sampling point \tcode{pt}, where
 \rSec2 [\iotwod.brush.sampling.surface] {Sampling from a surface brush}
 
 \pnum
-When \tcode{b} is a surface brush, when sampling point \tcode{pt} from \tcode{b}, where \tcode{pt} is the return value of calling the \tcode{transform_pt} member function of the brush matrix or mask matrix using the requested point, the visual data returned are from the point \tcode{pt} in the graphics data of the brush, as modified by the values of wrap mode (\ref{\iotwod.wrapmode}) and filter (\ref{\iotwod.filter}).
+When \tcode{b} is a surface brush, when sampling point \tcode{pt} from \tcode{b}, where \tcode{pt} is the return value of calling the \tcode{transform_pt} member function of the brush matrix or mask matrix using the requested point, the visual data returned are from the point \tcode{pt} in the raster graphics data of the brush, as modified by the values of wrap mode (\ref{\iotwod.wrapmode}) and filter (\ref{\iotwod.filter}).
 
 \rSec1 [\iotwod.brush.cons] {\tcode{basic_brush} constructors and assignment operators}
 
 \indexlibrary{\idxcode{basic_brush}!constructor}%
 \begin{itemdecl}
-explicit basic_brush(const rgba_color& c);<TODO><Implementation mismatch>
+explicit basic_brush(const rgba_color& c);%<TODO><Implementation mismatch> MM: I'm not seeing a mismatch. Am I missing something?
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -120,7 +116,7 @@ Constructs an object of type \tcode{basic_brush}.
 
 \pnum
 \remarks
-The visual data format of the graphics data are as-if it is that specified by \tcode{format::argb32}.
+The visual data format of the visual data are as-if it is that specified by \tcode{format::argb32}.
 
 \pnum
 Sampling from the brush produces the results specified in \ref{\iotwod.brush.sampling.color}.
