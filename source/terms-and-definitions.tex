@@ -125,7 +125,7 @@ mathematical function that determines a visual data element
 
 \indexdefn{composition algorithm}%
 \definition{composition algorithm}{\iotwod.defns.compositionalgorithm}
-algorithm that combines source \term{visual data element} (\ref{\iotwod.defns.visdataelem}) and a destination \term{visual data element} producing a \term{visual data element} that has the same \term{visual data format} (\ref{\iotwod.defns.visdatafmt}) as the destination \term{visual data element}
+algorithm that combines source visual data element and a destination visual data element producing a visual data element that has the same visual data format as the destination visual data element
 
 \indexdefn{compose}%
 \definition{compose}{\iotwod.defns.compose}
@@ -149,7 +149,7 @@ presence of artifacts in the results of composing
 
 \indexdefn{anti-aliasing}%
 \definition{anti-aliasing}{\iotwod.defns.antialias}
-application of a function or algorithm while \term{composing} (\ref{\iotwod.defns.compose}) to reduce \term{aliasing} (\ref{\iotwod.defns.alias})
+application of a function or algorithm while composing to reduce aliasing
 \begin{note}
 Certain algorithms can produce ``better'' results, i.e. results with fewer artifacts or with less pronounced artifacts, when rendering text with anti-aliasing due to the nature of text rendering. As such, it often makes sense to provide the ability to choose one type of anti-aliasing for text rendering and another for all other rendering and to provide different sets of anti-aliasing types to choose from for each of the two operations.
 \end{note}
@@ -160,11 +160,11 @@ Certain algorithms can produce ``better'' results, i.e. results with fewer artif
 
 \indexdefn{start point}%
 \definition{start point}{\iotwod.defns.startpt}
-point that begins a \term{segment} (\ref{\iotwod.defns.seg})
+point that begins a segment
 
 \indexdefn{end point}%
 \definition{end point}{\iotwod.defns.endpt}
-point that ends a \term{segment} (\ref{\iotwod.defns.seg})
+point that ends a segment
 
 \indexdefn{control point}%
 \definition{control point}{\iotwod.defns.controlpt}
@@ -175,7 +175,7 @@ point, other than the start point and the end point, that is used in defining a 
 \definition{\bezierlocal curve}{\iotwod.defns.bezier.quadratic}
 \defncontext{quadratic} curve defined by the 
 equation $f(t) = (1 - t)^{2} \times P_{0} + 2 \times t \times (1 - t) 
-\times P_{1} + t^{2} \times t \times P_{2}$ where t is in the range \crange{0}{1}, $P_{0}$ is the \term{start point} (\ref{\iotwod.defns.startpt}), $P_{1}$ is the \term{control point} (\ref{\iotwod.defns.controlpt}), and $P_{2}$ is end point (\ref{\iotwod.defns.endpt})
+\times P_{1} + t^{2} \times t \times P_{2}$ where t is in the range \crange{0}{1}, $P_{0}$ is the start point, $P_{1}$ is the control point, and $P_{2}$ is end point
 
 \indexdefn{\bezierlocal curve}
 \indexdefn{\bezierlocal curve!cubic}
@@ -183,96 +183,96 @@ equation $f(t) = (1 - t)^{2} \times P_{0} + 2 \times t \times (1 - t)
 \defncontext{cubic} curve defined by the 
 equation $f(t) = (1 - t)^{3} \times P_{0} + 3 \times t \times (1 - t)^{2} 
 \times P_{1} + 3 \times t^{2} \times (1 - t) \times P_{2} + t^{3} \times t 
-\times P_{3}$ where t is in the range \crange{0}{1}, $P_{0}$ is the \term{start point} (\ref{\iotwod.defns.startpt}), $P_{1}$ is the first \term{control point} (\ref{\iotwod.defns.controlpt}), $P_{2}$ is the second \term{control point}, and $P_{3}$ is the end point (\ref{\iotwod.defns.endpt})
+\times P_{3}$ where t is in the range \crange{0}{1}, $P_{0}$ is the start point, $P_{1}$ is the first control point, $P_{2}$ is the second control point, and $P_{3}$ is the end point
 
 \indexdefn{segment}%
 \definition{segment}{\iotwod.defns.seg}
-line, \term{\bezierlocal curve} (\ref{\iotwod.defns.bezier.quadratic}, \ref{\iotwod.defns.bezier.cubic}), or arc
+line, \bezierlocal curve, or arc
 
 \indexdefn{initial segment}%
 \definition{initial segment}{\iotwod.defns.initialseg}
-\term{segment} (\ref{\iotwod.defns.seg}) in a \term{figure} (\ref{\iotwod.defns.figure}) whose \term{start point} (\ref{\iotwod.defns.startpt}) is not defined as being the \term{end point} (\ref{\iotwod.defns.endpt}) of another segment in the figure
+segment in a figure whose start point is not defined as being the end point of another segment in the figure
 \begin{note}
 It is possible for the initial segment and final segment to be the same segment.
 \end{note}
 
 \indexdefn{new figure point}%
 \definition{new figure point}{\iotwod.defns.newfigpt}
-point that is the \term{start point} (\ref{\iotwod.defns.startpt}) of the \term{initial segment} (\ref{\iotwod.defns.initialseg})
+point that is the start point of the initial segment
 
 \indexdefn{final segment}%
 \definition{final segment}{\iotwod.defns.finalseg}
-\term{segment} (\ref{\iotwod.defns.seg}) in a \term{figure} (\ref{\iotwod.defns.figure}) whose \term{end point} (\ref{\iotwod.defns.endpt}) does not define the \term{start point} (\ref{\iotwod.defns.startpt}) of any other \term{segment}
+segment in a figure whose end point does not define the start point of any other segment
 \begin{note}
 It is possible for the initial segment and final segment to be the same segment.
 \end{note}
 
 \indexdefn{current point}%
 \definition{current point}{\iotwod.defns.currentpt}
-point used as the \term{start point} (\ref{\iotwod.defns.startpt}) of a \term{segment} (\ref{\iotwod.defns.seg})
+point used as the start point of a segment
 
 \indexdefn{open figure}%
 \definition{open figure}{\iotwod.defns.openfigure}
-figure (\ref{\iotwod.defns.figure}) with one or more \term{segments} (\ref{\iotwod.defns.seg}) where the \term{new figure point} (\ref{\iotwod.defns.newfigpt}) is not used to define the \term{end point} (\ref{\iotwod.defns.endpt}) of the figure's \term{final segment} (\ref{\iotwod.defns.finalseg})
+figure with one or more segments where the new figure point is not used to define the end point of the figure's final segment
 \begin{note}
 Even if the start point of the initial segment and the end point of the final segment are assigned the same coordinates, the figure is still an open figure. This is because the final segment's end point is not defined as being the new figure point but instead merely happens to have the same value as that point.
 \end{note}
 
 \indexdefn{closed figure}%
 \definition{closed figure}{\iotwod.defns.closedfigure}
-\term{figure} (\ref{\iotwod.defns.figure}) with one or more \term{segments} (\ref{\iotwod.defns.seg}) where the \term{new figure point} (\ref{\iotwod.defns.newfigpt}) is used to define the \term{end point} (\ref{\iotwod.defns.endpt}) of the figure's \term{final segment} (\ref{\iotwod.defns.finalseg})
+figure with one or more segments where the new figure point is used to define the end point of the figure's final segment
 
 \indexdefn{degenerate segment}%
 \definition{degenerate segment}{\iotwod.defns.degenerateseg}
-\term{segment} (\ref{\iotwod.defns.seg}) that has the same values for its \term{start point} (\ref{\iotwod.defns.startpt}), \term{end point} (\ref{\iotwod.defns.endpt}), and, if any, \term{control points} (\ref{\iotwod.defns.controlpt})
+segment that has the same values for its start point, end point, and, if any, control points
 
 \indexdefn{command}%
 \definition{command}{\iotwod.defns.command.closefig}
-\defncontext{close figure command} instruction that creates a line \term{segment} (\ref{\iotwod.defns.seg}) with a \term{start point} (\ref{\iotwod.defns.startpt}) of \term{current point} (\ref{\iotwod.defns.currentpt}) and an \term{end point} (\ref{\iotwod.defns.endpt}) of \term{new figure point} (\ref{\iotwod.defns.newfigpt})
+\defncontext{close figure command} instruction that creates a line segment with a start point of current point and an end point of new figure point
 
 \indexdefn{command}%
 \definition{command}{\iotwod.defns.command.newfig}
-\defncontext{new figure command} an instruction that creates a new \term{path} (\ref{\iotwod.defns.path})
+\defncontext{new figure command} an instruction that creates a new path
 
 \indexdefn{figure item}%
 \definition{figure item}{\iotwod.defns.figitem}
-\term{segment} (\ref{\iotwod.defns.seg}), \term{new figure command} (\ref{\iotwod.defns.command.newfig}), \term{close figure command} (\ref{\iotwod.defns.command.closefig}), or \term{path command} (\ref{\iotwod.defns.pathcommand})
+segment, new figure command, close figure command, or path command
 
 \indexdefn{figure}%
 \definition{figure}{\iotwod.defns.figure}
-collection of \term{figure items} (\ref{\iotwod.defns.figitem}) where the \term{end point} (\ref{\iotwod.defns.endpt}) of each \term{segment} (\ref{\iotwod.defns.seg}) in the collection, except the \term{final segment} (\ref{\iotwod.defns.finalseg}), defines the \term{start point} (\ref{\iotwod.defns.startpt}) of exactly one other segment in the collection
+collection of figure items where the end point of each segment in the collection, except the final segment, defines the start point of exactly one other segment in the collection
 
 \indexdefn{path}%
 \definition{path}{\iotwod.defns.path}
-collection of \term{figures} (\ref{\iotwod.defns.figure})
+collection of figures
 
 \indexdefn{path transformation matrix}%
 \definition{path transformation matrix}{\iotwod.defns.pathtransform}
-affine transformation matrix used to apply affine transformations to the points in a \term{path} (\ref{\iotwod.defns.path})
+affine transformation matrix used to apply affine transformations to the points in a path
 
 \indexdefn{path command}%
 \definition{path command}{\iotwod.defns.pathcommand}
-instruction that modifies the \term{path transformation matrix} (\ref{\iotwod.defns.pathtransform})
+instruction that modifies the path transformation matrix
 
 \indexdefn{degenerate figure}%
 \definition{degenerate figure}{\iotwod.defns.degenfigure}
-\term{figure} (\ref{\iotwod.defns.figure}) containing a \term{new figure command} (\ref{\iotwod.defns.command.newfig}), zero or more \term{degenerate segments} (\ref{\iotwod.defns.degenerateseg}), zero or more \term{path commands} (\ref{\iotwod.defns.pathcommand}), and, optionally, a \term{close figure command} (\ref{\iotwod.defns.command.closefig})
+figure containing a new figure command, zero or more degenerate segments, zero or more path commands, and, optionally, a close figure command
 
 \indexdefn{graphics state data}%
 \definition{graphics state data}{\iotwod.defns.graphicsstatedata}
-data which specify how some part of the process of rendering, or of a \term{composing operation} (\ref{\iotwod.defns.composingoperation}), shall be performed in part or in whole
+data which specify how some part of the process of rendering, or of a composing operation, is performed in part or in whole
 
 \indexdefn{render}%
 \definition{render}{\iotwod.defns.render}
-transform a \term{path} (\ref{\iotwod.defns.path}) into visual data in the manner specified by a set of \term{graphics state data} (\ref{\iotwod.defns.graphicsstatedata})
+transform a path into visual data in the manner specified by a set of graphics state data
 
 \indexdefn{rendering operation}%
 \definition{rendering operation}{\iotwod.defns.renderingoperation}
-operation that performs \term{rendering} (\ref{\iotwod.defns.render})
+operation that performs rendering
 
 \indexdefn{rendering and composing operation}%
 \definition{rendering and composing operation}{\iotwod.defns.renderingandcomposingop}
-operation that is either a \term{composing operation} (\ref{\iotwod.defns.composingoperation}), or a \term{rendering operation} (\ref{\iotwod.defns.renderingoperation}) followed by a \term{composing operation}
+operation that is either a composing operation, or a rendering operation followed by a composing operation
 
 %\input{definitions-paths}
 
