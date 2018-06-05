@@ -159,7 +159,7 @@ Certain types do not require any member data to describe the observable effects 
 \tcode{X::paths::create_abs_cubic_curve()}	&
 \tcode{AC}	&
 \effects
-Equivalent to \tcode{return create_abs_cubic_curve(P\{\}, P\{\}, P\{\});}	&
+Equivalent to \tcode{return create_abs_cubic_curve(P(), P(), P());}	&
 	\\ \rowsep
 \tcode{X::paths::create_abs_cubic_curve(const P\& cpt1, const P\& cpt2, const P\& ept)}	&
 \tcode{abs_cubic_curve_data_type}	&
@@ -226,7 +226,7 @@ An object \tcode{al}.	&
 %%
 \tcode{X::paths::create_abs_matrix()}	&
 \tcode{AM}	&
-Equivalent to \tcode{return create_abs_matrix(M\{\});}	&
+Equivalent to \tcode{return create_abs_matrix(M());}	&
 	\\ \rowsep
 \tcode{X::paths::create_abs_matrix(const M\& m)}	&
 \tcode{AM}	&
@@ -249,7 +249,7 @@ An object \tcode{am}.	&
 %%
 \tcode{X::paths::create_abs_new_figure()}	&
 \tcode{AN}	&
-\effects Equivalent to \tcode{return create_abs_new_figure(P\{\});}	&
+\effects Equivalent to \tcode{return create_abs_new_figure(P());}	&
 	\\ \rowsep
 \tcode{X::paths::create_abs_new_figure(const P\& p)}	&
 \tcode{AN}	&
@@ -272,7 +272,7 @@ An object \tcode{an}.	&
 %%
 \tcode{X::paths::create_abs_quadratic_curve()}	&
 \tcode{AQ}	&
-Equivalent to \tcode{return create_abs_quadratic_curve(P\{\}, P\{\});}	&
+Equivalent to \tcode{return create_abs_quadratic_curve(P(), P());}	&
 	\\ \rowsep
 \tcode{X::paths::create_abs_quadratic_curve(const P\& cpt, const P\& ept)}	&
 \tcode{AQ}	&
@@ -306,7 +306,7 @@ An object \tcode{aq}.	&
 \tcode{X::paths::create_arc()}	&
 \tcode{ARC}	&
 \effects
-Equivalent to \tcode{return create_arc(P\{\}, 0.0f, 0.0f);}	&
+Equivalent to \tcode{return create_arc(P(), 0.0f, 0.0f);}	&
 	\\ \rowsep
 \tcode{X::paths::create_arc(const P\& rad, float rot, float sa)}	&
 \tcode{ARC}	&
@@ -409,7 +409,7 @@ The internal data of the interpreted path should be in a form that is best suite
 \tcode{X::paths::create_rel_cubic_curve()}	&
 \tcode{RC}	&
 \effects
-Equivalent to \tcode{return create_rel_cubic_curve(P\{\}, P\{\}, P\{\});}	&
+Equivalent to \tcode{return create_rel_cubic_curve(P(), P(), P());}	&
 	\\ \rowsep
 \tcode{X::paths::create_rel_cubic_curve(const P\& cpt1, const P\& cpt2, const P\& ept)}	&
 \tcode{RC}	&
@@ -476,7 +476,7 @@ An object \tcode{rl}.	&
 %%
 \tcode{X::paths::create_rel_matrix()}	&
 \tcode{RM}	&
-Equivalent to \tcode{return create_rel_matrix(M\{\});}	&
+Equivalent to \tcode{return create_rel_matrix(M());}	&
 	\\ \rowsep
 \tcode{X::paths::create_rel_matrix(const M\& m)}	&
 \tcode{RM}	&
@@ -499,7 +499,7 @@ An object \tcode{rm}.	&
 %%
 \tcode{X::paths::create_rel_new_figure()}	&
 \tcode{RN}	&
-\effects Equivalent to \tcode{return create_rel_new_figure(P\{\});}	&
+\effects Equivalent to \tcode{return create_rel_new_figure(P());}	&
 	\\ \rowsep
 \tcode{X::paths::create_rel_new_figure(const P\& p)}	&
 \tcode{RN}	&
@@ -522,7 +522,7 @@ An object \tcode{rn}.	&
 %%
 \tcode{X::paths::create_rel_quadratic_curve()}	&
 \tcode{RQ}	&
-Equivalent to \tcode{return create_rel_quadratic_curve(P\{\}, P\{\});}	&
+Equivalent to \tcode{return create_rel_quadratic_curve(P(), P());}	&
 	\\ \rowsep
 \tcode{X::paths::create_rel_quadratic_curve(const P\& cpt, const P\& ept)}	&
 \tcode{RQ}	&

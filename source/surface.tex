@@ -312,7 +312,13 @@ An output device might be a window in a windowing system environment or the usab
 \end{example}
 
 \pnum
-It is not required that implementations support the simultaneous existence of multiple \tcode{basic_output_surface} objects.
+Implementations may allow more than one \tcode{basic_output_surface} object, \tcode{basic_unmanaged_output_surface} object, or a combination thereof to exist co-synchronously. \begin{note}
+In windowing environments, implementations would likely support multiple objects of these types. In contrast, on a smart phone it is unlikely that an implementation would support multiple objects of these types due to environmental and platform constraints.
+\end{note}
+
+\pnum
+It is not required that implementations support the existence of any \tcode{basic_unmanaged_output_surface} objects. See Table~\ref{tab:\iotwod.graphsurf.surfs.requirementstab}.
+\end{note}
 
 \pnum
 All functions that perform rendering and composing operations operate on the back buffer. <TODO> Specify on a per-function basis rather than with a blanket statement that is probably inaccurate.
