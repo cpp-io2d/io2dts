@@ -11,10 +11,10 @@ namespace std::experimental::io2d::v1 {
   template <class GraphicsSurfaces>
   basic_image_surface<GraphicsSurfaces> copy_surface(
     basic_output_surface<GraphicsSurfaces>& sfc) noexcept;
-  template <class GraphicsSurfaces>
-  basic_image_surface<GraphicsSurfaces> copy_surface(
-    basic_unmanaged_output_surface<GraphicsSurfaces>& sfc) noexcept;
-  int format_stride_for_width(format format, int width) noexcept;
+  template <class T>
+  constexpr T degrees_to_radians(T d) noexcept;
+  template <class T>
+  constexpr T radians_to_degrees(T r) noexcept;
   float angle_for_point(point_2d ctr, point_2d pt) noexcept;
   point_2d point_for_angle(float ang, float rad = 1.0f) noexcept;
   point_2d point_for_angle(float ang, point_2d rad) noexcept;
@@ -37,9 +37,6 @@ basic_image_surface<GraphicsSurfaces> copy_surface(
 template <class GraphicsSurfaces>
 basic_image_surface<GraphicsSurfaces> copy_surface(
   basic_output_surface<GraphicsSurfaces>& sfc) noexcept;
-template <class GraphicsSurfaces>
-basic_image_surface<GraphicsSurfaces> copy_surface(
-  basic_unmanaged_output_surface<GraphicsSurfaces>& sfc) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -47,19 +44,30 @@ basic_image_surface<GraphicsSurfaces> copy_surface(
 \tcode{GraphicsSurfaces::surfaces::copy_surface(sfc)}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.standalone.formatstrideforwidth] {\tcode{format_stride_for_width}}
-
-\indexlibrary{\idxcode{format_stride_for_width}}%
+\rSec1 [\iotwod.standalone.degtorad] {\tcode{degrees_to_radians}}
 \begin{itemdecl}
-int format_stride_for_width(format fmt, int width) noexcept;
+template <class T>
+constexpr T degrees_to_radians(T d) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
-\pnum
 \returns
-The size in bytes of a row of pixels with a visual data format of \tcode{fmt} that is \tcode{width} pixels wide. This value may be larger than the value obtained by multiplying the number of bytes specified by the \tcode{format} enumerator specified by \tcode{fmt} by the number of pixels specified by \tcode{width}.
+If \tcode{d} is positive and is less than one thousandth of a degree, then \tcode{static_cast<T>(0)}. If \tcode{d} is negative and is less than one thousandth of a degree, then \tcode{-static_cast<T>(0)}. Otherwise, the value obtained from converting the degrees value \tcode{d} to radians.
 
-\pnum
-If \tcode{fmt == format::invalid}, this function shall return \tcode{0}.
+\remarks
+This function shall not participate in overload resolution unless \tcode{T} is a floating-point type.
+\end{itemdescr}
+
+\rSec1 [\iotwod.standalone.radtodeg] {\tcode{radians_to_degrees}}
+\begin{itemdecl}
+template <class T>
+constexpr T radians_to_degrees(T r) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\returns
+If \tcode{r} is positive and is less than one thousandth of a degree in radians, then \tcode{static_cast<T>(0)}. If \tcode{r} is negative and is less than one thousandth of a degree in radians, then \tcode{-static_cast<T>(0)}. Otherwise, the value obtained from converting the radians value \tcode{r} to degrees.
+
+\remarks
+This function shall not participate in overload resolution unless \tcode{T} is a floating-point type.
 \end{itemdescr}
 
 \rSec1 [\iotwod.standalone.angleforpoint] {\tcode{angle_for_point}}

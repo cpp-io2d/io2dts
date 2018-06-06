@@ -7,25 +7,395 @@
 
 namespace std { namespace experimental {
   namespace io2d { inline namespace v1 {
-  		
-  using bounding_box = basic_bounding_box<default_graphics_math>;
-  using brush = basic_brush<default_graphics_surfaces>;
-  using brush_props = basic_brush_props<default_graphics_surfaces>;
-  using circle = basic_circle<default_graphics_math>;
-  using clip_props = basic_clip_props<default_graphics_surfaces>;
-  using dashes = basic_dashes<default_graphics_surfaces>;
-  using display_point = basic_display_point<default_graphics_math>;
-  using figure_items = basic_figure_items<default_graphics_surfaces>;
-  using image_surface = basic_image_surface<default_graphics_surfaces>;
-  using interpreted_path = basic_interpreted_path<default_graphics_surfaces>;
-  using mask_props = basic_mask_props<default_graphics_surfaces>;
-  using matrix_2d = basic_matrix_2d<default_graphics_math>;
-  using output_surface = basic_output_surface<default_graphics_surfaces>;
-  using path_builder = basic_path_builder<default_graphics_surfaces>;
-  using point_2d = basic_point_2d<default_graphics_math>;
-  using render_props = basic_render_props<default_graphics_surfaces>;
-  using stroke_props = basic_stroke_props<default_graphics_surfaces>;
-  using unmanaged_output_surface = basic_unmanaged_output_surface<default_graphics_surfaces>;
+    template <class T>
+    constexpr T pi = T(3.14159265358979323846264338327950288L);
+    template <class T>
+    constexpr T two_pi = T(6.28318530717958647692528676655900577L);
+    template <class T>
+    constexpr T half_pi = T(1.57079632679489661923132169163975144L);
+    template <class T>
+    constexpr T three_pi_over_two = T(4.71238898038468985769396507491925432L);
+    template <class T>
+    constexpr T tau = T(6.28318530717958647692528676655900577L);
+    template <class T>
+    constexpr T three_quarters_tau = T(4.71238898038468985769396507491925432L);
+    template <class T>
+    constexpr T half_tau = T(3.14159265358979323846264338327950288L);
+    template <class T>
+    constexpr T quarter_tau = T(1.57079632679489661923132169163975144L);
+    
+    template <class T>
+    constexpr T degrees_to_radians(T deg) noexcept;
+    template <class T>
+    constexpr T radians_to_degrees(T rad) noexcept;
+
+    class rgba_color;
+    constexpr bool operator==(const rgba_color& lhs, const rgba_color& rhs) 
+      noexcept;
+    constexpr bool operator!=(const rgba_color& lhs, const rgba_color& rhs) 
+      noexcept;
+    template <class T>
+    constexpr rgba_color operator*(const rgba_color& lhs, T rhs) noexcept;
+    template <class U>
+    constexpr rgba_color operator*(const rgba_color& lhs, U rhs) noexcept;
+    template <class T>
+    constexpr rgba_color operator*(T lhs, const rgba_color& rhs) noexcept;
+    template <class U>
+    constexpr rgba_color operator*(U lhs, const rgba_color& rhs) noexcept;
+  
+    class gradient_stop;
+    constexpr bool operator==(const gradient_stop& lhs,
+      const gradient_stop& rhs) noexcept;
+    constexpr bool operator!=(const gradient_stop& lhs,
+      const gradient_stop& rhs) noexcept;
+  
+    template <class GraphicsMath>
+    class basic_bounding_box;
+    template <class GraphicsMath>
+    bool operator==(const basic_bounding_box<GraphicsMath>& lhs,
+      const basic_bounding_box<GraphicsMath>& rhs) noexcept;
+    template <class GraphicsMath>
+    bool operator!=(const basic_bounding_box<GraphicsMath>& lhs,
+      const basic_bounding_box<GraphicsMath>& rhs) noexcept;
+  
+    template <class GraphicsSurfaces>
+    class basic_brush;
+    template <class GraphicsSurfaces>
+    bool operator==(const basic_brush<GraphicsSurfaces>& lhs,
+      const basic_brush<GraphicsSurfaces>& rhs) noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(const basic_brush<GraphicsSurfaces>& lhs,
+      const basic_brush<GraphicsSurfaces>& rhs) noexcept;
+
+    template <class GraphicsSurfaces>
+    class basic_brush_props;
+    template <class GraphicsSurfaces>
+    bool operator==(const basic_brush_props<GraphicsSurfaces>& lhs,
+      const basic_brush_props<GraphicsSurfaces>& rhs) noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(const basic_brush_props<GraphicsSurfaces>& lhs,
+      const basic_brush_props<GraphicsSurfaces>& rhs) noexcept;
+    
+    template <class GraphicsMath>
+    class basic_circle;
+    template <class GraphicsMath>
+    bool operator==(const basic_circle<GraphicsMath>& lhs,
+      const basic_circle<GraphicsMath>& rhs) noexcept;
+    template <class GraphicsMath>
+    bool operator!=(const basic_circle<GraphicsMath>& lhs,
+      const basic_circle<GraphicsMath>& rhs) noexcept;
+    
+    template <class GraphicsSurfaces>
+    class basic_clip_props;
+    template <class GraphicsSurfaces>
+    bool operator==(const basic_clip_props<GraphicsSurfaces>& lhs,
+      const basic_clip_props<GraphicsSurfaces>& rhs) noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(const basic_clip_props<GraphicsSurfaces>& lhs,
+      const basic_clip_props<GraphicsSurfaces>& rhs) noexcept;
+    
+    template <class GraphicsSurfaces>
+    class basic_dashes;
+    template <class GraphicsSurfaces>
+    bool operator==(const basic_dashes<GraphicsSurfaces>& lhs,
+      const basic_dashes<GraphicsSurfaces>& rhs) noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(const basic_dashes<GraphicsSurfaces>& lhs,
+      const basic_dashes<GraphicsSurfaces>& rhs) noexcept;
+    
+    template <class GraphicsMath>
+    class basic_display_point;
+    
+    template <class GraphicsSurfaces>
+    class basic_figure_items;
+    template <class GraphicsSurfaces>
+    bool operator==(
+      const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& rhs) 
+      noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(
+      const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& rhs) noexcept;
+    template <class GraphicsSurfaces>
+    bool operator==(
+      const typename basic_figure_items<GraphicsSurfaces>::rel_new_figure& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::rel_new_figure& rhs) 
+      noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(
+      const typename basic_figure_items<GraphicsSurfaces>::rel_new_figure& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::rel_new_figure& rhs) 
+      noexcept;
+    template <class GraphicsSurfaces>
+    bool operator==(
+      const typename basic_figure_items<GraphicsSurfaces>::close_figure& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::close_figure& rhs) 
+      noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(
+      const typename basic_figure_items<GraphicsSurfaces>::close_figure& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::close_figure& rhs) 
+      noexcept;
+    template <class GraphicsSurfaces>
+    bool operator==(
+      const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& rhs) 
+      noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(
+      const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& rhs) 
+      noexcept;
+    template <class GraphicsSurfaces>
+    bool operator==(
+      const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& rhs) 
+      noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(
+      const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& rhs) 
+      noexcept;
+    template <class GraphicsSurfaces>
+    bool operator==(
+      const typename basic_figure_items<GraphicsSurfaces>::revert_matrix& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::revert_matrix& rhs) 
+      noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(
+      const typename basic_figure_items<GraphicsSurfaces>::revert_matrix& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::revert_matrix& rhs) 
+      noexcept;
+    template <class GraphicsSurfaces>
+    bool operator==(
+      const typename basic_figure_items<GraphicsSurfaces>::abs_line& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::abs_line& rhs) 
+      noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(
+      const typename basic_figure_items<GraphicsSurfaces>::abs_line& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::abs_line& rhs) 
+      noexcept;
+    template <class GraphicsSurfaces>
+    bool operator==(
+      const typename basic_figure_items<GraphicsSurfaces>::rel_line& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::rel_line& rhs) 
+      noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(
+      const typename basic_figure_items<GraphicsSurfaces>::rel_line& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::rel_line& rhs) 
+      noexcept;
+    template <class GraphicsSurfaces>
+    bool operator==(const typename
+      basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& 
+      rhs) noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(const typename 
+      basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& 
+      rhs) noexcept;
+    template <class GraphicsSurfaces>
+    bool operator==(const typename 
+      basic_figure_items<GraphicsSurfaces>::rel_quadratic_curve& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::rel_quadratic_curve& 
+      rhs) noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(const typename 
+      basic_figure_items<GraphicsSurfaces>::rel_quadratic_curve& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::rel_quadratic_curve& 
+      rhs) noexcept;
+    template <class GraphicsSurfaces>
+    bool operator==(const typename 
+      basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& 
+      rhs) noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(const typename 
+      basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& 
+      rhs) noexcept;
+    template <class GraphicsSurfaces>
+    bool operator==(const typename 
+      basic_figure_items<GraphicsSurfaces>::rel_cubic_curve& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::rel_cubic_curve& 
+      rhs) noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(const typename 
+      basic_figure_items<GraphicsSurfaces>::rel_cubic_curve& lhs,
+      const typename basic_figure_items<GraphicsSurfaces>::rel_cubic_curve& 
+      rhs) noexcept;
+    template <class GraphicsSurfaces>
+    bool operator==(const typename basic_figure_items<GraphicsSurfaces>::arc& 
+      lhs, const typename basic_figure_items<GraphicsSurfaces>::arc& rhs) 
+      noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(const typename basic_figure_items<GraphicsSurfaces>::arc& 
+      lhs, const typename basic_figure_items<GraphicsSurfaces>::arc& rhs) 
+      noexcept;
+    
+    template <class GraphicsSurfaces>
+    class basic_image_surface;
+    
+    template <class GraphicsSurfaces>
+    class basic_interpreted_path;
+    template <class GraphicsSurfaces>
+    bool operator==(const basic_interpreted_path<GraphicsSurfaces>& lhs,
+      const basic_interpreted_path<GraphicsSurfaces>& rhs) noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(const basic_interpreted_path<GraphicsSurfaces>& lhs,
+      const basic_interpreted_path<GraphicsSurfaces>& rhs) noexcept;
+    
+    
+    template <class GraphicsSurfaces>
+    class basic_mask_props;
+    template <class GraphicsSurfaces>
+    bool operator==(const basic_mask_props<GraphicsSurfaces>& lhs,
+      const basic_mask_props<GraphicsSurfaces>& rhs) noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(const basic_mask_props<GraphicsSurfaces>& lhs,
+      const basic_mask_props<GraphicsSurfaces>& rhs) noexcept;
+    
+    template <class GraphicsMath>
+    class basic_matrix_2d;
+    template <class GraphicsMath>
+    basic_matrix_2d<GraphicsMath> operator*(
+      const basic_matrix_2d<GraphicsMath>& lhs,
+      const basic_matrix_2d<GraphicsMath>& rhs) noexcept;
+    template <class GraphicsMath>
+    basic_point_2d<GraphicsMath> operator*(
+      const basic_point_2d<GraphicsMath>& lhs,
+      const basic_matrix_2d<GraphicsMath>& rhs) noexcept;
+    template <class GraphicsMath>
+    bool operator==(const basic_matrix_2d<GraphicsMath>& lhs,
+      const basic_matrix_2d<GraphicsMath>& rhs) noexcept;
+    template <class GraphicsMath>
+    bool operator!=(const basic_matrix_2d<GraphicsMath>& lhs,
+      const basic_matrix_2d<GraphicsMath>& rhs) noexcept;
+  
+    template <class GraphicsSurfaces>
+    class basic_output_surface;
+    
+    template <class GraphicsSurfaces, class Allocator =
+      allocator<typename basic_figure_items<GraphicsSurfaces>::figure_item>>
+    class basic_path_builder;
+    template <class GraphicsSurfaces, class Allocator>
+    bool operator==(const basic_path_builder<GraphicsSurfaces, Allocator>& lhs,
+      const basic_path_builder<GraphicsSurfaces, Allocator>& rhs) noexcept;
+    template <class GraphicsSurfaces, class Allocator>
+    bool operator!=(const basic_path_builder<GraphicsSurfaces, Allocator>& lhs,
+      const basic_path_builder<GraphicsSurfaces, Allocator>& rhs) noexcept;
+    template <class GraphicsSurfaces, class Allocator>
+    void swap(basic_path_builder<GraphicsSurfaces, Allocator>& lhs,
+      basic_path_builder<GraphicsSurfaces, Allocator>& rhs) noexcept(noexcept(lhs.swap(rhs)));
+      
+    template <class GraphicsMath>
+    class basic_point_2d;
+    template <class GraphicsMath>
+    bool operator==(const basic_point_2d<GraphicsMath>& lhs,
+      const basic_point_2d<GraphicsMath>& rhs) noexcept;
+    template <class GraphicsMath>
+    bool operator!=(const basic_point_2d<GraphicsMath>& lhs,
+      const basic_point_2d<GraphicsMath>& rhs) noexcept;
+    template <class GraphicsMath>
+    basic_point_2d<GraphicsMath> operator+(
+      const basic_point_2d<GraphicsMath>& val) noexcept;
+    template <class GraphicsMath>
+    basic_point_2d<GraphicsMath> operator+(
+      const basic_point_2d<GraphicsMath>& lhs,
+      const basic_point_2d<GraphicsMath>& rhs) noexcept;
+    template <class GraphicsMath>
+    basic_point_2d<GraphicsMath> operator-(
+      const basic_point_2d<GraphicsMath>& val) noexcept;
+    template <class GraphicsMath>
+    basic_point_2d<GraphicsMath> operator-(
+      const basic_point_2d<GraphicsMath>& lhs,
+      const basic_point_2d<GraphicsMath>& rhs) noexcept;
+    template <class GraphicsMath>
+    basic_point_2d<GraphicsMath> operator*(
+      const basic_point_2d<GraphicsMath>& lhs,
+      float rhs) noexcept;
+    template <class GraphicsMath>
+    basic_point_2d<GraphicsMath> operator*(float lhs,
+      const basic_point_2d<GraphicsMath>& rhs) noexcept;
+    template <class GraphicsMath>
+    basic_point_2d<GraphicsMath> operator*(
+      const basic_point_2d<GraphicsMath>& lhs,
+      const basic_point_2d<GraphicsMath>& rhs) noexcept;
+    template <class GraphicsMath>
+    basic_point_2d<GraphicsMath> operator/(
+      const basic_point_2d<GraphicsMath>& lhs,
+      float rhs) noexcept;
+    template <class GraphicsMath>
+    basic_point_2d<GraphicsMath> operator/(float lhs,
+      const basic_point_2d<GraphicsMath>& rhs) noexcept;
+    template <class GraphicsMath>
+    basic_point_2d<GraphicsMath> operator/(
+      const basic_point_2d<GraphicsMath>& lhs,
+      const basic_point_2d<GraphicsMath>& rhs) noexcept;
+  
+    template <class GraphicsSurfaces>    
+    class basic_render_props;
+    template <class GraphicsSurfaces>
+    bool operator==(const basic_render_props<GraphicsSurfaces>& lhs,
+      const basic_render_props<GraphicsSurfaces>& rhs) noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(const basic_render_props<GraphicsSurfaces>& lhs,
+      const basic_render_props<GraphicsSurfaces>& rhs) noexcept;
+    
+    template <class GraphicsSurfaces>
+    class basic_stroke_props;
+    template <class GraphicsSurfaces>
+    bool operator==(const basic_stroke_props<GraphicsSurfaces>& lhs,
+      const basic_stroke_props<GraphicsSurfaces>& rhs) noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(const basic_stroke_props<GraphicsSurfaces>& lhs,
+      const basic_stroke_props<GraphicsSurfaces>& rhs) noexcept;
+    
+    template <class GraphicsSurfaces>
+    class basic_unmanaged_output_surface;
+  
+    using bounding_box = basic_bounding_box<default_graphics_math>;
+    using brush = basic_brush<default_graphics_surfaces>;
+    using brush_props = basic_brush_props<default_graphics_surfaces>;
+    using circle = basic_circle<default_graphics_math>;
+    using clip_props = basic_clip_props<default_graphics_surfaces>;
+    using dashes = basic_dashes<default_graphics_surfaces>;
+    using display_point = basic_display_point<default_graphics_math>;
+    using figure_items = basic_figure_items<default_graphics_surfaces>;
+    using image_surface = basic_image_surface<default_graphics_surfaces>;
+    using interpreted_path = basic_interpreted_path<default_graphics_surfaces>;
+    using mask_props = basic_mask_props<default_graphics_surfaces>;
+    using matrix_2d = basic_matrix_2d<default_graphics_math>;
+    using output_surface = basic_output_surface<default_graphics_surfaces>;
+    using path_builder = basic_path_builder<default_graphics_surfaces>;
+    using point_2d = basic_point_2d<default_graphics_math>;
+    using render_props = basic_render_props<default_graphics_surfaces>;
+    using stroke_props = basic_stroke_props<default_graphics_surfaces>;
+    using unmanaged_output_surface = 
+      basic_unmanaged_output_surface<default_graphics_surfaces>;
+    
+    template <class GraphicsSurfaces>
+    basic_image_surface<GraphicsSurfaces> copy_surface(
+      basic_image_surface<GraphicsSurfaces>& sfc) noexcept;
+    template <class GraphicsSurfaces>
+    basic_image_surface<GraphicsSurfaces> copy_surface(
+      basic_output_surface<GraphicsSurfaces>& sfc) noexcept;
+    template <class T>
+    constexpr T degrees_to_radians(T d) noexcept;
+    template <class T>
+    constexpr T radians_to_degrees(T r) noexcept;
+    float angle_for_point(point_2d ctr, point_2d pt) noexcept;
+    point_2d point_for_angle(float ang, float rad = 1.0f) noexcept;
+    point_2d point_for_angle(float ang, point_2d rad) noexcept;
+    point_2d arc_start(point_2d ctr, float sang, point_2d rad, 
+      const matrix_2d& m = matrix_2d{}) noexcept;
+    point_2d arc_center(point_2d cpt, float sang, point_2d rad, 
+      const matrix_2d& m = matrix_2d{}) noexcept;
+    point_2d arc_end(point_2d cpt, float eang, point_2d rad, 
+      const matrix_2d& m = matrix_2d{}) noexcept;
 } } } }
 
 \end{codeblock}

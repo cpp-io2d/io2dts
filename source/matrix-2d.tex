@@ -91,10 +91,12 @@ namespace std::experimental::io2d::v1 {
 
   // \ref{\iotwod.\matrixtwod.ops}, member operators:
   template <class GraphicsMath>
-  basic_matrix_2d<GraphicsMath> operator*(const basic_matrix_2d<GraphicsMath>& lhs,
+  basic_matrix_2d<GraphicsMath> operator*(
+    const basic_matrix_2d<GraphicsMath>& lhs,
     const basic_matrix_2d<GraphicsMath>& rhs) noexcept;
   template <class GraphicsMath>
-  basic_point_2d<GraphicsMath> operator*(const basic_point_2d<GraphicsMath>& lhs,
+  basic_point_2d<GraphicsMath> operator*(
+    const basic_point_2d<GraphicsMath>& lhs,
     const basic_matrix_2d<GraphicsMath>& rhs) noexcept;
   template <class GraphicsMath>
   bool operator==(const basic_matrix_2d<GraphicsMath>& lhs,
