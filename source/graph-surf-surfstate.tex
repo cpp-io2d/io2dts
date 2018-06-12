@@ -37,8 +37,8 @@ Table~\ref{tab:\iotwod.graphsurf.surfstateprops.typedefnamestab} defines the req
 \tcode{basic_stroke_props}	\\ \rowsep
 \tcode{mask_props_data_type}	&
 \tcode{basic_mask_props}	\\ \rowsep
-\tcode{basic_dashes}	&
-\tcode{dashes_data_type}	\\
+\tcode{dashes_data_type}	&
+\tcode{basic_dashes}	\\
 \end{libreqtab2}
 
 \pnum
@@ -102,10 +102,10 @@ In order to describe the observable effects of functions contained in Table~\ref
 \tcode{mask_props_data_type}	&
 \tcode{m}	&
 \tcode{M}	\\ \rowsep
-\tcode{dashes_data_type}	&
+\tcode{dashes_props_data_type}	&
 \tcode{o}	&
 \tcode{float}	\\ \rowsep
-\tcode{dashes_data_type}	&
+\tcode{dashes_props_data_type}	&
 \tcode{p}	&
 \tcode{vector<float>}	\\
 \end{libiotwodreqtab3f}
@@ -421,5 +421,13 @@ An object \tcode{d}.	&
 \returns
 An object \tcode{d}.	&
 \postconditions
-\tcode{d.o == o} and \tcode{d.p == vector<float>(il)}.	\\
+\tcode{d.o == o} and \tcode{d.p == vector<float>(il)}.	\\ \rowsep
+\tcode{X::surface_state_props::equal(const DA\& lhs, const DA\& rhs)}	&
+\tcode{bool}	&
+\returns
+\tcode{lhs.o == rhs.o \&\& lhs.p == rhs.p}.	\\ \rowsep
+\tcode{X::surface_state_props::not_equal(const DA\& lhs, const DA\& rhs)}	&
+\tcode{bool}	&
+\returns
+\tcode{lhs.o != rhs.o || lhs.p != rhs.p}. \\
 \end{libreqtab4d}

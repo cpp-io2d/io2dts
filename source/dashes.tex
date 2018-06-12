@@ -2,5 +2,146 @@
 
 \rSec0 [\iotwod.dashes] {Class template \tcode{basic_dashes}}
 
+\rSec1 [\iotwod.dashes.intro] {\tcode{basic_dashes} class template}
+
 \pnum
-<TODO>
+\indexlibrary{\idxcode{basic_dashes}}%
+The class template \tcode{basic_dashes} describes a pattern for determining, in conjunction with other properties, what points on a path are included when a stroking operation is performed.
+
+\pnum
+It has an \term{offset} of type \tcode{float} and a \term{pattern} of an unspecified type capable of sequentially storing floating-point values.
+
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::surface_props_data::dashes_props_data_type}. It is accessible using the \tcode{data} member function.
+
+\rSec1 [\iotwod.dashes.synopsis] {Synopsis}
+
+\begin{codeblock}
+namespace std::experimental::io2d::v1 {
+  template <class GraphicsSurfaces>
+  class basic_dashes {
+  public:
+  using data_type = 
+    typename GraphicsSurfaces::surface_state_props::dashes_data_type;
+  public:
+    // \ref{\iotwod.dashes.cons}, constructors:
+    basic_dashes() noexcept;
+    template <class InputIterator>
+    basic_dashes(float o, InputIterator first, InputIterator last);
+    basic_dashes(float o, initializer_list<float> il);
+
+    // \ref{\iotwod.dashes.observers}, observers:
+    const data_type& data() const noexcept;
+  };
+
+  // \ref{\iotwod.dashes.ops}, operators:
+  template <class GraphicsSurfaces>
+  bool operator==(const basic_dashes<GraphicsSurfaces>& lhs,
+    const basic_dashes<GraphicsSurfaces>& rhs) noexcept;
+  template <class GraphicsSurfaces>
+  bool operator!=(const basic_dashes<GraphicsSurfaces>& lhs,
+    const basic_dashes<GraphicsSurfaces>& rhs) noexcept;
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.dashes.cons] {Constructors}
+
+\indexlibrary{\idxcode{basic_dashes}!constructor}%
+\begin{itemdecl}
+basic_dashes() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{basic_dashes}.
+
+\pnum
+\postconditions
+\tcode{data() == GraphicsSurfaces::surface_state_props::create_dashes()}.
+
+\pnum
+\remarks
+The offset is \tcode{0.0f} and the pattern contains no values.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{basic_dashes}!constructor}%
+\begin{itemdecl}
+template <class InputIterator>
+basic_dashes(float o, InputIterator first, InputIterator last);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+The value type of \tcode{InputIterator} is \tcode{float}.
+
+\pnum
+Each value from \tcode{first} through \tcode{last - 1} is greater than or equal to \tcode{0.0f}.
+
+\pnum
+\effects
+Constructs an object of type \tcode{basic_dashes}.
+
+\pnum
+\postconditions
+\tcode{data() == GraphicsSurfaces::surface_state_props::create_dashes(o, first, last)}.
+
+\pnum
+\remarks
+The offset is \tcode{o} and the pattern is the sequential list of value beginning at \tcode{first} and ending at \tcode{last - 1}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{basic_dashes}!constructor}%
+\begin{itemdecl}
+basic_dashes(float o, initializer_list<float> il);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires
+Each value in \tcode{il} is greater than or equal to \tcode{0.0f}.
+
+\pnum
+\effects
+Constructs an object of type \tcode{basic_dashes}.
+
+\pnum
+\postconditions
+\tcode{data() == GraphicsSurfaces::surface_state_props::create_dashes(o, il)}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.dashes.observers] {Observers}
+
+\indexlibrarymember{data}{basic_brush}
+\begin{itemdecl}
+const data_type& data() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+A reference to the \tcode{basic_dashes} object's data object (See \ref{\iotwod.dashes.intro}).
+\end{itemdescr}
+
+\rSec1 [\iotwod.dashes.ops] {Operators}
+
+\pnum
+\begin{itemdecl}
+template <class GraphicsSurfaces>
+bool operator==(const basic_dashes<GraphicsSurfaces>& lhs,
+  const basic_dashes<GraphicsSurfaces>& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{GraphicsSurfaces::surface_state_props::equal(lhs.data(), rhs.data())}.
+\end{itemdescr}
+
+\pnum
+\begin{itemdecl}
+template <class GraphicsSurfaces>
+bool operator!=(const basic_dashes<GraphicsSurfaces>& lhs,
+  const basic_dashes<GraphicsSurfaces>& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{GraphicsSurfaces::surface_state_props::not_equal(lhs.data(), rhs.data())}.
+\end{itemdescr}
