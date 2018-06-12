@@ -36,7 +36,7 @@ namespace std::experimental::io2d::v1 {
  \\ \capsep
  \endhead
  \tcode{invalid}
- & A previously specified \tcode{format} is unsupported by the implementation.
+ & A previously requested \tcode{format} is unsupported by the implementation.
  \\ \rowsep
  \tcode{argb32}
  & A 32-bit RGB color model pixel format. There is an 8 bit alpha channel, 
@@ -55,3 +55,9 @@ namespace std::experimental::io2d::v1 {
  & An 8-bit transparency data pixel format. All 8 bits are an alpha channel.
  \\
 \end{libreqtab2}
+
+\pnum
+Implementations may support additional visual data formats (See: \ref{\iotwod.graphsurf.reqs.addform}).
+
+\pnum
+Implementations shall document the visual data formats supported for each surface class (See: \ref{\iotwod.surface.intro}).

@@ -1,0 +1,17 @@
+%!TEX root = io2d.tex
+
+\rSec2 [\iotwod.graphsurf.reqs.addform]{\tcode{additional_formats} requirements}
+
+\pnum
+Let \tcode{X} be a \graphicssurfacestemplparam type.
+
+\pnum
+The \tcode{X::additional_formats} class contains zero or more \tcode{format} enumerators that represent \impldefplain{additional visual data formats} additional visual data formats that the implementation supports.
+
+\pnum
+The size in bytes, byte order, and interpretation of values within each channel 
+of each additional visual data format is \impdef.
+
+\pnum
+The values of the additional visual data format enumerators shall be in the 
+range \crange{10000}{39999}.
