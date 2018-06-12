@@ -7,38 +7,6 @@
 The \tcode{format} enum class indicates a visual data format. See Table~\ref{tab:\iotwod.format.meanings} for 
 the meaning of each \tcode{format} enumerator.
 
-%\pnum
-%A pixel is a value composed from one or more channels.
-%
-%\pnum
-%A \term{channel} is a visual data element that represents color data (red, green,
-%or blue) or transparency data (alpha). A pixel can be comprised of color data,
-%transparency data, or both color and transparency data.
-%
-\pnum
-Unless otherwise specified, a visual data format is an unsigned integral
-value of the specified bit size in native-endian format.
-
-%\pnum
-%Unless otherwise specified, each channel of a pixel shall be treated as an 
-%unsigned integral value of the specified bit size at the specified bit location
-%within the pixel.
-%
-\pnum
-A channel value of 0x0 means that there is no contribution from that channel. 
-As the channel value increases towards the maximum unsigned integral value 
-representable by the number of bits of the channel, the contribution from that 
-channel also increases, with the maximum value representing the maximum
-contribution from that channel.
-\begin{example}
-Given a 5-bit channel representing the color, a value of 0x0 means that the red channel does not 
-contribute any value towards the final color of the pixel. A value of 0x1F 
-means that the red channel makes its maximum contribution to the final color of 
-the pixel.
-
-A
-\end{example}
-
 \rSec1 [\iotwod.format.synopsis] {\tcode{format} synopsis}
 
 \begin{codeblock}
@@ -71,14 +39,17 @@ namespace std::experimental::io2d::v1 {
  & A previously specified \tcode{format} is unsupported by the implementation.
  \\ \rowsep
  \tcode{argb32}
- & A 32-bit RGB color model pixel format. The upper 8 bits are an alpha channel, 
- followed by an 8-bit red color channel, then an 8-bit green color channel, and 
- finally an 8-bit blue color channel. The value in each channel is an unsigned 
- normalized integer. This is a premultiplied format.
+ & A 32-bit RGB color model pixel format. There is an 8 bit alpha channel, 
+ an 8-bit red color channel, an 8-bit green color channel, and 
+ an 8-bit blue color channel. The byte order, interpretation of values within 
+ each channel, and whether or not this is a premultiplied format are 
+ \impldef{format::argb32}.
  \\ \rowsep
- \tcode{rgb24}
- & A 32-bit RGB color model pixel format. The upper 8 bits are unused, followed by an 8-bit red 
- color channel, then an 8-bit green color channel, and finally an 8-bit blue color channel. 
+ \tcode{xrgb32}
+ & A 32-bit RGB color model pixel format. There is an 8 bit channel that is not 
+  used, an 8-bit red color channel, an 8-bit green color channel, and 
+  an 8-bit blue color channel. The byte order and interpretation of values 
+  within each channel are \impldef{format::xrgb32}.
  \\ \rowsep
  \tcode{a8}
  & An 8-bit transparency data pixel format. All 8 bits are an alpha channel.
