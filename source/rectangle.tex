@@ -109,6 +109,20 @@ Constructs an object of type \tcode{basic_bounding_box}.
 \tcode{data() == GraphicsMath::create_bounding_box(tl.data(), br.data()}.
 \end{itemdescr}
 
+\indexlibrary{\idxcode{basic_bounding_box}!constructor}%
+\begin{itemdecl}
+basic_bounding_box(const data_type& val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{basic_bounding_box}.
+
+\pnum
+\postconditions
+\tcode{data() == val}.
+\end{itemdescr}
+
 \rSec1 [\iotwod.bounding_box.accessors]{\tcode{basic_bounding_box} accessors}
 
 \indexlibrarymember{data}{basic_bounding_box}%

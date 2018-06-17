@@ -1,0 +1,188 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.displaypt] {Class template \tcode{basic_display_point}}
+
+\rSec1 [\iotwod.displaypt.intro] {\tcode{basic_display_point} description}
+
+\indexlibrary{\idxcode{basic_display_point}}%
+\pnum
+The class template \tcode{basic_display_point} describes an integral point used to describe certain properties of surfaces.
+
+\pnum
+It has an \term{x coordinate} of type \tcode{int} and a \term{y coordinate} of type \tcode{int}.
+
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsMath::display_point_data_type}. It is accessible using the \tcode{data} member functions.
+
+\rSec1 [\iotwod.displaypt.synopsis] {\tcode{basic_display_point} synopsis}
+
+\begin{codeblock}
+namespace std::experimental::io2d::v1 {
+  template <class GraphicsMath>
+  class basic_display_point {
+  public:
+    using data_type = typename GraphicsMath::display_point_data_type;
+    
+    // \ref{\iotwod.displaypt.cons}, constructors:
+    basic_display_point() noexcept;
+    basic_display_point(int x, int y) noexcept;
+    basic_display_point(const data_type& val) noexcept;
+
+    // \ref{\iotwod.displaypt.accessors}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+
+    // \ref{\iotwod.displaypt.modifiers}, modifiers:
+    void x(int val) noexcept;
+    void y(int val) noexcept;
+
+    // \ref{\iotwod.displaypt.observers}, observers:
+    int x() const noexcept;
+    int y() const noexcept;
+  };
+
+  // \ref{\iotwod.displaypt.ops}, operators:
+  template <class GraphicsMath>
+  bool operator==(const basic_display_point<GraphicsMath>& lhs,
+    const basic_display_point<GraphicsMath>& rhs) noexcept;
+  template <class GraphicsMath>
+  bool operator!=(const basic_display_point<GraphicsMath>& lhs,
+    const basic_display_point<GraphicsMath>& rhs) noexcept;
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.displaypt.cons] {\tcode{basic_display_point} constructors}
+
+\indexlibrary{\idxcode{basic_display_point}!constructor}%
+\begin{itemdecl}
+basic_display_point() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{basic_display_point}.
+
+\pnum
+\postconditions
+\tcode{data() == GraphicsMath::create_display_point()}.
+
+\pnum
+\remarks
+The x coordinate is \tcode{0} and the y coordinate is \tcode{0}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{basic_display_point}!constructor}%
+\begin{itemdecl}
+basic_display_point(int x, int y) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{basic_display_point}.
+
+\pnum
+\postconditions
+\tcode{data() == GraphicsMath::create_display_point(x, y)}.
+
+\pnum
+\remarks
+The x coordinate is \tcode{x} and the y coordinate is \tcode{y}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{basic_display_point}!constructor}%
+\begin{itemdecl}
+basic_display_point(const data_type& val) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{basic_display_point}.
+
+\pnum
+\postconditions
+\tcode{data() == val}.
+
+\pnum
+\remarks
+The x coordinate is \tcode{GraphicsMath::x(val)} and the y coordinate is \tcode{GraphicsMath::y(val)}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.displaypt.accessors]{\tcode{basic_display_point} accessors}
+
+\indexlibrarymember{data}{basic_display_point}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+A reference to the \tcode{basic_display_point} object's data object (See: \ref{\iotwod.displaypt.intro}).
+\end{itemdescr}
+
+\rSec1 [\iotwod.displaypt.modifiers]{\tcode{basic_display_point} modifiers}
+
+\indexlibrarymember{x}{basic_display_point}%
+\begin{itemdecl}
+void x(int v) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to \tcode{GraphicsMath::x(data(), v);}
+\end{itemdescr}
+
+\indexlibrarymember{y}{basic_display_point}%
+\begin{itemdecl}
+void y(int v) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to \tcode{GraphicsMath::y(data(), v);}
+\end{itemdescr}
+
+\rSec1 [\iotwod.displaypt.observers]{\tcode{basic_display_point} observers}
+
+\indexlibrarymember{x}{basic_display_point}%
+\begin{itemdecl}
+int x() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{GraphicsMath::x(data())}.
+\end{itemdescr}
+
+\indexlibrarymember{y}{basic_display_point}%
+\begin{itemdecl}
+int y() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{GraphicsMath::y(data())}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.displaypt.ops] {\tcode{basic_display_point} operators}
+
+\indexlibrarymember{operator==}{basic_display_point}%
+\begin{itemdecl}
+bool operator==(const basic_display_point<GraphicsMath>& lhs,
+  const basic_display_point<GraphicsMath>& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{GraphicsMath::equal(lhs.data(), rhs.data())}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{basic_display_point}%
+\begin{itemdecl}
+bool operator!=(const basic_display_point<GraphicsMath>& lhs,
+  const basic_display_point<GraphicsMath>& rhs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{GraphicsMath::not_equal(lhs.data(), rhs.data())}.
+\end{itemdescr}
