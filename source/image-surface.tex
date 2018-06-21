@@ -45,13 +45,6 @@ namespace std::experimental::io2d::v1 {
 	
     // \ref{\iotwod.imagesurface.mofifiers}, modifiers:
     void clear();
-    void flush();
-    void flush(error_code& ec) noexcept;
-    void mark_dirty();
-    void mark_dirty(error_code& ec) noexcept;
-    void mark_dirty(const basic_bounding_box<graphics_math_type>& extents);
-    void mark_dirty(const basic_bounding_box<graphics_math_type>& extents,
-      error_code& ec) noexcept;
     void paint(const basic_brush<GraphicsSurfaces>& b,
       const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
       const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
@@ -257,93 +250,6 @@ void clear();
 \pnum
 \effects
 <TODO>
-\end{itemdescr}
-
-\indexlibrarymember{flush}{basic_image_surface}%
-\begin{itemdecl}
-void flush();
-void flush(error_code& ec) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-If the implementation does not provide a native handle to the surface's visual data, this function does nothing.
-
-\pnum
-If the implementation does provide a native handle to the surface's visual data, then the implementation performs every action necessary to ensure that all operations on the surface that produce observable effects occur.
-
-\pnum
-The implementation performs any other actions necessary to ensure that the surface will be usable again after a call to \tcode{basic_image_surface::mark_dirty}.
-
-\pnum
-Once a call to \tcode{basic_image_surface::flush} is made, \tcode{basic_image_surface::mark_dirty} shall be called before any other member function of the surface is called or the surface is used as an argument to any other function.
-
-\pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-\pnum
-\remarks
-This function exists to allow the user to take control of the underlying surface using an implementation-provided native handle without introducing a race condition. The implementation's responsibility is to ensure that the user can safely use the underlying surface.
-
-\pnum
-\errors
-The potential errors are \impldefplain{basic_image_surface::flush errors}.
-
-\pnum
-Implementations should avoid producing errors here.
-
-\pnum
-If the implementation does not provide a native handle to the \tcode{basic_image_surface} object's visual data, this function shall not produce any errors.
-
-\pnum
-\begin{note}
-There are several purposes for \tcode{basic_image_surface::flush} and \tcode{basic_image_surface::mark_dirty}.
-
-\pnum
-One is to allow implementation wide latitude in how they implement the rendering and composing operations (\ref{\iotwod.surface.rendering}), such as batching calls and then sending them to graphics acceleration hardware at appropriate times.
-
-\pnum
-Another is to give implementations the chance during the call to \tcode{basic_image_surface::flush} to save any internal state that might be modified by the user and then restore it during the call to \tcode{basic_image_surface::mark_dirty}.
-
-\pnum
-Other uses of this pair of calls are also possible.
-\end{note}
-\end{itemdescr}
-
-\indexlibrarymember{mark_dirty}{basic_image_surface}%
-\begin{itemdecl}
-void mark_dirty();
-void mark_dirty(error_code& ec) noexcept;
-void mark_dirty(const basic_bounding_box<graphics_math_type>& extents);
-void mark_dirty(const basic_bounding_box<graphics_math_type>& extents, error_code& ec) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-If the implementation does not provide a native handle to the \tcode{basic_image_surface} object's visual data, this function shall do nothing.
-
-\pnum
-If the implementation does provide a native handle to the \tcode{basic_image_surface} object's visual data, then:
-\begin{itemize}
-\item If called without a \tcode{basic_bounding_box} argument, informs the implementation that external changes using a native handle potentially modified all of the surface's visual data.
-\item If called with a \tcode{basic_bounding_box} argument, informs the implementation that external changes using a native handle potentially modified the surface's visual data only within the bounds specified by the \term{bounding rectangle} \tcode{basic_bounding_box\{ round(extents.x()), round (extents.y()), round(extents.width()), round(extents.height())\}}. No part of the bounding rectangle shall be outside of the bounds of the surface's visual data; no diagnostic is required.
-\end{itemize}
-
-\pnum
-\throws
-As specified in Error reporting (\ref{\iotwod.err.report}).
-
-\pnum
-\remarks
-After external changes are made to this \tcode{basic_image_surface} object's visual data using a native pointer, this function shall be called before using this \tcode{basic_image_surface} object; no diagnostic is required.
-
-\pnum
-\errors
-The errors, if any, produced by this function are \impldefplain{basic_image_surface!mark_dirty}.
-
-\pnum
-If the implementation does not provide a native handle to the \tcode{basic_image_surface} object's visual data, this function shall not produce any errors.
 \end{itemdescr}
 
 \indexlibrarymember{paint}{basic_image_surface}%
