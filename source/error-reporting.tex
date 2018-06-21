@@ -12,7 +12,7 @@ When an error prevents the function from meeting its specifications:
 % and the cause of the error is described in the function's \textit{Error conditions} description:
 
 \begin{itemize}
-\item Functions that do not take argument of type \tcode{error_code\&} throw an exception of type \tcode{system_error} or of a \tcode{system_error}-derived type. The exception object shall include the enumerator specified by the function as part of its observable state.
+\item Functions that do not take argument of type \tcode{error_code\&} throw an exception of type \tcode{system_error} or of an \impldefplain{implementation system_error-derived type} type that derives from \tcode{system_error}. The exception object shall include the enumerator specified by the function as part of its observable state.
 %If the cause of the error is described in the function's \textit{Error conditions} description, the exception object includes the enumerator specified by the function. It may also include \impldefplain{error condition, additional information} additional information. Other data included in the exception object, if any, is \impldefplain{error condition, undocumented}.
 
 \item Functions that take an argument of type \tcode{error_code\&} assigns the specified enumerator to the provided \tcode{error_code} object and then returns.
@@ -22,7 +22,7 @@ When an error prevents the function from meeting its specifications:
 Failure to allocate storage is reported by throwing an exception as described in [res.on.exception.handling] in \CppXVII.
 
 \pnum
-Destructor operations defined in this \documenttypename{} shall not throw exceptions. Every destructor in this \documenttypename{} shall behave as if it had a non-throwing exception specification.
+Destructor operations defined in this \documenttypename{} shall not throw exceptions. Every destructor in this \documenttypename{} shall behave as-if it had a non-throwing exception specification.
 
 \pnum
 If no error occurs in a function that takes an argument of type \tcode{error_code\&}, \tcode{error_code::clear} shall be called on the \tcode{error_code} object immediately before the function returns.
