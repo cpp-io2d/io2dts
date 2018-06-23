@@ -1,16 +1,16 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.refreshrate] {Enum class \tcode{refresh_rate}}
+\rSec0 [\iotwod.refreshstyle] {Enum class \tcode{refresh_style}}
 
-\rSec1 [\iotwod.refreshrate.summary] {\tcode{refresh_rate} summary}
+\rSec1 [\iotwod.refreshstyle.summary] {\tcode{refresh_style} summary}
 
 \pnum
-The \tcode{refresh_rate} enum class describes when the \term{draw callback} (Table~\ref{tab:\iotwod.displaysurface.state.listing}) of a \tcode{display_surface} object shall be called. See Table~\ref{tab:\iotwod.refreshrate.meanings} for the meaning of each \tcode{} enumerator.
+The \tcode{refresh_style} enum class describes when the \term{draw callback} (Table~\ref{tab:\iotwod.displaysurface.state.listing}) of a \tcode{display_surface} object shall be called. See Table~\ref{tab:\iotwod.refreshstyle.meanings} for the meaning of each \tcode{refresh_style} enumerator.
 
-\rSec1 [\iotwod.refreshrate.synopsis] {\tcode{refresh_rate} synopsis}
+\rSec1 [\iotwod.refreshstyle.synopsis] {\tcode{refresh_style} synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
-  enum class refresh_rate {
+  enum class refresh_style {
     as_needed,
     as_fast_as_possible,
     fixed
@@ -18,11 +18,11 @@ namespace std::experimental::io2d::v1 {
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.refreshrate.enumerators] {\tcode{refresh_rate} enumerators}
+\rSec1 [\iotwod.refreshstyle.enumerators] {\tcode{refresh_style} enumerators}
 
 \begin{libreqtab2}
- {\tcode{refresh_rate} value meanings}
- {tab:\iotwod.refreshrate.meanings}
+ {\tcode{refresh_style} value meanings}
+ {tab:\iotwod.refreshstyle.meanings}
  \\ \topline
  \lhdr{Enumerator}
  & \rhdr{Meaning}
@@ -39,10 +39,10 @@ namespace std::experimental::io2d::v1 {
  \begin{note}
  The intention of this enumerator is that implementations will call the draw callback as little as possible in order to minimize power usage. Users can call \tcode{display_surface::redraw_required} to make the implementation run the draw callback whenever the user requires.
  \end{note}
- \\
+ \\ \rowsep
  \tcode{as_fast_as_possible}
  & The draw callback shall be called as frequently as possible, subject to any limits of the execution environment.
- \\
+ \\ \rowsep
  \tcode{fixed}
  & The draw callback shall be called as frequently as needed to maintain the \term{desired frame rate} (Table~\ref{tab:\iotwod.displaysurface.state.listing}) as closely as possible. If more time has passed between two successive calls to the draw callback than is required, it shall be called \term{excess time} and it shall count towards the \term{required time}, which is the time that is required to pass after a call to the draw callback before the next successive call to the draw callback shall be made. If the excess time is greater than the required time, implementations shall call the draw callback and then repeatedly subtract the required time from the excess time until the excess time is less than the required time. If the implementation needs to call the draw callback for some other reason, it shall use that call as the new starting point for maintaining the desired frame rate.
  \begin{example}

@@ -398,13 +398,13 @@ Table~\ref{tab:\iotwod.outputsurface.state.listing} specifies the name, type, fu
 	If \tcode{true} the implementation shall call \tcode{clear}, which shall clear the back buffer, immediately before it executes the draw callback &
 	\tcode{false} \\ \rowsep
 	
-	\term{Refresh rate} &
-	\tcode{refresh_rate} &
-	The \tcode{refresh_rate} value that determines when the draw callback shall be called while output surface\tcode{::show} is being executed &
-	\tcode{refresh_rate::as_fast_as_possible} \\ \rowsep
+	\term{Refresh style} &
+	\tcode{refresh_style} &
+	The \tcode{refresh_style} value that determines when the draw callback shall be called while \tcode{basic_output_surface<T>::begin_show} is being executed &
+	\tcode{refresh_style::as_fast_as_possible} \\ \rowsep
 	
 	\term{Desired frame rate} &
 	\tcode{float} &
-	This value is the number of times the draw callback shall be called per second while output surface\tcode{::show} is being executed when the value of refresh rate is \tcode{refresh_rate::fixed}, subject to the additional requirements documented in the meaning of \tcode{refresh_rate::fixed} (Table~\ref{tab:\iotwod.refreshrate.meanings}) \\ \rowsep
-	
+	This value is the number of times the draw callback shall be called per second while \tcode{basic_output_surface<T>::begin_show} is being executed when the value of refresh style is \tcode{refresh_style::fixed}, subject to the additional requirements documented in the meaning of \tcode{refresh_style::fixed} (Table~\ref{tab:\iotwod.refreshstyle.meanings})
+	\\
 \end{libreqtab4b}

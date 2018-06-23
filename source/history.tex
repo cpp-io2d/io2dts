@@ -67,6 +67,9 @@ Added \tcode{GraphicsSurfaces::additional_formats} This allows implementations t
 \pnum
 Eliminated all \tcode{flush} and \tcode{mark_dirty} member functions. These only existed to allow users to modify surfaces externally. Implementations that wish to allow users to modify surfaces externally should provide and document their own functionality for how to do that. The errors, etc., are all implementation dependent anyway so a uniform calling interface provides no benefit at all in the current templated-design.
 
+\pnum
+Renamed \tcode{enum class refresh_rate} to \tcode{refresh_style} to more accurately reflect its meaning. This was already done in parts of the R7; it is now complete.
+
 \rSec1 [\iotwod.revisionhistory.r7] {Revision 7}
 
 \pnum
