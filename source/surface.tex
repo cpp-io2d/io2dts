@@ -54,13 +54,13 @@ The surface classes provide four fundamental rendering and composing operations:
  \endhead
  Painting
  & \tcode{paint}
- \\
+ \\ \rowsep
  Filling
  & \tcode{fill}
- \\
+ \\ \rowsep
  Stroking
  & \tcode{stroke}
- \\
+ \\ \rowsep
  Masking
  & \tcode{mask}
  \\
@@ -107,10 +107,10 @@ All rendering and composing operations use the following state data:
  \endhead
  Brush properties
  & \tcode{brush_props}
- \\
+ \\ \rowsep
  Surface properties
  & \tcode{render_props}
- \\
+ \\ \rowsep
  Clip properties
  & \tcode{clip_props}
  \\
@@ -139,11 +139,11 @@ In addition to the common state data (\ref{\iotwod.surface.rendering.commonstate
  Stroking
  & Stroke properties
  & \tcode{stroke_props}
- \\
+ \\ \rowsep
  Stroking
  & Dashes
  & \tcode{dashes}
- \\
+ \\ \rowsep
  Masking
  & Mask properties
  & \tcode{mask_props}
@@ -203,35 +203,35 @@ Given a point \tcode{pt}, a brush coordinate space transformation matrix \tcode{
  brush coordinate space
  & mask coordinate space
  & \tcode{mcsm.transform_pt(bcsm.invert().transform_pt(pt))}.
- \\
+ \\ \rowsep
  brush coordinate space
  & user coordinate space
  & \tcode{bcsm.invert().transform_pt(pt)}.
- \\
+ \\ \rowsep
  brush coordinate space
  & surface coordinate space
  & \tcode{scsm.transform_pt(bcsm.invert().transform_pt(pt))}.
- \\
+ \\ \rowsep
  user coordinate space
  & brush coordinate space
  & \tcode{bcsm.transform_pt(pt)}.
- \\
+ \\ \rowsep
  user coordinate space
  & mask coordinate space
  & \tcode{mcsm.transform_pt(pt)}.
- \\
+ \\ \rowsep
  user coordinate space
  & surface coordinate space
  & \tcode{scsm.transform_pt(pt)}.
- \\
+ \\ \rowsep
  surface coordinate space
  & brush coordinate space
  & \tcode{bcsm.transform_pt(scsm.invert().transform_pt(pt))}.
- \\
+ \\ \rowsep
  surface coordinate space
  & mask coordinate space
  & \tcode{mcsm.transform_pt(scsm.invert().transform_pt(pt))}.
- \\
+ \\ \rowsep
  surface coordinate space
  & user coordinate space
  & \tcode{scsm.invert().transform_pt(pt)}.
@@ -405,6 +405,7 @@ Table~\ref{tab:\iotwod.outputsurface.state.listing} specifies the name, type, fu
 	
 	\term{Desired frame rate} &
 	\tcode{float} &
-	This value is the number of times the draw callback shall be called per second while \tcode{basic_output_surface<T>::begin_show} is being executed when the value of refresh style is \tcode{refresh_style::fixed}, subject to the additional requirements documented in the meaning of \tcode{refresh_style::fixed} (Table~\ref{tab:\iotwod.refreshstyle.meanings})
-	\\
+	This value is the number of times the draw callback shall be called per second while \tcode{basic_output_surface<T>::begin_show} is being executed when the value of refresh style is \tcode{refresh_style::fixed}, subject to the additional requirements documented in the meaning of \tcode{refresh_style::fixed} (See: Table~\ref{tab:\iotwod.refreshstyle.meanings}). &
+	\tcode{30.0f}
+	\\ 
 \end{libreqtab4b}

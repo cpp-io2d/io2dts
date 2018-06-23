@@ -39,15 +39,16 @@ namespace std::experimental::io2d::v1 {
  & \rhdr{Meaning}
  \\ \capsep
  \endhead
+ \tcode{none}
  & No anti-aliasing is performed.
- \\
+ \\ \rowsep
  \tcode{fast}
  & Some form of anti-aliasing shall be used when this option is selected, but the form used is \impldefplain{antialiasing!fast}.
  \begin{note}
  By specifying this value, the user is hinting that faster anti-aliasing is 
  preferable to better anti-aliasing.
  \end{note}
- \\
+ \\ \rowsep
  \tcode{good}
  & Some form of anti-aliasing shall be used when this option is selected, but the form used is \impldefplain{antialiasing!good}.
  \begin{note}
@@ -55,7 +56,7 @@ namespace std::experimental::io2d::v1 {
  to obtain better anti-aliasing is acceptable but that performance is still a 
  concern.
  \end{note}
- \\
+ \\ \rowsep
  \tcode{best}
  & Some form of anti-aliasing shall be used when this option is selected, but the form used is \impldefplain{antialiasing!best}.
  \begin{note}
