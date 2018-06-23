@@ -1,7 +1,7 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.brush] {Class \tcode{basic_brush}}
+\rSec0 [\iotwod.brush] {Class template \tcode{basic_brush}}
 
-\rSec1 [\iotwod.brush.intro] {\tcode{basic_brush} summary}
+\rSec1 [\iotwod.brush.intro] {Summary}
 
 \pnum
 \indexlibrary{\idxcode{basic_brush}}%
@@ -22,7 +22,7 @@ As a result of technological limitations, a \tcode{basic_brush} object's visual 
 \pnum
 The data are stored in an object of type \tcode{typename GraphicsMath::brushes::brush_data_type}.
 
-\rSec1 [\iotwod.brush.synopsis] {\tcode{basic_brush} synopsis}
+\rSec1 [\iotwod.brush.synopsis] {Synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
@@ -31,28 +31,26 @@ class basic_brush {
   public:
     using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
     using data_type = typename GraphicsSurfaces::brushes::brush_data_type;
+
+    // \ref{\iotwod.brush.ctor}, constructors:
     explicit basic_brush(const rgba_color& c);
-
     template <class InputIterator>
     basic_brush(const basic_point_2d<graphics_math_type>& begin,
       const basic_point_2d<graphics_math_type>& end,
       InputIterator first, InputIterator last);
-
     basic_brush(const basic_point_2d<graphics_math_type>& begin,
       const basic_point_2d<graphics_math_type>& end,
       ::std::initializer_list<gradient_stop> il);
-
     template <class InputIterator>
     basic_brush(const basic_circle<graphics_math_type>& start,
       const basic_circle<graphics_math_type>& end,
       InputIterator first, InputIterator last);
-
     basic_brush(const basic_circle<graphics_math_type>& start,
       const basic_circle<graphics_math_type>& end,
       ::std::initializer_list<gradient_stop> il);
-
     basic_brush(basic_image_surface<GraphicsSurfaces>&& img);
-    
+
+	// \ref{\iotwod.brush.acc}, accessors:
     const data_type& data() const noexcept;
     brush_type type() const noexcept;
   };
@@ -99,11 +97,11 @@ When \tcode{b} is a radial gradient brush, when sampling point \tcode{pt}, where
 \pnum
 When \tcode{b} is a surface brush, when sampling point \tcode{pt} from \tcode{b}, where \tcode{pt} is the return value of calling the \tcode{transform_pt} member function of the brush matrix or mask matrix using the requested point, the visual data returned are from the point \tcode{pt} in the raster graphics data of the brush, as modified by the values of wrap mode (\ref{\iotwod.wrapmode}) and filter (\ref{\iotwod.filter}).
 
-\rSec1 [\iotwod.brush.cons] {\tcode{basic_brush} constructors and assignment operators}
+\rSec1 [\iotwod.brush.ctor] {Constructors}
 
 \indexlibrary{\idxcode{basic_brush}!constructor}%
 \begin{itemdecl}
-explicit basic_brush(const rgba_color& c);%<TODO><Implementation mismatch> MM: I'm not seeing a mismatch. Am I missing something?
+explicit basic_brush(const rgba_color& c);<TODO><Implementation mismatch> MM: I'm not seeing a mismatch. Am I missing something?
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -221,7 +219,7 @@ Constructs an object of type \tcode{basic_brush}.
 Sampling from this brush produces the results specified in \ref{\iotwod.brush.sampling.surface}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.brush.observers]{\tcode{basic_brush} observers}
+\rSec1 [\iotwod.brush.acc]{Accessors}
 
 \indexlibrarymember{data}{basic_brush}
 \begin{itemdecl}
