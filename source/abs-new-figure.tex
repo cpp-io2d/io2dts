@@ -1,14 +1,64 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.absnewfigure] {Class \tcode{abs_new_figure}}
+\rSec0 [\iotwod.absnewfigure] {Class template \tcode{basic_figure_items<GraphicsSurfaces>::abs_new_figure}}
+
+\rSec1 [\iotwod.absnewfigure.intro] {Overview}
 
 \pnum
 \indexlibrary{\idxcode{abs_new_figure}}%
-The class \tcode{abs_new_figure} describes a figure item that is a new figure command.
+The class template \tcode{basic_figure_items<GraphicsSurfaces>::abs_new_figure} describes a figure item that is a new figure command.
 
 \pnum
 It has an \term{at point} of type \tcode{point_2d}.
 
-\rSec1 [\iotwod.absnewfigure.cons] {\tcode{abs_new_figure} constructors}%
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::paths::abs_new_figure_data_type}. It is accessible using the \tcode{data} member functions.
+
+\rSec1 [\iotwod.absnewfigure.synopsis] {Synopsis}
+\begin{codeblock}
+namespace std::experimemtal::io2d::v1 {
+  template <class GraphicsSurfaces>
+  class basic_figure_items<GraphicsSurfaces>::abs_new_figure {
+  public:
+    using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+    using data_type =
+      typename GraphicsSurfaces::paths::abs_new_figure_data_type;
+
+    // \ref{\iotwod.absnewfigure.ctor}, construct:
+    abs_new_figure();
+    explicit abs_new_figure(const basic_point_2d<graphics_math_type>& pt);
+    abs_new_figure(const abs_new_figure& other) = default;
+    abs_new_figure(abs_new_figure&& other) noexcept = default;
+
+    // assign:
+    abs_new_figure& operator=(const abs_new_figure& other) = default;
+    abs_new_figure& operator=(abs_new_figure&& other) noexcept = default;
+
+    // \ref{\iotwod.absnewfigure.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+
+    // \ref{\iotwod.absnewfigure.mod}, modifiers:
+    void at(const basic_point_2d<graphics_math_type>& pt) noexcept;
+
+    // \ref{\iotwod.absnewfigure.obs}, observers:
+    basic_point_2d<graphics_math_type> at() const noexcept;
+  };
+  
+  // \ref{\iotwod.absnewfigure.eq}, equality operators:
+  template <class GraphicsSurfaces>
+  bool operator==(
+    const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& rhs) 
+    noexcept;  
+  template <class GraphicsSurfaces>
+  bool operator!=(
+    const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& rhs) 
+    noexcept;  
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.absnewfigure.ctor] {Constructors}%
 
 \indexlibrary{\idxcode{abs_new_figure}!constructor}%
 \begin{itemdecl}
@@ -16,105 +66,95 @@ abs_new_figure();
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-Equivalent to: \tcode{abs_new_figure\{basic_point_2d<typename GraphicsSurfaces::graphics_math_type>()\};}
+\effects Constructs an object of type \tcode{abs_new_figure}.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::paths::create_abs_new_figure()}.
+
+\pnum
+\remarks The at point is \tcode{basic_point_2d<graphics_math_type>()}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{abs_new_figure}!constructor}%
 \begin{itemdecl}
-explicit abs_new_figure(const basic_point_2d<typename
-  GraphicsSurfaces::graphics_math_type>& pt);
+explicit abs_new_figure(const basic_point_2d<graphics_math_type>& pt);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-Constructs an object of type \tcode{abs_new_figure}.
+\effects Constructs an object of type \tcode{abs_new_figure}.
 
 \pnum
-The at point is \tcode{pt}.
+\postconditions \tcode{data() == GraphicsSurfaces::paths::create_abs_new_figure(pt)}.
+
+\pnum
+\remarks The at point is \tcode{pt}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{abs_new_figure}!constructor}%
+\rSec1 [\iotwod.absnewfigure.acc] {Accessors}%
+
+\indexlibrarymember{data}{abs_new_figure}%
 \begin{itemdecl}
-abs_new_figure(const abs_new_figure& other);
-abs_new_figure(abs_new_figure&& other) noexcept;
+const data_type& data() const noexcept;
+data_type& data() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-Constructs an object of type \tcode{abs_new_figure}. In the second form, other is left in a valid state with an unspecified value.
-	
-\pnum
-The at point is \tcode{other.at()}.
+\returns A reference to the \tcode{abs_new_figure} object's data object (See: \ref{\iotwod.absnewfigure.intro}).
 \end{itemdescr}
 
-\rSec1 [\iotwod.absnewfigure.assign] {\tcode{abs_new_figure} assignment operators}%
-
-\indexlibrary{\idxcode{abs_new_figure}!assignment}%
-\begin{itemdecl}
-abs_new_figure& operator=(const abs_new_figure& other);
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-If \tcode{*this} and \tcode{other} are not the same object, modifies \tcode{*this} such that \tcode{*this.at()} is \tcode{other.at()}
-
-\pnum
-If \tcode{*this} and \tcode{other} are the same object, the member has no effect.
-	
-\pnum
-\returns
-\tcode{*this}
-\end{itemdescr}
-
-\indexlibrary{\idxcode{abs_new_figure}!assignment}%
-\begin{itemdecl}
-abs_new_figure& operator=(abs_new_figure&& other) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-<TODO>
-
-\pnum
-\returns
-\tcode{*this}
-\end{itemdescr}
-
-\rSec1 [\iotwod.absnewfigure.modifiers]{\tcode{abs_new_figure} modifiers}%
+\rSec1 [\iotwod.absnewfigure.mod] {Modifiers}%
 
 \indexlibrarymember{at}{abs_new_figure}%
 \begin{itemdecl}
-void at(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& pt) noexcept;
+void at(const basic_point_2d<graphics_math_type>& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-The at point is \tcode{pt}.
+\effects Calls \tcode{GraphicsSurfaces::paths::at(data(), pt)}.
+
+\pnum
+\remarks The at point is \tcode{pt}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.absnewfigure.observers]{\tcode{abs_new_figure} observers}%
+\rSec1 [\iotwod.absnewfigure.obs]{Observers}%
 
 \indexlibrarymember{at}{abs_new_figure}%
 \begin{itemdecl}
-basic_point_2d<typename GraphicsSurfaces::graphics_math_type> at() const noexcept;
+basic_point_2d<graphics_math_type> at() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-The at point.
+\returns \tcode{GraphicsSurfaces::paths::at(data())}.
+
+\pnum
+\remarks
+The returned value is the at point.
 \end{itemdescr}
 
-\rSec1 [\iotwod.absnewfigure.ops]{\tcode{abs_new_figure} operators}%
+\rSec1 [\iotwod.absnewfigure.eq] {Equality operators}%
 
 \indexlibrarymember{operator==}{abs_new_figure}%
 \begin{itemdecl}
 template <class GraphicsSurfaces>
-bool operator==(const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& lhs,
-  const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& rhs) noexcept;
+bool operator==(
+  const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& rhs) 
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-\tcode{lhs.at() == rhs.at()}.
+\returns \tcode{GraphicsSurfaces::paths::equal(lhs, rhs)}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{abs_new_figure}%
+\begin{itemdecl}
+template <class GraphicsSurfaces>
+bool operator!=(
+  const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::paths::not_equal(lhs, rhs)}.
 \end{itemdescr}

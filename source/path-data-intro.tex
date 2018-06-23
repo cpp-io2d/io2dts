@@ -1,6 +1,6 @@
 %!TEX root = io2d.tex
 
-\rSec0 [\iotwod.paths.items.intro] {Introduction}
+\rSec0 [\iotwod.paths.figureitems.intro] {Introduction}
 
 \pnum
 The nested classes within the class template \tcode{basic_figure_items} describe figure items.
@@ -17,7 +17,7 @@ A figure begins with an \tcode{abs_new_figure} or \tcode{rel_new_figure} object.
 \pnum
 The \tcode{basic_path_builder} class is a sequential container that contains a path. It provides a simple interface for building a path but a path can be created using any container that stores \tcode{basic_figure_items::figure_item} objects.
 
-\rSec0 [\iotwod.paths.items.synopsis] {\tcode{basic_figure_items} synopsis}
+\rSec0 [\iotwod.paths.figureitems.synopsis] {Synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
@@ -41,26 +41,6 @@ namespace std::experimental::io2d::v1 {
     using figure_item = variant<abs_cubic_curve, abs_line, abs_matrix,
       abs_new_figure, abs_quadratic_curve, arc, close_figure, rel_cubic_curve, 
       rel_line, rel_matrix, rel_new_figure, rel_quadratic_curve, revert_matrix>;
-
-    class abs_new_figure {
-    public:
-      // \ref{\iotwod.absnewfigure.cons}, construct:
-      abs_new_figure();
-      explicit abs_new_figure(const basic_point_2d<typename
-      GraphicsSurfaces::graphics_math_type>& pt);
-      abs_new_figure(const abs_new_figure& other);
-      abs_new_figure(abs_new_figure&& other) noexcept;
-
-      // \ref{\iotwod.absnewfigure.assign}, assign:
-      abs_new_figure& operator=(const abs_new_figure& other);
-      abs_new_figure& operator=(abs_new_figure&& other) noexcept;
-
-      // \ref{\iotwod.absnewfigure.modifiers}, modifiers:
-      void at(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& pt) noexcept;
-
-      // \ref{\iotwod.absnewfigure.observers}, observers:
-      basic_point_2d<typename GraphicsSurfaces::graphics_math_type> at() const noexcept;
-    };
 
     class rel_new_figure {
     public:
@@ -316,17 +296,6 @@ namespace std::experimental::io2d::v1 {
       rel_new_figure, rel_quadratic_curve, revert_matrix>;
   };
 
-  // \ref{\iotwod.absnewfigure.ops}, abs_new_figure operators:
-  template <class GraphicsSurfaces>
-  bool operator==(
-    const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& lhs,
-    const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& rhs) 
-    noexcept;
-  template <class GraphicsSurfaces>
-  bool operator!=(
-    const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& lhs,
-    const typename basic_figure_items<GraphicsSurfaces>::abs_new_figure& rhs) noexcept;
-  
   // \ref{\iotwod.relnewfigure.ops}, rel_new_figure operators:
   template <class GraphicsSurfaces>
   bool operator==(
