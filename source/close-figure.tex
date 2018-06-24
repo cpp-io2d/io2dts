@@ -1,11 +1,38 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.closefigure] {Class \tcode{close_figure}}%
+\rSec0 [\iotwod.closefigure] {Class template \tcode{basic_figure_items<GraphicsSurfaces>::close_figure}}
+
+\rSec1 [\iotwod.closefigure.intro] {Overview}
 
 \pnum
 \indexlibrary{\idxcode{close_figure}}
-The class \tcode{close_figure} describes a figure item that is a close figure command.
+The class template \tcode{basic_figure_items<GraphicsSurfaces>::close_figure} describes a figure item that is a close figure command.
 
-\rSec1 [\iotwod.closefigure.cons] {\tcode{close_figure} constructors}%
+\rSec1 [\iotwod.closefigure.synopsis] {Synopsis}
+\begin{codeblock}
+namespace std::experimemtal::io2d::v1 {
+  template <class GraphicsSurfaces>
+  class basic_figure_items<GraphicsSurfaces>::close_figure {
+  public:
+    using data_type =
+      typename GraphicsSurfaces::paths::abs_new_figure_data_type;
+
+    // \ref{\iotwod.closefigure.ctor}, construct:
+    close_figure();
+    close_figure(const close_figure& other) = default;
+    close_figure(close_figure&& other) noexcept = default;
+
+    // assign:
+    close_figure& operator=(const close_figure& other) = default;
+    close_figure& operator=(close_figure&& other) noexcept = default;
+
+    // \ref{\iotwod.closefigure.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+  };
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.closefigure.ctor] {Constructors}%
 
 \indexlibrary{\idxcode{close_figure}!constructor}%
 \begin{itemdecl}
@@ -13,20 +40,45 @@ close_figure();
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-Constructs an object of type \tcode{close_figure}.
+\effects Constructs an object of type \tcode{close_figure}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.closefigure.ops]{\tcode{close_figure} operators}%
+\rSec1 [\iotwod.closefigure.acc] {Accessors}%
+
+\indexlibrarymember{data}{close_figure}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{close_figure} object's data object (See: \ref{\iotwod.closefigure.intro}).
+\end{itemdescr}
+
+\rSec1 [\iotwod.closefigure.eq] {Equality operators}%
 
 \indexlibrarymember{operator==}{close_figure}%
 \begin{itemdecl}
 template <class GraphicsSurfaces>
-bool operator==(const typename basic_figure_items<GraphicsSurfaces>::close_figure& lhs,
-  const typename basic_figure_items<GraphicsSurfaces>::close_figure& rhs) noexcept;
+bool operator==(
+  const typename basic_figure_items<GraphicsSurfaces>::close_figure& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::close_figure& rhs)
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-\tcode{true}.
+\returns \tcode{true}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{close_figure}%
+\begin{itemdecl}
+template <class GraphicsSurfaces>
+bool operator!=(
+  const typename basic_figure_items<GraphicsSurfaces>::close_figure& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::close_figure& rhs)
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{false}.
 \end{itemdescr}
