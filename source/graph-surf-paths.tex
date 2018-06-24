@@ -63,7 +63,20 @@ An object of type \tcode{basic_interpreted_path<X>} is an immutable object. As s
 \end{note}
 
 \pnum
-In Table~\ref{tab:\iotwod.graphsurf.paths.requirementstab}, \tcode{AC} denotes the type \tcode{X::paths::abs_cubic_curve_data_type}, \tcode{AL} denotes the type \tcode{X::paths::abs_line_data_type}, \tcode{AM} denotes the type \tcode{X::paths::abs_matrix_data_type}, \tcode{AN} denotes the type \tcode{X::paths::abs_new_figure_data_type}, \tcode{AQ} denotes the type \tcode{X::paths::abs_quadratic_curve_data_type}, \tcode{ARC} denotes the type \tcode{X::paths::arc_data_type}, \tcode{CF} denotes the type \tcode{X::paths::close_figure_data_type}, \tcode{IP} denotes the type \tcode{X::paths::interpreted_path_data_type}, \tcode{RC} denotes the type \tcode{X::paths::rel_cubic_curve_data_type}, \tcode{RL} denotes the type \tcode{X::paths::rel_line_data_type}, \tcode{RM} denotes the type \tcode{X::paths::rel_matrix_data_type}, \tcode{RN} denotes the type \tcode{X::paths::rel_new_figure_data_type}, \tcode{RQ} denotes the type \tcode{X::paths::rel_quadratic_curve_data_type}, \tcode{RV} denotes the type \tcode{X::paths::revert_matrix_data_type}, \tcode{M} denotes the type \tcode{basic_matrix_2d<X::graphics_math_type}, and \tcode{P} denotes the type \tcode{basic_point_2d<X::graphics_math_type>}.
+In Table~\ref{tab:\iotwod.graphsurf.paths.requirementstab},
+\tcode{AC} denotes the type \tcode{X::paths::abs_cubic_curve_data_type}, \tcode{AL} denotes the type \tcode{X::paths::abs_line_data_type},
+\tcode{AM} denotes the type \tcode{X::paths::abs_matrix_data_type},
+\tcode{AN} denotes the type \tcode{X::paths::abs_new_figure_data_type},
+\tcode{AQ} denotes the type \tcode{X::paths::abs_quadratic_curve_data_type},
+\tcode{ARC} denotes the type \tcode{X::paths::arc_data_type},
+\tcode{IP} denotes the type \tcode{X::paths::interpreted_path_data_type},
+\tcode{RC} denotes the type \tcode{X::paths::rel_cubic_curve_data_type},
+\tcode{RL} denotes the type \tcode{X::paths::rel_line_data_type},
+\tcode{RM} denotes the type \tcode{X::paths::rel_matrix_data_type},
+\tcode{RN} denotes the type \tcode{X::paths::rel_new_figure_data_type},
+\tcode{RQ} denotes the type \tcode{X::paths::rel_quadratic_curve_data_type},
+\tcode{M} denotes the type \tcode{basic_matrix_2d<X::graphics_math_type}, and
+\tcode{P} denotes the type \tcode{basic_point_2d<X::graphics_math_type>}.
 
 \pnum
 In order to describe the observable effects of functions contained in Table~\ref{tab:\iotwod.graphsurf.paths.requirementstab}, Table~\ref{tab:\iotwod.graphsurf.paths.typememberdata} describes the types contained in \tcode{X} as-if they possessed certain member data. 
@@ -378,14 +391,6 @@ return spt + pt * lmtx;
 \tcode{spt} is the starting point of the arc. \tcode{m} is the transformation matrix being used.
 \end{note}	\\ \rowsep
 %%
-%% close_figure
-%%
-\tcode{X::paths::create_close_figure()}	&
-\tcode{CF}	&
-\returns
-An object \tcode{cf}.	&
-	\\ \rowsep
-%%
 %% interpreted_path
 %%
 \tcode{X::paths::create_interpreted_path()}	&
@@ -549,13 +554,5 @@ An object \tcode{rq}.	&
 \tcode{P}	&
 \returns
 \tcode{rq.ept}.	&
-	\\ \rowsep
-%%
-%% revert_matrix
-%%
-\tcode{X::paths::revert_matrix}	&
-\tcode{RV}	&
-\returns
-An object \tcode{rv}.	&
 	\\
 \end{libreqtab4d}
