@@ -7,8 +7,11 @@
 \indexlibrary{\idxcode{rel_new_figure}}%
 The class template \tcode{basic_figure_items<GraphicsSurfaces>::rel_new_figure} describes a figure item that is a new figure command.
 
+%\pnum
+%Let \tcode{X} be the type \tcode{GraphicsSurfaces::graphics_math_type}.
+%
 \pnum
-It has an \term{at point} of type \tcode{point_2d}.
+It has an \term{at point} of type \tcode{basic_point_2d<GraphicsSurfaces::graphics_math_type>}.
 
 \pnum
 The data are stored in an object of type \tcode{typename GraphicsSurfaces::paths::rel_new_figure_data_type}. It is accessible using the \tcode{data} member functions.
