@@ -57,7 +57,7 @@ namespace std::experimemtal::io2d::v1 {
         basic_matrix_2d<graphics_math_type>{}) const noexcept;
   };
 
-  // \ref{\iotwod.arc.ops}, equality operators:
+  // \ref{\iotwod.arc.eq}, equality operators:
   template <class GraphicsSurfaces>
   bool operator==(
     const typename basic_figure_items<GraphicsSurfaces>::arc& lhs,
@@ -102,6 +102,18 @@ The rotation is \tcode{rot}.
 The start angle is \tcode{sang}.
 \end{itemdescr}
 
+\rSec1 [\iotwod.arc.acc] {Accessors}%
+
+\indexlibrarymember{data}{arc}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{arc} object's data object (See: \ref{\iotwod.arc.intro}).
+\end{itemdescr}
+
 \rSec1 [\iotwod.arc.mod] {Modifiers}
 
 \indexlibrarymember{radius}{arc}%
@@ -131,7 +143,7 @@ void start_angle(float sang) noexcept;
 \effects The start angle is \tcode{sang}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.arc.observers] {Observers}
+\rSec1 [\iotwod.arc.obs] {Observers}
 
 \indexlibrarymember{radius}{arc}%
 \begin{itemdecl}
@@ -203,7 +215,7 @@ return cpt + pt * lmtx;
 \end{codeblock}
 \end{itemdescr}
 
-\rSec1 [\iotwod.arc.ops] {Equality operators}%
+\rSec1 [\iotwod.arc.eq] {Equality operators}%
 
 \indexlibrarymember{operator==}{arc}%
 \begin{itemdecl}

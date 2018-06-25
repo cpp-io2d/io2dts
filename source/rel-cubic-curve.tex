@@ -50,7 +50,7 @@ namespace std::experimemtal::io2d::v1 {
     basic_point_2d<graphics_math_type> end_pt() const noexcept;
   };
 
-  // \ref{\iotwod.relcubiccurve.ops}, equality operators:
+  // \ref{\iotwod.relcubiccurve.eq}, equality operators:
   template <class GraphicsSurfaces>
   bool operator==(
     const typename basic_figure_items<GraphicsSurfaces>::rel_cubic_curve& lhs,
@@ -94,6 +94,18 @@ rel_cubic_curve(const basic_point_2d<typename GraphicsSurfaces::graphics_math_ty
 
 \pnum
 \remarks The end point is \tcode{ept}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.relcubiccurve.acc] {Accessors}%
+
+\indexlibrarymember{data}{rel_cubic_curve}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{rel_matrix} object's data object (See: \ref{\iotwod.relcubiccurve.intro}).
 \end{itemdescr}
 
 \rSec1 [\iotwod.relcubiccurve.mod] {Modifiers}
@@ -159,7 +171,7 @@ basic_point_2d<graphics_math_type> end_pt() const noexcept;
 \returns The end point.
 \end{itemdescr}
 
-\rSec1 [\iotwod.relcubiccurve.ops] {Equality operators}%
+\rSec1 [\iotwod.relcubiccurve.eq] {Equality operators}%
 
 \indexlibrarymember{operator==}{rel_cubic_curve}%
 \begin{itemdecl}

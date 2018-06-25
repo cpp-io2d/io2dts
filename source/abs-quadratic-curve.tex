@@ -47,7 +47,7 @@ namespace std::experimemtal::io2d::v1 {
     basic_point_2d<graphics_math_type> end_pt() const noexcept;
   };
 
-  // \ref{\iotwod.absquadraticcurve.ops}, equality operators:
+  // \ref{\iotwod.absquadraticcurve.eq}, equality operators:
   template <class GraphicsSurfaces>
   bool operator==(
     const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& lhs,
@@ -86,6 +86,18 @@ abs_quadratic_curve(const basic_point_2d<graphics_math_type>& cpt,
 
 \pnum
 \remarks The end point is \tcode{ept}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.absquadraticcurve.acc] {Accessors}%
+
+\indexlibrarymember{data}{abs_quadratic_curve}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{abs_quadratic_curve} object's data object (See: \ref{\iotwod.absquadraticcurve.intro}).
 \end{itemdescr}
 
 \rSec1 [\iotwod.absquadraticcurve.mod]{Modifiers}%
@@ -128,7 +140,7 @@ basic_point_2d<graphics_math_type> end_pt() const noexcept;
 \returns The end point.
 \end{itemdescr}
 
-\rSec1 [\iotwod.absquadraticcurve.ops] {Equality operators}%
+\rSec1 [\iotwod.absquadraticcurve.eq] {Equality operators}%
 
 \indexlibrarymember{operator==}{abs_quadratic_curve}%
 \begin{itemdecl}
@@ -155,5 +167,5 @@ bool operator!=(
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{lhs.control_pt() != rhs.control_pt() \&\& lhs.end_pt() != rhs.end_pt()}.
+\tcode{lhs.control_pt() != rhs.control_pt() || lhs.end_pt() != rhs.end_pt()}.
 \end{itemdescr}

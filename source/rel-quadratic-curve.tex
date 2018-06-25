@@ -88,6 +88,18 @@ rel_quadratic_curve(const basic_point_2d<typename GraphicsSurfaces::graphics_mat
 \remarks The end point is \tcode{ept}.
 \end{itemdescr}
 
+\rSec1 [\iotwod.relquadraticcurve.acc] {Accessors}%
+
+\indexlibrarymember{data}{rel_quadratic_curve}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{rel_quadratic_curve} object's data object (See: \ref{\iotwod.relquadraticcurve.intro}).
+\end{itemdescr}
+
 \rSec1 [\iotwod.relquadraticcurve.mod]{Modifiers}%
 
 \indexlibrarymember{control_pt}{rel_quadratic_curve}%
@@ -128,7 +140,7 @@ basic_point_2d<graphics_math_type> end_pt() const noexcept;
 \returns The end point.
 \end{itemdescr}
 
-\rSec1 [\iotwod.relquadraticcurve.ops] {Equality operators}%
+\rSec1 [\iotwod.relquadraticcurve.eq] {Equality operators}%
 
 \indexlibrarymember{operator==}{rel_quadratic_curve}%
 \begin{itemdecl}
@@ -155,5 +167,5 @@ bool operator!=(
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{lhs.control_pt() != rhs.control_pt() \&\& lhs.end_pt() != rhs.end_pt()}.
+\tcode{lhs.control_pt() != rhs.control_pt() || lhs.end_pt() != rhs.end_pt()}.
 \end{itemdescr}

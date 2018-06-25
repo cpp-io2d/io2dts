@@ -50,7 +50,7 @@ namespace std::experimemtal::io2d::v1 {
     basic_point_2d<graphics_math_type> end_pt() const noexcept;
   };
 
-  // \ref{\iotwod.abscubiccurve.ops}, equality operators:
+  // \ref{\iotwod.abscubiccurve.eq}, equality operators:
   template <class GraphicsSurfaces>
   bool operator==(
     const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& lhs,
@@ -96,7 +96,19 @@ abs_cubic_curve(const basic_point_2d<typename GraphicsSurfaces::graphics_math_ty
 \remarks The end point is \tcode{ept}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.abscubiccurve.mod]{\tcode{abs_cubic_curve} modifiers}
+\rSec1 [\iotwod.abscubiccurve.acc] {Accessors}%
+
+\indexlibrarymember{data}{abs_cubic_curve}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{rel_matrix} object's data object (See: \ref{\iotwod.abscubiccurve.intro}).
+\end{itemdescr}
+
+\rSec1 [\iotwod.abscubiccurve.mod] {Modifiers}
 
 \indexlibrarymember{control_pt1}{abs_cubic_curve}%
 \begin{itemdecl}
@@ -159,7 +171,7 @@ basic_point_2d<graphics_math_type> end_pt() const noexcept;
 \returns The end point.
 \end{itemdescr}
 
-\rSec1 [\iotwod.abscubiccurve.ops] {Equality operators}%
+\rSec1 [\iotwod.abscubiccurve.eq] {Equality operators}%
 
 \indexlibrarymember{operator==}{abs_cubic_curve}%
 \begin{itemdecl}
@@ -186,5 +198,5 @@ bool operator!=(
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{lhs.control_pt1() != rhs.control_pt1() \&\& lhs.control_pt2() != rhs.control_pt2() \&\& lhs.end_pt() != rhs.end_pt()}.
+\tcode{lhs.control_pt1() != rhs.control_pt1() || lhs.control_pt2() != rhs.control_pt2() || lhs.end_pt() != rhs.end_pt()}.
 \end{itemdescr}

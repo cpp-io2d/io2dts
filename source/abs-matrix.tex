@@ -10,6 +10,9 @@ The class template \tcode{basic_figure_items<GraphicsSurfaces>::abs_matrix} desc
 \pnum
 It has a transform matrix of type \tcode{basic_matrix_2d<GraphicsSurfaces::graphics_math_type>}.
 
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::paths::abs_matrix_data_type}. It is accessible using the \tcode{data} member functions.
+
 \rSec1 [\iotwod.absmatrix.synopsis] {Synopsis}
 \begin{codeblock}
 namespace std::experimemtal::io2d::v1 {
