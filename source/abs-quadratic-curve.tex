@@ -1,14 +1,67 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.absquadraticcurve] {Class \tcode{abs_quadratic_curve}}
+\rSec0 [\iotwod.absquadraticcurve] {Class template \tcode{basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve}}
+
+\rSec1 [\iotwod.absquadraticcurve.intro] {Overview}
 
 \pnum
 \indexlibrary{\idxcode{abs_quadratic_curve}}%
-The class \tcode{abs_quadratic_curve} describes a figure item that is a segment.
+The class \tcode{basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve} describes a figure item that is a segment.
 
 \pnum
-It has a \term{control point} of type \tcode{basic_point_2d} and an \term{end point} of type \tcode{basic_point_2d}.
+It has a \term{control point} of type \tcode{basic_point_2d<GraphicsSurfaces::graphics_math_type>} and an \term{end point} of type \tcode{basic_point_2d<GraphicsSurfaces::graphics_math_type>}.
 
-\rSec1 [\iotwod.absquadraticcurve.cons] {\tcode{abs_quadratic_curve} constructors}
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::paths::abs_quadratic_curve_data_type}. It is accessible using the \tcode{data} member functions.
+
+\rSec1 [\iotwod.absquadraticcurve.synopsis] {Synopsis}
+\begin{codeblock}
+namespace std::experimemtal::io2d::v1 {
+  template <class GraphicsSurfaces>
+  class basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve {
+  public:
+    using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+    using data_type =
+      typename GraphicsSurfaces::paths::abs_quadratic_curve_data_type;
+
+    // \ref{\iotwod.absquadraticcurve.ctor}, construct:
+    abs_quadratic_curve();
+    abs_quadratic_curve(const basic_point_2d<graphics_math_type>& cpt,
+      const basic_point_2d<graphics_math_type>& ept);
+    abs_quadratic_curve(const abs_quadratic_curve& other) = default;
+    abs_quadratic_curve(abs_quadratic_curve&& other) noexcept = default;
+
+    // assign:
+    abs_quadratic_curve& operator=(const abs_quadratic_curve& other) = default;
+    abs_quadratic_curve& operator=(abs_quadratic_curve&& other) noexcept = default;
+
+    // \ref{\iotwod.absquadraticcurve.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+
+    // \ref{\iotwod.absquadraticcurve.mod}, modifiers:
+    void control_pt(const basic_point_2d<graphics_math_type>& cpt) noexcept;
+    void end_pt(const basic_point_2d<graphics_math_type>& ept) noexcept;
+
+    // \ref{\iotwod.absquadraticcurve.obs}, observers:
+    basic_point_2d<graphics_math_type> control_pt() const noexcept;
+    basic_point_2d<graphics_math_type> end_pt() const noexcept;
+  };
+
+  // \ref{\iotwod.absquadraticcurve.ops}, equality operators:
+  template <class GraphicsSurfaces>
+  bool operator==(
+    const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& rhs) 
+    noexcept;  
+  template <class GraphicsSurfaces>
+  bool operator!=(
+    const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& rhs) 
+    noexcept;  
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.absquadraticcurve.ctor] {Constructors}%
 
 \indexlibrary{\idxcode{abs_quadratic_curve}!constructor}%
 \begin{itemdecl}
@@ -16,131 +69,91 @@ abs_quadratic_curve() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-Equivalent to: \tcode{abs_quadratic_curve\{ basic_point_2d(), basic_point_2d() \};}
+\effects Equivalent to: \tcode{abs_quadratic_curve\{ basic_point_2d(), basic_point_2d() \};}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{abs_quadratic_curve}!constructor}%
 \begin{itemdecl}
-abs_quadratic_curve(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& cpt,
-  const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& ept) noexcept;
+abs_quadratic_curve(const basic_point_2d<graphics_math_type>& cpt,
+  const basic_point_2d<graphics_math_type>& ept) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-Constructs an object of type \tcode{abs_quadratic_curve}.
+\effects Constructs an object of type \tcode{abs_quadratic_curve}.
 
 \pnum
-The control point is \tcode{cpt}.
+\remarks The control point is \tcode{cpt}.
 
 \pnum
-The end point is \tcode{ept}.
+\remarks The end point is \tcode{ept}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{abs_quadratic_curve}!constructor}%
-\begin{itemdecl}
-abs_quadratic_curve(const abs_quadratic_curve& other);
-abs_quadratic_curve(abs_quadratic_curve&& other) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Constructs an object of type \tcode{abs_quadratic_curve}. In the second form, other is left in a valid state with an unspecified value.
-
-\pnum
-The control point is \tcode{other.control_pt()}.
-
-\pnum
-The end point is \tcode{other.end_pt()}.
-\end{itemdescr}
-
-\rSec1 [\iotwod.absquadraticcurve.assign] {\tcode{abs_quadratic_curve} assignment operators}
-
-\indexlibrary{\idxcode{abs_quadratic_curve}!assignment}%
-\begin{itemdecl}
-abs_quadratic_curve& operator=(const abs_quadratic_curve& other);
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-If \tcode{*this} and \tcode{other} are not the same object, modifies \tcode{*this} such that \tcode{*this.control_pt()} is \tcode{other.control_pt()} and \tcode{*this.end_pt()} is \tcode{other.end_pt()}
-
-\pnum
-If \tcode{*this} and \tcode{other} are the same object, the member has no effect.
-
-\pnum
-\returns
-\tcode{*this}
-\end{itemdescr}
-
-\indexlibrary{\idxcode{abs_quadratic_curve}!assignment}%
-\begin{itemdecl}
-abs_quadratic_curve& operator=(abs_quadratic_curve&& other) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-<TODO>
-
-\pnum
-\returns
-\tcode{*this}
-\end{itemdescr}
-
-\rSec1 [\iotwod.absquadraticcurve.modifiers]{\tcode{abs_quadratic_curve} modifiers}
+\rSec1 [\iotwod.absquadraticcurve.mod]{Modifiers}%
 
 \indexlibrarymember{control_pt}{abs_quadratic_curve}%
 \begin{itemdecl}
-void control_pt(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& cpt) noexcept;
+void control_pt(const basic_point_2d<graphics_math_type>& cpt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-The control point is \tcode{cpt}.
+\effects The control point is \tcode{cpt}.
 \end{itemdescr}
 
 \indexlibrarymember{end_pt}{abs_quadratic_curve}%
 \begin{itemdecl}
-void end_pt(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& ept) noexcept;
+void end_pt(const basic_point_2d<graphics_math_type>& ept) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-The end point is \tcode{ept}.
+\effects The end point is \tcode{ept}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.absquadraticcurve.observers]{\tcode{abs_quadratic_curve} observers}
+\rSec1 [\iotwod.absquadraticcurve.obs] {Observers}
 
 \indexlibrarymember{control_pt}{abs_quadratic_curve}%
 \begin{itemdecl}
-basic_point_2d<typename GraphicsSurfaces::graphics_math_type> control_pt() const noexcept;
+basic_point_2d<graphics_math_type> control_pt() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-The control point.
+\returns The control point.
 \end{itemdescr}
 
 \indexlibrarymember{end_pt}{abs_quadratic_curve}%
 \begin{itemdecl}
-basic_point_2d<typename GraphicsSurfaces::graphics_math_type> end_pt() const noexcept;
+basic_point_2d<graphics_math_type> end_pt() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-The end point.
+\returns The end point.
 \end{itemdescr}
 
-\rSec1 [\iotwod.absquadraticcurve.ops]{\tcode{abs_quadratic_curve} operators}
+\rSec1 [\iotwod.absquadraticcurve.ops] {Equality operators}%
 
 \indexlibrarymember{operator==}{abs_quadratic_curve}%
 \begin{itemdecl}
 template <class GraphicsSurfaces>
-bool operator==(const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& lhs,
-  const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& rhs) noexcept;
+bool operator==(
+  const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& rhs) 
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
 \tcode{lhs.control_pt() == rhs.control_pt() \&\& lhs.end_pt() == rhs.end_pt()}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{abs_quadratic_curve}%
+\begin{itemdecl}
+template <class GraphicsSurfaces>
+bool operator!=(
+  const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::abs_quadratic_curve& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{lhs.control_pt() != rhs.control_pt() \&\& lhs.end_pt() != rhs.end_pt()}.
 \end{itemdescr}

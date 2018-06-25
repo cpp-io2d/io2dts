@@ -1,14 +1,61 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.absmatrix] {Class \tcode{abs_matrix}}%
+\rSec0 [\iotwod.absmatrix] {Class template \tcode{basic_figure_items<GraphicsSurfaces>::abs_matrix}}
+
+\rSec1 [\iotwod.absmatrix.intro] {Overview}
 
 \pnum
 \indexlibrary{\idxcode{abs_matrix}}%
-The class \tcode{abs_matrix} describes a figure item that is a path command.
+The class template \tcode{basic_figure_items<GraphicsSurfaces>::abs_matrix} describes a figure item that is a path command.
 
 \pnum
-It has a transform matrix of type \tcode{basic_matrix_2d}.
+It has a transform matrix of type \tcode{basic_matrix_2d<GraphicsSurfaces::graphics_math_type>}.
 
-\rSec1 [\iotwod.absmatrix.cons] {\tcode{abs_matrix} constructors}
+\rSec1 [\iotwod.absmatrix.synopsis] {Synopsis}
+\begin{codeblock}
+namespace std::experimemtal::io2d::v1 {
+  template <class GraphicsSurfaces>
+  class basic_figure_items<GraphicsSurfaces>::abs_matrix {
+  public:
+    using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+    using data_type =
+      typename GraphicsSurfaces::paths::abs_matrix_data_type;
+
+    // \ref{\iotwod.absmatrix.ctor}, construct:
+    abs_matrix();
+    explicit abs_matrix(const basic_matrix_2d<graphics_math_type>& m) noexcept;
+    abs_matrix(const abs_matrix& other) = default;
+    abs_matrix(abs_matrix&& other) noexcept = default;
+
+    // assign:
+    abs_matrix& operator=(const abs_matrix& other) = default;
+    abs_matrix& operator=(abs_matrix&& other) noexcept = default;
+
+    // \ref{\iotwod.absmatrix.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+
+    // \ref{\iotwod.absmatrix.mod}, modifiers:
+    void matrix(const basic_matrix_2d<graphics_math_type>& m) noexcept;
+
+    // \ref{\iotwod.absmatrix.obs}, observers:
+    basic_matrix_2d<graphics_math_type> matrix() const noexcept;
+  };
+  
+  // \ref{\iotwod.absmatrix.eq}, equality operators:
+  template <class GraphicsSurfaces>
+  bool operator==(
+    const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& rhs) 
+    noexcept;  
+  template <class GraphicsSurfaces>
+  bool operator!=(
+    const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& rhs) 
+    noexcept;  
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.absmatrix.ctor] {Constructors}%
 
 \indexlibrary{\idxcode{abs_matrix}!constructor}%
 \begin{itemdecl}
@@ -16,89 +63,54 @@ abs_matrix() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-Equivalent to: \tcode{abs_matrix\{ basic_matrix_2d() \};}
+\effects Equivalent to: \tcode{abs_matrix\{ basic_matrix_2d() \};} 
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::paths::create_abs_matrix()}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{abs_matrix}!constructor}%
 \begin{itemdecl}
-explicit abs_matrix(const basic_matrix_2d<typename
-  GraphicsSurfaces::graphics_math_type>& m) noexcept;
+explicit abs_matrix(const basic_matrix_2d<graphics_math_type>& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\requires
-\tcode{m.is_invertible()} is \tcode{true}.
+\requires \tcode{m.is_invertible()} is \tcode{true}.
 
 \pnum
-\effects
-Constructs an object of type \tcode{abs_matrix}.
+\effects Constructs an object of type \tcode{abs_matrix}.
 
 \pnum
-The transform matrix is \tcode{m}.
+\remarks The transform matrix is \tcode{m}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{abs_matrix}!constructor}%
+\rSec1 [\iotwod.absmatrix.acc] {Accessors}%
+
+\indexlibrarymember{data}{abs_matrix}%
 \begin{itemdecl}
-abs_matrix(const abs_matrix& other);
-abs_matrix(abs_matrix&& other) noexcept;
+const data_type& data() const noexcept;
+data_type& data() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-Constructs an object of type \tcode{abs_matrix}. In the second form, other is left in a valid state with an unspecified value.
+\returns A reference to the \tcode{abs_matrix} object's data object (See: \ref{\iotwod.absmatrix.intro}).
 \end{itemdescr}
 
-\rSec1 [\iotwod.absmatrix.assign] {\tcode{abs_matrix} assignment operators}
-
-\indexlibrary{\idxcode{abs_matrix}!assignment}%
-\begin{itemdecl}
-abs_matrix& operator=(const abs_matrix& other);
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-If \tcode{*this} and \tcode{other} are not the same object, modifies \tcode{*this} such that \tcode{*this.matrix()} is \tcode{other.matrix()}
-
-\pnum
-If \tcode{*this} and \tcode{other} are the same object, the member has no effect.
-
-\pnum
-\returns
-\tcode{*this}
-\end{itemdescr}
-
-\indexlibrary{\idxcode{abs_matrix}!assignment}%
-\begin{itemdecl}
-abs_matrix& operator=(abs_matrix&& other) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-<TODO>
-
-\pnum
-\returns
-\tcode{*this}
-\end{itemdescr}
-
-\rSec1 [\iotwod.absmatrix.modifiers]{\tcode{abs_matrix} modifiers}
+\rSec1 [\iotwod.absmatrix.mod] {Modifiers}%
 
 \indexlibrarymember{matrix}{abs_matrix}%
 \begin{itemdecl}
-void matrix(const basic_matrix_2d<typename GraphicsSurfaces::graphics_math_type>& m) noexcept;
+void matrix(const basic_matrix_2d<tgraphics_math_type>& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\requires
-\tcode{m.is_invertible()} is \tcode{true}.
+\requires \tcode{m.is_invertible()} is \tcode{true}.
 
 \pnum
-\effects
-The transform matrix is \tcode{m}.
+\effects The transform matrix is \tcode{m}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.absmatrix.observers]{\tcode{abs_matrix} observers}
+\rSec1 [\iotwod.absmatrix.obs]{Observers}%
 
 \indexlibrarymember{matrix}{abs_matrix}%
 \begin{itemdecl}
@@ -106,20 +118,33 @@ basic_matrix_2d<typename GraphicsSurfaces::graphics_math_type> matrix() const no
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-The transform matrix.
+\returns The transform matrix.
 \end{itemdescr}
 
-\rSec1 [\iotwod.absmatrix.ops]{\tcode{abs_matrix} operators}
+\rSec1 [\iotwod.absmatrix.eq] {Equality operators}%
 
 \indexlibrarymember{operator==}{abs_matrix}%
 \begin{itemdecl}
 template <class GraphicsSurfaces>
-bool operator==(const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& lhs,
-  const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& rhs) noexcept;
+bool operator==(
+  const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& rhs)
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-\tcode{lhs.matrix() == rhs.matrix()}.
+\returns \tcode{lhs.matrix() == rhs.matrix()}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{abs_matrix}%
+\begin{itemdecl}
+template <class GraphicsSurfaces>
+bool operator!=(
+  const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::abs_matrix& rhs)
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{lhs.matrix() != rhs.matrix()}.
 \end{itemdescr}

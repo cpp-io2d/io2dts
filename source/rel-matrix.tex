@@ -1,14 +1,61 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.relmatrix] {Class \tcode{rel_matrix}}%
+\rSec0 [\iotwod.relmatrix] {Class template \tcode{basic_figure_items<GraphicsSurfaces>::rel_matrix}}
+
+\rSec1 [\iotwod.relmatrix.intro] {Overview}
 
 \pnum
 \indexlibrary{\idxcode{rel_matrix}}%
-The class \tcode{rel_matrix} describes a figure item that is a path command.
+The class template \tcode{basic_figure_items<GraphicsSurfaces>::rel_matrix} describes a figure item that is a path command.
 
 \pnum
-It has a transform matrix of type \tcode{basic_matrix_2d}.
+It has a transform matrix of type \tcode{basic_matrix_2d<GraphicsSurfaces::graphics_math_type>}.
 
-\rSec1 [\iotwod.relmatrix.cons] {\tcode{rel_matrix} constructors}
+\rSec1 [\iotwod.relmatrix.synopsis] {Synopsis}
+\begin{codeblock}
+namespace std::experimemtal::io2d::v1 {
+  template <class GraphicsSurfaces>
+  class basic_figure_items<GraphicsSurfaces>::rel_matrix {
+  public:
+    using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+    using data_type =
+      typename GraphicsSurfaces::paths::rel_matrix_data_type;
+
+    // \ref{\iotwod.relmatrix.ctor}, construct:
+    rel_matrix();
+    explicit rel_matrix(const basic_matrix_2d<graphics_math_type>& m) noexcept;
+    rel_matrix(const rel_matrix& other) = default;
+    rel_matrix(rel_matrix&& other) noexcept = default;
+
+    // assign:
+    rel_matrix& operator=(const rel_matrix& other) = default;
+    rel_matrix& operator=(rel_matrix&& other) noexcept = default;
+
+    // \ref{\iotwod.relmatrix.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+
+    // \ref{\iotwod.relmatrix.mod}, modifiers:
+    void matrix(const basic_matrix_2d<graphics_math_type>& m) noexcept;
+
+    // \ref{\iotwod.relmatrix.obs}, observers:
+    basic_matrix_2d<graphics_math_type> matrix() const noexcept;
+  };
+  
+  // \ref{\iotwod.relmatrix.eq}, equality operators:
+  template <class GraphicsSurfaces>
+  bool operator==(
+    const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& rhs) 
+    noexcept;  
+  template <class GraphicsSurfaces>
+  bool operator!=(
+    const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& rhs) 
+    noexcept;  
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.relmatrix.ctor] {Constructors}%
 
 \indexlibrary{\idxcode{rel_matrix}!constructor}%
 \begin{itemdecl}
@@ -16,89 +63,54 @@ rel_matrix() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-Equivalent to: \tcode{rel_matrix\{ basic_matrix_2d() \};}
+\effects Equivalent to: \tcode{rel_matrix\{ basic_matrix_2d() \};} 
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::paths::create_rel_matrix()}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rel_matrix}!constructor}%
 \begin{itemdecl}
-explicit rel_matrix(const basic_matrix_2d<typename
-  GraphicsSurfaces::graphics_math_type>& m) noexcept;
+explicit rel_matrix(const basic_matrix_2d<graphics_math_type>& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\requires
-\tcode{m.is_invertible()} is \tcode{true}.
+\requires \tcode{m.is_invertible()} is \tcode{true}.
 
 \pnum
-\effects
-Constructs an object of type \tcode{rel_matrix}.
+\effects Constructs an object of type \tcode{rel_matrix}.
 
 \pnum
-The transform matrix is \tcode{m}.
+\remarks The transform matrix is \tcode{m}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rel_matrix}!constructor}%
+\rSec1 [\iotwod.relmatrix.acc] {Accessors}%
+
+\indexlibrarymember{data}{rel_matrix}%
 \begin{itemdecl}
-rel_matrix(const rel_matrix& other);
-rel_matrix(rel_matrix&& other) noexcept;
+const data_type& data() const noexcept;
+data_type& data() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-Constructs an object of type \tcode{rel_matrix}. In the second form, other is left in a valid state with an unspecified value.
+\returns A reference to the \tcode{rel_matrix} object's data object (See: \ref{\iotwod.relmatrix.intro}).
 \end{itemdescr}
 
-\rSec1 [\iotwod.relmatrix.assign] {\tcode{rel_matrix} assignment operators}
-
-\indexlibrary{\idxcode{rel_matrix}!assignment}%
-\begin{itemdecl}
-rel_matrix& operator=(const rel_matrix& other);
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-If \tcode{*this} and \tcode{other} are not the same object, modifies \tcode{*this} such that \tcode{*this.matrix()} is \tcode{other.matrix()}
-
-\pnum
-If \tcode{*this} and \tcode{other} are the same object, the member has no effect.
-
-\pnum
-\returns
-\tcode{*this}
-\end{itemdescr}
-
-\indexlibrary{\idxcode{rel_matrix}!assignment}%
-\begin{itemdecl}
-rel_matrix& operator=(rel_matrix&& other) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-<TODO>
-
-\pnum
-\returns
-\tcode{*this}
-\end{itemdescr}
-
-\rSec1 [\iotwod.relmatrix.modifiers]{\tcode{rel_matrix} modifiers}
+\rSec1 [\iotwod.relmatrix.mod] {Modifiers}%
 
 \indexlibrarymember{matrix}{rel_matrix}%
 \begin{itemdecl}
-void matrix(const basic_matrix_2d<typename GraphicsSurfaces::graphics_math_type>& m) noexcept;
+void matrix(const basic_matrix_2d<tgraphics_math_type>& m) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\requires
-\tcode{m.is_invertible()} is \tcode{true}.
+\requires \tcode{m.is_invertible()} is \tcode{true}.
 
 \pnum
-\effects
-The transform matrix is \tcode{m}.
+\effects The transform matrix is \tcode{m}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.relmatrix.observers]{\tcode{rel_matrix} observers}
+\rSec1 [\iotwod.relmatrix.obs]{Observers}%
 
 \indexlibrarymember{matrix}{rel_matrix}%
 \begin{itemdecl}
@@ -106,20 +118,33 @@ basic_matrix_2d<typename GraphicsSurfaces::graphics_math_type> matrix() const no
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-The transform matrix.
+\returns The transform matrix.
 \end{itemdescr}
 
-\rSec1 [\iotwod.relmatrix.ops]{\tcode{rel_matrix} operators}
+\rSec1 [\iotwod.relmatrix.eq] {Equality operators}%
 
 \indexlibrarymember{operator==}{rel_matrix}%
 \begin{itemdecl}
 template <class GraphicsSurfaces>
-bool operator==(const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& lhs,
-  const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& rhs) noexcept;
+bool operator==(
+  const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& rhs)
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-\tcode{lhs.matrix() == rhs.matrix()}.
+\returns \tcode{lhs.matrix() == rhs.matrix()}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{rel_matrix}%
+\begin{itemdecl}
+template <class GraphicsSurfaces>
+bool operator!=(
+  const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::rel_matrix& rhs)
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{lhs.matrix() != rhs.matrix()}.
 \end{itemdescr}

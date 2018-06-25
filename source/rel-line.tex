@@ -1,14 +1,64 @@
 %!TEX root = io2d.tex
 \rSec0 [\iotwod.relline] {Class \tcode{rel_line}}
 
+\rSec1 [\iotwod.relline.intro] {Overview}
+
 \pnum
 \indexlibrary{\idxcode{rel_line}}%
-The class \tcode{rel_line} describes a figure item that is a segment.
+The class \tcode{basic_figure_items<GraphicsSurfaces>::rel_line} describes a figure item that is a segment.
 
 \pnum
-It has an \term{end point} of type \tcode{basic_point_2d}.
+It has an \term{end point} of type \tcode{basic_point_2d<GraphicsSurfaces::graphics_math_type>}.
 
-\rSec1 [\iotwod.relline.cons] {\tcode{rel_line} constructors}
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::paths::rel_line_data_type}. It is accessible using the \tcode{data} member functions.
+
+\rSec1 [\iotwod.relline.synopsis] {Synopsis}
+\begin{codeblock}
+namespace std::experimemtal::io2d::v1 {
+  template <class GraphicsSurfaces>
+  class basic_figure_items<GraphicsSurfaces>::rel_line {
+  public:
+    using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+    using data_type =
+      typename GraphicsSurfaces::paths::rel_line_data_type;
+
+    // \ref{\iotwod.relline.ctor}, construct:
+    rel_line();
+    explicit rel_line(const basic_point_2d<graphics_math_type>& pt);
+    rel_line(const rel_line& other) = default;
+    rel_line(rel_line&& other) noexcept = default;
+
+    // assign:
+    rel_line& operator=(const rel_line& other) = default;
+    rel_line& operator=(rel_line&& other) noexcept = default;
+
+    // \ref{\iotwod.relline.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+
+    // \ref{\iotwod.relline.mod}, modifiers:
+    void at(const basic_point_2d<graphics_math_type>& pt) noexcept;
+
+    // \ref{\iotwod.relline.obs}, observers:
+    basic_point_2d<graphics_math_type> at() const noexcept;
+  };
+  
+  // \ref{\iotwod.relline.eq}, equality operators:
+  template <class GraphicsSurfaces>
+  bool operator==(
+    const typename basic_figure_items<GraphicsSurfaces>::rel_line& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::rel_line& rhs) 
+    noexcept;  
+  template <class GraphicsSurfaces>
+  bool operator!=(
+    const typename basic_figure_items<GraphicsSurfaces>::rel_line& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::rel_line& rhs) 
+    noexcept;  
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.relline.ctor] {Constructors}%
 
 \indexlibrary{\idxcode{rel_line}!constructor}%
 \begin{itemdecl}
@@ -16,8 +66,7 @@ rel_line() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-Equivalent to: \tcode{rel_line\{ basic_point_2d() \};}
+\effects Equivalent to: \tcode{rel_line\{ basic_point_2d() \};}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rel_line}!constructor}%
@@ -27,94 +76,71 @@ explicit rel_line(const basic_point_2d<typename
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-Constructs an object of type \tcode{rel_line}.
+\effects Constructs an object of type \tcode{rel_line}.
 
 \pnum
-The end point is \tcode{pt}.
+\remarks The end point is \tcode{pt}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rel_line}!constructor}%
+\rSec1 [\iotwod.relline.acc] {Accessors}%
+
+\indexlibrarymember{data}{rel_line}%
 \begin{itemdecl}
-rel_line(const rel_line& other);
-rel_line(rel_line&& other) noexcept;
+const data_type& data() const noexcept;
+data_type& data() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-Constructs an object of type \tcode{rel_line}. In the second form, other is left in a valid state with an unspecified value.
-
-\pnum
-The end point is \tcode{other.to()}.
+\returns A reference to the \tcode{rel_line} object's data object (See: \ref{\iotwod.relline.intro}).
 \end{itemdescr}
 
-\rSec1 [\iotwod.relline.assign] {\tcode{rel_line} assignment operators}
+\rSec1 [\iotwod.relline.mod] {Modifiers}%
 
-\indexlibrary{\idxcode{rel_line}!assignment}%
+\indexlibrarymember{to}{rel_line}%
 \begin{itemdecl}
-rel_line& operator=(const rel_line& other);
+void to(const basic_point_2d<graphics_math_type>& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-If \tcode{*this} and \tcode{other} are not the same object, modifies \tcode{*this} such that \tcode{*this.to()} is \tcode{other.to()}
-
-\pnum
-If \tcode{*this} and \tcode{other} are the same object, the member has no effect.
-
-\pnum
-\returns
-\tcode{*this}
+\effects The end point is \tcode{pt}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{rel_line}!assignment}%
+\rSec1 [\iotwod.relline.obs] {Observers} 
+
+\indexlibrarymember{to}{rel_line}%
 \begin{itemdecl}
-rel_line& operator=(rel_line&& other) noexcept;
+basic_point_2d<graphics_math_type> to() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-<TODO>
-
-\pnum
-\returns
-\tcode{*this}
+\returns The end point.
 \end{itemdescr}
 
-\rSec1 [\iotwod.relline.modifiers]{\tcode{rel_line} modifiers}
-
-\indexlibrarymember{rel_line}{to}
-\begin{itemdecl}
-void to(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& pt) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-The end point is \tcode{pt}.
-\end{itemdescr}
-
-\rSec1 [\iotwod.relline.observers]{\tcode{rel_line} observers}
-
-\indexlibrary{\idxcode{rel_line}!\idxcode{to}}%
-\begin{itemdecl}
-basic_point_2d<typename GraphicsSurfaces::graphics_math_type> to() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-The end point.
-\end{itemdescr}
-
-\rSec1 [\iotwod.relline.ops]{\tcode{rel_line} operators}
+\rSec1 [\iotwod.relline.ops] {Equality operators}%
 
 \indexlibrarymember{operator==}{rel_line}%
 \begin{itemdecl}
 template <class GraphicsSurfaces>
-bool operator==(const typename basic_figure_items<GraphicsSurfaces>::rel_line& lhs,
-  const typename basic_figure_items<GraphicsSurfaces>::rel_line& rhs) noexcept;
+bool operator==(
+  const typename basic_figure_items<GraphicsSurfaces>::rel_line& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::rel_line& rhs)
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
 \tcode{lhs.to() == rhs.to()}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{rel_line}%
+\begin{itemdecl}
+template <class GraphicsSurfaces>
+bool operator!=(
+  const typename basic_figure_items<GraphicsSurfaces>::rel_line& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::rel_line& rhs)
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{lhs.to() != rhs.to()}.
 \end{itemdescr}

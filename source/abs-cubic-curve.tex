@@ -1,14 +1,70 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.abscubiccurve] {Class \tcode{abs_cubic_curve}}
+\rSec0 [\iotwod.abscubiccurve] {Class template \tcode{basic_figure_items<GraphicsSurfaces>::abs_cubic_curve}}
+
+\rSec1 [\iotwod.abscubiccurve.intro] {Overview}
 
 \pnum
 \indexlibrary{\idxcode{abs_cubic_curve}}%
-The class \tcode{abs_cubic_curve} describes a figure item that is a segment.
+The class \tcode{basic_figure_items<GraphicsSurfaces>::abs_cubic_curve} describes a figure item that is a segment.
 
 \pnum
-It has a \term{first control point} of type \tcode{basic_point_2d}, a \term{second control point} of type \tcode{basic_point_2d}, and an \tcode{end point} of type \tcode{basic_point_2d}.
+It has a \term{first control point} of type \tcode{basic_point_2d<GraphicsSurfaces::graphics_math_type>}, a \term{second control point} of type \tcode{basic_point_2d<GraphicsSurfaces::graphics_math_type>}, and an \tcode{end point} of type \tcode{basic_point_2d<GraphicsSurfaces::graphics_math_type>}.
 
-\rSec1 [\iotwod.abscubiccurve.cons] {\tcode{abs_cubic_curve} constructors}
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::paths::abs_cubic_curve_data_type}. It is accessible using the \tcode{data} member functions.
+
+\rSec1 [\iotwod.abscubiccurve.synopsis] {Synopsis}
+\begin{codeblock}
+namespace std::experimemtal::io2d::v1 {
+  template <class GraphicsSurfaces>
+  class basic_figure_items<GraphicsSurfaces>::abs_cubic_curve {
+  public:
+    using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+    using data_type =
+      typename GraphicsSurfaces::paths::abs_cubic_curve_data_type;
+
+    // \ref{\iotwod.abscubiccurve.ctor}, construct:
+    abs_cubic_curve();
+    abs_cubic_curve(const basic_point_2d<graphics_math_type>& cpt1,
+       const basic_point_2d<graphics_math_type>& cpt2,
+       const basic_point_2d<graphics_math_type>& ept) noexcept;
+    abs_cubic_curve(const abs_cubic_curve& other) = default;
+    abs_cubic_curve(abs_cubic_curve&& other) noexcept = default;
+
+    // assign:
+    abs_cubic_curve& operator=(const abs_cubic_curve& other) = default;
+    abs_cubic_curve& operator=(abs_cubic_curve&& other) noexcept = default;
+
+    // \ref{\iotwod.abscubiccurve.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+
+    // \ref{\iotwod.abscubiccurve.mod}, modifiers:
+    void control_pt1(const basic_point_2d<graphics_math_type>& cpt) noexcept;
+    void control_pt2(const basic_point_2d<graphics_math_type>& cpt) noexcept;
+    void end_pt(const basic_point_2d<graphics_math_type>& ept) noexcept;
+
+    // \ref{\iotwod.abscubiccurve.obs}, observers:
+    basic_point_2d<graphics_math_type> control_pt1() const noexcept;
+    basic_point_2d<graphics_math_type> control_pt2() const noexcept;
+    basic_point_2d<graphics_math_type> end_pt() const noexcept;
+  };
+
+  // \ref{\iotwod.abscubiccurve.ops}, equality operators:
+  template <class GraphicsSurfaces>
+  bool operator==(
+    const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& rhs) 
+    noexcept;  
+  template <class GraphicsSurfaces>
+  bool operator!=(
+    const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& rhs) 
+    noexcept;  
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.abscubiccurve.ctor] {Constructors}%
 
 \indexlibrary{\idxcode{abs_cubic_curve}!constructor}%
 \begin{itemdecl}
@@ -28,73 +84,19 @@ abs_cubic_curve(const basic_point_2d<typename GraphicsSurfaces::graphics_math_ty
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-Constructs an object of type \tcode{abs_cubic_curve}.
+\effects Constructs an object of type \tcode{abs_cubic_curve}.
 
 \pnum
-The first control point is \tcode{cpt1}.
+\remarks The first control point is \tcode{cpt1}.
 
 \pnum
-The second control point is \tcode{cpt2}.
+\remarks The second control point is \tcode{cpt2}.
 
 \pnum
-The end point is \tcode{ept}.
+\remarks The end point is \tcode{ept}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{abs_cubic_curve}!constructor}%
-\begin{itemdecl}
-abs_cubic_curve(const abs_cubic_curve& other);
-abs_cubic_curve(abs_cubic_curve&& other) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-Constructs an object of type \tcode{abs_cubic_curve}. In the second form, other is left in a valid state with an unspecified value.
-
-\pnum
-The first control point is \tcode{other.control_pt1()}.
-
-\pnum
-The second control point is \tcode{other.control_pt2()}.
-
-\pnum
-The end point is \tcode{other.end_pt()}.
-\end{itemdescr}
-
-\rSec1 [\iotwod.abscubiccurve.assign] {\tcode{abs_cubic_curve} assignment operators}
-
-\indexlibrary{\idxcode{abs_cubic_curve}!assignment}%
-\begin{itemdecl}
-abs_cubic_curve& operator=(const abs_cubic_curve& other);
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-If \tcode{*this} and \tcode{other} are not the same object, modifies \tcode{*this} such that \tcode{*this.control_pt1()} is \tcode{other.control_pt1()}, \tcode{*this.control_pt2()} is \tcode{other.control_pt2()} and \tcode{*this.end_pt()} is \tcode{other.end_pt()}
-
-\pnum
-If \tcode{*this} and \tcode{other} are the same object, the member has no effect.
-
-\pnum
-\returns
-\tcode{*this}
-\end{itemdescr}
-
-\indexlibrary{\idxcode{abs_cubic_curve}!assignment}%
-\begin{itemdecl}
-abs_cubic_curve& operator=(abs_cubic_curve&& other) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-<TODO>
-
-\pnum
-\returns
-\tcode{*this}
-\end{itemdescr}
-
-\rSec1 [\iotwod.abscubiccurve.modifiers]{\tcode{abs_cubic_curve} modifiers}
+\rSec1 [\iotwod.abscubiccurve.mod]{\tcode{abs_cubic_curve} modifiers}
 
 \indexlibrarymember{control_pt1}{abs_cubic_curve}%
 \begin{itemdecl}
@@ -128,52 +130,61 @@ void end_pt(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>&
 The end point is \tcode{ept}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.abscubiccurve.observers]{\tcode{abs_cubic_curve} observers}
+\rSec1 [\iotwod.abscubiccurve.obs] {Observers}
 
 \indexlibrarymember{control_pt1}{abs_cubic_curve}%
 \begin{itemdecl}
-basic_point_2d<typename GraphicsSurfaces::graphics_math_type> control_pt1() const noexcept;
+basic_point_2d<graphics_math_type> control_pt1() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-The first control point.
+\returns The first control point.
 \end{itemdescr}
 
 \indexlibrarymember{control_pt2}{abs_cubic_curve}%
 \begin{itemdecl}
-basic_point_2d<typename GraphicsSurfaces::graphics_math_type> control_pt2() const noexcept;
+basic_point_2d<graphics_math_type> control_pt2() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-The second control point.
+\returns The second control point.
 \end{itemdescr}
 
 \indexlibrarymember{end_pt}{abs_cubic_curve}%
 \begin{itemdecl}
-basic_point_2d<typename GraphicsSurfaces::graphics_math_type> end_pt() const noexcept;
+basic_point_2d<graphics_math_type> end_pt() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-The end point.
+\returns The end point.
 \end{itemdescr}
 
-\rSec1 [\iotwod.abscubiccurve.ops]{\tcode{abs_cubic_curve} operators}
+\rSec1 [\iotwod.abscubiccurve.ops] {Equality operators}%
 
 \indexlibrarymember{operator==}{abs_cubic_curve}%
 \begin{itemdecl}
 template <class GraphicsSurfaces>
-bool operator==(const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& lhs,
-  const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& rhs) noexcept;
+bool operator==(
+  const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& rhs) 
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-\begin{codeblock}
-lhs.control_pt1() == rhs.control_pt1() &&
-lhs.control_pt2() == rhs.control_pt2() &&
-lhs.end_pt() && rhs.end_pt()
-\end{codeblock}
+\tcode{lhs.control_pt1() == rhs.control_pt1() \&\& lhs.control_pt2() == rhs.control_pt2() \&\& lhs.end_pt() == rhs.end_pt()}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{abs_cubic_curve}%
+\begin{itemdecl}
+template <class GraphicsSurfaces>
+bool operator!=(
+  const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::abs_cubic_curve& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{lhs.control_pt1() != rhs.control_pt1() \&\& lhs.control_pt2() != rhs.control_pt2() \&\& lhs.end_pt() != rhs.end_pt()}.
 \end{itemdescr}

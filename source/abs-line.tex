@@ -1,14 +1,64 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.absline] {Class \tcode{abs_line}}
+\rSec0 [\iotwod.absline] {Class template \tcode{basic_figure_items<GraphicsSurfaces>::abs_line}}
+
+\rSec1 [\iotwod.absline.intro] {Overview}
 
 \pnum
 \indexlibrary{\idxcode{abs_line}}%
-The class \tcode{abs_line} describes a figure item that is a segment.
+The class \tcode{basic_figure_items<GraphicsSurfaces>::abs_line} describes a figure item that is a segment.
 
 \pnum
-It has an \term{end point} of type \tcode{basic_point_2d}.
+It has an \term{end point} of type \tcode{basic_point_2d<GraphicsSurfaces::graphics_math_type>}.
 
-\rSec1 [\iotwod.absline.cons] {\tcode{abs_line} constructors}
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::paths::abs_line_data_type}. It is accessible using the \tcode{data} member functions.
+
+\rSec1 [\iotwod.absline.synopsis] {Synopsis}
+\begin{codeblock}
+namespace std::experimemtal::io2d::v1 {
+  template <class GraphicsSurfaces>
+  class basic_figure_items<GraphicsSurfaces>::abs_line {
+  public:
+    using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+    using data_type =
+      typename GraphicsSurfaces::paths::abs_line_data_type;
+
+    // \ref{\iotwod.absline.ctor}, construct:
+    abs_line();
+    explicit abs_line(const basic_point_2d<graphics_math_type>& pt);
+    abs_line(const abs_line& other) = default;
+    abs_line(abs_line&& other) noexcept = default;
+
+    // assign:
+    abs_line& operator=(const abs_line& other) = default;
+    abs_line& operator=(abs_line&& other) noexcept = default;
+
+    // \ref{\iotwod.absline.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+
+    // \ref{\iotwod.absline.mod}, modifiers:
+    void at(const basic_point_2d<graphics_math_type>& pt) noexcept;
+
+    // \ref{\iotwod.absline.obs}, observers:
+    basic_point_2d<graphics_math_type> at() const noexcept;
+  };
+  
+  // \ref{\iotwod.absline.eq}, equality operators:
+  template <class GraphicsSurfaces>
+  bool operator==(
+    const typename basic_figure_items<GraphicsSurfaces>::abs_line& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_line& rhs) 
+    noexcept;  
+  template <class GraphicsSurfaces>
+  bool operator!=(
+    const typename basic_figure_items<GraphicsSurfaces>::abs_line& lhs,
+    const typename basic_figure_items<GraphicsSurfaces>::abs_line& rhs) 
+    noexcept;  
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.absline.ctor] {Constructors}%
 
 \indexlibrary{\idxcode{abs_line}!constructor}%
 \begin{itemdecl}
@@ -16,8 +66,7 @@ abs_line() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-Equivalent to: \tcode{abs_line\{ basic_point_2d() \};}
+\effects Equivalent to: \tcode{abs_line\{ basic_point_2d() \};}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{abs_line}!constructor}%
@@ -27,94 +76,71 @@ explicit abs_line(const basic_point_2d<typename
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-Constructs an object of type \tcode{abs_line}.
+\effects Constructs an object of type \tcode{abs_line}.
 
 \pnum
-The end point is \tcode{pt}.
+\remarks The end point is \tcode{pt}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{abs_line}!constructor}%
+\rSec1 [\iotwod.absline.acc] {Accessors}%
+
+\indexlibrarymember{data}{abs_line}%
 \begin{itemdecl}
-abs_line(const abs_line& other);
-abs_line(abs_line&& other) noexcept;
+const data_type& data() const noexcept;
+data_type& data() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-Constructs an object of type \tcode{abs_line}. In the second form, other is left in a valid state with an unspecified value.
-
-\pnum
-The end point is \tcode{other.to()}.
+\returns A reference to the \tcode{abs_line} object's data object (See: \ref{\iotwod.absline.intro}).
 \end{itemdescr}
 
-\rSec1 [\iotwod.absline.assign] {\tcode{abs_line} assignment operators}
+\rSec1 [\iotwod.absline.mod] {Modifiers}%
 
-\indexlibrary{\idxcode{abs_line}!assignment}%
+\indexlibrarymember{to}{abs_line}%
 \begin{itemdecl}
-abs_line& operator=(const abs_line& other);
+void to(const basic_point_2d<graphics_math_type>& pt) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-If \tcode{*this} and \tcode{other} are not the same object, modifies \tcode{*this} such that \tcode{*this.to()} is \tcode{other.to()}
-
-\pnum
-If \tcode{*this} and \tcode{other} are the same object, the member has no effect.
-
-\pnum
-\returns
-\tcode{*this}
+\effects The end point is \tcode{pt}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{abs_line}!assignment}%
+\rSec1 [\iotwod.absline.obs] {Observers} 
+
+\indexlibrarymember{to}{abs_line}%
 \begin{itemdecl}
-abs_line& operator=(abs_line&& other) noexcept;
+basic_point_2d<graphics_math_type> to() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-<TODO>
-
-\pnum
-\returns
-\tcode{*this}
+\returns The end point.
 \end{itemdescr}
 
-\rSec1 [\iotwod.absline.modifiers]{\tcode{abs_line} modifiers}
-
-\indexlibrarymember{abs_line}{to}%
-\begin{itemdecl}
-void to(const basic_point_2d<typename GraphicsSurfaces::graphics_math_type>& pt) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\effects
-The end point is \tcode{pt}.
-\end{itemdescr}
-
-\rSec1 [\iotwod.absline.observers]{\tcode{abs_line} observers}
-
-\indexlibrarymember{abs_line}{to}%
-\begin{itemdecl}
-basic_point_2d<typename GraphicsSurfaces::graphics_math_type> to() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-The end point.
-\end{itemdescr}
-
-\rSec1 [\iotwod.absline.ops]{\tcode{abs_line} operators}
+\rSec1 [\iotwod.absline.ops] {Equality operators}%
 
 \indexlibrarymember{operator==}{abs_line}%
 \begin{itemdecl}
 template <class GraphicsSurfaces>
-bool operator==(const typename basic_figure_items<GraphicsSurfaces>::abs_line& lhs,
-  const typename basic_figure_items<GraphicsSurfaces>::abs_line& rhs) noexcept;
+bool operator==(
+  const typename basic_figure_items<GraphicsSurfaces>::abs_line& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::abs_line& rhs)
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
 \tcode{lhs.to() == rhs.to()}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{abs_line}%
+\begin{itemdecl}
+template <class GraphicsSurfaces>
+bool operator!=(
+  const typename basic_figure_items<GraphicsSurfaces>::abs_line& lhs,
+  const typename basic_figure_items<GraphicsSurfaces>::abs_line& rhs)
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{lhs.to() != rhs.to()}.
 \end{itemdescr}
