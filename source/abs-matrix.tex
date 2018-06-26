@@ -15,7 +15,7 @@ The data are stored in an object of type \tcode{typename GraphicsSurfaces::paths
 
 \rSec1 [\iotwod.absmatrix.synopsis] {Synopsis}
 \begin{codeblock}
-namespace std::experimemtal::io2d::v1 {
+namespace std::experimental::io2d::v1 {
   template <class GraphicsSurfaces>
   class basic_figure_items<GraphicsSurfaces>::abs_matrix {
   public:
@@ -66,10 +66,13 @@ abs_matrix() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects Equivalent to: \tcode{abs_matrix\{ basic_matrix_2d() \};} 
+\effects Constructs an \tcode{abs_matrix} object.
 
 \pnum
 \postconditions \tcode{data() == GraphicsSurfaces::paths::create_abs_matrix()}.
+
+\pnum
+\remarks The transform matrix is \tcode{basic_matrix_2d<graphics_math_type()}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{abs_matrix}!constructor}%
@@ -81,7 +84,10 @@ explicit abs_matrix(const basic_matrix_2d<graphics_math_type>& m) noexcept;
 \requires \tcode{m.is_invertible()} is \tcode{true}.
 
 \pnum
-\effects Constructs an object of type \tcode{abs_matrix}.
+\effects Constructs an \tcode{abs_matrix} object.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::paths::create_abs_matrix(m)}.
 
 \pnum
 \remarks The transform matrix is \tcode{m}.

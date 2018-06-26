@@ -70,6 +70,39 @@ Eliminated all \tcode{flush} and \tcode{mark_dirty} member functions. These only
 \pnum
 Renamed \tcode{enum class refresh_rate} to \tcode{refresh_style} to more accurately reflect its meaning. This was already done in parts of the R7; it is now complete.
 
+\pnum
+Changed the order of items in the \tcode{basic_figure_items::figure_item} type alias from alphabetical to grouping by function (e.g. \tcode{abs_new_figure}, \tcode{rel_new_figure}, and \tcode{close_figure} are grouped together and \tcode{abs_line} and \tcode{rel_line} are grouped together). While it's not expected that any new figure item types will be added, there is no chance that the existing ones will be augmented with additional types. So if new figure items are added, grouping by type will simply add them to the end, thus preserving the validity of the existing index values without having the existing entries be alphabetized and new entries not being alphabetized.
+
+\pnum
+Moved the class template definitions for the nested classes within basic_figure_items<GraphicsSurfaces> to the descriptions of each of those types from the synopsis of basic_figure_items<GraphicsSurfaces> itself.
+
+\pnum
+Added \tcode{format::xrgb16}. The number of bits per channel is left to the implementation since, e.g., Windows\textregistered is 565 whereas OS X\textregistered and iOS\textregistered are 555 with an unused bit. This is useful for platforms with limited memory where supported so having it as an official enumerator will help. 
+
+\pnum
+Users can now request a different output device format when calling the overloads of the basic_output_surface ctor and the basic_unmanaged_output_surface ctor that take separate output device width and height preferences.
+
+\pnum
+Eliminated \tcode{redraw_required} from \tcode{basic_unmanaged_output_surface}. Users can and should track the need to redraw in their own code when they manage the output device.
+
+\pnum
+Eliminated \tcode{user_scaling_callback} functionality from \tcode{basic_output_surface} and \tcode{basic_unmanaged_output_surface} since the output device is intentionally not fully specified (same as stdout, etc.).
+
+\pnum
+\tcode{begin_show} now returns void instead of int and has an error_code overload in case the user tries to show more output surfaces than the system permits.
+
+\pnum
+\tcode{render_props} now has a \tcode{filter} instead of an \tcode{antialias}.
+
+\pnum
+\tcode{stroke_props} now has an \tcode{antialias} instead of a \tcode{filter}.
+
+\pnum
+New type \tcode{basic_fill_props} for parameters specific to the fill operation.
+
+\pnum
+Removed the \tcode{fill_rule} from \tcode{basic_brush_props} as it was only being used for fill operations.
+
 \rSec1 [\iotwod.revisionhistory.r7] {Revision 7}
 
 \pnum

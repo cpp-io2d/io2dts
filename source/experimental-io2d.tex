@@ -237,6 +237,15 @@ namespace std { namespace experimental {
       noexcept;
     
     template <class GraphicsSurfaces>
+    class basic_fill_props;
+    template <class GraphicsSurfaces>
+    bool operator==(const basic_fill_props<GraphicsSurfaces>& lhs,
+      const basic_fill_props<GraphicsSurfaces>& rhs) noexcept;
+    template <class GraphicsSurfaces>
+    bool operator!=(const basic_fill_props<GraphicsSurfaces>& lhs,
+      const basic_fill_props<GraphicsSurfaces>& rhs) noexcept;
+    
+    template <class GraphicsSurfaces>
     class basic_image_surface;
     
     template <class GraphicsSurfaces>
@@ -365,6 +374,7 @@ namespace std { namespace experimental {
     using dashes = basic_dashes<default_graphics_surfaces>;
     using display_point = basic_display_point<default_graphics_math>;
     using figure_items = basic_figure_items<default_graphics_surfaces>;
+    using fill_props = basic_fill_props<default_graphics_surfaces>;
     using image_surface = basic_image_surface<default_graphics_surfaces>;
     using interpreted_path = basic_interpreted_path<default_graphics_surfaces>;
     using mask_props = basic_mask_props<default_graphics_surfaces>;

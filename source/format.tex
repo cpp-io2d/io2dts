@@ -14,7 +14,8 @@ namespace std::experimental::io2d::v1 {
   enum class format {
     invalid,
     argb32,
-    rgb24,
+    xrgb32,
+    xrgb16,
     a8
   };
 }
@@ -51,6 +52,9 @@ namespace std::experimental::io2d::v1 {
   an 8-bit blue color channel. The byte order and interpretation of values 
   within each channel are \impldef{format::xrgb32}.
  \\ \rowsep
+ \tcode{xrgb16}
+ & A 16-bit RGB color model pixel format. There is a red color channel, a green color channel, and a blue color channel. The number of bits, byte order, and interpretation of values within each channel are \impldef{format::xrgb16}.
+ \\ \rowsep
  \tcode{a8}
  & An 8-bit transparency data pixel format. All 8 bits are an alpha channel.
  \\
@@ -58,6 +62,3 @@ namespace std::experimental::io2d::v1 {
 
 \pnum
 Implementations may support additional visual data formats (See: \ref{\iotwod.graphsurf.reqs.addform}).
-
-\pnum
-Implementations shall document the visual data formats supported for each surface class (See: \ref{\iotwod.surface.intro}).

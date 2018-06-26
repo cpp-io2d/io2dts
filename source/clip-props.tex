@@ -1,14 +1,17 @@
 %!TEX root = io2d.tex
 
-\rSec0 [\iotwod.clipprops] {Class \tcode{basic_clip_props}}
+\rSec0 [\iotwod.clipprops] {Class template \tcode{basic_clip_props}}
 
-\rSec1 [\iotwod.clipprops.summary] {\tcode{basic_clip_props} summary}
-
-\pnum
-The \tcode{basic_clip_props} class provides general state information that is applicable to all rendering and composing operations (\ref{\iotwod.surface.rendering}).
+\rSec1 [\iotwod.clipprops.intro] {Overview}
 
 \pnum
-It has a \term{clip area} of type \tcode{interpreted_path} and a \term{fill rule} of type \tcode{fill_rule}.
+The \tcode{basic_clip_props} class template provides general state information that is applicable to all rendering and composing operations (\ref{\iotwod.surface.rendering}).
+
+\pnum
+It has a \term{clip area} of type \tcode{optional<interpreted_path>} and a \term{fill rule} of type \tcode{fill_rule}. If the clip area has no value, the clip area is boundless.
+
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::surface_state_props::clip_props_data_type}. It is accessible using the \tcode{data} member functions.
 
 \rSec1 [\iotwod.clipprops.synopsis] {\tcode{basic_clip_props} synopsis}
 
@@ -18,31 +21,40 @@ namespace std::experimental::io2d::v1 {
   class basic_clip_props {
   public:
     using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+    using data_type =
+      typename GraphicsSurfaces::surface_state_props::clip_props_data_type;
 
-    // \ref{\iotwod.clipprops.cons}, constructors:
+    // \ref{\iotwod.clipprops.ctor}, constructors:
     basic_clip_props() noexcept;
     template <class Allocator>
-    explicit basic_clip_props(const basic_path_builder<GraphicsSurfaces, Allocator>& pb,
+    explicit basic_clip_props(
+      const basic_path_builder<GraphicsSurfaces, Allocator>& pb,
       io2d::fill_rule fr = io2d::fill_rule::winding);
-    explicit basic_clip_props(const basic_interpreted_path<GraphicsSurfaces>& ip,
+    explicit basic_clip_props(
+      const basic_interpreted_path<GraphicsSurfaces>& ip,
       io2d::fill_rule fr = io2d::fill_rule::winding) noexcept;
     explicit basic_clip_props(const basic_bounding_box<graphics_math_type>& r,
       io2d::fill_rule fr = io2d::fill_rule::winding);
 
-    // \ref{\iotwod.clipprops.modifiers}, modifiers:
+    // \ref{\iotwod.clipprops.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+
+    // \ref{\iotwod.clipprops.mod}, modifiers:
+    void clip();
     template <class Allocator>
     void clip(const basic_path_builder<GraphicsSurfaces, Allocator>& pb);
     void clip(const basic_interpreted_path<GraphicsSurfaces>& ip) noexcept;
     void fill_rule(io2d::fill_rule fr) noexcept;
 
-    // \ref{\iotwod.clipprops.observers}, observers:
-    basic_interpreted_path<GraphicsSurfaces> clip() const noexcept;
+    // \ref{\iotwod.clipprops.obs}, observers:
+    optional<basic_interpreted_path<GraphicsSurfaces>> clip() const noexcept;
     io2d::fill_rule fill_rule() const noexcept;
   };
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.clipprops.cons] {\tcode{basic_clip_props} constructors}
+\rSec1 [\iotwod.clipprops.ctor] {\tcode{basic_clip_props} constructors}
 
 \indexlibrary{\idxcode{basic_clip_props}!constructor}%
 \begin{itemdecl}
@@ -51,7 +63,15 @@ basic_clip_props() noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{basic_clip_props(basic_path_builder<>\{ \})}.
+Constructs an object of type \tcode{basic_clip_props}.
+
+\pnum
+\postconditions
+\tcode{data() == GraphicsSurfaces::surface_state_props::create_clip_props()}.
+
+\pnum
+\remarks
+The clip area is \tcode{optional<basic_interpreted_path<GraphicsSurfaces>()}. The fill rule is \tcode{io2d::fill_rule::winding}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{basic_clip_props}!constructor}%
@@ -59,8 +79,95 @@ Equivalent to: \tcode{basic_clip_props(basic_path_builder<>\{ \})}.
 template <class Allocator>
 explicit basic_clip_props(const basic_path_builder<GraphicsSurfaces, Allocator>& pb,
   io2d::fill_rule fr = io2d::fill_rule::winding);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{basic_clip_props}.
+
+\pnum
+\postconditions
+\tcode{data() == GraphicsSurfaces::surface_state_props::create_clip_props(pb, fr)}.
+
+\remarks
+\pnum
+The clip area is \tcode{optional<basic_interpreted_path<GraphicsSurfaces>>(basic_interpreted_path<GraphicsSurfaces>(pb))}.
+
+\pnum
+The fill rule is \tcode{fr}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{basic_clip_props}!constructor}%
+\begin{itemdecl}
+template <class InputIterator>
+basic_clip_props(InputIterator first, InputIterator last,
+  io2d::fill_rule fr = io2d::fill_rule::winding);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{basic_clip_props}.
+
+\pnum
+\postconditions
+\tcode{data() == GraphicsSurfaces::surface_state_props::create_clip_props(first, last, fr)}.
+
+\remarks
+\pnum
+The clip area is \tcode{optional<basic_interpreted_path<GraphicsSurfaces>>(basic_interpreted_path<GraphicsSurfaces>(first, last))}.
+
+\pnum
+The fill rule is \tcode{fr}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{basic_clip_props}!constructor}%
+\begin{itemdecl}
+template <class Allocator>
+explicit basic_clip_props(
+  initializer_list<basic_figure_items<GraphicsSurfaces>::figure_item> il,
+  io2d::fill_rule fr = io2d::fill_rule::winding);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{basic_clip_props}.
+
+\pnum
+\postconditions
+\tcode{data() == GraphicsSurfaces::surface_state_props::create_clip_props(il, fr)}.
+
+\remarks
+\pnum
+The clip area is \tcode{optional<basic_interpreted_path<GraphicsSurfaces>>(basic_interpreted_path<GraphicsSurfaces>(il))}.
+
+\pnum
+The fill rule is \tcode{fr}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{basic_clip_props}!constructor}%
+\begin{itemdecl}
 explicit basic_clip_props(const basic_interpreted_path<GraphicsSurfaces>& ip,
   io2d::fill_rule fr = io2d::fill_rule::winding) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{basic_clip_props}.
+
+\pnum
+\postconditions
+\tcode{data() == GraphicsSurfaces::surface_state_props::create_clip_props(ip, fr)}.
+
+\remarks
+\pnum
+The clip area is \tcode{optional<basic_interpreted_path<GraphicsSurfaces>(ip}.
+
+\pnum
+The fill rule is \tcode{fr}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{basic_clip_props}!constructor}%
+\begin{itemdecl}
 explicit basic_clip_props(const basic_bounding_box<graphics_math_type>& r,
   io2d::fill_rule fr = io2d::fill_rule::winding)
 \end{itemdecl}
@@ -70,33 +177,114 @@ explicit basic_clip_props(const basic_bounding_box<graphics_math_type>& r,
 Constructs an object of type \tcode{basic_clip_props}.
 
 \pnum
-The clip area is:
-\begin{itemize}
-\item \tcode{interpreted_path\{pb\}}; or
-\item \tcode{ip}; or
-\item \tcode{interpreted_path\{r\}};<TODO>
-\end{itemize}
+\postconditions
+\tcode{data() == GraphicsSurfaces::surface_state_props::create_clip_props(r, fr)}.
+
+\remarks
+\pnum
+The clip area is \tcode{optional<basic_interpreted_path<GraphicsSurfaces>>(basic_interpreted_path<GraphicsSurfaces>(r))};
 
 \pnum
 The fill rule is \tcode{fr}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.clipprops.modifiers] {\tcode{basic_clip_props} modifiers}
+\rSec1 [\iotwod.clipprops.acc] {Accessors}
+
+\indexlibrarymember{data}{basic_clip_props}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{basic_clip_props} object's data object (See: \ref{\iotwod.clipprops.intro}).
+\end{itemdescr}
+
+\rSec1 [\iotwod.clipprops.mod] {\tcode{basic_clip_props} modifiers}
+
+\indexlibrarymember{clip}{basic_clip_props}%
+\begin{itemdecl}
+template <class Allocator>
+void clip();
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+The clip area is \tcode{optional<basic_interpreted_path<GraphicsSurfaces>>())}.
+\end{itemdescr}
+
+\indexlibrarymember{clip}{basic_clip_props}%
+\begin{itemdecl}
+void clip(const basic_bounding_box<GraphicsSurfaces>& bb);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Calls \tcode{GraphicsSurfaces::surface_state_props::clip(data(), bb)};
+
+\pnum
+\remarks
+The clip area is \tcode{optional<basic_interpreted_path<GraphicsSurfaces>>(basic_interpreted_path<GraphicsSurfaces>(bb))}.
+\end{itemdescr}
 
 \indexlibrarymember{clip}{basic_clip_props}%
 \begin{itemdecl}
 template <class Allocator>
 void clip(const basic_path_builder<GraphicsSurfaces, Allocator>& pb);
-void clip(const basic_interpreted_path<GraphicsSurfaces>& ip) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-The clip area is:
-\begin{itemize}
-\item \tcode{interpreted_path\{pb\}}; or
-\item \tcode{ip}.
-\end{itemize}
+Calls \tcode{GraphicsSurfaces::surface_state_props::clip(data(), pb)};
+
+\pnum
+\remarks
+The clip area is \tcode{optional<basic_interpreted_path<GraphicsSurfaces>>(basic_interpreted_path<GraphicsSurfaces>(pb))}.
+\end{itemdescr}
+
+\indexlibrarymember{clip}{basic_clip_props}%
+\begin{itemdecl}
+template <class InputIterator>
+void clip(InputIterator first, InputIterator last);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Calls \tcode{GraphicsSurfaces::surface_state_props::clip(data(), first, last)};
+
+\pnum
+\remarks
+The clip area is \tcode{optional<basic_interpreted_path<GraphicsSurfaces>>(basic_interpreted_path<GraphicsSurfaces>(first, last))}.
+\end{itemdescr}
+
+\indexlibrarymember{clip}{basic_clip_props}%
+\begin{itemdecl}
+void clip(
+  const initializer_list<typename 
+  basic_figure_items<GraphicsSurfaces>::figure_item> il);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Calls \tcode{GraphicsSurfaces::surface_state_props::clip(data(), il)};
+
+\pnum
+\remarks
+The clip area is \tcode{optional<basic_interpreted_path<GraphicsSurfaces>>(basic_interpreted_path<GraphicsSurfaces>(il))}.
+\end{itemdescr}
+
+\indexlibrarymember{clip}{basic_clip_props}%
+\begin{itemdecl}
+void clip(const basic_bounding_box<GraphicsSurfaces>& bb);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Calls \tcode{GraphicsSurfaces::surface_state_props::clip(data(), ip)};
+
+\pnum
+\remarks
+The clip area is \tcode{optional<basic_interpreted_path<GraphicsSurfaces>>(ip)}.
 \end{itemdescr}
 
 \indexlibrarymember{fill_rule}{basic_clip_props}%
@@ -106,19 +294,27 @@ void fill_rule(experimental::io2d::fill_rule fr) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
+Calls \tcode{GraphicsSurfaces::surface_state_props::clip_fill_rule(fr)}.
+
+\pnum
+\remarks
 The fill rule is \tcode{fr}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.clipprops.observers] {\tcode{basic_clip_props} observers}
+\rSec1 [\iotwod.clipprops.obs] {\tcode{basic_clip_props} observers}
 
 \indexlibrarymember{clip}{basic_clip_props}%
 \begin{itemdecl}
-basic_interpreted_path<GraphicsSurfaces> clip() const noexcept;
+optional<basic_interpreted_path<GraphicsSurfaces>> clip() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The clip area.
+\tcode{GraphicsSurfaces::surface_state_props::clip(data())}.
+
+\pnum
+\remarks
+The return value is the clip area.
 \end{itemdescr}
 
 \indexlibrarymember{fill_rule}{basic_clip_props}%
@@ -128,5 +324,9 @@ io2d::fill_rule fill_rule() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-The fill rule.
+\tcode{GraphicsSurfaces::surface_state_props::clip_fill_rule(data())}.
+
+\pnum
+\remarks
+The return value is the fill rule.
 \end{itemdescr}

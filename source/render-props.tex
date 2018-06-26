@@ -1,16 +1,19 @@
 %!TEX root = io2d.tex
 
-\rSec0 [\iotwod.renderprops] {Class \tcode{basic_render_props}}
+\rSec0 [\iotwod.renderprops] {Class template \tcode{basic_render_props}}
 
-\rSec1 [\iotwod.renderprops.summary] {\tcode{basic_render_props} summary}
-
-\pnum
-The \tcode{basic_render_props} class provides general state information that is applicable to all rendering and composing operations (\ref{\iotwod.surface.rendering}).
+\rSec1 [\iotwod.renderprops.intro] {Overview}
 
 \pnum
-It has an \term{antialias} of type \tcode{antialias} with a default value of \tcode{antialias::good}, a \term{surface matrix} of type \tcode{basic_matrix_2d} with a default constructed value, and a \term{compositing operator} of type \tcode{compositing_op} with a default value of \tcode{compositing_op::over}.
+The \tcode{basic_render_props} class template provides general state information that is applicable to all rendering and composing operations (\ref{\iotwod.surface.rendering}).
 
-\rSec1 [\iotwod.renderprops.synopsis] {\tcode{basic_render_props} synopsis}
+\pnum
+It has a \term{filter algorithm} of type \tcode{filter}, a \term{surface matrix} of type \tcode{basic_matrix_2d}, and a \term{compositing operator} of type \tcode{compositing_op}.
+
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::surface_state_props::render_props_data_type}. It is accessible using the \tcode{data} member functions.
+
+\rSec1 [\iotwod.renderprops.synopsis] {Synopsis}
 
 \begin{codeblock}
 namespace std::experimental::io2d::v1 {
@@ -18,41 +21,51 @@ namespace std::experimental::io2d::v1 {
   class basic_render_props {
   public:
     using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+    using data_type =
+      typename GraphicsSurfaces::surface_state_props::render_props_data_type;
 
-    // \ref{\iotwod.renderprops.cons}, constructors:
+    // \ref{\iotwod.renderprops.ctor}, constructors:
     basic_render_props() noexcept;
-    explicit basic_render_props(antialias a,
+    explicit basic_render_props(filter f,
       const basic_matrix_2d<graphics_math_type>& m = basic_matrix_2d<graphics_math_type>{},
       compositing_op co = compositing_op::over) noexcept;
+    
+    // \ref{\iotwod.renderprops.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
 
-    // \ref{\iotwod.renderprops.modifiers}, modifiers:
-    void antialiasing(antialias a) noexcept;
+    // \ref{\iotwod.renderprops.mod}, modifiers:
+    void filtering(filter f) noexcept;
     void compositing(compositing_op co) noexcept;
     void surface_matrix(const basic_matrix_2d<graphics_math_type>& m) noexcept;
 
-    // \ref{\iotwod.renderprops.observers}, observers:
-    antialias antialiasing() const noexcept;
+    // \ref{\iotwod.renderprops.obs}, observers:
+    filter filtering() const noexcept;
     compositing_op compositing() const noexcept;
     basic_matrix_2d<graphics_math_type> surface_matrix() const noexcept;
   };
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.renderprops.cons] {\tcode{basic_render_props} constructors}
+\rSec1 [\iotwod.renderprops.ctor] {Constructors}
 
-\indexlibrary{\idxcode{render_props}!constructor}
+\indexlibrary{\idxcode{basic_render_props}!constructor}
 \begin{itemdecl}
 basic_render_props() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{basic_render_props(antialias::good)}.
+Constructs an object of type \tcode{basic_render_props}.
+
+\pnum
+\postconditions
+\tcode{data() == X::surface_state_props::create_render_props()}.
 \end{itemdescr}
 
-\indexlibrary{\idxcode{render_props}!constructor}%
+\indexlibrary{\idxcode{basic_render_props}!constructor}%
 \begin{itemdecl}
-explicit basic_render_props(antialias a,
+explicit basic_render_props(filter f,
   const basic_matrix_2d<graphics_math_type>& m = basic_matrix_2d<graphics_math_type>{},
   compositing_op co = compositing_op::over) noexcept;
 \end{itemdecl}
@@ -63,32 +76,54 @@ explicit basic_render_props(antialias a,
 
 \pnum
 \effects
-The antialias is \tcode{a}. The surface matrix is \tcode{m}. The compositing operator is \tcode{co}.
+Constructs an object of type \tcode{basic_render_props}.
+
+\pnum
+\postconditions
+\tcode{data() == GraphicsSurfaces::surface_state_props::create_render_props(f, m, co)}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.renderprops.modifiers] {\tcode{basic_render_props} modifiers}
+\rSec1 [\iotwod.renderprops.acc] {Accessors}
 
-\indexlibrarymember{antialiasing}{render_props}%
+\indexlibrarymember{data}{basic_render_props}%
 \begin{itemdecl}
-void antialiasing(antialias a) noexcept;
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{basic_render_props} object's data object (See: \ref{\iotwod.renderprops.intro}).
+\end{itemdescr}
+
+\rSec1 [\iotwod.renderprops.mod] {Modifiers}
+
+\indexlibrarymember{filtering}{basic_render_props}%
+\begin{itemdecl}
+void filtering(filter f) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
-The antialias is \tcode{a}.
+Calls \tcode{GraphicsSurfaces::surface_state_props::filtering(data(), f))}.
+
+\remarks
+The filtering algorithm is \tcode{f}.
 \end{itemdescr}
 
-\indexlibrarymember{compositing}{render_props}%
+\indexlibrarymember{compositing}{basic_render_props}%
 \begin{itemdecl}
 void compositing(compositing_op co) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects
+Calls \tcode{GraphicsSurfaces::surface_state_props::compositing(data(), co)}.
+
+\remarks
 The compositing operator is \tcode{co}.
 \end{itemdescr}
 
-\indexlibrarymember{surface_member}{render_props}%
+\indexlibrarymember{surface_member}{basic_render_props}%
 \begin{itemdecl}
 void surface_matrix(const basic_matrix_2d<graphics_math_type>& m) noexcept;
 \end{itemdecl}
@@ -99,37 +134,53 @@ void surface_matrix(const basic_matrix_2d<graphics_math_type>& m) noexcept;
 
 \pnum
 \effects
+Calls \tcode{GraphicsSurfaces::surface_state_props::surface_matrix(data(), m)}.
+
+\pnum
+\remarks
 The surface matrix is \tcode{m}.
 \end{itemdescr}
 
-\rSec1 [\iotwod.renderprops.observers] {\tcode{basic_render_props} observers}
+\rSec1 [\iotwod.renderprops.obs] {Observers}
 
-\indexlibrarymember{antialiasing}{render_props}%
+\indexlibrarymember{filtering}{basic_render_props}%
 \begin{itemdecl}
-antialias antialiasing() const noexcept;
+filter filtering() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The antialias.
+\tcode{GraphicsSurfaces::surface_state_props::filtering(data())}.
+
+\pnum
+\remarks
+The returned value is the filter algorithm.
 \end{itemdescr}
 
-\indexlibrarymember{compositing}{render_props}%
+\indexlibrarymember{compositing}{basic_render_props}%
 \begin{itemdecl}
 compositing_op compositing() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The compositing operator.
+\tcode{GraphicsSurfaces::surface_state_props::compositing(data())}.
+
+\pnum
+\remarks
+The returned value is the compositing operator.
 \end{itemdescr}
 
-\indexlibrarymember{surface_matrix}{render_props}%
+\indexlibrarymember{surface_matrix}{basic_render_props}%
 \begin{itemdecl}
 basic_matrix_2d<graphics_math_type> surface_matrix() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \returns
-The surface matrix.
+\tcode{GraphicsSurfaces::surface_state_props::surface_matrix(data())}.
+
+\pnum
+\remarks
+The returned value is the surface matrix.
 \end{itemdescr}

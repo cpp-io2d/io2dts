@@ -5,7 +5,7 @@
 
 \pnum
 The antialias enum class specifies the type of anti-aliasing that the rendering
-system uses for rendering and composing paths. See 
+system uses for rendering paths. See 
 Table~\ref{tab:\iotwod.antialias.meanings} for the meaning of each
 \tcode{antialias} enumerator.
 
@@ -40,28 +40,18 @@ namespace std::experimental::io2d::v1 {
  \\ \capsep
  \endhead
  \tcode{none}
- & No anti-aliasing is performed.
+ & No anti-aliasing is performed when performing a rendering operation.
  \\ \rowsep
  \tcode{fast}
- & Some form of anti-aliasing shall be used when this option is selected, but the form used is \impldefplain{antialiasing!fast}.
- \begin{note}
- By specifying this value, the user is hinting that faster anti-aliasing is 
- preferable to better anti-aliasing.
- \end{note}
+ & Some form of anti-aliasing should be used when performing a rendering operation but performance is more important than the quality of the results. The technique used is \impldef{antialiasing!fast}.
  \\ \rowsep
  \tcode{good}
- & Some form of anti-aliasing shall be used when this option is selected, but the form used is \impldefplain{antialiasing!good}.
- \begin{note}
- By specifying this value, the user is hinting that sacrificing some performance 
- to obtain better anti-aliasing is acceptable but that performance is still a 
- concern.
- \end{note}
+ & Some form of anti-aliasing should be used when performing a rendering operation and the sacrificing some performance to obtain better anti-aliasing results than would likely be obtained from \tcode{antialias::fast} is acceptable. The technique used is \impldef{antialiasing!good}.
  \\ \rowsep
  \tcode{best}
- & Some form of anti-aliasing shall be used when this option is selected, but the form used is \impldefplain{antialiasing!best}.
+ & Some form of anti-aliasing should be used when performing a rendering operation and better anti-aliasing results than would likely be obtained from \tcode{antialias::fast} and \tcode{antialias::good} are desired even if performance degrades significantly. The technique used is \impldef{antialiasing!best}.
  \begin{note}
- By specifying this value, the user is hinting that anti-aliasing is more 
- important than performance.
+ This might commonly be chosen when a user is going to render something once and cache the results for repeated use or when a user is rendering something that does not necessarily need performance suitable for real-time computer graphics applications.
  \end{note}
  \\
 \end{libreqtab2}

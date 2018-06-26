@@ -42,7 +42,17 @@ Table~\ref{tab:\iotwod.graphsurf.surfstateprops.typedefnamestab} defines the req
 \end{libreqtab2}
 
 \pnum
-In Table~\ref{tab:\iotwod.graphsurf.surfstateprops.requirementstab}, \tcode{RE} denotes the type \tcode{X::surface_state_props::render_props_data_type}, \tcode{BR} denotes the type \tcode{X::surface_state_props::brush_props_data_type}, \tcode{CL} denotes the type \tcode{X::surface_state_props::clip_props_data_type}, \tcode{ST} denotes the type \tcode{X::surface_state_props::stroke_props_data_type}, \tcode{MA} denotes the type \tcode{X::surface_state_props::mask_props_data_type}, \tcode{DA} denotes the type \tcode{X::surface_state_props::dashes_data_type}, \tcode{BB} denotes the type \tcode{basic_bounding_box<G>}, \tcode{IP} denotes the type \tcode{basic_interpreted_path<X>}, \tcode{FI} denotes the type \tcode{basic_figure_items<X>::figure_item}, \tcode{M} denotes the type \tcode{basic_matrix_2d<G>}, and \tcode{P} denotes the type \tcode{basic_point_2d<G>}.
+In Table~\ref{tab:\iotwod.graphsurf.surfstateprops.requirementstab},
+\tcode{RE} denotes the type \tcode{X::surface_state_props::render_props_data_type},
+\tcode{BR} denotes the type \tcode{X::surface_state_props::brush_props_data_type},
+\tcode{CL} denotes the type \tcode{X::surface_state_props::clip_props_data_type},
+\tcode{ST} denotes the type \tcode{X::surface_state_props::stroke_props_data_type},
+\tcode{FP} denotes the type \tcode{X::surface_state_props::fill_props_data_type},
+\tcode{MA} denotes the type \tcode{X::surface_state_props::mask_props_data_type},
+\tcode{DA} denotes the type \tcode{X::surface_state_props::dashes_data_type}, \tcode{BB} denotes the type \tcode{basic_bounding_box<G>},
+\tcode{IP} denotes the type \tcode{basic_interpreted_path<X>},
+\tcode{FI} denotes the type \tcode{basic_figure_items<X>::figure_item}, \tcode{M} denotes the type \tcode{basic_matrix_2d<G>}, and
+\tcode{P} denotes the type \tcode{basic_point_2d<G>}.
 
 \pnum
 In order to describe the observable effects of functions contained in Table~\ref{tab:\iotwod.graphsurf.surfstateprops.requirementstab}, Table~\ref{tab:\iotwod.graphsurf.surfstateprops.typememberdata} describes the types contained in \tcode{X} as-if they possessed certain member data. 
@@ -55,8 +65,8 @@ In order to describe the observable effects of functions contained in Table~\ref
 \lhdr{Type}		&	\chdr{Member data}	&	\rhdr{Member data type} \\ \capsep
 \endhead
 \tcode{render_props_data_type}	&
-\tcode{a}	&
-\tcode{antialias}	\\ \rowsep
+\tcode{fi}	&
+\tcode{filter}	\\ \rowsep
 \tcode{render_props_data_type}	&
 \tcode{m}	&
 \tcode{M}	\\ \rowsep
@@ -69,9 +79,9 @@ In order to describe the observable effects of functions contained in Table~\ref
 \tcode{brush_props_data_type}	&
 \tcode{fi}	&
 \tcode{filter}	\\ \rowsep
-\tcode{brush_props_data_type}	&
-\tcode{fr}	&
-\tcode{fill_rule}	\\ \rowsep
+%\tcode{brush_props_data_type}	&
+%\tcode{fr}	&
+%\tcode{fill_rule}	\\ \rowsep
 \tcode{brush_props_data_type}	&
 \tcode{m}	&
 \tcode{M}	\\ \rowsep
@@ -93,6 +103,15 @@ In order to describe the observable effects of functions contained in Table~\ref
 \tcode{stroke_props_data_type}	&
 \tcode{lj}	&
 \tcode{line_join}	\\ \rowsep
+\tcode{stroke_props_data_type}	&
+\tcode{aa}	&
+\tcode{antialias}	\\ \rowsep
+\tcode{fill_props_data_type}	&
+\tcode{fr}	&
+\tcode{fill_rule}	\\ \rowsep
+\tcode{fill_props_data_type}	&
+\tcode{aa}	&
+\tcode{antialias}	\\ \rowsep
 \tcode{mask_props_data_type}	&
 \tcode{wm}	&
 \tcode{wrap_mode}	\\ \rowsep
@@ -127,17 +146,17 @@ In order to describe the observable effects of functions contained in Table~\ref
 %
 % render props
 %
-\tcode{X::surface_state_props::create_render_props(antialias a = antialias::good, M m = M\{\}, compositing op c = compositing_op::over)}	&
+\tcode{X::surface_state_props::create_render_props(filter f = filter::good, M m = M\{\}, compositing op c = compositing_op::over)}	&
 \tcode{RE}	&
 \returns
 An object \tcode{r}.	&
 \postconditions
-\tcode{r.a == a}, \tcode{r.m == m}, and \tcode{r.c == c}.	\\ \rowsep
-\tcode{X::surface_state_props::antialiasing(RA\& r, antialias a)}	&
+\tcode{r.fi == f}, \tcode{r.m == m}, and \tcode{r.c == c}.	\\ \rowsep
+\tcode{X::surface_state_props::filtering(RA\& r, filter fi)}	&
 \tcode{void}	&
 	&
 \postconditions
-\tcode{r.a == a}.	\\ \rowsep
+\tcode{r.fi == fi}.	\\ \rowsep
 \tcode{X::surface_state_props::surface_matrix(RA\& r, const M\& m)}	&
 \tcode{void}	&
 	&
@@ -148,10 +167,10 @@ An object \tcode{r}.	&
 	&
 \postconditions
 \tcode{ra.c == c}.	\\ \rowsep
-\tcode{X::surface_state_props::antialiasing(const RA\& r)}	&
-\tcode{antialias}	&
+\tcode{X::surface_state_props::filtering(const RA\& r)}	&
+\tcode{filter}	&
 \returns
-\tcode{r.a}.	&
+\tcode{r.fi}.	&
 	\\ \rowsep
 \tcode{X::surface_state_props::surface_matrix(const RA\& r)}	&
 \tcode{M}	&
@@ -166,12 +185,12 @@ An object \tcode{r}.	&
 %
 % brush props
 %
-\tcode{X::surface_state_props::create_brush_props(wrap_mode w = wrap_mode::none, filter fi = filter::good, fill_rule fr = fill_rule::winding, const M\& m = M\{\})}	&
+\tcode{X::surface_state_props::create_brush_props(wrap_mode w = wrap_mode::none, filter fi = filter::good, const M\& m = M\{\})}	&
 \tcode{BR}	&
 \returns
 An object \tcode{b}.	&
 \postconditions
-\tcode{b.w == w}, \tcode{b.fi == fi}, \tcode{b.fr == fr}, and \tcode{b.m == m}.	\\ \rowsep
+\tcode{b.w == w}, \tcode{b.fi == fi}, and \tcode{b.m == m}.	\\ \rowsep
 \tcode{X::surface_state_props::brush_wrap_mode(BR\& b, wrap_mode w)}	&
 \tcode{void}	&
 	&
@@ -182,11 +201,6 @@ An object \tcode{b}.	&
 	&
 \postconditions
 \tcode{b.fi == fi}.	\\ \rowsep
-\tcode{X::surface_state_props::brush_fill_rule(BR\& b, fill_rule fr)}	&
-\tcode{void}	&
-	&
-\postconditions
-\tcode{b.fr == fr}.	\\ \rowsep
 \tcode{X::surface_state_props::brush_matrix(BR\& b, const M\& m)}	&
 \tcode{void}	&
 	&
@@ -201,11 +215,6 @@ An object \tcode{b}.	&
 \tcode{filter}	&
 \returns
 \tcode{b.fi}.	&
-	\\ \rowsep
-\tcode{X::surface_state_props::brush_fill_rule(const BR\& b)}	&
-\tcode{fill_rule}	&
-\returns
-\tcode{b.fr}.	&
 	\\ \rowsep
 \tcode{X::surface_state_props::brush_matrix(const BR\& b)}	&
 \tcode{M}	&
@@ -307,14 +316,14 @@ X::surface_state_props::clip(CL\& c, InputIterator first, InputIterator last)}	&
 %
 % stroke props
 %
-\tcode{X::surface_state_props::create_stroke_props(float lw = 2.0f, line_cap lc = line_cap::none, line_join lj = line_join::miter, float ml = 10.0f)}	&
+\tcode{X::surface_state_props::create_stroke_props(float lw = 2.0f, line_cap lc = line_cap::none, line_join lj = line_join::miter, float ml = 10.0f, antialias aa = antialias::good)}	&
 \tcode{ST}	&
 \returns
 An object \tcode{s}.	&
 \requires
 \tcode{lw >= 0.0f}, \tcode{ml >= 1.0f}, and \tcode{ml <= max_miter_limit()}.
 \postconditions
-\tcode{s.lw == lw}, \tcode{s.lc == lc}, \tcode{s.lj == lj}, and \tcode{s.ml == ml}.	\\ \rowsep
+\tcode{s.lw == lw}, \tcode{s.lc == lc}, \tcode{s.lj == lj}, \tcode{s.ml == ml}, and \tcode{s.aa == aa}.	\\ \rowsep
 \tcode{X::surface_state_props::line_width(ST\& s, float lw)}	&
 \tcode{void}	&
 	&
@@ -335,6 +344,10 @@ An object \tcode{s}.	&
 	&
 \postconditions
 \tcode{s.ml == ml}.	\\ \rowsep
+\tcode{X::surface_state_props::anti_aliasing(ST\& s, antialias aa)}	&
+\tcode{void}	&
+\postconditions
+\tcode{s.aa == aa}.	\\ \rowsep
 \tcode{X::surface_state_props::line_width(const ST\& s)}	&
 \tcode{float}	&
 \returns
@@ -355,15 +368,52 @@ An object \tcode{s}.	&
 \returns
 \tcode{s.ml}.	&
 	\\ \rowsep
+\tcode{X::surfaces_state_props::anti_aliasing(const ST\& s)}	&
+\tcode{antialias}	&
+\returns
+\tcode{s.aa}.	&
+	\\ \rowsep
 \tcode{X::surface_state_props::max_miter_limit()}	&
 \tcode{float}	&
 \returns
 An \impldefplain{max miter limit} maximum value for \tcode{ST::ml}.	&
 	\\ \rowsep
 %
+% fill_props
+%
+\tcode{X::surface_state_props::create_fill_props(fill_rule fr = fill_rule::winding, antialias aa = antialias::good)}	&
+\tcode{FP}	&
+\returns
+An object \tcode{f}.	&
+\postconditions
+\tcode{f.fr == fr} and \tcode{f.aa == aa}.
+	\\ \rowsep
+\tcode{X::surface_state_props::fill_fill_rule(FP\& f, fill_rule fr)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{f.fr == fr}.
+	\\ \rowsep
+\tcode{X::surface_state_props::antialiasing(FP\& f, antialias aa)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{f.aa == aa}.
+	\\ \rowsep
+\tcode{X::surface_state_props::fill_fill_rule(const FP\& f)}	&
+\tcode{fill_rule}	&
+\returns
+\tcode{f.fr}.	&
+	\\ \rowsep
+\tcode{X::surface_state_props::antialiasing(const FP\& f)}	&
+\tcode{antialias}	&
+\returns
+\tcode{f.aa}.	&
+	\\ \rowsep
+%
 % mask props
 %
-\tcode{X::surface_state_props::create_mask_props(wrap_mode wm == wrap_mode::none, filter fi == filter::good, const M\& m == M\{\})}	&
+\tcode{X::surface_state_props::create_mask_props(wrap_mode wm = wrap_mode::none, filter fi = filter::good, const M\& m = M())}	&
 \tcode{MA}	&
 \returns
 An object \tcode{ma}.	&

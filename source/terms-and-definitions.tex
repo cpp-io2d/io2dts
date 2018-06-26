@@ -42,27 +42,25 @@ The definition of normalize given is the definition for normalizing unsigned inp
 \definition{aspect ratio}{\iotwod.defns.aspectratio}
 ratio of the width to the height of a rectangular area
 
-\indexdefn{gradient stop}%
-\definition{gradient stop}{\iotwod.defns.gradientstop}
-point at which a color gradient changes from one color to the next
-
+%\indexdefn{gradient stop}%
+%\definition{gradient stop}{\iotwod.defns.gradientstop}
+%point at which a color gradient changes from one color to the next
+%
 \indexdefn{visual data}%
 \definition{visual data}{\iotwod.defns.visdata}
-data representing color, transparency, some other quality, or some combination thereof in a possibly bounded Euclidean plane \begin{note}
-The data can vary throughout the plane.
-\end{note}
+data in a possibly bounded Euclidean plane consisting of one or more components representing color, transparency, or some other quality where the component values are not necessarily uniform throughout the plane
 
 \indexdefn{visual data element}%
 \definition{visual data element}{\iotwod.defns.visdataelem}
-visual data at a specific point
+unit of visual data at a specific point
 
 \indexdefn{channel}%
 \definition{channel}{\iotwod.defns.channel}
-component of visual data representing color, transparency, or some other quality
+component of visual data
 
 \indexdefn{color channel}%
 \definition{color channel}{\iotwod.defns.colorchannel}
-channel that only represents color
+channel that only represents the intensity of a specific color
 
 \indexdefn{alpha channel}%
 \definition{alpha channel}{\iotwod.defns.alphachannel}
@@ -70,27 +68,26 @@ channel that only represents transparency
 
 \indexdefn{visual data format}%
 \definition{visual data format}{\iotwod.defns.visdatafmt}
-set of all information necessary to transform visual data stored in a particular form into data in a specified, well-defined color model
+specification of information necessary to transform a set of one or more channels into colors in a color model
 
 \indexdefn{premultiplied format}%
 \definition{premultiplied format}{\iotwod.defns.premultipliedformat}
 visual data format with one or more color channels and an alpha channel where each color channel is normalized and then multiplied by the normalized alpha channel value
 \begin{example}
-Given the 32-bit non-premultiplied RGBA pixel with 8 bits per channel \{255, 0, 0, 127\} (half-transparent red), when normalized it would become \{1.0f, 0.0f, 0.0f, 0.5f\}. As such, in premultiplied, normalized format it would become \{0.5f, 0.0f, 0.0f, 0.5f\} as a result of multiplying each of the three color channels by the alpha channel value.
+Given the 32-bit non-premultiplied RGBA pixel with 8 bits per channel \{255, 0, 0, 127\} (half-transparent red), when normalized it would become \{1.0f, 0.0f, 0.0f, 0.5f\}. When premultiplied it would become \{0.5f, 0.0f, 0.0f, 0.5f\} as a result of multiplying each of the three color channels by the alpha channel value.
 \end{example}
-
-% The following may not be needed. Already defined in IEC 60050 723-05-31
-\indexdefn{pixel}%
-\definition{pixel}{\iotwod.defns.pixel}
-discrete visual data element with a particular visual data format
 
 \indexdefn{raster graphics data}%
 \definition{raster graphics data}{\iotwod.defns.rastergfxdata}
-data comprised of a rectangular array of pixels where the top-left pixel is located at the origin in the standard coordinate space and additional pixels are located at consecutive integral points of increasing value
+data comprised of a rectangular array of visual data elements together with their visual data format where the top-left visual data element is located at the origin in the standard coordinate space and additional visual data elements are located at integral points of consecutive values
+
+\indexdefn{pixel}%
+\definition{pixel}{\iotwod.defns.pixel}
+discrete element of raster graphics data
 
 \indexdefn{vector graphics data}%
 \definition{vector graphics data}{\iotwod.defns.vectorgfxdata}
-data comprised of zero or more paths together with a sequence of rendering and composing operations and graphics state data that produces continuous visual data
+data comprised of zero or more paths together with a sequence of rendering and composing operations and graphics state data that produces continuous visual data when processed
 
 \indexdefn{color model}%
 \definition{color model}{\iotwod.defns.colormodel}
@@ -118,41 +115,6 @@ systematic mapping of values to colorimetric colors
 \indexdefn{color space!sRGB}%
 \definition{sRGB color space}{\iotwod.defns.srgbcolorspace}
 color space defined in IEC 61966-2-1 that is based on the RGB color model
-
-\indexdefn{filter}%
-\definition{filter}{\iotwod.defns.filter}
-mathematical function that determines a visual data element
-
-\indexdefn{composition algorithm}%
-\definition{composition algorithm}{\iotwod.defns.compositionalgorithm}
-algorithm that combines source visual data element and a destination visual data element producing a visual data element that has the same visual data format as the destination visual data element
-
-\indexdefn{compose}%
-\definition{compose}{\iotwod.defns.compose}
-combine part or all of source visual data with destination visual data in the manner specified by a composition algorithm
-
-\indexdefn{composing operation}%
-\definition{composing operation}{\iotwod.defns.composingoperation}
-operation that performs composing
-
-\indexdefn{sample}%
-\definition{sample}{\iotwod.defns.sample}
-use a filter to obtain the visual data of a given point within visual data
-
-\indexdefn{artifact}%
-\definition{artifact}{\iotwod.defns.artifact}
-error in the results of the application of a composing operation when sampling from raster graphics data due to its visual data being discrete rather than continuous
-
-\indexdefn{aliasing}%
-\definition{aliasing}{\iotwod.defns.alias}
-presence of artifacts in the results of composing
-
-\indexdefn{anti-aliasing}%
-\definition{anti-aliasing}{\iotwod.defns.antialias}
-application of a function or algorithm while composing to reduce aliasing
-\begin{note}
-Certain algorithms can produce ``better'' results, i.e. results with fewer artifacts or with less pronounced artifacts, when rendering text with anti-aliasing due to the nature of text rendering. As such, it often makes sense to provide the ability to choose one type of anti-aliasing for text rendering and another for all other rendering and to provide different sets of anti-aliasing types to choose from for each of the two operations.
-\end{note}
 
 %
 % path/figure definitions
@@ -260,19 +222,50 @@ figure containing a new figure command, zero or more degenerate segments, zero o
 
 \indexdefn{graphics state data}%
 \definition{graphics state data}{\iotwod.defns.graphicsstatedata}
-data which specify how some part of the process of rendering, or of a composing operation, is performed in part or in whole
+data which specify how some part of the process of rendering or composing is performed in part or in whole
 
 \indexdefn{render}%
 \definition{render}{\iotwod.defns.render}
-transform a path into visual data in the manner specified by a set of graphics state data
+transform a path into visual data
 
-\indexdefn{rendering operation}%
-\definition{rendering operation}{\iotwod.defns.renderingoperation}
-operation that performs rendering
+%\indexdefn{rendering operation}%
+%\definition{rendering operation}{\iotwod.defns.renderingoperation}
+%operation that renders
+%
+\indexdefn{composition algorithm}%
+\definition{composition algorithm}{\iotwod.defns.compositionalgorithm}
+algorithm that combines source visual data and destination visual data producing visual data that has the same visual data format as the destination visual data
+
+\indexdefn{compose}%
+\definition{compose}{\iotwod.defns.compose}
+apply a composition algorithm
+%
+%\indexdefn{composing operation}%
+%\definition{composing operation}{\iotwod.defns.composingoperation}
+%operation that performs composing
 
 \indexdefn{rendering and composing operation}%
 \definition{rendering and composing operation}{\iotwod.defns.renderingandcomposingop}
-operation that is either a composing operation, or a rendering operation followed by a composing operation
+operation that is either a composing operation or a rendering operation followed by a composing operation that uses the data produced by the rendering operation
+
+\indexdefn{filter}%
+\definition{filter}{\iotwod.defns.filter}
+algorithm that determines a color value from a raster graphics data source for a non-integral point
+
+\indexdefn{sample}%
+\definition{sample}{\iotwod.defns.sample}
+apply a filter
+
+\indexdefn{aliasing}%
+\definition{aliasing}{\iotwod.defns.alias}
+errors in the appearance of the results of rendering where the resulting visual data is raster graphics data because of inaccuracies in transforming continuous data into discrete data
+
+\indexdefn{anti-aliasing}%
+\definition{anti-aliasing}{\iotwod.defns.antialias}
+application of an algorithm while rendering to reduce aliasing
+%\begin{note}
+%Certain algorithms can produce ``better'' results, i.e. results with fewer artifacts or with less pronounced artifacts, when rendering text with anti-aliasing due to the nature of text rendering. As such, it often makes sense to provide the ability to choose one type of anti-aliasing for text rendering and another for all other rendering and to provide different sets of anti-aliasing types to choose from for each of the two operations.
+%\end{note}
 
 %\input{definitions-paths}
 

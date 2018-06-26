@@ -12,19 +12,16 @@ Let \tcode{G} be a \graphicsmathtemplparam type.
 Let \tcode{IM} be an object of \unspec{} type that contains visual data.
 
 \pnum
-Let \tcode{OU} be an output surface of \unspec{} type that provides all functionality needed to display visual data.
+Let \tcode{OU} be an object of \unspec{} type that provides all functionality needed to display visual data on an output device and to process all operations required to create, maintain, and destroy the mechanism used to display visual data. \begin{example}In a windowing environment the mechanism would typically be a window.\end{example}
 
 \pnum
-Let \tcode{UN} be an output surface of \unspec{} type that provides all functionality needed to display visual data.
+Let \tcode{UN} be an object of \unspec{} type that provides all functionality needed to display visual data on an output device which does not process the operations required to create, maintain, and destroy the mechanism used to display visual data. \begin{note}This type lets the user draw on an existing output mechanism which the user manages.\end{note}
 
 \pnum
 The types \tcode{OU} and \tcode{UN} may be the same type.
 
 \pnum
-What constitutes an output surface is \impldef{output surface}.
-\begin{note}
-The implementer in this case is the provider of a type that meets the requirements of a \graphicssurfacestemplparam type.
-\end{note}
+The definition of an output device is provided in \ref{\iotwod.outputsurface.misc}.
 
 \pnum
 Table~\ref{tab:\iotwod.graphsurf.surfs.requirementstab} describes the observable effects of the member functions of \tcode{X::surfaces}.
@@ -51,7 +48,25 @@ Table~\ref{tab:\iotwod.graphsurf.surfs.typedefnamestab} defines the required \gr
 \end{libreqtab2}
 
 \pnum
-In Table~\ref{tab:\iotwod.graphsurf.surfs.requirementstab}, \tcode{I} denotes the type \tcode{image_surface_data_type}, \tcode{O} denotes the type \tcode{output_surface_data_type}, \tcode{U} denotes the type \tcode{unmanaged_output_surface_data_type}, \tcode{BB} denotes the type \tcode{basic_bounding_box<G>}, \tcode{IP} denotes the type \tcode{basic_interpreted_path<X>}, \tcode{FI} denotes the type \tcode{basic_figure_items<X>::figure_item}, \tcode{M} denotes the type \tcode{basic_matrix_2d<G>}, and \tcode{P} denotes the type \tcode{basic_point_2d<G>}.
+In Table~\ref{tab:\iotwod.graphsurf.surfs.typememberdata} and Table~\ref{tab:\iotwod.graphsurf.surfs.requirementstab},
+\tcode{I} denotes the type \tcode{image_surface_data_type},
+\tcode{O} denotes the type \tcode{output_surface_data_type},
+\tcode{U} denotes the type \tcode{unmanaged_output_surface_data_type}, \tcode{BB} denotes the type \tcode{basic_bounding_box<G>},
+\tcode{BP} denotes the type \tcode{basic_brush_props<X>},
+\tcode{BR} denotes the type \tcode{basic_brush<X>},
+\tcode{CP} denotes the type \tcode{basic_clip_props<X>},
+\tcode{D} denotes the type \tcode{basic_dashes<X>},
+\tcode{DP} denotes the type \tcode{basic_display_point<G>},
+\tcode{FI} denotes the type \tcode{basic_figure_items<X>::figure_item},
+\tcode{IMS} denotes the type \tcode{basic_image_surface<X>},
+\tcode{IP} denotes the type \tcode{basic_interpreted_path<X>},
+\tcode{M} denotes the type \tcode{basic_matrix_2d<G>},
+\tcode{MP} denotes the type \tcode{basic_mask_properties<X>},
+\tcode{OUS} denotes the type \tcode{basic_output_surface<X>},
+\tcode{P} denotes the type \tcode{basic_point_2d<G>},
+\tcode{RP} denotes the type \tcode{basic_render_props<X>},
+\tcode{SP} denotes the type \tcode{basic_stroke_props<X>}, and
+\tcode{UOS} denotes the type \tcode{basic_unmanaged_output_surface<X>}.
 
 \pnum
 In order to describe the observable effects of functions contained in Table~\ref{tab:\iotwod.graphsurf.surfs.requirementstab}, Table~\ref{tab:\iotwod.graphsurf.surfs.typememberdata} describes the types contained in \tcode{X} as-if they possessed certain member data. 
@@ -63,20 +78,103 @@ In order to describe the observable effects of functions contained in Table~\ref
 \topline
 \lhdr{Type}		&	\chdr{Member data}	&	\rhdr{Member data type} \\ \capsep
 \endhead
-\tcode{image_surface_data_type}	&
-\tcode{im}	&
+\tcode{I}	&
+\tcode{im}	&	% The pixel data
 \tcode{IM}	\\ \rowsep
-\tcode{output_surface_data_type}	&
-\tcode{ou}	&
+\tcode{I}	&
+\tcode{fmt}	&	% The visual data format
+\tcode{format}	\\ \rowsep
+\tcode{I}	&
+\tcode{dm}	&	% The dimensions of the pixel data
+\tcode{DP}	\\ \rowsep
+%
+% output surface
+%
+\tcode{O}	&
+\tcode{ou}	&	% The output device
 \tcode{OU}	\\ \rowsep
-\tcode{unmanaged_output_surface_data_type}	&
+\tcode{O}	&
+\tcode{fmt}	&	% The output device visual data format.
+\tcode{format}	\\ \rowsep
+\tcode{O}	&
+\tcode{dm}	&	% The output device dimensions
+\tcode{DP}	\\ \rowsep
+\tcode{O}	&
+\tcode{bb}	&	% The back buffer
+\tcode{I}	\\ \rowsep
+\tcode{O}	&
+\tcode{lb}	&	% The letterbox brush
+\tcode{optional<BR>}	\\ \rowsep
+\tcode{O}	&	
+\tcode{lbp}	&	% The letterbox brush properties
+\tcode{BP}	\\ \rowsep
+\tcode{O}	&
+\tcode{sc}	&	% The scaling type for transfering data from the back buffer to the output device
+\tcode{scaling}	\\ \rowsep
+\tcode{O}	&
+\tcode{ac}	&	% auto clear the backbuffer before the draw callback is called
+\tcode{bool}	\\ \rowsep
+\tcode{O}	&
+\tcode{rr}	&	% redraw required. User can set this to force a redraw.
+\tcode{bool}	\\ \rowsep
+\tcode{O}	&
+\tcode{rs}	&	% Helps determine how often to transfer the contents of the back buffer to the output device
+\tcode{refresh_style}	\\ \rowsep
+\tcode{O}	&
+\tcode{dfr}	&	% desired frame rate. used when rs == refresh_style::fixed
+\tcode{float}	\\ \rowsep
+\tcode{O}	&
+\tcode{dc}	&	% the draw callback. Called when the value of rs (and possibly dfr) says it should be called. This must have a value when in the show loop. It can be changed within it though.
+\tcode{function<void(OUS\&)>}	\\ \rowsep
+\tcode{O}	&
+\tcode{scc}	&	% the size change callback. If it has a value when the output device dimensions change it is called not later than the next time the draw callback is called.
+\tcode{function<void(OUS\&)>}	\\ \rowsep
+%%\tcode{O}	&
+%%\tcode{usc}	% Note: Eliminated the user scaling callback: the user cannot have access to the output device directly since we effectively know nothing about it.
+%%\tcode{function<BB(const OUS\&, bool\&)}	\\ \rowsep
+%
+% unmanaged output surface
+%
+\tcode{U}	&
 \tcode{un}	&
-\tcode{UN}	\\
+\tcode{UN}	\\ \rowsep
+\tcode{U}	&
+\tcode{dm}	&	% The output device dimensions
+\tcode{DP}	\\ \rowsep
+\tcode{U}	&
+\tcode{bb}	&	% The back buffer
+\tcode{I}	\\ \rowsep
+\tcode{U}	&
+\tcode{lb}	&	% The letterbox brush
+\tcode{optional<BR>}	\\ \rowsep
+\tcode{U}	&	
+\tcode{lbp}	&	% The letterbox brush properties
+\tcode{BP}	\\ \rowsep
+\tcode{U}	&
+\tcode{sc}	&	% The scaling type for transfering data from the back buffer to the output device
+\tcode{scaling}	\\ \rowsep
+\tcode{U}	&
+\tcode{ac}	&	% auto clear the backbuffer before the draw callback is called
+\tcode{bool}	\\ \rowsep
+%\tcode{U}	&
+%\tcode{rr}	&	% redraw required. Eliminated this; user will keep track of it externally if they care.
+%\tcode{bool}	\\ \rowsep
+\tcode{U}	&
+\tcode{dc}	&	% the draw callback. Called when the user invokes it.
+\tcode{function<void(OUS\&)>}	\\ \rowsep
+\tcode{U}	&
+\tcode{scc}	&	% the size change callback. If it has a value when the output device dimensions change it is called not later than the next time the draw callback is called.
+\tcode{function<void(OUS\&)>}	\\
 \end{libiotwodreqtab3f}
 
 \pnum
 \begin{note}
-In the same way that \tcode{stdin}, \tcode{stdout}, and \tcode{stderr} do not specify how they meet the requirements placed on them, the requirements set forth in Table~\ref{tab:\iotwod.graphsurf.surfs.requirementstab} also do not specify such details.
+In the same way that \tcode{stdin}, \tcode{stdout}, and \tcode{stderr} do not specify how they meet certain requirements, the requirements set forth in Table~\ref{tab:\iotwod.graphsurf.surfs.requirementstab} also do not specify how they meet certain requirements, most or all of which relate to the output device.
+\end{note}
+
+\pnum
+\begin{note}
+Operations on objects of types \tcode{IM}, \tcode{OU}, and \tcode{UO} follow the \Cpp requirements regarding observable behavior (See: \CppXVII [intro.execution]). Successive operations on such objects are not observable unless and until the visual data of such objects can be observed, such as when the visual data is displayed on an output device or is written out to a file. As such, implementations that use graphics acceleration hardware can use batching and other deferred processing techniques to improve performance.
 \end{note}
 
 \begin{libreqtab4d}
@@ -94,173 +192,311 @@ In the same way that \tcode{stdin}, \tcode{stdout}, and \tcode{stderr} do not sp
     &   &   \chdr{semantics}    &   \rhdr{pre-/post-condition}   \\ \capsep
 \endhead
 %
-% image_surface
+% max_image_dimensions
 %
-\tcode{X::surfaces::create_image_surface(format f, int w, int h)}	&
-\tcode{I}	&
-\returns An object \tcode{i}.	&
-\requires
-\tcode{w > 0}, \tcode{w <= max_dimensions().x()}, \tcode{h > 0}, and \tcode{h <= max_dimensions().y()}.\newline%
-\postconditions
-The bounds of \tcode{i.im} are \range{0}{w} along the \xaxis and \range{0}{h} along the y axis. The visual data format of \tcode{i.im} is \tcode{f}.
-%Sampling from any point within the bounds of \tcode{i.im} produces visual data that is the equivalent of \tcode{rgba_color::transparent_black} in the visual data format \tcode{f}.
-	\\ \rowsep
-\tcode{X::surfaces::create_image_surface(filesystem::path f, image_file_format iff, format fmt)}	&
-\tcode{I}	&
-\returns An object \tcode{i}.	&
-\requires \tcode{f} is a file and the contents of \tcode{f} are valid data in the data format (\ref{\iotwod.imagefileformat.summary}) specified by \tcode{iff}.\newline%
-\postconditions
-<TODO>	\\ \rowsep
-	&
-	&
-	&
-	\\ \rowsep
-	&
-	&
-	&
-	\\ \rowsep
-	&
-	&
-	&
-	\\ \rowsep
-	&
-	&
-	&
-	\\ \rowsep
-	&
-	&
-	&
-	\\ \rowsep
-	&
-	&
-	&
-	\\ \rowsep
-	&
-	&
-	&
-	\\ \rowsep
-	&
-	&
-	&
-	\\ \rowsep
-	&
-	&
-	&
-	\\ \rowsep
-	&
-	&
-	&
-	\\ \rowsep
-	&
-	&
-	&
-	\\ \rowsep
-	&
-	&
-	&
-	\\ \rowsep
-	&
-	&
-	&
+\tcode{X::surfaces::max_image_dimensions()}	&
+\tcode{DP}	&
+\returns
+An object \tcode{dp} where \tcode{dp.x()} is the maximum width in pixels of the visual data of an object of type \tcode{IM} and \tcode{dp.y()} is the maximum height in pixels of the visual data of an object of type \tcode{IM}.	&
 	\\ \rowsep
 %
 % max_display_dimensions
 %
-\tcode{max_display_dimensions()}	&
+\tcode{X::surfaces::max_output_dimensions()}	&
+\tcode{DP}	&
+\returns
+An object \tcode{dp} where \tcode{dp.x()} is the maximum width in pixels of the visual data of an object of type \tcode{OU} and \tcode{dp.y()} is the maximum height in pixels of the visual data of an object of type \tcode{OU}.	&
+	\\ \rowsep
+%
+% max_unmanaged_output_dimensions
+%
+\tcode{X::surfaces::max_unmanaged_output_dimensions()}	&
+\tcode{DP}	&
+\returns
+An object \tcode{dp} where \tcode{dp.x()} is the maximum width in pixels of the visual data of an object of type \tcode{UN} and \tcode{dp.y()} is the maximum height in pixels of the visual data of an object of type \tcode{UN}.	&
+	\\ \rowsep
+%
+% image_surface
+%
+\tcode{X::surfaces::create_image_surface(format fmt, int w, int h)}	&
+\tcode{I}	&
+\returns An object \tcode{i}.	&
+\requires
+\tcode{fmt != format::invalid}, \tcode{w > 0}, \tcode{w <= max_image_dimensions().x()}, \tcode{h > 0}, and \tcode{h <= max_image_dimensions().y()}.\newline%
+\postconditions
+The bounds of \tcode{i.im} are \range{0}{w} along the \xaxis and \range{0}{h} along the y axis, the visual data format of \tcode{i.im} is \tcode{fmt}, \tcode{i.fmt == fmt}, and \tcode{i.dm == DP(x, y)}. The values of the visual data of \tcode{i.im} are \unspec.
+	\\ \rowsep
+\pagebreak%
+\tcode{X::surfaces::create_image_surface(filesystem::path f, image_file_format iff, format fmt)}\newline%
+\tcode{X::surfaces::create_image_surface(filesystem::path f, image_file_format iff, format fmt, error_code\& ec) noexcept}	&
+\tcode{I}	&
+\returns An object \tcode{i}.	&
+\requires \tcode{f} is a file, the contents of \tcode{f} are valid data in the data format (\ref{\iotwod.imagefileformat.summary}) specified by \tcode{iff}, the bounds of the visual data contained in the contents of \tcode{f} do not exceed the values returned by \tcode{max_image_dimensions()}, and \tcode{fmt != format::invalid}.\newline%
+\postconditions
+The visual data format of \tcode{i.im} is \tcode{fmt}. The bounds and visual data of \tcode{i.im} are the result of processing the contents of \tcode{f} and transforming the visual data it contains into the visual data format \tcode{fmt}. \tcode{i.fmt == fmt}. \tcode{i.dm} is equal to the result of creating an object of type \tcode{DP} using the bounds obtained from processing the contents of \tcode{f}.
+\\
+(Continued...)	&
 	&
 	&
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).\newline%
+\errors
+Any error that could result from trying to access \tcode{f}, open \tcode{f} for reading, or reading data from \tcode{f}. Other errors, if any, are \impldef{X::surfaces::create_image_surface}.
+	\\ \rowsep
+\tcode{X::surfaces::save(I\& i, filesystem::path f, image_file_format iff)}\newline%
+\tcode{X::surfaces::save(I\& i, filesystem::path f, image_file_format iff, error_code\& ec) noexcept}	&
+\tcode{void}	&
+Any pending rendering and composing operations (\ref{\iotwod.surface.rendering}) on \tcode{i.im} are performed. The visual data of \tcode{i.im} is written to \tcode{f} in the data format specified by \tcode{iff}.	&
+\requires
+\tcode{f} shall be a valid path to a file. It is not required that the file exist provided that the other components of the path are valid.\newline%
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).\newline%
+\errors
+Any error that could result from trying to access \tcode{f}, open \tcode{f} for writing, or write data to \tcode{f}. Other errors, if any, are \impldef{X::surfaces::save}.
+	\\ \rowsep
+\tcode{X::surfaces::format(const I\& i) noexcept}	&
+\tcode{io2d::format}	&
+\returns
+\tcode{i.fmt}.	&
+	\\ \rowsep
+\tcode{X::surfaces::dimensions(const I\& i) noexcept}	&
+\tcode{DP}	&
+\returns
+\tcode{i.dm}.	&
+	\\ \rowsep
+\tcode{X::surfaces::clear(I\& i)}	&
+\tcode{void}	&
+\effects Equivalent to: \tcode{X::surfaces::paint(i, BR(rgba_color::transparent_black), nullopt, make_optional<RP>(antialias::none, M(), compositing_op::clear);}	&
+	\\ \rowsep
+\tcode{X::surfaces::paint(I\& i, const BB\& b, const BP\& bp, const RP\& rp, const CP\& cl);}	&
+\tcode{void}	&
+\effects Perform the painting operation on \tcode{i.im} as specified in \ref{\iotwod.surface.painting}. \tcode{b} is the source brush. \tcode{bp} is the brush properties. \tcode{rp} is the surface properties. \tcode{cl} is the clip properties. 	&
+	\\ \rowsep
+\tcode{X::surfaces::stroke(I\& i, const BB\& b, const IP\& ip, const BP\& bp, const SP\& sp, const D\& d, const RP\& rp, const CP\& cl);}	&
+\tcode{void}	&
+\effects Perform the stroking operation on \tcode{i.im} as specified in \ref{\iotwod.surface.stroking}.	&
+	\\ \rowsep
+\tcode{X::surfaces::fill(I\& i, const BB\& b, const IP\& ip, const BP\& bp, const RP\& rp, const CP\& cl);}	&
+\tcode{void}	&
+\effects Perform the filling operation on \tcode{i.im} as specified in \ref{\iotwod.surface.filling}.	&
+	\\ \rowsep
+\tcode{X::surfaces::mask(I\& i, const BB\& b, const BB\& m, const BP\& bp, const MP\& mp, const RP\& rp, const CP\& cl);}	&
+\tcode{void}	&
+\effects Perform the masking operation on \tcode{i.im} as specified in \ref{\iotwod.surface.masking}.	&
 	\\ \rowsep
 %
 % output_surface
 %
+%
+\pagebreak%
+%
+\tcode{X::surfaces::create_output_surface(int pw, int ph, io2d::format pfmt, io2d::scaling scl, io2d::refresh_style rs, float fps)}\newline%
+\tcode{X::surfaces::create_output_surface(int pw, int ph, io2d::format pfmt, error_code\& ec, io2d::scaling scl, io2d::refresh_style rs, float fps) noexcept}	&
+\tcode{O}	&
+\returns
+An object \tcode{o}.	&
+\requires
+\tcode{pw > 0}, \tcode{pw <= min(max_image_dimensions().x(), max_output_dimensions().x()}), \tcode{ph > 0}, \tcode{ph <= min(max_image_dimensions().y(), max_output_dimensions().y())}, \tcode{pfmt != format::invalid}, and \tcode{fps < 0.0f}.\newline%
+\postconditions
+The bounds of \tcode{o.ou} are \range{0}{pw} along the \xaxis{} and \range{0}{ph} along the \yaxis. The visual data format of \tcode{o.ou} is \tcode{fmt} or, if \tcode{pfmt} is not supported for \tcode{o.ou} then an \impldef{output device visual format support} visual data format. \tcode{o.fmt} is set to the \tcode{format} enumerator that corresponds to the visual data format of \tcode{o.ou}, which may be a value in \tcode{X::additional_formats}. \tcode{o.dm == DP(pw, ph)}. The values of the visual data of \tcode{o.ou} are \unspec.
+\\
+(Continued...)	&
 	&
 	&
+The bounds of \tcode{o.bb.im} are \range{0}{pw} along the \xaxis{} and \range{0}{ph} along the \yaxis{}, the visual data format of \tcode{o.bb.im} is \tcode{pfmt}, \tcode{o.bb.fmt == pfmt}, and \tcode{o.bb.dm == DP(pw, ph)}. The values of the visual data of \tcode{o.bb.im} are \unspec.
+\tcode{o.lb.value() == BR(rgba_color::black)}.
+\tcode{o.lbp == BP()}. \tcode{o.sc == scaling::letterbox}. \tcode{o.ac == false}. \tcode{o.rr == false}. \tcode{o.rs == rs}. \tcode{o.dfr == fps}. \tcode{o.dc == nullptr}. \tcode{o.scc == nullptr}.\newline%
+\remarks
+Implementations may defer the creation of \tcode{o.ou} and \tcode{o.bb} until \tcode{begin_show(o, ...)} is called. Implementations may defer the creation of the visual data of the object contained in \tcode{o.lb} until it is used.
+\\
+(Continued...)	&
 	&
+	&
+When \tcode{o.ou} and \tcode{o.bb} are created, the implementation shall ensure that the values of \tcode{o.dm} and \tcode{o.bb.dm} are set to the bounds of \tcode{o.ou}, and if either value changed it shall then invoke \tcode{o.scc} if \tcode{o.scc != nullptr}.
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).\newline%
+\errors
+\tcode{errc::not_supported} if creating \tcode{o} would exceed the maximum number of simultaneous \tcode{basic_display_surface} objects or combination of \tcode{basic_display_surface} objects and \tcode{basic_unmanaged_display_surface} objects supported by the implementation (See: \ref{\iotwod.outputsurface.misc}).
 	\\ \rowsep
+%
+\pagebreak%
+%
+\tcode{X::surfaces::create_output_surface(int pw, int ph, io2d::format pfmt, int pdw, int pdh, io2d::format pdfmt, io2d::scaling scl, io2d::refresh_style rs, float fps)}\newline%
+\tcode{X::surfaces::create_output_surface(int pw, int ph, io2d::format pfmt, int pdw, int pdh, io2d::format pdfmt, error_code\& ec, io2d::scaling scl, io2d::refresh_style rs, float fps) noexcept}	&
+\tcode{O}	&
+\returns
+An object \tcode{o}.	&
+\requires
+\tcode{pw > 0}, \tcode{pw <= max_image_dimensions().x()}), \tcode{ph > 0}, \tcode{ph <= max_image_dimensions().y()}, \tcode{pfmt != format::invalid}, \tcode{pdw > 0}, \tcode{pdh <= max_output_dimensions().x()}, \tcode{pdh > 0}, \tcode{pdh <= max_output_dimensions().y()}, \tcode{pdfmt != format::invalid}, and \tcode{fps < 0.0f}.\newline%
+\postconditions
+The bounds of \tcode{o.ou} are \range{0}{pdw} along the \xaxis{} and \range{0}{pdh} along the \yaxis. The visual data format of \tcode{o.ou} is \tcode{pdfmt} or, if \tcode{pdfmt} is not supported for \tcode{o.ou} then an \impldef{output device visual format support} visual data format. \tcode{o.fmt} is set to the \tcode{format} enumerator that corresponds to the visual data format of \tcode{o.ou}, which may be a value in \tcode{X::additional_formats}. \tcode{o.dm == DP(pdw, pdh)}. The values of the visual data of \tcode{o.ou} are \unspec.
+\\
+(Continued...)	&
 	&
 	&
+The bounds of \tcode{o.bb.im} are \range{0}{pw} along the \xaxis{} and \range{0}{ph} along the \yaxis{}, the visual data format of \tcode{o.bb.im} is \tcode{pfmt}, \tcode{o.bb.fmt == pfmt}, and \tcode{o.bb.dm == DP(pw, ph)}. The values of the visual data of \tcode{o.bb.im} are \unspec.
+\tcode{o.lb.value() == BR(rgba_color::black)}.
+\tcode{o.lbp == BP()}. \tcode{o.sc == scaling::letterbox}. \tcode{o.ac == false}. \tcode{o.rr == false}. \tcode{o.rs == rs}. \tcode{o.dfr == fps}. \tcode{o.dc == nullptr}. \tcode{o.scc == nullptr}.\newline%
+\remarks
+Implementations may defer the creation of \tcode{o.ou} and \tcode{o.bb} until \tcode{begin_show(o, ...)} is called. Implementations may defer the creation of the visual data of the object contained in \tcode{o.lb} until it is used.
+\\
+(Continued...)	&
 	&
+	&
+When \tcode{o.ou} and \tcode{o.bb} are created, the implementation shall ensure that the values of \tcode{o.dm} and \tcode{o.bb.dm} are set to the bounds of \tcode{o.ou}, and if either value changed it shall then invoke \tcode{o.scc} if \tcode{o.scc != nullptr}.
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).\newline%
+\errors
+\tcode{errc::not_supported} if creating \tcode{o} would exceed the maximum number of simultaneous \tcode{basic_display_surface} objects or combination of \tcode{basic_display_surface} objects and \tcode{basic_unmanaged_display_surface} objects supported by the implementation (See: \ref{\iotwod.outputsurface.misc}).
 	\\ \rowsep
+\tcode{X::surfaces::begin_show(O\& o, OUS\& sfc)}\newline%
+\tcode{X::surfaces::begin_show(O\& o, OUS\& src, error_code\& ec) noexcept}	&
+\tcode{void}	&
+Performs the following actions in a continuous loop:
+\begin{enumerate}
+\item Handle any implementation and host environment matters, including updating the value of \tcode{o.dm} if the output device bounds have changed; then,
+\item If the value of \tcode{o.dm} changed and \tcode{o.scc != nullptr}, invoke \tcode{o.scc}; then,
+\item If \tcode{o.rr == true} or the values of \tcode{o.rs} and \tcode{o.dfr} require that \tcode{o.dc} be called:
+  \begin{enumeratea}
+  \item Set \tcode{o.rr} to \tcode{false}; then,
+  \item If \tcode{o.ac == true}, invoke \tcode{clear(o.bb)}; then,
+  \item Invoke \tcode{o.dc}; then,
+  \item Transfer \tcode{o.bb.im} to \tcode{o.ou}, performing the scaling and letterboxing, if any, required by \tcode{o.sc} and the color space conversion, if any, required to transform \tcode{o.bb.im} from \tcode{o.bb.fmt} to \tcode{o.fmt}.
+  \end{enumeratea}
+\end{enumerate}	&
+\requires
+\tcode{sfc.data() == o}.\newline%
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).\newline%
+\errors
+\tcode{errc::not_supported} if creating or displaying \tcode{o.im} would exceed the maximum number of simultaneous \tcode{basic_display_surface} objects or combination of \tcode{basic_display_surface} objects and \tcode{basic_unmanaged_display_surface} objects supported by the implementation (See: \ref{\iotwod.outputsurface.misc}).
+\\
+(Continued...)	&
 	&
 	&
+\remarks All observable effects to visual data produced as a result of steps 3-b and 3-c above are as-if they were applied to \tcode{o.bb.im} in those steps. Implementations may apply those observable effects directly to \tcode{o.ou} provided that they do so as-if the scaling, letterboxing, and color space conversion behavior specified in 3-d occurs. \begin{note}
+This allows implementations which do not wish to use a back buffer the freedom to do so.
+\end{note}	\\ \rowsep
+\tcode{X::surfaces::end_show(O\& o)}	&
+\tcode{void}	&
+Initiates the process of exiting the continuous loop resulting from the invocation of \tcode{begin_show(o, ...)}. Implementations should follow any procedures that the host environment requires in order to stop the continuous loop without error. If the continuous loop resulting from the invocation of \tcode{begin_show(o, ...)} is not executing or is already exiting due to a previous call to this function, this function does nothing.	&
+\remarks
+This function shall not wait until the continuous loop from \tcode{begin_show(o, ...)} ends before returning. \begin{note}
+The correct way to exit the \tcode{begin_show(o, ...)} continuous loop is to call this function from \tcode{o.dc} or from another thread.
+\end{note}	\\ \rowsep
+\tcode{dimensions(O\& o, const DP\& dm)}	&
+\tcode{void}	&
+Attempts to change the bounds of \tcode{o.bb.im} to \tcode{dm}. If successful, \tcode{o.bb.dm == dm}, otherwise there are no effects.	&
+\requires
+\tcode{dm.x() > 0}, \tcode{dm.x() <= max_image_dimensions().x()}), \tcode{dm.y() > 0}, \tcode{dm.y() <= max_image_dimensions().y()}	\\ \rowsep
+\tcode{output_dimensions(O\& o, const DP\& dm)}	&
+\tcode{void}	&
+Attempts to change the bounds of \tcode{o.ou} to \tcode{dm}. If successful sets \tcode{o.dm} to the value of \tcode{dm} and then invokes \tcode{o.scc} unless \tcode{o.scc != nullptr}, otherwise there are no effects.	&
+\requires
+\tcode{dm.x() > 0}, \tcode{dm.x() <= max_output_dimensions().x()}), \tcode{dm.y() > 0}, \tcode{dm.y() <= max_output_dimensions().y()}	\\ \rowsep
+\tcode{scaling(O\& o, io2d::scaling sc)}	&
+\tcode{void}	&
 	&
+\postconditions \tcode{o.sc == sc}.	\\ \rowsep
+\tcode{refresh_style(O\& o, io2d::refresh_style rs)}	&
+\tcode{void}	&
+	&
+\postconditions \tcode{o.rs == rs}.	\\ \rowsep
+\tcode{desired_frame_rate(O\& o, float dfr)}	&
+\tcode{void}	&
+	&
+\requires \tcode{dfr > 0.0f}.\newline%
+\postconditions \tcode{o.dfr == dfr}.	\\ \rowsep
+\tcode{letterbox_brush(O\& o, const optional<BB>\& lb, const optional<BP>\& lbp)}	&
+\tcode{void}	&
+	&
+\postconditions If \tcode{lb.has_value() == true} then \tcode{o.lb == lb.value()}, otherwise \tcode{o.lb == BB(rgba_color::black)}. If \tcode{lbp.has_value() == true} then \tcode{o.lpb == lbp.value()}, otherwise \tcode{o.lbp == BP()}.	\\ \rowsep
+\tcode{letterbox_brush_properties(O\& o, const optional<BP>\& lbp)}	&
+\tcode{void}	&
+	&
+\postconditions If \tcode{lbp.has_value() == true} then \tcode{o.lpb == lbp.value()}, otherwise \tcode{o.lbp == BP()}.	\\ \rowsep
+\tcode{auto_clear(O\& o, bool ac)}	&
+\tcode{void}	&
+	&
+\postconditions \tcode{o.ac == ac}.	\\ \rowsep
+\tcode{redraw_required(O\& o, bool rr)}	&
+\tcode{void}	&
+	&
+\postconditions \tcode{o.rr == rr}.	\\ \rowsep
+\tcode{draw_callback(O\& o, function<void(OUS\&)> dc)}	&
+\tcode{void}	&
+	&
+\postconditions \tcode{o.dc == dc}.	\\ \rowsep
+\tcode{size_change_callback(O\& o, function<void(OUS\&)> scc)}	&
+\tcode{void}	&
+	&
+\postconditions \tcode{o.scc == scc}.	\\ \rowsep
+\tcode{X::surfaces::clear(O\& o)}	&
+\tcode{void}	&
+\effects Equivalent to: \tcode{paint(o.bb)}.	&
 	\\ \rowsep
-	&
-	&
-	&
+\tcode{X::surfaces::paint(O\& o, const BB\& b, const BP\& bp, const RP\& rp, const CP\& cl);}	&
+\tcode{void}	&
+\effects Equivalent to: \tcode{paint(o.bb, <TODO>)}.	&
 	\\ \rowsep
-	&
-	&
-	&
+\tcode{X::surfaces::stroke(I\& i, const BB\& b, const IP\& ip, const BP\& bp, const SP\& sp, const D\& d, const RP\& rp, const CP\& cl);}	&
+\tcode{void}	&
+Perform the stroking operation on \tcode{i.im} as specified in \ref{\iotwod.surface.stroking}.	&
 	\\ \rowsep
-	&
-	&
-	&
+\tcode{X::surfaces::fill(I\& i, const BB\& b, const IP\& ip, const BP\& bp, const RP\& rp, const CP\& cl);}	&
+\tcode{void}	&
+Perform the filling operation on \tcode{i.im} as specified in \ref{\iotwod.surface.filling}.	&
 	\\ \rowsep
-	&
-	&
-	&
+\tcode{X::surfaces::mask(I\& i, const BB\& b, const BB\& m, const BP\& bp, const MP\& mp, const RP\& rp, const CP\& cl);}	&
+\tcode{void}	&
+Perform the masking operation on \tcode{i.im} as specified in \ref{\iotwod.surface.filling}.	&
 	\\ \rowsep
-	&
-	&
-	&
+\tcode{X::surfaces::dimensions(const O\& o) noexcept}	&
+\tcode{DP}	&
+\returns \tcode{o.bb.dm}.	&
 	\\ \rowsep
-	&
-	&
-	&
+\tcode{X::surfaces::output_dimensions(const O\& o) noexcept}	&
+\tcode{DP}	&
+\returns \tcode{o.dm}.	&
 	\\ \rowsep
-	&
-	&
-	&
+\tcode{X::surfaces::refresh_style(const O\& o) noexcept}	&
+\tcode{io2d::refresh_style}	&
+\returns \tcode{o.rs}	&
 	\\ \rowsep
-	&
-	&
-	&
+\tcode{X::surfaces::desired_frame_rate(const O\& o) noexcept}	&
+\tcode{float}	&
+\returns \tcode{o.dfr}.	&
 	\\ \rowsep
-	&
-	&
-	&
+\tcode{X::surfaces::scaling(const O\& o) noexcept}	&
+\tcode{io2d::scaling}	&
+\returns \tcode{o.sc}.	&
 	\\ \rowsep
-	&
-	&
-	&
+\tcode{X::surfaces::letterbox_brush(const O\& o) noexcept}	&
+\tcode{optional<BB>}	&
+\returns \tcode{o.lb}.	&
 	\\ \rowsep
-	&
-	&
-	&
+\tcode{X::surfaces::letterbox_brush_props(const O\& o) noexcept}	&
+\tcode{BP}	&
+\returns \tcode{o.lbp}.	&
 	\\ \rowsep
-	&
-	&
-	&
+\tcode{X::surfaces::auto_clear(const O\& o) noexcept}	&
+\tcode{bool}	&
+\returns \tcode{o.ac}.	&
 	\\ \rowsep
-	&
-	&
-	&
+\tcode{X::surfaces::redraw_required(const O\& o) noexcept}	&
+\tcode{bool}	&
+\returns \tcode{o.rr}.	&
 	\\ \rowsep
-	&
-	&
-	&
-	\\ \rowsep
-	&
-	&
-	&
-	\\ \rowsep
-	&
-	&
-	&
-	\\ \rowsep
-	&
-	&
-	&
-	\\ \rowsep
-	&
-	&
-	&
-	\\ \rowsep
-	&
-	&
-	&
-	\\ \rowsep
+\tcode{X::surfaces::copy_surface(const I\& i)}	&
+\tcode{IMS}	&
+\returns An object \tcode{c}.	&
+\postconditions
+\tcode{c.data().im} is a copy of the data in \tcode{i.im}. \tcode{c.data().fmt == i.fmt}. \tcode{c.data().dm == i.dm}.	\\ \rowsep
+\tcode{X::surfaces::copy_surface(const O\& o)}	&
+\tcode{IMS}	&
+\returns An object \tcode{c}.	&
+\postconditions
+\tcode{c.data().im} is a copy of the data in \tcode{o.bb.im}. \tcode{c.data().fmt == o.bb.fmt}. \tcode{c.data().dm == o.bb.dm}.	\\ \rowsep
 	&
 	&
 	&

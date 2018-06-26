@@ -17,12 +17,15 @@ namespace std::experimental::io2d::v1 {
   public:
     // \ref{\iotwod.pathgroup.cons}, construct:
     basic_interpreted_path() noexcept;
+    explicit basic_interpreted_path(
+      const basic_bounding_box<GraphicsSurfaces>& bb);
     template <class Allocator>
-    explicit basic_interpreted_path(const basic_path_builder<GraphicsSurfaces, Allocator>& pb);
-    template <class ForwardIterator>
-    basic_interpreted_path(ForwardIterator first, ForwardIterator last);
+    explicit basic_interpreted_path(
+      const basic_path_builder<GraphicsSurfaces, Allocator>& pb);
+    template <class InputIterator>
+    basic_interpreted_path(InputIterator first, InputIterator last);
     explicit basic_interpreted_path(initializer_list<typename
-      basic_figure_items<GraphicsSurfaces>::figure_item> il);
+      basic_figure_items<GraphicsSurfaces>::figure_item>> il);
   };
 }
 \end{codeblock}
@@ -52,8 +55,8 @@ Equivalent to: \tcode{basic_interpreted_path\{ begin(pb), end(pb) \};}.
 
 \indexlibrary{\idxcode{interpreted_path}!constructor}%
 \begin{itemdecl}
-template <class ForwardIterator>
-basic_interpreted_path(ForwardIterator first, ForwardIterator last);
+template <class InputIterator>
+basic_interpreted_path(InputIterator first, InputIterator last);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
