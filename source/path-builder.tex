@@ -13,10 +13,11 @@ The collection of \tcode{figure_items::figure_item} objects in a path builder is
 
 \rSec1 [\iotwod.pathbuilder.synopsis] {\tcode{basic_path_builder} synopsis}%
 
+% Note: std::reverse_iterator always needs to be qualified for name disambiguation
 \begin{codeblock}
-namespace std::experimental::io2d::v1 {
+namespace @\fullnamespace{}@ {
   template <class GraphicsSurfaces,
-            class Allocator = ::std::allocator<typename
+            class Allocator = @\stdqualifier{}@allocator<typename
               basic_figure_items<GraphicsSurfaces>::figure_item>>
   class basic_path_builder {
   public:

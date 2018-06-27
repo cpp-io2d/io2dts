@@ -1,12 +1,12 @@
 %!TEX root = io2d.tex
-\rSec0[\iotwod.syn]{Header \tcode{<experimental/io2d>} synopsis}
+\rSec0[\iotwod.syn]{Header \tcode{<\iotwodheader{}>} synopsis}
 
-\indexlibrary{\idxhdr{experimental/io2d}}%
+\indexlibrary{\idxhdr{\iotwodheader{}}}%
 \indextext{2D graphics!synopsis|(}%
 \begin{codeblock}
 
-namespace std { namespace experimental {
-  namespace io2d { inline namespace v1 {
+namespace @\namespacenoinlinev{}@ {
+  inline namespace v1 {
     template <class T>
     constexpr T pi = T(3.14159265358979323846264338327950288L);
     template <class T>
@@ -406,7 +406,7 @@ namespace std { namespace experimental {
       const matrix_2d& m = matrix_2d{}) noexcept;
     point_2d arc_end(point_2d cpt, float eang, point_2d rad, 
       const matrix_2d& m = matrix_2d{}) noexcept;
-} } } }
+} }
 
 \end{codeblock}
 \indextext{2D graphics!synopsis|)}%

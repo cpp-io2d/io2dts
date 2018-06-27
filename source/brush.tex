@@ -25,9 +25,9 @@ The data are stored in an object of type \tcode{typename GraphicsMath::brushes::
 \rSec1 [\iotwod.brush.synopsis] {Synopsis}
 
 \begin{codeblock}
-namespace std::experimental::io2d::v1 {
-template <class GraphicsSurfaces>
-class basic_brush {
+namespace @\fullnamespace{}@ {
+  template <class GraphicsSurfaces>
+  class basic_brush {
   public:
     using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
     using data_type = typename GraphicsSurfaces::brushes::brush_data_type;
@@ -40,14 +40,14 @@ class basic_brush {
       InputIterator first, InputIterator last);
     basic_brush(const basic_point_2d<graphics_math_type>& begin,
       const basic_point_2d<graphics_math_type>& end,
-      ::std::initializer_list<gradient_stop> il);
+      initializer_list<gradient_stop> il);
     template <class InputIterator>
     basic_brush(const basic_circle<graphics_math_type>& start,
       const basic_circle<graphics_math_type>& end,
       InputIterator first, InputIterator last);
     basic_brush(const basic_circle<graphics_math_type>& start,
       const basic_circle<graphics_math_type>& end,
-      ::std::initializer_list<gradient_stop> il);
+      initializer_list<gradient_stop> il);
     basic_brush(basic_image_surface<GraphicsSurfaces>&& img);
 
 	// \ref{\iotwod.brush.acc}, accessors:
@@ -101,7 +101,7 @@ When \tcode{b} is a surface brush, when sampling point \tcode{pt} from \tcode{b}
 
 \indexlibrary{\idxcode{basic_brush}!constructor}%
 \begin{itemdecl}
-explicit basic_brush(const rgba_color& c);<TODO><Implementation mismatch> MM: I'm not seeing a mismatch. Am I missing something?
+explicit basic_brush(const rgba_color& c);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

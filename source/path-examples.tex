@@ -11,10 +11,10 @@ Paths are composed of zero or more figures. The following examples show the basi
 Every example is placed within the following code at the indicated spot. This code is shown here once to avoid repetition:
 
 \begin{codeblock}
-#include <experimental/io2d>
+#include <@\iotwodheader{}@>
 
 using namespace std;
-using namespace std::experimental::io2d;
+using namespace @\namespacenoinlinev{}@;
 
 int main() {
   auto imgSfc = make_image_surface(format::argb32, 300, 200);
