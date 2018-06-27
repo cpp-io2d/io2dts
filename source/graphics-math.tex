@@ -417,7 +417,7 @@ Returns an object \tcode{b}.	&
 \postconditions{} \tcode{b.x == x}, \tcode{b.y == y}, \tcode{b.w == w}, and \tcode{b.h == h}.	\\ \rowsep
 \tcode{X::create_bounding_box(const P\& tl, const P\& br)}	&
 \tcode{B}	&
-Equivalent to \tcode{return create_bounding_box(tl.x, tl.y, max(0.0f, br.x - tl.x), max(0.0f, br.y - tl.y));}	&
+Equivalent to \tcode{return create_bounding_box(tl.x, tl.y, \stdqualifier{}max(0.0f, br.x - tl.x), \stdqualifier{}max(0.0f, br.y - tl.y));}	&
 	\\ \rowsep
 \tcode{X::x(B\& b, float x)}	&
 \tcode{void}	&
@@ -442,7 +442,7 @@ Equivalent to \tcode{return create_bounding_box(tl.x, tl.y, max(0.0f, br.x - tl.
 \tcode{X::bottom_right(B\& b, const P\& p)}	&
 \tcode{void}	&
 	&
-\postconditions{} \tcode{b.w == max(p.x - b.x, 0.0f)} and \tcode{b.h == max(p.y - b.y, 0.0f)}.	\\ \rowsep
+\postconditions{} \tcode{b.w == \stdqualifier{}max(p.x - b.x, 0.0f)} and \tcode{b.h == \stdqualifier{}max(p.y - b.y, 0.0f)}.	\\ \rowsep
 \tcode{X::x(const B\& b)}	&
 \tcode{float}	&
 Returns \tcode{b.x}.	&

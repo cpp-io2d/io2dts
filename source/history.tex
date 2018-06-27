@@ -2,6 +2,11 @@
 \addtocounter{chapter}{-1} % Make this Clause 0 instead of 1
 \rSec0[\iotwod.revisionhistory]{Revision history}
 
+\rSec1 [\iotwod.revisionhistory.r9] {Revision 9}
+
+\pnum
+Formatting and typo fixes.
+
 \rSec1 [\iotwod.revisionhistory.r8] {Revision 8}
 
 \pnum
@@ -26,7 +31,7 @@ Updated the relevant class member functions in this proposal to define their eff
 Added a new \clause, Surface state props (\ref{\iotwod.surfacestate}) and moved the relevant \tcode{enum class} types and the \tcode{basic_render_props}, \tcode{basic_brush_props}, \tcode{basic_clip_props}, \tcode{basic_stroke_props}, and \tcode{basic_mask_props} class templates to it. 
 
 \pnum
-Added Michael Kazakov as a co-author. He has written an implementation of this proposal using the Core Graphics framework of Cocoa\textregistered, thus providing a native implementation for iOS\textregistered and OS X\textregistered. It is available as part of the reference implementation (See \ref{\iotwod.revisionhistory.r7}).
+Added Michael Kazakov as a co-author. He has written an implementation of this proposal using the Core Graphics framework of Cocoa\textregistered{}, thus providing a native implementation for iOS\textregistered{} and OS X\textregistered{}. It is available as part of the reference implementation (See \ref{\iotwod.revisionhistory.r7}).
 
 \pnum
 He has also written a series of tests for compliance. This has drawn attention to several issues that have require some revision.
@@ -77,7 +82,7 @@ Changed the order of items in the \tcode{basic_figure_items::figure_item} type a
 Moved the class template definitions for the nested classes within basic_figure_items<GraphicsSurfaces> to the descriptions of each of those types from the synopsis of basic_figure_items<GraphicsSurfaces> itself.
 
 \pnum
-Added \tcode{format::xrgb16}. The number of bits per channel is left to the implementation since, e.g., Windows\textregistered is 565 whereas OS X\textregistered and iOS\textregistered are 555 with an unused bit. This is useful for platforms with limited memory where supported so having it as an official enumerator will help. 
+Added \tcode{format::xrgb16}. The number of bits per channel is left to the implementation since, e.g., Windows\textregistered{} is 565 whereas OS X\textregistered{} and iOS\textregistered{} are 555 with an unused bit. This is useful for platforms with limited memory where supported so having it as an official enumerator will help. 
 
 \pnum
 Users can now request a different output device format when calling the overloads of the basic_output_surface ctor and the basic_unmanaged_output_surface ctor that take separate output device width and height preferences.

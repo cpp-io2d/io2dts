@@ -1268,16 +1268,16 @@ constexpr rgba_color& operator*=(T rhs) noexcept;
 
 \pnum
 \effects
-\tcode{r(min(r() * rhs / 255.0F, 1.0F))}.
+\tcode{r(\stdqualifier{}min(r() * rhs / 255.0F, 1.0F))}.
 
 \pnum
-\tcode{g(min(g() * rhs / 255.0F, 1.0F))}.
+\tcode{g(\stdqualifier{}min(g() * rhs / 255.0F, 1.0F))}.
 
 \pnum
-\tcode{b(min(b() * rhs / 255.0F, 1.0F))}.
+\tcode{b(\stdqualifier{}min(b() * rhs / 255.0F, 1.0F))}.
 
 \pnum
-\tcode{a(min(a() * rhs / 255.0F, 1.0F))}.
+\tcode{a(\stdqualifier{}min(a() * rhs / 255.0F, 1.0F))}.
 
 \returns
 \tcode{*this}.
@@ -1299,16 +1299,16 @@ constexpr rgba_color& operator*=(U rhs) noexcept;
 
 \pnum
 \effects
-\tcode{r(min(r() * rhs, 1.0F))}.
+\tcode{r(\stdqualifier{}min(r() * rhs, 1.0F))}.
 
 \pnum
-\tcode{g(min(g() * rhs, 1.0F))}.
+\tcode{g(\stdqualifier{}min(g() * rhs, 1.0F))}.
 
 \pnum
-\tcode{b(min(b() * rhs, 1.0F))}.
+\tcode{b(\stdqualifier{}min(b() * rhs, 1.0F))}.
 
 \pnum
-\tcode{a(min(a() * rhs, 1.0F))}.
+\tcode{a(\stdqualifier{}min(a() * rhs, 1.0F))}.
 
 \returns
 \tcode{*this}.
@@ -1345,8 +1345,10 @@ constexpr rgba_color operator*(const rgba_color& lhs, T rhs) noexcept;
 \pnum
 \returns
 \begin{codeblock}
-rgba_color(min(lhs.r() * rhs / 255.0F, 1.0F), min(lhs.g() * rhs / 255.0F, 1.0F),
-  min(lhs.b() * rhs / 255.0F, 1.0F), min(lhs.a() * rhs / 255.0F, 1.0F))
+rgba_color(@\stdqualifier{}@min(lhs.r() * rhs / 255.0F, 1.0F), 
+  @\stdqualifier{}@min(lhs.g() * rhs / 255.0F, 1.0F),
+  @\stdqualifier{}@min(lhs.b() * rhs / 255.0F, 1.0F), 
+  @\stdqualifier{}@min(lhs.a() * rhs / 255.0F, 1.0F))
 \end{codeblock}
 
 \pnum
@@ -1367,8 +1369,10 @@ constexpr rgba_color& operator*(const rgba_color& lhs, U rhs) noexcept;
 \pnum
 \returns
 \begin{codeblock}
-rgba_color(min(lhs.r() * rhs, 1.0F), min(lhs.g() * rhs, 1.0F),
-  min(lhs.b() * rhs, 1.0F), min(lhs.a() * rhs, 1.0F))
+rgba_color(@\stdqualifier{}@min(lhs.r() * rhs, 1.0F), 
+  @\stdqualifier{}@min(lhs.g() * rhs, 1.0F),
+  @\stdqualifier{}@min(lhs.b() * rhs, 1.0F),
+  @\stdqualifier{}@min(lhs.a() * rhs, 1.0F))
 \end{codeblock}
 
 \pnum
@@ -1389,8 +1393,10 @@ constexpr rgba_color operator*(T lhs, const rgba_color& rhs) noexcept;
 \pnum
 \returns
 \begin{codeblock}
-rgba_color(min(lhs * rhs.r() / 255.0F, 1.0F), min(lhs * rhs.g() / 255.0F, 1.0F),
-  min(lhs * rhs.b() / 255.0F, 1.0F), min(lhs * rhs.a() / 255.0F, 1.0F))
+rgba_color(@\stdqualifier{}@min(lhs * rhs.r() / 255.0F, 1.0F), 
+  @\stdqualifier{}@min(lhs * rhs.g() / 255.0F, 1.0F),
+  @\stdqualifier{}@min(lhs * rhs.b() / 255.0F, 1.0F),
+  @\stdqualifier{}@min(lhs * rhs.a() / 255.0F, 1.0F))
 \end{codeblock}
 
 \pnum
@@ -1411,8 +1417,10 @@ constexpr rgba_color& operator*(U lhs, const rgba_color& rhs) noexcept;
 \pnum
 \returns
 \begin{codeblock}
-rgba_color(min(lhs * rhs.r(), 1.0F), min(lhs * rhs.g(), 1.0F),
-  min(lhs * rhs.b(), 1.0F), min(lhs * rhs.a(), 1.0F))
+rgba_color(@\stdqualifier{}@min(lhs * rhs.r(), 1.0F),
+  @\stdqualifier{}@min(lhs * rhs.g(), 1.0F),
+  @\stdqualifier{}@min(lhs * rhs.b(), 1.0F),
+  @\stdqualifier{}@min(lhs * rhs.a(), 1.0F))
 \end{codeblock}
 
 \pnum

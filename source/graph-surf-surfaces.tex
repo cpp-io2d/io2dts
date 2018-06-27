@@ -296,7 +296,7 @@ Any error that could result from trying to access \tcode{f}, open \tcode{f} for 
 \returns
 An object \tcode{o}.	&
 \requires
-\tcode{pw > 0}, \tcode{pw <= min(max_image_dimensions().x(), max_output_dimensions().x()}), \tcode{ph > 0}, \tcode{ph <= min(max_image_dimensions().y(), max_output_dimensions().y())}, \tcode{pfmt != format::invalid}, and \tcode{fps < 0.0f}.\newline%
+\tcode{pw > 0}, \tcode{pw <= \stdqualifier{}min(max_image_dimensions().x(), max_output_dimensions().x()}), \tcode{ph > 0}, \tcode{ph <= \stdqualifier{}min(max_image_dimensions().y(), max_output_dimensions().y())}, \tcode{pfmt != format::invalid}, and \tcode{fps < 0.0f}.\newline%
 \postconditions
 The bounds of \tcode{o.ou} are \range{0}{pw} along the \xaxis{} and \range{0}{ph} along the \yaxis. The visual data format of \tcode{o.ou} is \tcode{fmt} or, if \tcode{pfmt} is not supported for \tcode{o.ou} then an \impldef{output device visual format support} visual data format. \tcode{o.fmt} is set to the \tcode{format} enumerator that corresponds to the visual data format of \tcode{o.ou}, which may be a value in \tcode{X::additional_formats}. \tcode{o.dm == DP(pw, ph)}. The values of the visual data of \tcode{o.ou} are \unspec.
 \\
