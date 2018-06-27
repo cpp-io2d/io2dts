@@ -83,11 +83,11 @@ namespace @\fullnamespace{}@ {
     void size_change_callback(
       const function<void(basic_unmanaged_output_surface& sfc)>& fn);
     void dimensions(basic_display_point<graphics_math_type> dp);
-    void dimensions(basic_display_point<graphics_math_type> dp, error_code& ec) 
+    void dimensions(basic_display_point<graphics_math_type> dp, @\stdqualifier{}@error_code& ec) 
       noexcept;
     void display_dimensions(basic_display_point<graphics_math_type> dp);
     void display_dimensions(basic_display_point<graphics_math_type> dp, 
-      error_code& ec) noexcept;
+      @\stdqualifier{}@error_code& ec) noexcept;
     void scaling(io2d::scaling scl) noexcept;
     void letterbox_brush(const optional<basic_brush<GraphicsSurfaces>>& b,
       const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt) 
@@ -376,7 +376,7 @@ void size_change_callback(const function<void(basic_unmanaged_output_surface& sf
 \indexlibrarymember{dimensions}{basic_unmanaged_output_surface}%
 \begin{itemdecl}
 void dimensions(basic_display_point<graphics_math_type> dp);
-void dimensions(basic_display_point<graphics_math_type> dp, error_code& ec) noexcept;
+void dimensions(basic_display_point<graphics_math_type> dp, @\stdqualifier{}@error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -387,7 +387,7 @@ void dimensions(basic_display_point<graphics_math_type> dp, error_code& ec) noex
 \indexlibrarymember{display_dimensions}{basic_unmanaged_output_surface}%
 \begin{itemdecl}
 void display_dimensions(basic_display_point<graphics_math_type> dp);
-void display_dimensions(basic_display_point<graphics_math_type> dp, error_code& ec) noexcept;
+void display_dimensions(basic_display_point<graphics_math_type> dp, @\stdqualifier{}@error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

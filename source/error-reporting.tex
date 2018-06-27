@@ -2,7 +2,7 @@
 \rSec0[\iotwod.err.report]{Error reporting}
 
 \pnum
-2D graphics library functions that can produce errors occasionally provide two overloads: one that throws an exception to report errors and another that reports errors using an \tcode{error_code} object. This provides for situations where errors are not truly exceptional.
+2D graphics library functions that can produce errors occasionally provide two overloads: one that throws an exception to report errors and another that reports errors using an \tcode{\stdqualifier{}error_code} object. This provides for situations where errors are not truly exceptional.
 
 \pnum
 report errors as follows, unless otherwise specified:
@@ -12,10 +12,10 @@ When an error prevents the function from meeting its specifications:
 % and the cause of the error is described in the function's \textit{Error conditions} description:
 
 \begin{itemize}
-\item Functions that do not take argument of type \tcode{error_code\&} throw an exception of type \tcode{system_error} or of an \impldefplain{implementation system_error-derived type} type that derives from \tcode{system_error}. The exception object shall include the enumerator specified by the function as part of its observable state.
+\item Functions that do not take argument of type \tcode{\stdqualifier{}error_code\&} throw an exception of type \tcode{\stdqualifier{}system_error} or of an \impldefplain{implementation system_error-derived type} type that derives from \tcode{\stdqualifier{}system_error}. The exception object shall include the enumerator specified by the function as part of its observable state.
 %If the cause of the error is described in the function's \textit{Error conditions} description, the exception object includes the enumerator specified by the function. It may also include \impldefplain{error condition, additional information} additional information. Other data included in the exception object, if any, is \impldefplain{error condition, undocumented}.
 
-\item Functions that take an argument of type \tcode{error_code\&} assigns the specified enumerator to the provided \tcode{error_code} object and then returns.
+\item Functions that take an argument of type \tcode{\stdqualifier{}error_code\&} assigns the specified enumerator to the provided \tcode{\stdqualifier{}error_code} object and then returns.
 \end{itemize}
 
 \pnum
@@ -25,4 +25,4 @@ Failure to allocate storage is reported by throwing an exception as described in
 Destructor operations defined in this \documenttypename{} shall not throw exceptions. Every destructor in this \documenttypename{} shall behave as-if it had a non-throwing exception specification.
 
 \pnum
-If no error occurs in a function that takes an argument of type \tcode{error_code\&}, \tcode{error_code::clear} shall be called on the \tcode{error_code} object immediately before the function returns.
+If no error occurs in a function that takes an argument of type \tcode{\stdqualifier{}error_code\&}, \tcode{\stdqualifier{}error_code::clear} shall be called on the \tcode{\stdqualifier{}error_code} object immediately before the function returns.

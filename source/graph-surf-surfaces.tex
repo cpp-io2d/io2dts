@@ -228,7 +228,7 @@ The bounds of \tcode{i.im} are \range{0}{w} along the \xaxis and \range{0}{h} al
 	\\ \rowsep
 \pagebreak%
 \tcode{X::surfaces::create_image_surface(filesystem::path f, image_file_format iff, format fmt)}\newline%
-\tcode{X::surfaces::create_image_surface(filesystem::path f, image_file_format iff, format fmt, error_code\& ec) noexcept}	&
+\tcode{X::surfaces::create_image_surface(filesystem::path f, image_file_format iff, format fmt, \stdqualifier{}error_code\& ec) noexcept}	&
 \tcode{I}	&
 \returns An object \tcode{i}.	&
 \requires \tcode{f} is a file, the contents of \tcode{f} are valid data in the data format (\ref{\iotwod.imagefileformat.summary}) specified by \tcode{iff}, the bounds of the visual data contained in the contents of \tcode{f} do not exceed the values returned by \tcode{max_image_dimensions()}, and \tcode{fmt != format::invalid}.\newline%
@@ -244,7 +244,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).\newline%
 Any error that could result from trying to access \tcode{f}, open \tcode{f} for reading, or reading data from \tcode{f}. Other errors, if any, are \impldef{X::surfaces::create_image_surface}.
 	\\ \rowsep
 \tcode{X::surfaces::save(I\& i, filesystem::path f, image_file_format iff)}\newline%
-\tcode{X::surfaces::save(I\& i, filesystem::path f, image_file_format iff, error_code\& ec) noexcept}	&
+\tcode{X::surfaces::save(I\& i, filesystem::path f, image_file_format iff, \stdqualifier{}error_code\& ec) noexcept}	&
 \tcode{void}	&
 Any pending rendering and composing operations (\ref{\iotwod.surface.rendering}) on \tcode{i.im} are performed. The visual data of \tcode{i.im} is written to \tcode{f} in the data format specified by \tcode{iff}.	&
 \requires
@@ -291,7 +291,7 @@ Any error that could result from trying to access \tcode{f}, open \tcode{f} for 
 \pagebreak%
 %
 \tcode{X::surfaces::create_output_surface(int pw, int ph, io2d::format pfmt, io2d::scaling scl, io2d::refresh_style rs, float fps)}\newline%
-\tcode{X::surfaces::create_output_surface(int pw, int ph, io2d::format pfmt, error_code\& ec, io2d::scaling scl, io2d::refresh_style rs, float fps) noexcept}	&
+\tcode{X::surfaces::create_output_surface(int pw, int ph, io2d::format pfmt, \stdqualifier{}error_code\& ec, io2d::scaling scl, io2d::refresh_style rs, float fps) noexcept}	&
 \tcode{O}	&
 \returns
 An object \tcode{o}.	&
@@ -322,7 +322,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).\newline%
 \pagebreak%
 %
 \tcode{X::surfaces::create_output_surface(int pw, int ph, io2d::format pfmt, int pdw, int pdh, io2d::format pdfmt, io2d::scaling scl, io2d::refresh_style rs, float fps)}\newline%
-\tcode{X::surfaces::create_output_surface(int pw, int ph, io2d::format pfmt, int pdw, int pdh, io2d::format pdfmt, error_code\& ec, io2d::scaling scl, io2d::refresh_style rs, float fps) noexcept}	&
+\tcode{X::surfaces::create_output_surface(int pw, int ph, io2d::format pfmt, int pdw, int pdh, io2d::format pdfmt, \stdqualifier{}error_code\& ec, io2d::scaling scl, io2d::refresh_style rs, float fps) noexcept}	&
 \tcode{O}	&
 \returns
 An object \tcode{o}.	&
@@ -350,7 +350,7 @@ As specified in Error reporting (\ref{\iotwod.err.report}).\newline%
 \tcode{errc::not_supported} if creating \tcode{o} would exceed the maximum number of simultaneous \tcode{basic_display_surface} objects or combination of \tcode{basic_display_surface} objects and \tcode{basic_unmanaged_display_surface} objects supported by the implementation (See: \ref{\iotwod.outputsurface.misc}).
 	\\ \rowsep
 \tcode{X::surfaces::begin_show(O\& o, OUS\& sfc)}\newline%
-\tcode{X::surfaces::begin_show(O\& o, OUS\& src, error_code\& ec) noexcept}	&
+\tcode{X::surfaces::begin_show(O\& o, OUS\& src, \stdqualifier{}error_code\& ec) noexcept}	&
 \tcode{void}	&
 Performs the following actions in a continuous loop:
 \begin{enumerate}

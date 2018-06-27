@@ -24,7 +24,7 @@ namespace @\fullnamespace{}@ {
       float fps = 30.0f);
     basic_output_surface(int preferredWidth, int preferredHeight,
       io2d::format preferredFormat,
-      error_code& ec, io2d::scaling scl = io2d::scaling::letterbox,
+      @\stdqualifier{}@error_code& ec, io2d::scaling scl = io2d::scaling::letterbox,
       io2d::refresh_style rr = io2d::refresh_style::as_fast_as_possible,
       float fps = 30.0f) noexcept;
     basic_output_surface(int preferredWidth, int preferredHeight,
@@ -36,7 +36,7 @@ namespace @\fullnamespace{}@ {
     basic_output_surface(int preferredWidth, int preferredHeight,
       io2d::format preferredFormat, int preferredDisplayWidth,
       int preferredDisplayHeight, io2d::format preferredDisplayFormat,
-      error_code& ec, io2d::scaling scl = io2d::scaling::letterbox,
+      @\stdqualifier{}@error_code& ec, io2d::scaling scl = io2d::scaling::letterbox,
       io2d::refresh_style rr = io2d::refresh_style::as_fast_as_possible,
       float fps = 30.0f) noexcept;
 
@@ -84,10 +84,10 @@ namespace @\fullnamespace{}@ {
     void size_change_callback(
       const function<void(basic_output_surface& sfc)>& fn);
     void dimensions(basic_display_point<graphics_math_type> dp);
-    void dimensions(basic_display_point<graphics_math_type> dp, error_code& ec) noexcept;
+    void dimensions(basic_display_point<graphics_math_type> dp, @\stdqualifier{}@error_code& ec) noexcept;
     void output_dimensions(basic_display_point<graphics_math_type> dp);
     void output_dimensions(basic_display_point<graphics_math_type> dp, 
-      error_code& ec) noexcept;
+      @\stdqualifier{}@error_code& ec) noexcept;
     void scaling(io2d::scaling scl) noexcept;
     void user_scaling_callback(const
       function<basic_bounding_box<graphics_math_type>(const basic_output_surface&, bool&)>& fn);
@@ -122,7 +122,7 @@ basic_output_surface(int preferredWidth, int preferredHeight,
   float fps = 30.0f);
 basic_output_surface(int preferredWidth, int preferredHeight,
   io2d::format preferredFormat,
-  error_code& ec, io2d::scaling scl = io2d::scaling::letterbox,
+  @\stdqualifier{}@error_code& ec, io2d::scaling scl = io2d::scaling::letterbox,
   io2d::refresh_style rr = io2d::refresh_style::as_fast_as_possible,
   float fps = 30.0f) noexcept;
 \end{itemdecl}
@@ -142,7 +142,7 @@ basic_output_surface(int preferredWidth, int preferredHeight,
 basic_output_surface(int preferredWidth, int preferredHeight,
   io2d::format preferredFormat, int preferredDisplayWidth,
   int preferredDisplayHeight, io2d::format preferredDisplayFormat,
-  error_code& ec, io2d::scaling scl = io2d::scaling::letterbox,
+  @\stdqualifier{}@error_code& ec, io2d::scaling scl = io2d::scaling::letterbox,
   io2d::refresh_style rr = io2d::refresh_style::as_fast_as_possible,
   float fps = 30.0f) noexcept;
 \end{itemdecl}
@@ -370,7 +370,7 @@ void size_change_callback(const function<void(basic_output_surface& sfc)>& fn);
 \indexlibrarymember{dimensions}{basic_output_surface}%
 \begin{itemdecl}
 void dimensions(basic_display_point<graphics_math_type> dp);
-void dimensions(basic_display_point<graphics_math_type> dp, error_code& ec) noexcept;
+void dimensions(basic_display_point<graphics_math_type> dp, @\stdqualifier{}@error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -381,7 +381,7 @@ void dimensions(basic_display_point<graphics_math_type> dp, error_code& ec) noex
 \indexlibrarymember{display_dimensions}{basic_output_surface}%
 \begin{itemdecl}
 void display_dimensions(basic_display_point<graphics_math_type> dp);
-void display_dimensions(basic_display_point<graphics_math_type> dp, error_code& ec) noexcept;
+void display_dimensions(basic_display_point<graphics_math_type> dp, @\stdqualifier{}@error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

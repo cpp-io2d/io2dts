@@ -28,13 +28,13 @@ namespace @\fullnamespace{}@ {
     basic_image_surface(io2d::format fmt, int width, int height);
     basic_image_surface(filesystem::path f, io2d::image_file_format iff, io2d::format fmt);
     basic_image_surface(filesystem::path f, io2d::image_file_format iff, io2d::format fmt,
-      error_code& ec) noexcept;
+      @\stdqualifier{}@error_code& ec) noexcept;
     basic_image_surface(basic_image_surface&&) noexcept;
     basic_image_surface& operator=(basic_image_surface&&) noexcept;
 
     // \ref{\iotwod.imagesurface.members}, members:
     void save(filesystem::path p, image_file_format i);
-    void save(filesystem::path p, image_file_format i, error_code& ec) noexcept;
+    void save(filesystem::path p, image_file_format i, @\stdqualifier{}@error_code& ec) noexcept;
 
     // \ref{\iotwod.imagesurface.staticmembers}, static members:
     static basic_display_point<graphics_math_type> max_dimensions() noexcept;
@@ -114,7 +114,7 @@ The pixel format is \tcode{fmt}, the width is \tcode{w}, and the height is \tcod
 \begin{itemdecl}
 basic_image_surface(filesystem::path f, io2d::image_file_format i, io2d::format fmt);
 basic_image_surface(filesystem::path f, io2d::image_file_format i, io2d::format fmt,
-  error_code& ec) noexcept;
+  @\stdqualifier{}@error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -174,7 +174,7 @@ Any error that could result from trying to access \tcode{f}, open \tcode{f} for 
 \indexlibrarymember{save}{basic_image_surface}%
 \begin{itemdecl}
 void save(filesystem::path p, image_file_format i);
-void save(filesystem::path p, image_file_format i, error_code& ec) noexcept;
+void save(filesystem::path p, image_file_format i, @\stdqualifier{}@error_code& ec) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
