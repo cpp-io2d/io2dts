@@ -14,10 +14,10 @@ The collection of \tcode{gradient_stop} objects contribute to defining a brush w
 A linear gradient is a type of gradient.
 
 \pnum
-A linear gradient has a \term{begin point} and an \term{end point}, each of which are objects of type \tcode{basic_point_2d}.
+A linear gradient has a \term{begin point} and an \term{end point}, each of which are objects of type \tcode{basic_point_2d<\graphicsmathtemplparamnospace{}>}.
 
 \pnum
-A linear gradient for which the distance between its begin point and its end point is <TODO>\tcode{basic_point_2d::zero()} is a \term{degenerate linear gradient}.
+A linear gradient for which the distance between its begin point and its end point is \tcode{0} is a \term{degenerate linear gradient}.
 
 \pnum
 All attempts to sample from a a degenerate linear gradient return the color \tcode{rgba_color::transparent_black}. The remainder of \ref{\iotwod.gradients} is inapplicable to degenerate linear gradients.
@@ -33,7 +33,7 @@ Gradient stop offset values in the range \crange{0.0f}{1.0f} linearly correspond
 
 \pnum
 \begin{example}
-Given a linear gradient with a begin point of <TODO>\tcode{basic_point_2d(0.0f, 0.0f)} and an end point of <TODO>\tcode{basic_point_2d(10.0f, 5.0f)}, a gradient stop offset value of 0.6f would correspond to the point <TODO>\tcode{basic_point_2d(6.0f, 3.0f)}.
+Given a linear gradient with a begin point of \tcode{basic_point_2d<\graphicsmathtemplparamnospace{}>(0.0f, 0.0f)} and an end point of \tcode{basic_point_2d<\graphicsmathtemplparamnospace{}>(10.0f, 5.0f)}, a gradient stop offset value of 0.6f would correspond to the point \tcode{basic_point_2d<\graphicsmathtemplparamnospace{}>(6.0f, 3.0f)}.
 \end{example}
 
 \pnum
@@ -59,14 +59,14 @@ To determine the offset value of a point $p$ for a linear gradient, perform the 
 A radial gradient is a type of gradient.
 
 \pnum
-A radial gradient has a \term{start circle} and an \term{end circle}, each of which is defined by a \tcode{basic_circle} object.
+A radial gradient has a \term{start circle} and an \term{end circle}, each of which is defined by a \tcode{basic_circle<\graphicsmathtemplparamnospace{}>} object.
 
 \pnum
 A radial gradient is a \term{degenerate radial gradient} if:
 \begin{itemize}
 \item its start circle has a negative radius; or,
 \item its end circle has a negative radius; or,
-\item the distance between the center point of its start circle and the center point of its end circle is <TODO>\tcode{basic_point_2d::zero()}; or,
+\item the distance between the center point of its start circle and the center point of its end circle is \tcode{0}; or,
 \item its start circle has a radius of \tcode{0.0f} and its end circle has a radius of \tcode{0.0f}.
 \end{itemize}
 
@@ -92,7 +92,7 @@ where $o$ is a gradient stop offset value.
 The range of potential values for $o$ shall be determined by the \term{wrap mode} (\ref{\iotwod.brushes.general}):
 \begin{itemize}
 \item For \tcode{wrap_mode::none}, the range of potential values for $o$ is \crange{0}{1}.
-\item For all other \tcode{wrap_mode} values, the range of potential values for $o$ is\\ $[$~\tcode{numeric_limits<float>::lowest(),numeric_limits<float>::max()}~$]$.
+\item For all other \tcode{wrap_mode} values, the range of potential values for $o$ is\\ $[$~\tcode{\stdqualifier{}numeric_limits<float>::lowest(),\stdqualifier{}numeric_limits<float>::max()}~$]$.
 \end{itemize}
 
 \pnum
