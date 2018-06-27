@@ -5,13 +5,13 @@
 
 \pnum
 \indexlibrary{\idxcode{rgba_color}}%
-The class \tcode{rgba_color} describes a four channel color in premultiplied format.
+The class \tcode{rgba_color} describes a four channel color using the RGBA color model.
 
 \pnum
-There are three color channels, red, green, and blue, each of which is a \tcode{float}.
+There are three color channels, red, green, and blue, each of which is a \tcode{float} value.
 
 \pnum
-There is also an alpha channel, which is a \tcode{float}.
+There is also an alpha channel, which is a \tcode{float} value.
 
 \pnum
 Legal values for each channel are in the range \crange{0.0f}{1.0f}.
@@ -253,11 +253,11 @@ constexpr rgba_color(T r, T g, T b, T a = static_cast<T>(255)) noexcept;
 
 \pnum
 \effects
-Constructs an object of type \tcode{rgba_color}. The alpha channel is \tcode{a / 255.0F}. The red channel is \tcode{r / 255.0F * a / 255.0F }. The green channel is \tcode{g / 255.0F * a / 255.0F }. The blue channel is \tcode{b / 255.0F * a / 255.0F }.
+Constructs an object of type \tcode{rgba_color}. The red channel is \tcode{r / 255.0f}. The green channel is \tcode{g / 255.0f}. The blue channel is \tcode{b / 255.0f}. The alpha channel is \tcode{a / 255.0f}.
 
 \pnum
 \remarks
-This constructor shall not participate in overload resolution unless \tcode{is_integral_v<T>} is \tcode{true}.
+This constructor shall not participate in overload resolution unless \tcode{\stdqualifier{}is_integral_v<T>} is \tcode{true}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{rgba_color}!constructor}%
@@ -272,11 +272,11 @@ constexpr rgba_color(U r, U g, U b, U a = static_cast<U>(1.0f)) noexcept;
 
 \pnum
 \effects
-Constructs an object of type \tcode{rgba_color}. The alpha channel is {a}. The red channel is \tcode{r * a}. The green channel is \tcode{g * a}. The blue channel is \tcode{b * a}.
+Constructs an object of type \tcode{rgba_color}. The red channel is \tcode{static_cast<float>(r)}. The green channel is \tcode{static_cast<float>(g)}. The blue channel is \tcode{static_cast<float>(b)}. The alpha channel is \tcode{static_cast<float>(a)}
 
 \pnum
 \remarks
-This constructor shall not participate in overload resolution unless \tcode{is_floating_point_v<U>} is \tcode{true}.
+This constructor shall not participate in overload resolution unless \tcode{\stdqualifier{}is_floating_point_v<U>} is \tcode{true}.
 \end{itemdescr}
 
 
@@ -294,11 +294,11 @@ constexpr void r(T val) noexcept;
 
 \pnum
 \effects
-The red channel is \tcode{val / 255.0F * a()}.
+The red channel is \tcode{val / 255.0f}.
 
 \pnum
 \remarks
-This function shall not participate in overload resolution unless \tcode{is_integral_v<T>} is \tcode{true}.
+This function shall not participate in overload resolution unless \tcode{\stdqualifier{}is_integral_v<T>} is \tcode{true}.
 \end{itemdescr}
 
 \indexlibrarymember{r}{rgba_color}%
@@ -313,11 +313,11 @@ constexpr void r(U val) noexcept;
 
 \pnum
 \effects
-The red channel is \tcode{val * a()}.
+The red channel is \tcode{static_cast<float>(val)}.
 
 \pnum
 \remarks
-This function shall not participate in overload resolution unless \tcode{is_floating_point_v<U>} is \tcode{true}.
+This function shall not participate in overload resolution unless \tcode{\stdqualifier{}is_floating_point_v<U>} is \tcode{true}.
 \end{itemdescr}
 
 \indexlibrarymember{g}{rgba_color}%
@@ -333,11 +333,11 @@ constexpr void g(T val) noexcept;
 
 \pnum
 \effects
-The green channel is \tcode{val / 255.0F * a()}.
+The green channel is \tcode{val / 255.0f}.
 
 \pnum
 \remarks
-This function shall not participate in overload resolution unless \tcode{is_integral_v<T>} is \tcode{true}.
+This function shall not participate in overload resolution unless \tcode{\stdqualifier{}is_integral_v<T>} is \tcode{true}.
 \end{itemdescr}
 
 \indexlibrarymember{g}{rgba_color}%
@@ -352,11 +352,11 @@ constexpr void g(U val) noexcept;
 
 \pnum
 \effects
-The green channel is \tcode{val * a()}.
+The green channel is \tcode{static_cast<float>(val)}.
 
 \pnum
 \remarks
-This function shall not participate in overload resolution unless \tcode{is_floating_point_v<U>} is \tcode{true}.
+This function shall not participate in overload resolution unless \tcode{\stdqualifier{}is_floating_point_v<U>} is \tcode{true}.
 \end{itemdescr}
 
 \indexlibrarymember{b}{rgba_color}%
@@ -371,11 +371,11 @@ constexpr void b(T val) noexcept;
 
 \pnum
 \effects
-The blue channel is \tcode{val / 255.0F * a()}.
+The blue channel is \tcode{val / 255.0f}.
 
 \pnum
 \remarks
-This function shall not participate in overload resolution unless \tcode{is_integral_v<T>} is \tcode{true}.
+This function shall not participate in overload resolution unless \tcode{\stdqualifier{}is_integral_v<T>} is \tcode{true}.
 \end{itemdescr}
 
 \indexlibrarymember{b}{rgba_color}%
@@ -390,11 +390,11 @@ constexpr void b(U val) noexcept;
 
 \pnum
 \effects
-The blue channel is \tcode{val * a()}.
+The blue channel is \tcode{static_cast<float>(val)}.
 
 \pnum
 \remarks
-This function shall not participate in overload resolution unless \tcode{is_floating_point_v<U>} is \tcode{true}.
+This function shall not participate in overload resolution unless \tcode{\stdqualifier{}is_floating_point_v<U>} is \tcode{true}.
 \end{itemdescr}
 
 \indexlibrarymember{a}{rgba_color}%
@@ -407,19 +407,22 @@ constexpr void a(T val) noexcept;
 \requires
 \tcode{val >= 0} and \tcode{val <= 255}.
 
+%\pnum
+%\effects
+%If \tcode{a() == 0.0f} the alpha channel is \tcode{val / 255.0f}, otherwise:
+%\begin{enumerate}
+%\item The red channel is set to \tcode{(r() / a()) * val / 255.0f;}
+%\item The green channel is set to \tcode{(g() / a()) * val / 255.0f;}
+%\item The blue channel is set to \tcode{(b() / a()) * val / 255.0f;}
+%\item The alpha channel is set to \tcode{val / 255.0f}.
+%\end{enumerate}
 \pnum
 \effects
-If \tcode{a() == 0.0f} the alpha channel is \tcode{val / 255.0F}, otherwise:
-\begin{enumerate}
-\item The red channel is set to \tcode{(r() / a()) * val / 255.0F;}
-\item The green channel is set to \tcode{(g() / a()) * val / 255.0F;}
-\item The blue channel is set to \tcode{(b() / a()) * val / 255.0F;}
-\item The alpha channel is set to \tcode{val / 255.0F}.
-\end{enumerate}
+The alpha channel is \tcode{val / 255.0f}.
 
 \pnum
 \remarks
-This function shall not participate in overload resolution unless \tcode{is_integral_v<T>} is \tcode{true}.
+This function shall not participate in overload resolution unless \tcode{\stdqualifier{}is_integral_v<T>} is \tcode{true}.
 \end{itemdescr}
 
 \indexlibrarymember{a}{rgba_color}%
@@ -432,19 +435,22 @@ constexpr void a(U val) noexcept;
 \requires
 \tcode{val >= 0.0f} and \tcode{val <= 1.0f}.
 
+%\pnum
+%\effects
+%If \tcode{a() == 0.0f} the alpha channel is \tcode{val}, otherwise:
+%\begin{enumerate}
+%\item The red channel is set to \tcode{(r() / a()) * val;}
+%\item The green channel is set to \tcode{(g() / a()) * val;}
+%\item The blue channel is set to \tcode{(b() / a()) * val;}
+%\item The alpha channel is \tcode{val}.
+%\end{enumerate}
 \pnum
 \effects
-If \tcode{a() == 0.0f} the alpha channel is \tcode{val}, otherwise:
-\begin{enumerate}
-\item The red channel is set to \tcode{(r() / a()) * val;}
-\item The green channel is set to \tcode{(g() / a()) * val;}
-\item The blue channel is set to \tcode{(b() / a()) * val;}
-\item The alpha channel is \tcode{val}.
-\end{enumerate}
+The alpha channel is \tcode{static_cast<float>(val)}.
 
 \pnum
 \remarks
-This function shall not participate in overload resolution unless \tcode{is_floating_point_v<U>} is \tcode{true}.
+This function shall not participate in overload resolution unless \tcode{\stdqualifier{}is_floating_point_v<U>} is \tcode{true}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.rgbacolor.observers]{\tcode{rgba_color} observers}
@@ -492,7 +498,7 @@ The alpha channel.
 \rSec1 [\iotwod.rgbacolor.statics] {\tcode{rgba_color} static members}
 
 \pnum
-The \tcode{alpha} value of all of the predefined \tcode{rgba_color} static member object in Table~\ref{tab:\iotwod.rgbacolor.members.values} is \tcode{1.0F} except for \tcode{transparent_black}, which has an \tcode{alpha} value of \tcode{0.0F}.
+The \tcode{alpha} value of all of the predefined \tcode{rgba_color} static member object in Table~\ref{tab:\iotwod.rgbacolor.members.values} is \tcode{1.0f} except for \tcode{transparent_black}, which has an \tcode{alpha} value of \tcode{0.0f}.
 
 \begin{libiotwodtab4}
  {\tcode{rgba_color} static members values}
@@ -1268,23 +1274,23 @@ constexpr rgba_color& operator*=(T rhs) noexcept;
 
 \pnum
 \effects
-\tcode{r(\stdqualifier{}min(r() * rhs / 255.0F, 1.0F))}.
+\tcode{r(\stdqualifier{}min(r() * rhs / 255.0f, 1.0f))}.
 
 \pnum
-\tcode{g(\stdqualifier{}min(g() * rhs / 255.0F, 1.0F))}.
+\tcode{g(\stdqualifier{}min(g() * rhs / 255.0f, 1.0f))}.
 
 \pnum
-\tcode{b(\stdqualifier{}min(b() * rhs / 255.0F, 1.0F))}.
+\tcode{b(\stdqualifier{}min(b() * rhs / 255.0f, 1.0f))}.
 
 \pnum
-\tcode{a(\stdqualifier{}min(a() * rhs / 255.0F, 1.0F))}.
+\tcode{a(\stdqualifier{}min(a() * rhs / 255.0f, 1.0f))}.
 
 \returns
 \tcode{*this}.
 
 \pnum
 \remarks
-This function shall not participate in overload resolution unless \tcode{is_integral_v<T>} is \tcode{true}.
+This function shall not participate in overload resolution unless \tcode{\stdqualifier{}is_integral_v<T>} is \tcode{true}.
 \end{itemdescr}
 
 \indexlibrarymember{operator*=}{rgba_color}%
@@ -1295,27 +1301,27 @@ constexpr rgba_color& operator*=(U rhs) noexcept;
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{rhs >= 0.0F} and \tcode{rhs <= 1.0F}.
+\tcode{rhs >= 0.0f} and \tcode{rhs <= 1.0f}.
 
 \pnum
 \effects
-\tcode{r(\stdqualifier{}min(r() * rhs, 1.0F))}.
+\tcode{r(\stdqualifier{}min(r() * static_cast<float>(rhs), 1.0f))}.
 
 \pnum
-\tcode{g(\stdqualifier{}min(g() * rhs, 1.0F))}.
+\tcode{g(\stdqualifier{}min(g() * static_cast<float>(rhs), 1.0f))}.
 
 \pnum
-\tcode{b(\stdqualifier{}min(b() * rhs, 1.0F))}.
+\tcode{b(\stdqualifier{}min(b() * static_cast<float>(rhs), 1.0f))}.
 
 \pnum
-\tcode{a(\stdqualifier{}min(a() * rhs, 1.0F))}.
+\tcode{a(\stdqualifier{}min(a() * static_cast<float>(rhs), 1.0f))}.
 
 \returns
 \tcode{*this}.
 
 \pnum
 \remarks
-This function shall not participate in overload resolution unless \tcode{is_floating_point_v<T>} is \tcode{true}.
+This function shall not participate in overload resolution unless \tcode{\stdqualifier{}is_floating_point_v<T>} is \tcode{true}.
 \end{itemdescr}
 
 \indexlibrarymember{operator==}{rgba_color}%
@@ -1345,15 +1351,15 @@ constexpr rgba_color operator*(const rgba_color& lhs, T rhs) noexcept;
 \pnum
 \returns
 \begin{codeblock}
-rgba_color(@\stdqualifier{}@min(lhs.r() * rhs / 255.0F, 1.0F), 
-  @\stdqualifier{}@min(lhs.g() * rhs / 255.0F, 1.0F),
-  @\stdqualifier{}@min(lhs.b() * rhs / 255.0F, 1.0F), 
-  @\stdqualifier{}@min(lhs.a() * rhs / 255.0F, 1.0F))
+rgba_color(@\stdqualifier{}@min(lhs.r() * rhs / 255.0f, 1.0f), 
+  @\stdqualifier{}@min(lhs.g() * rhs / 255.0f, 1.0f),
+  @\stdqualifier{}@min(lhs.b() * rhs / 255.0f, 1.0f), 
+  @\stdqualifier{}@min(lhs.a() * rhs / 255.0f, 1.0f))
 \end{codeblock}
 
 \pnum
 \remarks
-This function shall not participate in overload resolution unless \tcode{is_integral_v<T>} is \tcode{true}.
+This function shall not participate in overload resolution unless \tcode{\stdqualifier{}is_integral_v<T>} is \tcode{true}.
 \end{itemdescr}
 
 \indexlibrarymember{operator*}{rgba_color}%
@@ -1364,20 +1370,20 @@ constexpr rgba_color& operator*(const rgba_color& lhs, U rhs) noexcept;
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{rhs >= 0.0F} and \tcode{rhs <= 1.0F}.
+\tcode{rhs >= 0.0f} and \tcode{rhs <= 1.0f}.
 
 \pnum
 \returns
 \begin{codeblock}
-rgba_color(@\stdqualifier{}@min(lhs.r() * rhs, 1.0F), 
-  @\stdqualifier{}@min(lhs.g() * rhs, 1.0F),
-  @\stdqualifier{}@min(lhs.b() * rhs, 1.0F),
-  @\stdqualifier{}@min(lhs.a() * rhs, 1.0F))
+rgba_color(@\stdqualifier{}@min(lhs.r() * static_cast<float>(rhs), 1.0f), 
+  @\stdqualifier{}@min(lhs.g() * static_cast<float>(rhs), 1.0f),
+  @\stdqualifier{}@min(lhs.b() * static_cast<float>(rhs), 1.0f),
+  @\stdqualifier{}@min(lhs.a() * static_cast<float>(rhs), 1.0f))
 \end{codeblock}
 
 \pnum
 \remarks
-This function shall not participate in overload resolution unless \tcode{is_floating_point_v<U>} is \tcode{true}.
+This function shall not participate in overload resolution unless \tcode{\stdqualifier{}is_floating_point_v<U>} is \tcode{true}.
 \end{itemdescr}
 
 \indexlibrarymember{operator*}{rgba_color}%
@@ -1393,15 +1399,15 @@ constexpr rgba_color operator*(T lhs, const rgba_color& rhs) noexcept;
 \pnum
 \returns
 \begin{codeblock}
-rgba_color(@\stdqualifier{}@min(lhs * rhs.r() / 255.0F, 1.0F), 
-  @\stdqualifier{}@min(lhs * rhs.g() / 255.0F, 1.0F),
-  @\stdqualifier{}@min(lhs * rhs.b() / 255.0F, 1.0F),
-  @\stdqualifier{}@min(lhs * rhs.a() / 255.0F, 1.0F))
+rgba_color(@\stdqualifier{}@min(lhs * rhs.r() / 255.0f, 1.0f), 
+  @\stdqualifier{}@min(lhs * rhs.g() / 255.0f, 1.0f),
+  @\stdqualifier{}@min(lhs * rhs.b() / 255.0f, 1.0f),
+  @\stdqualifier{}@min(lhs * rhs.a() / 255.0f, 1.0f))
 \end{codeblock}
 
 \pnum
 \remarks
-This function shall not participate in overload resolution unless \tcode{is_integral_v<T>} is \tcode{true}.
+This function shall not participate in overload resolution unless \tcode{\stdqualifier{}is_integral_v<T>} is \tcode{true}.
 \end{itemdescr}
 
 \indexlibrarymember{operator*}{rgba_color}%
@@ -1412,18 +1418,18 @@ constexpr rgba_color& operator*(U lhs, const rgba_color& rhs) noexcept;
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{lhs >= 0.0F} and \tcode{lhs <= 1.0F}.
+\tcode{lhs >= 0.0f} and \tcode{lhs <= 1.0f}.
 
 \pnum
 \returns
 \begin{codeblock}
-rgba_color(@\stdqualifier{}@min(lhs * rhs.r(), 1.0F),
-  @\stdqualifier{}@min(lhs * rhs.g(), 1.0F),
-  @\stdqualifier{}@min(lhs * rhs.b(), 1.0F),
-  @\stdqualifier{}@min(lhs * rhs.a(), 1.0F))
+rgba_color(@\stdqualifier{}@min(static_cast<float>(lhs) * rhs.r(), 1.0f),
+  @\stdqualifier{}@min(static_cast<float>(lhs) * rhs.g(), 1.0f),
+  @\stdqualifier{}@min(static_cast<float>(lhs) * rhs.b(), 1.0f),
+  @\stdqualifier{}@min(static_cast<float>(lhs) * rhs.a(), 1.0f))
 \end{codeblock}
 
 \pnum
 \remarks
-This function shall not participate in overload resolution unless \tcode{is_floating_point_v<U>} is \tcode{true}.
+This function shall not participate in overload resolution unless \tcode{\stdqualifier{}is_floating_point_v<U>} is \tcode{true}.
 \end{itemdescr}
