@@ -53,7 +53,7 @@ Returns an object \tcode{b}.	&
 \postconditions
 \tcode{b} is a linear gradient brush, its begin point is \tcode{be}, its end point is \tcode{en}, its gradient stops are formed using the sequential series of \tcode{gradient_stop} objects beginning at \tcode{first} and ending at \tcode{last - 1} (See \ref{\iotwod.gradients.linear} and \ref{\iotwod.gradients.sampling}),
 and \tcode{X::brushes::get_brush_type(b) == brush_type::linear}.	\\ \rowsep
-\tcode{create_brush(const basic_point_2d<M>\& be, const basic_point_2d<M>\& en, initializer_list<gradient_stop> il)}	&
+\tcode{create_brush(const basic_point_2d<M>\& be, const basic_point_2d<M>\& en, \stdqualifier{}initializer_list<gradient_stop> il)}	&
 \tcode{brush_data_type}	&
 Returns an object \tcode{b}.	&
 \postconditions
@@ -66,7 +66,7 @@ Returns an object \tcode{b}.	&
 \postconditions
 \tcode{b} is a radial gradient brush, its start circle is \tcode{be}, its end circle is \tcode{en}, its gradient stops are formed using the sequential series of \tcode{gradient_stop} objects beginning at \tcode{first} and ending at \tcode{last - 1} (See \ref{\iotwod.gradients.radial} and \ref{\iotwod.gradients.sampling}),
 and \tcode{X::brushes::get_brush_type(b) == brush_type::radial}.	\\ \rowsep
-\tcode{create_brush(const basic_circle<M>\& be, const basic_circle<M>\& en, initializer_list<gradient_stop> il)}	&
+\tcode{create_brush(const basic_circle<M>\& be, const basic_circle<M>\& en, \stdqualifier{}initializer_list<gradient_stop> il)}	&
 \tcode{brush_data_type}	&
 Returns an object \tcode{b}.	&
 \postconditions

@@ -28,7 +28,7 @@ namespace @\fullnamespace{}@ {
     basic_dashes() noexcept;
     template <class InputIterator>
     basic_dashes(float o, InputIterator first, InputIterator last);
-    basic_dashes(float o, initializer_list<float> il);
+    basic_dashes(float o, @\stdqualifier{}@initializer_list<float> il);
 
     // \ref{\iotwod.dashes.observers}, observers:
     const data_type& data() const noexcept;
@@ -92,7 +92,7 @@ The offset is \tcode{o} and the pattern is the sequential list of value beginnin
 
 \indexlibrary{\idxcode{basic_dashes}!constructor}%
 \begin{itemdecl}
-basic_dashes(float o, initializer_list<float> il);
+basic_dashes(float o, @\stdqualifier{}@initializer_list<float> il);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

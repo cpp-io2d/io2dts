@@ -252,7 +252,7 @@ X::surface_state_props::create_clip_props(InputIterator first, InputIterator las
 An object \tcode{c}.	&
 \postconditions
 \tcode{c.c == IP(first, last)} and \tcode{c.fr == fr}.	\\ \rowsep
-\tcode{X::surface_state_props::create_clip_props(initializer_list<FI> il, fill_rule fr)}	&
+\tcode{X::surface_state_props::create_clip_props(\stdqualifier{}initializer_list<FI> il, fill_rule fr)}	&
 \tcode{CL}	&
 \returns
 An object \tcode{c}.	&
@@ -288,7 +288,7 @@ X::surface_state_props::clip(CL\& c, InputIterator first, InputIterator last)}	&
 	&
 \postconditions
 \tcode{c.c == IP(first, last)}.	\\ \rowsep
-\tcode{X::surface_state_props::clip(CL\& c, initializer_list<FI> il)}	&
+\tcode{X::surface_state_props::clip(CL\& c, \stdqualifier{}initializer_list<FI> il)}	&
 \tcode{void}	&
 	&
 \postconditions
@@ -466,7 +466,7 @@ X::surface_state_props::create_dashes(float o, InputIterator first, InputIterato
 An object \tcode{d}.	&
 \postconditions
 \tcode{d.o == o} and \tcode{d.p == vector<float>(first, last)}.	\\ \rowsep
-\tcode{X::surface_state_props::create_dashes(float o, initializer_list<float> il)}	&
+\tcode{X::surface_state_props::create_dashes(float o, \stdqualifier{}initializer_list<float> il)}	&
 \tcode{DA}	&
 \returns
 An object \tcode{d}.	&

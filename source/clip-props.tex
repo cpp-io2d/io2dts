@@ -124,7 +124,7 @@ The fill rule is \tcode{fr}.
 \begin{itemdecl}
 template <class Allocator>
 explicit basic_clip_props(
-  initializer_list<basic_figure_items<GraphicsSurfaces>::figure_item> il,
+  @\stdqualifier{}@initializer_list<basic_figure_items<GraphicsSurfaces>::figure_item> il,
   io2d::fill_rule fr = io2d::fill_rule::winding);
 \end{itemdecl}
 \begin{itemdescr}
@@ -260,7 +260,7 @@ The clip area is \tcode{optional<basic_interpreted_path<GraphicsSurfaces>>(basic
 \indexlibrarymember{clip}{basic_clip_props}%
 \begin{itemdecl}
 void clip(
-  const initializer_list<typename 
+  const @\stdqualifier{}@initializer_list<typename 
   basic_figure_items<GraphicsSurfaces>::figure_item> il);
 \end{itemdecl}
 \begin{itemdescr}

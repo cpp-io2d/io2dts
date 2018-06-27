@@ -24,7 +24,7 @@ namespace @\fullnamespace{}@ {
       const basic_path_builder<GraphicsSurfaces, Allocator>& pb);
     template <class InputIterator>
     basic_interpreted_path(InputIterator first, InputIterator last);
-    explicit basic_interpreted_path(initializer_list<typename
+    explicit basic_interpreted_path(@\stdqualifier{}@initializer_list<typename
       basic_figure_items<GraphicsSurfaces>::figure_item>> il);
   };
 }
@@ -69,7 +69,7 @@ The contained path is as-if it was the result of interpreting a path containing 
 
 \indexlibrary{\idxcode{basic_interpreted_path}!constructor}%
 \begin{itemdecl}
-explicit basic_interpreted_path(initializer_list<typename
+explicit basic_interpreted_path(@\stdqualifier{}@initializer_list<typename
   basic_figure_items<GraphicsSurfaces>::figure_item> il);
 \end{itemdecl}
 \begin{itemdescr}

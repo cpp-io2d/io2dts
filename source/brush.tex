@@ -40,14 +40,14 @@ namespace @\fullnamespace{}@ {
       InputIterator first, InputIterator last);
     basic_brush(const basic_point_2d<graphics_math_type>& begin,
       const basic_point_2d<graphics_math_type>& end,
-      initializer_list<gradient_stop> il);
+      @\stdqualifier{}@initializer_list<gradient_stop> il);
     template <class InputIterator>
     basic_brush(const basic_circle<graphics_math_type>& start,
       const basic_circle<graphics_math_type>& end,
       InputIterator first, InputIterator last);
     basic_brush(const basic_circle<graphics_math_type>& start,
       const basic_circle<graphics_math_type>& end,
-      initializer_list<gradient_stop> il);
+      @\stdqualifier{}@initializer_list<gradient_stop> il);
     basic_brush(basic_image_surface<GraphicsSurfaces>&& img);
 
 	// \ref{\iotwod.brush.acc}, accessors:
@@ -145,7 +145,7 @@ Sampling from this brush produces the results specified in \ref{\iotwod.brush.sa
 \begin{itemdecl}
 basic_brush(const basic_point_2d<graphics_math_type>& begin,
   const basic_point_2d<graphics_math_type>& end,
-  initializer_list<gradient_stop> il);
+  @\stdqualifier{}@initializer_list<gradient_stop> il);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -186,7 +186,7 @@ Sampling from this brush produces the results specified in \ref{\iotwod.brush.sa
 \begin{itemdecl}
 basic_brush(const basic_circle<graphics_math_type>& start,
   const basic_circle<graphics_math_type>& end,
-  initializer_list<gradient_stop> il);
+  @\stdqualifier{}@initializer_list<gradient_stop> il);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
