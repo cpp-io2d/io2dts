@@ -33,7 +33,7 @@ namespace @\fullnamespace{}@ {
     using data_type = typename GraphicsSurfaces::brushes::brush_data_type;
 
     // \ref{\iotwod.brush.ctor}, constructors:
-    explicit basic_brush(const rgba_color& c);
+    explicit basic_brush(rgba_color c);
     template <class InputIterator>
     basic_brush(const basic_point_2d<graphics_math_type>& begin,
       const basic_point_2d<graphics_math_type>& end,
@@ -101,7 +101,7 @@ When \tcode{b} is a surface brush, when sampling point \tcode{pt} from \tcode{b}
 
 \indexlibrary{\idxcode{basic_brush}!constructor}%
 \begin{itemdecl}
-explicit basic_brush(const rgba_color& c);
+explicit basic_brush(rgba_color c);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

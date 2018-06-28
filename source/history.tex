@@ -10,6 +10,9 @@ Formatting and typo fixes.
 \pnum
 \tcode{rgba_color} is no longer premultiplied. Users can apply premultiplication themselves if they wish. This change allowed the setters to directly set a value rather than be modified by the alpha value, or in the case of the alpha setter modifying all other values.
 
+\pnum
+The solid color \tcode{basic_brush} ctor now takes its \tcode{rgba_color} argument by value rather than reference.
+
 \rSec1 [\iotwod.revisionhistory.r8] {Revision 8}
 
 \pnum
