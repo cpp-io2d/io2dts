@@ -1,9 +1,14 @@
 %!TEX root = io2d.tex
 \rSec0 [\iotwod.pathgroup] {Class \tcode{basic_interpreted_path}}
 
+\rSec1 [\iotwod.pathgroup.intro] {Overview}
+
 \pnum
 \indexlibrary{\idxcode{basic_interpreted_path}}%
 The class \tcode{basic_interpreted_path} contains the data that result from interpreting (\ref{\iotwod.paths.interpretation}) a sequence of \tcode{figure_items::figure_item} objects.
+
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::surface_state_props::interpreted_path_data_type}. It is accessible using the \tcode{data} member function.
 
 \pnum
 A \tcode{basic_interpreted_path} object is used by most rendering and composing operations.
@@ -12,25 +17,31 @@ A \tcode{basic_interpreted_path} object is used by most rendering and composing 
 
 \begin{codeblock}
 namespace @\fullnamespace{}@ {
-  template <class GraphicsSurfaces>
+  template <class @\graphicssurfacestemplparamnospace{}@>
   class basic_interpreted_path {
   public:
-    // \ref{\iotwod.pathgroup.cons}, construct:
+    using data_type = typename 
+      @\graphicssurfacestemplparamnospace{}@::surface_state_props::interpreted_path_data_type;
+      
+    // \ref{\iotwod.pathgroup.ctor}, construct:
     basic_interpreted_path() noexcept;
     explicit basic_interpreted_path(
-      const basic_bounding_box<GraphicsSurfaces>& bb);
+      const basic_bounding_box<@\graphicsmathtemplparamnospace{}@>& bb);
     template <class Allocator>
     explicit basic_interpreted_path(
-      const basic_path_builder<GraphicsSurfaces, Allocator>& pb);
+      const basic_path_builder<@\graphicssurfacestemplparamnospace{}@, Allocator>& pb);
     template <class InputIterator>
     basic_interpreted_path(InputIterator first, InputIterator last);
     explicit basic_interpreted_path(@\stdqualifier{}@initializer_list<typename
-      basic_figure_items<GraphicsSurfaces>::figure_item>> il);
+      basic_figure_items<@\graphicssurfacestemplparamnospace{}@>::figure_item>> il);    
+    
+    // \ref{\iotwod.clipprops.acc}, accessors:
+    const data_type& data() const noexcept;
   };
 }
 \end{codeblock}
 
-\rSec1 [\iotwod.pathgroup.cons] {\tcode{basic_interpreted_path} constructors}
+\rSec1 [\iotwod.pathgroup.ctor] {\tcode{basic_interpreted_path} constructors}
 
 \indexlibrary{\idxcode{basic_interpreted_path}!constructor}%
 \begin{itemdecl}
@@ -40,6 +51,20 @@ basic_interpreted_path() noexcept;
 \pnum
 \effects
 Constructs a \tcode{basic_interpreted_path} that contains an empty path.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{basic_interpreted_path}!constructor}%
+\begin{itemdecl}
+explicit basic_interpreted_path(const basic_bounding_box<@\graphicsmathtemplparamnospace{}@>& bb);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{basic_interpreted_path}.
+
+\pnum
+\postconditions
+\tcode{data() == \graphicssurfacestemplparamnospace{}::paths::create_interpreted_path(bb)}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{basic_interpreted_path}!constructor}%
@@ -78,3 +103,13 @@ explicit basic_interpreted_path(@\stdqualifier{}@initializer_list<typename
 <TODO>
 \end{itemdescr}
 
+\rSec1 [\iotwod.pathgroup.acc] {Accessors}
+
+\indexlibrarymember{data}{basic_interpreted_path}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{basic_interpreted_path} object's data object (See: \ref{\iotwod.pathgroup.intro}).
+\end{itemdescr}

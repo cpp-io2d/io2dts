@@ -69,14 +69,16 @@ In Table~\ref{tab:\iotwod.graphsurf.paths.requirementstab},
 \tcode{AN} denotes the type \tcode{X::paths::abs_new_figure_data_type},
 \tcode{AQ} denotes the type \tcode{X::paths::abs_quadratic_curve_data_type},
 \tcode{ARC} denotes the type \tcode{X::paths::arc_data_type},
+\tcode{BB} denotes the type \tcode{basic_bounding_box<G>},
+\tcode{FI} denotes the type \tcode{basic_figure_items<X>::figure_item},
 \tcode{IP} denotes the type \tcode{X::paths::interpreted_path_data_type},
 \tcode{RC} denotes the type \tcode{X::paths::rel_cubic_curve_data_type},
 \tcode{RL} denotes the type \tcode{X::paths::rel_line_data_type},
 \tcode{RM} denotes the type \tcode{X::paths::rel_matrix_data_type},
 \tcode{RN} denotes the type \tcode{X::paths::rel_new_figure_data_type},
 \tcode{RQ} denotes the type \tcode{X::paths::rel_quadratic_curve_data_type},
-\tcode{M} denotes the type \tcode{basic_matrix_2d<X::graphics_math_type}, and
-\tcode{P} denotes the type \tcode{basic_point_2d<X::graphics_math_type>}.
+\tcode{M} denotes the type \tcode{basic_matrix_2d<G}, and
+\tcode{P} denotes the type \tcode{basic_point_2d<G>}.
 
 \pnum
 In order to describe the observable effects of functions contained in Table~\ref{tab:\iotwod.graphsurf.paths.requirementstab}, Table~\ref{tab:\iotwod.graphsurf.paths.typememberdata} describes the types contained in \tcode{X} as-if they possessed certain member data. 
@@ -399,13 +401,26 @@ return spt + pt * lmtx;
 An object \tcode{ip}.	&
 \postconditions
 \tcode{ip} has zero figures (See: \ref{\iotwod.paths.interpretation})	\\ \rowsep
+\tcode{X::paths::create_interpreted_path(const BB\& bb)}	&
+\tcode{IP}	&
+\effects Equivalent to: \tcode{return create_interpreted_path({
+figureItem(\stdqualifier{}in_place_type<typename basic_figure_items<graphics_surfaces_type>::abs_new_figure>, bb.top_left()), 
+figureItem(\stdqualifier{}in_place_type<typename basic_figure_items<graphics_surfaces_type>::rel_line>, basic_point_2d<GraphicsMath>(bb.width(), 0.0f)), 
+figureItem(\stdqualifier{}in_place_type<typename basic_figure_items<graphics_surfaces_type>::rel_line>, basic_point_2d<GraphicsMath>(0.0f, bb.height())), 
+figureItem(\stdqualifier{}in_place_type<typename basic_figure_items<graphics_surfaces_type>::rel_line>, basic_point_2d<GraphicsMath>(-bb.width(), 0.0f)), 
+figureItem(\stdqualifier{}in_place_type<typename basic_figure_items<graphics_surfaces_type>::close_figure>) });}	&
+	\\ \rowsep
+\tcode{X::paths::create_interpreted_path(\stdqualifier{}initializer_list<FI> il)}	&
+\tcode{IP}	&
+\effects Equivalent to: \tcode{return create_interpreted_path(\stdqualifier{}begin(il), \stdqualifier{}end(il);}	&
+	\\ \rowsep
 \tcode{template <class ForwardIterator>\newline
 X::paths::create_interpreted_path<ForwardIterator first, ForwardIterator last}	&
 \tcode{IP}	&
 \returns
 An object \tcode{ip}.	&
 \postconditions
-\tcode{ip} contains a zero or more figure items as determined by evaluating the sequence of \tcode{figure_items::figure_item} objects beginning with \tcode{first} and ending with \tcode{last} in the manner described in \ref{\iotwod.paths.interpretation}.\newline
+\tcode{ip} contains a zero or more figure items as determined by evaluating the sequence of \tcode{FI} objects beginning with \tcode{first} and ending with \tcode{last} in the manner described in \ref{\iotwod.paths.interpretation}.\newline
 \remarks
 The internal data of the interpreted path should be in a form that is best suited to take advantage of the platform and environment targeted by \tcode{X}.	\\ \rowsep
 %%
