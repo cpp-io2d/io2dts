@@ -1,8 +1,104 @@
 %!TEX root = io2d.tex
 \addtocounter{chapter}{-1} % Make this Clause 0 instead of 1
-\rSec0[\iotwod.revisionhistory]{Revision history}
 
-\rSec1 [\iotwod.revisionhistory.r9] {Revision 9}
+\rSec0[\iotwod.intro]{Introduction}
+
+\rSec1[\iotwod.overview]{Background and rational}
+
+\rSec2[\iotwod.background]{Interactive I/O background}
+
+\pnum
+When \Cpp{} was first created, the dominant interactive I/O technology was a console. From its inception, \Cpp{} included the ability to interact with users via a console as part of its standard library. Programs that needed to interact with the user would send output information in the form of text to the user and receive input information in the form of text from the user.
+
+\pnum
+The implementation details necessary to provide this functionality varied from platform to platform, of course. The same was, and still is, true for other functionality that relies on interacting with the environment provided by the platform that the program runs on, e.g. file I/O. Compilers provided such functionality in ways that were unspecified. The only specification was of the API that a programmer used to access these features.
+
+\pnum
+Today, 2D computer graphics displays have replaced console I/O as the dominant interactive I/O technology. For example, writing a simple \tcode{cout << "Hello, world!";} statement doesn’t do anything useful on most tablets and smartphones. Even on PCs, console I/O is generally a legacy technology rather than the primary form of user interaction.
+
+\pnum
+Thus the absence of 2D computer graphics I/O in the standard library leaves standard \Cpp{} less useful and relevant than it was when it was created. In other areas, standard \Cpp{} has modernized, evolved, and continues to develop and improve as new features are added. As a result, standard \Cpp{} is a vibrant and highly relevant programming language. Except when it comes to providing programmers access to the current dominant interactive I/O technology.
+
+\pnum
+Standard \Cpp{} has lost the capability of providing access to the dominant interactive I/O technology, which it had provided when the language was created. The purpose of this \documenttypename{} is to rectify this. This is a complex subject matter. The design has undergone numerous reviews and revisions since it the initial proposal, N3888, in January 2014. Work on output is now substantially complete. Since the design of an input API is inherently reliant on the design of the output API, from the outset the authors decided to only pursue of the input API after the output API design was complete. This is why there is no proposed input API at this time.
+
+\rSec2[\iotwod.technologies]{Brief comparison of I/O technologies}
+
+\pnum
+For purposes of clarity, we will briefly touch on the differences between console I/O and 2D computer graphics I/O.
+
+\pnum
+Console I/O allows for the input and output of strings, whether as single characters or as multi-line constructs.
+
+\pnum
+For output purposes, a console is defined in terms of the number of characters it can display per horizontal line, e.g. 80, and the number of horizontal lines of characters, e.g. 24, that it can display. Its finest granularity is at the character level; in other words a programmer can, at most, control the output at the character level. The actual size of those characters on the console in terms of specific pixels is an implementation detail that is inaccessible to the programmer. Individual pixels are not addressable.
+
+\pnum
+For output purposes, a 2D computer graphics display is defined in terms of the number of pixels it can display per horizontal line, e.g. 1920, and the number of horizontal lines of pixels, e.g. 1080, that it can display, called its resolution. It is also defined by the number of bits per pixel, representing the amount of color information each pixel is capable of carrying and thus the amount of variation in color that can be displayed to the user.
+
+\pnum
+The display of characters on 2D computer graphics displays is usually accomplished using technologies that process those characters, transform them into pixels in a manner specified by fonts, and modify the appropriate pixels.
+
+\pnum
+Fonts describe characters in ideal representations and the process of transforming them into pixels is called rendering. Rendering converts the ideal representation into a representation composed of pixels. They are then rasterized, i.e. transformed from their rendered composition of pixels into pixels on the 2D graphics display such that they are sized appropriately based on the program's specification.
+
+\pnum
+Characters, by way of fonts, are not the only things that can be rendered. Any specification of an ideal representation of graphical data can be rendered into a composition of pixels and the result can then be rasterized. Because different displays have different resolutions, there doesn't need to be a one-to-one ratio of pixels between the rendered result and the rasterization of it. Non-exact rasterization can be, and often is, done, and the method for doing it is defined by any one of a number of algorithms, each of which produce outputs that depend on the values supplied for parameters that they use.
+
+\pnum
+From an input perspective, the lowest resolution for console input is a character. While lower resolutions are not inherently prohibited, because the lowest resolution of console output is a character, in practice this is also the lowest resolution of input to a console.
+
+\pnum
+For a 2D computer graphics display, the lowest resolution is a pixel on the display itself. This does not prohibit higher input resolutions, including characters and strings. It is in no way uncommon for a 2D computer graphics display to receive character or string input. It is simply a fact that such displays are virtually always designed to be capable of receiving input at a lower resolution than the character level if that is what the program requires.
+
+\rSec2[\iotwod.compgraphicshistory]{Computer graphics history}
+
+\pnum
+Computer graphics first appeared in the 1950s. The first displays were oscilloscopes which could be used to plot points and lines. Spacewar!, which was first released in 1962 for the DEC PDP-1, is widely recognized as the first computer game that was distributed to and played at multiple computer facilities.
+
+\pnum
+As computers became less exotic and computer time became less expensive, games and puzzles became a typical way for students to learn programming. The first commercial video game, Pong, was a TTL device which rendered a small number of lines and points to a CRT device.
+
+\pnum
+In 1974 the Evans and Sutherland frame buffer debuted which allowed the display of 512x512 pixel images. Although enormously expensive at \$15,000 (not adjusted for inflation), prices were driven down over time. This new technology allowed raster display to be incorporated into the nascent home-brew computers of the late 1970s.
+
+\pnum
+With the invention of VRAM in the mid-1980s frame buffers became significantly cheaper and as a result available pixel resolutions increased and color displays steadily replaced monochrome displays. Computer displays now frequently deliver resolutions exceeding 2 million pixels with 24 bits or more of color information.
+
+\pnum
+In the late 1980s, software programs started to rely on 2D graphics for intuitive feedback of information using spatial contexts on screens. The widespread introduction of home computers to the market made 2D graphics a familiar experience. Many of today’s programmers had their first experience of programming on these machines, learning to code by writing graphics demonstrations and simple games.
+
+\pnum
+During the 1990s graphics co-processors started to appear; these were add-in cards which provided additional computing power for performing vector calculations. They often contained their own separate RAM used for their own frame buffer to preserve locality in hardware. Over the past twenty years available resolutions have come to greatly exceed the typical resolution of a domestic television set.
+
+\pnum
+Rendering images has spawned a large field of academic study, advanced by Bresenham’s line drawing algorithm in 1965, and also by K. Vesprille’s dissertation on the B-Spline approximation form in 1975. As colour depths and available grey scales have increased, font rendering and anti-aliasing have become rich areas of investigation. There are entire conferences devoted to rendering, for example SIGGRAPH.
+
+\rSec2[\iotwod.cppcompgraphics]{\Cpp{} and computer graphics}
+
+\pnum
+Many \Cpp{} 2D graphics libraries have been released in the years since computer graphics have become common. Some are very feature-rich, requiring many hundreds of hours of study and use to master. Some support hardware acceleration using the graphics co-processors that have become ubiquitous in many devices. Some support only one OS or only one type of GPU.
+
+\pnum
+What these libraries do not provide is a standardized \Cpp{} API. The \Cpp{} Standard Library and the \Cpp{} Technical Specifications all provide standard \Cpp{} APIs. Some features, such as atomics, rely on the host environment and quality of implementation to determine their ability to work and their performance. The same will be true for 2D graphics. Unlike many other features being added to \Cpp{}, 2D graphics has a core set of functionality that has existed and has been in wide use for decades.
+
+\pnum
+Beginning with the PostScript language and continuing through to modern C and \Cpp libraries such as Skia, is the functionality of plotting points, drawing lines and curves, displaying bitmaps, and rendering text. This functionality has been the stable core of 2D graphics for nearly 40 years (since the advent of PostScript, if not before then). While the best methods of implementing it has changed over the years as computer hardware has evolved, the functionality itself has remained the stable core of 2D graphics; any other 2D graphics operations can be performed using it. As such there is no reason to be concerned about the future utility of a standard \Cpp{} API that embodies this functionality. 2D graphics is, in effect, a solved problem. Indeed, even the rendering of text is performed either by displaying bitmaps (using bitmap fonts) or by rendering points, lines, and curves (using text rendering descriptions such as OpenType fonts), such that text rendering, while sometimes considered a core part of 2D graphics functionality, is in fact a superset of the true core of 2D graphics. 
+
+\rSec2[\iotwod.goals]{Goals for the proposed TS}
+
+\pnum
+Get feedback from implementers regarding changes that could be made to allow them to provide better performance. This design decouples the front end user API and the back end implementation by using templates, thus mimicking a standard ABI as close as possible. Back end implementations will still need to provide builds that are compatible with each linker that they want to allow users to make use of. But the front end is able to be provided as non-compiled header files. In fact the reference implementation already provides a front end implementation that is licensed under terms that allow all its use by commercial and non-commercial implementations, such that there is no need for implementers to implement the front end unless they are restricted from doing so by policies they are required to follow.
+
+\pnum
+Get feedback from users regarding improvements in usability and requests for additional features. While the design has undergone numerous design reviews and revisions, feedback from the \Cpp{} community is crucial to ensuring that this API meets the needs of the community at large. As with any library functionality, there will be users who have needs that cannot be met except by an extremely targeted design meant for one or more specific environments. The goal here is to identify areas where a design change would broaden the \Cpp{} programming community's ability to use this API in real world products and to make it more usable for \Cpp{} programmers who would already be able to use it to meet their needs.
+
+\rSec1[\iotwod.revisionhistory]{Revision history}
+
+\rSec2 [\iotwod.revisionhistory.r9] {Revision 9}
+
+\pnum
+This Clause is now an Introduction clause as defined by ISO/IEC directives. It now includes informative information and commentary about the technical content of this \documenttypename{} and the reasons prompting its preparation. Much of it is drawn from information previously published in P0669R0, with revisions and expansions. This is a result of feedback from the San Diego 2018 conference where it was noted that it is advisable to include this sort of information directly in this proposal.
 
 \pnum
 Formatting and typo fixes.
@@ -13,13 +109,13 @@ Formatting and typo fixes.
 \pnum
 The solid color \tcode{basic_brush} ctor now takes its \tcode{rgba_color} argument by value rather than reference.
 
-\rSec1 [\iotwod.revisionhistory.r8] {Revision 8}
+\rSec2 [\iotwod.revisionhistory.r8] {Revision 8}
 
 \pnum
 Modified the revision 7 notes (\ref{\iotwod.revisionhistory.r7}) to denote trademarks where applicable, and to use the correct capitalization for the cairo graphics library. The contents of those notes is otherwise unchanged.
 
 \pnum
-Changed the Revision history \clause, to be \clause 0.
+Changed the Revision history \clause{}\, to be \clause{} 0.
 
 \pnum
 Added a new \clause, Graphics math (\ref{\iotwod.graphmath}), which defines the requirements of a type that conforms to the \graphicsmathtemplparam template parameter used by various classes.
@@ -28,7 +124,7 @@ Added a new \clause, Graphics math (\ref{\iotwod.graphmath}), which defines the 
 Updated the relevant class member functions in this proposal to define their effects to include calls to the appropriate \graphicsmathtemplparam functions. This completes the work, begun in P0267R7, of abstracting the implementation of the linear algebra and geometry classes, thereby allowing users to specify a preferred implementation of the mathematical functionality used in this proposal.
 
 \pnum
-Added a new \clause, Graphics surfaces (\ref{\iotwod.graphsurf}), which defines the requirements of a type that conforms to the \graphicssurfacestemplparam template parameter used by various classes.
+Added a new \clause{}, Graphics surfaces (\ref{\iotwod.graphsurf}), which defines the requirements of a type that conforms to the \graphicssurfacestemplparam template parameter used by various classes.
 
 \pnum
 Updated the relevant class member functions in this proposal to define their effects to include calls to the appropriate \graphicssurfacestemplparam functions. This completes the work, begun in P0267R7, of abstracting the implementation of the brush, paths, surface state, and surface classes, thereby allowing users to specify a preferred implementation of the functionality specified in this proposal.
@@ -114,7 +210,7 @@ New type \tcode{basic_fill_props} for parameters specific to the fill operation.
 \pnum
 Removed the \tcode{fill_rule} from \tcode{basic_brush_props} as it was only being used for fill operations.
 
-\rSec1 [\iotwod.revisionhistory.r7] {Revision 7}
+\rSec2 [\iotwod.revisionhistory.r7] {Revision 7}
 
 \pnum
 The significant difference between R7 and R6 is the abstraction of the implementation into separate classes. These classes provide math and rendering support. The linear algebra and geometry classes are templated over any appropriate math support class, while the path, brush and surface classes are templated over any appropriate rendering support class.
@@ -197,7 +293,7 @@ The \tcode{surface} class and the \tcode{mapped_surface} class have been withdra
 \pnum
 The reference implementation, including a software-only implementation of math and rendering support classes, is available at https://github.com/mikebmcl/P0267_RefImpl
 
-\rSec1 [\iotwod.revisionhistory.r6] {Revision 6}
+\rSec2 [\iotwod.revisionhistory.r6] {Revision 6}
 
 \pnum
 Presented to LEWG in Toronto, July 2017

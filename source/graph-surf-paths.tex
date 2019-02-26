@@ -364,8 +364,8 @@ An object \tcode{arc}.	&
 \returns
 As-if: \tcode{\newline
 auto lmtx = m;\newline
-lmtx.m20 = 0.0f;\newline
-lmtx.m21 = 0.0f;\newline
+lmtx.m20(0.0f);\newline
+lmtx.m21(0.0f);\newline
 auto ctrOffset =\newline
 \hspace*{1em}point_for_angle<G>(\newline
 \hspace*{1em}two_pi<float> - arc.sa,\newline
@@ -381,8 +381,8 @@ return spt - ctrOffset *\newline
 \returns
 As-if: \tcode{\newline
 auto lmtx = m;\newline
-lmtx.m20 = 0.0f;\newline
-lmtx.m21 = 0.0f;\newline
+lmtx.m20(0.0f);\newline
+lmtx.m21(0.0f);\newline
 auto tfrm = M::create_rotate(arc.sa +\newline
 \hspace*{1em}arc.rot);\newline
 auto pt = arc.rad * tfrm;\newline
