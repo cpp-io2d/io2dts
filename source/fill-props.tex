@@ -1,0 +1,146 @@
+%!TEX root = io2d.tex
+
+\rSec0 [\iotwod.fillprops] {Class template \tcode{basic_fill_props}}
+
+\rSec1 [\iotwod.fillprops.intro] {Overview}
+
+\pnum
+The \tcode{basic_fill_props} class template provides state information that is applicable to the filling rendering and composing operation (\ref{\iotwod.surface.rendering}).
+
+\pnum
+It has a \term{fill rule} of type \tcode{fill_rule} and an \term{antialiasing algorithm} of type \tcode{antialias}.
+
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::surface_state_props::fill_props_data_type}. It is accessible using the \tcode{data} member functions.
+
+\rSec1 [\iotwod.fillprops.synopsis] {Synopsis}
+
+\begin{codeblock}
+namespace @\fullnamespace{}@ {
+  template <class GraphicsSurfaces>
+  class basic_fill_props {
+  public:
+    using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+    using data_type =
+      typename GraphicsSurfaces::surface_state_props::fill_props_data_type;
+
+    // \ref{\iotwod.fillprops.ctor}, constructors:
+    basic_fill_props() noexcept;
+    explicit basic_fill_props(io2d::fill_rule fr,
+      antialias aa = antialias::good) noexcept;
+    
+    // \ref{\iotwod.fillprops.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+
+    // \ref{\iotwod.fillprops.mod}, modifiers:
+    void fill_rule(io2d::fill_rule fr) noexcept;
+    void antialiasing(antialias aa) noexcept;
+
+    // \ref{\iotwod.fillprops.obs}, observers:
+    io2d::fill_rule fill_rule() const noexcept;
+    antialias antialiasing() const noexcept;
+  };
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.fillprops.ctor] {Constructors}
+
+\indexlibrary{\idxcode{basic_fill_props}!constructor}
+\begin{itemdecl}
+basic_fill_props() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{basic_fill_props}.
+
+\pnum
+\postconditions
+\tcode{data() == X::surface_state_props::create_fill_props()}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{basic_fill_props}!constructor}%
+\begin{itemdecl}
+explicit basic_fill_props(io2d::fill_rule fr, antialias aa = antialias::good) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{basic_fill_props}.
+
+\pnum
+\postconditions
+\tcode{data() == GraphicsSurfaces::surface_state_props::create_fill_props(fr, aa)}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.fillprops.acc] {Accessors}
+
+\indexlibrarymember{data}{basic_fill_props}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{basic_fill_props} object's data object (See: \ref{\iotwod.fillprops.intro}).
+\end{itemdescr}
+
+\rSec1 [\iotwod.fillprops.mod] {Modifiers}
+
+\indexlibrarymember{filtering}{basic_fill_props}%
+\begin{itemdecl}
+void fill_rule(io2d::fill_rule fr) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Calls \tcode{GraphicsSurfaces::surface_state_props::fill_fill_rule(data(), fr))}.
+
+\remarks
+The fill rull is \tcode{fr}.
+\end{itemdescr}
+
+\indexlibrarymember{antialiasing}{basic_fill_props}%
+\begin{itemdecl}
+void compositing(compositing_op co) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Calls \tcode{GraphicsSurfaces::surface_state_props::antialiasing(data(), aa)}.
+
+\remarks
+The antialiasing algorithm is \tcode{aa}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.fillprops.obs] {Observers}
+
+\indexlibrarymember{fill_rule}{basic_fill_props}%
+\begin{itemdecl}
+io2d::fill_rule fill_rule() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{GraphicsSurfaces::surface_state_props::fill_fill_rule(data())}.
+
+\pnum
+\remarks
+The returned value is the fill rule.
+\end{itemdescr}
+
+\indexlibrarymember{antialiasing}{basic_fill_props}%
+\begin{itemdecl}
+antialias antialiasing() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{GraphicsSurfaces::surface_state_props::antialiasing(data())}.
+
+\pnum
+\remarks
+The returned value is the antialiasing algorithm.
+\end{itemdescr}
