@@ -1,0 +1,38 @@
+%!TEX root = io2d.tex
+\rSec0[\iotwod.desgn]{Library design overview (Informative)}
+
+\pnum
+In order to provide an effective, efficient, standardized 2D graphics library, the library design makes use of templates. The main class templates described provide a standard API "front end" and the template arguments to them provide the implementation "back end".
+
+\pnum
+The front end is described in terms of calling specific functions that back ends are required to provide in order to meet the requirements necessary to be a valid back end. As a result, the front end code can be and likely will be identical for all standard library implementations. As a time saving measure, standard library implementers can likely simply incorporate the source code for the front end that is provided by the reference implementation. The license of the reference implementation is intended to allow this and its authors are happy to work with standard library implementers to try to ensure that this can be done (e.g. by providing the option to license the front end code under a different license if necessary). Regardless, the specification of the front end in this \documenttypename{} is sufficient for standard library implementers to write their own implementation without any need to refer to the reference implementation.
+
+\pnum
+The back end, which consists of classes meeting the requirements specified herein, is where the platform-specific operations that make this library work are performed. Users of the library can change which back end they are using by changing the template arguments provided to the front end and making certain other changes required by the compiler they are using. It's worth pointing out that only back ends provided by standard library implementers are allowed to be in the \tcode{std} namespace and that there are naming requirements placed on those to prevent name collisions.
+
+\pnum
+The back end specifies requirements for two classes, one for mathematics functionality required for 2D graphics, \graphicsmathtemplparamnospace{}, and the other for 2D graphics operations, \graphicssurfacestemplparamnospace{}. The design is such that while \graphicssurfacestemplparamnospace{} uses functionality provided by \graphicsmathtemplparamnospace{}, the two are independent of each other. This allows users to choose the best ones for their needs.
+
+\pnum
+It is expected that the template arguments provided to the front end will be user defined type aliases. If so, to change back ends, users would change the type aliases, include any back end-specific header files for the desired back end, and use implementation dependent mechanisms, such as arguments to the compiler, to ensure that the back end is available when the program runs.
+
+\pnum
+With conditional type aliases, conditional includes, and conditional arguments to the compiler, the user can easily change back ends without ever needing to change the code that performs the graphics operations, since all of that code exclusively uses the front end. The back end is not meant to be directly invoked by the users, and the description of the library functionality does not provide users with the ability to access the back end via the front end APIs.
+
+\pnum
+Two goals are met by adopting this design.
+
+\pnum
+First, standard library implementers do not need to provide full back ends for every single platform on which their standard library implementation might used. Standard library implementers are required to provide a back end that, at a minimum, supports all operations on image surfaces. The reason for this is that it is possible to write platform independent code that supports image surfaces and all operations on them (subject to host environment limitations, of course).
+
+\pnum
+The reference implementation relies on outside libraries for back end image surface operations such that standard library implementers might not be able to use the reference implementation to meet this requirement. They will need to evaluate how best to meet this requirement, which could require a non-trivial, albeit one-time, expenditure of time to write the necessary code to meet this obligation (not including future maintenance and possible modifications as a result of changes made as a byproduct of the TS process). This is considered a reasonable trade off since it ensures that there is always support for image surfaces (subject to host limitations) without requiring standard library implementers to take on any new platform-specific dependencies.
+
+\pnum
+Second, users are not forced to use the back ends that standard library implementations do provide. Users can choose their own back ends (whether written in-house or by third parties) for purposes of gaining access to back ends that support other platforms and back ends that provide more performant implementations for specific platforms than what might be provided by standard library implementations.
+
+\pnum
+Third parties such as graphics acceleration hardware vendors, operating system vendors, graphics environment vendors, and others can write back ends and make them available to users directly or perhaps even by contributing them to standard library implementations. As hardware and software evolves, new and updated back ends can be provided. Since a back end only needs to conform to the specified requirements, these individuals and organizations are not committed to implementing any part of the C++ standard library. Nor are they required to produce updates quickly (or even at all) should the API change due to the use of inline namespaces to provide versioning for large APIs such as this.
+
+\pnum
+In summation, the API of the 2D graphics library is split into two parts: a front end composed of classes, class templates, and scoped enums that is expected to be fairly static in its design and will be what users use for standardized 2D graphics programming in \Cpp; and a back end that is a specification of requirements for classes that are used by the front end to perform the graphics operations specified by the front end. Standard library implementers are required to provide the front end and a back end that provides only the platform-independent functionality required by the requirements for a back end. Back ends are provided as template arguments to the class templates of the front end such that users can choose back ends provided by standard library implementations, by third parties, or by the user's own back end implementation that meet the user's needs.
