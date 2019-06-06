@@ -8,7 +8,16 @@ In order to provide an effective, efficient, standardized 2D graphics library, t
 The front end is described in terms of calling specific functions that back ends are required to provide in order to meet the requirements necessary to be a valid back end. As a result, the front end code can be and likely will be identical for all standard library implementations. As a time saving measure, standard library implementers can likely simply incorporate the source code for the front end that is provided by the reference implementation. The license of the reference implementation is intended to allow this and its authors are happy to work with standard library implementers to try to ensure that this can be done (e.g. by providing the option to license the front end code under a different license if necessary). Regardless, the specification of the front end in this \documenttypename{} is sufficient for standard library implementers to write their own implementation without any need to refer to the reference implementation.
 
 \pnum
-The back end, which consists of classes meeting the requirements specified herein, is where the platform-specific operations that make this library work are performed. Users of the library can change which back end they are using by changing the template arguments provided to the front end and making certain other changes required by the compiler they are using. It's worth pointing out that only back ends provided by standard library implementers are allowed to be in the \tcode{std} namespace and that there are naming requirements placed on those to prevent name collisions.
+The back end, which consists of classes meeting the requirements specified herein, is where the platform-specific operations that make this library work are performed.
+
+\pnum
+Back ends can be provided by standard library implementations and by others. It is expected that standard library implementations will provide back ends for all relevant platforms they support, but they aren't required to do so. This significantly reduces the burden on standard library implementations. Others, in turn, need only provide the back end, not a full standard library implementation.
+
+\pnum
+Users of the library can choose which back end they are using by changing the template arguments provided to the front end and making any other changes required by the compiler and build system they are using.
+
+\pnum
+Only back ends provided by standard library implementers are allowed to be in the \tcode{std} namespace. This requirement exists simply to prevent naming collisions that otherwise could occur.
 
 \pnum
 The back end specifies requirements for two classes, one for mathematics functionality required for 2D graphics, \graphicsmathtemplparamnospace{}, and the other for 2D graphics operations, \graphicssurfacestemplparamnospace{}. The design is such that while \graphicssurfacestemplparamnospace{} uses functionality provided by \graphicsmathtemplparamnospace{}, the two are independent of each other. This allows users to choose the best ones for their needs.

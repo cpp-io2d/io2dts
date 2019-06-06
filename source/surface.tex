@@ -37,7 +37,7 @@ Vector graphics data, being continuous, has the finest granularity possible sinc
 \rSec2 [\iotwod.surface.rendering.ops] {Operations}
 
 \pnum
-The surface classes provide four fundamental rendering and composing operations:
+The surface classes provide five fundamental rendering and composing operations:
 \begin{libreqtab2}
  {surface rendering and composing operations}
  {tab:\iotwod.surface.rendering.operations}
@@ -63,6 +63,9 @@ The surface classes provide four fundamental rendering and composing operations:
  \\ \rowsep
  Masking
  & \tcode{mask}
+ \\ \rowsep
+ Text Rendering
+ & \tcode{draw_text}
  \\
 \end{libreqtab2}
 
@@ -85,7 +88,10 @@ The masking operation uses a \term{mask brush} of type \tcode{basic_brush}.
 \rSec2 [\iotwod.surface.rendering.sourcepath] {Rendering and composing source path}
 
 \pnum
-In addition to brushes (\ref{\iotwod.surface.rendering.brushes}), all rendering and composing operation except for painting and masking use a \term{source path}. The source path is either a \tcode{basic_path_builder<Allocator>} object or a \tcode{basic_interpreted_path} object. If it is a \tcode{basic_path_builder<Allocator>} object, it is interpreted (\ref{\iotwod.paths.interpretation}) before it is used as the source path.
+In addition to brushes (\ref{\iotwod.surface.rendering.brushes}), the Stroke and Fill rendering and composing operations use a \term{source path}. The source path is either a \tcode{basic_path_builder<Allocator>} object or a \tcode{basic_interpreted_path} object. If it is a \tcode{basic_path_builder<Allocator>} object, it is interpreted (\ref{\iotwod.paths.interpretation}) before it is used as the source path.
+
+\pnum
+In addition to brushes, the Text Rendering rendering and composing operation uses a \term{source text} and a \tcode{font}. The source text is a \tcode{string} object containing text in the UTF-8 text format. The font is a \tcode{basic_font} object.
 
 \rSec2 [\iotwod.surface.rendering.commonstate] {Common state data}
 
@@ -147,6 +153,10 @@ In addition to the common state data (\ref{\iotwod.surface.rendering.commonstate
  Masking
  & Mask properties
  & \tcode{mask_props}
+ \\ \rowsep
+ Text Rendering
+ & Text properties
+ & \tcode{text_props}
  \\
 \end{libiotwodtab3e}
 
@@ -301,6 +311,33 @@ When a masking operation is initiated on a surface, the implementation shall pro
 \item Sample the alpha channel from point $mp$ of the mask brush and store the result in $mac$; if the visual data format of the mask brush does not have an alpha channel, the value of $mac$ shall always be $1.0$.
 \item Transform $sp$ from the surface coordinate space to the brush coordinate space, resulting in point $bp$.
 \item Sample from point $bp$ of the source brush (\ref{\iotwod.surface.rendering.brushes}), combine the resulting visual data with the surface's visual data at point $sp$ in the manner specified by the surface's current compositing operator (\ref{\iotwod.renderprops.intro}), multiply each channel of the result produced by application of the compositing operator by $map$ if the visual data format of the surface's visual data is a premultiplied format and if not then just multiply the alpha channel of the result by $map$, and modify the surface's visual data at point $sp$ to reflect the multiplied result.
+\end{enumerate}
+
+\rSec1 [\iotwod.surface.textrendering] {surface text rendering}
+\pnum
+\begin{note}
+The following uses terminology and other information contained in ISO/IEC 10646 and ISO/IEC 14496-22, both of which are listed in the normative references of this \documenttypename{}. 
+\end{note}
+
+\pnum
+Text rendering is a complex subject. The specifics of how it is performed are described in ISO/IEC 10646 and ISO/IEC 14496-22. The following is an informative overview of the process. The normative process is described in those two standards, except where otherwise noted.
+
+%\pnum
+%When a text rendering operation is initiated on a surface, the implementation shall produce results as-if the following steps were performed:
+
+\begin{enumerate}
+%\item For each UCS character $ch$ resulting from the transformation of the source text from UTF-8 to UCS characters, use the font to determine the glyph or glyphs, $gl$, for the character.
+\item This item is normative. The source text is transformed from UTF-8 to UCS characters.
+\item Those characters are transformed into glyphs using the cmap table of the font.
+\item That set of glyphs is then modified using transformations specified in various tables in the font, some of which are optional and thus may not be present, e.g. the GSUB table. Depending on the glyphs that are present in the set and the presence or absence of certain tables, it is possible that no modification will occur.
+\item The layout of the glyphs for purposes of rasterization is calculated using metrics and adjustments specified in various tables in the font, some of which are optional, e.g. the BASE and GPOS tables.
+\item This item is normative. When the text properties' location is a \tcode{basic_point_2d} object, the glyphs are rendered in a single line without regard to justification. When the location is a \tcode{basic_bounding_box} object, the glyphs are rendered in one or more lines, which are contained within the confines of the \tcode{basic_bounding_box} object.
+\item If applicable, potential line break locations are determined.
+\item This item is normative. The layout is modified as specified by the property values contained within the text properties.
+\item If multiple lines are possible, the layout is modified to ensure that the rendered glyphs will fit within the specified bounds, adding line breaks where necessary and applying justification to each line.
+\item This item is normative. Where the glyph data are contours or otherwise are composed of commands that resemble the figure items described in this \documenttypename, the glyphs shall be rendered and composed as-if this was a stroking operation, using the glyph data as the source path after applying any mathematical transformations necessary to convert the glyph data as defined in ISO/IEC 14496-22 into figure items as defined in this \documenttypename. Where the glyph data are raster graphics data, the glyphs shall be rendered and composed as-if this was a masking operation, with the glyph data serving as the mask brush and a \tcode{basic_mask_props} object default constructed with its wrap mode changed to \tcode{wrap_mode::none} serving as the mask properties. Regardless of how the glyph data are rendered and composed, the glyph data shall be transformed from its design space to surface coordinate space as specified in ISO/IEC 14496-22 suitably adjusted to conform to the layout. \begin{note}
+The property values contained in the text properties have already been applied to the layout such that things like its font size and size units will be taken into account when transformation of glyph data from its design space to surface coordinate space occurs.
+\end{note}
 \end{enumerate}
 
 \rSec1 [\iotwod.outputsurface.misc] {output surface miscellaneous behavior}

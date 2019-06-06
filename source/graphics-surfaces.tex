@@ -10,6 +10,17 @@ This \clause{} defines requirements on \term{\graphicssurfacestemplparamnospace}
 \pnum
 Most classes specified in \ref{\iotwod.paths}, \ref{\iotwod.brushes}, and \ref{\iotwod.surfaces} need a set of related types and functions to complete the definition of their semantics. These types and functions are provided as a set of \grammarterm{typedef-name}{s} and nested classes containing \grammarterm{typedef-name}{s} and \tcode{static} member functions in the template argument \tcode{\graphicssurfacestemplparamnospace} used by each such template. This \clause{} defines the names of the classes and the semantics of their members.
 
+\pnum
+\begin{note}
+It is important to remember that in \Cpp{}, the requirements are not to execute each expression at the time and place that it occurs in the program but instead is to emulate the observable behavior of the abstract machine described by the \Cpp{} standard, i.e. to follow the as-if rule. 
+
+\pnum
+There are only a few 2D graphics operations that produce observable behavior, those being the operations that are visible to the user either by displaying the results of graphics operations to the output surface or by saving the results to a file. Thus, most operations can be implemented in whatever manner best suits the environment that the \graphicssurfacestemplparamnospace{} types are designed to target so long as the end result complies with the as-if rule.
+
+\pnum
+For example, hardware accelerated implementations could record the rendering and composing operations, creating vertex buffers, index buffers, and state objects at appropriate times and adding them to a command list, and then submit that list to the hardware when observable behavior occurs in order to achieve optimal performance. This is a highly simplified description that is meant to provide some indication as to how such implementations could work since the details of hardware accelerated optimization of graphics operations are quite complex and are beyond the scope of this \documenttypename{}.
+\end{note}
+
 \rSec1 [\iotwod.graphsurf.reqs] {Requirements}
 
 \input{graph-surf-classes}
