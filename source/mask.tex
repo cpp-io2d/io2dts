@@ -1,0 +1,375 @@
+%!TEX root = io2d.tex
+
+\rSec0 [\iotwod.cmdlists.commands.mask] {Class template \tcode{basic_commands<GraphicsSurfaces>::mask}}
+
+\rSec1 [\iotwod.cmdlists.mask.intro] {Overview}
+
+\pnum
+\indexlibrary{\idxcode{mask}}%
+The class template \tcode{basic_commands<GraphicsSurfaces>::mask} describes a command that invokes the \tcode{mask} member function of a surface.
+
+\pnum
+It has an \term{optional surface} of type \tcode{optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>}. If optional surface has a value, the mask operation is performed on the optional surface instead of the surface that the command is submitted to.
+
+\pnum
+If optional surface has a value and the referenced \tcode{basic_image_surface<GraphicsSurfaces>} object has been destroyed or otherwise rendered invalid when a \tcode{basic_command_list<GraphicsSurfaces>} object built using this \tcode{paint} object is used by the program, the effects are undefined.
+
+\pnum
+It has a \term{brush} of type \tcode{basic_brush<GraphicsSurfaces>}.
+
+\pnum
+It has a \term{mask brush} of type \tcode{basic_brush<GraphicsSurfaces>}.
+
+\pnum
+It has a \term{brush props} of type \tcode{basic_brush_props<GraphicsSurfaces>}.
+
+\pnum
+It has a \term{mask props} of type \tcode{basic_mask_props<GraphicsSurfaces>}.
+
+\pnum
+It has a \term{render props} of type \tcode{basic_render_props<GraphicsSurfaces>}.
+
+\pnum
+It has a \term{clip props} of type \tcode{basic_clip_props}.
+
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::surfaces::mask_data_type}. It is accessible using the \tcode{data} member functions.
+
+\pnum
+The data are used as arguments for the invocation of the \tcode{mask} member function of the appropriate surface when a \tcode{basic_command_list<GraphicsSurfaces>} object built using this \tcode{mask} object is used by the program.
+
+\rSec1 [\iotwod.cmdlists.mask.synopsis] {Synopsis}
+\begin{codeblock}
+namespace @\fullnamespace{}@ {
+  template <class GraphicsSurfaces>
+  class basic_commands<GraphicsSurfaces::mask {
+  public:
+    using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+    using data_type = typename GraphicsSurfaces::surfaces::mask_data_type;
+
+    // \ref{\iotwod.cmdlists.mask.ctor}, construct:
+    mask(const basic_brush<GraphicsSurfaces>& b,
+      const basic_brush<GraphicsSurfaces>& mb,
+      const basic_brush_props<GraphicsSurfaces>& bp = 
+      basic_brush_props<GraphicsSurfaces>{},
+      const basic_mask_props<GraphicsSurfaces>& mp = 
+      basic_mask_props<GraphicsSurfaces>{},
+      const basic_render_props<GraphicsSurfaces>& rp = 
+      basic_mask_props<GraphicsSurfaces>{},
+      const basic_clip_props<GraphicsSurfaces>& cl = 
+      basic_clip_props<GraphicsSurfaces>{}) noexcept;
+    mask(reference_wrapper<basic_image_surface<GraphicsSurfaces>> sfc,
+      const basic_brush<GraphicsSurfaces>& b,
+      const basic_brush<GraphicsSurfaces>& mb,
+      const basic_brush_props<GraphicsSurfaces>& bp = 
+      basic_brush_props<GraphicsSurfaces>{},
+      const basic_mask_props<GraphicsSurfaces>& mp = 
+      basic_mask_props<GraphicsSurfaces>{},
+      const basic_render_props<GraphicsSurfaces>& rp = 
+      basic_mask_props<GraphicsSurfaces>{},
+      const basic_clip_props<GraphicsSurfaces>& cl = 
+      basic_clip_props<GraphicsSurfaces>{}) noexcept;
+    
+    // \ref{\iotwod.cmdlists.mask.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+
+    // \ref{\iotwod.cmdlists.mask.mod}, modifiers:
+    void surface(
+      optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> sfc) 
+      noexcept;
+    void brush(const basic_brush<GraphicsSurfaces>& b) noexcept;
+    void mask_brush(const basic_brush<GraphicsSurfaces>& mb) noexcept;
+    void brush_props(const basic_brush_props<GraphicsSurfaces>& bp) noexcept;
+    void mask_props(const basic_mask_props<GraphicsSurfaces>& mp) noexcept;
+    void render_props(const basic_render_props<GraphicsSurfaces>& rp) noexcept;
+    void clip_props(const basic_clip_props<GraphicsSurfaces>& cl) noexcept;
+
+    // \ref{\iotwod.cmdlists.mask.obs}, observers:
+    optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> 
+      surface() const noexcept;
+    basic_brush<GraphicsSurfaces> brush() const noexcept;
+    basic_brush<GraphicsSurfaces> mask_brush() const noexcept;
+    basic_brush_props<GraphicsSurfaces> brush_props() const noexcept;
+    basic_mask_props<GraphicsSurfaces> mask_props() const noexcept;
+    basic_render_props<GraphicsSurfaces> render_props() const noexcept;
+    basic_clip_props<GraphicsSurfaces> clip_props() const noexcept;
+  };
+
+  // \ref{\iotwod.cmdlists.mask.eq}, equality operators:
+  template <class GraphicsSurfaces>
+  bool operator==(
+    const typename basic_commands<GraphicsSurfaces::mask& lhs,
+    const typename basic_commands<GraphicsSurfaces::mask& rhs) 
+    noexcept;
+  template <class GraphicsSurfaces>
+  bool operator!=(
+    const typename basic_commands<GraphicsSurfaces::mask& lhs,
+    const typename basic_commands<GraphicsSurfaces::mask& rhs) 
+    noexcept;
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.cmdlists.mask.ctor] {Constructors}%
+
+\indexlibrary{\idxcode{mask}!constructor}%
+\begin{itemdecl}
+mask(const basic_brush<GraphicsSurfaces>& b,
+  const basic_brush<GraphicsSurfaces>& mb,
+  const basic_brush_props<GraphicsSurfaces>& bp = 
+  basic_brush_props<GraphicsSurfaces>{},
+  const basic_mask_props<GraphicsSurfaces>& mp = 
+  basic_mask_props<GraphicsSurfaces>{},
+  const basic_render_props<GraphicsSurfaces>& rp = 
+  basic_mask_props<GraphicsSurfaces>{},
+  const basic_clip_props<GraphicsSurfaces>& cl = 
+  basic_clip_props<GraphicsSurfaces>{}) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Constructs an object of type \tcode{mask}.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::surfaces::create_mask(b, mb, bp, mp, rp, cl)}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{mask}!constructor}%
+\begin{itemdecl}
+mask(reference_wrapper<basic_image_surface<GraphicsSurfaces>> sfc,
+  const basic_brush<GraphicsSurfaces>& b,
+  const basic_brush<GraphicsSurfaces>& mb,
+  const basic_brush_props<GraphicsSurfaces>& bp = 
+  basic_brush_props<GraphicsSurfaces>{},
+  const basic_mask_props<GraphicsSurfaces>& mp = 
+  basic_mask_props<GraphicsSurfaces>{},
+  const basic_render_props<GraphicsSurfaces>& rp = 
+  basic_mask_props<GraphicsSurfaces>{},
+  const basic_clip_props<GraphicsSurfaces>& cl = 
+  basic_clip_props<GraphicsSurfaces>{}) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Constructs an object of type \tcode{mask}.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::surfaces::create_mask(sfc, b, mb, bp, mp, rp, cl)}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.cmdlists.mask.acc] {Accessors}%
+
+\indexlibrarymember{data}{mask}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{mask} object's data object (See: \ref{\iotwod.cmdlists.mask.intro}).
+
+\pnum
+\remarks The behavior of a program is undefined if the user modifies the data contained in the \tcode{data_type} object returned by this function.
+\end{itemdescr}
+
+\rSec1 [\iotwod.cmdlists.mask.mod] {Modifiers}%
+
+\indexlibrarymember{surface}{mask}%
+\begin{itemdecl}
+void surface(
+  optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> sfc) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::surface(data(), sfc)}.
+
+\pnum
+\remarks The optional surface is \tcode{sfc}.
+\end{itemdescr}
+
+\indexlibrarymember{brush}{mask}%
+\begin{itemdecl}
+void brush(const basic_brush<GraphicsSurfaces>& b) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::brush(data(), b)}.
+
+\pnum
+\remarks The brush is \tcode{b}.
+\end{itemdescr}
+
+\indexlibrarymember{mask_brush}{mask}%
+\begin{itemdecl}
+void path(const basic_brush<GraphicsSurfaces>& mb) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::mask_brush(data(), mb)}.
+
+\pnum
+\remarks The mask brush is \tcode{mb}.
+\end{itemdescr}
+
+\indexlibrarymember{brush_props}{mask}%
+\begin{itemdecl}
+void brush_props(const basic_brush_props<GraphicsSurfaces>& bp) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::brush_props(data(), bp)}.
+
+\pnum
+\remarks The brush props is \tcode{bp}.
+\end{itemdescr}
+
+\indexlibrarymember{mask_props}{mask}%
+\begin{itemdecl}
+void mask_props(const basic_mask_props<GraphicsSurfaces>& bp) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::mask_props(data(), bp)}.
+
+\pnum
+\remarks The mask props is \tcode{bp}.
+\end{itemdescr}
+
+\indexlibrarymember{render_props}{mask}%
+\begin{itemdecl}
+void render_props(const basic_render_props<GraphicsSurfaces>& rp) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::render_props(data(), rp)}.
+
+\pnum
+\remarks The render props is \tcode{rp}.
+\end{itemdescr}
+
+\indexlibrarymember{clip_props}{mask}%
+\begin{itemdecl}
+void clip_props(const basic_clip_props<GraphicsSurfaces>& cl) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::clip_props(data(), cl)}.
+
+\pnum
+\remarks The clip props is \tcode{cl}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.cmdlists.mask.obs] {Observers}%
+
+\indexlibrarymember{surface}{mask}%
+\begin{itemdecl}
+optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> 
+  surface() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::surface(data())}.
+
+\pnum
+\remarks
+The returned value is the optional surface.
+\end{itemdescr}
+
+\indexlibrarymember{brush}{mask}%
+\begin{itemdecl}
+basic_brush<GraphicsSurfaces> brush() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::brush(data())}.
+
+\pnum
+\remarks The returned value is the brush.
+\end{itemdescr}
+
+\indexlibrarymember{mask_brush}{mask}%
+\begin{itemdecl}
+basic_brush<GraphicsSurfaces> mask_brush() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::mask_brush(data())}.
+
+\pnum
+\remarks The returned value is the mask brush.
+\end{itemdescr}
+
+\indexlibrarymember{brush_props}{mask}%
+\begin{itemdecl}
+basic_brush_props<GraphicsSurfaces> brush_props() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::brush_props(data())}.
+
+\pnum
+\remarks The returned value is the brush props.
+\end{itemdescr}
+
+\indexlibrarymember{mask_props}{mask}%
+\begin{itemdecl}
+basic_mask_props<GraphicsSurfaces> mask_props() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::mask_props(data())}.
+
+\pnum
+\remarks The returned value is the mask props.
+\end{itemdescr}
+
+\indexlibrarymember{render_props}{mask}%
+\begin{itemdecl}
+basic_render_props<GraphicsSurfaces> render_props() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::render_props(data())}.
+
+\pnum
+\remarks The returned value is the render props.
+\end{itemdescr}
+
+\indexlibrarymember{clip_props}{mask}%
+\begin{itemdecl}
+basic_clip_props<GraphicsSurfaces> clip_props() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::clip_props(data())}.
+
+\pnum
+\remarks The returned value is the clip props.
+\end{itemdescr}
+
+\rSec1 [\iotwod.cmdlists.mask.eq] {Equality operators}%
+
+\indexlibrarymember{operator==}{mask}%
+\begin{itemdecl}
+template <class GraphicsSurfaces>
+bool operator==(
+  const typename basic_commands<GraphicsSurfaces::mask& lhs,
+  const typename basic_commands<GraphicsSurfaces::mask& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::equal(lhs.data(), rhs.data())}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{mask}%
+\begin{itemdecl}
+template <class GraphicsSurfaces>
+bool operator!=(
+  const typename basic_commands<GraphicsSurfaces::mask& lhs,
+  const typename basic_commands<GraphicsSurfaces::mask& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::not_equal(lhs.data(), rhs.data())}.
+\end{itemdescr}

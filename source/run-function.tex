@@ -1,0 +1,193 @@
+%!TEX root = io2d.tex
+
+\rSec0 [\iotwod.cmdlists.commands.runfunc] {Class template \tcode{basic_commands<GraphicsSurfaces>::run_function}}
+
+\rSec1 [\iotwod.cmdlists.runfunc.intro] {Overview}
+
+\pnum
+\indexlibrary{\idxcode{run_function}}%
+The class template \tcode{basic_commands<GraphicsSurfaces>::run_function} describes a command that invokes the user-provided function, passing it a reference to the surface the command list was submitted to, an optional surface, and user data. It allows the user to perform arbitrary operations that are not otherwise possible using the other command types.
+
+\pnum
+It has a \term{user-provided function} of type \tcode{variant<function<void(basic_image_surface<GraphicsSurfaces>\&, 
+      optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+      void*)>, function<void(basic_output_surface<GraphicsSurfaces>\&, 
+      optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+      void*)>, function<void(basic_unmanaged_output_surface<GraphicsSurfaces>\&, 
+      optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+      void*)>>}.
+
+\pnum
+\begin{note}
+The user-defined function is stored in a variant to enable a single class to support use in a command list that is intended for any of the surface types rather than have three separate classes.
+\end{note}
+
+\pnum
+It has an \term{optional surface} of type \tcode{optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>}.
+
+\pnum
+It has \tcode{user data} of type \tcode{void*}.
+
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::surfaces::run_function_data_type}. It is accessible using the \tcode{data} member functions.
+
+\rSec1 [\iotwod.cmdlists.runfunc.synopsis] {Synopsis}
+\begin{codeblock}
+namespace @\fullnamespace{}@ {
+  template <class GraphicsSurfaces>
+  class basic_commands<GraphicsSurfaces::run_function {
+  public:
+    using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+    using data_type =
+      typename GraphicsSurfaces::surfaces::run_function_data_type;
+
+    // \ref{\iotwod.cmdlists.runfunc.ctor}, construct:
+    run_function(const function<void(basic_image_surface<GraphicsSurfaces>&, 
+      optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+      void*)>& fn, void* user_data, 
+      optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> sfc) 
+      noexcept;
+    run_function(const function<void(basic_output_surface<GraphicsSurfaces>&, 
+      optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+      void*)>& fn, void* user_data, 
+      optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> sfc) 
+      noexcept;
+    run_function(
+      const function<void(basic_unmanaged_output_surface<GraphicsSurfaces>&, 
+      optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+      void*)>& fn, void* user_data, 
+      optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> sfc) 
+      noexcept;
+    
+    // \ref{\iotwod.cmdlists.runfunc.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+
+    // \ref{\iotwod.cmdlists.runfunc.mod}, modifiers:
+    void surface(
+      optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> sfc) 
+      noexcept;
+    void func(const function<void(basic_image_surface<GraphicsSurfaces>&, 
+      optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+      void*)>& fn) noexcept;
+    void func(const function<void(basic_output_surface<GraphicsSurfaces>&, 
+      optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+      void*)>& fn) noexcept;
+    void func(
+      const function<void(basic_unmanaged_output_surface<GraphicsSurfaces>&, 
+      optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+      void*)>& fn) noexcept;
+    void user_data(void* ud) noexcept;
+
+    // \ref{\iotwod.cmdlists.runfunc.obs}, observers:
+    optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> 
+      surface() const noexcept;
+    const variant<function<void(basic_image_surface<GraphicsSurfaces>&, 
+      optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+      void*)>, function<void(basic_output_surface<GraphicsSurfaces>&, 
+      optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+      void*)>, function<void(basic_unmanaged_output_surface<GraphicsSurfaces>&, 
+      optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+      void*)>>& func() const noexcept;
+    void* user_data() const noexcept;
+  };
+
+  // \ref{\iotwod.cmdlists.runfunc.eq}, equality operators:
+  template <class GraphicsSurfaces>
+  bool operator==(
+    const typename basic_commands<GraphicsSurfaces::run_function& lhs,
+    const typename basic_commands<GraphicsSurfaces::run_function& rhs) 
+    noexcept;
+  template <class GraphicsSurfaces>
+  bool operator!=(
+    const typename basic_commands<GraphicsSurfaces::run_function& lhs,
+    const typename basic_commands<GraphicsSurfaces::run_function& rhs) 
+    noexcept;
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.cmdlists.runfunc.ctor] {Constructors}%
+
+\indexlibrary{\idxcode{run_function}!constructor}%
+\begin{itemdecl}
+run_function();
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Constructs an object of type \tcode{run_function}.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::surfaces::create_run_function()}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.cmdlists.runfunc.acc] {Accessors}%
+
+\indexlibrarymember{data}{run_function}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{run_function} object's data object (See: \ref{\iotwod.cmdlists.runfunc.intro}).
+\end{itemdescr}
+
+\rSec1 [\iotwod.cmdlists.runfunc.mod] {Modifiers}%
+
+\indexlibrarymember{surface}{run_function}%
+\begin{itemdecl}
+void surface(
+  optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> sfc) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::surface(data(), sfc)}.
+
+\pnum
+\remarks The optional surface is \tcode{sfc}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.cmdlists.runfunc.obs] {Observers}%
+
+\indexlibrarymember{surface}{run_function}%
+\begin{itemdecl}
+optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> 
+  surface() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::surface(data())}.
+
+\pnum
+\remarks
+The returned value is the optional surface.
+\end{itemdescr}
+
+\rSec1 [\iotwod.cmdlists.runfunc.eq] {Equality operators}%
+
+\indexlibrarymember{operator==}{run_function}%
+\begin{itemdecl}
+template <class GraphicsSurfaces>
+bool operator==(
+  const typename basic_commands<GraphicsSurfaces::run_function& lhs,
+  const typename basic_commands<GraphicsSurfaces::run_function& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::equal(lhs.data(), rhs.data())}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{run_function}%
+\begin{itemdecl}
+template <class GraphicsSurfaces>
+bool operator!=(
+  const typename basic_commands<GraphicsSurfaces::run_function& lhs,
+  const typename basic_commands<GraphicsSurfaces::run_function& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::not_equal(lhs.data(), rhs.data())}.
+\end{itemdescr}

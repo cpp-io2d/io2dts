@@ -1,0 +1,53 @@
+%!TEX root = io2d.tex
+
+\rSec0 [\iotwod.cmdlists] {Command lists}
+
+\rSec1 [\iotwod.cmdlists.overview]{Overview of command lists}
+
+\pnum
+Command lists define operations on surfaces, \term{commands}, that can be submitted to a surface.
+
+\pnum
+Commands consist of the rendering and composing operations, other operations on surfaces, and a type that allows a user-provided function to run.
+
+\pnum
+Command lists provide a mechanism for efficiently processing graphics operations, allowing them to be executed on multiple threads. Additionally, the \tcode{basic_interpreted_command_list} class template allows command lists to be pre-compiled by the back end, which provides optimization possibilities for back ends that use graphics acceleration hardware.
+
+%\begin{note}
+%\pnum
+%In order to gain the benefits that allow back ends to efficiently use graphics acceleration hardware, the command lists API requires users to manage the lifetimes of the data objects they use. 
+%\end{note}
+%
+\rSec1 [\iotwod.cmdlists.commands] {Class template \tcode{basic_commands}}
+
+\addtocounter{SectionDepthBase}{2}
+\input{commands-intro}
+\input{clear}
+%\input{flush}
+%\input{mark-dirty}
+\input{paint}
+\input{stroke}
+\input{fill}
+\input{mask}
+\input{draw-text}
+\input{run-function}
+\addtocounter{SectionDepthBase}{-2}
+
+\begin{codeblock}
+namespace @\fullnamespace{}@ {
+  template <class GraphicsSurfaces>
+  struct basic_commands {
+    using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+
+    class clear;
+    class paint;
+    class stroke;
+    class fill;
+    class mask;
+    class draw_text;
+    class run_function;
+  }
+  using command_item = variant<clear, paint, stroke, fill, mask, draw_text, 
+    run_function>;
+  };
+\end{codeblock}

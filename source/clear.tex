@@ -1,0 +1,150 @@
+%!TEX root = io2d.tex
+
+\rSec0 [\iotwod.cmdlists.clear] {Class template \tcode{basic_commands<GraphicsSurfaces>::clear}}
+
+\rSec1 [\iotwod.cmdlists.clear.intro] {Overview}
+
+\pnum
+\indexlibrary{\idxcode{clear}}%
+The class template \tcode{basic_commands<GraphicsSurfaces>::clear} describes a command that invokes the \tcode{clear} member function of a surface.
+%clears a surface by performing a paint rendering and composing operation using the \tcode{compositing_op::clear} composition algorithm with no .
+
+\pnum
+It has an \term{optional surface} of type \tcode{optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>}. If optional surface has a value, the clear operation is performed on the optional surface instead of the surface that the command is submitted to.
+
+\pnum
+If optional surface has a value and the referenced \tcode{basic_image_surface<GraphicsSurfaces>} object has been destroyed or otherwise rendered invalid when a \tcode{basic_command_list<GraphicsSurfaces>} object built using this \tcode{paint} object is used by the program, the effects are undefined.
+
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::surfaces::clear_data_type}. It is accessible using the \tcode{data} member functions.
+
+\rSec1 [\iotwod.cmdlists.clear.synopsis] {Synopsis}
+\begin{codeblock}
+namespace @\fullnamespace{}@ {
+  template <class GraphicsSurfaces>
+  class basic_commands<GraphicsSurfaces::clear {
+  public:
+    using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+    using data_type = typename GraphicsSurfaces::surfaces::clear_data_type;
+
+    // \ref{\iotwod.cmdlists.clear.ctor}, construct:
+    clear() noexcept;
+    clear(reference_wrapper<basic_image_surface<GraphicsSurfaces>> sfc) 
+      noexcept;
+    
+    // \ref{\iotwod.cmdlists.clear.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+
+    // \ref{\iotwod.cmdlists.clear.mod}, modifiers:
+    void surface(
+      optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> sfc) 
+      noexcept;
+
+    // \ref{\iotwod.cmdlists.clear.obs}, observers:
+    optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> 
+      surface() const noexcept;
+  };
+
+  // \ref{\iotwod.cmdlists.clear.eq}, equality operators:
+  template <class GraphicsSurfaces>
+  bool operator==(
+    const typename basic_commands<GraphicsSurfaces::clear& lhs,
+    const typename basic_commands<GraphicsSurfaces::clear& rhs) 
+    noexcept;
+  template <class GraphicsSurfaces>
+  bool operator!=(
+    const typename basic_commands<GraphicsSurfaces::clear& lhs,
+    const typename basic_commands<GraphicsSurfaces::clear& rhs) 
+    noexcept;
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.cmdlists.clear.ctor] {Constructors}%
+
+\indexlibrary{\idxcode{clear}!constructor}%
+\begin{itemdecl}
+clear();
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Constructs an object of type \tcode{clear}.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::surfaces::create_clear()}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.cmdlists.clear.acc] {Accessors}%
+
+\indexlibrarymember{data}{clear}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{clear} object's data object (See: \ref{\iotwod.cmdlists.clear.intro}).
+
+\pnum
+\remarks The behavior of a program is undefined if the user modifies the data contained in the \tcode{data_type} object returned by this function.
+\end{itemdescr}
+
+\rSec1 [\iotwod.cmdlists.clear.mod] {Modifiers}%
+
+\indexlibrarymember{surface}{clear}%
+\begin{itemdecl}
+void surface(
+  optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> sfc) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::surface(data(), sfc)}.
+
+\pnum
+\remarks The optional surface is \tcode{sfc}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.cmdlists.clear.obs] {Observers}%
+
+\indexlibrarymember{surface}{clear}%
+\begin{itemdecl}
+optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> 
+  surface() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::surface(data())}.
+
+\pnum
+\remarks
+The returned value is the optional surface.
+\end{itemdescr}
+
+\rSec1 [\iotwod.cmdlists.clear.eq] {Equality operators}%
+
+\indexlibrarymember{operator==}{clear}%
+\begin{itemdecl}
+template <class GraphicsSurfaces>
+bool operator==(
+  const typename basic_commands<GraphicsSurfaces::clear& lhs,
+  const typename basic_commands<GraphicsSurfaces::clear& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::equal(lhs.data(), rhs.data())}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{clear}%
+\begin{itemdecl}
+template <class GraphicsSurfaces>
+bool operator!=(
+  const typename basic_commands<GraphicsSurfaces::clear& lhs,
+  const typename basic_commands<GraphicsSurfaces::clear& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::not_equal(lhs.data(), rhs.data())}.
+\end{itemdescr}

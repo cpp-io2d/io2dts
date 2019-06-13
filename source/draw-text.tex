@@ -1,0 +1,597 @@
+%!TEX root = io2d.tex
+
+\rSec0 [\iotwod.cmdlists.commands.drawtext] {Class template \tcode{basic_commands<GraphicsSurfaces>::draw_text}}
+
+\rSec1 [\iotwod.cmdlists.drawtext.intro] {Overview}
+
+\pnum
+\indexlibrary{\idxcode{draw_text}}%
+The class template \tcode{basic_commands<GraphicsSurfaces>::draw_text} describes a command that invokes the \tcode{draw_text} member function of a surface.
+
+\pnum
+It has an \term{optional surface} of type \tcode{optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>}. If optional surface has a value, the draw_text operation is performed on the optional surface instead of the surface that the command is submitted to.
+
+\pnum
+If optional surface has a value and the referenced \tcode{basic_image_surface<GraphicsSurfaces>} object has been destroyed or otherwise rendered invalid when a \tcode{basic_command_list<GraphicsSurfaces>} object built using this \tcode{paint} object is used by the program, the effects are undefined.
+
+\pnum
+It has a \term{text location} of type \tcode{variant<basic_point_2d<typename GraphicsSurfaces::graphics_math_type>, basic_bounding_box<typename GraphicsSurfaces::graphics_math_type>>}.
+
+\pnum
+It has a \term{brush} of type \tcode{basic_brush<GraphicsSurfaces>}.
+
+\pnum
+It has a \term{font} of type \tcode{basic_font<GraphicsSurfaces>}.
+
+\pnum
+It has \term{text} of type \tcode{string} comprised of UTF-8 encoded character data.
+
+\pnum
+It has a \term{text props} of type \tcode{basic_text_props<GraphicsSurfaces>}.
+
+\pnum
+It has a \term{brush props} of type \tcode{basic_brush_props<GraphicsSurfaces>}.
+
+\pnum
+It has a \term{stroke props} of type \tcode{basic_stroke_props<GraphicsSurfaces>}.
+
+\pnum
+It has a \term{dashes} of type \tcode{basic_dashes<GraphicsSurfaces>}.
+
+\pnum
+It has a \term{render props} of type \tcode{basic_render_props<GraphicsSurfaces>}.
+
+\pnum
+It has a \term{clip props} of type \tcode{basic_clip_props}.
+
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::surfaces::stroke_data_type}. It is accessible using the \tcode{data} member functions.
+
+\pnum
+The data are used as arguments for the invocation of the \tcode{draw_text} member function of the appropriate surface when a \tcode{basic_command_list<GraphicsSurfaces>} object built using this \tcode{draw_text} object is used by the program.
+
+\rSec1 [\iotwod.cmdlists.drawtext.synopsis] {Synopsis}
+\begin{codeblock}
+namespace @\fullnamespace{}@ {
+  template <class GraphicsSurfaces>
+  class basic_commands<GraphicsSurfaces::draw_text {
+  public:
+    using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+    using data_type = typename GraphicsSurfaces::surfaces::draw_text_data_type;
+
+    // \ref{\iotwod.cmdlists.drawtext.ctor}, construct:
+    draw_text(const basic_point_2d<graphics_math_type>& pt,
+      const basic_brush<GraphicsSurfaces>& b,
+      const basic_font<GraphicsSurfaces>& font, string t,
+      const basic_text_props<GraphicsSurfaces>& tp = 
+      basic_text_props<GraphicsSurfaces>{},
+      const basic_brush_props<GraphicsSurfaces>& bp = 
+      basic_brush_props<GraphicsSurfaces>{},
+      const basic_stroke_props<GraphicsSurfaces>& sp = 
+      basic_stroke_props<GraphicsSurfaces>{},
+      const basic_dashes<GraphicsSurfaces>& d =
+      basic_dashes<GraphicsSurfaces>{},
+      const basic_render_props<GraphicsSurfaces>& rp = 
+      basic_render_props<GraphicsSurfaces>{},
+      const basic_clip_props<GraphicsSurfaces>& cl = 
+      basic_clip_props<GraphicsSurfaces>{}) noexcept;
+    draw_text(reference_wrapper<basic_image_surface<GraphicsSurfaces>> sfc,
+      const basic_point_2d<graphics_math_type>& pt,
+      const basic_brush<GraphicsSurfaces>& b,
+      const basic_font<GraphicsSurfaces>& font, string t,
+      const basic_text_props<GraphicsSurfaces>& tp = 
+      basic_text_props<GraphicsSurfaces>{},
+      const basic_brush_props<GraphicsSurfaces>& bp = 
+      basic_brush_props<GraphicsSurfaces>{},
+      const basic_stroke_props<GraphicsSurfaces>& sp = 
+      basic_stroke_props<GraphicsSurfaces>{},
+      const basic_dashes<GraphicsSurfaces>& d =
+      basic_dashes<GraphicsSurfaces>{},
+      const basic_render_props<GraphicsSurfaces>& rp = 
+      basic_render_props<GraphicsSurfaces>{},
+      const basic_clip_props<GraphicsSurfaces>& cl = 
+      basic_clip_props<GraphicsSurfaces>{}) noexcept;
+    draw_text(const basic_bounding_box<graphics_math_type>& bb,
+      const basic_brush<GraphicsSurfaces>& b,
+      const basic_font<GraphicsSurfaces>& font, string t,
+      const basic_text_props<GraphicsSurfaces>& tp = 
+      basic_text_props<GraphicsSurfaces>{},
+      const basic_brush_props<GraphicsSurfaces>& bp = 
+      basic_brush_props<GraphicsSurfaces>{},
+      const basic_stroke_props<GraphicsSurfaces>& sp = 
+      basic_stroke_props<GraphicsSurfaces>{},
+      const basic_dashes<GraphicsSurfaces>& d = 
+      basic_dashes<GraphicsSurfaces>{},
+      const basic_render_props<GraphicsSurfaces>& rp = 
+      basic_render_props<GraphicsSurfaces>{},
+      const basic_clip_props<GraphicsSurfaces>& cl = 
+      basic_clip_props<GraphicsSurfaces>{}) noexcept;
+    draw_text(reference_wrapper<basic_image_surface<GraphicsSurfaces>> sfc, 
+      const basic_bounding_box<graphics_math_type>& bb,
+      const basic_brush<GraphicsSurfaces>& b,
+      const basic_font<GraphicsSurfaces>& font, string t,
+      const basic_text_props<GraphicsSurfaces>& tp = 
+      basic_text_props<GraphicsSurfaces>{},
+      const basic_brush_props<GraphicsSurfaces>& bp = 
+      basic_brush_props<GraphicsSurfaces>{},
+      const basic_stroke_props<GraphicsSurfaces>& sp = 
+      basic_stroke_props<GraphicsSurfaces>{},
+      const basic_dashes<GraphicsSurfaces>& d = 
+      basic_dashes<GraphicsSurfaces>{},
+      const basic_render_props<GraphicsSurfaces>& rp = 
+      basic_render_props<GraphicsSurfaces>{},
+      const basic_clip_props<GraphicsSurfaces>& cl = 
+      basic_clip_props<GraphicsSurfaces>{}) noexcept;
+    
+    // \ref{\iotwod.cmdlists.drawtext.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+
+    // \ref{\iotwod.cmdlists.drawtext.mod}, modifiers:
+    void surface(
+      optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> sfc) 
+      noexcept;
+    void location(const basic_point_2d<graphics_math_type>& pt) noexcept;
+    void location(const basic_bounding_box<graphics_math_type>& bb) noexcept;
+    void brush(const basic_brush<GraphicsSurfaces>& b) noexcept;
+    void font(const basic_font<GraphicsSurfaces>& f) noexcept;
+    void text(string t) noexcept;
+    void text_props(const basic_text_props<GraphicsSurfaces>& tp) noexcept;
+    void brush_props(const basic_brush_props<GraphicsSurfaces>& bp) noexcept;
+    void stroke_props(const basic_stroke_props<GraphicsSurfaces>& sp) noexcept;
+    void dashes(const basic_dashes<GraphicsSurfaces>& d) noexcept;
+    void render_props(const basic_render_props<GraphicsSurfaces>& rp) noexcept;
+    void clip_props(const basic_clip_props<GraphicsSurfaces>& cl) noexcept;
+
+    // \ref{\iotwod.cmdlists.drawtext.obs}, observers:
+    optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> 
+      surface() const noexcept;
+    variant<basic_point_2d<graphics_math_type>, 
+      basic_bounding_box<graphics_math_type>> location() const noexcept;
+    basic_brush<GraphicsSurfaces> brush() const noexcept;
+    basic_font<GraphicsSurfaces> font() const noexcept;
+    string text() const noexcept;
+    basic_text_props<GraphicsSurfaces> text_props() const noexcept;
+    basic_brush_props<GraphicsSurfaces> brush_props() const noexcept;
+    basic_stroke_props<GraphicsSurfaces> stroke_props() const noexcept;
+    basic_dashes<GraphicsSurfaces> dashes() const noexcept;
+    basic_render_props<GraphicsSurfaces> render_props() const noexcept;
+    basic_clip_props<GraphicsSurfaces> clip_props() const noexcept;
+  };
+
+  // \ref{\iotwod.cmdlists.drawtext.eq}, equality operators:
+  template <class GraphicsSurfaces>
+  bool operator==(
+    const typename basic_commands<GraphicsSurfaces::draw_text& lhs,
+    const typename basic_commands<GraphicsSurfaces::draw_text& rhs) 
+    noexcept;
+  template <class GraphicsSurfaces>
+  bool operator!=(
+    const typename basic_commands<GraphicsSurfaces::draw_text& lhs,
+    const typename basic_commands<GraphicsSurfaces::draw_text& rhs) 
+    noexcept;
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.cmdlists.drawtext.ctor] {Constructors}%
+
+\indexlibrary{\idxcode{draw_text}!constructor}%
+\begin{itemdecl}
+draw_text(const basic_point_2d<graphics_math_type>& pt,
+  const basic_brush<GraphicsSurfaces>& b,
+  const basic_font<GraphicsSurfaces>& font, string t,
+  const basic_text_props<GraphicsSurfaces>& tp = 
+  basic_text_props<GraphicsSurfaces>{},
+  const basic_brush_props<GraphicsSurfaces>& bp = 
+  basic_brush_props<GraphicsSurfaces>{},
+  const basic_stroke_props<GraphicsSurfaces>& sp = 
+  basic_stroke_props<GraphicsSurfaces>{},
+  const basic_dashes<GraphicsSurfaces>& d =
+  basic_dashes<GraphicsSurfaces>{},
+  const basic_render_props<GraphicsSurfaces>& rp = 
+  basic_render_props<GraphicsSurfaces>{},
+  const basic_clip_props<GraphicsSurfaces>& cl = 
+  basic_clip_props<GraphicsSurfaces>{}) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Constructs an object of type \tcode{draw_text}.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::surfaces::create_draw_text(pt, b, font, t, tp, bp, sp, d, rp, cl)}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{draw_text}!constructor}%
+\begin{itemdecl}
+draw_text(reference_wrapper<basic_image_surface<GraphicsSurfaces>> sfc,
+  const basic_point_2d<graphics_math_type>& pt,
+  const basic_brush<GraphicsSurfaces>& b,
+  const basic_font<GraphicsSurfaces>& font, string t,
+  const basic_text_props<GraphicsSurfaces>& tp = 
+  basic_text_props<GraphicsSurfaces>{},
+  const basic_brush_props<GraphicsSurfaces>& bp = 
+  basic_brush_props<GraphicsSurfaces>{},
+  const basic_stroke_props<GraphicsSurfaces>& sp = 
+  basic_stroke_props<GraphicsSurfaces>{},
+  const basic_dashes<GraphicsSurfaces>& d =
+  basic_dashes<GraphicsSurfaces>{},
+  const basic_render_props<GraphicsSurfaces>& rp = 
+  basic_render_props<GraphicsSurfaces>{},
+  const basic_clip_props<GraphicsSurfaces>& cl = 
+  basic_clip_props<GraphicsSurfaces>{}) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Constructs an object of type \tcode{draw_text}.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::surfaces::create_draw_text(sfc, pt, b, font, t, tp, bp, sp, d, rp, cl)}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{draw_text}!constructor}%
+\begin{itemdecl}
+draw_text(const basic_bounding_box<graphics_math_type>& bb,
+  const basic_brush<GraphicsSurfaces>& b,
+  const basic_font<GraphicsSurfaces>& font, string t,
+  const basic_text_props<GraphicsSurfaces>& tp = 
+  basic_text_props<GraphicsSurfaces>{},
+  const basic_brush_props<GraphicsSurfaces>& bp = 
+  basic_brush_props<GraphicsSurfaces>{},
+  const basic_stroke_props<GraphicsSurfaces>& sp = 
+  basic_stroke_props<GraphicsSurfaces>{},
+  const basic_dashes<GraphicsSurfaces>& d = 
+  basic_dashes<GraphicsSurfaces>{},
+  const basic_render_props<GraphicsSurfaces>& rp = 
+  basic_render_props<GraphicsSurfaces>{},
+  const basic_clip_props<GraphicsSurfaces>& cl = 
+  basic_clip_props<GraphicsSurfaces>{}) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Constructs an object of type \tcode{draw_text}.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::surfaces::create_draw_text(bb, b, font, t, tp, bp, sp, d, rp, cl)}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{draw_text}!constructor}%
+\begin{itemdecl}
+draw_text(reference_wrapper<basic_image_surface<GraphicsSurfaces>> sfc, 
+  const basic_bounding_box<graphics_math_type>& bb,
+  const basic_brush<GraphicsSurfaces>& b,
+  const basic_font<GraphicsSurfaces>& font, string t,
+  const basic_text_props<GraphicsSurfaces>& tp = 
+  basic_text_props<GraphicsSurfaces>{},
+  const basic_brush_props<GraphicsSurfaces>& bp = 
+  basic_brush_props<GraphicsSurfaces>{},
+  const basic_stroke_props<GraphicsSurfaces>& sp = 
+  basic_stroke_props<GraphicsSurfaces>{},
+  const basic_dashes<GraphicsSurfaces>& d = 
+  basic_dashes<GraphicsSurfaces>{},
+  const basic_render_props<GraphicsSurfaces>& rp = 
+  basic_render_props<GraphicsSurfaces>{},
+  const basic_clip_props<GraphicsSurfaces>& cl = 
+  basic_clip_props<GraphicsSurfaces>{}) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Constructs an object of type \tcode{draw_text}.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::surfaces::create_draw_text(sfc, bb, b, font, t, tp, bp, sp, d, rp, cl)}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.cmdlists.drawtext.acc] {Accessors}%
+
+\indexlibrarymember{data}{draw_text}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{draw_text} object's data object (See: \ref{\iotwod.cmdlists.drawtext.intro}).
+
+\pnum
+\remarks The behavior of a program is undefined if the user modifies the data contained in the \tcode{data_type} object returned by this function.
+\end{itemdescr}
+
+\rSec1 [\iotwod.cmdlists.drawtext.mod] {Modifiers}%
+
+\indexlibrarymember{surface}{draw_text}%
+\begin{itemdecl}
+void surface(
+  optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> sfc) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::surface(data(), sfc)}.
+
+\pnum
+\remarks The optional surface is \tcode{sfc}.
+\end{itemdescr}
+
+\indexlibrarymember{location}{draw_text}%
+\begin{itemdecl}
+void location(const basic_point_2d<graphics_math_type>& pt) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::location(data(), pt)}.
+
+\pnum
+\remarks The text location holds \tcode{pt} as its value.
+\end{itemdescr}
+
+\indexlibrarymember{location}{draw_text}%
+\begin{itemdecl}
+void location(const basic_bounding_box<graphics_math_type>& bb) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::location(data(), bb)}.
+
+\pnum
+\remarks The text location holds \tcode{bb} at its value.
+\end{itemdescr}
+
+\indexlibrarymember{brush}{draw_text}%
+\begin{itemdecl}
+void brush(const basic_brush<GraphicsSurfaces>& b) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::brush(data(), b)}.
+
+\pnum
+\remarks The brush is \tcode{b}.
+\end{itemdescr}
+
+\indexlibrarymember{font}{draw_text}%
+\begin{itemdecl}
+void font(const basic_font<GraphicsSurfaces>& f) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::font(data(), f)}.
+
+\pnum
+\remarks The font is \tcode{f}.
+\end{itemdescr}
+
+\indexlibrarymember{text}{draw_text}%
+\begin{itemdecl}
+void text(string t) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::text(data(), b)}.
+
+\pnum
+\remarks The text is \tcode{t}.
+\end{itemdescr}
+
+\indexlibrarymember{text_props}{draw_text}%
+\begin{itemdecl}
+void text_props(const basic_text_props<GraphicsSurfaces>& tp) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::text_props(data(), tp)}.
+
+\pnum
+\remarks The text props is \tcode{tp}.
+\end{itemdescr}
+
+\indexlibrarymember{brush_props}{draw_text}%
+\begin{itemdecl}
+void brush_props(const basic_brush_props<GraphicsSurfaces>& bp) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::brush_props(data(), bp)}.
+
+\pnum
+\remarks The brush props is \tcode{bp}.
+\end{itemdescr}
+
+\indexlibrarymember{stroke_props}{draw_text}%
+\begin{itemdecl}
+void brush_props(const basic_stroke_props<GraphicsSurfaces>& sp) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::stroke_props(data(), sp)}.
+
+\pnum
+\remarks The stroke props is \tcode{sp}.
+\end{itemdescr}
+
+\indexlibrarymember{dashes}{draw_text}%
+\begin{itemdecl}
+void dashes(const basic_dashes<GraphicsSurfaces>& d) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::dashes(data(), d)}.
+
+\pnum
+\remarks The dashes is \tcode{d}.
+\end{itemdescr}
+
+\indexlibrarymember{render_props}{draw_text}%
+\begin{itemdecl}
+void render_props(const basic_render_props<GraphicsSurfaces>& rp) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::render_props(data(), rp)}.
+
+\pnum
+\remarks The render props is \tcode{rp}.
+\end{itemdescr}
+
+\indexlibrarymember{clip_props}{draw_text}%
+\begin{itemdecl}
+void clip_props(const basic_clip_props<GraphicsSurfaces>& cl) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::clip_props(data(), cl)}.
+
+\pnum
+\remarks The clip props is \tcode{cl}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.cmdlists.drawtext.obs] {Observers}%
+
+\indexlibrarymember{surface}{draw_text}%
+\begin{itemdecl}
+optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> 
+  surface() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::surface(data())}.
+
+\pnum
+\remarks
+The returned value is the optional surface.
+\end{itemdescr}
+
+\indexlibrarymember{location}{draw_text}%
+\begin{itemdecl}
+variant<basic_point_2d<graphics_math_type>, basic_bounding_box<graphics_math_type>> brush() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::location(data())}.
+
+\pnum
+\remarks The returned value is the text location.
+\end{itemdescr}
+
+\indexlibrarymember{brush}{draw_text}%
+\begin{itemdecl}
+basic_brush<GraphicsSurfaces> brush() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::brush(data())}.
+
+\pnum
+\remarks The returned value is the brush.
+\end{itemdescr}
+
+\indexlibrarymember{font}{draw_text}%
+\begin{itemdecl}
+basic_font<GraphicsSurfaces> font() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::font(data())}.
+
+\pnum
+\remarks The returned value is the font.
+\end{itemdescr}
+
+\indexlibrarymember{text_props}{draw_text}%
+\begin{itemdecl}
+basic_text_props<GraphicsSurfaces> text_props() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::text_props(data())}.
+
+\pnum
+\remarks The returned value is the text props.
+\end{itemdescr}
+
+\indexlibrarymember{brush_props}{draw_text}%
+\begin{itemdecl}
+basic_brush_props<GraphicsSurfaces> brush_props() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::brush_props(data())}.
+
+\pnum
+\remarks The returned value is the brush props.
+\end{itemdescr}
+
+\indexlibrarymember{stroke_props}{draw_text}%
+\begin{itemdecl}
+basic_stroke_props<GraphicsSurfaces> stroke_props() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::stroke_props(data())}.
+
+\pnum
+\remarks The returned value is the stroke props.
+\end{itemdescr}
+
+\indexlibrarymember{dashes}{draw_text}%
+\begin{itemdecl}
+basic_dashes<GraphicsSurfaces> dashes() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::dashes(data())}.
+
+\pnum
+\remarks The returned value is the dashes.
+\end{itemdescr}
+
+\indexlibrarymember{render_props}{draw_text}%
+\begin{itemdecl}
+basic_render_props<GraphicsSurfaces> render_props() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::render_props(data())}.
+
+\pnum
+\remarks The returned value is the render props.
+\end{itemdescr}
+
+\indexlibrarymember{clip_props}{draw_text}%
+\begin{itemdecl}
+basic_clip_props<GraphicsSurfaces> clip_props() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::clip_props(data())}.
+
+\pnum
+\remarks The returned value is the clip props.
+\end{itemdescr}
+
+\rSec1 [\iotwod.cmdlists.drawtext.eq] {Equality operators}%
+
+\indexlibrarymember{operator==}{draw_text}%
+\begin{itemdecl}
+template <class GraphicsSurfaces>
+bool operator==(
+  const typename basic_commands<GraphicsSurfaces::draw_text& lhs,
+  const typename basic_commands<GraphicsSurfaces::draw_text& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::equal(lhs.data(), rhs.data())}.
+\end{itemdescr}
+
+\indexlibrarymember{operator!=}{draw_text}%
+\begin{itemdecl}
+template <class GraphicsSurfaces>
+bool operator!=(
+  const typename basic_commands<GraphicsSurfaces::draw_text& lhs,
+  const typename basic_commands<GraphicsSurfaces::draw_text& rhs) 
+  noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::not_equal(lhs.data(), rhs.data())}.
+\end{itemdescr}
