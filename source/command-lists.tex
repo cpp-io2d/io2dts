@@ -13,15 +13,10 @@ Commands consist of the rendering and composing operations, other operations on 
 \pnum
 Command lists provide a mechanism for efficiently processing graphics operations, allowing them to be executed on multiple threads. Additionally, the \tcode{basic_interpreted_command_list} class template allows command lists to be pre-compiled by the back end, which provides optimization possibilities for back ends that use graphics acceleration hardware.
 
-%\begin{note}
-%\pnum
-%In order to gain the benefits that allow back ends to efficiently use graphics acceleration hardware, the command lists API requires users to manage the lifetimes of the data objects they use. 
-%\end{note}
-%
 \rSec1 [\iotwod.cmdlists.commands] {Class template \tcode{basic_commands}}
 
 \addtocounter{SectionDepthBase}{2}
-\input{commands-intro}
+%\input{commands-intro}
 \input{clear}
 %\input{flush}
 %\input{mark-dirty}
@@ -32,6 +27,10 @@ Command lists provide a mechanism for efficiently processing graphics operations
 \input{draw-text}
 \input{run-function}
 \addtocounter{SectionDepthBase}{-2}
+
+\addtocounter{SectionDepthBase}{1}
+\input{command-list}
+\addtocounter{SectionDepthBase}{-1}
 
 \begin{codeblock}
 namespace @\fullnamespace{}@ {
@@ -49,5 +48,5 @@ namespace @\fullnamespace{}@ {
   }
   using command_item = variant<clear, paint, stroke, fill, mask, draw_text, 
     run_function>;
-  };
+};
 \end{codeblock}

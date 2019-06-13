@@ -19,7 +19,7 @@ It has a \term{user-provided function} of type \tcode{variant<function<void(basi
 
 \pnum
 \begin{note}
-The user-defined function is stored in a variant to enable a single class to support use in a command list that is intended for any of the surface types rather than have three separate classes.
+The user-defined function is stored in a variant to avoid having three separate classes that essentially provide the same functionality.
 \end{note}
 
 \pnum
@@ -44,18 +44,18 @@ namespace @\fullnamespace{}@ {
     // \ref{\iotwod.cmdlists.runfunc.ctor}, construct:
     run_function(const function<void(basic_image_surface<GraphicsSurfaces>&, 
       optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
-      void*)>& fn, void* user_data, 
+      void*)>& fn, void* ud, 
       optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> sfc) 
       noexcept;
     run_function(const function<void(basic_output_surface<GraphicsSurfaces>&, 
       optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
-      void*)>& fn, void* user_data, 
+      void*)>& fn, void* ud, 
       optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> sfc) 
       noexcept;
     run_function(
       const function<void(basic_unmanaged_output_surface<GraphicsSurfaces>&, 
       optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
-      void*)>& fn, void* user_data, 
+      void*)>& fn, void* ud, 
       optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> sfc) 
       noexcept;
     
@@ -110,14 +110,29 @@ namespace @\fullnamespace{}@ {
 
 \indexlibrary{\idxcode{run_function}!constructor}%
 \begin{itemdecl}
-run_function();
+run_function(const function<void(basic_image_surface<GraphicsSurfaces>&, 
+  optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+  void*)>& fn, void* ud, 
+  optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> sfc) 
+  noexcept;
+run_function(const function<void(basic_output_surface<GraphicsSurfaces>&, 
+  optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+  void*)>& fn, void* ud, 
+  optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> sfc) 
+  noexcept;
+run_function(
+  const function<void(basic_unmanaged_output_surface<GraphicsSurfaces>&, 
+  optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+  void*)>& fn, void* ud, 
+  optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>> sfc) 
+  noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
 \effects Constructs an object of type \tcode{run_function}.
 
 \pnum
-\postconditions \tcode{data() == GraphicsSurfaces::surfaces::create_run_function()}.
+\postconditions \tcode{data() == GraphicsSurfaces::surfaces::create_run_function(fn, ud, sfc)}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.cmdlists.runfunc.acc] {Accessors}%
@@ -148,6 +163,39 @@ void surface(
 \remarks The optional surface is \tcode{sfc}.
 \end{itemdescr}
 
+\indexlibrarymember{func}{run_function}%
+\begin{itemdecl}
+void func(const function<void(basic_image_surface<GraphicsSurfaces>&, 
+  optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+  void*)>& fn) noexcept;
+void func(const function<void(basic_output_surface<GraphicsSurfaces>&, 
+  optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+  void*)>& fn) noexcept;
+void func(
+  const function<void(basic_unmanaged_output_surface<GraphicsSurfaces>&, 
+  optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+  void*)>& fn) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::func(data(), fn)}.
+
+\pnum
+\remarks The user-defined function holds \tcode{fn} as its value.
+\end{itemdescr}
+
+\indexlibrarymember{user_data}{run_function}%
+\begin{itemdecl}
+void user_data(void* ud) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::user_data(data(), ud)}.
+
+\pnum
+\remarks The user data is \tcode{ud}.
+\end{itemdescr}
+
 \rSec1 [\iotwod.cmdlists.runfunc.obs] {Observers}%
 
 \indexlibrarymember{surface}{run_function}%
@@ -162,6 +210,38 @@ optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>
 \pnum
 \remarks
 The returned value is the optional surface.
+\end{itemdescr}
+
+\indexlibrarymember{func}{run_function}%
+\begin{itemdecl}
+const variant<function<void(basic_image_surface<GraphicsSurfaces>&, 
+  optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+  void*)>, function<void(basic_output_surface<GraphicsSurfaces>&, 
+  optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+  void*)>, function<void(basic_unmanaged_output_surface<GraphicsSurfaces>&, 
+  optional<reference_wrapper<basic_image_surface<GraphicsSurfaces>>>, 
+  void*)>>& func() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::func(data())}.
+
+\pnum
+\remarks
+The returned value is the user-defined function.
+\end{itemdescr}
+
+\indexlibrarymember{user_data}{run_function}%
+\begin{itemdecl}
+void* user_data() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::surfaces::user_data(data())}.
+
+\pnum
+\remarks
+The returned value is the user data.
 \end{itemdescr}
 
 \rSec1 [\iotwod.cmdlists.runfunc.eq] {Equality operators}%

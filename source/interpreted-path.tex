@@ -1,14 +1,14 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.pathgroup] {Class \tcode{basic_interpreted_path}}
+\rSec0 [\iotwod.pathgroup] {Class template \tcode{basic_interpreted_path}}
 
 \rSec1 [\iotwod.pathgroup.intro] {Overview}
 
 \pnum
 \indexlibrary{\idxcode{basic_interpreted_path}}%
-The class \tcode{basic_interpreted_path} contains the data that result from interpreting (\ref{\iotwod.paths.interpretation}) a sequence of \tcode{figure_items::figure_item} objects.
+The class template \tcode{basic_interpreted_path} contains the data that result from interpreting (\ref{\iotwod.paths.interpretation}) a sequence of \tcode{basic_figure_items<GraphicsSurfaces>::figure_item} objects.
 
 \pnum
-The data are stored in an object of type \tcode{typename GraphicsSurfaces::surface_state_props::interpreted_path_data_type}. It is accessible using the \tcode{data} member function.
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::paths::interpreted_path_data_type}. It is accessible using the \tcode{data} member function.
 
 \pnum
 A \tcode{basic_interpreted_path} object is used by most rendering and composing operations.
@@ -21,7 +21,7 @@ namespace @\fullnamespace{}@ {
   class basic_interpreted_path {
   public:
     using data_type = typename 
-      @\graphicssurfacestemplparamnospace{}@::surface_state_props::interpreted_path_data_type;
+      @\graphicssurfacestemplparamnospace{}@::paths::interpreted_path_data_type;
       
     // \ref{\iotwod.pathgroup.ctor}, construct:
     basic_interpreted_path() noexcept;
@@ -35,7 +35,7 @@ namespace @\fullnamespace{}@ {
     explicit basic_interpreted_path(@\stdqualifier{}@initializer_list<typename
       basic_figure_items<@\graphicssurfacestemplparamnospace{}@>::figure_item>> il);    
     
-    // \ref{\iotwod.clipprops.acc}, accessors:
+    // \ref{\iotwod.pathgroup.acc}, accessors:
     const data_type& data() const noexcept;
   };
 }
@@ -75,10 +75,10 @@ explicit basic_interpreted_path(const basic_path_builder<GraphicsSurfaces, Alloc
 \begin{itemdescr}
 \pnum
 \effects
-Equivalent to: \tcode{basic_interpreted_path\{ begin(pb), end(pb) \};}.	
+Equivalent to: \tcode{basic_interpreted_path\{ begin(pb), end(pb) \}}.	
 \end{itemdescr}
 
-\indexlibrary{\idxcode{interpreted_path}!constructor}%
+\indexlibrary{\idxcode{basic_interpreted_path}!constructor}%
 \begin{itemdecl}
 template <class InputIterator>
 basic_interpreted_path(InputIterator first, InputIterator last);
@@ -86,10 +86,16 @@ basic_interpreted_path(InputIterator first, InputIterator last);
 \begin{itemdescr}
 \pnum
 \effects
-Constructs an object of type \tcode{interpreted_path}.
+Constructs an object of type \tcode{basic_interpreted_path}.
 
 \pnum
+\postconditions
+\tcode{data() == \graphicssurfacestemplparamnospace{}::paths::create_interpreted_path(first, last)}.
+
+\pnum
+\begin{note}
 The contained path is as-if it was the result of interpreting a path containing the values of the elements from \tcode{first} to the last element before \tcode{last}.
+\end{note}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{basic_interpreted_path}!constructor}%
@@ -100,7 +106,7 @@ explicit basic_interpreted_path(@\stdqualifier{}@initializer_list<typename
 \begin{itemdescr}
 \pnum
 \effects
-<TODO>
+Equivalent to \tcode{basic_interpreted_path\{ il.begin(), il.end() \}}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.pathgroup.acc] {Accessors}
