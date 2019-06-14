@@ -1,0 +1,107 @@
+%!TEX root = io2d.tex
+\rSec0 [\iotwod.commandlist] {Class template \tcode{basic_command_list}}
+
+\rSec1 [\iotwod.commandlist.intro] {Overview}
+
+\pnum
+\indexlibrary{\idxcode{basic_command_list}}%
+The class template \tcode{basic_command_list<\graphicssurfacestemplparamnospace{}>} contains the data that results from a back end pre-compiling (interpreting) a sequence of \tcode{basic_commands<\graphicssurfacestemplparamnospace{}>::command_item} objects.
+
+\pnum
+The data are stored in an object of type \tcode{typename \graphicssurfacestemplparamnospace{}::surfaces::command_list_data_type}. It is accessible using the \tcode{data} member function.
+
+\rSec1 [\iotwod.commandlist.synopsis] {\tcode{basic_command_list} synopsis}
+
+\begin{codeblock}
+namespace @\fullnamespace{}@ {
+  template <class @\graphicssurfacestemplparamnospace{}@>
+  class basic_command_list {
+  public:
+    using data_type = typename 
+      @\graphicssurfacestemplparamnospace{}@::surfaces::command_list_data_type;
+      
+    // \ref{\iotwod.commandlist.ctor}, construct:
+    basic_command_list() noexcept;
+    template <class InputIterator>
+    basic_command_list(InputIterator first, InputIterator last);
+    explicit basic_command_list(@\stdqualifier{}@initializer_list<typename
+      basic_commands<@\graphicssurfacestemplparamnospace{}@>::command_item>> il);    
+    
+    // \ref{\iotwod.commandlist.acc}, accessors:
+    const data_type& data() const noexcept;
+  };
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.commandlist.ctor] {\tcode{basic_command_list} constructors}
+
+\indexlibrary{\idxcode{basic_command_list}!constructor}%
+\begin{itemdecl}
+basic_command_list() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\pnum
+\effects
+Constructs an object of type \tcode{basic_command_list}.
+
+\pnum
+\postconditions
+\tcode{data() == \graphicssurfacestemplparamnospace{}::surfaces::create_command_list()}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{basic_command_list}!constructor}%
+\begin{itemdecl}
+explicit basic_command_list(const basic_bounding_box<@\graphicsmathtemplparamnospace{}@>& bb);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{basic_command_list}.
+
+\pnum
+\postconditions
+\tcode{data() == \graphicssurfacestemplparamnospace{}::surfaces::create_command_list()}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{basic_command_list}!constructor}%
+\begin{itemdecl}
+template <class InputIterator>
+basic_command_list(InputIterator first, InputIterator last);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{basic_command_list}.
+
+\pnum
+\postconditions
+\tcode{data() == \graphicssurfacestemplparamnospace{}::surfaces::create_command_list(first, last)}.
+
+\pnum
+\begin{note}
+The contained data is the result of the back end pre-compiling the series of objects of type \tcode{basic_commands<GraphicsSurfaces>::command_item} from \tcode{first} to the last element before \tcode{last}.
+\end{note}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{basic_command_list}!constructor}%
+\begin{itemdecl}
+explicit basic_command_list(@\stdqualifier{}@initializer_list<typename
+  basic_commands<GraphicsSurfaces>::command_item> il);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Equivalent to: \tcode{basic_command_list\{ il.begin(), il.end() \}}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.commandlist.acc] {Accessors}
+
+\indexlibrarymember{data}{basic_command_list}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{basic_command_list} object's data object (See: \ref{\iotwod.commandlist.intro}).
+\end{itemdescr}

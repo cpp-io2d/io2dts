@@ -1,0 +1,30 @@
+%!TEX root = io2d.tex
+
+\rSec0 [\iotwod.text.weight] {Enum class \tcode{font_weight}}
+
+\rSec1 [\iotwod.text.weight.summary] {\tcode{font_weight} summary}
+
+\pnum
+The \tcode{font_weight} enum class indicates the visual weight (degree of blackness or thickness of strokes) of the characters in a font. The names of the enumerators correspond to the names of the \term{usWeightClass} values in the \term{OS/2} table described in the OFF Font Format and represent the same meaning as their counterparts in the OFF Font Format.
+
+\pnum
+The names of the enumerators substitute _ for - in order to conform to \Cpp{} syntax.
+
+\rSec1 [\iotwod.text.weight.synopsis] {\tcode{font_weight} synopsis}
+
+\indexlibrary{\idxcode{font_weight}}
+\begin{codeblock}
+namespace @\fullnamespace{}@ {
+  enum class font_weight {
+    thin,
+    extra_light,
+    light,
+    normal,
+    medium,
+    semi_bold,
+    bold,
+    extra_bold,
+    black
+  };
+}
+\end{codeblock}

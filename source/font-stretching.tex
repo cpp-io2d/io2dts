@@ -1,0 +1,32 @@
+%!TEX root = io2d.tex
+
+\rSec0 [\iotwod.text.stretching] {Enum class \tcode{font_stretching}}
+
+\rSec1 [\iotwod.text.stretching.summary] {\tcode{font_stretching} summary}
+
+\pnum
+The \tcode{font_stretching} enum class indicates a relative change from the normal aspect ratio (width to height ratio) as specified by a
+font designer for the glyphs in a font. The names of the enumerators correspond to the names of the \term{usWidthClass} values in the \term{OS/2} table described in the OFF Font Format and represent the same meaning as their counterparts in the OFF Font Format.
+
+\pnum
+The names of the enumerators substitute _ for - in order to conform to \Cpp{} syntax.
+
+\rSec1 [\iotwod.text.stretching.synopsis] {\tcode{font_stretching} synopsis}
+
+\indexlibrary{\idxcode{font_stretching}}
+\begin{codeblock}
+namespace @\fullnamespace{}@ {
+  enum class font_stretching {
+    ultra_condensed = 1,
+    extra_condensed,
+    condensed,
+    semi_condensed,
+    medium,
+    normal = medium,
+    semi_expanded,
+    expanded,
+    extra_expanded,
+    ultra_expanded
+  };
+}
+\end{codeblock}

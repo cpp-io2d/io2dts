@@ -2,7 +2,30 @@
 
 \rSec0 [\iotwod.text] {Text rendering and display}
 
+%\pnum
+%\begin{note}
+%Text rendering and matters related to it, such as font support, will be added at a later date. This section is a placeholder. The integration of text rendering is expected to result in the addition of member functions to the surface class templates and changes to other parts of the text.
+%\end{note}
+
+\rSec1 [\iotwod.text.intro] {Intro}
+
 \pnum
-\begin{note}
-Text rendering and matters related to it, such as font support, will be added at a later date. This section is a placeholder. The integration of text rendering is expected to result in the addition of member functions to the surface class templates and changes to other parts of the text.
-\end{note}
+For an overview of how text rendering works, see \ref{\iotwod.surface.textrendering}.
+
+\pnum
+Several enum classes and class template are used in the process of text rendering. These are defined here.
+
+\addtocounter{SectionDepthBase}{1}
+\input{font-size-units}
+\input{font-weight}
+\input{font-capitalization}
+\input{font-hinting}
+\input{font-stretching}
+\input{font-style}
+\input{font-line}
+\input{font-antialias}
+\input{generic-font-names}
+\input{text-props}
+\input{font}
+\input{font-database}
+\addtocounter{SectionDepthBase}{-1}

@@ -1,0 +1,52 @@
+%!TEX root = io2d.tex
+
+\rSec0 [\iotwod.text.style] {Enum class \tcode{font_style}}
+
+\rSec1 [\iotwod.text.style.summary] {\tcode{font_style} summary}
+
+\pnum
+The \tcode{font_style} enum class specifies that a specific font pattern shall be used. If this font pattern is not available in the requested font family, a similar font family that contains a font face with this font pattern shall be used when creating the \tcode{basic_font} object.
+%The names of the enumerators correspond to the names of the \term{usWidthClass} values in the \term{OS/2} table described in the OFF Font Format and represent the same meaning as their counterparts in the OFF Font Format.
+
+\rSec1 [\iotwod.text.style.synopsis] {\tcode{font_style} synopsis}
+
+\indexlibrary{\idxcode{font_stretching}}
+\begin{codeblock}
+namespace @\fullnamespace{}@ {
+  enum class font_style {
+    normal,
+    italic,
+    oblique
+  };
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.text.style.enumerators] {\tcode{font_style} enumerators}
+
+\pnum
+All enumerators are defined in terms of bit flags set in the \term{fsSelection} value of the \tcode{OS/2} table of the font.
+
+\begin{libreqtab2}
+ {\tcode{antialias} enumerator meanings}
+ {tab:\iotwod.antialias.meanings}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endhead
+ \tcode{normal}
+ & A font face with bit 6 (REGULAR) set to 1.
+ \\ \rowsep
+ \tcode{italic}
+ & A font face with bit 0 (ITALIC) set to 1.
+ \\ \rowsep
+ \tcode{oblique}
+ & A font face with bit 9 (OBLIQUE) set to 1 or bit 1 (ITALIC) set to 1, with font rendering preference given to the font face that has bit 9 set to 1 if both font faces are present.
+ \\
+\end{libreqtab2}

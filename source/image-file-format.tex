@@ -19,7 +19,8 @@ namespace @\fullnamespace{}@ {
     unknown,
     png,
     jpeg,
-    tiff
+    tiff,
+    svg
   };
 }
 \end{codeblock}
@@ -27,7 +28,7 @@ namespace @\fullnamespace{}@ {
 \rSec1 [\iotwod.imagefileformat.enumerators] {\tcode{image_file_format} enumerators}
 
 \begin{libreqtab2}
- {\tcode{imagefileformat} enumerator meanings}
+ {\tcode{image_file_format} enumerator meanings}
  {tab:\iotwod.imagefileformat.meanings}
  \\ \topline
  \lhdr{Enumerator}
@@ -42,14 +43,17 @@ namespace @\fullnamespace{}@ {
  \endhead
  \tcode{unknown}
  & The format is unknown because it is not an image file format that is required to be supported. It may be known and supported by the implementation.
- \\
+ \\ \rowsep
  \tcode{png}
  & The PNG format.
- \\
+ \\ \rowsep
  \tcode{jpeg}
  & The JPEG format.
- \\
+ \\ \rowsep
  \tcode{tiff}
  & The TIFF format.
+ \\ \rowsep
+ \tcode{svg}
+ & The SVG 1.1 Standard format.
  \\
 \end{libreqtab2}

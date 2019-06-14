@@ -1,0 +1,31 @@
+%!TEX root = io2d.tex
+
+\rSec0 [\iotwod.text.genericfonts] {Enum class generic_font_names}
+
+\rSec1 [\iotwod.antialias.summary] {\tcode{antialias} summary}
+
+\pnum
+The \tcode{generic_font_names} enum class specifies font names that correspond to \term{generic font families} found in the CSS Fonts Specification. A font created using a \tcode{generic_font_names} enumerator shall meet the requirements for a generic font family of the same name as specified in the CSS Fonts Specification.
+
+\pnum
+A \tcode{basic_font} object constructed using a \tcode{generic_font_names} enumerator shall return the name of the enumerator as a \tcode{string} object when its \tcode{family} member function is called.
+
+\pnum
+\begin{note}
+As per the specification, multiple font families might be required to be used when using a \tcode{basic_font} object that is constructed using a \tcode{generic_font_names} enumerator in order to meet the specifications. Because of this, the \tcode{basic_font} object returns the enumerator name when its \tcode{family} member function is called rather than a more specific font family name.
+\end{note}
+
+\rSec1 [\iotwod.text.genericfonts.synopsis] {\tcode{antialias} synopsis}
+
+\indexlibrary{\idxcode{antialias}}%
+\begin{codeblock}
+namespace @\fullnamespace{}@ {
+  enum class generic_font_names {
+    serif,
+    sans_serif,
+    cursive,
+    fantasy,
+    monospace
+  };
+}
+\end{codeblock}
