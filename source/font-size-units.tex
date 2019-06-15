@@ -7,6 +7,20 @@
 \pnum
 The \tcode{font_size_units} enum class specifies the measurement units used to interpret a font size value.
 
+\pnum
+Glyph data in a font is specified in \term{font size units}. The area in which the glyph data is defined is known as an \term{em box}, which is a two-dimensional square. The number of font size units that make up the length of a side of the em box, an \term{em}, is defined by the \term{unitsPerEm} value contained in the font's \term{head} table. Acceptable values for one em are between \crange{16}{16384}.
+
+\pnum
+When a glyph is rendered, the font size unit coordinates are converted to ems by dividing 1 by em and multiplying the result by the coordinate value. This is then multiplied by the \term{interpreted font size} value to get the coordinates in surface space. The method for turning a font size value into an interpreted font size value is specified by the \tcode{font_size_units} enumerators.
+
+\pnum
+\begin{note}
+While glyphs are defined in terms of 
+\end{note}
+
+\pnum
+The \tcode{font_size_units} enumerators 
+
 \rSec1 [\iotwod.text.sizeunits.synopsis] {\tcode{font_size_units} synopsis}
 
 \indexlibrary{\idxcode{font_size_units}}
@@ -36,9 +50,14 @@ namespace @\fullnamespace{}@ {
  \\ \capsep
  \endhead
  \tcode{points}
- & TODO
+ & The interpreted font size value $\frac{1}{6}$ of an inch. This relies on the PPI of the surface. The default value for a \tcode{basic_image_surface} is \tcode{96}. This can be changed by calling the \tcode{ppi} member function of the \tcode{basic_image_surface} object. The default PPI values for other surface types is environment-specific and as such is unspecified. Users must query those surfaces to determine their PPI value.
  \\ \rowsep
  \tcode{pixels}
- & TODO
+ & The interpreted font size value is the same as the font size value.
  \\
 \end{libreqtab2}
+
+\pnum
+\begin{note}
+ The PPI of output surfaces varies greatly depending on the device on which the program is running. Common values currently range anywhere from 96 to 300+. The value can even change when an output surface is moved from one output device to another or when settings are changed on the existing output device. This is a difficult issue to deal with even when writing programs using environment-specific APIs. Using a \tcode{basic_image_surface} and setting its PPI to the current value of the output surface can help alleviate these problems, but if the PPI of the output surface changes, or if no adjustment from the default value is made, the resulting scaling will likely produce text that appears fuzzy or heavily pixelated depending on the parameters used when text rendering occurs.
+ \end{note}

@@ -2,15 +2,19 @@
 
 \rSec0 [\iotwod.text] {Text rendering and display}
 
-%\pnum
-%\begin{note}
-%Text rendering and matters related to it, such as font support, will be added at a later date. This section is a placeholder. The integration of text rendering is expected to result in the addition of member functions to the surface class templates and changes to other parts of the text.
-%\end{note}
-
 \rSec1 [\iotwod.text.intro] {Intro}
 
 \pnum
 For an overview of how text rendering works, see \ref{\iotwod.surface.textrendering}.
+
+\pnum
+Text rendering and display makes use of the OFF Font Format. No other font formats are supported at this time.
+
+\pnum
+References made to a font's tables refer to the tables contained in the font's OFF Font Format.
+
+\pnum
+Text rendering and display uses UTF-8 encoded text contained in a \tcode{string} object. Attempting to use text in a different encoding results in undefined behavior.
 
 \pnum
 Several enum classes and class template are used in the process of text rendering. These are defined here.

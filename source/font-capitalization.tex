@@ -1,3 +1,55 @@
 %!TEX root = io2d.tex
 
 \rSec0 [\iotwod.text.caps] {Enum class \tcode{font_capitalization}}
+
+\rSec1 [\iotwod.text.caps.summary] {\tcode{font_capitalization} summary}
+
+\pnum
+The \tcode{font_capitalization} enum class specifies that text should be rendered in a particular capitalization style. This value is ignored for text that is not in a bicameral script (i.e. those without case differences).
+
+\pnum
+Where the font that is being used provides small capital glyphs, glyph substitution shall be performed to replace lower case character glyphs with  their small capital glyph counterparts as specified by the font.
+
+\pnum
+Where the font that is being used does not provide separate small capital glyphs, small capitals shall be emulated by using uppercase character glyphs to replace their lowercase character glyph counterparts and then modifying the rendering of those replacement glyphs such that they are shorter than ordinary capital glyphs. The rendering method for shortening such glyphs is unspecified. In the case of emulation, it is recommended that the scaled height of the small capitals be the ratio of the \term{sxHeight} to the \term{sCapHeight} as specified in the \term{OS/2} table of the font.
+
+\pnum
+\begin{note}
+To achieve a better look with emulation, in addition to scaling down the uppercase glyphs, using an increased weight (boldness) is often beneficial.
+\end{note}
+
+\rSec1 [\iotwod.text.caps.synopsis] {\tcode{font_capitalization} synopsis}
+
+\indexlibrary{\idxcode{font_capitalization}}
+\begin{codeblock}
+namespace @\fullnamespace{}@ {
+  enum class font_capitalization {
+    normal,
+    small_caps
+  };
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.text.caps.enumerators] {\tcode{font_capitalization} enumerators}
+
+\begin{libreqtab2}
+ {\tcode{font_capitalization} enumerator meanings}
+ {tab:\iotwod.text.caps.meanings}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endhead
+ \tcode{normal}
+ & No change in rendering results from this enumerator value.
+ \\ \rowsep
+ \tcode{small_caps}
+ & The text is rendered with small capitals replacing lowercase characters.
+ \\
+\end{libreqtab2}
