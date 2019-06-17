@@ -1,3 +1,83 @@
 %!TEX root = io2d.tex
 
 \rSec0 [\iotwod.text.fontdb] {Class template \tcode{basic_font_database}}
+
+\rSec1 [\iotwod.text.fontdb.summary] {\tcode{basic_font_database} summary}
+
+\pnum
+\indexlibrary{\idxcode{basic_font_database}}%
+The \tcode{basic_font_database} class provides a way to get a list of all font families available in the environment the program is running in.
+
+\pnum
+It has no public data.
+
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::text::font_database_data_type}. It is accessible using the \tcode{data} member function.
+
+\rSec1 [\iotwod.text.fontdb.matching]{\tcode{basic_font_database} matching}
+
+\rSec1 [\iotwod.text.fontdb.synopsis] {\tcode{basic_font_database} synopsis}
+
+\begin{codeblock}
+namespace @\fullnamespace{}@ {
+  template <class GraphicsSurfaces>
+  class basic_font_database {
+  public:
+    using data_type = typename GraphicsSurfaces::text::font_database_data_type;
+
+    // \ref{\iotwod.text.fontdb.ctor}, construct:
+    basic_font_database();
+
+    // \ref{\iotwod.text.fontdb.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+
+    // \ref{\iotwod.text.fontdb.obs}, observers:
+    vector<string> get_families() const noexcept;
+  };
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.text.fontdb.ctor] {\tcode{basic_font_database} constructor}
+
+\indexlibrary{\idxcode{basic_font_database}!constructor}%
+\begin{itemdecl}
+basic_font_database();
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Constructs an object of type \tcode{basic_font_database}.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::text::create_font_database()}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.text.fontdb.acc] {Accessors}%
+
+\indexlibrarymember{data}{basic_font_database}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{basic_font_database} object's data object (See: \ref{\iotwod.cmdlists.mask.intro}).
+
+\pnum
+\remarks The behavior of a program is undefined if the user modifies the data contained in the \tcode{data_type} object returned by this function.
+\end{itemdescr}
+
+\rSec1 [\iotwod.text.fontdb.obs] {\tcode{basic_font_database} observers}
+
+\indexlibrarymember{get_families}{basic_font_database}%
+\begin{itemdecl}
+vector<string> get_families() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::text::get_families(data())}.
+
+\pnum
+\remarks
+The returned value is a collection containing the names of all font families available in the environment the program is running in.
+\end{itemdescr}
