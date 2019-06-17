@@ -1,3 +1,293 @@
 %!TEX root = io2d.tex
 
 \rSec0 [\iotwod.text.textprops] {Class template \tcode{basic_text_props}}
+
+\rSec1 [\iotwod.text.textprops.summary] {\tcode{basic_text_props} summary}
+
+\pnum
+\indexlibrary{\idxcode{basic_text_props}}%
+The \tcode{basic_text_props} class provides general state information that is applicable to the text rendering rendering and composing operations (\ref{\iotwod.surface.rendering}).
+
+\pnum
+It has a \term{scale} of type \tcode{float}, a \term{font size} of type \tcode{float}, a \term{size units type} of type \tcode{font_size_unit}, a \term{kerning value} of type \tcode{bool}, an \term{anti-aliasing value} of type \tcode{font_antialias}, a \term{stretch value} of type \tcode{font_stretching}, a \term{strike through value} of type \tcode{bool}, and a \term{font line value} of type \tcode{font_line}.
+%, a \tcode{letter spacing} of type \tcode{float}, and a \term{word spacing} of type \tcode{float}.
+
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::text::text_props_data_type}. It is accessible using the \tcode{data} member function.
+
+\rSec1 [\iotwod.text.textprops.synopsis] {\tcode{basic_text_props} synopsis}
+
+\begin{codeblock}
+namespace @\fullnamespace{}@ {
+  template <class GraphicsSurfaces>
+  class basic_text_props {
+  public:
+    using data_type = typename GraphicsSurfaces::text::text_props_data_type;
+
+    // \ref{\iotwod.text.textprops.ctor}, construct:
+    basic_text_props(float scl = 1.0f,
+      font_size_units fsu = font_size_units::points,
+      float sz = -1.0f,
+      bool kern = true,
+      font_antialias aa = font_antialias::antialias,
+      font_stretching stretch = font_stretching::normal,
+      bool strike = false,
+      font_line fl = font_line::none) noexcept;
+
+    // \ref{\iotwod.text.textprops.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+
+    // \ref{\iotwod.text.textprops.mod}, modifiers:
+    void scale(float s) noexcept;
+    void font_size(font_size_units fsu, float sz) noexcept;
+    void kerning(bool k) noexcept;
+    void antialiasing(font_antialias aa) noexcept;
+    void stretching(font_stretching fs) noexcept;
+    void strike_through(bool st) noexcept;
+    void line(font_line fl) noexcept;
+
+    // \ref{\iotwod.text.textprops.obs}, observers:
+    float scale() const noexcept;
+    float font_size() const noexcept;
+    font_size_units size_units() const noexcept;
+    bool kerning() const noexcept;
+    font_antialias antialiasing() const noexcept;
+    font_stretching stretching() const noexcept;
+    bool strike_through() const noexcept;
+    font_line line() const noexcept;
+  };
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.text.textprops.ctor] {\tcode{basic_text_props} constructor}
+
+\indexlibrary{\idxcode{basic_text_props}!constructor}%
+\begin{itemdecl}
+basic_text_props(float scl = 1.0f,
+  font_size_units fsu = font_size_units::points,
+  float sz = -1.0f,
+  bool kern = true,
+  font_antialias aa = font_antialias::antialias,
+  font_stretching stretch = font_stretching::normal,
+  bool strike = false,
+  font_line fl = font_line::none) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Constructs an object of type \tcode{basic_text_props}.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::text::create_text_props(scl, fsu, sz, kern, aa, stretch, strike, fl)}.
+
+\pnum
+The scale is \tcode{scl}. The size units type is \tcode{fsu}. The font size is \tcode{sz}. The kerning value is \tcode{kern}. The anti-aliasing value is \tcode{aa}. The stretch value is \tcode{stretch}. The strike through value is \tcode{strike}. The font line value is \tcode{fl}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.text.textprops.acc] {Accessors}%
+
+\indexlibrarymember{data}{mask}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{mask} object's data object (See: \ref{\iotwod.cmdlists.mask.intro}).
+
+\pnum
+\remarks The behavior of a program is undefined if the user modifies the data contained in the \tcode{data_type} object returned by this function.
+\end{itemdescr}
+
+\rSec1 [\iotwod.text.textprops.mod] {\tcode{basic_text_props} modifiers}
+
+\indexlibrarymember{scale}{basic_text_props}%
+\begin{itemdecl}
+void scale(float scl) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::text::scale(data(), scl)}.
+
+\pnum
+\remarks The scale is \tcode{scl}.
+\end{itemdescr}
+
+\indexlibrarymember{font_size}{basic_text_props}%
+\begin{itemdecl}
+void font_size(font_size_units fsu, float sz) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::text::font_size(data(), fsu, sz)}.
+
+\pnum
+\remarks The size units type is \tcode{fsu}. The font size is \tcode{sz}.
+\end{itemdescr}
+
+\indexlibrarymember{kerning}{basic_text_props}%
+\begin{itemdecl}
+void kerning(bool k) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::text::kerning(data(), k)}.
+
+\pnum
+\remarks The kerning value is \tcode{k}.
+\end{itemdescr}
+
+\indexlibrarymember{antialiasing}{basic_text_props}%
+\begin{itemdecl}
+void antialiasing(font_antialias aa) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::text::antialiasing(data(), aa)}.
+
+\pnum
+\remarks The anti-aliasing value is \tcode{aa}.
+\end{itemdescr}
+
+\indexlibrarymember{stretching}{basic_text_props}%
+\begin{itemdecl}
+void stretching(font_stretching fs) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::text::stretching(data(), fs)}.
+
+\pnum
+\remarks The stretch value is \tcode{fs}.
+\end{itemdescr}
+
+\indexlibrarymember{strike_through}{basic_text_props}%
+\begin{itemdecl}
+void strike_through(bool st) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::text::strike_through(data(), st)}.
+
+\pnum
+\remarks The strike through value is \tcode{st}.
+\end{itemdescr}
+
+\indexlibrarymember{line}{basic_text_props}%
+\begin{itemdecl}
+void line(font_line fl) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::text::line(data(), fl)}.
+
+\pnum
+\remarks The font line value is \tcode{fl}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.text.textprops.obs] {\tcode{basic_text_props} observers}
+
+\indexlibrarymember{scale}{basic_text_props}%
+\begin{itemdecl}
+float scale() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::text::scale(data())}.
+
+\pnum
+\remarks
+The returned value is the scale.
+\end{itemdescr}
+
+\indexlibrarymember{font_size}{basic_text_props}%
+\begin{itemdecl}
+float font_size() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::text::font_size(data())}.
+
+\pnum
+\remarks
+The returned value is the font size.
+\end{itemdescr}
+
+\indexlibrarymember{size_units}{basic_text_props}%
+\begin{itemdecl}
+font_size_units size_units() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::text::size_units(data())}.
+
+\pnum
+\remarks
+The returned value is the size units type.
+\end{itemdescr}
+
+\indexlibrarymember{kerning}{basic_text_props}%
+\begin{itemdecl}
+bool kerning() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::text::kerning(data())}.
+
+\pnum
+\remarks
+The returned value is the kerning value.
+\end{itemdescr}
+
+\indexlibrarymember{antialiasing}{basic_text_props}%
+\begin{itemdecl}
+font_antialias antialiasing() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::text::antialiasing(data())}.
+
+\pnum
+\remarks
+The returned value is the anti-aliasing value.
+\end{itemdescr}
+
+\indexlibrarymember{stretching}{basic_text_props}%
+\begin{itemdecl}
+font_stretching stretching() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::text::stretching(data())}.
+
+\pnum
+\remarks
+The returned value is the stretch value.
+\end{itemdescr}
+
+\indexlibrarymember{strike_through}{basic_text_props}%
+\begin{itemdecl}
+bool strike_through() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::text::strike_through(data())}.
+
+\pnum
+\remarks
+The returned value is the strike through value.
+\end{itemdescr}
+
+\indexlibrarymember{line}{basic_text_props}%
+\begin{itemdecl}
+font_line line() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::text::line(data())}.
+
+\pnum
+\remarks
+The returned value is the font line value.
+\end{itemdescr}

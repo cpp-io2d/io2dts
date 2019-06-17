@@ -1,3 +1,76 @@
 %!TEX root = io2d.tex
 
 \rSec0 [\iotwod.text.antialias] {Enum class font_antialias}
+
+\rSec1 [\iotwod.text.antialias.summary] {\tcode{font_antialias} summary}
+
+\pnum
+The \tcode{font_antialias} enum class specifies whether or not text should be anti-aliased when rendered. Excluding the \tcode{font_antialias::none} enumerator, all enumerators specify preferences.
+
+\pnum
+Subpixel antialiasing takes advantage of the fact that most modern displays use pixels that have a red, a green, and a blue subcomponent. By manipulating which of these subcomponents are turned on for each pixel, the resulting text will appear to have less aliasing while retaining the intended color of the text as rendered when viewed by the user of the program.
+
+\pnum
+Gray anti-aliasing uses varying shades of the color that the text is to be rendered with for pixels that are rendered and certain pixels that surround pixels that would be rendered if no anti-aliasing were performed in order to reduce aliasing. If a non-solid color brush is used, implementations may ignore this type of anti-aliasing even if they are otherwise capable of performing it.
+
+\pnum
+\begin{note}
+With gray anti-aliasing, as examples, when the text is rendered as white, shades of gray would be used. When the text is rendered as green, shades of green would be used.
+\end{note}
+
+\pnum
+\begin{note}
+Anti-aliasing may not be available in certain environments, for certain font families, or in other circumstances, but it is always possible to not perform anti-aliasing.
+\end{note}
+
+\rSec1 [\iotwod.text.antialias.synopsis] {\tcode{font_antialias} synopsis}
+
+\indexlibrary{\idxcode{font_antialias}}
+\begin{codeblock}
+namespace @\fullnamespace{}@ {
+  enum class font_antialias {
+    none,
+    antialias,
+    gray,
+    subpixel,
+    prefer_gray,
+    prefer_subpixel
+  };
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.text.antialias.enumerators] {\tcode{font_antialias} enumerators}
+
+\begin{libreqtab2}
+ {\tcode{font_antialias} enumerator meanings}
+ {tab:\iotwod.text.antialias.meanings}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endhead
+ \tcode{none}
+ & Do not anti-alias text when rendering
+ \\ \rowsep
+ \tcode{antialias}
+ & Prefer anti-aliasing, leaving it up to the implementation to decide on gray vs. subpixel.
+ \\ \rowsep
+ \tcode{gray}
+ & Use gray anti-aliasing if available, otherwise none.
+ \\ \rowsep
+ \tcode{subpixel}
+ & Use subpixel anti-aliasing if available, otherwise none.
+ \\ \rowsep
+ \tcode{prefer_gray}
+ & Prefer gray anti-aliasing if available, otherwise use subpixel if available.
+ \\ \rowsep
+ \tcode{prefer_subpixel}
+ & Prefer subpixel anti-aliasing if available, otherwise use gray if available.
+ \\
+\end{libreqtab2}

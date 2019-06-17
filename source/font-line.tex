@@ -1,3 +1,44 @@
 %!TEX root = io2d.tex
 
 \rSec0 [\iotwod.text.line] {Enum class \tcode{font_line}}
+
+\rSec1 [\iotwod.text.line.summary] {\tcode{font_line} summary}
+
+\pnum
+The \tcode{font_line} enum class specifies whether or not text should be underlined when rendered.
+
+\rSec1 [\iotwod.text.line.synopsis] {\tcode{font_line} synopsis}
+
+\indexlibrary{\idxcode{font_line}}
+\begin{codeblock}
+namespace @\fullnamespace{}@ {
+  enum class font_line {
+    none,
+    underline
+  };
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.text.line.enumerators] {\tcode{font_line} enumerators}
+
+\begin{libreqtab2}
+ {\tcode{font_line} enumerator meanings}
+ {tab:\iotwod.text.line.meanings}
+ \\ \topline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endfirsthead
+ \continuedcaption\\
+ \hline
+ \lhdr{Enumerator}
+ & \rhdr{Meaning}
+ \\ \capsep
+ \endhead
+ \tcode{none}
+ & No underlining is performed when rendering text.
+ \\ \rowsep
+ \tcode{underline}
+ & Underlining is performed when rendering text.
+ \\
+\end{libreqtab2}
