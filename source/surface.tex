@@ -357,7 +357,7 @@ In windowing environments, implementations would likely support multiple objects
 It is not required that implementations support the existence of any \tcode{basic_unmanaged_output_surface} objects. See Table~\ref{tab:\iotwod.graphsurf.surfs.requirementstab}.
 
 \pnum
-All functions that perform rendering and composing operations operate on the back buffer. <TODO> Specify on a per-function basis rather than with a blanket statement that is probably inaccurate.
+All functions that perform rendering and composing operations operate on the back buffer. The data is subsequently transfered to the display buffer as specified by the output surfaces.%<TODO> Specify on a per-function basis rather than with a blanket statement that is probably inaccurate.
 
 \rSec1 [\iotwod.outputsurface.state] {output surface state}
 

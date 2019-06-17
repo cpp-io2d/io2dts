@@ -99,8 +99,7 @@ namespace @\fullnamespace{}@ {
       const optional<basic_dashes<GraphicsSurfaces>>& d = nullopt,
       const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
       const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
-    template <class InputIterator>
-	future<void> command_list(InputIterator first, InputIterator last);
+	future<void> command_list(const basic_command_list<GraphicsSurfaces>& cl);
   };
 }
 \end{codeblock}
@@ -234,8 +233,11 @@ static basic_display_point<graphics_math_type> max_dimensions() noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-<TODO>The maximum height and width for a \tcode{basic_image_surface} object.
+\returns \tcode{GraphicsSurfaces::surfaces::max_dimensions()}.
+
+\pnum
+\remarks
+The maximum height and width for a \tcode{basic_image_surface} object.
 \end{itemdescr}
 
 \rSec1 [\iotwod.imagesurface.observers] {\tcode{basic_image_surface} observers}
@@ -246,7 +248,10 @@ io2d::format format() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
+\returns \tcode{GraphicsSurfaces::surfaces::format(data())}.
+
+\pnum
+\remarks
 The pixel format.
 \end{itemdescr}
 
@@ -256,8 +261,11 @@ basic_display_point<graphics_math_type> dimensions() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-<TODO>The height and width.
+\returns \tcode{GraphicsSurfaces::surfaces::dimensions(data())}.
+
+\pnum
+\remarks
+The pixel dimensions.
 \end{itemdescr}
 
 \rSec1 [\iotwod.imagesurface.mofifiers] {\tcode{basic_image_surface} modifiers}
@@ -269,7 +277,7 @@ void clear();
 \begin{itemdescr}
 \pnum
 \effects
-<TODO>
+Equivalent to \tcode{paint(basic_brush<GraphicsSurfaces(rgba_color::white), nullopt, basic_render_props<GraphicsSurfaces>(nearest, basic_matrix_2d<typename GraphicsSurfaces::graphics_math_type>\{\}, compositing_op::clear));}
 \end{itemdescr}
 
 \indexlibrarymember{paint}{basic_image_surface}%
@@ -387,4 +395,55 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 \errors
 
 The errors, if any, produced by this function are \impldefplain{basic_image_surface!mask}.
+\end{itemdescr}
+
+\indexlibrarymember{draw_text}{basic_image_surface}%
+\begin{itemdecl}
+void draw_text(const basic_point_2d<graphics_math_type>& pt,
+  const basic_brush<GraphicsSurfaces>& b,
+  const basic_font<GraphicsSurfaces>& font, const string& text,
+  const optional<basic_text_props<GraphicsSurfaces>>& tp = nullopt,
+  const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+  const optional<basic_stroke_props<GraphicsSurfaces>>& sp = nullopt,
+  const optional<basic_dashes<GraphicsSurfaces>>& d = nullopt,
+  const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
+  const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+void draw_text(const basic_bounding_box<graphics_math_type>& bb,
+  const basic_brush<GraphicsSurfaces>& b,
+  const basic_font<GraphicsSurfaces>& font, const string& text,
+  const optional<basic_text_props<GraphicsSurfaces>>& tp = nullopt,
+  const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+  const optional<basic_stroke_props<GraphicsSurfaces>>& sp = nullopt,
+  const optional<basic_dashes<GraphicsSurfaces>>& d = nullopt,
+  const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
+  const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Performs the text rendering rendering and composing operation as specified by \ref{\iotwod.surface.textrendering}.
+
+\pnum
+The meanings of the parameters are specified by \ref{\iotwod.surface.rendering}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+
+The errors, if any, produced by this function are \impldefplain{basic_image_surface!draw_text}.
+\end{itemdescr}
+
+\indexlibrarymember{command_list}{basic_image_surface}%
+\begin{itemdecl}
+future<void> command_list(const basic_command_list<GraphicsSurfaces>& cl);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Submits a command list to be processed by the surface.
+
+\pnum
+\returns A \tcode{future<void>} object to inform the user when the command list has completed.
 \end{itemdescr}

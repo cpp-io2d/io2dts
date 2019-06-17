@@ -4,7 +4,7 @@
 \rSec1 [\iotwod.refreshstyle.summary] {\tcode{refresh_style} summary}
 
 \pnum
-The \tcode{refresh_style} enum class describes when the \term{draw callback} (Table~\ref{tab:\iotwod.displaysurface.state.listing}) of a \tcode{display_surface} object shall be called. See Table~\ref{tab:\iotwod.refreshstyle.meanings} for the meaning of each \tcode{refresh_style} enumerator.
+The \tcode{refresh_style} enum class describes when the \term{draw callback} (Table~\ref{tab:\iotwod.outputsurface.state.listing}) of a \tcode{display_surface} object shall be called. See Table~\ref{tab:\iotwod.refreshstyle.meanings} for the meaning of each \tcode{refresh_style} enumerator.
 
 \rSec1 [\iotwod.refreshstyle.synopsis] {\tcode{refresh_style} synopsis}
 
@@ -44,7 +44,7 @@ namespace @\fullnamespace{}@ {
  & The draw callback shall be called as frequently as possible, subject to any limits of the execution environment.
  \\ \rowsep
  \tcode{fixed}
- & The draw callback shall be called as frequently as needed to maintain the \term{desired frame rate} (Table~\ref{tab:\iotwod.displaysurface.state.listing}) as closely as possible. If more time has passed between two successive calls to the draw callback than is required, it shall be called \term{excess time} and it shall count towards the \term{required time}, which is the time that is required to pass after a call to the draw callback before the next successive call to the draw callback shall be made. If the excess time is greater than the required time, implementations shall call the draw callback and then repeatedly subtract the required time from the excess time until the excess time is less than the required time. If the implementation needs to call the draw callback for some other reason, it shall use that call as the new starting point for maintaining the desired frame rate.
+ & The draw callback shall be called as frequently as needed to maintain the \term{desired frame rate} (Table~\ref{tab:\iotwod.outputsurface.state.listing}) as closely as possible. If more time has passed between two successive calls to the draw callback than is required, it shall be called \term{excess time} and it shall count towards the \term{required time}, which is the time that is required to pass after a call to the draw callback before the next successive call to the draw callback shall be made. If the excess time is greater than the required time, implementations shall call the draw callback and then repeatedly subtract the required time from the excess time until the excess time is less than the required time. If the implementation needs to call the draw callback for some other reason, it shall use that call as the new starting point for maintaining the desired frame rate.
  \begin{example}
  Given a desired frame rate of \tcode{20.0f}, then as per the above, the implementation would call the draw callback at 50 millisecond intervals or as close thereto as possible.
  

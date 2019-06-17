@@ -8,6 +8,9 @@
 The class template \tcode{basic_command_list<\graphicssurfacestemplparamnospace{}>} contains the data that results from a back end pre-compiling (interpreting) a sequence of \tcode{basic_commands<\graphicssurfacestemplparamnospace{}>::command_item} objects.
 
 \pnum
+This command list may later be executed by one of the surface types. For \tcode{basic_image_surface}, it may be executed on separate thread.
+
+\pnum
 The data are stored in an object of type \tcode{typename \graphicssurfacestemplparamnospace{}::surfaces::command_list_data_type}. It is accessible using the \tcode{data} member function.
 
 \rSec1 [\iotwod.commandlist.synopsis] {\tcode{basic_command_list} synopsis}

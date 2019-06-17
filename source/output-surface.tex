@@ -5,7 +5,13 @@
 
 \pnum
 \indexlibrary{\idxcode{basic_output_surface}}%
-<TODO>
+A \tcode{basic_output_surface} object represents a simple way to display 2D graphics to a user. The mechanisms required to ensure that all environment-specific requirements, such as providing an event loop handler, are provided by the object.
+
+\pnum
+The user just needs to set a draw callback or a command list (or both) and then call the \tcode{begin_show} member function. 
+
+\pnum
+When the user wishes to end the display of 2D graphics, the user calls the \tcode{end_show} member function either from the draw callback or from a \tcode{run_function} object contained within the command list.
 
 \rSec1 [\iotwod.outputsurface.synopsis] {\tcode{basic_output_surface} synopsis}
 
@@ -80,6 +86,25 @@ namespace @\fullnamespace{}@ {
       const optional<basic_mask_props<GraphicsSurfaces>>& mp = nullopt,
       const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
       const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+    void draw_text(const basic_point_2d<graphics_math_type>& pt,
+      const basic_brush<GraphicsSurfaces>& b,
+      const basic_font<GraphicsSurfaces>& font, const string& text,
+      const optional<basic_text_props<GraphicsSurfaces>>& tp = nullopt,
+      const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+      const optional<basic_stroke_props<GraphicsSurfaces>>& sp = nullopt,
+      const optional<basic_dashes<GraphicsSurfaces>>& d = nullopt,
+      const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
+      const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+    void draw_text(const basic_bounding_box<graphics_math_type>& bb,
+      const basic_brush<GraphicsSurfaces>& b,
+      const basic_font<GraphicsSurfaces>& font, const string& text,
+      const optional<basic_text_props<GraphicsSurfaces>>& tp = nullopt,
+      const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+      const optional<basic_stroke_props<GraphicsSurfaces>>& sp = nullopt,
+      const optional<basic_dashes<GraphicsSurfaces>>& d = nullopt,
+      const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
+      const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+    void command_list(const basic_command_list<GraphicsSurfaces>& cl);
     void draw_callback(const function<void(basic_output_surface& sfc)>& fn);
     void size_change_callback(
       const function<void(basic_output_surface& sfc)>& fn);
@@ -120,6 +145,23 @@ basic_output_surface(int preferredWidth, int preferredHeight,
   io2d::scaling scl = io2d::scaling::letterbox,
   io2d::refresh_style rr = io2d::refresh_style::as_fast_as_possible,
   float fps = 30.0f);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Constructs an object of type \tcode{basic_output_surface}.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::surfaces::create_output_surface(preferredWidth, preferredHeight, preferredFormat, scl, rr, fps)}.
+
+\pnum
+\throws As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors Errors, if any, are \impldefplain{basic_output_surface!constructor}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{basic_output_surface}!constructor}%
+\begin{itemdecl}
 basic_output_surface(int preferredWidth, int preferredHeight,
   io2d::format preferredFormat,
   @\stdqualifier{}@error_code& ec, io2d::scaling scl = io2d::scaling::letterbox,
@@ -128,7 +170,16 @@ basic_output_surface(int preferredWidth, int preferredHeight,
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-<TODO>
+\effects Constructs an object of type \tcode{basic_output_surface}.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::surfaces::create_output_surface(preferredWidth, preferredHeight, preferredFormat, ec, scl, rr, fps)}.
+
+\pnum
+\throws As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors Errors, if any, are \impldefplain{basic_output_surface!constructor}
 \end{itemdescr}
 
 \indexlibrary{\idxcode{basic_output_surface}!constructor}%
@@ -139,6 +190,23 @@ basic_output_surface(int preferredWidth, int preferredHeight,
   io2d::scaling scl = io2d::scaling::letterbox,
   io2d::refresh_style rr = io2d::refresh_style::as_fast_as_possible,
   float fps = 30.0f);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Constructs an object of type \tcode{basic_output_surface}.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::surfaces::create_output_surface(preferredWidth, preferredHeight, preferredFormat, preferredDisplayWidth, preferredDisplayHeight, preferredDisplayFormat, scl, rr, fps)}.
+
+\pnum
+\throws As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors Errors, if any, are \impldefplain{basic_output_surface!constructor}
+\end{itemdescr}
+
+\indexlibrary{\idxcode{basic_output_surface}!constructor}%
+\begin{itemdecl}
 basic_output_surface(int preferredWidth, int preferredHeight,
   io2d::format preferredFormat, int preferredDisplayWidth,
   int preferredDisplayHeight, io2d::format preferredDisplayFormat,
@@ -148,8 +216,19 @@ basic_output_surface(int preferredWidth, int preferredHeight,
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-<TODO>
+\effects Constructs an object of type \tcode{basic_output_surface}.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::surfaces::create_output_surface(preferredWidth, preferredHeight, preferredFormat, preferredDisplayWidth, preferredDisplayHeight, preferredDisplayFormat, ec, scl, rr, fps)}.
+
+\pnum
+\throws As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors Errors, if any, are \impldefplain{basic_output_surface!constructor}
 \end{itemdescr}
+
+
 \rSec1 [\iotwod.outputsurface.mofifiers] {\tcode{basic_output_surface} modifiers}
 
 \indexlibrarymember{begin_show}{basic_output_surface}%
@@ -227,7 +306,7 @@ void clear();
 \begin{itemdescr}
 \pnum
 \effects
-<TODO>
+Equivalent to \tcode{paint(basic_brush<GraphicsSurfaces(rgba_color::white), nullopt, basic_render_props<GraphicsSurfaces>(nearest, basic_matrix_2d<typename GraphicsSurfaces::graphics_math_type>\{\}, compositing_op::clear));}
 \end{itemdescr}
 
 \indexlibrarymember{paint}{basic_output_surface}%
@@ -347,14 +426,77 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 The errors, if any, produced by this function are \impldefplain{surface!mask}.
 \end{itemdescr}
 
+\indexlibrarymember{draw_text}{basic_output_surface}%
+\begin{itemdecl}
+void draw_text(const basic_point_2d<graphics_math_type>& pt,
+  const basic_brush<GraphicsSurfaces>& b,
+  const basic_font<GraphicsSurfaces>& font, const string& text,
+  const optional<basic_text_props<GraphicsSurfaces>>& tp = nullopt,
+  const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+  const optional<basic_stroke_props<GraphicsSurfaces>>& sp = nullopt,
+  const optional<basic_dashes<GraphicsSurfaces>>& d = nullopt,
+  const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
+  const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+void draw_text(const basic_bounding_box<graphics_math_type>& bb,
+  const basic_brush<GraphicsSurfaces>& b,
+  const basic_font<GraphicsSurfaces>& font, const string& text,
+  const optional<basic_text_props<GraphicsSurfaces>>& tp = nullopt,
+  const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+  const optional<basic_stroke_props<GraphicsSurfaces>>& sp = nullopt,
+  const optional<basic_dashes<GraphicsSurfaces>>& d = nullopt,
+  const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
+  const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Performs the text rendering rendering and composing operation as specified by \ref{\iotwod.surface.textrendering}.
+
+\pnum
+The meanings of the parameters are specified by \ref{\iotwod.surface.rendering}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+
+The errors, if any, produced by this function are \impldefplain{basic_output_surface!draw_text}.
+\end{itemdescr}
+
+\indexlibrarymember{command_list}{basic_command_list>}%
+\begin{itemdecl}
+void command_list(const basic_command_list<GraphicsSurfaces>& cl);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::command_list(data(), cl)}.
+
+\pnum
+\remarks Stores a \tcode{basic_command_list} object for execution whenever the output needs to be redrawn.
+
+\pnum
+If a draw callback exists, it is executed before the command list.
+
+\pnum
+Either a draw callback or a command list must be set before \tcode{begin_show} is called. Both may be set if desired.
+
+\pnum
+The command list may use a \tcode{run_function} command object to replace itself, but it is not permitted to replace the existing command list with a new command list more than once within the existing command list.
+\end{itemdescr}
+
 \indexlibrarymember{draw_callback}{basic_output_surface}%
 \begin{itemdecl}
 void draw_callback(const function<void(basic_output_surface& sfc)>& fn);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-<TODO>
+\effects Calls \tcode{GraphicsSurfaces::surfaces::draw_callback(data(), fn)}.
+
+\pnum
+\remarks Either a draw callback or a command list must be set before \tcode{begin_show} is called. Both may be set if desired.
+
 \end{itemdescr}
 
 \indexlibrarymember{size_change_callback}{basic_output_surface}%
@@ -363,8 +505,10 @@ void size_change_callback(const function<void(basic_output_surface& sfc)>& fn);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-<TODO>
+\effects Calls \tcode{GraphicsSurfaces::surfaces::size_change_callback(data(), fn)}.
+
+\pnum
+\remarks Sets a function that will be called whenever the output surface size changes.
 \end{itemdescr}
 
 \indexlibrarymember{dimensions}{basic_output_surface}%
@@ -374,8 +518,13 @@ void dimensions(basic_display_point<graphics_math_type> dp, @\stdqualifier{}@err
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-<TODO>
+\effects Calls \tcode{GraphicsSurfaces::surfaces::dimensions(data(), dp)} or \tcode{GraphicsSurfaces::surfaces::dimensions(data(), dp, ec)}.
+
+\pnum
+\remarks Changes the dimensions of the output surface's back buffer.
+
+\pnum
+\errors Errors, if any, are \impldefplain{basic_output_surface!display_dimensions}.
 \end{itemdescr}
 
 \indexlibrarymember{display_dimensions}{basic_output_surface}%
@@ -385,8 +534,13 @@ void display_dimensions(basic_display_point<graphics_math_type> dp, @\stdqualifi
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-<TODO>
+\effects Calls \tcode{GraphicsSurfaces::surfaces::display_dimensions(data(), dp)} or \tcode{GraphicsSurfaces::surfaces::display_dimensions(data(), dp, ec)}.
+
+\pnum
+\remarks Changes the dimensions of the output surface's display.
+
+\pnum
+\errors Errors, if any, are \impldefplain{basic_output_surface!display_dimensions}.
 \end{itemdescr}
 
 \indexlibrarymember{scaling}{basic_output_surface}%
@@ -395,8 +549,10 @@ void scaling(io2d::scaling scl) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-<TODO>
+\effects Calls \tcode{GraphicsSurfaces::surfaces::scaling(data(), scl)}.
+
+\pnum
+\remarks Sets the type of scaling that should be performed, if required, when transferring the graphics data from the back buffer to the display buffer.
 \end{itemdescr}
 
 \indexlibrarymember{user_scaling_callback}{basic_output_surface}%
@@ -406,20 +562,30 @@ void user_scaling_callback(const
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-<TODO>
+\effects Calls \tcode{GraphicsSurfaces::surfaces::user_scaling_callback(data(), fn)}.
+
+\pnum
+\remarks Sets an optional user function that allows the user to provide a \tcode{basic_bounding_box} object that specifies the area in the display buffer that the back buffer shall be transferred to.
 \end{itemdescr}
 
 \indexlibrarymember{letterbox_brush}{basic_output_surface}%
 \begin{itemdecl}
 void letterbox_brush(const optional<basic_brush<GraphicsSurfaces>>& b,
   const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt) noexcept;
-void letterbox_brush_props(const optional<basic_brush_props<GraphicsSurfaces>>& bp) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-<TODO>
+\effects Calls \tcode{GraphicsSurfaces::surfaces::letterbox_brush(data(), b, bp)}.
+\end{itemdescr}
+
+\indexlibrarymember{letterbox_brush}{basic_output_surface}%
+\begin{itemdecl}
+void letterbox_brush_props(
+  const optional<basic_brush_props<GraphicsSurfaces>>& bp) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::letterbox_brush_props(data(), bp)}.
 \end{itemdescr}
 
 \indexlibrarymember{auto_clear}{basic_output_surface}%
@@ -428,8 +594,7 @@ void auto_clear(bool val) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-<TODO>
+\effects Calls \tcode{GraphicsSurfaces::surfaces::auto_clear(data(), val)}.
 \end{itemdescr}
 
 \indexlibrarymember{redraw_required}{basic_output_surface}%
@@ -438,8 +603,7 @@ void redraw_required(bool val = true) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-<TODO>
+\effects Calls \tcode{GraphicsSurfaces::surfaces::redraw_required(data(), val)}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.outputsurface.observers] {\tcode{basic_output_surface} observers}
@@ -450,8 +614,10 @@ io2d::format format() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-The pixel format.
+\returns \tcode{GraphicsSurfaces::surfaces::format(data())}.
+
+\pnum
+\remarks The pixel format of the back buffer.
 \end{itemdescr}
 
 \indexlibrarymember{dimensions}{basic_output_surface}%
@@ -460,8 +626,10 @@ basic_display_point<graphics_math_type> dimensions() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-<TODO>The height and width.
+\returns \tcode{GraphicsSurfaces::surfaces::dimensions(data())}.
+
+\pnum
+\remarks The pixel dimensions of the back buffer.
 \end{itemdescr}
 
 \indexlibrarymember{max_dimensions}{basic_output_surface}%
@@ -470,8 +638,10 @@ basic_display_point<graphics_math_type> max_dimensions() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-<TODO>The maximum available height and width of a \tcode{basic_output_surcace} for the device.
+\returns \tcode{GraphicsSurfaces::surfaces::max_dimensions(data())}.
+
+\pnum
+\remarks The maximum possible pixel dimensions of the back buffer.
 \end{itemdescr}
 
 \indexlibrarymember{display_dimensions}{basic_output_surface}%
@@ -480,8 +650,10 @@ basic_display_point<graphics_math_type> display_dimensions() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-<TODO>
+\returns \tcode{GraphicsSurfaces::surfaces::display_dimensions(data())}.
+
+\pnum
+\remarks The pixel dimensions of the output buffer.
 \end{itemdescr}
 
 \indexlibrarymember{max_output_dimensions}{basic_output_surface}%
@@ -490,8 +662,10 @@ basic_display_point<graphics_math_type> max_output_dimensions() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-<TODO>
+\returns \tcode{GraphicsSurfaces::surfaces::max_output_dimensions(data())}.
+
+\pnum
+\remarks The maximum possible pixel dimensions of the output buffer.
 \end{itemdescr}
 
 \indexlibrarymember{scaling}{basic_output_surface}%
@@ -500,8 +674,10 @@ io2d::scaling scaling() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-The scaling type.
+\returns \tcode{GraphicsSurfaces::surfaces::scaling(data())}.
+
+\pnum
+\remarks The scaling type.
 \end{itemdescr}
 
 \indexlibrarymember{letterbox_brush}{basic_output_surface}%
@@ -510,8 +686,10 @@ optional<basic_brush<GraphicsSurfaces>> letterbox_brush() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-An \tcode{optional<basic_brush<GraphicsSurfaces>>} object constructed using the user-provided letterbox brush or, if the letterbox brush is set to its default value, an empty \tcode{optional<basic_brush<GraphicsSurfaces>>} object.
+\returns \tcode{GraphicsSurfaces::surfaces::letterbox_brush(data())}.
+
+\pnum
+\remarks An \tcode{optional<basic_brush<GraphicsSurfaces>>} object constructed using the user-provided letterbox brush or, if the letterbox brush is set to its default value, an empty \tcode{optional<basic_brush<GraphicsSurfaces>>} object.
 \end{itemdescr}
 
 \indexlibrarymember{letterbox_brush_props}{basic_output_surface}%
@@ -530,6 +708,8 @@ bool auto_clear() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-The value of auto clear.
+\returns \tcode{GraphicsSurfaces::surfaces::auto_clear(data())}.
+
+\pnum
+\remarks The value of auto clear.
 \end{itemdescr}
