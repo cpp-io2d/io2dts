@@ -112,6 +112,8 @@ void scale(float scl) noexcept;
 
 \pnum
 \remarks The scale is \tcode{scl}.
+
+\pnum If the scale is $\leq 0$, the scale is disregarded during text rendering occurs.
 \end{itemdescr}
 
 \indexlibrarymember{font_size}{basic_text_props}%
@@ -124,6 +126,8 @@ void font_size(font_size_units fsu, float sz) noexcept;
 
 \pnum
 \remarks The size units type is \tcode{fsu}. The font size is \tcode{sz}.
+
+\pnum If the font size is $leq 0$, the \tcode{basic_font} object's font size is used during text rendering.
 \end{itemdescr}
 
 \indexlibrarymember{kerning}{basic_text_props}%
@@ -136,6 +140,13 @@ void kerning(bool k) noexcept;
 
 \pnum
 \remarks The kerning value is \tcode{k}.
+
+\pnum When the kerning value is \tcode{true}, kerning should be used.
+
+\pnum
+\begin{note}
+If kerning is not available with the font being used, kerning does not occur.
+\end{note}
 \end{itemdescr}
 
 \indexlibrarymember{antialiasing}{basic_text_props}%

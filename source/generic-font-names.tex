@@ -5,7 +5,7 @@
 \rSec1 [\iotwod.text.genericfonts.summary] {\tcode{antialias} summary}
 
 \pnum
-The \tcode{generic_font_names} enum class specifies font names that correspond to \term{generic font families} found in the CSS Fonts Specification. A font created using a \tcode{generic_font_names} enumerator shall meet the requirements for a generic font family of the same name as specified in the CSS Fonts Specification.
+The \tcode{generic_font_names} enum class specifies font names that correspond to \term{generic font families} found in the CSS Fonts Specification. A \tcode{basic_font} object created using a \tcode{generic_font_names} enumerator without specifying a font family through a \tcode{string} argument shall meet the requirements for a generic font family of the same name as specified in the CSS Fonts Specification.
 
 \pnum
 A \tcode{basic_font} object constructed using a \tcode{generic_font_names} enumerator shall return the name of the enumerator as a \tcode{string} object when its \tcode{family} member function is called.

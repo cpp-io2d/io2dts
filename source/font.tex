@@ -1,3 +1,255 @@
 %!TEX root = io2d.tex
 
 \rSec0 [\iotwod.text.font] {Class template \tcode{basic_font}}
+
+\rSec1 [\iotwod.text.font.summary] {\tcode{basic_font} summary}
+
+\pnum
+\indexlibrary{\idxcode{basic_font}}%
+The \tcode{basic_font} class provides an OFF Font Format font for use by the text rendering rendering and composing operation (\ref{\iotwod.surface.textrendering}).
+
+\pnum
+It has a \term{font family} of type \tcode{string}, a \term{font size} of type \tcode{float}, a \term{size units type} of type \tcode{font_size_unit}, a \term{font weight} of type \tcode{font_weight}, a \term{font style} of type \tcode{font_style}, and a merging value of \tcode{bool}.
+
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::text::font_data_type}. It is accessible using the \tcode{data} member function.
+
+\rSec1 [\iotwod.text.font.matching]{\tcode{basic_font} matching}
+
+\pnum
+Sometimes when creating a \tcode{basic_font} object, the font family that is requested is not present in the environment the program is running in. When this occurs, the implementation uses the other parameters, together with its knowledge, if any, of the requested family to select a similar font family to the one requested. The selection algorithm is unspecified. When this occurs, the \tcode{family} member function shall return the name of the font the implementation selected.
+
+\rSec1 [\iotwod.text.font.synopsis] {\tcode{basic_font} synopsis}
+
+\begin{codeblock}
+namespace @\fullnamespace{}@ {
+  template <class GraphicsSurfaces>
+  class basic_font {
+  public:
+    using data_type = typename GraphicsSurfaces::text::font_data_type;
+
+    // \ref{\iotwod.text.font.ctor}, construct:
+    basic_font(string family, font_size_units fsu, float sz,
+      generic_font_names gfn, font_weight fw = font_weight::normal,
+      font_style fs = font_style::normal, bool merging = true);
+    basic_font(filesystem::path file, font_size_units fsu, float sz, 
+      font_weight fw = font_weight::normal, font_style fs = font_style::normal, 
+      bool merging = true);
+    basic_font(generic_font_names gfn, font_size_units fsu, float sz, 
+      font_weight fw = font_weight::normal, font_style fs = font_style::normal);
+
+    // \ref{\iotwod.text.font.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+
+    // \ref{\iotwod.text.font.mod}, modifiers:
+    void font_size(font_size_units fsu, float sz) noexcept;
+    void merging(bool m) noexcept;
+
+    // \ref{\iotwod.text.font.obs}, observers:
+    float font_size() const noexcept;
+    string family() const noexcept;
+    font_size_units size_units() const noexcept;
+    font_weight weight() const noexcept;
+    font_style style() const noexcept;
+    bool merging() const noexcept;
+  };
+}
+\end{codeblock}
+
+\rSec1 [\iotwod.text.font.ctor] {\tcode{basic_font} constructor}
+
+\indexlibrary{\idxcode{basic_font}!constructor}%
+\begin{itemdecl}
+basic_font(string family, font_size_units fsu, float sz,
+  generic_font_names gfn, font_weight fw = font_weight::normal,
+  font_style fs = font_style::normal, bool merging = true);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires \tcode{sz > 0}.
+
+\pnum
+\effects Constructs an object of type \tcode{basic_font}.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::text::create_font(family, fsu, sz, gfn, fw, fs, merging)}.
+
+\pnum
+\remarks The value of \tcode{gfn} is only used if an exact match is not available (see: \ref{\iotwod.text.font.matching}).
+
+\pnum
+If an exact match is available, the font family is \tcode{family}. The size units type is \tcode{fsu}. The font size is \tcode{sz}. The font weight is \tcode{fw}. The font style is \tcode{fs}. The stretch value is \tcode{stretch}. The strike through value is \tcode{strike}. The font line value is \tcode{fl}. The merging value is \tcode{merging}.
+
+\pnum When an exact match is not available, the implementation uses the value of \tcode{gfn} to help select a similar font. In this case, the font family is the name of the font chosen by the implementation. The size units type is \tcode{fsu}. The font size is \tcode{sz}. The font weight is the font weight of the font chosen by the implementation. The font style is the font style of the font chosen by the implementation. The stretch value is \tcode{stretch}. The strike through value is \tcode{strike}. The font line value is \tcode{fl}. The merging value is \tcode{merging}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{basic_font}!constructor}%
+\begin{itemdecl}
+basic_font(filesystem::path file, font_size_units fsu, float sz, 
+  font_weight fw = font_weight::normal, font_style fs = font_style::normal, 
+  bool merging = true);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires \tcode{sz > 0}.
+
+\pnum
+\effects Constructs an object of type \tcode{basic_font}.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::text::create_font(family, fsu, sz, fw, fs, merging)}.
+
+\pnum
+\remarks The font family is specified in the \term{name} table of the OFF Font Format font contained in \tcode{file}. The size units type is \tcode{fsu}. The font size is \tcode{sz}. The font weight is the font weight of the font in the OFF Font Format font contain in \tcode{file}, or is the nearest font weight to \tcode{value} if the \tcode{file} is an OFF Font Format Font Collection. The font style is the font style of the font in the OFF Font Format font contain in \tcode{file}, or is the nearest font style to \tcode{value} if the \tcode{file} is an OFF Font Format Font Collection. The stretch value is \tcode{stretch}. The strike through value is \tcode{strike}. The font line value is \tcode{fl}. The merging value is \tcode{merging}.
+\end{itemdescr}
+
+\indexlibrary{\idxcode{basic_font}!constructor}%
+\begin{itemdecl}
+basic_font(generic_font_names gfn, font_size_units fsu, float sz, 
+  font_weight fw = font_weight::normal, font_style fs = font_style::normal);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires \tcode{sz > 0}.
+
+\pnum
+\effects Constructs an object of type \tcode{basic_font}.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::text::create_font(family, fsu, sz, fw, fs)}.
+
+\pnum
+\remarks The font is chosen by the implementation using \tcode{gfn} together with the other arguments to perform matching (see \ref{\iotwod.text.font.matching}).
+
+\pnum The font family is the name of the font chosen by the implementation. The size units type is \tcode{fsu}. The font size is \tcode{sz}. The font weight is the font weight of the font chosen by the implementation. The font style is the font style of the font chosen by the implementation. The stretch value is \tcode{stretch}. The strike through value is \tcode{strike}. The font line value is \tcode{fl}. The merging value is \tcode{true}.
+
+\pnum
+\begin{note}
+The merging value is true because the intention of this constructor is to support as many characters as possible, in the manner specified by the CSS Fonts Specification. The user is mostly surrendering control of the choice of a font family in exchange for this expansive character support. It can be changed using the \tcode{merging} member function, but this is strongly discouraged.
+\end{note}
+\end{itemdescr}
+
+\rSec1 [\iotwod.text.font.acc] {Accessors}%
+
+\indexlibrarymember{data}{mask}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{mask} object's data object (See: \ref{\iotwod.cmdlists.mask.intro}).
+
+\pnum
+\remarks The behavior of a program is undefined if the user modifies the data contained in the \tcode{data_type} object returned by this function.
+\end{itemdescr}
+
+\rSec1 [\iotwod.text.font.mod] {\tcode{basic_font} modifiers}
+
+\indexlibrarymember{font_size}{basic_font}%
+\begin{itemdecl}
+void font_size(font_size_units fsu, float sz) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\requires \tcode{sz > 0}.
+
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::text::font_size(data(), fsu, sz)}.
+
+\pnum
+\remarks The size units type is \tcode{fsu}. The font size is \tcode{sz}.
+\end{itemdescr}
+
+\indexlibrarymember{kerning}{basic_font}%
+\begin{itemdecl}
+void merging(bool m) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::text::merging(data(), m)}.
+
+\pnum
+\remarks The merging value is \tcode{m}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.text.font.obs] {\tcode{basic_font} observers}
+
+\indexlibrarymember{font_size}{basic_font}%
+\begin{itemdecl}
+float font_size() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::text::font_size(data())}.
+
+\pnum
+\remarks
+The returned value is the font size.
+\end{itemdescr}
+
+\indexlibrarymember{size_units}{basic_font}%
+\begin{itemdecl}
+font_size_units size_units() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::text::size_units(data())}.
+
+\pnum
+\remarks
+The returned value is the size units type.
+\end{itemdescr}
+
+\indexlibrarymember{family}{basic_font}%
+\begin{itemdecl}
+string family() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::text::family(data())}.
+
+\pnum
+\remarks
+The returned value is the font family. If matching occurred (see: \ref{\iotwod.text.font.matching}), the value is the name of the family that the implementation chose.
+\end{itemdescr}
+
+\indexlibrarymember{weight}{basic_font}%
+\begin{itemdecl}
+font_weight weight() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::text::weight(data())}.
+
+\pnum
+\remarks
+The returned value is the font weight.
+\end{itemdescr}
+
+\indexlibrarymember{style}{basic_font}%
+\begin{itemdecl}
+font_style style() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::text::style(data())}.
+
+\pnum
+\remarks
+The returned value is the font style.
+\end{itemdescr}
+
+\indexlibrarymember{merging}{basic_font}%
+\begin{itemdecl}
+bool merging() const noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns \tcode{GraphicsSurfaces::text::merging(data())}.
+
+\pnum
+\remarks
+The returned value is the merging value.
+\end{itemdescr}
