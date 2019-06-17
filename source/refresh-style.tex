@@ -4,7 +4,7 @@
 \rSec1 [\iotwod.refreshstyle.summary] {\tcode{refresh_style} summary}
 
 \pnum
-The \tcode{refresh_style} enum class describes when the \term{draw callback} (Table~\ref{tab:\iotwod.outputsurface.state.listing}) of a \tcode{display_surface} object shall be called. See Table~\ref{tab:\iotwod.refreshstyle.meanings} for the meaning of each \tcode{refresh_style} enumerator.
+The \tcode{refresh_style} enum class describes when the \term{draw callback} (Table~\ref{tab:\iotwod.outputsurface.state.listing}) of a \tcode{basic_output_surface} or \tcode{basic_unmanaged_output_surface} object shall be called. See Table~\ref{tab:\iotwod.refreshstyle.meanings} for the meaning of each \tcode{refresh_style} enumerator.
 
 \rSec1 [\iotwod.refreshstyle.synopsis] {\tcode{refresh_style} synopsis}
 
@@ -37,7 +37,7 @@ namespace @\fullnamespace{}@ {
  \tcode{as_needed}
  & The draw callback shall be called when the implementation needs to do so.
  \begin{note}
- The intention of this enumerator is that implementations will call the draw callback as little as possible in order to minimize power usage. Users can call \tcode{display_surface::redraw_required} to make the implementation run the draw callback whenever the user requires.
+ The intention of this enumerator is that implementations will call the draw callback as little as possible in order to minimize power usage. Users can call the \tcode{redraw_required} member function of one of the display surface types to make the implementation run the draw callback whenever the user requires.
  \end{note}
  \\ \rowsep
  \tcode{as_fast_as_possible}

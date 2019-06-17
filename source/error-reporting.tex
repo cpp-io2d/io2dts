@@ -26,3 +26,6 @@ Destructor operations defined in this \documenttypename{} shall not throw except
 
 \pnum
 If no error occurs in a function that takes an argument of type \tcode{\stdqualifier{}error_code\&}, \tcode{\stdqualifier{}error_code::clear} shall be called on the \tcode{\stdqualifier{}error_code} object immediately before the function returns.
+
+\pnum
+Where the specification of a function template, including member functions of class templates, declares that there may be implementation-defined errors, the implementer is the provider of the type used as the template argument, referred to at times as the "back end" (see: \ref{\iotwod.desgn}, \ref{\iotwod.graphmath}, and \ref{\iotwod.graphsurf}). The implementer is not the provider of the class template or function template.

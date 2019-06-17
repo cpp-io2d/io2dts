@@ -4,7 +4,7 @@
 \rSec1 [\iotwod.scaling.summary] {\tcode{scaling} summary}
 
 \pnum
-The scaling enum class specifies the type of scaling a \tcode{display_surface} 
+The scaling enum class specifies the type of scaling an output surface 
 will use when the size of its \term{display buffer} (\ref{\iotwod.outputsurface.misc}) differs from the size of its \term{back buffer} (\ref{\iotwod.outputsurface.misc}).
 
 \pnum
@@ -28,7 +28,7 @@ namespace @\fullnamespace{}@ {
 
 \pnum
 \begin{note}
-In the following table, examples will be given to help explain the meaning of each enumerator. The examples will all use a \tcode{display_surface} called \tcode{ds}.
+In the following table, examples will be given to help explain the meaning of each enumerator. The examples will all use a \tcode{basic_output_surface} object called \tcode{ds}.
 
 The back buffer (\ref{\iotwod.outputsurface.misc}) of \tcode{ds} is 640x480 (i.e. it has a width of 640 pixels and a height of 480 pixels), giving it an aspect ratio of $1.\bar{3}$.
 

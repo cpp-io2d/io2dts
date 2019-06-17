@@ -1,11 +1,20 @@
 %!TEX root = io2d.tex
-\rSec0 [\iotwod.unmanagedoutputsurface] {Class \tcode{basic_unmanaged_output_surface}}
+\rSec0 [\iotwod.unmanagedoutputsurface] {Class template \tcode{basic_unmanaged_output_surface}}
 
 \rSec1 [\iotwod.unmanagedoutputsurface.summary] {\tcode{basic_unmanaged_output_surface} summary}
 
 \pnum
 \indexlibrary{\idxcode{basic_unmanaged_output_surface}}%
-<TODO>
+The \tcode{basic_unmanaged_output_surface} provides users the ability to use this library to draw on an existing surface, one that is not owned or managed by the library.
+
+\pnum
+Specifics of its implementation depend to a certain degree on the environment, especially when it comes to constructing one. Back ends are not required to support them but should do so where possible. Once a \tcode{basic_unmanaged_output_surface} object is created, the user is able to rely on a standard API such that the only non-standard (i.e. platform and implementation-dependent) aspect is instantiation of the object.
+
+\pnum
+Its data are unspecified.
+
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::surfaces::unmanaged_output_surface_data_type}. It is accessible using the \tcode{data} member functions.
 
 \rSec1 [\iotwod.unmanagedoutputsurface.synopsis] {\tcode{basic_unmanaged_output_surface} synopsis}
 
@@ -21,6 +30,10 @@ namespace @\fullnamespace{}@ {
     // \ref{\iotwod.unmanagedoutputsurface.cons}, constructor:
     basic_unmanaged_output_surface(data_type&& data) noexcept;
 	
+	// \ref{\iotwod.unmanagedoutputsurface.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
+
     // \ref{\iotwod.unmanagedoutputsurface.observers}, observers:
     bool has_draw_callback() const noexcept;
     bool has_size_change_callback() const noexcept;
@@ -108,7 +121,25 @@ basic_unmanaged_output_surface(data_type&& data) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-<TODO>
+\effects Constructs an object of type \tcode{basic_unmanaged_output_surface}.
+
+\pnum
+\remarks The method of constructing an object of type \tcode{data_type}, including its arguments, is \impldefplain{basic_unmanaged_output_surface!data_type}.
+
+\pnum
+Implementations are not required to provide this class and may explicitly do so by not providing any public constructors for \tcode{data_type}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.unmanagedoutputsurface.acc] {Accessors}
+
+\indexlibrarymember{data}{basic_unmanaged_output_surface}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{basic_unmanaged_output_surface} object's data object (See: \ref{\iotwod.unmanagedoutputsurface.summary}).
 \end{itemdescr}
 
 \rSec1 [\iotwod.unmanagedoutputsurface.observers] {\tcode{basic_unmanaged_output_surface} observers}
@@ -119,8 +150,7 @@ bool has_draw_callback() const noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\returns
-<TODO>
+\returns \tcode{GraphicsSurfaces::surfaces::has_draw_callback(data())}
 \end{itemdescr}
 
 \indexlibrarymember{has_size_change_callback}{basic_unmanaged_output_surface}%
@@ -233,7 +263,8 @@ void clear();
 \begin{itemdescr}
 \pnum
 \effects
-<TODO>
+\effects
+Equivalent to \tcode{paint(basic_brush<GraphicsSurfaces(rgba_color::white), nullopt, basic_render_props<GraphicsSurfaces>(nearest, basic_matrix_2d<typename GraphicsSurfaces::graphics_math_type>\{\}, compositing_op::clear));}
 \end{itemdescr}
 
 \indexlibrarymember{paint}{basic_unmanaged_output_surface}%

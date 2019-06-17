@@ -11,6 +11,9 @@ The class \tcode{basic_image_surface} provides an interface to raster graphics d
 It has a \term{pixel format} of type \tcode{format}, a \term{width} of type \tcode{int}, and a \term{height} of type \tcode{int}.
 
 \pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::surfaces::image_surface_data_type}. It is accessible using the \tcode{data} member functions.
+
+\pnum
 \begin{note}
 Because of the functionality it provides and what it can be used for, it is expected that developers familiar with other graphics technologies will think of the \tcode{basic_image_surface} class as being a form of \term{render target}. This is intentional, though this \documenttypename{} does not formally define or use that term to avoid any minor ambiguities and differences in its meaning between the various graphics technologies that do use the term render target.
 \end{note}
@@ -23,6 +26,7 @@ namespace @\fullnamespace{}@ {
   class basic_image_surface {
   public:
     using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+    using data_type = typename GraphicsSurfaces::image_surface_data_type;
 
     // \ref{\iotwod.imagesurface.cons}, construct/copy/move/destroy:
     basic_image_surface(io2d::format fmt, int width, int height);
@@ -31,6 +35,10 @@ namespace @\fullnamespace{}@ {
       @\stdqualifier{}@error_code& ec) noexcept;
     basic_image_surface(basic_image_surface&&) noexcept;
     basic_image_surface& operator=(basic_image_surface&&) noexcept;
+
+    // \ref{\iotwod.imagesurface.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
 
     // \ref{\iotwod.imagesurface.members}, members:
     void save(filesystem::path p, image_file_format i);
@@ -127,6 +135,9 @@ Constructs an object of type \tcode{basic_image_surface}.
 
 \pnum
 The pixel format is \tcode{fmt}, the width is \tcode{w}, and the height is \tcode{h}.
+
+\pnum
+\postconditions \tcode{data() == GraphicsSurfaces::surfaces::create_image_surface(fmt, w, h)}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{basic_image_surface}!constructor}%
@@ -138,7 +149,7 @@ basic_image_surface(filesystem::path f, io2d::image_file_format i, io2d::format 
 \begin{itemdescr}
 \pnum
 \requires
-\tcode{f} is a file and its contents are data in either JPEG format, TIFF format or PNG format.
+\tcode{f} is a file and its contents are data in a supported format (see: \ref{\iotwod.imagefileformat}).
 
 \pnum
 \tcode{fmt} is not \tcode{io2d::format::invalid}.
@@ -148,7 +159,10 @@ basic_image_surface(filesystem::path f, io2d::image_file_format i, io2d::format 
 Constructs an object of type \tcode{basic_image_surface}.
 
 \pnum
-The raster graphics data is the result of processing \tcode{f} into uncompressed raster graphics in the manner specified by the standard that describes how to transform the contents of data contained in \tcode{f} into raster graphics data and then transforming that transformed raster graphics data into the format specified by \tcode{fmt}.
+\postconditions If called without an \tcode{error_code\&} argument \tcode{data() == GraphicsSurfaces::surfaces::create_image_surface(f, i, fmt)}, otherwise \tcode{data() == GraphicsSurfaces::surfaces::create_image_surface(f, i, fmt, ec)}.
+
+\pnum
+\remarks The raster graphics data is the result of processing \tcode{f} into uncompressed raster graphics in the manner specified by the standard that describes how to transform the contents of data contained in \tcode{f} into raster graphics data and then transforming that transformed raster graphics data into the format specified by \tcode{fmt}.
 
 \pnum
 The data of \tcode{f} is processed into uncompressed raster graphics data as specified by the value of \tcode{i}.
@@ -188,6 +202,22 @@ Any error that could result from trying to access \tcode{f}, open \tcode{f} for 
 \tcode{errc::argument_out_of_domain} if the width would be less than \tcode{1}, the width would be greater than \tcode{basic_image_surface::max_width()}, the height would be less than \tcode{1}, or the height would be greater than \tcode{basic_image_surface::max_height()}.
 \end{itemdescr}
 
+\rSec1 [\iotwod.imagesurface.acc] {Accessors}%
+
+\indexlibrarymember{data}{basic_image_surface}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{basic_image_surface} object's data object (See: \ref{\iotwod.imagesurface.summary}).
+
+\pnum
+\remarks The behavior of a program is undefined if the user modifies the data contained in the \tcode{data_type} object returned by this function.
+\end{itemdescr}
+
+
 \rSec1 [\iotwod.imagesurface.members] {\tcode{basic_image_surface} members}
 
 \indexlibrarymember{save}{basic_image_surface}%
@@ -204,8 +234,10 @@ void save(filesystem::path p, image_file_format i, @\stdqualifier{}@error_code& 
 If the file exists, it shall be writable. If the file does not exist, it shall be possible to create the file at the specified path and then the created file shall be writable.
 
 \pnum
-\effects
-Any pending rendering and composing operations (\ref{\iotwod.surface.rendering}) are performed.
+\effects If called without an \tcode{error_code\&} argument \tcode{GraphicsSurfaces::surfaces::save(p, i)}, otherwise \tcode{GraphicsSurfaces::surfaces::save(p, i, ec)}.
+
+\pnum
+\remarks Any pending rendering and composing operations (\ref{\iotwod.surface.rendering}) are performed before the surface's visual data is written to \tcode{p}.
 
 \pnum
 The surface's visual data is written to \tcode{p} in the data format specified by \tcode{i}.
@@ -289,8 +321,10 @@ void paint(const basic_brush<GraphicsSurfaces>& b,
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
-Performs the painting rendering and composing operation as specified by \ref{\iotwod.surface.painting}.
+\effects Calls \tcode{GraphicsSurfaces::surfaces::paint(data(), b, (bp == nullopt ? basic_brush_props<GraphicsSurfaces>() : bp.value()), (rp == nullopt ? basic_render_props<GraphicsSurfaces>() : rp.value()), (cl == nullopt ? basic_clip_props<GraphicsSurfaces>() : cl.value()))}
+
+\pnum
+\remarks Performs the painting rendering and composing operation as specified by \ref{\iotwod.surface.painting}.
 
 \pnum
 The meanings of the parameters are specified by \ref{\iotwod.surface.rendering}.
@@ -314,6 +348,29 @@ void stroke(const basic_brush<GraphicsSurfaces>& b,
   const optional<basic_dashes<GraphicsSurfaces>>& d = nullopt,
   const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
   const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::stroke(data(), b, basic_interpreted_path<GraphicsSurfaces>(pb), (bp == nullopt ? basic_brush_props<GraphicsSurfaces>() : bp.value()), (sp == nullopt ? basic_stroke_props<GraphicsSurfaces>() : sp.value()), (d == nullopt ? basic_dashes<GraphicsSurfaces>() : d.value()), (rp == nullopt ? basic_render_props<GraphicsSurfaces>() : rp.value()), (cl == nullopt ? basic_clip_props<GraphicsSurfaces>() : cl.value()))}.
+
+\pnum
+\remarks
+Performs the stroking rendering and composing operation as specified by \ref{\iotwod.surface.stroking}.
+
+\pnum
+The meanings of the parameters are specified by \ref{\iotwod.surface.rendering}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+The errors, if any, produced by this function are \impldefplain{basic_image_surface!stroke}.
+\end{itemdescr}
+
+\indexlibrarymember{stroke}{basic_image_surface}%
+\begin{itemdecl}
 void stroke(const basic_brush<GraphicsSurfaces>& b,
   const basic_interpreted_path<GraphicsSurfaces>& ip,
   const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
@@ -324,7 +381,10 @@ void stroke(const basic_brush<GraphicsSurfaces>& b,
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
+\effects Calls \tcode{GraphicsSurfaces::surfaces::stroke(data(), b, ip, (bp == nullopt ? basic_brush_props<GraphicsSurfaces>() : bp.value()), (sp == nullopt ? basic_stroke_props<GraphicsSurfaces>() : sp.value()), (d == nullopt ? basic_dashes<GraphicsSurfaces>() : d.value()), (rp == nullopt ? basic_render_props<GraphicsSurfaces>() : rp.value()), (cl == nullopt ? basic_clip_props<GraphicsSurfaces>() : cl.value()))}.
+
+\pnum
+\remarks
 Performs the stroking rendering and composing operation as specified by \ref{\iotwod.surface.stroking}.
 
 \pnum
@@ -347,6 +407,29 @@ void fill(const basic_brush<GraphicsSurfaces>& b,
   const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
   const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
   const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::fill(data(), b, basic_interpreted_path<GraphicsSurfaces>(pb), (bp == nullopt ? basic_brush_props<GraphicsSurfaces>() : bp.value()), (rp == nullopt ? basic_render_props<GraphicsSurfaces>() : rp.value()), (cl == nullopt ? basic_clip_props<GraphicsSurfaces>() : cl.value()))}.
+
+\pnum
+\remarks
+Performs the filling rendering and composing operation as specified by \ref{\iotwod.surface.filling}.
+
+\pnum
+The meanings of the parameters are specified by \ref{\iotwod.surface.rendering}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+The errors, if any, produced by this function are \impldefplain{basic_image_surface!fill}.
+\end{itemdescr}
+
+\indexlibrarymember{fill}{basic_image_surface}%
+\begin{itemdecl}
 void fill(const basic_brush<GraphicsSurfaces>& b,
   const basic_interpreted_path<GraphicsSurfaces>& ip,
   const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
@@ -355,7 +438,10 @@ void fill(const basic_brush<GraphicsSurfaces>& b,
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
+\effects Calls \tcode{GraphicsSurfaces::surfaces::fill(data(), b, ip, (bp == nullopt ? basic_brush_props<GraphicsSurfaces>() : bp.value()), (rp == nullopt ? basic_render_props<GraphicsSurfaces>() : rp.value()), (cl == nullopt ? basic_clip_props<GraphicsSurfaces>() : cl.value()))}.
+
+\pnum
+\remarks
 Performs the filling rendering and composing operation as specified by \ref{\iotwod.surface.filling}.
 
 \pnum
@@ -381,7 +467,10 @@ void mask(const basic_brush<GraphicsSurfaces>& b,
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
+\effects Calls \tcode{GraphicsSurfaces::surfaces::mask(data(), b, mb, (bp == nullopt ? basic_brush_props<GraphicsSurfaces>() : bp.value()), (mp == nullopt ? basic_mask_props<GraphicsSurfaces>() : mp.value()), (rp == nullopt ? basic_render_props<GraphicsSurfaces>() : rp.value()), (cl == nullopt ? basic_clip_props<GraphicsSurfaces>() : cl.value()))}.
+
+\pnum
+\remarks
 Performs the masking rendering and composing operation as specified by \ref{\iotwod.surface.masking}.
 
 \pnum
@@ -393,7 +482,6 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \pnum
 \errors
-
 The errors, if any, produced by this function are \impldefplain{basic_image_surface!mask}.
 \end{itemdescr}
 
@@ -408,6 +496,29 @@ void draw_text(const basic_point_2d<graphics_math_type>& pt,
   const optional<basic_dashes<GraphicsSurfaces>>& d = nullopt,
   const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
   const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects Calls \tcode{GraphicsSurfaces::surfaces::draw_text(data(), pt, b, font, text, tp.value_or(basic_text_props<GraphicsSurfaces>()), bp.value_or(basic_brush_props<GraphicsSurfaces>()), sp.value_or(basic_stroke_props<GraphicsSurfaces>()), d.value_or(basic_dashes<GraphicsSurfaces>()), rp.value_or(basic_render_props<GraphicsSurfaces>()), cl.value_or(basic_clip_props<GraphicsSurfaces>()))}.
+
+\pnum
+\remarks
+Performs the text rendering rendering and composing operation as specified by \ref{\iotwod.surface.textrendering}.
+
+\pnum
+The meanings of the parameters are specified by \ref{\iotwod.surface.rendering}.
+
+\pnum
+\throws
+As specified in Error reporting (\ref{\iotwod.err.report}).
+
+\pnum
+\errors
+The errors, if any, produced by this function are \impldefplain{basic_image_surface!draw_text}.
+\end{itemdescr}
+
+\indexlibrarymember{draw_text}{basic_image_surface}%
+\begin{itemdecl}
 void draw_text(const basic_bounding_box<graphics_math_type>& bb,
   const basic_brush<GraphicsSurfaces>& b,
   const basic_font<GraphicsSurfaces>& font, const string& text,
@@ -420,7 +531,10 @@ void draw_text(const basic_bounding_box<graphics_math_type>& bb,
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects
+\effects Calls \tcode{GraphicsSurfaces::surfaces::draw_text(data(), bb, b, font, text, tp.value_or(basic_text_props<GraphicsSurfaces>()), bp.value_or(basic_brush_props<GraphicsSurfaces>()), sp.value_or(basic_stroke_props<GraphicsSurfaces>()), d.value_or(basic_dashes<GraphicsSurfaces>()), rp.value_or(basic_render_props<GraphicsSurfaces>()), cl.value_or(basic_clip_props<GraphicsSurfaces>()))}.
+
+\pnum
+\remarks
 Performs the text rendering rendering and composing operation as specified by \ref{\iotwod.surface.textrendering}.
 
 \pnum
@@ -432,7 +546,6 @@ As specified in Error reporting (\ref{\iotwod.err.report}).
 
 \pnum
 \errors
-
 The errors, if any, produced by this function are \impldefplain{basic_image_surface!draw_text}.
 \end{itemdescr}
 
@@ -442,8 +555,29 @@ future<void> command_list(const basic_command_list<GraphicsSurfaces>& cl);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects Submits a command list to be processed by the surface.
+\effects Calls \tcode{GraphicsSurfaces::surfaces::command_list(data(), cl)}.
 
 \pnum
 \returns A \tcode{future<void>} object to inform the user when the command list has completed.
+
+\pnum
+\remarks
+Submits a command list to be processed by the surface. The command list may run on a separate thread. Users shall be responsible for preventing data races.
+
+\pnum
+\begin{note}
+The ability of the implementation to run command lists on separate threads provides a number of optimization opportunities. As a byproduct, it introduces the potential for data races.
+
+\pnum
+Submitting a command list to a \tcode{basic_image_surface} object and then calling one of its other functions, especially one of the rendering and composing operation functions, before the command list has finished execution is highly likely to introduce data races. Attempting to use that object before the command list has finished execution will, at best, produce erroneous results.
+
+\pnum
+Some intended uses for command lists are to allow advanced graphics users who need high performance for their applications to run graphics operations in parallel, to allow users to pre-record various sets of operations and run them on an as-needed basis, and to provide a mechanism where users can be sure that the graphics operations they perform will be batched such that the function is guaranteed to return instantly and allow other work that would not introduce data races to proceed in parallel.
+
+\pnum
+As such, it is recommended that users choose to use either command lists or the "direct" API (where surface member functions that perform rendering and composing operations, copying image surfaces, saving image data, etc.).
+
+\pnum
+This is not to suggest that the direct API is simplistic and only meant for beginners. For light graphics loads it is easier to use since it does not introduce potentials for race conditions, etc. Further, the direct API can be implemented such that its graphics operations are batched and only run when it is efficient to run them or when when observable behavior requirements force their execution, which will allow them to have reasonably good performance.
+\end{note}
 \end{itemdescr}

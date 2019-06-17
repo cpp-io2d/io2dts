@@ -13,7 +13,11 @@ The user just needs to set a draw callback or a command list (or both) and then 
 \pnum
 When the user wishes to end the display of 2D graphics, the user calls the \tcode{end_show} member function either from the draw callback or from a \tcode{run_function} object contained within the command list.
 
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::surfaces::output_surface_data_type}. It is accessible using the \tcode{data} member functions.
+
 \rSec1 [\iotwod.outputsurface.synopsis] {\tcode{basic_output_surface} synopsis}
+
 
 \begin{codeblock}
 namespace @\fullnamespace{}@ {
