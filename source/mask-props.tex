@@ -10,6 +10,9 @@ The \tcode{basic_mask_props} class template provides state information that is a
 \pnum
 It has a \term{wrap mode} of type \tcode{wrap_mode}, a \term{filter} of type \tcode{filter}, and a \term{mask matrix} of type \tcode{matrix_2d}.
 
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::surface_state_props::mask_props_data_type}. It is accessible using the \tcode{data} member functions.
+
 \rSec1 [\iotwod.maskprops.synopsis] {\tcode{basic_mask_props} synopsis}
 
 \begin{codeblock}
@@ -18,12 +21,18 @@ namespace @\fullnamespace{}@ {
   class basic_mask_props {
     public:
     using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+    using data_type =
+      typename GraphicsSurfaces::surface_state_props::mask_props_data_type;
 
     // \ref{\iotwod.maskprops.cons}, constructor:
     basic_mask_props(io2d::wrap_mode w = io2d::wrap_mode::repeat,
       io2d::filter fi = io2d::filter::good,
       const basic_matrix_2d<graphics_math_type>& m = basic_matrix_2d<graphics_math_type>{})
       noexcept;
+
+    // \ref{\iotwod.maskprops.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
 
     // \ref{\iotwod.maskprops.modifiers}, modifiers:
     void wrap_mode(io2d::wrap_mode w) noexcept;
@@ -52,7 +61,23 @@ basic_mask_props(io2d::wrap_mode w = io2d::wrap_mode::repeat,
 
 \pnum
 \effects
-The wrap mode is \tcode{w}. The filter is \tcode{fi}. The mask matrix is \tcode{m}.
+Constructs an object of type \tcode{basic_mask_props}.
+
+\pnum
+\postconditions
+\tcode{data() == GraphicsSurfaces::surface_state_props::create_mask_props(w, fi, m)}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.maskprops.acc] {Accessors}
+
+\indexlibrarymember{data}{basic_mask_props}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{basic_mask_props} object's data object (See: \ref{\iotwod.maskprops.summary}).
 \end{itemdescr}
 
 \rSec1 [\iotwod.maskprops.modifiers] {\tcode{basic_mask_props} modifiers}

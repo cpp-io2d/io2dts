@@ -6,10 +6,10 @@
 
 \pnum
 \indexlibrary{\idxcode{basic_font}}%
-The \tcode{basic_font} class provides an OFF Font Format font for use by the text rendering rendering and composing operation (\ref{\iotwod.surface.textrendering}).
+The \tcode{basic_font} class template provides an OFF Font Format font for use by the text rendering rendering and composing operation (\ref{\iotwod.surface.textrendering}).
 
 \pnum
-It has a \term{font family} of type \tcode{string}, a \term{font size} of type \tcode{float}, a \term{size units type} of type \tcode{font_size_unit}, a \term{font weight} of type \tcode{font_weight}, a \term{font style} of type \tcode{font_style}, and a merging value of \tcode{bool}.
+It has a \term{font family} of type \tcode{string}, a \term{font size} of type \tcode{float}, a \term{size units type} of type \tcode{font_size_unit}, a \term{font weight} of type \tcode{font_weight}, a \term{font style} of type \tcode{font_style}, and a \term{merging} value of \tcode{bool}.
 
 \pnum
 The data are stored in an object of type \tcode{typename GraphicsSurfaces::text::font_data_type}. It is accessible using the \tcode{data} member function.
@@ -32,9 +32,9 @@ namespace @\fullnamespace{}@ {
     basic_font(string family, font_size_units fsu, float sz,
       generic_font_names gfn, font_weight fw = font_weight::normal,
       font_style fs = font_style::normal, bool merging = true);
-    basic_font(filesystem::path file, font_size_units fsu, float sz, 
-      font_weight fw = font_weight::normal, font_style fs = font_style::normal, 
-      bool merging = true);
+    basic_font(filesystem::path file, string family, font_size_units fsu,
+      float sz, font_weight fw = font_weight::normal, font_style fs = 
+      font_style::normal, bool merging = true);
     basic_font(generic_font_names gfn, font_size_units fsu, float sz, 
       font_weight fw = font_weight::normal, font_style fs = font_style::normal);
 
@@ -86,7 +86,7 @@ If an exact match is available, the font family is \tcode{family}. The size unit
 
 \indexlibrary{\idxcode{basic_font}!constructor}%
 \begin{itemdecl}
-basic_font(filesystem::path file, font_size_units fsu, float sz, 
+basic_font(filesystem::path file, string family, font_size_units fsu, float sz, 
   font_weight fw = font_weight::normal, font_style fs = font_style::normal, 
   bool merging = true);
 \end{itemdecl}
@@ -98,10 +98,10 @@ basic_font(filesystem::path file, font_size_units fsu, float sz,
 \effects Constructs an object of type \tcode{basic_font}.
 
 \pnum
-\postconditions \tcode{data() == GraphicsSurfaces::text::create_font(family, fsu, sz, fw, fs, merging)}.
+\postconditions \tcode{data() == GraphicsSurfaces::text::create_font(file, family, fsu, sz, fw, fs, merging)}.
 
 \pnum
-\remarks The font family is specified in the \term{name} table of the OFF Font Format font contained in \tcode{file}. The size units type is \tcode{fsu}. The font size is \tcode{sz}. The font weight is the font weight of the font in the OFF Font Format font contain in \tcode{file}, or is the nearest font weight to \tcode{value} if the \tcode{file} is an OFF Font Format Font Collection. The font style is the font style of the font in the OFF Font Format font contain in \tcode{file}, or is the nearest font style to \tcode{value} if the \tcode{file} is an OFF Font Format Font Collection. The stretch value is \tcode{stretch}. The strike through value is \tcode{strike}. The font line value is \tcode{fl}. The merging value is \tcode{merging}.
+\remarks The font family is specified in the \term{name} table of the OFF Font Format font contained in \tcode{file}. If the OFF Font Format font contained in \tcode{file} is an OFF Font Font Collection, the font family is \tcode{family} if a font with the family name \tcode{family} is contained in \tcode{file}, otherwise it is the family name of the font contained in that file selected by the implementation in an \unspecnorm{} manner. The size units type is \tcode{fsu}. The font size is \tcode{sz}. The font weight is the font weight of the font in the OFF Font Format font contained in \tcode{file}, or is the nearest font weight to the value specified by \tcode{fw} if the \tcode{file} is an OFF Font Format Font Collection. The font style is the font style of the font in the OFF Font Format font contained in \tcode{file}, or is the nearest font style to the value of \tcode{fs} if \tcode{file} is an OFF Font Format Font Collection. The stretch value is \tcode{stretch}. The strike through value is \tcode{strike}. The font line value is \tcode{fl}. The merging value is \tcode{merging}.
 \end{itemdescr}
 
 \indexlibrary{\idxcode{basic_font}!constructor}%
@@ -117,12 +117,12 @@ basic_font(generic_font_names gfn, font_size_units fsu, float sz,
 \effects Constructs an object of type \tcode{basic_font}.
 
 \pnum
-\postconditions \tcode{data() == GraphicsSurfaces::text::create_font(family, fsu, sz, fw, fs)}.
+\postconditions \tcode{data() == GraphicsSurfaces::text::create_font(gfn, fsu, sz, fw, fs)}.
 
 \pnum
 \remarks The font is chosen by the implementation using \tcode{gfn} together with the other arguments to perform matching (see \ref{\iotwod.text.font.matching}).
 
-\pnum The font family is the name of the font chosen by the implementation. The size units type is \tcode{fsu}. The font size is \tcode{sz}. The font weight is the font weight of the font chosen by the implementation. The font style is the font style of the font chosen by the implementation. The stretch value is \tcode{stretch}. The strike through value is \tcode{strike}. The font line value is \tcode{fl}. The merging value is \tcode{true}.
+\pnum The font family is the string that is the name of the enumerator value specified by \tcode{gfn}. The font is chosen by the implementation as described in \tcode{\iotwod.text.genericfonts.summary}, taking into account the values of \tcode{fw} and \tcode{fs}. The size units type is \tcode{fsu}. The font size is \tcode{sz}. The font weight is the font weight of the font chosen by the implementation. The font style is the font style of the font chosen by the implementation. The stretch value is \tcode{stretch}. The strike through value is \tcode{strike}. The font line value is \tcode{fl}. The merging value is \tcode{true}.
 
 \pnum
 \begin{note}

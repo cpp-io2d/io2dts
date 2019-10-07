@@ -8,7 +8,10 @@
 The \tcode{basic_stroke_props} class template provides state information that is applicable to the stroking operation (see: \ref{\iotwod.surface.rendering} and \ref{\iotwod.surface.stroking}).
 
 \pnum
-It has a \term{line width} of type \tcode{float}, a \term{line cap} of type \tcode{line_cap}, a \term{line join} of type \tcode{line_join}, and a \term{miter limit} of type \tcode{float}.
+It has a \term{line width} of type \tcode{float}, a \term{line cap} of type \tcode{line_cap}, a \term{line join} of type \tcode{line_join}, a \term{miter limit} of type \tcode{float}, and an \term{antialiasing algorithm} of type \tcode{antialias}.
+
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::surface_state_props::stroke_props_data_type}. It is accessible using the \tcode{data} member functions.
 
 \rSec1 [\iotwod.strokeprops.synopsis] {\tcode{basic_stroke_props} synopsis}
 
@@ -18,23 +21,32 @@ namespace @\fullnamespace{}@ {
   class basic_stroke_props {
   public:
 	using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+    using data_type =
+      typename GraphicsSurfaces::surface_state_props::stroke_props_data_type;
 
     // \ref{\iotwod.strokeprops.cons}, constructors:
     basic_stroke_props() noexcept;
     explicit basic_stroke_props(float w, io2d::line_cap lc = io2d::line_cap::none,
-      io2d::line_join lj = io2d::line_join::miter, float ml = 10.0f) noexcept;
+      io2d::line_join lj = io2d::line_join::miter, float ml = 10.0f,
+      antialias aa = antialias::good) noexcept;
+
+    // \ref{\iotwod.strokeprops.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
 
     // \ref{\iotwod.strokeprops.modifiers}, modifiers:
     void line_width(float w) noexcept;
     void line_cap(io2d::line_cap lc) noexcept;
     void line_join(io2d::line_join lj) noexcept;
     void miter_limit(float ml) noexcept;
+    void antialiasing(antialias aa) noexcept;
 
     // \ref{\iotwod.strokeprops.observers}, observers:
     float line_width() const noexcept;
     io2d::line_cap line_cap() const noexcept;
     io2d::line_join line_join() const noexcept;
     float miter_limit() const noexcept;
+    antialias antialiasing() const noexcept;
     float max_miter_limit() const noexcept;
   };
 }
@@ -56,7 +68,7 @@ Equivalent to: \tcode{basic_stroke_props(2.0f)}.
 \begin{itemdecl}
 explicit basic_stroke_props(float w, io2d::line_cap lc = io2d::line_cap::none,
   io2d::line_join lj = io2d::line_join::miter,
-  float ml = 10.0f) noexcept;
+  float ml = 10.0f, antialias aa = antialias::good) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -65,7 +77,23 @@ explicit basic_stroke_props(float w, io2d::line_cap lc = io2d::line_cap::none,
 
 \pnum
 \effects
-The line width is \tcode{w}. The line cap is \tcode{lc}. The line join is \tcode{lj}. The miter limit is \tcode{ml}.
+Constructs an object of type \tcode{basic_stroke_props}.
+
+\pnum
+\postconditions
+\tcode{data() == GraphicsSurfaces::surface_state_props::create_stroke_props(w, lc, lj, ml, aa)}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.strokeprops.acc] {Accessors}
+
+\indexlibrarymember{data}{basic_stroke_props}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{basic_stroke_props} object's data object (See: \ref{\iotwod.strokeprops.summary}).
 \end{itemdescr}
 
 \rSec1 [\iotwod.strokeprops.modifiers] {\tcode{basic_stroke_props} modifiers}
@@ -91,6 +119,9 @@ void line_cap(io2d::line_cap lc) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
+Calls \tcode{GraphicsSurfaces::surface_state_props::line_cap(data(), lc))}.
+
+\remarks
 The line cap is \tcode{lc}.
 \end{itemdescr}
 
@@ -101,6 +132,9 @@ void line_join(io2d::line_join lj) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
+Calls \tcode{GraphicsSurfaces::surface_state_props::line_join(data(), lj))}.
+
+\remarks
 The line join is \tcode{lj}.
 \end{itemdescr}
 
@@ -115,7 +149,23 @@ void miter_limit(float ml) noexcept;
 
 \pnum
 \effects
+Calls \tcode{GraphicsSurfaces::surface_state_props::miter_limit(data(), ml))}.
+
+\remarks
 The miter limit is \tcode{ml}.
+\end{itemdescr}
+
+\indexlibrarymember{antialiasing}{basic_stroke_props}%
+\begin{itemdecl}
+void antialiasing(antialias aa) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\effects
+Calls \tcode{GraphicsSurfaces::surface_state_props::antialiasing(data(), aa)}.
+
+\remarks
+The antialiasing algorithm is \tcode{aa}.
 \end{itemdescr}
 
 \rSec1 [\iotwod.strokeprops.observers] {\tcode{basic_stroke_props} observers}
@@ -127,7 +177,11 @@ float line_width() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-The line width.
+\tcode{GraphicsSurfaces::surface_state_props::line_width(data())}.
+
+\pnum
+\remarks
+The returned value is the line width.
 \end{itemdescr}
 
 \indexlibrarymember{line_cap}{basic_stroke_props}%
@@ -137,7 +191,11 @@ io2d::line_cap line_cap() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-The line cap.
+\tcode{GraphicsSurfaces::surface_state_props::line_cap(data())}.
+
+\pnum
+\remarks
+The returned value is the line cap.
 \end{itemdescr}
 
 \indexlibrarymember{line_join}{basic_stroke_props}%
@@ -147,7 +205,11 @@ io2d::line_join line_join() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-The line join.
+\tcode{GraphicsSurfaces::surface_state_props::line_join(data())}.
+
+\pnum
+\remarks
+The returned value is the line join.
 \end{itemdescr}
 
 \indexlibrarymember{miter_limit}{basic_stroke_props}%
@@ -157,7 +219,25 @@ float miter_limit() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-The miter limit.
+\tcode{GraphicsSurfaces::surface_state_props::miter_limit(data())}.
+
+\pnum
+\remarks
+The returned value is the miter limit.
+\end{itemdescr}
+
+\indexlibrarymember{antialiasing}{basic_stroke_props}%
+\begin{itemdecl}
+void antialiasing(antialias aa) noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns
+\tcode{GraphicsSurfaces::surface_state_props::antialiasing(data())}.
+
+\pnum
+\remarks
+The returned value is the antialiasing algorithm.
 \end{itemdescr}
 
 \indexlibrarymember{max_miter_limit}{basic_stroke_props}%

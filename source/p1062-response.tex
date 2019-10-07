@@ -1,0 +1,152 @@
+%!TEX root = io2d.tex
+\infannex{p1062r0}{Response to P1062R0}
+
+\rSec1[p1062r0.overview]{Overview of P1062R0}
+
+\pnum
+P1062R0 examines and critiques P0267R7. The authors are of the opinion that "[P0267r7], "A Proposal to Add 2D Graphics Rendering and Display to C++" is not a good fit for C++."
+
+\pnum
+We respectfully disagree for a variety of reasons, some of which will be set forth below.
+
+\pnum
+That said, we offer our thanks to the authors of P1062R0 because they did point out some issues that needed to be addressed and features that should have been (and now are) part of the proposed API.
+
+\pnum
+We will address the various substantive parts of P1062R0 below. The order they are addressed is not the same as their order in the paper for various reasons.
+
+\pnum
+To avoid needless repetition, whenever a section number is given without naming a source document, the section number refers to the corresponding section in P1062R0. 
+
+\rSec1[p1062r0.sec4]{Section 4}
+
+\rSec2[p1062r0.sec4.batching]{Lack of batching}
+
+\pnum
+Section 4.1 points out that the API design presented in P0267R7 lacked a batching API that would allow graphical operations such as \term{paint} and \term{fill} to be sent in bulk to a hardware accelerated implementation.
+
+\pnum
+While it should be possible to batch all of the drawing commands contained in a \term{draw callback} and only submit them when an operation with observable behavior is invoked, having a batching API is nonetheless valuable both for hardware accelerated back ends and for other use cases such as specifying a set of operations as data (as opposed to as expressions within a function), applying the same set of operations to several surfaces, and using algorithms to modify the operations dynamically as the program executes in order to more easily achieve various desired results.
+
+\pnum
+This valuable feedback resulted in the addition of \tcode{command_list}s in P0267R9 (See: \ref{\iotwod.cmdlists}).
+
+\rSec2[p1062r0.sec4.text]{Text and Unicode}
+
+\pnum
+Section 4.2 notes that in R7, there was a Clause on text rendering and display that consisted solely of a placeholder note stating that: "Text rendering and matters related to it, such as font support, will be added at a later date. This section is a placeholder. The integration of text rendering is expected to result in the addition of member functions to the surface class and changes to other parts of the text."
+
+\pnum
+Section 4.2 goes on to state: "[w]hy is this feature missing from the library? This component of the library would depend on the standardization of a text library with Unicode support. There is work ongoing in this space, but it has not yet reached maturity. How much value and utility is there in producing a drawing library that cannot draw text?"
+
+\pnum
+This placeholder section was added as a result of LEWG feedback on P0267R6 at the Toronto 2017 meeting to denote that text rendering would be part of the final product. Because text rendering is a non-trivial feature, the placeholder text stated that the functionality of drawing text would be added at a later date.
+
+\pnum
+With the resolution of other important design issues in R8, there was sufficient time to add a text rendering API to R9. This API leverages two other standards, ISO/IEC 10646 (what is effectively the ISO/IEC standardization of Unicode) and ISO/IEC 14496-22 (Open Font Format). Together, they encompass the expertise of subject matter experts in those respective fields, providing the bulk of the information necessary to perform text rendering.
+
+\pnum
+What remained was the task of specifying a rendering API and associated data types that provide the information necessary to utilize the desired functionality provided by those standards. This involved becoming familiar with both standards, especially ISO/IEC 14496-22, which is in excess of 600 pages. The combination of waiting until the other parts of the drawing API stabilized in terms of their design and then finding the time to gain that familiarity was the primary factor in text rendering being the last major feature of the output API to be designed and specified.
+
+\pnum
+\begin{note}
+The text rendering API was reviewed in Cologne by SG16 (Unicode) and no major concerns with it were raised.
+\end{note}
+
+\rSec2[p1062r0.sec4.math]{Geometry and linear algebra types}
+
+\pnum
+Section 4.3 is concerned with the linear algebra and geometry types contained in the proposal.
+
+\pnum
+"These abstractions are far more general than 2D drawing. Why are they being designed in this paper, and why are they being designed specifically for 2D drawing?"
+
+\pnum
+The reason for this is that they are needed for 2D graphics and this proposal aims to provide 2D graphics library, not a generalized linear algebra and geometry library.
+
+\pnum
+This question has been asked several times over the past several years and each time the answer has been that the authors invite and would very much welcome a proposal for a standardized linear algebra and/or geometry library and would gladly incorporate it into this proposal if and when it was adopted into the Standard.
+
+\pnum
+The paper also raised concerns about the use of \tcode{float} rather than a parameterized type. The initial design used \tcode{double}. The issue was raised at one meeting that this would provide severe performance issues for hardware accelerated back ends and that float was the better choice. The suggestion of having a parameterized types was raised but it did not gain any traction. Similarly, the idea of delaying the paper to wait on a library that might be adopted and shipped sometime in the future was dismissed without anyone feeling the need for any discussion.
+
+\pnum
+Work is now underway on efforts to create a standardized linear algebra library. P1385 is steadily evolving. This is a very welcome development. That said, the earliest it would become part of the standard would be four years from now. 
+
+\pnum
+This proposal aims to ship as a TS. The narrowly tailored linear algebra and geometry types live within the \tcode{std::experimental::io2d::v1} namespace (n.b. \tcode{v1} is an inline namespace). They have been reviewed many times, feedback has been incorporated, and the authors believe that the types are sufficiently ready to be tested by the broader public.
+
+\pnum
+\begin{note}
+While there is no \tcode{operator[][]}, it can be made to seem like there is by using a proxy type. As such, the \tcode{basic_matrix} object's \tcode{operator[]} needs to create an object of that proxy type, call the proxy object's \tcode{operator[]} and then return the returned value. This adds a certain amount of complexity. Given that users normally shouldn't need to access the elements individually, we believe that keeping the existing mXY accessor functions design is preferable.
+\end{note}
+
+\rSec2[p1062r0.sec4.pathbuilder]{New container type}
+
+\pnum
+The addition of the container type \tcode{path_builder} is objected to in section 4.4.
+
+\pnum
+The existence (and name) of this type has come up in past meetings. Its existence was sustained and its name was changed from \tcode{path_factory} to \tcode{path_builder}. It is a convenience type that vastly simplifies creating paths, especially for new programmers. Having consulted with maintainers of major standard library implementations, adding and maintaining an additional container type was deemed trivial.
+
+\rSec1[p1062r0.sec5]{Section 5}
+
+\pnum
+Section 5 delves into priorities, committee time limitations, what belongs in the Standard, and related matters.
+
+\pnum
+P0267 began life as N3888. It has been reviewed by LEWG in ordinary sessions at numerous committee meetings over the years. At every such meeting, when the straw poll of whether LEWG wanted to see the proposal again was asked, LEWG decided in favor of it. Indeed, in Kona 2017 the following LEWG straw poll was held:
+
+\pnum
+"Are we comfortable moving the paper to LWG for a Graphics TS once these concerns are addressed and were happy with the wording."
+
+\pnum
+The vote was 1 strongly in favor, 8 in favor, 3 neutral, 1 against, and 1 strongly against. This was deemed consensus.
+
+\pnum
+The only time there was a vote against continuing P0267 was in the evening session in Rapperswil 2018, a meeting that the primary author did not attend because there was no new revision of P0267 to present and evening sessions had never before been anything other than informational.
+
+\pnum
+In response, a number National Body chairs co-authored a paper, P1200, stating their unwavering support for P0267 moving forward and becoming a TS. As a result, P0267 has been revived and is presently primarily being considered by SG13.
+
+\pnum
+As such, we feel that further discussion about the issues raised in section 5 would best be addressed as a reply to P1200.
+
+\rSec1[p1062r0.sec3]{Section 3}
+
+\pnum
+Section 3 purports to discuss the utility of this proposal both for teaching and for use in applications programming.
+
+\pnum
+In addition to reviving P0267, P1200 also discussed the goals its authors believed it served, what goals they believed it was not meant to serve, and their rebuttals of various arguments raised against P0267. Those arguments address, broadly, many of the points raised in section 3.
+
+\pnum
+There are several issues with section 3 that cannot go without comment, however.
+
+\pnum
+Section 3.1 states that "[a] simple facility for building graphical interfaces that supports and leverages established graphics standards and formats would allow programmers to use common image editing tools to generate art assets instead of having to express them programmatically in C++".
+
+\pnum
+We agree. That's why it has been part of the API since P0267R0, the first revision of the proposal to contain formal API wording, and was present conceptually beginning with N3888, the initial paper that began the proposal (the proposal became P0267 once the P number system was adopted).
+
+\pnum
+Section 3.2 also discusses how programmers would wish to use art assets created by external tools or produced by artists, etc. Again, this is perfectly possible.
+
+\pnum
+While the number of image formats that back ends are required to support is limited, this is because of complications related to other popular formats not being formally standardized or being otherwise encumbered by restrictions that should not be forced upon back end developers.
+
+\pnum
+Back end implementations are free to support additional asset formats and are encouraged to do so. There is even a mechanism reserving various enumerators to them for exactly this purpose. There are many things that we cannot or do not require via standardization that implementations provide for the convenience of their users. It is highly unlikely that this would be any different.
+
+\pnum
+On the whole, section 3 could be read to imply that P0267 does not support drawing image assets and instead only supports programmatically-generated line art. The proposal supports both and has done so from the very beginning.
+
+\rSec1[p1062r0.dtor]{Final thoughts and comments}
+
+\pnum
+Work is underway on the input API for P0267. While the output API is already very useful, it has always been the intention that this be an I/O API.
+
+\pnum
+As stated elsewhere in this proposal, from the outset Standard C++ had the functionality to let programs engage with users via the dominant interactive I/O method. At the time that was the console. The dominant interactive I/O method is now the output of 2D graphics and user input via keyboard, mouse, or touch in response to that output. This proposal, amongst the many other things it will do, will restore that functionality to C++.
+
+%\rSec2[p1062r0.sec4.]{}

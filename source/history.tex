@@ -95,6 +95,50 @@ Get feedback from users regarding improvements in usability and requests for add
 
 \rSec1[\iotwod.revisionhistory]{Revision history}
 
+\rSec2 [\iotwod.revisionhistory.r10] {Revision 10}
+
+%\pnum
+%Considered feedback from SG16 to consider adding overloads of \tcode{draw_text} that would take grapheme clusters. Adding them would require the development of a standardized type that would represent a grapheme cluster. A well-founded design would also include an API to perform operations on collections of grapheme clusters, perform various operations on individual clusters, provide mappings of clusters to glyphs, etc. As such, we feel that functionality of this nature is beyond the scope of a 2D graphics API. Our aim is to provide the core functionality needed for 2D graphics. As with linear algebra, if a grapheme cluster type is standardized at some point in the future, we will gladly examine ways to incorporate it in appropriate places.
+
+\pnum
+Added responses to P1062R0 and P1225R0, as requested during review in SG13 at the Cologne 2019 meeting. The responses can be found as informative appendices to the proposal. It is anticipated that they will be removed in a future revision.
+
+\pnum
+Added the GraphicsSurfaces::text requirements that were unintentionally absent from Revision 9.
+
+\pnum
+Clarified how text rendering handles a situation where one or more characters does not map to a glyph in the font being used to render the text. As a result, the purpose of a \tcode{basic_font_object}'s \term{merging} value is now defined.
+
+\pnum
+The \tcode{basic_font} constructor that has a \tcode{std::filesystem::path} parameter now also has a \tcode{string family} parameter. This addition was made because OFF Font Format Font Collections may contain multiple families and in such cases users should specify the family they desire rather than having the implementation always automagically select one for them.
+
+\pnum
+Renamed the \tcode{basic_matrix_2d} static factory functions from init_* to create_*. This change was made in the reference implementation in May 2018 to create naming uniformity but inadvertently was not changed in this document.
+
+\pnum
+Added missing requirements for GraphicsMath matrix mXY functions.
+
+\pnum
+Cleaned up specifications of \tcode{basic_brush_props}, \tcode{basic_fill_props}, \tcode{basic_mask_props}, and \tcode{basic_stroke_props}.
+
+\pnum
+Added member data of type \tcode{antialias} to \tcode{basic_stroke_props}.
+
+\pnum
+Removed member data of type \tcode{fill_rule} from \tcode{basic_brush_props}.
+
+\pnum
+Updated the descriptions of the stroking and filling operations to reflect the change of the \tcode{fill_rule} location and the application of the antialiasing algorithm of type \tcode{antialias} to those operations described in the relevant property.
+
+\pnum
+Changed stable name [io2d.imagesurface.mofifiers] to [io2d.imagesurface.modifiers]. Changed stable name [io2d.outputsurface.mofifiers] to [io2d.outputsurface.modifiers]. Changed stable name [io2d.unmanagedoutputsurface.mofifiers] to [io2d.unmanagedoutputsurface.modifiers].
+
+\pnum
+Updated the \tcode{fill} member functions and static requirements functions to have a \tcode{const optional<basic_fill_props<GraphicsSurfaces>>\& fp} parameter seeing as the \tcode{basic_fill_props} type was designed to be used by those functions.
+
+\pnum
+Miscellaneous typo and formatting fixes.
+
 \rSec2 [\iotwod.revisionhistory.r9] {Revision 9}
 
 \pnum

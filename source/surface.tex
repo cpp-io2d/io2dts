@@ -112,13 +112,13 @@ All rendering and composing operations use the following state data:
  \\ \capsep
  \endhead
  Brush properties
- & \tcode{brush_props}
+ & \tcode{basic_brush_props}
  \\ \rowsep
  Surface properties
- & \tcode{render_props}
+ & \tcode{basic_render_props}
  \\ \rowsep
  Clip properties
- & \tcode{clip_props}
+ & \tcode{basic_clip_props}
  \\
 \end{libreqtab2}
 
@@ -144,11 +144,15 @@ In addition to the common state data (\ref{\iotwod.surface.rendering.commonstate
  \endhead
  Stroking
  & Stroke properties
- & \tcode{stroke_props}
+ & \tcode{basic_stroke_props}
  \\ \rowsep
  Stroking
  & Dashes
- & \tcode{dashes}
+ & \tcode{basic_dashes}
+ \\ \rowsep
+ Filling
+ & Fill properties
+ & \tcode{basic_fill_props}
  \\ \rowsep
  Masking
  & Mask properties
@@ -156,7 +160,7 @@ In addition to the common state data (\ref{\iotwod.surface.rendering.commonstate
  \\ \rowsep
  Text Rendering
  & Text properties
- & \tcode{text_props}
+ & \tcode{basic_text_props}
  \\
 \end{libiotwodtab3e}
 
@@ -267,9 +271,9 @@ When a filling operation is initiated on a surface, the implementation shall pro
 \begin{enumerate}
 \item For each integral point $sp$ of the surface's visual data, determine if $sp$ is within the \term{clip area} (\ref{\iotwod.clipprops.intro}); if so, proceed with the remaining steps.
 \item Transform $sp$ from the surface coordinate space (\ref{\iotwod.surface.coordinatespaces}) to the user coordinate space (Table~\ref{tab:\iotwod.surface.pointtransforms.listing}), resulting in point $up$.
-\item Using the source path (\ref{\iotwod.surface.rendering.sourcepath}) and the fill rule (\ref{\iotwod.brushprops.summary}), determine whether $up$ shall be filled; if so, proceed with the remaining steps.
+\item Using the source path (\ref{\iotwod.surface.rendering.sourcepath}), the fill rule (\ref{\iotwod.fillprops.intro}), and the antialiasing algorithm (\ref{\iotwod.fillprops.intro}), determine whether $up$ shall be filled; if so, proceed with the remaining steps.
 \item Transform $up$ from the user coordinate space to the brush coordinate space (\ref{\iotwod.surface.coordinatespaces} and Table~\ref{tab:\iotwod.surface.pointtransforms.listing}), resulting in point $bp$.
-\item Sample from point $bp$ of the source brush (\ref{\iotwod.surface.rendering.brushes}), combine the resulting visual data with the visual data at point $sp$ in the surface's visual data in the manner specified by the surface's current compositing operator (\ref{\iotwod.renderprops.intro}), and modify the surface's visual data at point $sp$ to reflect the result produced by application of the compositing operator.
+\item Sample from point $bp$ of the source brush (\ref{\iotwod.surface.rendering.brushes}), combine the resulting visual data with the visual data at point $sp$ in the surface's visual data in the manner specified by the surface's current compositing operator (\ref{\iotwod.renderprops.intro}), apply the antialiasing algorithm if applicable, and modify the surface's visual data at point $sp$ to reflect the result produced by application of the compositing operator and antialiasing algorithm.
 \end{enumerate}
 
 \rSec1 [\iotwod.surface.stroking] {surface stroking}
@@ -281,6 +285,8 @@ When a stroking operation is initiated on a surface, it is carried out for each 
 The following rules shall apply when a stroking operation is carried out on a figure:
 \begin{enumerate}
 \item No part of the surface's visual data that is outside of the clip area shall be modified.
+
+\item The antialiasing algorithm (\ref{\iotwod.strokeprops.summary}) shall be used where applicable to determine whether a point along the path is rendered and if so what its resulting visual data is.
 
 \item If the figure is a closed figure, then the point where the end point of its final segment meets the start point of the initial segment shall be rendered as specified by the \term{line join} value (see: \ref{\iotwod.strokeprops.summary} and \ref{\iotwod.surface.rendering.specificstate}); otherwise the start point of the initial segment and end point of the final segment shall each by rendered as specified by the line cap value. The remaining meetings between successive end points and start points shall be rendered as specified by the line join value.
 
@@ -328,7 +334,7 @@ Text rendering is a complex subject. The specifics of how it is performed are de
 \begin{enumerate}
 %\item For each UCS character $ch$ resulting from the transformation of the source text from UTF-8 to UCS characters, use the font to determine the glyph or glyphs, $gl$, for the character.
 \item This item is normative. The source text is transformed from UTF-8 to UCS characters.
-\item Those characters are transformed into glyphs using the cmap table of the font.
+\item This item is normative. The UCS characters are transformed into glyphs using the cmap table of the font. Where any characters do not map to glyphs, if the \tcode{basic_font} object's \term{merging} value is \tcode{true}, a font with a similar style (which should be determined using the OS/2 table's sFamilyClass value or in an \unspecnorm{} manner if that matching method fails to produce a result) that can make that mapping is selected and used for those characters. If no such font exists or if the \tcode{basic_font} object's \term{merging} value is \tcode{false}, the characters that do not map to glyphs are mapped to glyph index \tcode{0} as noted in the description of the cmap table.
 \item That set of glyphs is then modified using transformations specified in various tables in the font, some of which are optional and thus may not be present, e.g. the GSUB table. Depending on the glyphs that are present in the set and the presence or absence of certain tables, it is possible that no modification will occur.
 \item The layout of the glyphs for purposes of rasterization is calculated using metrics and adjustments specified in various tables in the font, some of which are optional, e.g. the BASE and GPOS tables.
 \item This item is normative. When the text properties' location is a \tcode{basic_point_2d} object, the glyphs are rendered in a single line without regard to justification. When the location is a \tcode{basic_bounding_box} object, the glyphs are rendered in one or more lines, which are contained within the confines of the \tcode{basic_bounding_box} object.

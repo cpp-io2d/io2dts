@@ -31,7 +31,7 @@ A brush is used either as a \term{source brush} or a \term{mask brush} (\ref{\io
 When a brush is used in a rendering and composing operation, if it is used as a source brush, it has a \tcode{brush_props} object that describes how the brush is interpreted for purposes of sampling. If it is used as a mask brush, it has a \tcode{mask_props} object that describes how the brush is interpreted for purposes of sampling.
 
 \pnum
-The \tcode{basic_brush_props} (\ref{\iotwod.brushprops.summary}) and \tcode{basic_mask_props} (\ref{\iotwod.maskprops.summary}) classes each have a \term{wrap mode} and a \term{filter}. The \tcode{basic_brush_props} class also has a \term{brush matrix} and a \term{fill rule}. The \tcode{basic_mask_props} class also has a \term{mask matrix}. Where possible, the terms that are common between the two classes are referenced without regard to whether the brush is being used as a source brush or a mask brush.
+The \tcode{basic_brush_props} (\ref{\iotwod.brushprops.summary}) and \tcode{basic_mask_props} (\ref{\iotwod.maskprops.summary}) class templates each have a \term{wrap mode} and a \term{filter}. The \tcode{basic_brush_props} class template also has a \term{brush matrix} and a \term{fill rule}. The \tcode{basic_mask_props} class template also has a \term{mask matrix}. Where possible, the terms that are common between the two classes are referenced without regard to whether the brush is being used as a source brush or a mask brush.
 
 \pnum
 Solid color brushes are unbounded and as such always produce the same visual data when sampled from, regardless of the requested point.

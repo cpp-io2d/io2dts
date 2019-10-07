@@ -296,6 +296,66 @@ Equivalent to \tcode{return create_matrix_2d(1.0f, 0.0f, f, 1.0f, 0.0f, 0.0f);}	
 \tcode{M}	&
 Equivalent to \tcode{return create_matrix_2d(1.0f, f, 0.0f, 1.0f, 0.0f, 0.0f);}	&
 	\\ \rowsep
+\tcode{X::m00}(M\& m, float v)	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{m.m00 == v}.	\\ \rowsep
+\tcode{X::m01}(M\& m, float v)	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{m.m01 == v}.	\\ \rowsep
+\tcode{X::m10}(M\& m, float v)	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{m.m10 == v}.	\\ \rowsep
+\tcode{X::m11}(M\& m, float v)	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{m.m11 == v}.	\\ \rowsep
+\tcode{X::m20}(M\& m, float v)	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{m.m20 == v}.	\\ \rowsep
+\tcode{X::m21}(M\& m, float v)	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{m.m21 == v}.	\\ \rowsep
+\tcode{X::m00}(const M\& m)	&
+\tcode{float}	&
+\returns
+\tcode{m.m00}	&
+	\\ \rowsep
+\tcode{X::m01}(const M\& m)	&
+\tcode{float}	&
+\returns
+\tcode{m.m01}	&
+	\\ \rowsep
+\tcode{X::m10}(const M\& m)	&
+\tcode{float}	&
+\returns
+\tcode{m.m10}	&
+	\\ \rowsep
+\tcode{X::m11}(const M\& m)	&
+\tcode{float}	&
+\returns
+\tcode{m.m11}	&
+	\\ \rowsep
+\tcode{X::m20}(const M\& m)	&
+\tcode{float}	&
+\returns
+\tcode{m.m20}	&
+	\\ \rowsep
+\tcode{X::m21}(const M\& m)	&
+\tcode{float}	&
+\returns
+\tcode{m.m21}	&
+	\\ \rowsep
 \tcode{X::multiply(const M\& l, const M\& r)}	&
 \tcode{M}	&
 Equivalent to \tcode{return create_matrix_2d(%

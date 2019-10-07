@@ -2,7 +2,7 @@
 
 \rSec0 [\iotwod.text.genericfonts] {Enum class generic_font_names}
 
-\rSec1 [\iotwod.text.genericfonts.summary] {\tcode{antialias} summary}
+\rSec1 [\iotwod.text.genericfonts.summary] {\tcode{generic_font_names} summary}
 
 \pnum
 The \tcode{generic_font_names} enum class specifies font names that correspond to \term{generic font families} found in the CSS Fonts Specification. A \tcode{basic_font} object created using a \tcode{generic_font_names} enumerator without specifying a font family through a \tcode{string} argument shall meet the requirements for a generic font family of the same name as specified in the CSS Fonts Specification.
@@ -15,9 +15,9 @@ A \tcode{basic_font} object constructed using a \tcode{generic_font_names} enume
 As per the specification, multiple font families might be required to be used when using a \tcode{basic_font} object that is constructed using a \tcode{generic_font_names} enumerator in order to meet the specifications. Because of this, the \tcode{basic_font} object returns the enumerator name when its \tcode{family} member function is called rather than a more specific font family name.
 \end{note}
 
-\rSec1 [\iotwod.text.genericfonts.synopsis] {\tcode{antialias} synopsis}
+\rSec1 [\iotwod.text.genericfonts.synopsis] {\tcode{generic_font_names} synopsis}
 
-\indexlibrary{\idxcode{antialias}}%
+\indexlibrary{\idxcode{generic_font_names}}%
 \begin{codeblock}
 namespace @\fullnamespace{}@ {
   enum class generic_font_names {

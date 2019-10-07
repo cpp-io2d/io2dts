@@ -1,0 +1,279 @@
+%!TEX root = io2d.tex
+
+\rSec2 [\iotwod.graphsurf.reqs.text]{\tcode{text} requirements}
+
+\pnum
+Let \tcode{X} be a \graphicssurfacestemplparam type.
+
+\pnum
+Let \tcode{G} be a \graphicsmathtemplparam type.
+
+\pnum
+\pnum
+Let \tcode{F} be an object of \unspec{} type that contains an OFF Font Format.
+
+\pnum
+Table~\ref{tab:\iotwod.graphsurf.text.requirementstab} describes the observable effects of the member functions of \tcode{X::text}.
+
+\pnum
+Table~\ref{tab:\iotwod.graphsurf.text.typedefnamestab} defines the required \grammarterm{typedef-name}{s} in \tcode{X::text}, which are identifiers for class types capable of storing all data required to support the corresponding class template.
+
+\begin{libreqtab2}{\tcode{X::text} typedef-names}{tab:\iotwod.graphsurf.text.typedefnamestab}
+\\ \topline
+\lhdr{\grammarterm{typedef-name}}       &
+\rhdr{Class data}   \\ \capsep
+\endfirsthead
+\continuedcaption\\
+\topline
+\lhdr{\grammarterm{typedef-name}}       &
+\rhdr{Class template}   \\ \capsep
+\endhead
+\tcode{font_data_type}	&
+\tcode{basic_font}	\\ \rowsep
+\tcode{text_props_data_type}	&
+\tcode{basic_text_props}	\\ \rowsep
+\tcode{font_database_data_type}	&
+\tcode{basic_font_database}	\\
+\end{libreqtab2}
+
+\pnum
+In Table~\ref{tab:\iotwod.graphsurf.text.requirementstab},
+\tcode{FD} denotes the type \tcode{X::text::font_data_type},
+\tcode{TP} denotes the type \tcode{X::text::text_props_data_type},
+\tcode{FDB} denotes the type \tcode{X::text::font_database_data_type}, and
+\tcode{P} denotes the type \tcode{std::filesystem::path}.
+
+\pnum
+In order to describe the observable effects of functions contained in Table~\ref{tab:\iotwod.graphsurf.text.requirementstab}, Table~\ref{tab:\iotwod.graphsurf.text.typememberdata} describes the types contained in \tcode{X} as-if they possessed certain member data. 
+
+\begin{libiotwodreqtab3f}{\tcode{X::text} type member data}{tab:\iotwod.graphsurf.text.typememberdata}
+\\ \topline
+\lhdr{Type}		&	\chdr{Member data}	&	\rhdr{Member data type} \\ \capsep
+\endfirsthead
+\topline
+\lhdr{Type}		&	\chdr{Member data}	&	\rhdr{Member data type} \\ \capsep
+\endhead
+\tcode{font_data_type}	&
+\tcode{font}	&
+\tcode{F}	\\ \rowsep
+\tcode{font_data_type}	&
+\tcode{family}	&
+\tcode{string}	\\ \rowsep
+\tcode{font_data_type}	&
+\tcode{fsu}	&
+\tcode{font_size_units}	\\ \rowsep
+\tcode{font_data_type}	&
+\tcode{fontsize}	&
+\tcode{float}	\\ \rowsep
+\tcode{font_data_type}	&
+\tcode{fw}	&
+\tcode{font_weight}	\\ \rowsep
+\tcode{font_data_type}	&
+\tcode{fs}	&
+\tcode{font_style}	\\ \rowsep
+\tcode{font_data_type}	&
+\tcode{merging}	&
+\tcode{bool}	\\ \rowsep
+%
+% text_props_data
+%
+\tcode{text_props_data_type}	&
+\tcode{scale}	&
+\tcode{float}	\\ \rowsep
+\tcode{text_props_data_type}	&
+\tcode{fsu}	&
+\tcode{font_size_units}	\\ \rowsep
+\tcode{text_props_data_type}	&
+\tcode{fontsize}	&
+\tcode{float}	\\ \rowsep
+\tcode{text_props_data_type}	&
+\tcode{kern}	&
+\tcode{bool}	\\ \rowsep
+\tcode{text_props_data_type}	&
+\tcode{aa}	&
+\tcode{font_antialias}	\\ \rowsep
+\tcode{text_props_data_type}	&
+\tcode{stretch}	&
+\tcode{font_stretching}	\\ \rowsep
+\tcode{text_props_data_type}	&
+\tcode{strike}	&
+\tcode{bool}	\\ \rowsep
+\tcode{text_props_data_type}	&
+\tcode{fl}	&
+\tcode{font_line}	\\
+\end{libiotwodreqtab3f}
+
+\begin{libiotwodreqtab4d}
+{\tcode{X::text} requirements}
+{tab:\iotwod.graphsurf.text.requirementstab}
+\\ \topline
+\lhdr{Expression}       &   \chdr{Return type}  &   \chdr{Operational}  &
+\rhdr{Assertion/note}   \\
+    &   &   \chdr{semantics}    &   \rhdr{pre-/post-condition}   \\ \capsep
+\endfirsthead
+\continuedcaption\\
+\topline
+\lhdr{Expression}       &   \chdr{Return type}  &   \chdr{Operational}  &
+\rhdr{Assertion/note}   \\
+    &   &   \chdr{semantics}    &   \rhdr{pre-/post-condition}   \\ \capsep
+\endhead
+%
+% font
+%
+\tcode{X::text::create_font(string name, font_size_units fsu, float size, generic_font_names gfn, io2d::font_weight fw, font_style fs, bool merging)}	&
+\tcode{FD}	&
+\returns
+An object \tcode{fd}.	&
+\postconditions
+\tcode{fd.fsu == fsu}, \tcode{fd.fontsize == size}, \tcode{fd.fw == fw}, \tcode{fd.fs == fs}, and \tcode{fd.merging == merging}.	The value of \tcode{fd.family} is \tcode{name} when an OFF Font with that family name is present, in which case the value of \tcode{fd.font} is that OFF Font. Otherwise the value of \tcode{fd.family} is the family name of the OFF Font selected by the implementation in an \unspecnorm{} manner and the value of \tcode{fd.font} is that OFF Font. In the latter case, implementations should use the value of \tcode{gfn} together with the values of the other arguments to select an OFF Font. \\ \rowsep
+\tcode{X::text::create_font(P file, string name, font_size_units fsu, float size, io2d::font_weight fw, font_style fs, bool merging)}	&
+\tcode{FD}	&
+\returns
+An object \tcode{fd}.	&
+\postconditions
+\tcode{font} is the OFF Font contained in \tcode{file}, \tcode{fd.fsu == fsu}, \tcode{fd.fontsize == size}, \tcode{fd.fw == fw}, \tcode{fd.fs == fs}, and \tcode{fd.merging == merging}. Where \tcode{file} is not an OFF Font Font Collection, the value of \tcode{fd.family} is the family name of the OFF Font contained in \tcode{file}. Where \tcode{file} is an OFF Font Font Collection, the value of \tcode{fd.family} is \tcode{name} if a font with that family name is contained in \tcode{file}, otherwise it is the family name of the font contained in that file selected by the implementation in an \unspecnorm{} manner. In the latter case implementations should select the font that most closely corresponds to the values of the other arguments. \\ \rowsep
+\tcode{X::text::create_font(generic_font_names gfn, font_size_units fsu, float size, font_weight fw, font_style fs)}	&
+\tcode{FD}	&
+\returns
+An object \tcode{fd}.	&
+\postconditions
+\tcode{fd.fsu == fsu}, \tcode{fd.fontsize == size}, and \tcode{fd.merging == merging}. The value of \tcode{fd.family} is the string that is the name of the enumerator value \tcode{gfn}. The value of \tcode{fd.font} shall be determined as described in \ref{\iotwod.text.genericfonts.summary}, taking into account the values of \tcode{fw} and \tcode{fs}. If value chosen for \tcode{fd.font} is such that the value for \tcode{fd.fw} would better match an enumerator different than that specified by \tcode{fw} the value of \tcode{fd.fw} is the better match, otherwise it is \tcode{fw}. If value chosen for \tcode{fd.font} is such that the value for \tcode{fd.fs} would better match an enumerator different than that specified by \tcode{fs} the value of \tcode{fd.fs} is the better match, otherwise it is \tcode{fs}.	\\ \rowsep
+\tcode{X::text::font_size(FD\& data, font_size_units fsu, float size)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{data.fsu == fsu} and \tcode{data.fontsize == size}.	\\ \rowsep
+\tcode{X::text::merging(FD\& data, bool m)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{data.merging == m}.	\\ \rowsep
+\tcode{X::text::font_size(const FD\& data)}	&
+\tcode{float}	&
+\returns
+\tcode{data.fontsize}.	&
+	\\ \rowsep
+\tcode{X::text::family(const FD\& data)}	&
+\tcode{string}	&
+\returns
+\tcode{data.family}.	&
+	\\ \rowsep
+\tcode{X::text::size_units(const FD\& data)}	&
+\tcode{font_size_units}	&
+\returns
+\tcode{data.fsu}.	&
+	\\ \rowsep
+\tcode{X::text::weight(const FD\& data)}	&
+\tcode{font_weight}	&
+\returns
+\tcode{data.fw}.	&
+	\\ \rowsep
+\tcode{X::text::style(const FD\& data)}	&
+\tcode{font_style}	&
+\returns
+\tcode{data.fs}.	&
+	\\ \rowsep
+\tcode{X::text::merging(\newline{}const FD\& data)}	&
+\tcode{bool}	&
+\returns
+\tcode{data.merging}.	&
+	\\ \rowsep
+%
+% text props
+%
+\tcode{X::text::create_text_props(float scl, font_size_units fsu, float size, bool kern, font_antialias aa, font_stretching stretch, bool strike_through, font_line fl))}	&
+\tcode{TP}	&
+\returns
+An object \tcode{tp}.	&
+\postconditions
+\tcode{tp.scale == scl}, \tcode{tp.fsu == fsu}, \tcode{tp.fontsize == size}, \tcode{tp.kern == kern}, \tcode{tp.aa == aa}, \tcode{tp.stretch == stretch}, \tcode{tp.strike == strike_through}, and \tcode{tp.fl == fl}.	\\ \rowsep
+\tcode{X::text::scale(TP\& data, float scl)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{data.scale == scl}.	\\ \rowsep
+\tcode{X::text::font_size(TP\& data, font_size_units fsu, float sz)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{data.fsu == fsu} and \tcode{data.fontsize == sz}.	\\ \rowsep
+\tcode{X::text::kerning(TP\& data, bool k)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{data.kern == k}.	\\ \rowsep
+\tcode{X::text::antialiasing(\newline{}TP\& data, font_antialias aa)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{data.aa == aa}.	\\ \rowsep
+\tcode{X::text::stretching(\newline{}TP\& data, font_stretching fs)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{data.stretch == fs}.	\\ \rowsep
+\tcode{X::text::strike_through(TP\& data, bool st)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{data.strike == st}.	\\ \rowsep
+\tcode{X::text::line(TP\& data, font_line fl)}	&
+\tcode{void}	&
+	&
+\postconditions
+\tcode{data.fl == fl}.	\\ \rowsep
+\tcode{X::text::scale(const TP\& data)}	&
+\tcode{float}	&
+\returns
+\tcode{data.scale}.	&
+	\\ \rowsep
+\tcode{X::text::font_size(const TP\& data)}	&
+\tcode{float}	&
+\returns
+\tcode{data.fontsize}.	&
+	\\ \rowsep
+\tcode{X::text::size_units(const TP\& data)}	&
+\tcode{font_size_units}	&
+\returns
+\tcode{data.fsu}.	&
+	\\ \rowsep
+\tcode{X::text::kerning(const TP\& data)}	&
+\tcode{bool}	&
+\returns
+\tcode{data.kern}.	&
+	\\ \rowsep
+\tcode{X::text::antialiasing(\newline{}const TP\& data)}	&
+\tcode{font_antialias}	&
+\returns
+\tcode{data.aa}.	&
+	\\ \rowsep
+\tcode{X::text::stretching(\newline{}const TP\& data)}	&
+\tcode{font_stretching}	&
+\returns
+\tcode{data.stretch}.	&
+	\\ \rowsep
+\tcode{X::text::stroke_through(const TP\& data)}	&
+\tcode{bool}	&
+\returns
+\tcode{data.strike}.	&
+	\\ \rowsep
+\tcode{X::text::line(const TP\& data)}	&
+\tcode{font_line}	&
+\returns
+\tcode{data.fl}.	&
+	\\ \rowsep
+%
+% font database
+%
+\tcode{X::text::create_font_database()}	&
+\tcode{FDB}	&
+\returns
+An object \tcode{fdb}.	&
+	\\ \rowsep
+\tcode{X::text::get_families(const FDB\& data)}	&
+\tcode{vector<string>}	&
+\returns
+A \tcode{vector<string>} containing the family names of all font families available in the host environment.	&
+	\\
+\end{libiotwodreqtab4d}
+

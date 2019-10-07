@@ -50,7 +50,7 @@ namespace @\fullnamespace{}@ {
       io2d::refresh_style rr = io2d::refresh_style::as_fast_as_possible,
       float fps = 30.0f) noexcept;
 
-    // \ref{\iotwod.outputsurface.mofifiers}, modifiers:
+    // \ref{\iotwod.outputsurface.modifiers}, modifiers:
     int begin_show();
     void end_show();
     void clear();
@@ -77,11 +77,13 @@ namespace @\fullnamespace{}@ {
     void fill(const basic_brush<GraphicsSurfaces>& b,
       const basic_path_builder<GraphicsSurfaces, Allocator>& pb,
       const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+      const optional<basic_fill_props<GraphicsSurfaces>>& fp = nullopt,
       const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
       const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
     void fill(const basic_brush<GraphicsSurfaces>& b,
       const basic_interpreted_path<GraphicsSurfaces>& ip,
       const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+      const optional<basic_fill_props<GraphicsSurfaces>>& fp = nullopt,
       const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
       const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
     void mask(const basic_brush<GraphicsSurfaces>& b,
@@ -233,7 +235,7 @@ basic_output_surface(int preferredWidth, int preferredHeight,
 \end{itemdescr}
 
 
-\rSec1 [\iotwod.outputsurface.mofifiers] {\tcode{basic_output_surface} modifiers}
+\rSec1 [\iotwod.outputsurface.modifiers] {\tcode{basic_output_surface} modifiers}
 
 \indexlibrarymember{begin_show}{basic_output_surface}%
 \begin{itemdecl}
@@ -378,11 +380,13 @@ template <class Allocator>
 void fill(const basic_brush<GraphicsSurfaces>& b,
   const basic_path_builder<GraphicsSurfaces, Allocator>& pb,
   const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+  const optional<basic_fill_props<GraphicsSurfaces>>& fp = nullopt,
   const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
   const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
 void fill(const basic_brush<GraphicsSurfaces>& b,
   const basic_interpreted_path<GraphicsSurfaces>& ip,
   const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+  const optional<basic_fill_props<GraphicsSurfaces>>& fp = nullopt,
   const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
   const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
 \end{itemdecl}

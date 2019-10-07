@@ -15,7 +15,7 @@ The data are stored in an object of type \tcode{typename GraphicsSurfaces::surfa
 
 \pnum
 \begin{note}
-Because of the functionality it provides and what it can be used for, it is expected that developers familiar with other graphics technologies will think of the \tcode{basic_image_surface} class as being a form of \term{render target}. This is intentional, though this \documenttypename{} does not formally define or use that term to avoid any minor ambiguities and differences in its meaning between the various graphics technologies that do use the term render target.
+Because of the functionality it provides and what it can be used for, it is expected that developers familiar with other graphics technologies will think of the \tcode{basic_image_surface} class template as being a form of \term{render target}. This is intentional, though this \documenttypename{} does not formally define or use that term to avoid any minor ambiguities and differences in its meaning between the various graphics technologies that do use the term render target.
 \end{note}
 
 \rSec1 [\iotwod.imagesurface.synopsis] {\tcode{basic_image_surface} synopsis}
@@ -51,7 +51,7 @@ namespace @\fullnamespace{}@ {
     io2d::format format() const noexcept;
     basic_display_point<graphics_math_type> dimensions() const noexcept;
 	
-    // \ref{\iotwod.imagesurface.mofifiers}, modifiers:
+    // \ref{\iotwod.imagesurface.modifiers}, modifiers:
     void clear();
     void paint(const basic_brush<GraphicsSurfaces>& b,
       const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
@@ -76,11 +76,13 @@ namespace @\fullnamespace{}@ {
     void fill(const basic_brush<GraphicsSurfaces>& b,
       const basic_path_builder<GraphicsSurfaces, Allocator>& pb,
       const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+      const optional<basic_fill_props<GraphicsSurfaces>>& fp = nullopt,
       const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
       const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
     void fill(const basic_brush<GraphicsSurfaces>& b,
       const basic_interpreted_path<GraphicsSurfaces>& ip,
       const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+      const optional<basic_fill_props<GraphicsSurfaces>>& fp = nullopt,
       const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
       const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
     void mask(const basic_brush<GraphicsSurfaces>& b,
@@ -300,7 +302,7 @@ basic_display_point<graphics_math_type> dimensions() const noexcept;
 The pixel dimensions.
 \end{itemdescr}
 
-\rSec1 [\iotwod.imagesurface.mofifiers] {\tcode{basic_image_surface} modifiers}
+\rSec1 [\iotwod.imagesurface.modifiers] {\tcode{basic_image_surface} modifiers}
 
 \indexlibrarymember{clear}{basic_image_surface}%
 \begin{itemdecl}
@@ -405,12 +407,13 @@ template <class Allocator>
 void fill(const basic_brush<GraphicsSurfaces>& b,
   const basic_path_builder<GraphicsSurfaces, Allocator>& pb,
   const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+  const optional<basic_fill_props<GraphicsSurfaces>>& fp = nullopt,
   const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
   const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects Calls \tcode{GraphicsSurfaces::surfaces::fill(data(), b, basic_interpreted_path<GraphicsSurfaces>(pb), (bp == nullopt ? basic_brush_props<GraphicsSurfaces>() : bp.value()), (rp == nullopt ? basic_render_props<GraphicsSurfaces>() : rp.value()), (cl == nullopt ? basic_clip_props<GraphicsSurfaces>() : cl.value()))}.
+\effects Calls \tcode{GraphicsSurfaces::surfaces::fill(data(), b, basic_interpreted_path<GraphicsSurfaces>(pb), (bp == nullopt ? basic_brush_props<GraphicsSurfaces>() : bp.value()), (fp == nullopt ? basic_fill_props<GraphicsSurfaces>() : fp.value()), (rp == nullopt ? basic_render_props<GraphicsSurfaces>() : rp.value()), (cl == nullopt ? basic_clip_props<GraphicsSurfaces>() : cl.value()))}.
 
 \pnum
 \remarks
@@ -433,12 +436,13 @@ The errors, if any, produced by this function are \impldefplain{basic_image_surf
 void fill(const basic_brush<GraphicsSurfaces>& b,
   const basic_interpreted_path<GraphicsSurfaces>& ip,
   const optional<basic_brush_props<GraphicsSurfaces>>& bp = nullopt,
+  const optional<basic_fill_props<GraphicsSurfaces>>& fp = nullopt,
   const optional<basic_render_props<GraphicsSurfaces>>& rp = nullopt,
   const optional<basic_clip_props<GraphicsSurfaces>>& cl = nullopt);
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
-\effects Calls \tcode{GraphicsSurfaces::surfaces::fill(data(), b, ip, (bp == nullopt ? basic_brush_props<GraphicsSurfaces>() : bp.value()), (rp == nullopt ? basic_render_props<GraphicsSurfaces>() : rp.value()), (cl == nullopt ? basic_clip_props<GraphicsSurfaces>() : cl.value()))}.
+\effects Calls \tcode{GraphicsSurfaces::surfaces::fill(data(), b, ip, (bp == nullopt ? basic_brush_props<GraphicsSurfaces>() : bp.value()), (fp == nullopt ? basic_fill_props<GraphicsSurfaces>() : fp.value()), (rp == nullopt ? basic_render_props<GraphicsSurfaces>() : rp.value()), (cl == nullopt ? basic_clip_props<GraphicsSurfaces>() : cl.value()))}.
 
 \pnum
 \remarks

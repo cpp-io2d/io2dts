@@ -1,0 +1,87 @@
+%!TEX root = io2d.tex
+\infannex{p1225r0}{Response to P1225R0}
+
+\rSec1[p1225r0.overview]{Overview of P1225R0}
+
+\pnum
+P1225R0 provides feedback on P0267R8 and opinions on what a 2D graphics library should contain.
+
+\pnum
+We offer our thanks for the feedback and our replies to it below.
+
+\pnum
+To avoid needless repetition, whenever a section number is given without naming a source document, the section number refers to the corresponding section in P1225R0. 
+
+\rSec1[p1225r0.sec2]{Design}
+
+\pnum
+We'll address each point in section 2 in turn:
+\begin{itemize}
+\item 1. Multiple output devices. The API currently support memory buffers (\tcode{basic_image_surface}) and windows (\tcode{basic_output_surface} and \tcode{basic_unmanaged_output_surface}). Additionally, while the reference implementation does not currently contain this functionality, \tcode{basic_image_surface} can be implemented in a way that it would record all commands issued to it, thereby allowing it to be output to SVG, PDF, etc., in a way that translates the APIs drawing commands into the closest equivalents in those formats rather than as a raster image. Such an implementation would not preclude using that \tcode{basic_image_surface} as a raster image since it could execute the commands and produce the appropriate raster image data on an as-needed basis. As for formats like FP16, we can only support what exists in a published standard since a TS is based against such a document, but we are glad to see progress on additional floating point types and on fixed point types in various proposals. Alpha channel support is present in \tcode{basic_image_surface}. It does not exist in the two output surface types because they rarely support alpha (only in certain windowing systems where one window overlays another) and in all such environments we are aware of that do, the host environment controls whether and to what degree the output surface is transparent.
+\item 2. Anti-aliasing should come free where supported. This had been the intention all along. It unfortunately got lost somewhere along the way. The paper has been revised to correct this oversight. Thanks!
+\item 3. Text. There was placeholder text in R8. A text API was added in R9. The API is not yet complete, but basic functionality is now there.
+\item 4. Consistent, DPI-independent, output. We would like to do this but we want to make sure we get it correct. Functionality to enable this might be added to the next revision but we make no promises.
+\item 5. Hardware support where available. This is a QoI issue. The current design is that there is a set of class templates that are the "front end". This is what users will use (likely through typedefs to avoid needing to write out basic_...<SomeImpl> all the time). The front end interface calls in to a back end, which can be provided by anyone so long as it meets the requirements specified for a GraphicsSurfaces type (and the math back end meets the requirements for a GraphicsMath type). The back end is specified as a series of typedef'd opaque data structures that are used by static member functions specified by the requirements. A back end can be written to use any graphics technology and support any platform that the author wants. The reference implementation provides three back ends currently (cairo, CoreGraphics, and Qt). We expect many others will be written both before and after the proposal becomes a TS.
+\item 6. Reasonable performance. This is also a QoI issue.
+\item 7. Reasonable power consumption. This is also a QoI issue.
+\item 8. Color spaces and gamma support. The proposal describes sRGB and color spaces in general along with gamma. It does not forbid implementations from making use of any particular color space, but there is no API to access or modify this. We think it's a QoI issue but we welcome suggestions for an API that would expose these in a portable way.
+\item 9. Possibility to build an interactive model with animation on top of the API. This is possible. See, e.g., the rocks_in_space sample for some basic examples of thisk the matrix modification features in the path API, and the transformation matrices for surfaces and surface state objects.
+\end{itemize}
+
+\rSec1[p1225r0.sec3]{Science and teaching}
+
+\pnum
+Regarding section 3, for various reasons stated in this papers and others about it, we think (as do the authors of, e.g., P1200) that this will be a useful teaching tool.
+
+\pnum
+As for scientific plot generation, this paper is the first time we (or the primary author at least) has heard of any such demand. The library is, by intent, fairly low level. We wish to avoid feature creep and anything approaching a GUI-level API. Nonetheless, if a reasonable case is made for adding this specific functionality rather than letting users do it with the existing path API, we're happy to entertain it.
+
+\rSec1[p1225r0.sec4]{Abstraction level}
+
+\pnum
+Of the items in section 4:
+
+\begin{itemize}
+\item Window objects can be obtained if the back end supports it (these data can be obtained from the implementation's surface data_type objects, but this will likely not be cross-platform and, absent any guarantees from implementations, any attempt to use that data dives into the realm of undefined behavior since the contents of the back end *_data_type objects are intentionally unspecified).
+\item Asset file operations are fully supported.
+\item New user-implemented rasterization primitives are supported to the extent that they can be implemented with the existing API (of the examples given an ellipse can be created using the path API's \tcode{arc} functionality while NURBS can only be approximated using the path API's cubic \bezierlocal{} curves; we're unaware of any widely used cross-platform 2D graphics library that supports them and requiring back end implementers to support them thus would seem to be asking a bit too much perhaps).
+\item Stacking geometric transforms is possible (there are a number of matrices that are available which will modify the results of the various drawing operations).
+\item Scissoring and clipping are both available (both via the \tcode{basic_clipping} type and by performing a mask operation).
+\item User input is the next (and final) major feature we will be adding. We intentionally decided to begin with output only for a variety of reasons. Primarily because tackling both at the same time seemed like it would be too big of a task and input doesn't make sense if it's not in response to some sort of output.\item Text support was added in the R9 revision, one after the R8 revision that this paper is critiquing. The API is a work in progress, as described earlier.
+\item Complex line drawing is possible, including custom dash patterns.
+\item We believe that the API can be implemented entirely using hardware acceleration, including using shaders where appropriate. (If anyone wishes to engage the primary offer with a contract to create such an implementation... :) ). 
+\end{itemize}
+
+\rSec1[p1225r0.sec5]{Missing details}
+
+\pnum
+We will only briefly touch on section 5 since much of it has been addressed above.
+
+\pnum
+R9 added a command list type that enables buffering of commands and a subsequent bulk execution.
+
+\pnum
+The image types that are guaranteed to be supported are set out in the \tcode{image_file_format} enum class. We wish we could guarantee more, but other popular image formats are either not standardized or are encumbered in various ways which we do not want to force on back end implementers. Back end implementers are free to support more image formats than the guaranteed ones and there is even a specification for how back ends can validly supply their own additional enumerators to indicate that they support various image types beyond the required ones.
+
+\pnum
+To fully support the PDF format (which is standardized), the implementation needs one more brush type, one that would support the PDF Type 7 Shading Type (tensor-product patch meshes). We have not had the time to address that and welcome offers to contribution wording to add that support. We may also need some additional text functionality; this is part of what we are reviewing in terms of expanding the text API that was introduced in R9. Once we have those things we can add PDF support officially. Until then it's something that back ends can choose to support (though they would need to either add that additional functionality or else only partially support PDFs, which is not an option for us because of the licensing issues that go along with the PDF standard).
+
+\rSec1[p1225r0.sec6and7]{C++ aesthetics and Conclusion}
+
+\pnum
+Lastly lets delve in to sections 6 and 7.
+
+\pnum
+We also dislike the dual error handling mechanism. We have tried to limit it as much as possible and may eliminate it altogether. But we are also hoping that some proposals that would eliminate this issue will gain traction and enter into the Standard.
+
+\pnum
+It's perfectly possible to iterate over a path. Until such time as it is transformed into a \tcode{basic_interpreted_path} object since that is an intentionally opaque type that is meant to give back end implementers the ability to create optimized data that best suits their target environment(s). Even then, the path data collection used to create the \tcode{basic_interpreted_path} object remains and can be transformed and resubmitted for future drawing operations (this is one mechanism to use for animation).
+
+\pnum
+We agree about seeing linear algebra, et al., standardized separately. The goal of this proposal is 2D graphics. We created the minimal mathematical types needed for it. Should a linear algebra library become part of the standard we would strongly support integrating it into this proposal at that time and (likely) deprecating the types that we are currently providing.
+
+\pnum
+There is a CoreGraphics back end that supports both Mac and iOS. It was written and offered to us by Michael Kazakov, who undertook to write it on his own and then contacted us to offer it. He has since become a coauthor.
+
+\pnum
+Thanks for your feedback!

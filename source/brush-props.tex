@@ -9,7 +9,10 @@
 The \tcode{basic_brush_props} class template provides general state information that is applicable to all rendering and composing operations (\ref{\iotwod.surface.rendering}).
 
 \pnum
-It has a \term{wrap mode} of type \tcode{wrap_mode}, a \term{filter} of type \tcode{filter}, a \term{fill rule} of type \tcode{fill_rule}, and a \term{brush matrix} of type \tcode{basic_matrix_2d}.
+It has a \term{wrap mode} of type \tcode{wrap_mode}, a \term{filter} of type \tcode{filter}, and a \term{brush matrix} of type \tcode{basic_matrix_2d}.
+
+\pnum
+The data are stored in an object of type \tcode{typename GraphicsSurfaces::surface_state_props::brush_props_data_type}. It is accessible using the \tcode{data} member functions.
 
 \rSec1 [\iotwod.brushprops.synopsis] {\tcode{basic_brush_props} synopsis}
 
@@ -19,24 +22,27 @@ namespace @\fullnamespace{}@ {
   class basic_brush_props {
     public:
     using graphics_math_type = typename GraphicsSurfaces::graphics_math_type;
+    using data_type =
+      typename GraphicsSurfaces::surface_state_props::brush_props_data_type;
 
     // \ref{\iotwod.brushprops.cons}, constructor:
     basic_brush_props(io2d::wrap_mode w = io2d::wrap_mode::none,
       io2d::filter fi = io2d::filter::good,
-      io2d::fill_rule fr = io2d::fill_rule::winding,
       const basic_matrix_2d<graphics_math_type>& m = basic_matrix_2d<graphics_math_type>{})
       noexcept;
+
+    // \ref{\iotwod.brushprops.acc}, accessors:
+    const data_type& data() const noexcept;
+    data_type& data() noexcept;
 
     // \ref{\iotwod.brushprops.modifiers}, modifiers:
     void wrap_mode(io2d::wrap_mode w) noexcept;
     void filter(io2d::filter fi) noexcept;
-    void fill_rule(io2d::fill_rule fr) noexcept;
     void brush_matrix(const basic_matrix_2d<graphics_math_type>& m) noexcept;
 
     // \ref{\iotwod.brushprops.observers}, observers:
     io2d::wrap_mode wrap_mode() const noexcept;
     io2d::filter filter() const noexcept;
-    io2d::fill_rule fill_rule() const noexcept;
     basic_matrix_2d<graphics_math_type> brush_matrix() const noexcept;
   };
 }
@@ -48,7 +54,6 @@ namespace @\fullnamespace{}@ {
 \begin{itemdecl}
 basic_brush_props(io2d::wrap_mode w = io2d::wrap_mode::none,
   io2d::filter fi = io2d::filter::good,
-  io2d::fill_rule fr = io2d::fill_rule::winding,
   const basic_matrix_2d<graphics_math_type>& m = basic_matrix_2d<graphics_math_type>{})
   noexcept;
 \end{itemdecl}
@@ -62,7 +67,20 @@ basic_brush_props(io2d::wrap_mode w = io2d::wrap_mode::none,
 Constructs an object of type \tcode{basic_brush_props}.
 
 \pnum
-The wrap mode is \tcode{w}. The filter is \tcode{fi}. The fill rule is \tcode{fr}. The brush matrix is \tcode{m}.
+\postconditions
+\tcode{data() == GraphicsSurfaces::surface_state_props::create_brush_props(w, fi, m)}.
+\end{itemdescr}
+
+\rSec1 [\iotwod.brushprops.acc] {Accessors}
+
+\indexlibrarymember{data}{basic_brush_props}%
+\begin{itemdecl}
+const data_type& data() const noexcept;
+data_type& data() noexcept;
+\end{itemdecl}
+\begin{itemdescr}
+\pnum
+\returns A reference to the \tcode{basic_brush_props} object's data object (See: \ref{\iotwod.brushprops.summary}).
 \end{itemdescr}
 
 \rSec1 [\iotwod.brushprops.modifiers] {\tcode{basic_brush_props} modifiers}
@@ -74,6 +92,10 @@ void wrap_mode(io2d::wrap_mode w) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
+Calls \tcode{GraphicsSurfaces::surface_state_props::wrap_mode(data(), w)}.
+
+\pnum
+\remarks
 The wrap mode is \tcode{w}.
 \end{itemdescr}
 
@@ -84,17 +106,11 @@ void filter(io2d::filter fi) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-The filter is \tcode{fi}.
-\end{itemdescr}
+Calls \tcode{GraphicsSurfaces::surface_state_props::filter(data(), fi)}.
 
-\indexlibrarymember{fill_rule}{basic_brush_props}%
-\begin{itemdecl}
-void fill_rule(io2d::fill_rule fr) noexcept;
-\end{itemdecl}
-\begin{itemdescr}
 \pnum
-\effects
-The fill rule is \tcode{fr}.
+\remarks
+The filter is \tcode{fi}.
 \end{itemdescr}
 
 \indexlibrarymember{brush_matrix}{basic_brush_props}%
@@ -108,6 +124,10 @@ void brush_matrix(const basic_matrix_2d<graphics_math_type>& m) noexcept;
 
 \pnum
 \effects
+Calls \tcode{GraphicsSurfaces::surface_state_props::brush_matrix(data(), m)}.
+
+\pnum
+\remarks
 The brush matrix is \tcode{m}.
 \end{itemdescr}
 
@@ -120,7 +140,7 @@ io2d::wrap_mode wrap_mode() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-The wrap mode.
+\tcode{GraphicsSurfaces::surface_state_props::wrap_mode(data())}.
 \end{itemdescr}
 
 \indexlibrarymember{filter}{basic_brush_props}%
@@ -130,17 +150,7 @@ io2d::filter filter() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-The filter.
-\end{itemdescr}
-
-\indexlibrarymember{fill_rule}{basic_brush_props}%
-\begin{itemdecl}
-io2d::fill_rule fill_rule() const noexcept;
-\end{itemdecl}
-\begin{itemdescr}
-\pnum
-\returns
-The fill rule.
+\tcode{GraphicsSurfaces::surface_state_props::filter(data())}.
 \end{itemdescr}
 
 \indexlibrarymember{brush_matrix}{basic_brush_props}%
@@ -150,5 +160,5 @@ basic_matrix_2d<graphics_math_type> brush_matrix() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-The brush matrix.
+\tcode{GraphicsSurfaces::surface_state_props::brush_matrix(data())}.
 \end{itemdescr}

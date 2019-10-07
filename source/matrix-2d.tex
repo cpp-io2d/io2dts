@@ -8,7 +8,7 @@
 The class template \tcode{basic_matrix_2d} represents a three row by three column matrix. Its purpose is to perform affine transformations.
 
 \pnum
-The matrix is composed of nine \tcode{float} values: \tcode{m00}, \tcode{m01}, \tcode{m02}, \tcode{m10}, \tcode{m11}, \tcode{m12}, \tcode{m20}, \tcode{m21}, and \tcode{m22}. The ordering of these \tcode{float} values in the \tcode{basic_matrix_2d} class is unspecified.
+The matrix is composed of nine \tcode{float} values: \tcode{m00}, \tcode{m01}, \tcode{m02}, \tcode{m10}, \tcode{m11}, \tcode{m12}, \tcode{m20}, \tcode{m21}, and \tcode{m22}. The ordering of these \tcode{float} values in the data of a \tcode{basic_matrix_2d} object is unspecified.
 
 \pnum
 The specification of the \tcode{basic_matrix_2d} class, as described in this subclause, uses the following ordering: \\
@@ -47,14 +47,14 @@ namespace @\fullnamespace{}@ {
     data_type& data() noexcept;
 
     // \ref{\iotwod.\matrixtwod.staticfactories}, static factory functions:
-    static basic_matrix_2d init_translate(const basic_point_2d<GraphicsMath>& v) noexcept;
-    static basic_matrix_2d init_scale(const basic_point_2d<GraphicsMath>& v) noexcept;
-    static basic_matrix_2d init_rotate(float radians) noexcept;
-    static basic_matrix_2d init_rotate(float radians,
+    static basic_matrix_2d create_translate(const basic_point_2d<GraphicsMath>& v) noexcept;
+    static basic_matrix_2d create_scale(const basic_point_2d<GraphicsMath>& v) noexcept;
+    static basic_matrix_2d create_rotate(float radians) noexcept;
+    static basic_matrix_2d create_rotate(float radians,
       const basic_point_2d<GraphicsMath>& origin) noexcept;
-    static basic_matrix_2d init_reflect(float radians) noexcept;
-    static basic_matrix_2d init_shear_x(float factor) noexcept;
-    static basic_matrix_2d init_shear_y(float factor) noexcept;
+    static basic_matrix_2d create_reflect(float radians) noexcept;
+    static basic_matrix_2d create_shear_x(float factor) noexcept;
+    static basic_matrix_2d create_shear_y(float factor) noexcept;
 
     // \ref{\iotwod.\matrixtwod.modifiers}, modifiers:
     void m00(float v) noexcept;
@@ -171,9 +171,9 @@ A reference to the \tcode{basic_matrix_2d} object's data object (See: \ref{\iotw
 \rSec1 [\iotwod.\matrixtwod.staticfactories] {\tcode{basic_matrix_2d} static factory 
 functions}
 
-\indexlibrarymember{init_translate}{basic_matrix_2d}%
+\indexlibrarymember{create_translate}{basic_matrix_2d}%
 \begin{itemdecl}
-static basic_matrix_2d init_translate(basic_point_2d<GraphicsMath> v) noexcept;
+static basic_matrix_2d create_translate(basic_point_2d<GraphicsMath> v) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -181,9 +181,9 @@ static basic_matrix_2d init_translate(basic_point_2d<GraphicsMath> v) noexcept;
 \tcode{basic_matrix_2d(GraphicsMath::create_translate(v.data()))}.
 \end{itemdescr}
 
-\indexlibrarymember{init_scale}{basic_matrix_2d}%
+\indexlibrarymember{create_scale}{basic_matrix_2d}%
 \begin{itemdecl}
-static basic_matrix_2d init_scale(basic_point_2d<GraphicsMath> v) noexcept;
+static basic_matrix_2d create_scale(basic_point_2d<GraphicsMath> v) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -191,9 +191,9 @@ static basic_matrix_2d init_scale(basic_point_2d<GraphicsMath> v) noexcept;
 \tcode{basic_matrix_2d(GraphicsMath::create_scale(v.data())}.
 \end{itemdescr}
 
-\indexlibrarymember{init_rotate}{basic_matrix_2d}%
+\indexlibrarymember{create_rotate}{basic_matrix_2d}%
 \begin{itemdecl}
-static basic_matrix_2d init_rotate(float radians) noexcept;
+static basic_matrix_2d create_rotate(float radians) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -201,9 +201,9 @@ static basic_matrix_2d init_rotate(float radians) noexcept;
 \tcode{basic_matrix_2d(GraphicsMath::create_rotate(radians))}.
 \end{itemdescr}
 
-\indexlibrarymember{init_rotate}{basic_matrix_2d}%
+\indexlibrarymember{create_rotate}{basic_matrix_2d}%
 \begin{itemdecl}
-static basic_matrix_2d init_rotate(float radians, basic_point_2d<GraphicsMath> origin) noexcept;
+static basic_matrix_2d create_rotate(float radians, basic_point_2d<GraphicsMath> origin) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -211,9 +211,9 @@ static basic_matrix_2d init_rotate(float radians, basic_point_2d<GraphicsMath> o
 \tcode{basic_matrix_2d(GraphicsMath::create_rotate(radians, origin.data()))}.
 \end{itemdescr}
 
-\indexlibrarymember{init_reflect}{basic_matrix_2d}%
+\indexlibrarymember{create_reflect}{basic_matrix_2d}%
 \begin{itemdecl}
-static basic_matrix_2d init_reflect(float radians) noexcept;
+static basic_matrix_2d create_reflect(float radians) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -221,9 +221,9 @@ static basic_matrix_2d init_reflect(float radians) noexcept;
 \tcode{basic_matrix_2d(GraphicsMath::create_reflect(radians))}
 \end{itemdescr}
 
-\indexlibrarymember{init_shear_y}{basic_matrix_2d}%
+\indexlibrarymember{create_shear_y}{basic_matrix_2d}%
 \begin{itemdecl}
-static basic_matrix_2d init_shear_x(float factor) noexcept;
+static basic_matrix_2d create_shear_x(float factor) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -231,9 +231,9 @@ static basic_matrix_2d init_shear_x(float factor) noexcept;
 \tcode{basic_matrix_2d(GraphicsMath::create_shear_x(factor))}.
 \end{itemdescr}
 
-\indexlibrarymember{init_shear_y}{basic_matrix_2d}%
+\indexlibrarymember{create_shear_y}{basic_matrix_2d}%
 \begin{itemdecl}
-static basic_matrix_2d init_shear_y(float factor) noexcept;
+static basic_matrix_2d create_shear_y(float factor) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum

@@ -96,7 +96,7 @@ void fill_rule(io2d::fill_rule fr) noexcept;
 \begin{itemdescr}
 \pnum
 \effects
-Calls \tcode{GraphicsSurfaces::surface_state_props::fill_fill_rule(data(), fr))}.
+Calls \tcode{GraphicsSurfaces::surface_state_props::fill_rule(data(), fr))}.
 
 \remarks
 The fill rull is \tcode{fr}.
@@ -104,7 +104,7 @@ The fill rull is \tcode{fr}.
 
 \indexlibrarymember{antialiasing}{basic_fill_props}%
 \begin{itemdecl}
-void compositing(compositing_op co) noexcept;
+void antialiasing(antialias aa) noexcept;
 \end{itemdecl}
 \begin{itemdescr}
 \pnum
@@ -124,7 +124,7 @@ io2d::fill_rule fill_rule() const noexcept;
 \begin{itemdescr}
 \pnum
 \returns
-\tcode{GraphicsSurfaces::surface_state_props::fill_fill_rule(data())}.
+\tcode{GraphicsSurfaces::surface_state_props::fill_rule(data())}.
 
 \pnum
 \remarks
